@@ -11,20 +11,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'smswoo_nexmo' ) ) {
+if ( ! class_exists( 'SMSWOO_NEXMO' ) ) {
 
 	/**
+	 * Class SMSWOO_NEXMO extends to SMSWoo_SMS_Gateway
 	 *
-	 * @class   smswoo_nexmo
+	 * @class   SMSWOO_NEXMO
+	 *
 	 * @since   1.0
 	 *
 	 */
-	class smswoo_nexmo extends smswoo_sms_gateway {
+	class SMSWOO_NEXMO extends SMSWoo_SMS_Gateway {
 
-		/** @var string nexmo api key */
+		/*
+		*Nexmo API Key
+		* @var string nexmo api key 
+		*/
 		private $_nexmo_api_key;
 
-		/** @var string nexmo api secret */
+		/*
+		* Nexmo API secret
+		* @var string nexmo api secret 
+		*/
 		private $_nexmo_api_secret;
 
 		/**
@@ -83,7 +91,7 @@ if ( ! class_exists( 'smswoo_nexmo' ) ) {
 				'method' => 'POST',
 				'body'   => $args,
 				'header' => "Content-type: application/x-www-form-urlencoded\r\n" .
-				            "Content-Length: " . strlen( $args ) . "\r\n"
+							'Content-Length: ' . strlen( $args ) . "\r\n"
 			);
 
 			$endpoint = 'https://rest.nexmo.com/sms/json';
@@ -109,8 +117,8 @@ if ( ! class_exists( 'smswoo_nexmo' ) ) {
 
 			$result = json_decode( $response['body'], true );
 
-			if ( $result['messages'][0]['status'] != 0 ) {
-
+			if ( 0 != $result['messages'][0]['status'] ) {
+				/* translators: %s: search error text */
 				throw new Exception( sprintf( __( 'An error has occurred: %s', 'trackship-for-woocommerce' ), $result['messages'][0]['error-text'] ) );
 
 			}
@@ -143,7 +151,7 @@ if ( ! class_exists( 'smswoo_nexmo' ) ) {
 				'method' => 'POST',
 				'body'   => $args,
 				'header' => "Content-type: application/x-www-form-urlencoded\r\n" .
-				            "Content-Length: " . strlen( $args ) . "\r\n"
+							'Content-Length: ' . strlen( $args ) . "\r\n"
 			);
 
 			$endpoint = 'https://api.nexmo.com/ni/basic/json';
@@ -169,8 +177,8 @@ if ( ! class_exists( 'smswoo_nexmo' ) ) {
 
 			$result = json_decode( $response['body'], true );
 
-			if ( $result['status'] != 0 ) {
-
+			if ( 0 != $result['status'] ) {
+				/* translators: %s: search status message */
 				throw new Exception( sprintf( __( 'An error has occurred: %s', 'trackship-for-woocommerce' ), $result['status_message'] ) );
 
 			}

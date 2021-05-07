@@ -1,6 +1,6 @@
 <?php
 /**
- * html code for trackship tab
+ * Html code for trackship tab
  */
 wp_enqueue_script( 'trackship_script' );
 ?>

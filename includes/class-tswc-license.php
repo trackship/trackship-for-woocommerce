@@ -13,11 +13,13 @@ class TSWC_License {
 	private static $instance;
 	
 	/**
+	 * Define var 
+	 * 
 	 * @var string store_url
 	*/
-	var $item_code = 'tswc';
-	var $store_url = 'https://www.zorem.com/';
-	var $default_product_id = '87487';
+	public $item_code = 'tswc';
+	public $store_url = 'https://www.zorem.com/';
+	public $default_product_id = '87487';
 	
 	/**
 	 * Get the class instance
@@ -28,7 +30,7 @@ class TSWC_License {
 	public static function get_instance() {
 
 		if ( null === self::$instance ) {
-			self::$instance = new self;
+			self::$instance = new self();
 		}
 
 		return self::$instance;
@@ -63,7 +65,7 @@ class TSWC_License {
 	 *
 	 */
 	public function set_license_key( $license_key ) {
-		update_option( $this->get_item_code().'_license_key', $license_key );
+		update_option( $this->get_item_code() . '_license_key', $license_key );
 	}
 	
 	/**
@@ -74,7 +76,7 @@ class TSWC_License {
 	 *
 	 */
 	public function get_license_key() {
-		return get_option( $this->get_item_code().'_license_key', false);
+		return get_option( $this->get_item_code() . '_license_key', false);
 	}
 	
 	/**
@@ -85,7 +87,7 @@ class TSWC_License {
 	 *
 	 */
 	public function set_license_status( $status ) {
-		update_option( $this->get_item_code().'_license_status', $status );
+		update_option( $this->get_item_code() . '_license_status', $status );
 	}
 	
 	/**
@@ -96,7 +98,7 @@ class TSWC_License {
 	 *
 	 */
 	public function get_license_status() {
-		return get_option( $this->get_item_code().'_license_status', false);
+		return get_option( $this->get_item_code() . '_license_status', false);
 	}
 	
 	/**
@@ -107,7 +109,8 @@ class TSWC_License {
 	 *
 	 */
 	public function create_instance_id() {
-		return $instance_id = md5( $this->get_item_code().time() );
+		$instance_id = md5( $this->get_item_code() . time() );
+		return $instance_id;
 	}
 	
 	/**
@@ -118,7 +121,7 @@ class TSWC_License {
 	 *
 	 */
 	public function set_instance_id( $instance_id ) {
-		update_option( $this->get_item_code().'_instance_id', $instance_id );
+		update_option( $this->get_item_code() . '_instance_id', $instance_id );
 	}
 	
 	/**
@@ -129,7 +132,7 @@ class TSWC_License {
 	 *
 	 */
 	public function get_instance_id() {
-		return get_option( $this->get_item_code().'_instance_id', false);
+		return get_option( $this->get_item_code() . '_instance_id', false);
 	}
 	
 	/**
@@ -151,7 +154,7 @@ class TSWC_License {
 	 *
 	 */
 	public function get_license_cron_hook() {
-		return $this->get_item_code().'_license_cron_hook';
+		return $this->get_item_code() . '_license_cron_hook';
 	}
 	
 	/*
@@ -159,14 +162,14 @@ class TSWC_License {
 	 *
 	 * @since  1.0
 	*/
-	public function init(){
+	public function init() {
 		
 		//cron schedule added
 		add_filter( 'cron_schedules', array( $this, 'license_cron_schedule') );
 		
 		//ajax call for license
-		add_action( 'wp_ajax_'.$this->get_item_code().'_license_activate', array( $this, 'license_activate') );
-		add_action( 'wp_ajax_'.$this->get_item_code().'_license_deactivate', array( $this, 'license_deactivate') );
+		add_action( 'wp_ajax_' . $this->get_item_code() . '_license_activate', array( $this, 'license_activate') );
+		add_action( 'wp_ajax_' . $this->get_item_code() . '_license_deactivate', array( $this, 'license_deactivate') );
 		
 		//cron schedule
 		add_action( 'admin_init', array( $this, 'add_cron_schedule') );
@@ -183,7 +186,7 @@ class TSWC_License {
 	*
 	* @return  array
 	*/
-	function license_cron_schedule( $schedules ){
+	public function license_cron_schedule( $schedules ) {
 		$schedules[ 'license_cron_events' ] = array(
 			'interval' => 86400,
 			'display'  => __( 'Every day' ),
@@ -195,25 +198,25 @@ class TSWC_License {
 	* license activate
 	* @return  json string
 	*/
-	function license_activate() {
-		$license_key = sanitize_text_field( $_POST['license_key'] );
+	public function license_activate() {
+		check_ajax_referer( 'zorem-plugin', 'security' );
+		$license_key = isset( $_POST['license_key'] ) ? sanitize_text_field( $_POST['license_key'] ) : '' ;
 
-		if( isset( $license_key ) ) {
+		if ( isset( $license_key ) ) {
 			$instance_id = $this->create_instance_id();
-			$return = $authorize_data = $this->license_authorize_action( $license_key, 'activate', $instance_id );
-			if($authorize_data->success == 'true'){
+			$authorize_data = $this->license_authorize_action( $license_key, 'activate', $instance_id );
+			if ( 'true' == $authorize_data->success ) {
 				$this->set_license_key( $license_key );
 				$this->set_instance_id( $instance_id );
 				$this->set_license_status( 1 );
-				delete_transient( 'zorem_upgrade_'.$this->get_item_code() );
-			} else if( $authorize_data->error ) {
+				delete_transient( 'zorem_upgrade_' . $this->get_item_code() );
+			} else if ( $authorize_data->error ) {
 				$this->set_license_key( '' );
 				$this->set_instance_id( '' );
 				$this->set_license_status( 0 );
 			}
 			header('Content-type: application/json');
-			echo json_encode($return, JSON_PRETTY_PRINT);
-			die();
+			wp_send_json( $authorize_data, null, JSON_PRETTY_PRINT );
 		}		
 	}
 	
@@ -221,21 +224,20 @@ class TSWC_License {
 	* license deactivate
 	* @return  json string
 	*/
-	function license_deactivate() {
+	public function license_deactivate() {
+		check_ajax_referer( 'zorem-plugin', 'security' );
+		$license_key = isset( $_POST['license_key'] ) ? sanitize_text_field( $_POST['license_key'] ) : '' ;
 		
-		$license_key = sanitize_text_field( $_POST['license_key'] );
-		
-		if( isset( $license_key ) ) {
+		if ( isset( $license_key ) ) {
 			$return = $this->license_authorize_action( $license_key, 'deactivate' );
-			if($return->success == 'true'){
+			if ( 'true' == $return->success ) {
 				$this->set_license_key( '' );
 				$this->set_instance_id( '' );
 				$this->set_license_status( 0 );
-				delete_transient( 'zorem_upgrade_'.$this->get_item_code() );
+				delete_transient( 'zorem_upgrade_' . $this->get_item_code() );
 			}
 			header('Content-type: application/json');
-			echo json_encode($return, JSON_PRETTY_PRINT);
-			die();
+			wp_send_json( $return, null, JSON_PRETTY_PRINT );
 		}		
 	}
 	
@@ -244,7 +246,9 @@ class TSWC_License {
 	*/
 	public function license_authorize_action( $license_key = '', $action = 'validate', $instance_id = false) {
 		
-		if ( $instance_id == false ) $instance_id = $this->get_instance_id();
+		if ( false == $instance_id ) {
+			$instance_id = $this->get_instance_id();
+		}
 		
 		$domain = home_url();
 		
@@ -260,11 +264,14 @@ class TSWC_License {
 		$request = add_query_arg( $api_params, $this->store_url );
 		$response = wp_remote_get( $request, array( 'timeout' => 15, 'sslverify' => false ) );
 		
-		if ( is_wp_error( $response ) )
+		if ( is_wp_error( $response ) ) {
 			return false;
+		}
 		
 		$authorize_data = json_decode( wp_remote_retrieve_body( $response ) );
-		if(empty($authorize_data) || $authorize_data === NULL || $authorize_data === false) return false;
+		if ( empty($authorize_data) || null === $authorize_data || false === $authorize_data ) {
+			return false;
+		}
 		return $authorize_data;
 	}
 	
@@ -275,7 +282,7 @@ class TSWC_License {
 	 *
 	 * @return  null
 	 */
-	function add_cron_schedule(){
+	public function add_cron_schedule() {
 
 		if ( ! wp_next_scheduled( $this->get_license_cron_hook() ) ) {
 			wp_schedule_event( time(), 'license_cron_events', $this->get_license_cron_hook() );
@@ -293,12 +300,12 @@ class TSWC_License {
 	 */
 	public function check_license_valid() {
 		
-		if( $this->get_license_status() ){
+		if ( $this->get_license_status() ) {
 			
 			$authorize = $this->license_authorize_action( $this->get_license_key(), 'status' );
 			
 			$license_status = $authorize->status_check;
-			if( $license_status == 'inactive'){
+			if ( 'inactive' == $license_status ) {
 				$this->set_license_key( '' );
 				$this->set_instance_id( '' );
 				$this->set_license_status( 0 );

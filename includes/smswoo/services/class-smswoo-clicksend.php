@@ -11,15 +11,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'smswoo_clicksend' ) ) {
+if ( ! class_exists( 'SMSWOO_CLICKSEND' ) ) {
 
 	/**
+	* Class SMSWOO_CLICKSEND extend to SMSWoo_SMS_Gateway
 	*
-	* @class   smswoo_clicksend
+	* @class   SMSWOO_CLICKSEND
+	*
 	* @since   1.0
 	*
 	*/
-	class smswoo_clicksend extends smswoo_sms_gateway {
+	class SMSWOO_CLICKSEND extends SMSWoo_SMS_Gateway {
 		
 		private $_clicksend_authkey;
 		
@@ -68,7 +70,7 @@ if ( ! class_exists( 'smswoo_clicksend' ) ) {
 				'messages' => array(
 					array(
 						'to'		=> $to_phone,
-						'source'	=> "smswoo",
+						'source'	=> 'smswoo',
 						'body'		=> $message,
 					),
 				),
@@ -77,7 +79,7 @@ if ( ! class_exists( 'smswoo_clicksend' ) ) {
 			$args = array(
 				'body'    => wp_json_encode( $body ),
 				'headers' => array(
-					'Authorization' => "Basic " . base64_encode( $this->_clicksend_username.":".$this->_clicksend_key ),
+					'Authorization' => 'Basic ' . base64_encode( $this->_clicksend_username . ':' . $this->_clicksend_key ),
 					'Content-Type' => 'application/json',
 				),
 			);
@@ -98,14 +100,14 @@ if ( ! class_exists( 'smswoo_clicksend' ) ) {
 			}
 			
 			$result = json_decode( $response['body'], true );
-			if ( $result['response_code'] != 'SUCCESS' ) {
-				
+			if ( 'SUCCESS' != $result['response_code'] ) {
+				/* translators: %s: search response message */
 				throw new Exception( sprintf( __( 'An error has occurred: %s', 'trackship-for-woocommerce' ), $result['response_msg'] ) );
 
 			}
 
-			if ( $result[ 'data' ][ 'messages' ][0]['status'] != 'SUCCESS' ) {
-				
+			if ( 'SUCCESS' != $result[ 'data' ][ 'messages' ][0]['status'] ) {
+				/* translators: %s: search status */
 				throw new Exception( sprintf( __( 'An error has occurred: %s', 'trackship-for-woocommerce' ), $result[ 'data' ][ 'messages' ][0]['status'] ) );
 				
 			}

@@ -7,19 +7,20 @@
 /**
  * Adds the individual sections, settings, and controls to the theme customizer
  */
-class tswc_late_shipments_customizer_email {
+class TSWC_Late_Shipments_Customizer_Email {
 	// Get our default values	
 	public function __construct() {
 		// Get our Customizer defaults
 		$this->defaults = $this->wcast_generate_defaults();
 		
 		$wc_ast_api_key = get_option('wc_ast_api_key');
-		if(!$wc_ast_api_key)return;
-			
+		if (!$wc_ast_api_key) {
+			return;
+		}	
 	}		
 	
 	/**
-	 * code for initialize default value for customizer
+	 * Code for initialize default value for customizer
 	*/
 	public function wcast_generate_defaults() {		
 		$customizer_defaults = array(			
@@ -42,4 +43,4 @@ class tswc_late_shipments_customizer_email {
 /**
  * Initialise our Customizer settings
 */
-new tswc_late_shipments_customizer_email();
+new TSWC_Late_Shipments_Customizer_Email();

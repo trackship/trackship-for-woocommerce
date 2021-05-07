@@ -73,7 +73,7 @@ body.trackship_admin_settings {
 input.tab_input {
 	display: none;
 }
-label.tab_label {
+label.tab_label, label.inner_tab_label {
 	text-decoration: none;
 	padding: 11px 0;
 	font-size: 14px;
@@ -164,9 +164,9 @@ section.inner_tab_section {
 	margin-left: 5px;
 }
 .wp-core-ui .button-primary.btn_ts_sidebar {
-	background: transparent;
+	background: #fafafa;
 	color: #3c4858;
-	border-color: #59c889;
+	border: 1px solid #bdbdbd;
 	font-size: 13px;
 	box-shadow: none;
 }
@@ -649,7 +649,7 @@ ul.wcast-shipment-status-list {
 	padding: 15px;
 	font-size: 12px;
 }
-.woocommerce.trackship_admin_layout input.tab_input:checked + label {
+.woocommerce.trackship_admin_layout input.tab_input:checked + label, .woocommerce.trackship_admin_layout input.inner_tab_input:checked + label{
 	color: #3c4858;
 }
 label.tab_label.first_label {
@@ -722,9 +722,6 @@ label.tab_label.first_label {
 .settings_ul_submit {
 	text-align: right;
 }
-.settings_ul li> input[type=checkbox] {
-	vertical-align: bottom;
-}
 .status-label-li .order-label {
 	display: -webkit-inline-box;
 	display: -webkit-inline-flex;
@@ -741,7 +738,7 @@ label.tab_label.first_label {
 	padding: 0 1em;
 }
 .settings_ul .setting_ul_checkbox_label {
-	margin-left: 10px;
+	margin-left: 5px;
 }
 .status-label-li .wp-picker-container {
 	vertical-align: middle;
@@ -1505,25 +1502,15 @@ ul.settings_ul li label.left_label {
 #tab_email_notifications:checked ~ .shipment-status-email-section, #tab_sms_notifications:checked ~ .shipment-status-sms-section {
 	display: block !important;
 }
-label.inner_tab_label {
-	text-decoration: none;
-	padding: 15px 12px 8px;
-	font-size: 14px;
-	color: #32373c;
-	display: inline-block;
-	line-height: 1;
-	outline: none;
-	font-weight: 600;
-	border-bottom: 3px solid transparent;
-}
-.ts_notifications_outer_table label.inner_tab_label {
-	padding: 15px 12px 15px;
+#content_trackship_notifications.inner_tab_section .tab_inner_container .outer_form_table label.inner_tab_label {
+	padding: 15px 12px;
+	margin-left: 0;
 }
 input.tab_input, input.inner_tab_input {
 	display: none;
 }
 input.inner_tab_input:checked + label.ts_tabs_label {
-	border-bottom: 3px solid #59c889;
+	border-bottom: 0px;
 }
 section.inner_tab_section {
 	display: none;
@@ -1562,7 +1549,7 @@ span.shipment_status_toggle {
 }
 .wp-core-ui .btn_outline {
 	border-color: #59c889 !important;
-	background: transparent !important;
+    background: transparent !important;
 	color: #3c4858 !important;
 }
 label.setting_ul_tgl_checkbox_label {
@@ -1746,6 +1733,7 @@ div#trackship-tracking-items .ts-tracking-item {
 }
 #admin_tracking_widget .popuprow {
 	padding: 20px 20px 0;
+	max-width: 800px;
 }
 #admin_tracking_widget .shipment_status_heading {
 	line-height: 1;
@@ -1809,7 +1797,21 @@ td.shipment_tracking.column-shipment_tracking li {
 .license_message {
 	margin-top: 10px;
 }
-
+.shipment-status-sms-section .smswoo-shipment-sendto .btn_ts_transparent {
+	border: 1px solid #bdbdbd !important;
+    border-radius: 4px;
+    font-size: 13px;
+    display: inline-block;
+    height: 30px;
+	line-height: 28px;
+    color : #3c4858;
+	background: #fafafa !important;
+}
+.shipment-status-sms-section .smswoo-shipment-sendto .button-primary.woocommerce-save-button.button-smswoo {
+	background: #59c889;
+    border-color: #59c889;
+	padding: 0 10px;
+}
 @media (min-width: 992px) {
 .col-lg-6 {
 	-webkit-box-flex: 0;
