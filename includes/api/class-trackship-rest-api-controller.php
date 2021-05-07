@@ -28,6 +28,8 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	protected $post_type = 'shop_order';
 	
 	/**
+	 * Name Space function
+	 *
 	 * @param $namespace
 	 *
 	 * @return TrackShip_REST_API_Controller
@@ -81,22 +83,22 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	/*
 	* check_wcast_installed
 	*/
-	public function check_wcast_installed( $request ){
+	public function check_wcast_installed( $request ) {
 		$wc_ast_api_key = get_option('wc_ast_api_key');
 		$wc_ast_api_enabled = get_option('wc_ast_api_enabled');		
-		if(empty($wc_ast_api_key)){
-			update_option('wc_ast_api_key',$request['user_key']);
+		if ( empty( $wc_ast_api_key ) ) {
+			update_option('wc_ast_api_key', $request['user_key']);
 		}
 		
-		if( $wc_ast_api_enabled == '' ){
-			update_option('wc_ast_api_enabled',1);
+		if ( '' == $wc_ast_api_enabled ) {
+			update_option('wc_ast_api_enabled', 1);
 		}
 		
-		if($request['trackers_balance']){
+		if ( $request['trackers_balance'] ) {
 			update_option( 'trackers_balance', $request['trackers_balance'] );
 		}			
 		
-		$trackship = new WC_Trackship_Actions;
+		$trackship = new WC_Trackship_Actions();
 		$trackship->create_tracking_page();
 		
 		$data = array(
@@ -109,7 +111,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		$content = print_r($request, true);
 		$logger = wc_get_logger();
 		$context = array( 'source' => 'trackship_log' );
-		$logger->error( "New tracking_webhook \n\n".$content."\n\n", $context );
+		$logger->error( "New tracking_webhook \n\n" . $content . "\n\n", $context );
 		//error_log("New tracking_webhook \n\n".$content."\n\n", 3, ABSPATH . "trackship.log");
 		
 		//validation
@@ -129,14 +131,18 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 		
-		foreach( ( array )$tracking_items as $key => $tracking_item ){
-			if( trim($tracking_item['tracking_number']) != trim($tracking_number) )continue;
+		foreach ( ( array ) $tracking_items as $key => $tracking_item ) {
+			if ( trim( $tracking_item['tracking_number'] ) != trim($tracking_number) ) {
+				continue;
+			}
 			
-			$shipment_status = get_post_meta( $order_id, "shipment_status", true);
+			$shipment_status = get_post_meta( $order_id, 'shipment_status', true);
 			
-			if( is_string($shipment_status) )$shipment_status = array();			
+			if ( is_string($shipment_status) ) {
+				$shipment_status = array();			
+			}
 			
-			if(isset($shipment_status[$key]['status'])){
+			if ( isset( $shipment_status[$key]['status'] ) ) {
 				$previous_status = $shipment_status[$key]['status'];	
 			}			
 			
@@ -147,11 +153,11 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			$shipment_status[$key]['tracking_destination_events'] = json_decode($tracking_destination_events);
 			
 			$shipment_status[$key]['status_date'] = $tracking_event_date;
-			if($tracking_est_delivery_date){
-				$shipment_status[$key]['est_delivery_date'] = date("Y-m-d", strtotime($tracking_est_delivery_date));
+			if ( $tracking_est_delivery_date ) {
+				$shipment_status[$key]['est_delivery_date'] = gmdate('Y-m-d', strtotime($tracking_est_delivery_date));
 			}
 						
-			update_post_meta( $order_id, "shipment_status", $shipment_status );
+			update_post_meta( $order_id, 'shipment_status', $shipment_status );
 			
 			$shipment_status = trackship_for_woocommerce()->actions->get_shipment_status( $order_id );
 			
@@ -170,7 +176,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	/*
 	* disconnect store from TS
 	*/
-	public function disconnect_from_trackship_fun($request){
+	public function disconnect_from_trackship_fun( $request ) {
 		$add_key = update_option( 'wc_ast_api_key', '' );
 		$wc_ast_api_enabled = update_option( 'wc_ast_api_enabled', 0 );
 		delete_option( 'wc_ast_api_enabled' );

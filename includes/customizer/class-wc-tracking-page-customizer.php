@@ -7,7 +7,7 @@
 /**
  * Adds the individual sections, settings, and controls to the theme customizer
  */
-class ts_tracking_page_customizer {
+class TSWC_Tracking_Page_Customizer {
 	// Get our default values	
 	private static $order_ids  = null;
 	
@@ -19,7 +19,9 @@ class ts_tracking_page_customizer {
 		add_action( 'customize_register', array( $this, 'wcast_register_sample_default_controls' ) );
 		
 		// Only proceed if this is own request.
-		if ( ! $this->is_own_customizer_request() && ! $this->is_own_preview_request() )return;			
+		if ( ! $this->is_own_customizer_request() && ! $this->is_own_preview_request() ) {
+			return;
+		}
 		
 		// Register our sections
 		add_action( 'customize_register', array( trackship_customizer(), 'wcast_add_customizer_sections' ) );	
@@ -45,7 +47,7 @@ class ts_tracking_page_customizer {
 	
 	
 	/**
-	 * add css and js for preview
+	 * Add css and js for preview
 	*/	
 	public function enqueue_preview_scripts() {
 		 wp_enqueue_script('wcast-preview-scripts', trackship_for_woocommerce()->plugin_dir_url() . '/assets/js/preview-scripts.js', array('jquery', 'customize-preview'), trackship_for_woocommerce()->version, true);
@@ -69,7 +71,6 @@ class ts_tracking_page_customizer {
 	/**
 	 * Checks to see if we are opening our custom customizer preview
 	 *
-	 * @access public
 	 * @return bool
 	 */
 	public function is_own_preview_request() {
@@ -79,11 +80,10 @@ class ts_tracking_page_customizer {
 	/**
 	 * Checks to see if we are opening our custom customizer controls
 	 *
-	 * @access public
 	 * @return bool
 	 */
 	public function is_own_customizer_request() {
-		return isset( $_REQUEST['email'] ) && $_REQUEST['email'] === 'ast_tracking_page_section';
+		return isset( $_REQUEST['email'] ) && 'ast_tracking_page_section' === $_REQUEST['email'] ;
 	}
 	
 	/**
@@ -103,15 +103,14 @@ class ts_tracking_page_customizer {
 	/**
 	 * Get WooCommerce email settings page URL
 	 *
-	 * @access public
 	 * @return string
 	 */
-	public function get_email_settings_page_url($return_tab) {
+	public function get_email_settings_page_url( $return_tab ) {
 		return admin_url( 'admin.php?page=trackship-for-woocommerce&tab=tracking-page' );
 	}
 	
 	/**
-	 * code for initialize default value for customizer
+	 * Code for initialize default value for customizer
 	*/	
 	public function wcast_generate_defaults() {
 		$customizer_defaults = array(
@@ -140,7 +139,7 @@ class ts_tracking_page_customizer {
 		
 		$font_size_array[ '' ] = __( 'Select' );
 		for ( $i = 10; $i <= 30; $i++ ) {
-			$font_size_array[ $i ] = $i."px";
+			$font_size_array[ $i ] = $i . 'px';
 		}		
 		
 		$wp_customize->add_setting( 'wc_ast_select_tracking_page_layout',
@@ -293,4 +292,4 @@ class ts_tracking_page_customizer {
 /**
  * Initialise our Customizer settings
 */
-$ts_tracking_page_customizer = new ts_tracking_page_customizer();
+new TSWC_Tracking_Page_Customizer();

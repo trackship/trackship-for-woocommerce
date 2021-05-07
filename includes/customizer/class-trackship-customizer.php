@@ -15,9 +15,19 @@ class WC_Trackship_Customizer {
 	/**
 	 * Initialize the main plugin function
 	*/
-    public function __construct() {
-			
-    }
+	public function __construct() {
+
+	}
+	
+	public function my_allowed_tags( $tags ) {
+		$tags['style'] = array( 'type' => true, );
+		return $tags;
+	}
+	
+	public function safe_style_css_callback( $styles ) {
+		 $styles[] = 'display';
+		return $styles;
+	}
 	
 	/**
 	 * Register the Customizer sections
@@ -44,19 +54,20 @@ class WC_Trackship_Customizer {
 	}
 	
 	/**
-	 * add css and js for customizer
+	 * Add css and js for customizer
 	*/
-	public function enqueue_customizer_scripts(){
+	public function enqueue_customizer_scripts() {
 		if ( isset( $_REQUEST['wcast-customizer'] ) && '1' === $_REQUEST[ 'wcast-customizer' ] ) {
 			wp_enqueue_style( 'wp-color-picker' );
 			wp_enqueue_style('wcast-customizer-styles', trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/customizer-styles.css', array(), trackship_for_woocommerce()->version  );			
 			wp_enqueue_script('wcast-customizer-scripts', trackship_for_woocommerce()->plugin_dir_url() . 'assets/js/customizer-scripts.js', array('jquery', 'customize-controls','wp-color-picker'), trackship_for_woocommerce()->version, true);
 			
 			$shipment_status = 'in_transit';
-			if(isset( $_REQUEST['shipment_status'] )){
-				$shipment_status = $_REQUEST['shipment_status'];
+			if ( isset( $_REQUEST['shipment_status'] ) ) {
+				$shipment_status = sanitize_text_field( $_REQUEST['shipment_status'] );
 			}
 			
+			$r_mail = isset ($_REQUEST['email']) ? sanitize_text_field( $_REQUEST['email'] ) : '';
 			// Send variables to Javascript
 			wp_localize_script( 'wcast-customizer-scripts', 'wcast_customizer', array(
 				'ajax_url'              => admin_url('admin-ajax.php'),
@@ -70,7 +81,7 @@ class WC_Trackship_Customizer {
 				'customer_delivered_preview_url' => $this->get_customer_delivered_preview_url(),
 				'customer_returntosender_preview_url' => $this->get_customer_returntosender_preview_url(),
 				'customer_availableforpickup_preview_url' => $this->get_customer_availableforpickup_preview_url(),
-				'trigger_click'        => '#accordion-section-'.$_REQUEST['email'].' h3',
+				'trigger_click'        => '#accordion-section-' . $r_mail . ' h3', $r_mail
 			) );	
 
 			wp_localize_script( 'wp-color-picker', 'wpColorPickerL10n', array(
@@ -112,7 +123,7 @@ class WC_Trackship_Customizer {
 	 * Get Exception Shipment status preview URL
 	 *
 	 */
-	public function get_customer_exception_preview_url(){
+	public function get_customer_exception_preview_url() {
 		return add_query_arg( array(
 			'wcast-exception-email-customizer-preview' => '1',
 		), home_url( '' ) );
@@ -191,51 +202,48 @@ class WC_Trackship_Customizer {
 	}
 
 	/**
-     * Remove unrelated components
-     *
-     * @access public
-     * @param array $components
-     * @param object $wp_customize
-     * @return array
-     */
-    public function remove_unrelated_components( $components, $wp_customize ) {
-
-        // Iterate over components
-        foreach ($components as $component_key => $component) {
-
-            // Check if current component is own component
-            if ( ! $this->is_own_component( $component ) ) {
-                unset($components[$component_key]);
-            }
-        }
-
-        // Return remaining components
-        return $components;
-    }
-
-    /**
-     * Remove unrelated sections
-     *
-     * @access public
-     * @param bool $active
-     * @param object $section
-     * @return bool
-     */
-    public function remove_unrelated_sections( $active, $section ) {
+	 * Remove unrelated components
+	 *
+	 * @param array $components
+	 * @param object $wp_customize
+	 * @return array
+	 */
+	public function remove_unrelated_components( $components, $wp_customize ) {
+	
+		// Iterate over components
+		foreach ($components as $component_key => $component) {
+			
+			// Check if current component is own component
+			if ( ! $this->is_own_component( $component ) ) {
+				unset($components[$component_key]);
+			}
+		}
 		
-        // Check if current section is own section
-        if ( ! $this->is_own_section( $section->id ) ) {
-            return false;
-        }
-
-        // We can override $active completely since this runs only on own Customizer requests
-        return true;
-    }
+		// Return remaining components
+		return $components;
+	}
+	
+	/**
+	 * Remove unrelated sections
+	 *
+	 * @param bool $active
+	 * @param object $section
+	 * @return bool
+	 */
+	public function remove_unrelated_sections( $active, $section ) {
+		
+		// Check if current section is own section
+		if ( ! $this->is_own_section( $section->id ) ) {
+			return false;
+		}
+		
+		// We can override $active completely since this runs only on own Customizer requests
+		return true;
+	}
 
 	/**
 	* Remove unrelated controls
 	*
-	* @access public
 	* @param bool $active
 	* @param object $control
 	* @return bool
@@ -254,7 +262,6 @@ class WC_Trackship_Customizer {
 	/**
 	* Check if current component is own component
 	*
-	* @access public
 	* @param string $component
 	* @return bool
 	*/
@@ -265,13 +272,12 @@ class WC_Trackship_Customizer {
 	/**
 	* Check if current section is own section
 	*
-	* @access public
 	* @param string $key
 	* @return bool
 	*/
 	public static function is_own_section( $key ) {
 				
-		if ( $key === 'ast_tracking_page_section' || $key === 'trackship_shipment_status_email' ) {
+		if ( 'ast_tracking_page_section' === $key || 'trackship_shipment_status_email' === $key ) {
 			return true;
 		}
 
@@ -300,7 +306,6 @@ class WC_Trackship_Customizer {
 	/**
 	 * Get Order Ids
 	 *
-	 * @access public
 	 * @return array
 	 */
 	public static function get_order_ids() {		
@@ -316,16 +321,16 @@ class WC_Trackship_Customizer {
 		));	
 			
 		foreach ( $orders as $order ) {								
-				$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order->get_id() );
-				if($tracking_items){
-					$order_array[ $order->get_id() ] = $order->get_id() . ' - ' . $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();					
-				}				
-			}
+			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order->get_id() );
+			if ( $tracking_items ) {
+				$order_array[ $order->get_id() ] = $order->get_id() . ' - ' . $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();					
+			}				
+		}
 		return $order_array;
 	}
 	
 	/**
-	 * code for initialize default value for customizer
+	 * Code for initialize default value for customizer
 	*/
 	public function get_defaults( $key ) {
 		
@@ -345,14 +350,14 @@ class WC_Trackship_Customizer {
 			'track_button_text_color' => '#fff',
 		);
 		
-		return isset ( $customizer_defaults[ $key ] ) ? $customizer_defaults[ $key ] : NULL;
+		return isset ( $customizer_defaults[ $key ] ) ? $customizer_defaults[ $key ] : null;
 
 	}
 	
 	/*
 	* get customizer settings
 	*/
-	public function get_value( $array, $key ){
+	public function get_value( $array, $key ) {
 		$array_data = get_option( $array );
 		return ( isset( $array_data[$key] ) && !empty( $array_data[$key] ) ) ? $array_data[$key] : $this->get_defaults( $key );
 	}
@@ -360,15 +365,15 @@ class WC_Trackship_Customizer {
 	/*
 	* Return checkbox option value for customizer
 	*/
-	public function get_checkbox_option_value_from_array( $array,$key, $default_value) {		
+	public function get_checkbox_option_value_from_array( $array, $key, $default_value) {		
 		$array_data = get_option($array);	
 		$value = '';
 		
-		if(isset($array_data[$key])){
+		if ( isset( $array_data[$key] ) ) {
 			$value = $array_data[$key];				
 			return $value;
 		}							
-		if($value == ''){
+		if ( '' == $value ) {
 			$value = $default_value;
 		}		
 		return $value;

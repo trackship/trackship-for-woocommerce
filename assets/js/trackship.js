@@ -285,7 +285,8 @@ jQuery(document).on("change", ".shipment_status_toggle input", function(){
 		action: 'update_shipment_status_email_status',
 		id: id,
 		wcast_enable_status_email: wcast_enable_status_email,
-		settings_data: settings_data,		
+		settings_data: settings_data,
+		security: jQuery( '#tswc_shipment_status_email' ).val()
 	};
 	
 	jQuery.ajax({
@@ -535,7 +536,7 @@ jQuery(document).on("click", ".metabox_get_shipment_status", function(){
 				jQuery(document).zorem_snackbar_warning( response.data.msg );
 			}
 		},
-		error: function( response ) {
+		error: function( jqXHR, exception ) {
 			var msg = '';
 			if (jqXHR.status === 0) {
 				msg = 'Not connect.\n Verify Network.';
@@ -549,10 +550,12 @@ jQuery(document).on("click", ".metabox_get_shipment_status", function(){
 				msg = 'Time out error.';
 			} else if (exception === 'abort') {
 				msg = 'Ajax request aborted.';
+			} else if ( jqXHR.responseText === '-1' ) {
+				msg = 'Security check fail, please refresh and try again.';
 			} else {
 				msg = 'Uncaught Error.\n' + jqXHR.responseText;
 			}
-			jQuery(document).zorem_snackbar( msg );
+			jQuery(document).zorem_snackbar_warning( msg );
 		}
 	});
 });
@@ -561,6 +564,7 @@ jQuery(document).on( "click", ".open_tracking_details", function(){
 	var data = {
 		action:		'get_admin_tracking_widget',
 		order_id:	jQuery(this).data('orderid'),
+		security:	jQuery(this).data('nonce'),
 	}
 	jQuery.ajax({
 		url: ajaxurl,
@@ -570,8 +574,26 @@ jQuery(document).on( "click", ".open_tracking_details", function(){
 			jQuery("#admin_tracking_widget .popuprow").html(response);
 			jQuery("#admin_tracking_widget").show();
 		},
-		error: function(response) {
-
+		error: function( jqXHR, exception ) {
+			var msg = '';
+			if (jqXHR.status === 0) {
+				msg = 'Not connect.\n Verify Network.';
+			} else if (jqXHR.status == 404) {
+				msg = 'Requested page not found. [404]';
+			} else if (jqXHR.status == 500) {
+				msg = 'Internal Server Error [500].';
+			} else if (exception === 'parsererror') {
+				msg = 'Requested JSON parse failed.';
+			} else if (exception === 'timeout') {
+				msg = 'Time out error.';
+			} else if (exception === 'abort') {
+				msg = 'Ajax request aborted.';
+			} else if ( jqXHR.responseText === '-1' ) {
+				msg = 'Security check fail, please refresh and try again.';
+			} else {
+				msg = 'Uncaught Error.\n' + jqXHR.responseText;
+			}
+			jQuery(document).zorem_snackbar_warning( msg );
 		}
 	});
 	return false;

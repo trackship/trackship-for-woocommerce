@@ -11,21 +11,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'smswoo_twilio' ) ) {
+if ( ! class_exists( 'SMSWOO_TWILIO' ) ) {
 
 	/**
+	 * Class SMSWOO_TWILIO extend to SMSWoo_SMS_Gateway
 	 *
-	 * @class   smswoo_twilio
+	 * @class   SMSWOO_TWILIO
+	 *
 	 * @package smswoo
+	 *
 	 * @since   1.0.0
 	 *
 	 */
-	class smswoo_twilio extends smswoo_sms_gateway {
+	class SMSWOO_TWILIO extends SMSWoo_SMS_Gateway {
 
-		/** @var string twilio account sid */
 		private $_twilio_sid;
 
-		/** @var string twilio auth token */
 		private $_twilio_auth_token;
 
 		/**
@@ -112,7 +113,7 @@ if ( ! class_exists( 'smswoo_twilio' ) ) {
 
 			if ( isset( $response['response']['code'] ) ) {
 
-				if ( $response['response']['code'] != 201 && $response['response']['code'] != 200 ) {
+				if ( 201 != $response['response']['code'] && 200 != $response['response']['code'] ) {
 
 					$response = json_decode( $response['body'], true );
 
@@ -182,7 +183,7 @@ if ( ! class_exists( 'smswoo_twilio' ) ) {
 			
 			if ( isset( $response['response']['code'] ) ) {
 
-				if ( $response['response']['code'] != 201 && $response['response']['code'] != 200 ) {
+				if ( 201 != $response['response']['code'] && 200 != $response['response']['code'] ) {
 
 					$response = json_decode( $response['body'], true );
 
