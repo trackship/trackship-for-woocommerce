@@ -31,17 +31,15 @@ jQuery(document).on("submit", ".order_track_form", function(){
 		url: zorem_ajax_object.ajax_url,		
 		data: form.serialize(),
 		type: 'POST',
+		dataType: "json",
 		success: function(response) {
-			if(response == 'tracking_items_not_found'){				
-				jQuery(".track_fail_msg ").show();
-				jQuery(".track_fail_msg ").text('Tracking details not found.');
-			} else if(response){
-				jQuery('.track-order-section').replaceWith(response);
+			if(response.success == 'true'){
+				jQuery('.track-order-section').replaceWith(response.html);
 			} else{				
-				jQuery(".track_fail_msg ").show();
-				jQuery(".track_fail_msg ").text('Order not found.');
-			}
-			jQuery(".order_track_form ").unblock();	
+				jQuery(".track_fail_msg").text(response.message);
+				jQuery(".track_fail_msg").show();				
+			}			
+			jQuery(".order_track_form").unblock();
 		},
 		error: function(jqXHR, exception) {
 			console.log(jqXHR.status);

@@ -1,10 +1,9 @@
 <?php
 /**
- * @wordpress-plugin
  * Plugin Name: TrackShip for WooCommerce 
  * Plugin URI: https://www.zorem.com
  * Description: Add shipment tracking information to your WooCommerce orders and provide customers with an easy way to track their orders. Shipment tracking Info will appear in customers accounts (in the order panel) and in WooCommerce order complete email. 
- * Version: 0.6
+ * Version: 0.6.1
  * Author: zorem
  * Author URI: https://www.zorem.com 
  * License: GPL-2.0+
@@ -25,7 +24,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '0.6';
+	public $version = '0.6.1';
 	
 	/**
 	 * Initialize the main plugin function
@@ -58,12 +57,11 @@ class Trackship_For_Woocommerce {
 			$this->ts_install->init();
 			
 		}
-    }
+	}
 	
 	/**
 	 * Check if WooCommerce is active
 	 *
-	 * @access private
 	 * @since  1.0.0
 	 * @return bool
 	*/
@@ -89,13 +87,13 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Display WC active notice
 	 *
-	 * @access public
 	 * @since  1.0.0
 	*/
 	public function notice_activate_wc() {
 		?>
 		<div class="error">
-			<p><?php printf( __( 'Please install and activate %sWooCommerce%s for TrackShip for WooCommerce!', 'trackship-for-woocommerce' ), '<a href="' . admin_url( 'plugin-install.php?tab=search&s=WooCommerce&plugin-search-input=Search+Plugins' ) . '">', '</a>' ); ?></p>
+			<?php /* translators: %s: search for a tag */ ?>
+			<p><?php printf( esc_html__( 'Please install and activate %1$sWooCommerce%2$s for TrackShip for WooCommerce!', 'trackship-for-woocommerce' ), '<a href="' . esc_url( admin_url( 'plugin-install.php?tab=search&s=WooCommerce&plugin-search-input=Search+Plugins' ) ) . '">', '</a>' ); ?></p>
 		</div>
 		<?php
 	}
@@ -103,7 +101,7 @@ class Trackship_For_Woocommerce {
 	/*
 	* init when class loaded
 	*/
-	public function init(){
+	public function init() {
 		
 		add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ) );
 		
@@ -113,8 +111,8 @@ class Trackship_For_Woocommerce {
 		
 		if ( !$this->is_ast_active() ) {
 			//new order status
-			$newstatus = get_option( "wc_ast_status_delivered", 0);
-			if( $newstatus == true ){
+			$newstatus = get_option( 'wc_ast_status_delivered', 0);
+			if ( true == $newstatus ) {
 				//register order status 
 				add_action( 'init', array( $this->admin, 'register_order_status') );
 				//add status after completed
@@ -158,7 +156,7 @@ class Trackship_For_Woocommerce {
 	/*
 	* include files
 	*/
-	private function includes(){				
+	private function includes() {				
 	
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-install.php';
 		$this->ts_install = WC_Trackship_Install::get_instance();
@@ -181,7 +179,7 @@ class Trackship_For_Woocommerce {
 		if ( ! function_exists( 'SMSWOO' ) ) {
 			//SMSWOO
 			require_once $this->get_plugin_path() . '/includes/smswoo/class-smswoo-init.php';
-			$this->smswoo_init = tswc_smswoo_init::get_instance();
+			$this->smswoo_init = TSWC_SMSWOO_Init::get_instance();
 		}
 		
 		//license
@@ -264,7 +262,7 @@ class Trackship_For_Woocommerce {
 	* @param  array  $links List of existing plugin action links.
 	* @return array         List of modified plugin action links.
 	*/
-	function tsw_plugin_action_links( $links ) {
+	public function tsw_plugin_action_links( $links ) {
 		$links = array_merge( array(
 			'<a href="' . esc_url( admin_url( '/admin.php?page=trackship-for-woocommerce' ) ) . '">' . esc_html( 'Settings' ) . '</a>'
 		), $links );
@@ -274,7 +272,6 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Check if Advanced Shipment Tracking for WooCommerce is active
 	 *
-	 * @access private
 	 * @since  1.0.0
 	 * @return bool
 	*/
@@ -296,7 +293,6 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Check if Shipment Tracking is active
 	 *
-	 * @access private
 	 * @since  1.0.0
 	 * @return bool
 	*/
@@ -323,7 +319,7 @@ class Trackship_For_Woocommerce {
 	 * Return @void
 	 *
 	 */
-	function is_trackship_connected() {
+	public function is_trackship_connected() {
 		
 		$wc_ast_api_key = get_option( 'wc_ast_api_key' );
 		
@@ -341,7 +337,8 @@ class Trackship_For_Woocommerce {
 			return WC_Shipment_Tracking()->actions->get_tracking_items( $order_id, true );
 		} else {
 			$order = new WC_Order( $order_id );		
-			return $order->get_meta( '_wc_shipment_tracking_items', true );	
+			$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );
+			return $tracking_items ? $tracking_items : array();
 		}
 	}
 	
