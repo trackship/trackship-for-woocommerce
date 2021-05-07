@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class tswc_smswoo_admin {
+class TSWC_SMSWoo_Admin {
 	
 	/**
 	 * Instance of this class.
@@ -27,7 +27,7 @@ class tswc_smswoo_admin {
 	public static function get_instance() {
 
 		if ( null === self::$instance ) {
-			self::$instance = new self;
+			self::$instance = new self();
 		}
 
 		return self::$instance;
@@ -36,7 +36,7 @@ class tswc_smswoo_admin {
 	/*
 	 * init function
 	*/
-	public function init(){
+	public function init() {
 		
 		//register admin menu
 		add_action( 'after_trackship_settings', array( $this, 'smswoo_settings' ) );
@@ -49,195 +49,203 @@ class tswc_smswoo_admin {
 		
 	}
 	
-	public function build_html($template,$data = NULL) {
-		global $wpdb;
+	public function build_html( $template, $data = null, $echo = false ) {
 		$t = new \stdclass();
 		$t->data = $data;
-		ob_start();
-		include(dirname(__FILE__)."/admin-html/".$template.".phtml");
-		$s = ob_get_contents();
-		ob_end_clean();
-		return $s;
+		if ( $echo ) {
+			include(dirname(__FILE__) . '/admin-html/' . $template . '.phtml');
+		} else {
+			ob_start();
+			include(dirname(__FILE__) . '/admin-html/' . $template . '.phtml');
+			$s = ob_get_contents();
+			ob_end_clean();
+			return $s;
+		}
 	}
 	
-	function smswoo_settings(){
-		echo $this->build_html( "settings_tab" );
+	public function smswoo_settings() {
+		$this->build_html( 'settings_tab', null, true );
 	}
 	
 	/*
 	* get html of fields
 	*/
-	public function get_html( $arrays ){
+	public function get_html( $arrays ) {
 		$checked = '';
 		?>
 		<table class="form-table">
 			<tbody>
-				<?php foreach( (array)$arrays as $id => $array ){ ?>
-					
-					<?php if( $array['type'] == 'title' ){ ?>
-						<tr valign="top" class="<?php echo $array['type']?>_row <?php echo isset( $array['class'] ) ? $array['class'] : ''?>">
+				<?php foreach ( (array) $arrays as $id => $array ) { ?>
+					<?php if ( 'title' == $array['type'] ) { ?>
+						<tr valign="top" class="<?php echo esc_html( $array['type'] ); ?>_row <?php echo esc_html( isset( $array['class'] ) ? $array['class'] : '' ); ?>">
 							<th colspan="2">
-								<?php $button = isset( $array['submit-button'] ) ? $array['submit-button'] : '' ?>
-									<?php if ( ( $button == 'true' ) ) {?>
+								<?php $button = isset( $array['submit-button'] ) ? $array['submit-button'] : '' ; ?>
+									<?php if ( ( 'true' == $button ) ) { ?>
 										<div style="float:right;">
 											<div class="spinner workflow_spinner" style="float:none"></div>
-											<button name="save" class="button-primary button-trackship btn_large button-primary woocommerce-save-button button-smswoo" type="submit" ><?php esc_html_e( 'Save Changes', 'trackship-for-woocommerce' )?></button>
+											<button name="save" class="button-primary button-trackship btn_large button-primary woocommerce-save-button button-smswoo" type="submit" ><?php esc_html_e( 'Save Changes', 'trackship-for-woocommerce' ); ?></button>
 										</div>
 									<?php } ?>
-								<h3><?php echo $array['title'] ?></h3>
+								<h3><?php echo esc_html( $array['title'] ); ?></h3>
 							</th>
 						</tr>
-                        <?php continue; ?>
+						<?php continue; ?>
 					<?php } ?>
-                    
-                    <?php if( $array['type'] == 'dropdown_button' ){ ?>
-						<tr valign="top" class="<?php echo $array['type']?>_row <?php echo $array['class']; ?>">
-							<th><?php echo $array['title']?></th>
-								<?php
-									$value = get_option($id);
-								?>
+					<?php if ( 'dropdown_button' == $array['type'] ) { ?>
+						<tr valign="top" class="<?php echo esc_html( $array['type'] ); ?>_row <?php echo esc_html( $array['class'] ); ?>">
+							<th><?php echo esc_html( $array['title'] ); ?></th>
+								<?php $value = get_option($id); ?>
 							<td>
-								<select id="<?php echo $id?>" name="<?php echo $id?>" >
-									<?php foreach((array)$array['options'] as $key => $val ){?>
-										<?php $imgpath = isset( $array[ 'img_path_24x24' ][ $key ] ) ? $array[ 'img_path_24x24' ][ $key ] : '' ?>
-										<option value="<?php echo $key?>" image_path="<?php echo $imgpath?>" <?php echo ( $value == (string)$key ) ? 'selected' : '' ?> ><?php echo $val?></option>
+								<select id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>" >
+									<?php foreach ( (array) $array['options'] as $key => $val ) { ?>
+										<?php $imgpath = isset( $array[ 'img_path_24x24' ][ $key ] ) ? $array[ 'img_path_24x24' ][ $key ] : '' ; ?>
+										<option value="<?php echo esc_html( $key ); ?>" image_path="<?php echo esc_html( $imgpath ); ?>" <?php echo esc_html( ( $value == (string) $key ) ? 'selected' : '' ); ?> ><?php echo esc_html( $val ); ?></option>
 									<?php } ?>
 								</select>
 								<br>
-								<?php foreach($array['link'] as $key1 => $links) {?>
-								<strong valign="top" class="link_row smswoo_sms_provider <?php echo $key1; ?>_sms_provider">
-									<a href= "<?php echo $links['link']?>" target="_blank"><?php echo $links['title']?></a>
+								<?php foreach ( $array['link'] as $key1 => $links ) { ?>
+								<strong valign="top" class="link_row smswoo_sms_provider <?php echo esc_html( $key1 ); ?>_sms_provider">
+									<a href= "<?php echo esc_url( $links['link'] ); ?>" target="_blank"><?php echo esc_html( $links['title'] ); ?></a>
 								</strong>
 								<?php } ?>
 							</td>
 						</tr>
-                        <?php continue; ?>
+						<?php continue; ?>
 					<?php } ?>
-                    
-                    <?php if( $array['type'] == 'link' ){ ?>
-						<tr valign="top" class="<?php echo $array['type']?>_row <?php echo $array['class']; ?>">
-							<th colspan="2"><a href="<?php echo $array['link']?>" target="_blank"><?php echo $array['title']?></a></th>
+					<?php if ( 'link' == $array['type'] ) { ?>
+						<tr valign="top" class="<?php echo esc_html( $array['type'] ); ?>_row <?php echo esc_html( $array['class'] ); ?>">
+							<th colspan="2"><a href="<?php echo esc_url( $array['link'] ); ?>" target="_blank"><?php echo esc_html( $array['title'] ); ?></a></th>
 						</tr>
-                        <?php continue; ?>
+						<?php continue; ?>
 					<?php } ?>
-                    
-                    <?php if( $array['type'] == 'button' ){ ?>
-						<tr valign="top" class="<?php echo $array['type']?>_row <?php echo $array['class']; ?>">
+					<?php if ( 'button' == $array['type'] ) { ?>
+						<tr valign="top" class="<?php echo esc_html( $array['type'] ); ?>_row <?php echo esc_html( $array['class'] ); ?>">
 							<td colspan="2">
-                                <fieldset>
-                                    <button class="button-primary btn_green2 button-smswoo <?php echo $array['button_class'];?>" id="<?php echo $id?>" type="button"><?php echo $array['title'];?></button>
-                                    <div class="spinner test_sms_spinner" style="float:none"></div>
-                                </fieldset>
-                            </td>
+								<fieldset>
+									<button class="button-primary btn_green2 button-smswoo <?php echo esc_html( $array['button_class'] ); ?>" id="<?php echo esc_html( $id ); ?>" type="button"><?php echo esc_html( $array['title'] ); ?></button>
+									<div class="spinner test_sms_spinner" style="float:none"></div>
+								</fieldset>
+							</td>
 						</tr>
-                        <?php continue; ?>
+						<?php continue; ?>
 					<?php } ?>
-
-                	
-				<tr valign="top" class="<?php echo $array['type']?>_row <?php echo $array['class']; ?>">
-					<?php if($array['type'] != 'desc'){ ?>										
+				<tr valign="top" class="<?php echo esc_html( $array['type'] ); ?>_row <?php echo esc_html( $array['class'] ); ?>">
+					<?php if ( 'desc' != $array['type'] ) { ?>										
 					<th scope="row" class="titledesc"  >
-						<label for=""><?php echo $array['title']?><?php if(isset($array['title_link'])){ echo $array['title_link']; } ?>
-							<?php if( isset($array['tooltip']) ){?>
-                            	<span class="woocommerce-help-tip tipTip" title="<?php echo $array['tooltip']?>"></span>
-                            <?php } ?>
-                        </label>
+						<label for=""><?php echo esc_html( $array['title'] ); ?>
+							<?php 
+							if ( isset( $array['title_link'] ) ) { 
+								echo esc_html( $array['title_link'] );
+							}
+							?>
+							<?php if ( isset( $array['tooltip'] ) ) { ?>
+								<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
+							<?php } ?>
+						</label>
 					</th>
 					<?php } ?>
-					<td class="forminp"  <?php if($array['type'] == 'desc'){ ?> colspan=2 <?php } ?>>
-                    	<?php if( $array['type'] == 'checkbox' ){
+					<td class="forminp" <?php echo 'desc' == $array['type'] ? 'colspan=2' : ''; ?>>
+						<?php 
+						if ( 'checkbox' == $array['type'] ) {
 							
-								$default = isset( $array['default'] ) ? 1 : 0;
+							$default = isset( $array['default'] ) ? 1 : 0;
 
-								if( get_option( $id, $default ) ){
-									$checked = 'checked';
-								} else{
-									$checked = '';
-								} 
+							if ( get_option( $id, $default ) ) {
+								$checked = 'checked';
+							} else {
+								$checked = '';
+							} 
 							
-							if(isset($array['disabled']) && $array['disabled'] == true){
+							if ( isset($array['disabled']) && true == $array['disabled'] ) {
 								$disabled = 'disabled';
 								$checked = '';
-							} else{
+							} else {
 								$disabled = '';
 							}							
 							?>
-							<input type="hidden" name="<?php echo $id?>" value="0"/>
-							<input class="tgl tgl-flat" type="checkbox" id="<?php echo $id?>" name="<?php echo $id?>" <?php echo $checked ?> value="1" <?php echo $disabled; ?>/>
-							<label class="tgl-btn" for="<?php echo $id?>">
-							</label><p class="description"><?php echo (isset($array['desc']))? $array['desc']: ''?></p>
-						<?php } elseif( $array['type'] == 'textarea' ){ ?>
-                                        <fieldset>
-                                        <textarea rows="3" cols="20" class="input-text regular-input" type="textarea" name="<?php echo $id?>" id="<?php echo $id?>" style="" placeholder="<?php if(!empty($array['placeholder'])){echo $array['placeholder'];} ?>"><?php echo get_option( $id, isset($array['default']) ? $array['default'] : false )?></textarea>
-                                        </fieldset>
-                        <?php }  elseif( isset( $array['type'] ) && $array['type'] == 'dropdown' ){?>
-                        	<?php
-								if( isset($array['multiple']) ){
-									$multiple = 'multiple';
-									$field_id = $array['multiple'];
-								} else {
-									$multiple = '';
-									$field_id = $id;
-								}
+							<input type="hidden" name="<?php echo esc_html( $id ); ?>" value="0"/>
+							<input class="tgl tgl-flat" type="checkbox" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>" <?php echo esc_html( $checked ); ?> value="1" <?php echo esc_html( $disabled ); ?>/>
+							<label class="tgl-btn" for="<?php echo esc_html( $id ); ?>">
+							</label><p class="description"><?php echo esc_html( ( isset( $array['desc'] ) )? $array['desc']: '' ); ?></p>
+						<?php } elseif ( 'textarea' == $array['type'] ) { ?>
+							<fieldset>
+								<textarea rows="3" cols="20" class="input-text regular-input" type="textarea" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" style="" placeholder="<?php echo !empty( $array['placeholder'] ) ? esc_html( $array['placeholder'] ) : ''; ?>"><?php echo esc_html( get_option( $id, isset($array['default']) ? $array['default'] : false ) ); ?></textarea>
+							</fieldset>
+						<?php } elseif ( isset( $array['type'] ) && 'dropdown' == $array['type'] ) { ?>
+							<?php
+							if ( isset( $array['multiple'] ) ) {
+								$multiple = 'multiple';
+								$field_id = $array['multiple'];
+							} else {
+								$multiple = '';
+								$field_id = $id;
+							}
 								
 							?>
-                        	<fieldset>
-								<select class="select select2" id="<?php echo $field_id?>" name="<?php echo $id?>" <?php echo $multiple;?>>    <?php foreach((array)$array['options'] as $key => $val ){?>
-										<?php 
-											$selected = '';
-											if( isset($array['multiple']) ){
-												if (in_array($key, (array)$this->data->$field_id ))$selected = 'selected';
-											} else {
-												if( get_option($id) == (string)$key )$selected = 'selected';
+							<fieldset>
+								<select class="select select2" id="<?php echo esc_html( $field_id ); ?>" name="<?php echo esc_html( $id ); ?>" <?php echo esc_html( $multiple ); ?>>
+									<?php
+									foreach ( (array) $array['options'] as $key => $val ) {
+										$selected = '';
+										if ( isset( $array['multiple'] ) ) {
+											if ( in_array( $key, (array) $this->data->$field_id ) ) {
+												$selected = 'selected';
 											}
+										} else {
+											if ( get_option($id) == (string) $key ) {
+												$selected = 'selected';
+											}
+										}
 										?>
-										<option value="<?php echo $key?>" <?php echo $selected?> ><?php echo $val?></option>
-                                    <?php } ?><p class="description"><?php echo (isset($array['desc']))? $array['desc']: ''?></p>
+										<option value="<?php echo esc_html( $key ); ?>" <?php echo esc_html( $selected ); ?> ><?php echo esc_html( $val ); ?></option>
+									<?php } ?><p class="description"><?php echo esc_html( ( isset( $array['desc'] ) ) ? $array['desc'] : '' ); ?></p>
 								</select> 
 								<br>
-								<?php if(isset($array['desc']) && !empty($array['desc'])){?>
-								<p class="description"><?php echo $array['desc'];?></p>
+								<?php if ( isset( $array['desc'] ) && !empty( $array['desc'] ) ) { ?>
+								<p class="description"><?php echo esc_html( $array['desc'] ); ?></p>
 								<?php } ?>
-								<?php if(isset($array['link'])){ ?>
-									<?php foreach($array['link'] as $key1 => $links) {?>
-									<strong valign="top" class="link_row <?php echo $links['class']?>">
-										<a href= "<?php echo $links['link']?>" target="_blank"><?php echo $links['title']?></a>
+								<?php if ( isset( $array['link'] ) ) { ?>
+									<?php foreach ( $array['link'] as $key1 => $links ) { ?>
+									<strong valign="top" class="link_row <?php echo esc_html( $links['class'] ); ?>">
+										<a href= "<?php echo esc_url( $links['link'] ); ?>" target="_blank"><?php echo esc_html( $links['title'] ); ?></a>
 									</strong>
 									<?php } ?>
 								<?php } ?>
 							</fieldset>
-                        <?php } elseif( $array['type'] == 'title' ){?>
-						<?php }
-						elseif( $array['type'] == 'label' ){ ?>
+						<?php } elseif ( 'title' == $array['type'] ) { ?>
+						<?php } elseif ( 'label' == $array['type'] ) { ?>
 							<fieldset>
-                               <label><?php echo $array['value']; ?></label>
-                            </fieldset>
-						
-						<?php } elseif( $array['type'] == 'radio' ){ ?>
-						
-						
-							<fieldset>
-                            	<ul>
-									<?php foreach((array)$array['options'] as $key => $val ){?>
-									<li><label class="label_product_visibility"><input name="product_visibility" value="<?php echo $key; ?>" type="radio" style="" class="product_visibility" <?php if( $product_visibility == $key ) { echo 'checked'; } ?> /><?php echo $val;?><br></label></li>
-                                    <?php } ?>
-                                 </ul>
+								<label><?php echo esc_html( $array['value'] ); ?></label>
 							</fieldset>
-						<?php } elseif( $array['type'] == 'dummyfield' ){ ?>
-                        <?php } elseif( $array['type'] == 'time' ){ ?>
+						
+						<?php } elseif ( 'radio' == $array['type'] ) { ?>
+
 							<fieldset>
-                            	<input id="time_schedule_from" name="time_schedule_from" type="text" class="time" value="<?php echo get_option('time_schedule_from');?>" /> - 
-                                <input id="time_schedule_to" name="time_schedule_to" type="text" class="time" value="<?php echo get_option('time_schedule_to');?>" />
+								<ul>
+									<?php foreach ( (array) $array['options'] as $key => $val ) { ?>
+									<li>
+										<label class="label_product_visibility"><input name="product_visibility" value="<?php echo esc_html( $key ); ?>" type="radio" style="" class="product_visibility" <?php echo $product_visibility == $key ? 'checked' : ''; ?> />
+										<?php echo esc_html( $val ); ?>
+										<br>
+										</label>
+									</li>
+									<?php } ?>
+								</ul>
 							</fieldset>
+						<?php } elseif ( 'dummyfield' == $array['type'] ) { ?>
+						<?php } elseif ( 'time' == $array['type'] ) { ?>
+					<fieldset>
+						<input id="time_schedule_from" name="time_schedule_from" type="text" class="time" value="<?php echo esc_html( get_option('time_schedule_from') ); ?>" /> - 
+						<input id="time_schedule_to" name="time_schedule_to" type="text" class="time" value="<?php echo esc_html( get_option('time_schedule_to') ); ?>" />
+					</fieldset>
 						<?php } else { ?>
-                                                    
-                        	<fieldset>
-                                <input class="input-text regular-input " type="text" name="<?php echo $id?>" id="<?php echo $id?>" style="" value="<?php echo get_option( $id, isset($array['default']) ? $array['default'] : false )?>" placeholder="<?php if(!empty($array['placeholder'])){echo $array['placeholder'];} ?>">
-								<?php if(isset($array['desc']) && !empty($array['desc'])){?>
-                                <p class="description"><?php echo (isset($array['desc']))? $array['desc']: ''?></p>
+							<fieldset>
+								<input class="input-text regular-input " type="text" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" style="" value="<?php echo esc_html( get_option( $id, isset($array['default']) ? $array['default'] : false ) ); ?>" placeholder="<?php echo !empty( $array['placeholder'] ) ? esc_html( $array['placeholder'] ) : ''; ?>">
+								<?php if ( isset( $array['desc']) && !empty($array['desc'] ) ) { ?>
+									<p class="description"><?php echo esc_html( ( isset( $array['desc'] ) )? $array['desc'] : '' ); ?></p>
 								<?php } ?>
-                            </fieldset>
-                        <?php } ?>
+							</fieldset>
+						<?php } ?>
 					</td>
 				</tr>
 	<?php } ?>
@@ -247,12 +255,12 @@ class tswc_smswoo_admin {
 	}
 	
 	/**
-     * Get the settings for sms_provider.
-     *
-     * @return array Array of settings sms_provider.
+	* Get the settings for sms_provider.
+	*
+	* @return array Array of settings sms_provider.
 	*/
-	function get_sms_provider_data() {
-        $settings = array(
+	public function get_sms_provider_data() {
+		$settings = array(
 			'title1' => array(
 				'title'			=> __( 'SMS Service Provider', 'trackship-for-woocommerce' ),
 				'type'			=> 'title',
@@ -261,7 +269,7 @@ class tswc_smswoo_admin {
 			),
 			'smswoo_sms_provider' => array(
 				'title'		=> __( 'Choose SMS Provider', 'trackship-for-woocommerce' ),
-				'desc'		=> __( "Please choose SMS provider from Dropown.", 'trackship-for-woocommerce' ),
+				'desc'		=> __( 'Please choose SMS provider from Dropown.', 'trackship-for-woocommerce' ),
 				'type'		=> 'dropdown_button',
 				'show'		=> true,
 				'id'		=> 'smswoo_sms_provider',
@@ -275,14 +283,17 @@ class tswc_smswoo_admin {
 				),
 				'link' => array(
 					'smswoo_nexmo' => array(
+						/* translators: %s: search Nexmo */
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'Nexmo' ),
 						'link' => 'https://www.zorem.com/docs/sms-for-woocommerce/sms-api-providers/nexmo/?utm_source=wp-admin&utm_medium=SMSWOO&utm_campaign=settings',
 					),
 					'smswoo_twilio' => array(
+						/* translators: %s: search Twilio */
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'Twilio' ),
 						'link' => 'https://www.zorem.com/docs/sms-for-woocommerce/sms-api-providers/twilio/?utm_source=wp-admin&utm_medium=SMSWOO&utm_campaign=settings',
 					),
 					'smswoo_clicksend' => array(
+						/* translators: %s: search ClickSend */
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'ClickSend' ),
 						'link' => 'https://www.zorem.com/docs/sms-for-woocommerce/sms-api-providers/clicksend/?utm_source=wp-admin&utm_medium=SMSWOO&utm_campaign=settings',
 					)
@@ -331,17 +342,17 @@ class tswc_smswoo_admin {
 				'class'		=> 'smswoo_sms_provider smswoo_clicksend_sms_provider',
 			),
 			'smswoo_sender_phone_number' => array(
-				'title'		=> __( "Sender phone number / Sender ID", 'trackship-for-woocommerce' ),
+				'title'		=> __( 'Sender phone number / Sender ID', 'trackship-for-woocommerce' ),
 				'desc'		=> __( 'This field appears as a from or Sender ID', 'trackship-for-woocommerce'),
 				'type'		=> 'text',
 				'show'		=> true,
 				'id'		=> 'smswoo_sender_phone_number',
 				'class'		=> 'smswoo_sms_provider smswoo_nexmo_sms_provider smswoo_twilio_sms_provider smswoo_clicksend_sms_provider', //add provider class if need this field in another provider
 			),
-        );
-		$settings = apply_filters( "smswoo_sms_provider_array", $settings );
-        return $settings;
-    }
+		);
+		$settings = apply_filters( 'smswoo_sms_provider_array', $settings );
+		return $settings;
+	}
 	
 	/*
 	* settings form save
@@ -349,133 +360,92 @@ class tswc_smswoo_admin {
 	*
 	* @since   1.0
 	*/
-	function smswoo_settings_tab_save_callback(){
+	public function smswoo_settings_tab_save_callback() {
 		
 		check_ajax_referer( 'smswoo_settings_tab', 'smswoo_settings_tab_nonce' );
 		
 		$data = $this->get_sms_provider_data();
-		foreach( $data as $key => $val ){
-			if(isset($_POST[ $key ])){
-				update_option( $key, $_POST[ $key ] );
+		foreach ( $data as $key => $val ) {
+			if ( isset($_POST[ $key ] ) ) {
+				update_option( $key, sanitize_text_field( $_POST[ $key ] ) );
 			}
 		}
 		
 		$data = $this->get_customer_tracking_status_settings();
 		
-		foreach( $data as $key => $val ){
-			if(isset($_POST[ $val['id'] ])){
+		foreach ( $data as $key => $val ) {
+			if ( isset($_POST[ $val['id'] ] ) ) {
 				
-				update_option( $val['id'], $_POST[ $val['id'] ] );
+				update_option( $val['id'], sanitize_text_field( $_POST[ $val['id'] ] ) );
 				
-				$enabled_customer = $val['id'] . "_enabled_customer";
-				$enabled_admin = $val['id'] . "_enabled_admin";
+				$enabled_customer = $val['id'] . '_enabled_customer';
+				$enabled_admin = $val['id'] . '_enabled_admin';
 				
-				update_option( $enabled_customer, $_POST[ $enabled_customer ] );
-				update_option( $enabled_admin, $_POST[ $enabled_admin ] );
-				
+				$e_customer = isset( $_POST[ $enabled_customer ] ) ? sanitize_text_field( $_POST[ $enabled_customer ] ) : '';
+				$e_admin = isset( $_POST[ $enabled_admin ] ) ? sanitize_text_field( $_POST[ $enabled_admin ] ) : '';
+				update_option( $enabled_customer, $e_customer );
+				update_option( $enabled_admin, $e_admin );
 			}
 		}
-		
-		return;
-		
-		$data = $this->get_settings_data();
-		foreach( $data as $key => $val ){
-			if(isset($_POST[ $key ])){
-				update_option( $key, $_POST[ $key ] );
-			}
-		}
-		
-		$data = $this->get_url_shortening_data();
-		foreach( $data as $key => $val ){
-			if(isset($_POST[ $key ])){
-				update_option( $key, $_POST[ $key ] );
-			}
-		}
-		
-		$data = $this->get_customer_orderstatus_settings();
-		
-		foreach( $data as $key => $val ){
-			if(isset($_POST[ $val['id'] ])){
-				update_option( $val['id'], $_POST[ $val['id'] ] );
-				
-				$enabled_id = $val['id'] . "_enabled";
-				update_option( $enabled_id, $_POST[ $enabled_id ] );
-			}
-		}
-		
-		
-		
-		$data = $this->get_admin_notification_settings();
-		foreach( $data as $key => $val ){
-			if(isset($_POST[ $val['id'] ])){
-				update_option( $val['id'], $_POST[ $val['id'] ] );
-				
-				$enabled_id = $val['id'] . "_enabled";
-				update_option( $enabled_id, $_POST[ $enabled_id ] );
-			}
-		}
-		
-		echo json_encode( array('success' => 'true') );die();
+		echo json_encode( array('success' => 'true') );
+		die();
 	}
 	
 	/*
 	*
 	*/
-	public function shipment_status_notification_tab(){
-		echo $this->build_html( "shipment_status_sms_tab" );
+	public function shipment_status_notification_tab() {
+		$this->build_html( 'shipment_status_sms_tab', null, true );
 	}
 	
 	/*
 	* get html of fields
 	*/
-	public function get_shipment_template_html( $arrays ){
+	public function get_shipment_template_html( $arrays ) {
 		$checked = '';
 		?>
 		<div class="smswoo-container">
-        	<?php foreach( (array)$arrays as $id => $array ){
-				$enabled_customer = $array['id'] . "_enabled_customer";
-				$enabled_admin = $array['id'] . "_enabled_admin";
+			<?php 
+			foreach ( (array) $arrays as $id => $array ) {
+				$enabled_customer = $array['id'] . '_enabled_customer';
+				$enabled_admin = $array['id'] . '_enabled_admin';
 				  
 				$checked_customer = get_option( $enabled_customer );
 				$checked_admin = get_option( $enabled_admin );
 				?>
-				<div class="smswoo-row smswoo-shipment-row <?php echo ( $checked_customer ) ? 'enable_customer' : ''?> <?php echo ( $checked_admin ) ? 'enable_admin' : ''?>">
-                	<div class="smswoo-top">
-                    	<div class="smswoo-top-click"></div>
-                        <div>
-                            <span class="smswoo-inlineblock">
-                                <input type="hidden" name="<?php echo $enabled_customer?>" value="0"/>
-                                <input type="checkbox" id="<?php echo $enabled_customer?>" name="<?php echo $enabled_customer?>" class="tgl tgl-flat smswoo-shipment-checkbox" value="1" <?php echo $checked_customer ? 'checked' : ''?> data-row_class="enable_customer" />
-                                <label class="tgl-btn" for="<?php echo $enabled_customer?>"></label>
-                            </span>
-                            <span class="smswoo-label <?php echo $array['id']?>"><?php echo $array['label'];?></span>
-                        </div>
-                        <span class="smswoo-right smswoo-mr20 smswoo-shipment-sendto">
-                        	<span class="smswoo-shipment-sendto-customer btn_ts_transparent btn_outline"><?php echo __( 'Customize', 'trackship-for-woocommerce' )?></span>
-                            <button name="save" class="button-primary woocommerce-save-button button-smswoo hide button-trackship" type="submit" value="Save changes"><?php echo __( 'Save & Close', 'trackship-for-woocommerce' )?></button>
-                        </span>
-                    </div>
-                    <div class="smswoo-bottom">
-                        <div class="smswoo-ast-textarea">
-                            <div class="smawoo-textarea-placeholder">
-                                <textarea class="smswoo-textarea" name="<?php echo $array['id']?>" id="<?php echo $array['id']?>" cols="30" rows="5"><?php echo get_option( $array['id'], $array['default'] )?></textarea>
-                                <span class="mdl-list__item-secondary-action smswoo-inlineblock">
-                                <label class="mdl-switch " for="<?php echo $enabled_admin?>" >
-                                    <?php echo __( 'Send to admin', 'trackship-for-woocommerce' )?>
-                                    <input type="hidden" name="<?php echo $enabled_admin?>" value="0"/>
-                                    <input type="checkbox" id="<?php echo $enabled_admin?>" name="<?php echo $enabled_admin?>" class="mdl-switch__input smswoo-shipment-checkbox" value="1" <?php echo $checked_admin ? 'checked' : ''?> data-row_class="enable_admin" />
+				<div class="smswoo-row smswoo-shipment-row <?php echo esc_html( $checked_customer ? 'enable_customer' : '' ); ?> <?php echo esc_html( $checked_admin ? 'enable_admin' : '' ); ?>">
+					<div class="smswoo-top">
+						<div class="smswoo-top-click"></div>
+						<div>
+							<span class="smswoo-inlineblock">
+								<input type="hidden" name="<?php echo esc_html( $enabled_customer ); ?>" value="0"/>
+								<input type="checkbox" id="<?php echo esc_html( $enabled_customer ); ?>" name="<?php echo esc_html( $enabled_customer ); ?>" class="tgl tgl-flat smswoo-shipment-checkbox" value="1" <?php echo esc_html( $checked_customer ? 'checked' : '' ); ?> data-row_class="enable_customer" />
+								<label class="tgl-btn" for="<?php echo esc_html( $enabled_customer ); ?>"></label>
+							</span>
+							<span class="smswoo-label <?php echo esc_html( $array['id'] ); ?>"><?php echo esc_html( $array['label'] ); ?></span>
+						</div>
+						<span class="smswoo-right smswoo-mr20 smswoo-shipment-sendto">
+							<button type="button" class="smswoo-shipment-sendto-customer btn_ts_transparent btn_outline"><?php esc_html_e( 'Customize', 'trackship-for-woocommerce' ); ?></span>
+							<button name="save" class="button-primary woocommerce-save-button button-smswoo hide button-trackship" type="submit" value="Save changes"><?php esc_html_e( 'Save & Close', 'trackship-for-woocommerce' ); ?></button>
+						</span>
+					</div>
+					<div class="smswoo-bottom">
+						<div class="smswoo-ast-textarea">
+							<div class="smawoo-textarea-placeholder">
+								<textarea class="smswoo-textarea" name="<?php echo esc_html( $array['id'] ); ?>" id="<?php echo esc_html( $array['id'] ); ?>" cols="30" rows="5"><?php echo esc_html( get_option( $array['id'], $array['default'] ) ); ?></textarea>
+								<span class="mdl-list__item-secondary-action smswoo-inlineblock">
+								<label class="mdl-switch " for="<?php echo esc_html( $enabled_admin ); ?>" >
+									<?php esc_html_e( 'Send to admin', 'trackship-for-woocommerce' ); ?>
+									<input type="hidden" name="<?php echo esc_html( $enabled_admin ); ?>" value="0"/>
+									<input type="checkbox" id="<?php echo esc_html( $enabled_admin ); ?>" name="<?php echo esc_html( $enabled_admin ); ?>" class="mdl-switch__input smswoo-shipment-checkbox" value="1" <?php echo esc_html( $checked_admin ? 'checked' : '' ); ?> data-row_class="enable_admin" />
 								</label>
-                            </span>
-                            </div>
-                            <div class="zorem_plugin_sidebar smswoo_sidebar">
-                                <?php echo $this->build_html( "plugin_sidebar_placeholders" );?>
-                            </div>
-                        </div>    
-                        <div>
-                            	
-                        </div>
-                    </div>
-					<?php //echo '<pre>';print_r($array);echo '</pre>';?>
+								</span>
+								</div>
+								<div class="zorem_plugin_sidebar smswoo_sidebar">
+								<?php $this->build_html( 'plugin_sidebar_placeholders', null, true ); ?>
+							</div>
+						</div>  
+					</div>
 				</div>
 			<?php } ?>
 		</div>
@@ -487,7 +457,7 @@ class tswc_smswoo_admin {
 	*
 	* @since   1.0
 	*/
-	function get_customer_tracking_status_settings() {
+	public function get_customer_tracking_status_settings() {
 		
 		$tracking_status = array(
 			'in_transit'			=> __( 'In Transit', 'trackship-for-woocommerce' ),
@@ -501,7 +471,7 @@ class tswc_smswoo_admin {
 		);
 				
 		// Display a textarea setting for each available order status
-		foreach( $tracking_status as $slug => $label ) {
+		foreach ( $tracking_status as $slug => $label ) {
 
 			$slug = 'wc-' === substr( $slug, 0, 3 ) ? substr( $slug, 3 ) : $slug;
 
@@ -513,7 +483,7 @@ class tswc_smswoo_admin {
 				'default'	=> "Hi, Your order no %order_id% on %shop_name% is now {$label}.",
 			];
 		}
-        return $settings;
-    }
+		return $settings;
+	}
 	
 }

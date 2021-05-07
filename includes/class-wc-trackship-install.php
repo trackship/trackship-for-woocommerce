@@ -8,7 +8,7 @@ class WC_Trackship_Install {
 	/**
 	 * Initialize the main plugin function
 	*/
-    public function __construct() {
+	public function __construct() {
 		global $wpdb;
 		$this->table = $wpdb->prefix . 'trackship_shipping_provider';
 		if ( is_multisite() ) {
@@ -22,7 +22,7 @@ class WC_Trackship_Install {
 				$this->table = $wpdb->prefix . 'trackship_shipping_provider';
 			}
 		} else {
-			$this->table = $wpdb->prefix . "trackship_shipping_provider";	
+			$this->table = $wpdb->prefix . 'trackship_shipping_provider';	
 		}
 		$this->init();			
 	}
@@ -70,7 +70,7 @@ class WC_Trackship_Install {
 
 				global $wpdb;
 				$woo_ts_shipment_table_name = $this->table;
-				if ( !$wpdb->query( $wpdb->prepare( "show tables like %s", $woo_ts_shipment_table_name ) ) ) {
+				if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_ts_shipment_table_name ) ) ) {
 					$charset_collate = $wpdb->get_charset_collate();			
 					$sql = "CREATE TABLE $woo_ts_shipment_table_name (
 						id mediumint(9) NOT NULL AUTO_INCREMENT,
@@ -93,7 +93,7 @@ class WC_Trackship_Install {
 	}
 	
 	/**
-	 * get providers list from trackship and update providers in database
+	 * Get providers list from trackship and update providers in database
 	*/
 	public function update_shipping_providers() {
 		global $wpdb;		
@@ -102,16 +102,16 @@ class WC_Trackship_Install {
 				
 		if ( is_array( $resp ) && ! is_wp_error( $resp ) ) {
 		
-			$providers = json_decode($resp['body'],true);
+			$providers = json_decode($resp['body'], true);
 			
 			$providers_name = array();
 			
-			$default_shippment_providers = $wpdb->get_results( "SELECT * FROM $this->table" );			
-			foreach ( $default_shippment_providers as $key => $val ){
+			$default_shippment_providers = $wpdb->get_results( 'SELECT * FROM $this->table' );			
+			foreach ( $default_shippment_providers as $key => $val ) {
 				$shippment_providers[ $val->provider_name ] = $val;						
 			}
 
-			foreach ( $providers as $key => $val ){
+			foreach ( $providers as $key => $val ) {
 				$providers_name[ $val[ 'provider_name' ] ] = $val;						
 			}					
 			

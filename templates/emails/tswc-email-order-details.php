@@ -26,13 +26,15 @@ do_action( 'wcast_email_before_order_table', $order, $sent_to_admin, $plain_text
 
 $table_font_size = '';
 $kt_woomail = get_option( 'kt_woomail' );
-if( !empty($kt_woomail) && isset( $kt_woomail['font_size'] ) )$table_font_size = 'font-size:'.$kt_woomail['font_size'].'px';	
+if ( !empty($kt_woomail) && isset( $kt_woomail['font_size'] ) ) {
+	$table_font_size = 'font-size:' . $kt_woomail['font_size'] . 'px';
+}
 
 ?>
 <br>
-<h2><?php _e( 'Items in this shipment', 'trackship-for-woocommerce' );?></h2>
+<h2><?php esc_html_e( 'Items in this shipment', 'trackship-for-woocommerce' ); ?></h2>
 <div style="margin-bottom: 20px;">
-		<table class="td" cellspacing="0" cellpadding="6" style="background-color: transparent;width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;border:0;<?php echo $table_font_size; ?>" border="0">
+		<table class="td" cellspacing="0" cellpadding="6" style="background-color: transparent;width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;border:0;<?php echo esc_html( $table_font_size ); ?>" border="0">
 			<tbody>
 				<?php
 				foreach ( $order->get_items() as $item_id => $item ) :
@@ -50,13 +52,15 @@ if( !empty($kt_woomail) && isset( $kt_woomail['font_size'] ) )$table_font_size =
 				
 					?>
 					<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_order_item_class', 'order_item', $item, $order ) ); ?>">
-                        <td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;border-left:0;border:0;border-bottom:1px solid #e0e0e0;padding: 12px 5px;width: 70px;">
-                            <?php echo wp_kses_post( apply_filters( 'woocommerce_order_item_thumbnail', $image, $item ) ); ?>
-                        </td>
+						<td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;border-left:0;border:0;border-bottom:1px solid #e0e0e0;padding: 12px 5px;width: 70px;">
+							<?php echo wp_kses_post( apply_filters( 'woocommerce_order_item_thumbnail', $image, $item ) ); ?>
+						</td>
 						<td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;border-left:0;border:0;border-bottom:1px solid #e0e0e0;padding: 12px 5px;">
-							<?php
-							// Product name.
-							echo wp_kses_post( apply_filters( 'woocommerce_order_item_name', $item->get_name(), $item, false ) ); echo ' x '; echo $qty = $item->get_quantity(); 
+							<?php 
+							$qty = $item->get_quantity();
+							echo wp_kses_post( apply_filters( 'woocommerce_order_item_name', $item->get_name(), $item, false ) );
+							echo ' x ';
+							echo esc_html( $qty ); 
 							// allow other plugins to add additional product information here.
 							do_action( 'woocommerce_order_item_meta_start', $item_id, $item, $order, $plain_text );
 					

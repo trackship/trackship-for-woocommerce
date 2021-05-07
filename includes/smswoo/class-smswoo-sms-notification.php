@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class tswc_smswoo_sms_notification {
+class TSWC_SMSWoo_SMS_Notification {
 	
 	/**
 	 * Instance of this class.
@@ -12,30 +12,14 @@ class tswc_smswoo_sms_notification {
 	*/
 	private static $instance;
 	
-	/**
-	 * @var sms_gateway SMS gateway
-	 * not in use, remove in future
-	*/
 	private $sms_gateway;
 	
-	/**
-	 * @var string country code
-	 */
 	private $_country_code;
 	
-	/**
-	 * @var string SMS type
-	 */
 	private $_sms_type;
 	
-	/**
-	 * @var boolean SMS is for customer
-	 */
 	public $_customer_sms = false;
 	
-	/**
-	 * @var integer SMS length
-	 */
 	public $_sms_length = 160;
 	
 	/**
@@ -56,7 +40,7 @@ class tswc_smswoo_sms_notification {
 	public static function get_instance() {
 
 		if ( null === self::$instance ) {
-			self::$instance = new self;
+			self::$instance = new self();
 		}
 
 		return self::$instance;
@@ -67,13 +51,13 @@ class tswc_smswoo_sms_notification {
 	 *
 	 * @since  1.0
 	*/
-	public function init(){
+	public function init() {
 		
 		//TrackShip support 
 		add_action( 'ast_trigger_ts_status_change', array( $this, 'trigger_sms_on_shipment_status_change' ), 20, 5 );
 		
 		//AST support for order status sms
-		add_filter( "smswoo_sms_message_replacements", array( $this, 'ast_order_variable_support' ), 10, 2 );
+		add_filter( 'smswoo_sms_message_replacements', array( $this, 'ast_order_variable_support' ), 10, 2 );
 		
 	}
 		
@@ -114,40 +98,40 @@ class tswc_smswoo_sms_notification {
 		 *     @type string %billing_name%    The billing first and last name.
 		 *     @type string %shipping_name%   The shipping first and last name.
 		 *     @type string %shipping_method% The shipping method name.
-	 	 * }
+		* }
 		 */
 		$replacements = apply_filters( 'smswoo_sms_message_replacements', $replacements, $this );
 
 		return str_replace( array_keys( $replacements ), $replacements, $message );
 	}
 	
-	public function ast_order_variable_support( $replacements, $object ){
+	public function ast_order_variable_support( $replacements, $object ) {
 		
-		if( trackship_for_woocommerce()->is_ast_active() ){
+		if ( trackship_for_woocommerce()->is_ast_active() ) {
 			
 			$ast = WC_Advanced_Shipment_Tracking_Actions::get_instance();
 			$tracking_items = $ast->get_tracking_items( $object->order->get_id(), true );
 			
 			$tracking_number = array_column($tracking_items, 'tracking_number');
-			$replacements[ '%tracking_number%' ] = implode( ", ", $tracking_number );
+			$replacements[ '%tracking_number%' ] = implode( ', ', $tracking_number );
 			
 			$tracking_provider = array_column($tracking_items, 'formatted_tracking_provider');
-			$replacements[ '%tracking_provider%' ] = implode( ", ", $tracking_provider );
+			$replacements[ '%tracking_provider%' ] = implode( ', ', $tracking_provider );
 			
 			$tracking_link = array_column($tracking_items, 'formatted_tracking_link');
-			$replacements[ '%tracking_link%' ] = implode( ", ", $tracking_link );
+			$replacements[ '%tracking_link%' ] = implode( ', ', $tracking_link );
 			
 		}
 		
-		if( trackship_for_woocommerce()->is_trackship_connected() ){
+		if ( trackship_for_woocommerce()->is_trackship_connected() ) {
 			
-			$shipment_status = get_post_meta( $object->order->get_id(), "shipment_status", array() );
+			$shipment_status = get_post_meta( $object->order->get_id(), 'shipment_status', array() );
 			
-			$status = array_column( (array)$shipment_status, 'status');
-			$replacements[ '%shipment_status%' ] = implode( ", ", $status );
+			$status = array_column( (array) $shipment_status, 'status' );
+			$replacements[ '%shipment_status%' ] = implode( ', ', $status );
 			
-			$est_delivery_date = array_column( (array)$shipment_status, 'est_delivery_date');
-			$replacements[ '%est_delivery_date%' ] = implode( ", ", $est_delivery_date );
+			$est_delivery_date = array_column( (array) $shipment_status, 'est_delivery_date' );
+			$replacements[ '%est_delivery_date%' ] = implode( ', ', $est_delivery_date );
 
 		}
 		
@@ -170,7 +154,9 @@ class tswc_smswoo_sms_notification {
 		$bool = apply_filters( 'smswoo_timeschedule', false, $this, $phone, $message );
 		
 		//retun if sms is scheduled
-		if( $bool )return;
+		if ( $bool ) {
+			return;
+		}
 		
 		$timestamp   = time();
 		
@@ -226,9 +212,9 @@ class tswc_smswoo_sms_notification {
 			ob_start();
 			?>
 			SMSWoo
-			<?php _e( 'Status', 'trackship-for-woocommerce' ); ?>: <?php echo esc_html( $status_message ); ?>
+			<?php esc_html_e( 'Status', 'trackship-for-woocommerce' ); ?>: <?php echo esc_html( $status_message ); ?>
 			<br />
-			<?php _e( 'Content', 'trackship-for-woocommerce' ); ?>: <?php echo esc_html( $message ); ?>
+			<?php esc_html_e( 'Content', 'trackship-for-woocommerce' ); ?>: <?php echo esc_html( $message ); ?>
 			<?php
 
 			$this->order_note['text'] = ob_get_clean();
@@ -245,13 +231,12 @@ class tswc_smswoo_sms_notification {
 	 *
 	 * @since   1.0
 	 *
-	 *
 	 * @return  string provider class
 	 */
-	function get_sms_provider(){
+	public function get_sms_provider() {
 		
-		if( empty( $this->_sms_gateway )  ) {
-			$this->_sms_gateway  = get_option( 'smswoo_sms_provider' );
+		if ( empty( $this->_sms_gateway )  ) {
+			$this->_sms_gateway  = strtoupper( get_option( 'smswoo_sms_provider' ) );
 		}
 		
 		return $this->_sms_gateway;
@@ -265,7 +250,7 @@ class tswc_smswoo_sms_notification {
 	 *
 	 *
 	 */
-	function trigger_sms_on_shipment_status_change( $order_id, $old_status, $new_status, $tracking_item, $shipment_status ){
+	public function trigger_sms_on_shipment_status_change( $order_id, $old_status, $new_status, $tracking_item, $shipment_status ) {
 		$this->order = wc_get_order( $order_id );
 		
 		$logger = wc_get_logger();
@@ -274,7 +259,6 @@ class tswc_smswoo_sms_notification {
 		
 		// Check if sending SMS updates for this order's status
 		if ( get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_customer' ) || get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_admin' ) ) {
-			
 			//$logger->log( 'debug', 'Sms will be sent', $context );
 			
 			// get message template
@@ -301,7 +285,7 @@ class tswc_smswoo_sms_notification {
 			$message = apply_filters( 'smswoo_customer_sms_send', $message, $this->order );
 
 			// send the SMS to customer!
-			if ( get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_customer' ) && $this->user_subscribed_sms( $order_id ) ){
+			if ( get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_customer' ) && $this->user_subscribed_sms( $order_id ) ) {
 				
 				// allow modification of the "to" phone number
 				$phone = apply_filters( 'smswoo_sms_customer_phone', $this->order->get_billing_phone( 'edit' ), $this->order );
@@ -310,7 +294,7 @@ class tswc_smswoo_sms_notification {
 			}
 			
 			// send the SMS to admin!
-			if ( get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_admin' ) ){
+			if ( get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_admin' ) ) {
 				
 				// allow modification of the "to" phone number
 				$phone = apply_filters( 'smswoo_sms_customer_admin', get_option( 'smswoo_admin_phone_number' ), $this->order );
@@ -624,7 +608,7 @@ class tswc_smswoo_sms_notification {
 	 */
 	private function format_phone_number( $phone ) {
 
-		if ( $this->_calling_code == '' ) {
+		if ( '' == $this->_calling_code ) {
 			return apply_filters( 'smswoo_format_phone_number', $phone, $this->_calling_code );
 		}
 
@@ -637,7 +621,7 @@ class tswc_smswoo_sms_notification {
 			$phone = $this->country_special_cases( $phone );
 
 			// Check if number has country code
-			if ( $this->_calling_code != substr( $phone, 0, strlen( $this->_calling_code ) ) ) {
+			if ( substr( $phone, 0, strlen( $this->_calling_code ) != $this->_calling_code ) ) {
 
 				$phone = $this->_calling_code . $phone;
 			}
@@ -648,7 +632,7 @@ class tswc_smswoo_sms_notification {
 		$phone = preg_replace( '[\D]', '', $phone );
 
 		// Check if the number starts with the expected country code, remove any zero which immediately follows the country code.
-		if ( $this->_calling_code == substr( $phone, 0, strlen( $this->_calling_code ) ) ) {
+		if ( substr( $phone, 0, strlen( $this->_calling_code == $this->_calling_code ) ) ) {
 			$phone = preg_replace( "/^{$this->_calling_code}(\s*)?0/", $this->_calling_code, $phone );
 		}
 
@@ -670,11 +654,9 @@ class tswc_smswoo_sms_notification {
 		switch ( $this->_country_code ) {
 
 			case 'IT':
+				//In Italy, the telephone prefixes released by "H3G" operator have the first two digits equal to the Italian international prefix.
+				//If the customer has entered the number without the country code, the sending of SMS can fail because of this similarity
 
-				/**
-				 * in Italy, the telephone prefixes released by "H3G" operator have the first two digits equal to the Italian international prefix.
-				 * If the customer has entered the number without the country code, the sending of SMS can fail because of this similarity
-				 */
 				if ( strlen( $phone ) <= apply_filters( 'smswoo_italian_numbers_length', 10 ) ) {
 
 					$mobile_prefixes = apply_filters( 'smswoo_italian_prefixes', array( '390', '391', '392', '393', '397' ) );
@@ -690,11 +672,8 @@ class tswc_smswoo_sms_notification {
 				break;
 
 			case 'NO':
-
-				/**
-				 * in Norway, the newer telephone prefixes have the first two digits equal to the Norwegian international prefix.
-				 * If the customer has entered the number without the country code, the sending of SMS can fail because of this similarity
-				 */
+				/* In Norway, the newer telephone prefixes have the first two digits equal to the Norwegian international prefix.
+				If the customer has entered the number without the country code, the sending of SMS can fail because of this similarity */
 				if ( strlen( $phone ) <= apply_filters( 'smswoo_norwegian_numbers_length', 8 ) ) {
 
 					$mobile_prefixes = apply_filters( 'smswoo_norwegian_prefixes', array( '47' ) );
