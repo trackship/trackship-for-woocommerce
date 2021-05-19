@@ -1,16 +1,15 @@
 <?php
 /**
  * Plugin Name: TrackShip for WooCommerce 
- * Plugin URI: https://www.zorem.com
  * Description: Add shipment tracking information to your WooCommerce orders and provide customers with an easy way to track their orders. Shipment tracking Info will appear in customers accounts (in the order panel) and in WooCommerce order complete email. 
- * Version: 0.6.1
- * Author: zorem
- * Author URI: https://www.zorem.com 
+ * Version: 1.0
+ * Author: TrackShip
+ * Author URI: https://trackship.info/
  * License: GPL-2.0+
  * License URI: 
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
- * WC tested up to: 5.1
+ * WC tested up to: 5.3
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -24,39 +23,46 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '0.6.1';
+	public $version = '1.0';
 	
 	/**
 	 * Initialize the main plugin function
 	*/
 	public function __construct() {
 		
-		$this->plugin_file = __FILE__;							
-		
-		if ( $this->is_wc_active() ) {						
-			
-			// Include required files.
-			$this->includes();
-			
-			// Init REST API.
-			$this->init_rest_api();
-			
-			//start adding hooks
-			$this->init();
-
-			//admin class init
-			$this->ts_actions->init();			
-			
-			//admin class init
-			$this->admin->init();
-			
-			//lat shipments class init
-			$this->late_shipments->init();
-			
-			//plugin install class init
-			$this->ts_install->init();
-			
+		if ( ! $this->is_wc_active() ) {
+			add_action( 'admin_notices', array( $this, 'notice_activate_wc' ) );
+			return;
 		}
+		
+		if ( ! $this->is_ast_active() && ! $this->is_st_active() ) {
+			add_action( 'admin_notices', array( $this, 'notice_activate_ast' ) );
+			return;
+		}
+		
+		// WC & AST/ST are active
+			
+		// Include required files.
+		$this->includes();
+		
+		// Init REST API.
+		$this->init_rest_api();
+		
+		//start adding hooks
+		$this->init();
+
+		//admin class init
+		$this->ts_actions->init();			
+		
+		//admin class init
+		$this->admin->init();
+		
+		//lat shipments class init
+		$this->late_shipments->init();
+		
+		//plugin install class init
+		$this->ts_install->init();
+			
 	}
 	
 	/**
@@ -74,12 +80,6 @@ class Trackship_For_Woocommerce {
 			$is_active = true;
 		} else {
 			$is_active = false;
-		}
-		
-
-		// Do the WC active check
-		if ( false === $is_active ) {
-			add_action( 'admin_notices', array( $this, 'notice_activate_wc' ) );
 		}		
 		return $is_active;
 	}
@@ -94,6 +94,20 @@ class Trackship_For_Woocommerce {
 		<div class="error">
 			<?php /* translators: %s: search for a tag */ ?>
 			<p><?php printf( esc_html__( 'Please install and activate %1$sWooCommerce%2$s for TrackShip for WooCommerce!', 'trackship-for-woocommerce' ), '<a href="' . esc_url( admin_url( 'plugin-install.php?tab=search&s=WooCommerce&plugin-search-input=Search+Plugins' ) ) . '">', '</a>' ); ?></p>
+		</div>
+		<?php
+	}
+	
+	/**
+	 * Display AST active notice
+	 *
+	 * @since  1.0.0
+	*/
+	public function notice_activate_ast() {
+		?>
+		<div class="error">
+			<?php /* translators: %s: search for a tag */ ?>
+			<p><?php printf( esc_html__( 'Please install and activate %1$sAST%2$s for TrackShip for WooCommerce!', 'trackship-for-woocommerce' ), '<a href="' . esc_url( admin_url( 'plugin-install.php?tab=search&s=AST&plugin-search-input=Search+Plugins' ) ) . '">', '</a>' ); ?></p>
 		</div>
 		<?php
 	}
@@ -175,25 +189,6 @@ class Trackship_For_Woocommerce {
 		$this->late_shipments = WC_TrackShip_Late_Shipments::get_instance();
 
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-api-call.php';
-		
-		if ( ! function_exists( 'SMSWOO' ) ) {
-			//SMSWOO
-			require_once $this->get_plugin_path() . '/includes/smswoo/class-smswoo-init.php';
-			$this->smswoo_init = TSWC_SMSWOO_Init::get_instance();
-		}
-		
-		//license
-		require_once $this->get_plugin_path() . '/includes/class-tswc-license.php';
-		$this->license = TSWC_License::get_instance();
-				
-		//update-manager
-		require_once $this->get_plugin_path() . '/includes/class-tswc-update-manager.php';
-		new TSWC_Update_Manager(
-			$this->version,
-			'trackship-for-woocommerce/trackship-for-woocommerce.php',
-			$this->license->get_item_code()
-		);
-		
 	}
 	
 	/**
@@ -281,7 +276,7 @@ class Trackship_For_Woocommerce {
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		}
 		
-		if ( class_exists( 'zorem_woocommerce_advanced_shipment_tracking' ) ) {
+		if ( is_plugin_active( 'woo-advanced-shipment-tracking/woocommerce-advanced-shipment-tracking.php' ) ) {
 			$is_active = true;
 		} else {
 			$is_active = false;
@@ -302,7 +297,7 @@ class Trackship_For_Woocommerce {
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		}
 		
-		if ( class_exists( 'WC_Shipment_Tracking' ) ) {
+		if ( is_plugin_active( 'woocommerce-shipment-tracking/woocommerce-shipment-tracking.php' ) ) {
 			$is_active = true;
 		} else {
 			$is_active = false;

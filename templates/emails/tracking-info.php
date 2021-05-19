@@ -19,7 +19,8 @@ if ( $tracking_items ) :
 		<div class="tracking_list">
 			<?php foreach ( $tracking_items as $key => $tracking_item ) { ?>
 				<?php
-					$ship_status = isset( $shipment_status[ $key ][ 'status' ] ) ? $shipment_status[ $key ][ 'status' ] : false;
+					//$ship_status = isset( $shipment_status[ $key ][ 'status' ] ) ? $shipment_status[ $key ][ 'status' ] : false;
+					$ship_status = $new_status;
 					$tracking_link = isset( $shipment_status[ $key ][ 'tracking_page' ] ) ? $shipment_status[ $key ][ 'tracking_page' ] : $tracking_item[ 'formatted_tracking_link' ];
 					do_action( 'before_tracking_widget_email', $tracking_item, $order_id );
 				?>
