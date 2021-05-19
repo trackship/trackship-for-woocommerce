@@ -23,10 +23,6 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 'd
 							'label'	=> __( 'Notifications', 'trackship-for-woocommerce' ),
 							'slug'	=> 'notifications'
 						),
-						array(
-							'label'	=> __( 'License', 'trackship-for-woocommerce' ),
-							'slug'	=> 'license'
-						),
 					);
 					?>
 				<?php foreach ( $array as $key => $val ) { ?>
