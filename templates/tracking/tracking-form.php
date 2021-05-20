@@ -13,7 +13,7 @@
 		<p class="form-row form-row-last"><label for="order_email"><?php esc_html_e( apply_filters( 'ast_tracking_page_front_order_email_label', __( 'Order Email', 'trackship-for-woocommerce' ) ) ); ?></label> <input class="input-text" type="text" name="order_email" id="order_email" value="" placeholder="<?php esc_html_e( 'Found in your order confirmation email.', 'trackship-for-woocommerce' ); ?>"></p>				
 		<div class="clear"></div>
 		<input type="hidden" name="action" value="get_tracking_info">
-		<p class="form-row"><button type="submit" class="button" name="track" value="Track"><?php esc_html_e( apply_filters( 'ast_tracking_page_front_track_label', __( 'Track', 'trackship-for-woocommerce' ) ) ); ?></button></p>
+		<p class="form-row"><button type="submit" class="button btn btn-secondary" name="track" value="Track"><?php esc_html_e( apply_filters( 'ast_tracking_page_front_track_label', __( 'Track', 'trackship-for-woocommerce' ) ) ); ?></button></p>
 		<div class="track_fail_msg" style="display:none;color: red;"></div>
 		<?php wp_nonce_field( 'tracking_form' ); ?>
 	</form>

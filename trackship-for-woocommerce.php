@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: TrackShip for WooCommerce 
- * Description: Add shipment tracking information to your WooCommerce orders and provide customers with an easy way to track their orders. Shipment tracking Info will appear in customers accounts (in the order panel) and in WooCommerce order complete email. 
- * Version: 1.0
+ * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers. 
+ * Version: 1.0.1
  * Author: TrackShip
  * Author URI: https://trackship.info/
  * License: GPL-2.0+
@@ -23,7 +23,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.0';
+	public $version = '1.0.1';
 	
 	/**
 	 * Initialize the main plugin function
