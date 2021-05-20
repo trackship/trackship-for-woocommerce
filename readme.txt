@@ -4,7 +4,7 @@ Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 5.3
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -72,11 +72,12 @@ TrackShip will track orders when you add tracking numbers using one of the follo
 
 == Integrations  ==
 
-* [SMS for WooCommerce](https://www.zorem.com/product/sms-for-woocommerce/) - send Automatic SMS updates via Twilio, Nexmo or ClickSend
-* Custom Order Numbers plugins - tracking page display and order numbers on TrackShip account.
-* Custom Order Statuses plugins - select any order status to trigger the automatic tracking
-* [Checkout for WooCommerce](https://www.checkoutwc.com/) - display the tracking page widget on the order received and view order pages.
-* [AutomateWoo](https://woocommerce.com/products/automatewoo?aff=4780/) and any other marketing automation (you can use the Delivered order status fior marketing automation)
+[SMS for WooCommerce](https://trackship.info/docs/trackship-for-woocommerce/compatibility/sms-for-woocommerce/) - Send automatic SMS updates for shipment status & delivery via Twilio, Nexmo or ClickSend.
+[Checkout for WooCommerce](https://trackship.info/docs/trackship-for-woocommerce/compatibility/checkoutwc/) - Add Tracking Page widget to the Order received page when its set to be the view order page
+[AutomateWoo](https://trackship.info/docs/trackship-for-woocommerce/compatibility/automatewoo/) - use the "Delivered" custom order status to trigger marketing automation based on the order delivery date.
+
+== Documentation ==
+Check out TrackShip for WooCommerce [documentation](https://trackship.info/docs/trackship-for-woocommerce/) for more details on how to set up and work with TrackShip
 
 == Frequently Asked Questions ==
 = I connected my store but the shipment status is not showing for my orders
@@ -108,5 +109,9 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 
 
 == Changelog ==
+= 1.0.1 =
+* Dev - translations updated.
+* Improvement - tracking-form css updates.
+
 = 1.0 =
 * Initial version.
