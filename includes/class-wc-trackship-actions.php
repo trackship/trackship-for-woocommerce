@@ -49,7 +49,7 @@ class WC_Trackship_Actions {
 		add_action( 'wp_ajax_trackship_tracking_page_form_update', array( $this, 'trackship_tracking_page_form_update_callback' ) );
 		add_action( 'wp_ajax_ts_late_shipments_email_form_update', array( $this, 'ts_late_shipments_email_form_update_callback' ) );
 		
-		$api_enabled = get_option( 'wc_ast_api_enabled', 0);
+		$api_enabled = get_option( 'wc_ast_api_enabled', 0 );
 		
 		if ( true == $api_enabled ) {
 			//add Shipment status column after tracking
@@ -97,18 +97,27 @@ class WC_Trackship_Actions {
 		add_action( 'fix_shipment_tracking_for_deleted_tracking', array( $this, 'func_fix_shipment_tracking_for_deleted_tracking' ), 10, 3 );
 				
 		add_action( 'admin_footer', array( $this, 'footer_function'), 1 );
-
-		// trigger Trackship for spacific order
-		add_action( 'woocommerce_order_status_changed', array( $this, 'schedule_when_order_status_changed' ), 10, 3 );
+		
+		// if trackship is connected
+		if ( ! $this->get_trackship_key() ) {
+			return;
+		}
 		
 		//filter in shipped orders
 		add_filter( 'is_order_shipped', array( $this, 'check_order_status' ), 5, 2 );
 		add_filter( 'is_order_shipped', array( $this, 'check_tracking_exist' ), 10, 2 );
 		
-		add_action( 'wcast_retry_trackship_apicall', array( $this, 'trigger_trackship_apicall' ) );
-		
 		// CSV / manually
 		add_action( 'send_order_to_trackship', array( $this, 'schedule_while_adding_tracking' ), 10, 1 );
+		
+		//run cron action
+		add_action( 'wcast_retry_trackship_apicall', array( $this, 'trigger_trackship_apicall' ) );
+		
+		$valid_order_statuses = get_option( 'trackship_trigger_order_statuses', array() );
+		foreach( $valid_order_statuses as $order_status ){
+			// trigger Trackship for spacific order
+			add_action( 'woocommerce_order_status_' . $order_status, array( $this, 'schedule_when_order_status_changed' ), 8, 2 );
+		}
 	}
 	
 	/**
@@ -1388,8 +1397,8 @@ class WC_Trackship_Actions {
 	 * order status change
 	 * schedule to trigger trackship
 	*/
-	public function schedule_when_order_status_changed( $order_id, $old_status, $new_status ) {
-		$this->schedule_trackship_trigger( $order_id );
+	public function schedule_when_order_status_changed( $order_id, $order ) {
+		$this->trigger_trackship_apicall( $order_id );
 	}
 	
 	/*
@@ -1564,8 +1573,7 @@ class WC_Trackship_Actions {
 	 *
 	 */
 	public function get_trackship_key() {
-		$wc_ast_api_key = get_option( 'wc_ast_api_key' );
+		$wc_ast_api_key = get_option( 'wc_ast_api_key', false );
 		return $wc_ast_api_key;
 	}
-
 }

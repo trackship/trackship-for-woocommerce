@@ -78,8 +78,40 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			),
 			'schema' => array( $this, 'get_public_item_schema' ),
 		) );
-	}		
+		
+		//tswc_status
+		register_rest_route( $this->namespace, '/tswc_status', array(			
+			array(
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'tswc_status' ),
+				'permission_callback' => '__return_true',
+			),
+			'schema' => array( $this, 'get_public_item_schema' ),
+		) );
+		
+	}
 	
+	/*
+	* TSWC installed?
+	*/
+	public function tswc_status() {
+		$plugin = 'tswc';
+		
+		if ( trackship_for_woocommerce()->is_ast_active() ) {
+			$plugin.= '-ast';
+		}
+		
+		if ( trackship_for_woocommerce()->is_st_active() ) {
+			$plugin.= '-st';
+		}
+		
+		$data = array(
+			'status' => 'installed',
+			'plugin' => $plugin
+		);
+		return rest_ensure_response( $data );
+	}
+
 	/*
 	* check_wcast_installed
 	*/
