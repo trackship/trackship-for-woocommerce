@@ -107,6 +107,9 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended).
 
 == Changelog ==
+= 1.0.3 =
+* Dev - Order note added for Trackship, when tracking information sent to Trackship and shipment status change 
+
 = 1.0.2 =
 * Fix - Tracking Page link fixed in completed email
 
