@@ -99,7 +99,11 @@ class WC_TrackShip_Api_Call {
 							
 							if ( isset( $body['trackers_balance'] ) ) {
 								update_option( 'trackers_balance', $body['trackers_balance'] );
-							}														
+							}
+							// The text for the note
+							$note = sprintf( __( 'Shipping information (%s - %s) was sent to TrackShip.', 'trackship-for-woocommerce' ), $tracking_provider, $tracking_number );
+							// Add the note
+							$order->add_order_note( $note );														
 						} else {
 							//error like 400
 							$body = json_decode($response['body'], true);															

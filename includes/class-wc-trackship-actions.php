@@ -1020,7 +1020,13 @@ class WC_Trackship_Actions {
 			} elseif ( in_array( $new_status, array( 'failure', 'in_transit', 'on_hold', 'out_for_delivery', 'available_for_pickup', 'return_to_sender', 'exception' ) ) ) {
 				wc_trackship_email_manager()->shippment_status_email_trigger( $order_id, $order, $old_status, $new_status, $tracking_item, $shipment_status );
 			}
-			do_action( 'ast_trigger_ts_status_change', $order_id, $old_status, $new_status, $tracking_item, $shipment_status );				
+			do_action( 'ast_trigger_ts_status_change', $order_id, $old_status, $new_status, $tracking_item, $shipment_status );
+			
+			// The text for the note
+			$note = sprintf( __( 'Tracking Status (%s - %s) was updated to %s. (TrackShip)' ), $tracking_item['tracking_provider'], $tracking_item['tracking_number'], $new_status );
+			
+			// Add the note
+			$order->add_order_note( $note );
 		}
 	}	
 	
