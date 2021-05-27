@@ -61,6 +61,8 @@
 
 jQuery( document ).ready(function() {
 	
+	jQuery(".woocommerce-help-tip").tipTip();
+	
 	if ( jQuery.fn.wpColorPicker ) {
 	
 		jQuery('#wc_ast_select_border_color').wpColorPicker({
@@ -570,9 +572,10 @@ jQuery(document).on( "click", ".open_tracking_details", function(){
 		url: ajaxurl,
 		data: data,
 		type: 'POST',
-		success: function(response) {
+		success: function(response) {			
 			jQuery("#admin_tracking_widget .popuprow").html(response);
 			jQuery("#admin_tracking_widget").show();
+			jQuery(".woocommerce-help-tip").tipTip();
 		},
 		error: function( jqXHR, exception ) {
 			var msg = '';
@@ -616,12 +619,21 @@ jQuery(document).on("click", ".hide_old_details", function(){
 });
 
 /*
-* click on tracking_num_copy
+* click on tracking_page_link
 */
 jQuery(document).on("click", ".copy_tracking_page", function(){
 	var text = jQuery(this).data("tracking_page_link");
 	copyTextToClipboard(text);
 	jQuery(document).zorem_snackbar( 'Tracking link copied to clipboard' );
+});
+
+/*
+* click on copy_view_order_page
+*/
+jQuery(document).on("click", ".copy_view_order_page", function(){
+	var text = jQuery(this).data("view_order_link");
+	copyTextToClipboard(text);
+	jQuery(document).zorem_snackbar( 'View Order page link copied to clipboard' );
 });
 
 function copyTextToClipboard(text) {

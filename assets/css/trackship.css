@@ -457,8 +457,20 @@ ul.wcast-shipment-status-list {
 .ft11 {
 	font-size: 11px;
 }
+.ft12 {
+	font-size: 12px;
+}
+.icon-connection_issue .ts4wc_track_button.ft12, .icon-INVALID_TRACKING_NUM .ts4wc_track_button.ft12, .icon-pending_trackship .ts4wc_track_button.ft12, .ts4wc_more-info.ft12, .has_est_delivery_1 .showif_has_est_delivery_0 .ts4wc_track_button.ft12 {
+	display: none;
+}
 .has_est_delivery_0 .showif_has_est_delivery_0 {
 	display: block;
+}
+.icon-connection_issue .ts4wc_more-info.ft12, .icon-INVALID_TRACKING_NUM .ts4wc_more-info.ft12, .icon-pending_trackship .ts4wc_more-info.ft12 {
+	display: contents;
+}
+#admin_tracking_widget .popuprow span.wc_order_id a {
+	display: none;	
 }
 .ast-shipment-status .shipment-icon:before {
 	content: ' ';
@@ -1237,6 +1249,14 @@ opacity: 0;
 .ts-dashboard-widget .ts-widget-row {
 	display: flex;
 }
+.ts-dashboard-widget .ts-widget-row.ts-widget-guides {
+	display: block;
+}
+.ts-dashboard-widget .ts-widget-row.ts-widget-guides span.dashicons {
+	float: right;
+    text-decoration: none;
+    color: #59c889;
+}
 .ts-widget-content .ts-widget__section {
 	flex: 1;
 	padding: 15px;
@@ -1736,7 +1756,27 @@ div#trackship-tracking-items .ts-tracking-item {
 }
 #admin_tracking_widget .popuprow {
 	padding: 20px 20px 0;
-	max-width: 800px;
+	max-width: 600px;
+}
+.ts4wc_tracking-widget-header .button.btn_outline {
+	padding-bottom: 5px;
+}
+.ts4wc_tracking-widget-header .woocommerce-help-tip {
+    width: auto;
+}
+.ts4wc_tracking-widget-header .woocommerce-help-tip::after, .ast-shipment-status .shipment-icon .woocommerce-help-tip::after {
+    content: "";
+}
+.ast-shipment-status .shipment-icon .woocommerce-help-tip {
+    width: auto;
+    font-size: 12px;
+    vertical-align: initial;
+    color: #2271b1;
+}
+.ts4wc_logo{
+	width: 100px;
+	float: right;
+	margin-top: 10px;
 }
 #admin_tracking_widget .shipment_status_heading {
 	line-height: 1;

@@ -109,6 +109,11 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 == Changelog ==
 = 1.0.3 =
 * Dev - Order note added for Trackship, when tracking information sent to Trackship and shipment status change 
+* Improved UI/UX - Shipment Tracking Column on orders admin list
+* Dev - add track link to Shipment Tracking Column on orders admin list
+* Dev - Improvment in tracking page popup.
+* Fix - Tracking Widget Customizer – Show Only Last Event (was showing 2 last events)
+* Twick - Tracking Page Widget on View Order Page – Always show “last event” view.
 
 = 1.0.2 =
 * Fix - Tracking Page link fixed in completed email
