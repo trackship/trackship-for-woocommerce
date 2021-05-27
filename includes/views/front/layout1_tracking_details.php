@@ -20,7 +20,7 @@ if ( 1 == $hide_tracking_events ) {
 					<?php
 					$a = 1; 
 					foreach ( $trackind_destination_detail_by_status_rev as $key => $value ) { 
-						if ( $a > 2) {
+						if ( $a > 1) {
 							break;
 						}
 						$date = gmdate( 'Y-m-d', strtotime( $value->datetime ) );
@@ -42,7 +42,7 @@ if ( 1 == $hide_tracking_events ) {
 					<?php 
 					$a = 1;	
 					foreach ( $trackind_destination_detail_by_status_rev as $key => $value ) {
-						if ( $a <= 2 ) {
+						if ( $a <= 1 ) {
 							$a++;
 							continue;
 						}
@@ -74,7 +74,7 @@ if ( 1 == $hide_tracking_events ) {
 					<?php
 					$a = 1; 
 					foreach ( $trackind_detail_by_status_rev as $key => $value ) { 
-						if ( $a > 2) {
+						if ( $a > 1) {
 							break;
 						}
 						$date = gmdate('Y-m-d', strtotime($value->datetime));
@@ -96,7 +96,7 @@ if ( 1 == $hide_tracking_events ) {
 					<?php 
 					$a = 1;	
 					foreach ( $trackind_detail_by_status_rev as $key => $value ) {
-						if ( $a <= 2 ) {
+						if ( $a <= 1 ) {
 							$a++;
 							continue;
 						}

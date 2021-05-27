@@ -69,17 +69,24 @@ class WC_Trackship_Admin {
 	
 	public function get_admin_tracking_widget_cb() {
 		$order_id = isset( $_POST['order_id'] ) ? sanitize_text_field( $_POST['order_id'] ) : '' ;
+		$order = wc_get_order( $order_id );
 		check_ajax_referer( 'tswc-' . $order_id, 'security' );
 		
 		if ( current_user_can( 'manage_woocommerce' ) ) {
 			$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id );
 			?>
-			<div style="text-align:right;">
-				<button class="button btn_outline copy_tracking_page" data-tracking_page_link=<?php echo esc_url( $tracking_page_link ); ?> >
-					<span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
-					<span style="vertical-align: middle;">Copy Tracking page</span>
-				</button>
+			<div class="ts4wc_tracking-widget-header">
+                <button class="button btn_outline copy_tracking_page" data-tracking_page_link=<?php echo esc_url( $tracking_page_link ); ?> >
+                    <span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
+                    <span class="woocommerce-help-tip tipTip" style="vertical-align: middle;" title="Copy the secure link to the Tracking page">Copy Tracking page</span>
+                </button>
+                <button class="button btn_outline copy_view_order_page" data-view_order_link=<?php echo esc_url( $order->get_view_order_url() ); ?> >
+                    <span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
+                    <span class="woocommerce-help-tip tipTip" style="vertical-align: middle;" title="Copy the secure link to the View Order details page">Copy View order page</span>
+                </button>
+                <img class="ts4wc_logo" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png">
 			</div>
+            
 			<?php
 			trackship_for_woocommerce()->front->show_tracking_page_widget( $order_id );
 		} else {

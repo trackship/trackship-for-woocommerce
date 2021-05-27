@@ -339,12 +339,17 @@ class WC_Trackship_Actions {
 	 * @return string[] $new_columns
 	 */
 	public function wc_add_order_shipment_status_column_header( $columns ) {
+		
+		wp_register_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.min.js', array( 'jquery' ), WC_VERSION, true );
+		wp_enqueue_script( 'jquery-tiptip' );
+		
 		wp_enqueue_style( 'trackshipcss' );
 		wp_enqueue_script( 'trackship_script' );
 		
 		//front_style for tracking widget
 		wp_register_style( 'front_style', trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/front.css', array(), trackship_for_woocommerce()->version );
 		wp_enqueue_style( 'front_style' );
+		
 		
 		$columns['shipment_status'] = __( 'Shipment status', 'trackship-for-woocommerce' );
 		return $columns;
@@ -398,17 +403,21 @@ class WC_Trackship_Actions {
 								$has_est_delivery = true;
 							}
 							?>
-							<li id="shipment-item-<?php esc_html_e( $tracking_item['tracking_id'] ); ?>" class="tracking-item-<?php esc_html_e( $tracking_item['tracking_id'] ); ?> open_tracking_details" data-orderid="<?php esc_html_e( $post->ID ); ?>" data-tracking_id="<?php esc_html_e( $tracking_item['tracking_id'] ); ?>" data-nonce=<?php esc_html_e( wp_create_nonce( 'tswc-' . $post->ID ) ); ?> >                            	
+							<li id="shipment-item-<?php esc_html_e( $tracking_item['tracking_id'] ); ?>" class="tracking-item-<?php esc_html_e( $tracking_item['tracking_id'] ); ?>" >                            	
 								<div class="ast-shipment-status shipment-<?php esc_html_e( sanitize_title($status) ); ?> has_est_delivery_<?php esc_html_e( $has_est_delivery ? 1 : 0 ); ?>">
 
 									<span class="shipment-icon icon-default icon-<?php esc_html_e( $status ); ?>">
 										<span class="ast-shipment-tracking-status"><?php esc_html_e( apply_filters( 'trackship_status_filter', $status ) ); ?></span>
-										<?php if ( '' != $status_date ) { ?>
-											<span class="showif_has_est_delivery_0 ft11">on <?php esc_html_e( gmdate( $date_format, strtotime($status_date) ) ); ?></span>
-										<?php } ?>
-										<?php if ( $has_est_delivery ) { ?>
-											<span class="wcast-shipment-est-delivery ft11">Est. Delivery(<?php esc_html_e( gmdate( $date_format, strtotime($est_delivery_date) ) ); ?>)</span>
-										<?php } ?>
+											<?php if ( '' != $status_date ) { ?>
+                                                <span class="showif_has_est_delivery_0 ft11">Updated <?php esc_html_e( gmdate( $date_format, strtotime($status_date) ) ); ?> 
+                                                    <a class="ts4wc_track_button ft12 open_tracking_details" data-orderid="<?php esc_html_e( $post->ID ); ?>" data-tracking_id="<?php esc_html_e( $tracking_item['tracking_id'] ); ?>" data-nonce=<?php esc_html_e( wp_create_nonce( 'tswc-' . $post->ID ) ); ?> > Track</a>
+                                                   <a class="ts4wc_more-info ft12" target="_blank" href="https://trackship.info/docs/trackship-for-woocommerce/connect-trackship-to-your-store/#connection-troubleshooting"> <span class="woocommerce-help-tip tipTip" title="Pending TrackShip is a temporary status that will display for a few minutes until we update the order with the first tracking event from the shipping provider. Please refresh the orders admin in 2-3 minutes."> more info</span></a>
+                                                </span>
+                                            <?php } ?>
+											<?php if ( $has_est_delivery ) { ?>
+                                                <span class="wcast-shipment-est-delivery ft11">Est. Delivery(<?php esc_html_e( gmdate( $date_format, strtotime($est_delivery_date) ) ); ?>) <a class="ts4wc_track_button ft12 open_tracking_details" data-orderid="<?php esc_html_e( $post->ID ); ?>" data-tracking_id="<?php esc_html_e( $tracking_item['tracking_id'] ); ?>" data-nonce=<?php esc_html_e( wp_create_nonce( 'tswc-' . $post->ID ) ); ?> > Track</a></span>
+                                            <?php } ?>
+                                            
 									</span>
 								</div>
 							</li>
@@ -707,6 +716,9 @@ class WC_Trackship_Actions {
 				break;
 			case 'balance_zero':
 				$status = __( 'TrackShip balance is 0', 'woocommerce' );
+				break;
+			case 'connection_issue':
+				$status = __( 'TrackShip connection issue', 'woocommerce' );
 				break;
 		}
 		return $status;
