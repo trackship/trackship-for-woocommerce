@@ -50,8 +50,12 @@ class WC_TrackShip_Front {
 	
 	public function on_plugin_loaded() {
 		
-		if ( function_exists( 'wc_advanced_shipment_tracking' ) ) {
+		if ( function_exists( 'wc_advanced_shipment_tracking' ) && !function_exists( 'ast_pro' ) ) {
 			remove_action( 'woocommerce_view_order', array( wc_advanced_shipment_tracking()->actions, 'show_tracking_info_order' ) );
+		}
+		
+		if ( function_exists( 'ast_pro' ) && isset( ast_pro()->ast_pro_actions ) ) {
+			remove_action( 'woocommerce_view_order', array( ast_pro()->ast_pro_actions, 'show_tracking_info_order' ) );
 		}
 		
 		if ( function_exists( 'wc_shipment_tracking' ) ) {
@@ -304,22 +308,20 @@ class WC_TrackShip_Front {
 		<?php
 		
 		$num = 1;
+		$total_trackings = sizeof( $tracking_items );
 		
 		foreach ( $tracking_items as $key => $item ) {
 			$tracking_number = $item['tracking_number'];
-			$trackship_url = 'https://trackship.info';
 			$tracking_provider = $item['tracking_provider'];
 						
-			/*** Update in 2.7.9
-			* Date - 20/01/2020
-			* Remove api call code after three month - get_tracking_info
-			***/
 			$tracker = new \stdClass();
 			
 			if ( isset( $shipment_status[$key]['pending_status'] ) ) {
 				$tracker->ep_status = $shipment_status[$key]['pending_status'];								
 			} else if ( isset($shipment_status[$key]['status']) ) {
 				$tracker->ep_status = $shipment_status[$key]['status'];
+			} else {
+				$tracker->ep_status = 'not_shipped';
 			}
 			
 			$tracker->est_delivery_date = isset( $shipment_status[$key]['est_delivery_date'] ) ? $shipment_status[$key]['est_delivery_date'] : '';
@@ -333,8 +335,6 @@ class WC_TrackShip_Front {
 				if ( isset( $shipment_status[$key]['tracking_destination_events'] ) ) {
 					$tracker->tracking_destination_events = json_encode($shipment_status[$key]['tracking_destination_events']);
 				}
-							
-				$decoded_data = true;				
 			}									
 			
 			$tracking_detail_org = '';	
@@ -371,13 +371,17 @@ class WC_TrackShip_Front {
 				}
 			}	
 			
-			$order = wc_get_order( $order_id );			
+			$order = wc_get_order( $order_id );
 			
 			if ( isset( $tracker->ep_status ) ) {
 				?>
-				
+					<div class="shipment-header">
+						<?php if ( $total_trackings > 1 ) { ?>
+                            <p class="shipment_heading"><?php printf( esc_html( "Shipment : %s out of %s", 'trackship-for-woocommerce'), $num , $total_trackings ); ?></p>
+                        <?php } ?>
+                    </div>
 					<div class="tracking-detail col <?php echo 't_layout_1' != $tracking_page_layout ? 'tracking-layout-2' : ''; ?> ">
-						<div class="shipment-content">
+                    	<div class="shipment-content">
 						<?php
 						
 						esc_html_e( $this->tracking_page_header( $order, $tracking_provider, $tracking_number, $tracker, $item ) );
@@ -403,13 +407,7 @@ class WC_TrackShip_Front {
 						</div>
 					<?php } ?>
 				</div>
-			<?php } else { ?>
-				<div class="tracking-detail col">
-					<h1 class="shipment_status_heading text-secondary text-center"><?php esc_html_e( 'Tracking&nbsp;#&nbsp;' . $tracking_number, 'trackship-for-woocommerce' ); ?></h1>
-					<h3 class="text-center"><?php esc_html_e( 'Tracking details not found in TrackShip', 'trackship-for-woocommerce' ); ?></h3>
-				</div>
-			<?php
-			} 
+			<?php }
 			$num++;
 		}	
 	}
@@ -433,7 +431,7 @@ class WC_TrackShip_Front {
 			return;
 		}
 		
-		if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'unknown', 'carrier_unsupported', 'balance_zero' ) ) ) {
+		if ( in_array( $tracker->ep_status, array( 'not_shipped', 'pending_trackship', 'pending', 'unknown', 'carrier_unsupported', 'balance_zero' ) ) ) {
 			$width = '17%';
 		} elseif ( in_array( $tracker->ep_status, array( 'in_transit', 'on_hold' ) ) ) {
 			$width = '33%';

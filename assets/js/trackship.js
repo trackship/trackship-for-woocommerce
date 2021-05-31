@@ -61,7 +61,7 @@
 
 jQuery( document ).ready(function() {
 	
-	jQuery(".woocommerce-help-tip").tipTip();
+	jQuery(".trackship-tip").tipTip();
 	
 	if ( jQuery.fn.wpColorPicker ) {
 	
@@ -137,7 +137,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-jQuery(document).on("click", ".tab_input", function(){
+jQuery(document).on("click", ".trackship_admin_content .trackship_nav_div .tab_input", function(){
 	var tab = jQuery(this).data('tab');
 	var label = jQuery(this).data('label');
 	jQuery('.zorem-layout__header-breadcrumbs .header-breadcrumbs-last').text(label);
@@ -572,10 +572,10 @@ jQuery(document).on( "click", ".open_tracking_details", function(){
 		url: ajaxurl,
 		data: data,
 		type: 'POST',
-		success: function(response) {			
+		success: function(response) {
 			jQuery("#admin_tracking_widget .popuprow").html(response);
 			jQuery("#admin_tracking_widget").show();
-			jQuery(".woocommerce-help-tip").tipTip();
+			jQuery(".trackship-tip").tipTip();
 		},
 		error: function( jqXHR, exception ) {
 			var msg = '';

@@ -4,7 +4,7 @@ Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 5.3
 Tested up to: 5.7
 Requires PHP: 7.0
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -110,10 +110,13 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 = 1.0.3 =
 * Dev - Order note added for Trackship, when tracking information sent to Trackship and shipment status change 
 * Improved UI/UX - Shipment Tracking Column on orders admin list
+* Improvement - Trackship dashboard improved
 * Dev - add track link to Shipment Tracking Column on orders admin list
 * Dev - Improvment in tracking page popup.
 * Fix - Tracking Widget Customizer – Show Only Last Event (was showing 2 last events)
-* Twick - Tracking Page Widget on View Order Page – Always show “last event” view.
+* Fix - Shipment status filter issue solved and fixed when in settings close for shipment status filter
+* Fix - in AST when click on tab link changed
+* Twick - Tracking Page Widget on thank you Page – Always show “last event” view.
 
 = 1.0.2 =
 * Fix - Tracking Page link fixed in completed email

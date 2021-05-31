@@ -188,12 +188,15 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			if ( $tracking_est_delivery_date ) {
 				$shipment_status[$key]['est_delivery_date'] = gmdate('Y-m-d', strtotime($tracking_est_delivery_date));
 			}
-						
+			
 			update_post_meta( $order_id, 'shipment_status', $shipment_status );
 			
 			$shipment_status = trackship_for_woocommerce()->actions->get_shipment_status( $order_id );
 			
 			$trackship->trigger_tracking_email( $order_id, $previous_status, $tracking_event_status, $tracking_item, $shipment_status[$key] );
+			
+			$ts_shipment_status[$key]['status'] = $tracking_event_status;
+			update_post_meta( $order_id, "ts_shipment_status", $ts_shipment_status);
 		}
 		
 		$trackship->check_tracking_delivered( $order_id );
@@ -209,8 +212,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	* disconnect store from TS
 	*/
 	public function disconnect_from_trackship_fun( $request ) {
-		$add_key = update_option( 'wc_ast_api_key', '' );
-		$wc_ast_api_enabled = update_option( 'wc_ast_api_enabled', 0 );
+		update_option( 'wc_ast_api_key', '' );
 		delete_option( 'wc_ast_api_enabled' );
 		delete_option( 'trackers_balance' );
 	}
