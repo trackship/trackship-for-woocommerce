@@ -2,7 +2,7 @@
 /**
  * Plugin Name: TrackShip for WooCommerce 
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers. 
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: TrackShip
  * Author URI: https://trackship.info/
  * License: GPL-2.0+
@@ -19,11 +19,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Trackship_For_Woocommerce {
 	
 	/**
-	 * WooCommerce Advanced Shipment Tracking version.
+	 * Trackship_For_Woocommerce version.
 	 *
 	 * @var string
 	*/
-	public $version = '1.0.2';
+	public $version = '1.0.3';
 	
 	/**
 	 * Initialize the main plugin function
@@ -122,25 +122,6 @@ class Trackship_For_Woocommerce {
 		add_action( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'tsw_plugin_action_links' ) );
 		
 		add_action( 'template_redirect', array( $this->front, 'preview_tracking_page' ) );
-		
-		if ( !$this->is_ast_active() ) {
-			//new order status
-			$newstatus = get_option( 'wc_ast_status_delivered', 0);
-			if ( true == $newstatus ) {
-				//register order status 
-				add_action( 'init', array( $this->admin, 'register_order_status') );
-				//add status after completed
-				add_filter( 'wc_order_statuses', array( $this->admin, 'add_delivered_to_order_statuses') );
-				//Custom Statuses in admin reports
-				add_filter( 'woocommerce_reports_order_statuses', array( $this->admin, 'include_custom_order_status_to_reports'), 20, 1 );
-				// for automate woo to check order is paid
-				add_filter( 'woocommerce_order_is_paid_statuses', array( $this->admin, 'delivered_woocommerce_order_is_paid_statuses' ) );
-				//add bulk action
-				add_filter( 'bulk_actions-edit-shop_order', array( $this->admin, 'add_bulk_actions'), 50, 1 );
-				//add reorder button
-				add_filter( 'woocommerce_valid_order_statuses_for_order_again', array( $this->admin, 'add_reorder_button_delivered'), 50, 1 );
-			}
-		}
 	}				
 	
 	/**
@@ -276,7 +257,7 @@ class Trackship_For_Woocommerce {
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		}
 		
-		if ( is_plugin_active( 'woo-advanced-shipment-tracking/woocommerce-advanced-shipment-tracking.php' ) ) {
+		if ( is_plugin_active( 'woo-advanced-shipment-tracking/woocommerce-advanced-shipment-tracking.php' ) || is_plugin_active( 'ast-pro/ast-pro.php' )) {
 			$is_active = true;
 		} else {
 			$is_active = false;

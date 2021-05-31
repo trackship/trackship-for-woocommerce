@@ -69,9 +69,8 @@ class WC_TrackShip_Api_Call {
 						}
 						$shipment_status[$key]['status'] = "Something went wrong: {$error_message}";
 						$shipment_status[$key]['status_date'] = gmdate('Y-m-d H:i:s');
-						
 						update_post_meta( $order->get_id(), 'shipment_status', $shipment_status);
-						
+
 					} else {
 						
 						$code = $response['response']['code'];
@@ -103,7 +102,15 @@ class WC_TrackShip_Api_Call {
 							// The text for the note
 							$note = sprintf( __( 'Shipping information (%s - %s) was sent to TrackShip.', 'trackship-for-woocommerce' ), $tracking_provider, $tracking_number );
 							// Add the note
-							$order->add_order_note( $note );														
+							$order->add_order_note( $note );
+							
+							$ts_shipment_status = get_post_meta( $order->get_id(), 'ts_shipment_status', true);
+							if ( is_string( $ts_shipment_status ) ) {
+								$ts_shipment_status = array();
+							}
+							$ts_shipment_status[$key]['status'] = $shipment_status[$key]['pending_status'];
+							update_post_meta( $order->get_id(), 'ts_shipment_status', $ts_shipment_status );
+							
 						} else {
 							//error like 400
 							$body = json_decode($response['body'], true);															
