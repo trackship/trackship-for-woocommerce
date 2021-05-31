@@ -136,26 +136,34 @@ if ( $completed_order_with_tracking > 0 || $completed_order_with_zero_balance > 
 			<?php $tracking_analytics = $this->get_tracking_analytics_overview(); ?>
 			<div class="ts-widget-content ">
 				<div class="ts-widget-row ts-widget-guides">
-					<div class="ts-widget__section ts-widget-rborder ts-widget-bborder">
-						<p>
-                        	<a target="_blank" href="https://trackship.info/docs/trackship-for-woocommerce/tracking-page/#customize-the-tracking-page-widget"><span class="dashicons dashicons-arrow-right-alt2"></span></a><?php esc_html_e( 'How to Set up and customize the Tracking Page', 'trackship-for-woocommerce' ); ?>
-                        </p>
-					</div>
-                    <div class="ts-widget__section ts-widget-rborder ts-widget-bborder">
-						<p>
-							<a target="_blank" href="https://trackship.info/docs/trackship-for-woocommerce/compatibility/sms-for-woocommerce/"><span class="dashicons dashicons-arrow-right-alt2"></span></a><?php esc_html_e( 'Further Engage Customers with Delivery Updates via SMS', 'trackship-for-woocommerce' ); ?>
-						</p>
-					</div>
-                    <div class="ts-widget__section ts-widget-rborder ts-widget-bborder">
-						<p>
-                        	<a target="_blank" href="https://trackship.info/docs/trackship-for-woocommerce/compatibility/automatewoo/"><span class="dashicons dashicons-arrow-right-alt2"></span></a><?php esc_html_e( 'How to Automate your post-shipping Workflow', 'trackship-for-woocommerce' ); ?>
-						</p>
-					</div>
-                    <div class="ts-widget__section ts-widget-rborder ts-widget-bborder">
-						<p>
-                        	<a target="_blank" href="https://trackship.info/docs/trackship-for-woocommerce/shipment-status-notifications/"><span class="dashicons dashicons-arrow-right-alt2"></span></a><?php esc_html_e( 'Customize the Shipment Status Email Notifications', 'trackship-for-woocommerce' ); ?>
-                        </p>
-					</div>
+                	<a target="_blank" href="https://trackship.info/docs/trackship-for-woocommerce/tracking-page/#customize-the-tracking-page-widget">
+                        <div class="ts-widget__section ts-widget-rborder ts-widget-bborder">
+                            <p>
+                                <span class="dashicons dashicons-arrow-right-alt2"></span><?php esc_html_e( 'How to Set up and customize the Tracking Page', 'trackship-for-woocommerce' ); ?>
+                            </p>
+                        </div>
+                    </a>
+                    <a target="_blank" href="https://trackship.info/docs/trackship-for-woocommerce/compatibility/sms-for-woocommerce/">
+                        <div class="ts-widget__section ts-widget-rborder ts-widget-bborder">
+                            <p>
+                                <span class="dashicons dashicons-arrow-right-alt2"></span><?php esc_html_e( 'Further Engage Customers with Delivery Updates via SMS', 'trackship-for-woocommerce' ); ?>
+                            </p>
+                        </div>
+                    </a>
+                    <a target="_blank" href="https://trackship.info/docs/trackship-for-woocommerce/compatibility/automatewoo/">
+                        <div class="ts-widget__section ts-widget-rborder ts-widget-bborder">
+                            <p>
+                                <span class="dashicons dashicons-arrow-right-alt2"></span><?php esc_html_e( 'How to Automate your post-shipping Workflow', 'trackship-for-woocommerce' ); ?>
+                            </p>
+                        </div>
+                    </a>
+                    <a target="_blank" href="https://trackship.info/docs/trackship-for-woocommerce/shipment-status-notifications/">
+                        <div class="ts-widget__section ts-widget-rborder ts-widget-bborder">
+                            <p>
+                                <span class="dashicons dashicons-arrow-right-alt2"></span><?php esc_html_e( 'Customize the Shipment Status Email Notifications', 'trackship-for-woocommerce' ); ?>
+                            </p>
+                        </div>
+                    </a>
 				</div>
 			</div>
 		</div>
