@@ -43,7 +43,7 @@
 				<span class="wc_order_id">
 					<a href="#" target="_blank">
 						<?php /* translators: %s: search 14696 */ ?>
-						<?php printf( esc_html__( 'Order #%d', 'trackship-for-woocommerce' ), 14696 ); ?>
+						<?php printf( esc_html( '#%d' ), 14696 ); ?>
 					</a>
 				</span>
 				<div class="provider_image_div" style="">
