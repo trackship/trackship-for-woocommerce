@@ -4,7 +4,7 @@ if ( 1 == $hide_tracking_events ) {
 }
 ?>
 <div class="tracking-details" style="">	
-	<?php if ( 2 == $hide_tracking_events ) { ?>
+	<?php if ( 2 == $hide_tracking_events || is_wc_endpoint_url( 'order-received' ) ) { ?>
 		<?php if ( !empty( $tracking_details_by_date ) ) { ?>
 						
 			<div class="shipment_progress_heading_div">	               				
@@ -20,7 +20,7 @@ if ( 1 == $hide_tracking_events ) {
 					<?php
 					$a = 1; 
 					foreach ( $trackind_destination_detail_by_status_rev as $key => $value ) { 
-						if ( $a > 2) {
+						if ( $a > 1) {
 							break;
 						}
 						$date = gmdate( 'Y-m-d', strtotime( $value->datetime ) );
@@ -42,7 +42,7 @@ if ( 1 == $hide_tracking_events ) {
 					<?php 
 					$a = 1;	
 					foreach ( $trackind_destination_detail_by_status_rev as $key => $value ) {
-						if ( $a <= 2 ) {
+						if ( $a <= 1 ) {
 							$a++;
 							continue;
 						}
@@ -74,7 +74,7 @@ if ( 1 == $hide_tracking_events ) {
 					<?php
 					$a = 1; 
 					foreach ( $trackind_detail_by_status_rev as $key => $value ) { 
-						if ( $a > 2) {
+						if ( $a > 1) {
 							break;
 						}
 						$date = gmdate('Y-m-d', strtotime($value->datetime));
@@ -96,7 +96,7 @@ if ( 1 == $hide_tracking_events ) {
 					<?php 
 					$a = 1;	
 					foreach ( $trackind_detail_by_status_rev as $key => $value ) {
-						if ( $a <= 2 ) {
+						if ( $a <= 1 ) {
 							$a++;
 							continue;
 						}
