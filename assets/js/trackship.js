@@ -61,6 +61,8 @@
 
 jQuery( document ).ready(function() {
 	
+	jQuery(".trackship-tip").tipTip();
+	
 	if ( jQuery.fn.wpColorPicker ) {
 	
 		jQuery('#wc_ast_select_border_color').wpColorPicker({
@@ -135,7 +137,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-jQuery(document).on("click", ".tab_input", function(){
+jQuery(document).on("click", ".trackship_admin_content .trackship_nav_div .tab_input", function(){
 	var tab = jQuery(this).data('tab');
 	var label = jQuery(this).data('label');
 	jQuery('.zorem-layout__header-breadcrumbs .header-breadcrumbs-last').text(label);
@@ -573,6 +575,7 @@ jQuery(document).on( "click", ".open_tracking_details", function(){
 		success: function(response) {
 			jQuery("#admin_tracking_widget .popuprow").html(response);
 			jQuery("#admin_tracking_widget").show();
+			jQuery(".trackship-tip").tipTip();
 		},
 		error: function( jqXHR, exception ) {
 			var msg = '';
@@ -616,12 +619,21 @@ jQuery(document).on("click", ".hide_old_details", function(){
 });
 
 /*
-* click on tracking_num_copy
+* click on tracking_page_link
 */
 jQuery(document).on("click", ".copy_tracking_page", function(){
 	var text = jQuery(this).data("tracking_page_link");
 	copyTextToClipboard(text);
 	jQuery(document).zorem_snackbar( 'Tracking link copied to clipboard' );
+});
+
+/*
+* click on copy_view_order_page
+*/
+jQuery(document).on("click", ".copy_view_order_page", function(){
+	var text = jQuery(this).data("view_order_link");
+	copyTextToClipboard(text);
+	jQuery(document).zorem_snackbar( 'View Order page link copied to clipboard' );
 });
 
 function copyTextToClipboard(text) {

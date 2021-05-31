@@ -52,7 +52,8 @@ class WC_Trackship_Install {
 	* init from parent mail class
 	*/
 	public function init() {			
-		add_action( 'init', array( $this, 'update_database_check' ) );	
+		add_action( 'init', array( $this, 'update_database_check' ) );
+		add_action( 'update_ts_shipment_status_order_mete', array( $this, 'update_ts_shipment_status_order_mete' ), 10, 1 );	
 	}
 	
 	/*
@@ -89,7 +90,54 @@ class WC_Trackship_Install {
 
 				update_option( 'trackship_db', '1.2' );
 			}
+			
+			if ( version_compare( get_option( 'trackship_db' ), '1.3', '<' ) ) {
+			
+				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 1 ), '' );
+				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 2 ), '' );
+				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 3 ), '' );
+				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 4 ), '' );
+				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 5 ), '' );
+				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 6 ), '' );
+				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 7 ), '' );
+				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 8 ), '' );
+				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 9 ), '' );
+				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 10 ), '' );				
+
+				update_option( 'trackship_db', '1.3' );
+			}
+			
 		}
+	}
+	
+	/*
+	* function for update order meta from shipment_status to ts_shipment_status for filter order by shipment status
+	*/
+	public function update_ts_shipment_status_order_mete( $order_page ) {
+		
+		$wc_ast_api_key = get_option( 'wc_ast_api_key' ); 
+		if( !$wc_ast_api_key ) {
+			return;
+		}	
+		
+		$args = array(			
+			'limit' => 100,
+			'paged' => $order_page['order_page'],
+			'return' => 'ids',
+			'date_created' => '>' . ( time() - 1296000 ),
+		);
+		
+		$orders = wc_get_orders( $args );
+		
+		foreach ( $orders as $order_id ) {
+			$shipment_status = get_post_meta( $order_id, 'shipment_status', true );
+			if ( !empty( $shipment_status ) ) {
+				foreach ( $shipment_status as $key => $shipment ) {
+					$ts_shipment_status[ $key ][ 'status' ] = $shipment[ 'status' ];			
+					update_post_meta( $order_id, 'ts_shipment_status', $ts_shipment_status );						
+				}
+			}			
+		}		
 	}
 	
 	/**

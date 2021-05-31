@@ -58,6 +58,22 @@ class WC_Trackship_Admin {
 		add_action( 'wp_ajax_get_admin_tracking_widget', array( $this, 'get_admin_tracking_widget_cb' ) );
 		
 		add_action( 'woocommerce_auth_page_footer', array( $this, 'remove_connect_store_border' ), 5 );
+		
+		$newstatus = get_option( 'wc_ast_status_delivered', 0);
+		if ( true == $newstatus ) {
+			//register order status 
+			add_action( 'init', array( $this, 'register_order_status') );
+			//add status after completed
+			add_filter( 'wc_order_statuses', array( $this, 'add_delivered_to_order_statuses') );
+			//Custom Statuses in admin reports
+			add_filter( 'woocommerce_reports_order_statuses', array( $this, 'include_custom_order_status_to_reports'), 20, 1 );
+			// for automate woo to check order is paid
+			add_filter( 'woocommerce_order_is_paid_statuses', array( $this, 'delivered_woocommerce_order_is_paid_statuses' ) );
+			//add bulk action
+			add_filter( 'bulk_actions-edit-shop_order', array( $this, 'add_bulk_actions'), 50, 1 );
+			//add reorder button
+			add_filter( 'woocommerce_valid_order_statuses_for_order_again', array( $this, 'add_reorder_button_delivered'), 50, 1 );
+		}
 
 	}
 	
@@ -69,17 +85,24 @@ class WC_Trackship_Admin {
 	
 	public function get_admin_tracking_widget_cb() {
 		$order_id = isset( $_POST['order_id'] ) ? sanitize_text_field( $_POST['order_id'] ) : '' ;
+		$order = wc_get_order( $order_id );
 		check_ajax_referer( 'tswc-' . $order_id, 'security' );
 		
 		if ( current_user_can( 'manage_woocommerce' ) ) {
 			$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id );
 			?>
-			<div style="text-align:right;">
-				<button class="button btn_outline copy_tracking_page" data-tracking_page_link=<?php echo esc_url( $tracking_page_link ); ?> >
-					<span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
-					<span style="vertical-align: middle;">Copy Tracking page</span>
-				</button>
+			<div class="ts4wc_tracking-widget-header">
+                <button class="button btn_outline copy_tracking_page trackship-tip" title="Copy the secure link to the Tracking page" data-tracking_page_link=<?php echo esc_url( $tracking_page_link ); ?> >
+                    <span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
+                    <span style="vertical-align: middle;" >Copy Tracking page</span>
+                </button>
+                <button class="button btn_outline copy_view_order_page trackship-tip" title="Copy the secure link to the View Order details page" data-view_order_link=<?php echo esc_url( $order->get_view_order_url() ); ?> >
+                    <span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
+                    <span style="vertical-align: middle;" >Copy View order page</span>
+                </button>
+                <img class="ts4wc_logo" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png">
 			</div>
+            
 			<?php
 			trackship_for_woocommerce()->front->show_tracking_page_widget( $order_id );
 		} else {
@@ -517,7 +540,7 @@ class WC_Trackship_Admin {
 						<input type="hidden" name="<?php echo esc_html( $id ); ?>" value="0"/>
 						<input class="" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>" type="checkbox" <?php echo esc_html( $checked ); ?> value="1"/>
 											
-						<label class="setting_ul_checkbox_label"><?php echo esc_html( $array['title'] ); ?>
+						<label class="setting_ul_checkbox_label" for="<?php echo esc_html( $id ); ?>"><?php echo esc_html( $array['title'] ); ?>
 						<?php if ( isset( $array['tooltip'] ) ) { ?>
 							<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
 						<?php } ?>
@@ -855,7 +878,7 @@ class WC_Trackship_Admin {
 			'exclude_from_search'       => false,
 			/* translators: %s: search number of order */
 			'label_count'               => _n_noop( 'Delivered <span class="count">(%s)</span>', 'Delivered <span class="count">(%s)</span>', 'trackship-for-woocommerce' )
-		) );		
+		) );
 	}
 	
 	/*
@@ -877,7 +900,7 @@ class WC_Trackship_Admin {
 	* Adding the custom order status to the default woocommerce order statuses
 	*/
 	public function include_custom_order_status_to_reports( $statuses ) {
-		if ($statuses) {
+		if ( $statuses ) {
 			$statuses[] = 'delivered';
 		}
 		return $statuses;
@@ -887,7 +910,7 @@ class WC_Trackship_Admin {
 	* mark status as a paid.
 	*/
 	public function delivered_woocommerce_order_is_paid_statuses( $statuses ) { 
-		$statuses[] = 'delivered';		
+		$statuses[] = 'delivered';
 		return $statuses; 
 	}
 	
