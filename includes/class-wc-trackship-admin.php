@@ -91,14 +91,15 @@ class WC_Trackship_Admin {
 		if ( current_user_can( 'manage_woocommerce' ) ) {
 			$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id );
 			?>
+            
 			<div class="ts4wc_tracking-widget-header">
                 <button class="button btn_outline copy_tracking_page trackship-tip" title="Copy the secure link to the Tracking page" data-tracking_page_link=<?php echo esc_url( $tracking_page_link ); ?> >
                     <span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
-                    <span style="vertical-align: middle;" >Copy Tracking page</span>
+                    <span style="vertical-align: middle;" ><?php esc_html_e( 'Copy Tracking page', 'trackship-for-woocommerce' ); ?></span>
                 </button>
                 <button class="button btn_outline copy_view_order_page trackship-tip" title="Copy the secure link to the View Order details page" data-view_order_link=<?php echo esc_url( $order->get_view_order_url() ); ?> >
                     <span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
-                    <span style="vertical-align: middle;" >Copy View order page</span>
+                    <span style="vertical-align: middle;" ><?php esc_html_e( 'Copy View order page', 'trackship-for-woocommerce' ); ?></span>
                 </button>
                 <img class="ts4wc_logo" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png">
 			</div>
@@ -106,7 +107,7 @@ class WC_Trackship_Admin {
 			<?php
 			trackship_for_woocommerce()->front->show_tracking_page_widget( $order_id );
 		} else {
-			esc_html_e( 'Please refresh the page and try again.' );
+			esc_html_e( 'Please refresh the page and try again.', 'trackship-for-woocommerce' );
 		}
 		die();
 	}
@@ -1353,5 +1354,13 @@ class WC_Trackship_Admin {
 			),	
 		);
 		return $notifications_data;
+	}
+	
+	/*
+	* transaltion function for loco generater
+	* this function is not called from any function
+	*/
+	function translation_func(){
+		__( 'Tracking Analytics', 'trackship-for-woocommerce');
 	}
 }
