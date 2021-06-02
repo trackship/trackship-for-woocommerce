@@ -41,7 +41,6 @@ class WC_Trackship_Admin {
 		add_action( 'admin_menu', array( $this, 'register_woocommerce_menu' ), 110 );
 		
 		add_action( 'admin_footer', array( $this, 'footer_function'), 1 );		
-		add_filter( 'trackship_get_provider_name_from_slug', array( $this, 'trackship_get_provider_name_from_slug_callback') );		
 		add_action( 'wp_ajax_add_trackship_mapping_row', array( $this, 'add_trackship_mapping_row' ) );
 		add_action( 'wp_ajax_trackship_mapping_form_update', array( $this, 'trackship_custom_mapping_form_update') );
 		add_filter( 'convert_provider_name_to_slug', array( $this, 'detect_custom_mapping_provider') );	
@@ -975,21 +974,6 @@ class WC_Trackship_Admin {
 			
 		}
 		return $link_format;
-	}
-	
-	/*
-	* Return trackship provider name from provider slug
-	*/
-	public function trackship_get_provider_name_from_slug_callback( $provider ) {
-		
-		global $wpdb;
-		
-		$ts_shippment_provider = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}trackship_shipping_provider where ts_slug = %s", $provider ) );	
-		if ( $ts_shippment_provider ) {
-			$provider = $ts_shippment_provider[0]->provider_name;	
-		}
-		
-		return $provider;
 	}
 	
 	public function get_trackship_provider() {
