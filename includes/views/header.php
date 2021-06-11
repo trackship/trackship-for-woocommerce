@@ -1,27 +1,27 @@
 <?php
+$version = trackship_for_woocommerce()->version;
 $menu_items = array(
 	array(
-		'label' => 'Get Support',
-		'link' => 'https://trackship.info/support/?support=1'
+		'label' => __( 'Get Support', 'trackship-for-woocommerce' ),
+		'link' => 'https://trackship.info/support/?support=1',
 	),
 	array(
-		'label' => 'Documentation',
-		'link' => 'https://trackship.info/documentation/'
+		'label' =>__( 'Documentation', 'trackship-for-woocommerce' ),
+		'link' => 'https://trackship.info/documentation/',
 	),
 );
 ?>
-
 <div class="zorem-layout__header">
-	<h1 class="zorem-layout__header-breadcrumbs">TrackShip</h1>
+	<h1 class="zorem-layout__header-breadcrumbs"><img class="ts4wc_logo_header" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></h1>
 	<div class="woocommerce-layout__activity-panel">
 		<div class="woocommerce-layout__activity-panel-tabs">
-			<button type="button" id="activity-panel-tab-help" class="components-button woocommerce-layout__activity-panel-tab"> <span class="dashicons dashicons-editor-help"></span> Help </button>
+			<button type="button" id="activity-panel-tab-help" class="components-button woocommerce-layout__activity-panel-tab"> <span class="dashicons dashicons-editor-help"></span><?php esc_html_e( 'Help', 'trackship-for-woocommerce' ); ?></button>
 		</div>
 		<div class="woocommerce-layout__activity-panel-wrapper">
 			<div class="woocommerce-layout__activity-panel-content" id="activity-panel-true">
 				<div class="woocommerce-layout__activity-panel-header">
 					<div class="woocommerce-layout__inbox-title">
-						<p class="css-activity-panel-Text">Documentation</p>
+						<p class="css-activity-panel-Text"><?php esc_html_e( 'Documentation', 'trackship-for-woocommerce' ); ?></p>
 					</div>
 				</div>
 				<div>
@@ -41,6 +41,15 @@ $menu_items = array(
 								</a>
 							</li>
 						<?php } ?>
+                        <li class="woocommerce-list__item has-action ts4wc_version">
+                            <div class="woocommerce-list__item-text">
+                                <span class="woocommerce-list__item-title">
+                                    <div class="woocommerce-list-Text">
+                                        <?php esc_html_e( 'TrackShip for WooCommerce Version - ' . $version ); ?>
+                                    </div>
+                                </span>
+                            </div>
+                        </li>
 					</ul>
 				</div>
 			</div>
@@ -61,6 +70,7 @@ $menu_items = array(
 	width: 24px;
 	height: 24px;
 	font-size: 24px;
+	color: #59c889;
 }
 .woocommerce-layout__activity-panel-tabs .woocommerce-layout__activity-panel-tab {
 	display: flex;
@@ -194,6 +204,9 @@ $menu_items = array(
 	display: flex;
 	align-items: center;
 	margin-left: auto;
+}
+.woocommerce-list__item.has-action.ts4wc_version .woocommerce-list__item-text {
+	padding: 16px 24px;
 }
 @media (min-width: 783px) {
 	.woocommerce-layout__activity-panel-wrapper {

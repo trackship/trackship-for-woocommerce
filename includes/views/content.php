@@ -1,5 +1,5 @@
 <?php
-$menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 'dashboard';
+$menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 'settings';
 ?>
 <div class="woocommerce trackship_admin_layout">
 	<div class="trackship_admin_content" >
@@ -7,10 +7,6 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 'd
 			<?php if ( trackship_for_woocommerce()->is_trackship_connected() ) { ?>
 				<?php
 					$array = array(
-						array(
-							'label'	=> __( 'Dashboard', 'trackship-for-woocommerce' ),
-							'slug'	=> 'dashboard'
-						),
 						array(
 							'label'	=> __( 'Settings', 'trackship-for-woocommerce' ),
 							'slug'	=> 'settings'
@@ -22,6 +18,10 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 'd
 						array(
 							'label'	=> __( 'Notifications', 'trackship-for-woocommerce' ),
 							'slug'	=> 'notifications'
+						),
+						array(
+							'label'	=> __( 'Map Providers', 'trackship-for-woocommerce' ),
+							'slug'	=> 'map-providers'
 						),
 					);
 					?>

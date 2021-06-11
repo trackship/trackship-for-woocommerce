@@ -377,7 +377,9 @@ class WC_TrackShip_Front {
 				?>
 					<div class="shipment-header">
 						<?php if ( $total_trackings > 1 ) { ?>
-                            <p class="shipment_heading"><?php printf( esc_html( "Shipment : %s out of %s", 'trackship-for-woocommerce'), $num , $total_trackings ); ?></p>
+                            <p class="shipment_heading">
+                            <?php printf( esc_html__( 'Shipment %1$s out of %2$s', 'trackship-for-woocommerce' ), esc_html($num), esc_html($total_trackings) ); ?>
+                            </p>
                         <?php } ?>
                     </div>
 					<div class="tracking-detail col <?php echo 't_layout_1' != $tracking_page_layout ? 'tracking-layout-2' : ''; ?> ">

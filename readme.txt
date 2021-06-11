@@ -2,9 +2,9 @@
 Contributors: TrackShip
 Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 5.3
-Tested up to: 5.7
+Tested up to: 5.7.2
 Requires PHP: 7.0
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -107,6 +107,20 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended).
 
 == Changelog ==
+= 1.0.4 - 2021-06-11 =
+* Enhancement - Design updated
+* Dev - TrackShip menu added in WordPress, removed from WooCommerce
+* Dev - hook added in shipment status email.
+* Dev - Improvement in Tracking page preview
+* Dev - Dashboard menu added in WP
+* Dev - Improvement in dashboard tab
+* Fix - Fixed issue in look when dark background in tracking widget
+* Enhancement - Design updated in shipment email
+* Dev - Improvement in shop order page and edit order page
+* Dev - Translations updated.
+* New - Map shipping provider functionality added.
+* Dev - Tested with WC 5.4.1
+
 = 1.0.3 =
 * Dev - Order note added for Trackship, when tracking information sent to Trackship and shipment status change 
 * Improved UI/UX - Shipment Tracking Column on orders admin list

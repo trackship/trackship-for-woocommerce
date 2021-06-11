@@ -41,13 +41,12 @@ class WC_Trackship_Admin {
 		add_action( 'admin_menu', array( $this, 'register_woocommerce_menu' ), 110 );
 		
 		add_action( 'admin_footer', array( $this, 'footer_function'), 1 );		
-		add_filter( 'trackship_get_provider_name_from_slug', array( $this, 'trackship_get_provider_name_from_slug_callback') );		
 		add_action( 'wp_ajax_add_trackship_mapping_row', array( $this, 'add_trackship_mapping_row' ) );
 		add_action( 'wp_ajax_trackship_mapping_form_update', array( $this, 'trackship_custom_mapping_form_update') );
 		add_filter( 'convert_provider_name_to_slug', array( $this, 'detect_custom_mapping_provider') );	
 		add_action( 'wp_ajax_ts_late_shipments_email_form_update', array( $this, 'ts_late_shipments_email_form_update_callback' ) );
 		
-		add_action( 'wp_ajax_wc_ast_trackship_automation_form_update', array( $this, 'wc_ast_trackship_automation_form_update') );
+		//add_action( 'wp_ajax_wc_ast_trackship_automation_form_update', array( $this, 'wc_ast_trackship_automation_form_update') );
 		
 		add_action( 'add_meta_boxes', array( $this, 'register_metabox') );
 		
@@ -91,14 +90,15 @@ class WC_Trackship_Admin {
 		if ( current_user_can( 'manage_woocommerce' ) ) {
 			$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id );
 			?>
+            
 			<div class="ts4wc_tracking-widget-header">
                 <button class="button btn_outline copy_tracking_page trackship-tip" title="Copy the secure link to the Tracking page" data-tracking_page_link=<?php echo esc_url( $tracking_page_link ); ?> >
                     <span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
-                    <span style="vertical-align: middle;" >Copy Tracking page</span>
+                    <span style="vertical-align: middle;" ><?php esc_html_e( 'Copy Tracking page', 'trackship-for-woocommerce' ); ?></span>
                 </button>
                 <button class="button btn_outline copy_view_order_page trackship-tip" title="Copy the secure link to the View Order details page" data-view_order_link=<?php echo esc_url( $order->get_view_order_url() ); ?> >
                     <span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
-                    <span style="vertical-align: middle;" >Copy View order page</span>
+                    <span style="vertical-align: middle;" ><?php esc_html_e( 'Copy View order page', 'trackship-for-woocommerce' ); ?></span>
                 </button>
                 <img class="ts4wc_logo" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png">
 			</div>
@@ -106,7 +106,7 @@ class WC_Trackship_Admin {
 			<?php
 			trackship_for_woocommerce()->front->show_tracking_page_widget( $order_id );
 		} else {
-			esc_html_e( 'Please refresh the page and try again.' );
+			esc_html_e( 'Please refresh the page and try again.', 'trackship-for-woocommerce' );
 		}
 		die();
 	}
@@ -230,7 +230,11 @@ class WC_Trackship_Admin {
 	* WC sub menu
 	*/
 	public function register_woocommerce_menu() {
-		add_submenu_page( 'woocommerce', 'TrackShip', 'TrackShip', 'manage_options', 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
+		add_menu_page( 'TrackShip', 'TrackShip', 'manage_options', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), 'dashicons-location', 56 );
+		add_submenu_page( 'trackship-dashboard', 'Dashboard', 'Dashboard', 'manage_options', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ) );
+		if ( trackship_for_woocommerce()->is_trackship_connected() ) {
+			add_submenu_page( 'trackship-dashboard', 'Settings', 'Settings', 'manage_options', 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
+		}
 	}
 	
 	/*
@@ -242,6 +246,25 @@ class WC_Trackship_Admin {
 			<?php include 'views/header.php'; ?>
 			<?php do_action('ast_settings_admin_notice'); ?>
 			<?php include 'views/content.php'; ?>
+		</div>
+		<?php
+	}
+	
+	/*
+	* callback for Dashboard
+	*/
+	public function dashboard_page_callback() {
+		?>
+		<div class="zorem-layout">
+			<?php include 'views/header.php'; ?>
+			<?php do_action('ast_settings_admin_notice'); ?>
+            <div class="trackship_admin_content">
+                <section id="content_trackship_dashboard" style="display:block" class="inner_tab_section">
+                    <div class="tab_inner_container">
+                        <?php include 'views/dashboard.php'; ?>
+                    </div>
+                </section>
+            </div>
 		</div>
 	<?php
 	}
@@ -563,7 +586,7 @@ class WC_Trackship_Admin {
 						<input class="ast-tgl ast-tgl-flat" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>" type="checkbox" <?php echo esc_html( $checked ); ?> value="1"/>
 						<label class="ast-tgl-btn <?php echo esc_html( $tgl_class ); ?>" for="<?php echo esc_html( $id ); ?>"></label>
 											
-						<label class="setting_ul_tgl_checkbox_label"><?php echo esc_html( $array['title'] ); ?>
+						<label class="setting_ul_tgl_checkbox_label" for="<?php echo esc_html( $id ); ?>"><?php echo esc_html( $array['title'] ); ?>
 						<?php if ( isset( $array['tooltip'] ) ) { ?>
 							<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
 						<?php } ?>
@@ -613,12 +636,12 @@ class WC_Trackship_Admin {
 					</li>	
 				<?php } else if ( 'dropdown_tpage' == $array['type'] ) { ?>
 					<li class="li_<?php esc_html_e( $id ); ?>">
-						<label class="left_label"><?php esc_html_e( $array['title'] ); ?>
+						<label class="left_label"><b><?php esc_html_e( $array['title'] ); ?></b>
 							<?php if ( isset( $array['tooltip'] ) ) { ?>
 								<span class="woocommerce-help-tip tipTip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
 							<?php } ?>
 						</label>
-						<span style="display: inline-block;vertical-align: top;">
+						<span style="display: block; padding-top: 10px;">
 							<select class="select select2 tracking_page_select" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>">
 								<?php foreach ( (array) $array['options'] as $page_id => $page_name ) { ?>
 									<option <?php echo get_option( $id ) == $page_id ? 'selected' : ''; ?> value="<?php echo esc_html( $page_id ); ?>"><?php esc_html_e( $page_name ); ?></option>
@@ -626,7 +649,7 @@ class WC_Trackship_Admin {
 								<option <?php echo 'other' == get_option( $id ) ? 'selected' : ''; ?> value="other"><?php esc_html_e( 'Other', 'trackship-for-woocommerce' ); ?>
 								</option>	
 							</select>
-							<fieldset style="<?php echo 'other' != get_option( $id ) ? 'display:none;' : ''; ?>" class="trackship_other_page_fieldset">
+							<fieldset style="<?php echo 'other' != get_option( $id ) ? 'display:none;' : 'padding-top: 10px;'; ?>" class="trackship_other_page_fieldset">
 								<input type="text" name="wc_ast_trackship_other_page" id="wc_ast_trackship_other_page" value="<?php echo esc_html( get_option('wc_ast_trackship_other_page') ); ?>">
 							</fieldset>
 							<p class="tracking_page_desc"><?php esc_html_e( 'Add the [wcast-track-order] shortcode in the selected page.', 'trackship-for-woocommerce' ); ?> <a href="https://www.zorem.com/docs/woocommerce-advanced-shipment-tracking/integration/" target="blank"><?php esc_html_e( 'More info', 'trackship-for-woocommerce' ); ?></a></p>
@@ -634,13 +657,15 @@ class WC_Trackship_Admin {
 					</li>	
 				<?php } else if ( 'button' == $array['type'] ) { ?>
 					<li>
-						<label class="left_label"><?php echo esc_html( $array['title'] ); ?>
-							<?php if ( isset($array['tooltip']) ) { ?>
-								<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
-							<?php } ?>
-						</label>	
+                    	<?php if ( $array['title'] ) { ?>
+                            <label class="left_label"><?php echo esc_html( $array['title'] ); ?>
+                                <?php if ( isset($array['tooltip']) ) { ?>
+                                    <span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
+                                <?php } ?>
+                            </label>
+                        <?php } ?>
 						<?php if ( isset($array['customize_link']) ) { ?>
-							<a href="<?php echo esc_url( $array['customize_link'] ); ?>" class="button-primary btn_ts_sidebar ts_customizer_btn"><?php esc_html_e( 'Customize', 'trackship-for-woocommerce' ); ?></a>	
+							<a href="<?php echo esc_url( $array['customize_link'] ); ?>" class="button-primary btn_ts_sidebar ts_customizer_btn"><?php esc_html_e( 'Customize the Tracking Widget', 'trackship-for-woocommerce' ); ?></a>	
 						<?php } ?>	
 					</li>	
 				<?php } elseif ( isset( $array['type'] ) && 'dropdown' == $array['type'] ) { ?>
@@ -716,8 +741,8 @@ class WC_Trackship_Admin {
 				'class'     => '',
 			),
 			'wc_ast_show_shipment_status_filter' => array(
-				'type'		=> 'checkbox',
-				'title'		=> __( 'Display Shipment Status Filter on Orders admin', 'trackship-for-woocommerce' ),				
+				'type'		=> 'tgl_checkbox',
+				'title'		=> __( 'Enable a shipment status filter on orders admin', 'trackship-for-woocommerce' ),				
 				'show'		=> true,
 				'class'     => '',				
 			),
@@ -950,46 +975,6 @@ class WC_Trackship_Admin {
 		}
 		echo '<div id=admin_tracking_widget class=popupwrapper style="display:none;"><div class=popuprow></div><div class=popupclose></div></div>';
 	}
-
-	/*
-	* get formated tracking url form tracking number and provider
-	*/	
-	public function get_formated_tracking_url( $order_id, $item, $shipment_status ) {
-		$link_format = '';
-		
-		$order = wc_get_order( $order_id );
-		
-		$tracking_page = get_option('wc_ast_trackship_page_id');
-		$wc_ast_api_key = get_option('wc_ast_api_key');
-		$use_tracking_page = get_option('wc_ast_use_tracking_page');
-		
-		if ( $wc_ast_api_key && $use_tracking_page && 'carrier_unsupported' != $shipment_status ) {		
-			$order_key = $order->get_order_key();				
-			if ( 'other' == $tracking_page ) {
-				$trackship_other_page = get_option('wc_ast_trackship_other_page');
-				$link_format = $trackship_other_page . '?order_id=' . $order_id . '&order_key=' . $order_key;
-			} else {
-				$link_format = get_permalink( $tracking_page ) . '?order_id=' . $order_id . '&order_key=' . $order_key;	
-			}
-			
-		}
-		return $link_format;
-	}
-	
-	/*
-	* Return trackship provider name from provider slug
-	*/
-	public function trackship_get_provider_name_from_slug_callback( $provider ) {
-		
-		global $wpdb;
-		
-		$ts_shippment_provider = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}trackship_shipping_provider where ts_slug = %s", $provider ) );	
-		if ( $ts_shippment_provider ) {
-			$provider = $ts_shippment_provider[0]->provider_name;	
-		}
-		
-		return $provider;
-	}
 	
 	public function get_trackship_provider() {
 		
@@ -1017,7 +1002,7 @@ class WC_Trackship_Admin {
 						<option value="<?php echo esc_html( $ts_provider->ts_slug ); ?>"><?php echo esc_html( $ts_provider->provider_name ); ?></option>	
 					<?php } ?>
 				</select>
-				<span class="dashicons dashicons-no-alt remove_custom_maping_row"></span>
+				<span class="dashicons dashicons-trash remove_custom_maping_row"></span>
 			</td>
 		</tr>
 		
@@ -1231,7 +1216,7 @@ class WC_Trackship_Admin {
 	/*
 	* Trackship Automation form save
 	*/	
-	public function wc_ast_trackship_automation_form_update() {
+	/*public function wc_ast_trackship_automation_form_update() {
 		if ( ! empty( $_POST ) && check_admin_referer( 'wc_ast_trackship_automation_form', 'wc_ast_trackship_automation_form_nonce' ) ) {
 				
 			$data = $this->get_delivered_data();						
@@ -1242,7 +1227,7 @@ class WC_Trackship_Admin {
 				}
 			}
 		}
-	}
+	}*/
 	
 	/*
 	* get settings tab array data
@@ -1267,10 +1252,16 @@ class WC_Trackship_Admin {
 		
 		$ts_tracking_page_customizer = new TSWC_Tracking_Page_Customizer();
 								
-		$form_data = array(												
+		$form_data = array(
+			'wc_ast_use_tracking_page' => array(
+				'type'		=> 'tgl_checkbox',
+				'title'		=> __( 'Enable Tracking Page', 'trackship-for-woocommerce' ),				
+				'show'		=> true,
+				'class'     => 'wc_ast_use_tracking_page',				
+			),											
 			'wc_ast_trackship_page_id' => array(
 				'type'		=> 'dropdown_tpage',
-				'title'		=> __( 'Select tracking page', 'trackship-for-woocommerce' ),
+				'title'		=> __( 'Select tracking page:', 'trackship-for-woocommerce' ),
 				'options'   => $page_list,				
 				'show'		=> true,
 				'desc'		=> $page_desc,
@@ -1284,7 +1275,7 @@ class WC_Trackship_Admin {
 			),
 			'wc_ast_tracking_page_customize_btn' => array(
 				'type'		=> 'button',
-				'title'		=> __( 'Tracking Widget Customizer', 'trackship-for-woocommerce' ),						
+				'title'		=> '',						
 				'show'		=> true,				
 				'class'     => '',
 				'customize_link' => $ts_tracking_page_customizer->get_customizer_url( 'ast_tracking_page_section', 'trackship' ),
@@ -1302,6 +1293,28 @@ class WC_Trackship_Admin {
 				'enable_status_name' => 'wcast_enable_intransit_email',		
 				'customizer_url' => TSWC_Intransit_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'in_transit', 'trackship' ),	
 			),
+			'failure' => array(					
+				'title'	=> __( 'Failed Attempt', 'trackship-for-woocommerce' ),
+				'slug'  => 'failed-attempt',
+				'option_name'	=> 'wcast_failure_email_settings',
+				'enable_status_name' => 'wcast_enable_failure_email',		
+				'customizer_url' => TSWC_Failure_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'failure', 'trackship' ),	
+			),
+			'out_for_delivery' => array(					
+				'title'	=> __( 'Out For Delivery', 'trackship-for-woocommerce' ),
+				'slug'  => 'out-for-delivery',
+				'option_name'	=> 'wcast_outfordelivery_email_settings',
+				'enable_status_name' => 'wcast_enable_outfordelivery_email',		
+				'customizer_url' => TSWC_Outfordelivery_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'out_for_delivery', 'trackship' ),	
+			),
+			'exception' => array(					
+				'title'	=> __( 'Exception', 'trackship-for-woocommerce' ),
+				'slug'  => 'exception',
+				'option_name'	=> 'wcast_exception_email_settings',
+				'enable_status_name' => 'wcast_enable_exception_email',		
+				'customizer_url' => TSWC_Exception_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'exception', 'trackship' ),	
+			),	
+			
 			'on_hold' => array(					
 				'title'	=> __( 'On Hold', 'trackship-for-woocommerce' ),
 				'slug'  => 'on-hold',
@@ -1323,35 +1336,23 @@ class WC_Trackship_Admin {
 				'enable_status_name' => 'wcast_enable_availableforpickup_email',		
 				'customizer_url' => TSWC_Availableforpickup_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'available_for_pickup', 'trackship' ),	
 			),
-			'out_for_delivery' => array(					
-				'title'	=> __( 'Out For Delivery', 'trackship-for-woocommerce' ),
-				'slug'  => 'out-for-delivery',
-				'option_name'	=> 'wcast_outfordelivery_email_settings',
-				'enable_status_name' => 'wcast_enable_outfordelivery_email',		
-				'customizer_url' => TSWC_Outfordelivery_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'out_for_delivery', 'trackship' ),	
-			),
 			'delivered' => array(					
 				'title'	=> __( 'Delivered', 'trackship-for-woocommerce' ),
+				'title2'=> __( 'Send only when all shipments for the order are delivered', 'trackship-for-woocommerce' ),
 				'slug'  => 'delivered-status',
 				'option_name'	=> 'wcast_delivered_email_settings',
 				'enable_status_name' => 'wcast_enable_delivered_status_email',		
-				'customizer_url' => TSWC_Delivered_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'delivered', 'trackship' ),	
+				'customizer_url' => TSWC_Delivered_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'delivered', 'trackship' ),
 			),
-			'failure' => array(					
-				'title'	=> __( 'Failed Attempt', 'trackship-for-woocommerce' ),
-				'slug'  => 'failed-attempt',
-				'option_name'	=> 'wcast_failure_email_settings',
-				'enable_status_name' => 'wcast_enable_failure_email',		
-				'customizer_url' => TSWC_Failure_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'failure', 'trackship' ),	
-			),
-			'exception' => array(					
-				'title'	=> __( 'Exception', 'trackship-for-woocommerce' ),
-				'slug'  => 'exception',
-				'option_name'	=> 'wcast_exception_email_settings',
-				'enable_status_name' => 'wcast_enable_exception_email',		
-				'customizer_url' => TSWC_Exception_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'exception', 'trackship' ),	
-			),	
 		);
 		return $notifications_data;
+	}
+	
+	/*
+	* transaltion function for loco generater
+	* this function is not called from any function
+	*/
+	function translation_func(){
+		__( 'Tracking Analytics', 'trackship-for-woocommerce');
 	}
 }
