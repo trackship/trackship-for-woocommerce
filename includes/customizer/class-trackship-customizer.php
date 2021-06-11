@@ -346,7 +346,7 @@ class WC_Trackship_Customizer {
 			'wcast_intransit_email_code_block' => '',
 			'track_button_Text' => __( 'Track your order', 'trackship-for-woocommerce' ),
 			'track_button_font_size' => 16,
-			'track_button_color' => '#59c889',
+			'track_button_color' => '#3c4758',
 			'track_button_text_color' => '#fff',
 		);
 		
