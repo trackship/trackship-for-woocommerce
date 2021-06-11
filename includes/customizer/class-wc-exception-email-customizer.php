@@ -434,7 +434,7 @@ class TSWC_Exception_Customizer_Email {
 				'shipment_status' => $shipment_status,
 				'order_id' => $preview_id,
 				'show_shipment_status' => true,
-				'new_status' => 'failure',
+				'new_status' => 'exception',
 			), 'woocommerce-advanced-shipment-tracking/', get_stylesheet_directory() . '/woocommerce/' );
 		} else {
 			$message .= wc_get_template_html( 'emails/tracking-info.php', array( 
@@ -442,7 +442,7 @@ class TSWC_Exception_Customizer_Email {
 				'shipment_status' => $shipment_status,
 				'order_id' => $preview_id,
 				'show_shipment_status' => true,
-				'new_status' => 'failure',
+				'new_status' => 'exception',
 			), 'woocommerce-advanced-shipment-tracking/', trackship_for_woocommerce()->get_plugin_path() . '/templates/' );
 		}
 		

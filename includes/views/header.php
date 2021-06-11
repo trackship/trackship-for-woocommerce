@@ -12,7 +12,7 @@ $menu_items = array(
 );
 ?>
 <div class="zorem-layout__header">
-	<h1 class="zorem-layout__header-breadcrumbs">TrackShip</h1>
+	<h1 class="zorem-layout__header-breadcrumbs"><img class="ts4wc_logo_header" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></h1>
 	<div class="woocommerce-layout__activity-panel">
 		<div class="woocommerce-layout__activity-panel-tabs">
 			<button type="button" id="activity-panel-tab-help" class="components-button woocommerce-layout__activity-panel-tab"> <span class="dashicons dashicons-editor-help"></span><?php esc_html_e( 'Help', 'trackship-for-woocommerce' ); ?></button>
@@ -70,6 +70,7 @@ $menu_items = array(
 	width: 24px;
 	height: 24px;
 	font-size: 24px;
+	color: #59c889;
 }
 .woocommerce-layout__activity-panel-tabs .woocommerce-layout__activity-panel-tab {
 	display: flex;

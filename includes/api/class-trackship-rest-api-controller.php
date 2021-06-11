@@ -142,12 +142,10 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	public function tracking_webhook( $request ) {
 		$content = print_r($request, true);
 		$logger = wc_get_logger();
-		$context = array( 'source' => 'trackship_log' );
-		$logger->error( "New tracking_webhook \n\n" . $content . "\n\n", $context );
-		//error_log("New tracking_webhook \n\n".$content."\n\n", 3, ABSPATH . "trackship.log");
+		$context = array( 'source' => 'trackship_webhook' );
+		$logger->info( "New trackship_webhook \n\n" . $content . "\n\n", $context );
 		
 		//validation
-		
 		$user_key = $request['user_key'];
 		$order_id = $request['order_id'];
 		$tracking_number = $request['tracking_number'];
