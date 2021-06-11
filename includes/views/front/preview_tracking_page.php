@@ -43,7 +43,7 @@
 				<span class="wc_order_id">
 					<a href="#" target="_blank">
 						<?php /* translators: %s: search 14696 */ ?>
-						<?php printf( esc_html__( 'Order #%d', 'trackship-for-woocommerce' ), 14696 ); ?>
+						<?php printf( esc_html( '#%d' ), 14696 ); ?>
 					</a>
 				</span>
 				<div class="provider_image_div" style="">
@@ -52,7 +52,7 @@
 				<div class="tracking_number_div">
 					<ul>
 						<li>
-						USPS: 
+						<div>USPS</div> 
 						<a href="https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=9410803699300126968507" target="blank"><strong>9410803699300126968507</strong></a>
 						<strong>9410803699300126968507</strong>
 						</li>

@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: TrackShip for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-23 10:15+0000\n"
-"PO-Revision-Date: 2021-05-19 10:06+0000\n"
-"Last-Translator: Hitesh Patel\n"
+"PO-Revision-Date: 2021-06-10 13:08+0000\n"
+"Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10 >= 2 && n%10<=4 "
@@ -13,52 +13,36 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.5.2; wp-5.7\n"
+"X-Loco-Version: 2.5.2; wp-5.7.2\n"
 "X-Domain: trackship-for-woocommerce"
 
-#: includes/views/dashboard.php:88
+#: includes/views/dashboard.php:82
 msgid "Account Dashboard"
 msgstr "Panel konta"
 
-#: includes/views/dashboard.php:69
+#: includes/views/dashboard.php:119
 msgid "Active Shipments"
 msgstr "Przesyłki aktywne"
 
-#: includes/views/settings.php:129
-msgid "Add custom mapping"
-msgstr "Dodaj niestandardowe mapowanie"
+#: includes/views/map-providers.php:47
+msgid "Add mapping"
+msgstr "Dodaj mapowanie"
 
-#. Description of the plugin
-msgid ""
-"Add shipment tracking information to your WooCommerce orders and provide "
-"customers with an easy way to track their orders. Shipment tracking Info "
-"will appear in customers accounts (in the order panel) and in WooCommerce "
-"order complete email."
-msgstr ""
-"Dodaj informacje o śledzeniu przesyłek do zamówień WooCommerce i zapewnij "
-"klientom łatwy sposób śledzenia ich zamówień. Informacje o śledzeniu "
-"przesyłki pojawią się na kontach klientów (w panelu zamówień) oraz w "
-"kompletnym e-mailu zamówienia WooCommerce."
-
-#: includes/class-wc-trackship-admin.php:609
+#: includes/class-wc-trackship-admin.php:655
 msgid "Add the [wcast-track-order] shortcode in the selected page."
 msgstr "Dodaj shortcode [wcast-track-order] na wybranej stronie."
 
-#: includes/views/notifications.php:51
+#: includes/views/notifications.php:69
 msgid "Admin Notifications"
 msgstr "Powiadomienia administratora"
 
-#: includes/views/notifications.php:130
+#: includes/views/notifications.php:145
 msgid "As it Happens"
 msgstr "Zdarza się"
 
-#: includes/views/settings.php:32
-msgid "Automation"
-msgstr "Automatyzacja"
-
-#: includes/class-wc-trackship-actions.php:546
-#: includes/class-wc-trackship-actions.php:670
-#: includes/class-wc-trackship-admin.php:1297
+#: includes/class-wc-trackship-actions.php:557
+#: includes/class-wc-trackship-actions.php:619
+#: includes/class-wc-trackship-admin.php:1333
 #: includes/customizer/class-wc-availableforpickup-email-customizer.php:123
 #: includes/customizer/class-wc-intransit-email-customizer.php:200
 msgid "Available For Pickup"
@@ -91,7 +75,7 @@ msgstr "Dostępne do odbioru"
 msgid "Available variables:"
 msgstr "Dostępne zmienne:"
 
-#: includes/views/dashboard.php:62
+#: includes/views/dashboard.php:112
 msgid "Avg Shipment Length"
 msgstr "Średnia długość przesyłki"
 
@@ -107,12 +91,12 @@ msgstr "Kolor czcionki przycisku"
 msgid "Button font size"
 msgstr "Rozmiar czcionki przycisku"
 
-#: includes/class-wc-trackship-actions.php:551
-#: includes/class-wc-trackship-actions.php:688
+#: includes/class-wc-trackship-actions.php:562
+#: includes/class-wc-trackship-actions.php:637
 msgid "Carrier Unsupported"
 msgstr "Operator nieobsługiwany"
 
-#: includes/class-wc-trackship-admin.php:690
+#: includes/class-wc-trackship-admin.php:738
 msgid "Choose on which order emails to include the shipment tracking info"
 msgstr ""
 "Wybierz, w których wiadomościach e-mail z zamówieniem chcesz uwzględnić "
@@ -134,35 +118,46 @@ msgstr "Wartość koloru"
 msgid "Connect your store"
 msgstr "Podłącz swój sklep"
 
-#: includes/class-wc-trackship-admin.php:343 includes/views/dashboard.php:38
+#: includes/class-wc-trackship-admin.php:389 includes/views/dashboard.php:54
 msgid "Connected"
 msgstr "Połączony"
 
-#: includes/views/dashboard.php:35
+#: includes/views/dashboard.php:51
 msgid "Connection Status"
 msgstr "Status połączenia"
 
-#: includes/class-wc-trackship-admin.php:549
-#: includes/class-wc-trackship-admin.php:620
-#: includes/views/notifications.php:37 includes/views/notifications.php:68
+#: includes/class-wc-trackship-admin.php:97
+msgid "Copy Tracking page"
+msgstr "Kopiuj stronę śledzenia"
+
+#: includes/class-wc-trackship-admin.php:101
+msgid "Copy View order page"
+msgstr "Kopiuj Zobacz stronę zamówienia"
+
+#: includes/class-wc-trackship-admin.php:595
+#: includes/views/notifications.php:55 includes/views/notifications.php:83
 msgid "Customize"
 msgstr "Dostosuj"
 
-#: includes/views/notifications.php:134
+#: includes/views/dashboard.php:164
+msgid "Customize the Shipment Status Email Notifications"
+msgstr "Dostosuj powiadomienia e-mail o statusie przesyłki"
+
+#: includes/class-wc-trackship-admin.php:668
+msgid "Customize the Tracking Widget"
+msgstr "Dostosuj widżet śledzenia"
+
+#: includes/views/notifications.php:149
 msgid "Daily Digest on"
 msgstr "Codzienne podsumowanie włączone"
 
-#: includes/views/settings.php:65
+#: includes/views/settings.php:36
 msgid "Dark Font"
 msgstr "Ciemna czcionka"
 
-#: includes/views/content.php:11
-msgid "Dashboard"
-msgstr "Deska rozdzielcza"
-
-#: includes/class-wc-trackship-actions.php:1243
-#: includes/class-wc-trackship-actions.php:1251
-#: includes/class-wc-trackship-actions.php:1268
+#: includes/class-wc-trackship-actions.php:1264
+#: includes/class-wc-trackship-actions.php:1272
+#: includes/class-wc-trackship-actions.php:1289
 msgid "data not available."
 msgstr "dane nie dostępne."
 
@@ -170,19 +165,19 @@ msgstr "dane nie dostępne."
 msgid "Default"
 msgstr "Domyślna"
 
-#: includes/class-wc-trackship-actions.php:548
-#: includes/class-wc-trackship-actions.php:664
-#: includes/class-wc-trackship-admin.php:851
-#: includes/class-wc-trackship-admin.php:869
-#: includes/class-wc-trackship-admin.php:1311
+#: includes/class-wc-trackship-actions.php:559
+#: includes/class-wc-trackship-actions.php:613
+#: includes/class-wc-trackship-admin.php:899
+#: includes/class-wc-trackship-admin.php:917
+#: includes/class-wc-trackship-admin.php:1340
 #: includes/customizer/class-wc-delivered-email-customizer.php:123
 #: includes/customizer/class-wc-intransit-email-customizer.php:202
-#: includes/views/dashboard.php:73 includes/views/settings.php:54
+#: includes/views/dashboard.php:123 includes/views/settings.php:28
 msgid "Delivered"
 msgstr "Dostarczono"
 
 #. %s: search number of order
-#: includes/class-wc-trackship-admin.php:857
+#: includes/class-wc-trackship-admin.php:905
 #, php-format
 msgid "Delivered <span class=\"count\">(%s)</span>"
 msgid_plural "Delivered <span class=\"count\">(%s)</span>"
@@ -194,10 +189,6 @@ msgstr[2] "Dostarczono <span class=\"count\">(%s)</span>"
 #: includes/views/front/layout1_tracking_details.php:132
 msgid "Destination Details"
 msgstr "Szczegóły miejsca docelowego"
-
-#: includes/class-wc-trackship-admin.php:697
-msgid "Display Shipment Status Filter on Orders admin"
-msgstr "Wyświetl filtr statusu przesyłki na panelu administracyjnym zamówień"
 
 #: includes/customizer/class-wc-availableforpickup-email-customizer.php:308
 #: includes/customizer/class-wc-delivered-email-customizer.php:325
@@ -221,6 +212,10 @@ msgstr "Wyświetl adres wysyłki"
 msgid "Display the Shipping items"
 msgstr "Wyświetl pozycje wysyłkowe"
 
+#: includes/views/header.php:9 includes/views/header.php:24
+msgid "Documentation"
+msgstr "Dokumentacja"
+
 #: includes/customizer/class-wc-availableforpickup-email-customizer.php:249
 #: includes/customizer/class-wc-delivered-email-customizer.php:247
 #: includes/customizer/class-wc-exception-email-customizer.php:249
@@ -242,7 +237,7 @@ msgstr "Treść wiadomości e-mail"
 msgid "Email heading"
 msgstr "Nagłówek wiadomości e-mail"
 
-#: includes/views/notifications.php:12
+#: includes/views/notifications.php:21
 msgid "Email Notifications"
 msgstr "powiadomienia e-mailowe"
 
@@ -257,13 +252,18 @@ msgstr "powiadomienia e-mailowe"
 msgid "Email Subject"
 msgstr "Temat emaila"
 
-#: includes/views/settings.php:33
+#: includes/views/settings.php:20
 msgid ""
 "Enable a Custom Order Status Delivered that will be set automatically when "
 "all the order shipments are delivered"
 msgstr ""
 "Włącz niestandardowy status zamówienia, który zostanie ustawiony "
 "automatycznie po dostarczeniu wszystkich przesyłek z zamówieniem"
+
+#: includes/class-wc-trackship-admin.php:745
+#| msgid "Display Shipment Status Filter on Orders admin"
+msgid "Enable a shipment status filter on orders admin"
+msgstr "Wyświetl filtr statusu przesyłki na panelu administracyjnym zamówień"
 
 #: includes/customizer/class-wc-availableforpickup-email-customizer.php:158
 msgid "Enable Available For Pickup email"
@@ -289,6 +289,10 @@ msgstr "Włącz pocztę e-mail w drodze"
 msgid "Enable On Hold email"
 msgstr "Włącz wstrzymaną pocztę e-mail"
 
+#: includes/views/settings.php:19
+msgid "Enable Order Delivery Automation"
+msgstr "Włącz automatyzację dostarczania zamówień"
+
 #: includes/customizer/class-wc-outfordelivery-email-customizer.php:158
 msgid "Enable Out For Delivery email"
 msgstr "Włącz wysyłanie wiadomości e-mail do dostarczenia"
@@ -301,6 +305,10 @@ msgstr "Włącz opcję Return To Sender Email"
 msgid "Enable Tracking # link to Carrier"
 msgstr "Włącz link Śledzenie # do przewoźnika"
 
+#: includes/class-wc-trackship-admin.php:1258
+msgid "Enable Tracking Page"
+msgstr "Włącz stronę śledzenia"
+
 #: includes/customizer/class-wc-exception-email-customizer.php:178
 #: includes/customizer/class-wc-failure-email-customizer.php:177
 msgid ""
@@ -310,7 +318,7 @@ msgstr ""
 "Wpisz tutaj adresy e-mail lub użyj zmiennych, takich jak {customer_email}. "
 "Wiele e-maili można oddzielić przecinkami."
 
-#: includes/views/front/tracking_page_header.php:45
+#: includes/views/front/tracking_page_header.php:42
 msgid "Est. Delivery Date"
 msgstr "Szac. Data dostarczenia"
 
@@ -319,21 +327,21 @@ msgstr "Szac. Data dostarczenia"
 msgid "Events Display Type"
 msgstr "Typ wyświetlania zdarzeń"
 
-#: includes/class-wc-trackship-admin.php:1325
+#: includes/class-wc-trackship-admin.php:1311
 #: includes/customizer/class-wc-exception-email-customizer.php:124
 #: includes/customizer/class-wc-intransit-email-customizer.php:204
 msgid "Exception"
 msgstr "Wyjątek"
 
-#: includes/class-wc-trackship-actions.php:549
-#: includes/class-wc-trackship-actions.php:676
-#: includes/class-wc-trackship-admin.php:1318
+#: includes/class-wc-trackship-actions.php:560
+#: includes/class-wc-trackship-actions.php:625
+#: includes/class-wc-trackship-admin.php:1297
 #: includes/customizer/class-wc-failure-email-customizer.php:123
 #: includes/customizer/class-wc-intransit-email-customizer.php:203
 msgid "Failed Attempt"
 msgstr "Nieudana próba"
 
-#: includes/class-wc-trackship-actions.php:558
+#: includes/class-wc-trackship-actions.php:569
 msgid "Filter by shipment status"
 msgstr "Filtruj według statusu przesyłki"
 
@@ -342,14 +350,20 @@ msgstr "Filtruj według statusu przesyłki"
 msgid "Found in your order confirmation email."
 msgstr "Znaleziono w e-mailu z potwierdzeniem zamówienia."
 
-#: includes/views/settings.php:7
-msgid "General Settings"
-msgstr "Ustawienia główne"
+#: includes/views/dashboard.php:150
+msgid "Further Engage Customers with Delivery Updates via SMS"
+msgstr ""
+"Dalsze angażowanie klientów dzięki aktualizacjom dostaw za pośrednictwem SMS-"
+"ów"
 
-#: includes/class-wc-trackship-actions.php:518
-#: includes/class-wc-trackship-actions.php:933 includes/views/dashboard.php:24
+#: includes/class-wc-trackship-actions.php:531
+#: includes/class-wc-trackship-actions.php:942 includes/views/dashboard.php:40
 msgid "Get Shipment Status"
 msgstr "Uzyskaj status przesyłki"
+
+#: includes/views/header.php:5
+msgid "Get Support"
+msgstr "Uzyskać wsparcie"
 
 #: includes/customizer/class-wc-availableforpickup-email-customizer.php:326
 #: includes/customizer/class-wc-delivered-email-customizer.php:343
@@ -361,6 +375,14 @@ msgstr "Uzyskaj status przesyłki"
 #: includes/customizer/class-wc-returntosender-email-customizer.php:323
 msgid "Google Analytics link tracking"
 msgstr "Śledzenie linków Google Analytics"
+
+#: includes/views/dashboard.php:134
+msgid "Guides"
+msgstr "Przewodniki"
+
+#: includes/views/header.php:18
+msgid "Help"
+msgstr "Wsparcie"
 
 #: includes/customizer/class-wc-delivered-email-customizer.php:124
 msgid ""
@@ -439,25 +461,41 @@ msgstr "Ukryj zdarzenia śledzenia"
 msgid "Hide TrackShip Branding"
 msgstr "Ukryj markę TrackShip"
 
+#: includes/views/dashboard.php:157
+msgid "How to Automate your post-shipping Workflow"
+msgstr "Jak zautomatyzować przepływ pracy po wysyłce"
+
+#: includes/views/dashboard.php:143
+msgid "How to Set up and customize the Tracking Page"
+msgstr "Jak skonfigurować i dostosować stronę śledzenia"
+
 #: includes/customizer/class-wc-tracking-page-customizer.php:163
 msgid "Icons"
 msgstr "Ikony"
 
-#: includes/class-wc-trackship-actions.php:545
-#: includes/class-wc-trackship-actions.php:655
-#: includes/class-wc-trackship-admin.php:1276
+#: includes/views/map-providers.php:16
+msgid ""
+"If you get different names from your shipping service, you can map the "
+"Shipping Providers names to the ones on TrackShip."
+msgstr ""
+"Jeśli otrzymasz różne nazwy od swojej usługi wysyłkowej, możesz zmapować "
+"nazwy dostawców wysyłkowych na nazwy w TrackShip."
+
+#: includes/class-wc-trackship-actions.php:556
+#: includes/class-wc-trackship-actions.php:604
+#: includes/class-wc-trackship-admin.php:1290
 #: includes/customizer/class-trackship-customizer.php:339
 #: includes/customizer/class-wc-intransit-email-customizer.php:126
 #: includes/customizer/class-wc-intransit-email-customizer.php:197
 msgid "In Transit"
 msgstr "W tranzycie"
 
-#: includes/class-wc-trackship-actions.php:553
-#: includes/class-wc-trackship-actions.php:685
+#: includes/class-wc-trackship-actions.php:564
+#: includes/class-wc-trackship-actions.php:634
 msgid "Invalid Tracking Number"
 msgstr "Nieprawidłowy numer śledzenia"
 
-#: includes/class-wc-trackship-actions.php:691
+#: includes/class-wc-trackship-actions.php:640
 msgid "Invalid User Key"
 msgstr "Nieprawidłowy klucz użytkownika"
 
@@ -465,20 +503,20 @@ msgstr "Nieprawidłowy klucz użytkownika"
 msgid "Items in this shipment"
 msgstr "Pozycje w tej przesyłce"
 
-#: includes/views/dashboard.php:49
+#: includes/views/dashboard.php:99
 msgid "Last 30 days"
 msgstr "Ostatnie 30 dni"
 
-#: includes/class-wc-trackship-admin.php:175
+#: includes/class-wc-trackship-admin.php:198
 msgid "Last Update on"
 msgstr "Ostatnia aktualizacja dnia"
 
 #: includes/customizer/class-wc-late-shipments-email-customizer.php:28
-#: includes/views/notifications.php:65
+#: includes/views/notifications.php:80
 msgid "Late Shipment"
 msgstr "Spóźniona wysyłka"
 
-#: includes/views/notifications.php:84
+#: includes/views/notifications.php:99
 msgid "Late Shipment Days"
 msgstr "Dni spóźnionej wysyłki"
 
@@ -492,32 +530,34 @@ msgstr "Opóźniona wysyłka dla zamówienia nr% d"
 msgid "Late shipments notification"
 msgstr "Powiadomienie o spóźnionej wysyłce"
 
-#: includes/views/settings.php:63
+#: includes/views/settings.php:34
 msgid "Light Font"
 msgstr "Jasna czcionka"
 
-#: includes/views/settings.php:91
+#: includes/views/content.php:23
+msgid "Map Providers"
+msgstr "Dostawcy map"
+
+#: includes/views/map-providers.php:9
 msgid "Map Shipping Providers"
 msgstr "Dostawcy przesyłek mapowych"
 
-#: includes/views/settings.php:92
-msgid ""
-"Map the Shipping Providers names that you add to orders with TrackShip's "
-"shipping provider names"
-msgstr ""
-"Zamapuj nazwy dostawców przesyłek, które dodajesz do zamówień, z nazwami "
-"dostawców usług kurierskich TrackShip"
-
-#: includes/class-wc-trackship-admin.php:609
+#: includes/class-wc-trackship-admin.php:655
 msgid "More info"
 msgstr "Więcej informacji"
 
-#: includes/views/content.php:23
+#: includes/class-wc-trackship-actions.php:403
+#: includes/class-wc-trackship-actions.php:406
+#: includes/class-wc-trackship-actions.php:409
+msgid "more info"
+msgstr "więcej informacji"
+
+#: includes/views/content.php:19 includes/views/notifications.php:5
 msgid "Notifications"
 msgstr "Powiadomienia"
 
-#: includes/class-wc-trackship-actions.php:658
-#: includes/class-wc-trackship-admin.php:1283
+#: includes/class-wc-trackship-actions.php:607
+#: includes/class-wc-trackship-admin.php:1319
 #: includes/customizer/class-wc-intransit-email-customizer.php:198
 #: includes/customizer/class-wc-onhold-email-customizer.php:125
 msgid "On Hold"
@@ -529,20 +569,20 @@ msgstr "W oczekiwaniu"
 msgid "Order #%1$d shipped on %2$s:"
 msgstr "Zamówienie nr %1$d wysłane %2$s:"
 
-#. %s: search 14696
-#. %s: order number
-#: includes/views/front/preview_tracking_page.php:46
-#: includes/views/front/tracking_page_header.php:10
-#, php-format
-msgid "Order #%d"
-msgstr "Zamówienie nr% d"
+#: templates/tracking/tracking-form.php:13
+msgid "Order Email"
+msgstr "Zamówienie e-mail"
 
-#: includes/class-wc-trackship-front.php:204
-#: includes/class-wc-trackship-front.php:215
+#: templates/tracking/tracking-form.php:12
+msgid "Order ID"
+msgstr "Identyfikator zamówienia"
+
+#: includes/class-wc-trackship-front.php:208
+#: includes/class-wc-trackship-front.php:219
 msgid "Order not found."
 msgstr "Nie znaleziono zamówienia."
 
-#: includes/class-wc-trackship-admin.php:689
+#: includes/class-wc-trackship-admin.php:737
 msgid "Order statuses to trigger TrackShip "
 msgstr "Zamów statusy, aby uruchomić TrackShip"
 
@@ -551,22 +591,33 @@ msgstr "Zamów statusy, aby uruchomić TrackShip"
 msgid "Origin Details"
 msgstr "Szczegóły pochodzenia"
 
-#: includes/class-wc-trackship-admin.php:603
+#: includes/class-wc-trackship-admin.php:649
 msgid "Other"
 msgstr "Inny"
 
-#: includes/class-wc-trackship-actions.php:547
-#: includes/class-wc-trackship-actions.php:667
+#: includes/class-wc-trackship-actions.php:558
+#: includes/class-wc-trackship-actions.php:616
 #: includes/class-wc-trackship-admin.php:1304
 #: includes/customizer/class-wc-intransit-email-customizer.php:201
 #: includes/customizer/class-wc-outfordelivery-email-customizer.php:124
 msgid "Out For Delivery"
 msgstr "W drodze do odbiorcy"
 
-#: includes/class-wc-trackship-actions.php:542
-#: includes/class-wc-trackship-actions.php:682
+#: includes/class-wc-trackship-actions.php:553
+#: includes/class-wc-trackship-actions.php:631
 msgid "Pending TrackShip"
 msgstr "Oczekujący TrackShip"
+
+#: includes/class-wc-trackship-actions.php:403
+msgid ""
+"Pending TrackShip is a temporary status that will display for a few minutes "
+"until we update the order with the first tracking event from the shipping "
+"provider. Please refresh the orders admin in 2-3 minutes."
+msgstr ""
+"Oczekujące TrackShip to tymczasowy status, który będzie wyświetlany przez "
+"kilka minut, dopóki nie zaktualizujemy zamówienia o pierwsze zdarzenie "
+"śledzenia od dostawcy. Proszę odświeżyć administratora zamówień za 2-3 "
+"minuty."
 
 #. %s: search for a tag
 #: trackship-for-woocommerce.php:110
@@ -582,6 +633,10 @@ msgid ""
 "WooCommerce!"
 msgstr ""
 "Zainstaluj i aktywuj %1$sWooCommerce%2$s dla TrackShip dla WooCommerce!"
+
+#: includes/class-wc-trackship-admin.php:109
+msgid "Please refresh the page and try again."
+msgstr "Odśwież stronę i spróbuj ponownie."
 
 #: includes/customizer/class-wc-availableforpickup-email-customizer.php:399
 #: includes/customizer/class-wc-availableforpickup-email-customizer.php:407
@@ -602,8 +657,8 @@ msgstr ""
 msgid "Please select order to preview."
 msgstr "Wybierz zamówienie, aby wyświetlić podgląd."
 
-#: includes/class-wc-trackship-actions.php:544
-#: includes/class-wc-trackship-actions.php:661
+#: includes/class-wc-trackship-actions.php:555
+#: includes/class-wc-trackship-actions.php:610
 msgid "Pre Transit"
 msgstr "Przed tranzytem"
 
@@ -623,24 +678,24 @@ msgstr "Pasek postępu"
 #: includes/customizer/class-wc-onhold-email-customizer.php:178
 #: includes/customizer/class-wc-outfordelivery-email-customizer.php:177
 #: includes/customizer/class-wc-returntosender-email-customizer.php:175
-#: includes/views/notifications.php:94
+#: includes/views/notifications.php:109
 msgid "Recipient(s)"
 msgstr "Odbiorca (y)"
 
-#: includes/class-wc-trackship-actions.php:552
-#: includes/class-wc-trackship-actions.php:673
-#: includes/class-wc-trackship-admin.php:1290
+#: includes/class-wc-trackship-actions.php:563
+#: includes/class-wc-trackship-actions.php:622
+#: includes/class-wc-trackship-admin.php:1326
 #: includes/customizer/class-wc-intransit-email-customizer.php:199
 #: includes/customizer/class-wc-returntosender-email-customizer.php:122
 msgid "Return To Sender"
 msgstr "Zwrot do nadawcy"
 
-#: includes/views/notifications.php:145 includes/views/settings.php:13
-#: includes/views/settings.php:87
+#: includes/views/notifications.php:160 includes/views/settings.php:42
+#: includes/views/tracking-page.php:13 includes/views/map-providers.php:50
 msgid "Save Changes"
 msgstr "Zapisz zmiany"
 
-#: includes/class-wc-trackship-front.php:184
+#: includes/class-wc-trackship-front.php:188
 msgid "Security verification failed, please refresh page and try again."
 msgstr ""
 "Weryfikacja bezpieczeństwa nie powiodła się, odśwież stronę i spróbuj "
@@ -662,26 +717,33 @@ msgstr "Wybierz zamówienie, aby wyświetlić podgląd"
 msgid "Select shipment status"
 msgstr "Wybierz status przesyłki"
 
-#: includes/class-wc-trackship-admin.php:1250
-msgid "Select tracking page"
+#: includes/class-wc-trackship-admin.php:1264
+#| msgid "Select tracking page"
+msgid "Select tracking page:"
 msgstr "Wybierz stronę śledzenia"
 
-#: includes/views/content.php:15
+#: includes/class-wc-trackship-admin.php:1341
+msgid "Send only when all shipments for the order are delivered"
+msgstr ""
+"Wysyłaj tylko wtedy, gdy wszystkie przesyłki z zamówienia zostaną dostarczone"
+
+#: includes/views/content.php:11 includes/views/settings.php:7
 msgid "Settings"
 msgstr "Ustawienia"
 
 #. %s: search for number of shipments
+#: includes/class-wc-trackship-front.php:381
 #: templates/emails/tswc-tpi-email-order-details.php:69
 #, php-format
 msgid "Shipment %1$s out of %2$s"
 msgstr "Wysyłka %1$s z %2$s"
 
-#: includes/class-wc-trackship-actions.php:1231
+#: includes/class-wc-trackship-actions.php:1252
 msgid "Shipment providers"
 msgstr "Dostawcy przesyłek"
 
-#: includes/class-wc-trackship-actions.php:340
-#: includes/class-wc-trackship-actions.php:1234
+#: includes/class-wc-trackship-actions.php:344
+#: includes/class-wc-trackship-actions.php:1255
 #: includes/customizer/class-wc-intransit-email-customizer.php:189
 msgid "Shipment status"
 msgstr "Stan przesyłki"
@@ -690,7 +752,12 @@ msgstr "Stan przesyłki"
 msgid "Shipping and Delivery Emails"
 msgstr "Wiadomości e-mail o wysyłce i dostawie"
 
-#: includes/views/settings.php:100
+#: includes/class-wc-trackship-api-call.php:103
+#, php-format
+msgid "Shipping information (%s - %s) was sent to TrackShip."
+msgstr "Informacje o wysyłce (%s - %s) zostały wysłane do TrackShip."
+
+#: includes/views/map-providers.php:18
 msgid "Shipping Provider"
 msgstr "Dostawca usług transportowych"
 
@@ -710,15 +777,15 @@ msgstr "Pokaż szczegóły śledzenia"
 msgid "Simple"
 msgstr "Prosty"
 
-#: includes/views/notifications.php:15
+#: includes/views/notifications.php:24
 msgid "SMS Notifications"
 msgstr "Powiadomienia SMS"
 
-#: includes/views/dashboard.php:93
+#: includes/views/dashboard.php:71
 msgid "Subscription "
 msgstr "Subskrypcja"
 
-#: includes/class-wc-trackship-actions.php:504
+#: includes/class-wc-trackship-actions.php:517
 msgid ""
 "The shipment status updates will run in the background, please refresh the "
 "page in a few minutes."
@@ -744,12 +811,25 @@ msgstr ""
 msgid "This will be appended to URL in the email content"
 msgstr "Zostanie to dołączone do adresu URL w treści wiadomości e-mail"
 
-#: includes/views/dashboard.php:57
+#: templates/tracking/tracking-form.php:11
+msgid ""
+"To track your order please enter your Order ID in the box below and press "
+"the \"Track\" button. This was given to you on your receipt and in the "
+"confirmation email you should have received."
+msgstr ""
+"Aby śledzić swoje zamówienie, wprowadź swój identyfikator zamówienia w polu "
+"poniżej i naciśnij przycisk „Śledź”. Otrzymałeś to na potwierdzeniu oraz w e-"
+"mailu z potwierdzeniem, który powinieneś otrzymać."
+
+#: includes/views/dashboard.php:107
 msgid "Total Shipments"
 msgstr "Łączna liczba przesyłek"
 
+#: includes/class-wc-trackship-actions.php:400
+#: includes/class-wc-trackship-actions.php:414
 #: templates/emails/late-shipment-tracking-info.php:29
 #: templates/emails/tswc-tpi-email-order-details.php:80
+#: templates/tracking/tracking-form.php:16
 msgid "Track"
 msgstr "Tor"
 
@@ -761,7 +841,7 @@ msgstr "Przycisk utworu"
 msgid "Track button Text"
 msgstr "Śledź tekst przycisku"
 
-#: includes/class-wc-trackship-admin.php:162
+#: includes/class-wc-trackship-admin.php:185
 msgid "Track Shipment"
 msgstr "Śledź przesyłkę"
 
@@ -770,38 +850,34 @@ msgstr "Śledź przesyłkę"
 msgid "Track your order"
 msgstr "Śledź swoje zamówienie"
 
-#: includes/views/dashboard.php:101
+#: includes/views/dashboard.php:79
 msgid "Trackers Balance"
 msgstr "Trackers Balance"
 
-#: includes/views/dashboard.php:48
-msgid "Tracking Analytics overview"
-msgstr "Omówienie analizy śledzenia"
+#: includes/class-wc-trackship-admin.php:1356 includes/views/dashboard.php:98
+msgid "Tracking Analytics"
+msgstr "Analiza śledzenia"
 
 #: includes/views/front/layout1_tracking_details.php:11
 #: includes/views/front/layout1_tracking_details.php:128
 msgid "Tracking Details"
 msgstr "Szczegóły śledzenia"
 
-#: includes/class-wc-trackship-front.php:231
+#: includes/class-wc-trackship-front.php:235
 msgid "Tracking details not found"
 msgstr "Nie znaleziono szczegółów śledzenia"
 
-#: includes/class-wc-trackship-front.php:409
-msgid "Tracking details not found in TrackShip"
-msgstr "Szczegóły śledzenia nie zostały znalezione w TrackShip"
-
-#: includes/class-wc-trackship-front.php:389
+#: includes/class-wc-trackship-front.php:395
 msgid ""
 "Tracking information is not available, please try again in a few minutes."
 msgstr ""
 "Informacje o śledzeniu są niedostępne. Spróbuj ponownie za kilka minut."
 
-#: includes/class-wc-trackship-actions.php:1237
+#: includes/class-wc-trackship-actions.php:1258
 msgid "Tracking issues"
 msgstr "Problemy ze śledzeniem"
 
-#: includes/views/content.php:19 includes/views/tracking-page.php:7
+#: includes/views/content.php:15 includes/views/tracking-page.php:6
 msgid "Tracking Page"
 msgstr "Strona śledzenia"
 
@@ -809,34 +885,45 @@ msgstr "Strona śledzenia"
 msgid "Tracking Page Widget"
 msgstr "Widżet strony śledzenia"
 
-#: includes/class-wc-trackship-admin.php:1264
-msgid "Tracking Widget Customizer"
-msgstr "Konfigurator widżetów śledzenia"
+#: includes/views/dashboard.php:33
+msgid "TrackShip > Dashboard"
+msgstr "TrackShip > Pulpit"
 
-#: includes/views/dashboard.php:83
+#: includes/views/dashboard.php:64
 msgid "TrackShip Account"
 msgstr "Konto TrackShip"
 
-#: includes/views/dashboard.php:31
+#: includes/views/dashboard.php:47
 msgid "TrackShip Connection Status"
 msgstr "Stan połączenia TrackShip"
 
-#. Name of the plugin
-msgid "TrackShip for WooCommerce"
-msgstr "TrackShip dla WooCommerce"
+#. Description of the plugin
+msgid ""
+"TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store "
+"and auto-tracks your orders, automates your post-shipping workflow and "
+"allows you to provide a superior Post-Purchase experience to your customers."
+msgstr ""
+"TrackShip dla WooCommerce integruje TrackShip z Twoim sklepem WooCommerce i "
+"automatycznie śledzi Twoje zamówienia, automatyzuje przepływ pracy po "
+"wysyłce i pozwala zapewnić klientom doskonałe wrażenia po zakupie."
 
-#: includes/views/settings.php:101
+#: includes/views/map-providers.php:19
 msgid "TrackShip Provider"
 msgstr "Dostawca TrackShip"
 
-#: includes/views/notifications.php:113
+#: includes/views/notifications.php:128
 msgid "Trigger Alert"
 msgstr "Wyzwalanie alertu"
 
-#: includes/class-wc-trackship-actions.php:543
-#: includes/class-wc-trackship-actions.php:679
+#: includes/class-wc-trackship-actions.php:554
+#: includes/class-wc-trackship-actions.php:628
 msgid "Unknown"
 msgstr "Nieznany"
+
+#: includes/class-wc-trackship-actions.php:399
+#: includes/class-wc-trackship-actions.php:920
+msgid "Updated "
+msgstr "Zaktualizowano"
 
 #: includes/customizer/class-wc-availableforpickup-email-customizer.php:178
 #: includes/customizer/class-wc-delivered-email-customizer.php:176
@@ -856,12 +943,13 @@ msgstr ""
 msgid "view less"
 msgstr "wyświetl mniej"
 
+#. %s: search 14696
 #: includes/views/front/layout1_tracking_details.php:120
 #: includes/views/front/preview_tracking_page.php:126
 msgid "view more"
 msgstr "Zobacz więcej"
 
-#: includes/class-wc-trackship-actions.php:1274
+#: includes/class-wc-trackship-actions.php:1295
 msgid "View more on TrackShip"
 msgstr "Zobacz więcej na TrackShip"
 
@@ -881,7 +969,7 @@ msgstr "Kolor czcionki widżetu"
 msgid "Widget Tracker Type"
 msgstr "Typ widżetu śledzącego"
 
-#: includes/class-wc-trackship-actions.php:694
+#: includes/class-wc-trackship-actions.php:643
 msgid "Wrong Shipping Provider"
 msgstr "Niewłaściwy dostawca usług transportowych"
 
@@ -918,6 +1006,6 @@ msgstr "Twoje zamówienie nr {order_number} jest wstrzymane"
 msgid "Your order #{order_number} is out for delivery"
 msgstr "Twoje zamówienie nr {order_number} zostało wysłane"
 
-#: includes/class-wc-trackship-actions.php:134
+#: includes/class-wc-trackship-actions.php:143
 msgid "Your settings have been successfully saved."
 msgstr "Twoje ustawienia zostały pomyślnie zapisane."

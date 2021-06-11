@@ -35,7 +35,7 @@ form.order_track_form input {
 .col.tracking-detail {
 	margin: 5px auto 20px;
 	border: 1px solid #ccc;
-	max-width: 800px;
+	max-width: 600px;
 	position: relative;
 	padding: 10px 20px;
 }
@@ -76,7 +76,7 @@ span.wc_order_id {
 	font-weight: 600;
 	display: flex;
 	margin: 0 auto;
-    max-width: 800px;
+    max-width: 600px;
 }
 .shipment_heading {
 	margin-bottom: 0;
@@ -127,15 +127,15 @@ span.wc_order_id {
 	height: 30px;
 }
 .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.pre_transit:before {
-	content: url(icons/pre-transit-o.png);
+	content: url(icons/pre_transit-o.png);
 	left: 2%;
 }
 .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.in_transit:before {
-	content: url(icons/in-transit-o.png);
+	content: url(icons/in_transit-o.png);
 	left: 33%;
 }
 .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.not_shipped:before {
-	content: url(icons/not-shipped.png);
+	content: url(icons/not_shipped.png);
 	left: 17%;
 }
 .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.pending_trackship:before, .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.pending:before, .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.unknown:before, .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.carrier_unsupported:before, .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.balance_zero:before {
@@ -143,15 +143,15 @@ span.wc_order_id {
 	left: 17%;
 }
 .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.available_for_pickup:before {
-	content: url(icons/available-for-picup-o.png);
+	content: url(icons/available_for_pickup-o.png);
 	left: 64%;
 }
 .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.on_hold:before {
-	content: url(icons/on-hold-o.png);
+	content: url(icons/on_hold-o.png);
 	left: 33%;
 }
 .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.out_for_delivery:before {
-	content: url(icons/out-for-delivery-o.png);
+	content: url(icons/out_for_delivery-o.png);
 	left: 64%;
 }
 .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.delivered:before {
@@ -159,7 +159,7 @@ span.wc_order_id {
 	right: 2.5%;
 }
 .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.return_to_sender:before {
-	content: url(icons/return-to-sender-o.png);
+	content: url(icons/return_to_sender-o.png);
 	left: 64%;
 }
 .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.failure:before {
