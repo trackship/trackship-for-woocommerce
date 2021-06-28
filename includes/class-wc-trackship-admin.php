@@ -42,9 +42,11 @@ class WC_Trackship_Admin {
 		
 		add_action( 'admin_footer', array( $this, 'footer_function'), 1 );		
 		add_action( 'wp_ajax_add_trackship_mapping_row', array( $this, 'add_trackship_mapping_row' ) );
+		add_action( 'wp_ajax_remove_tracking_event', array( $this, 'remove_tracking_event' ) );
 		add_action( 'wp_ajax_trackship_mapping_form_update', array( $this, 'trackship_custom_mapping_form_update') );
 		add_filter( 'convert_provider_name_to_slug', array( $this, 'detect_custom_mapping_provider') );	
 		add_action( 'wp_ajax_ts_late_shipments_email_form_update', array( $this, 'ts_late_shipments_email_form_update_callback' ) );
+		add_action( 'wp_ajax_get_tracking_analytics_overview', array( $this, 'refresh_tracking_analytics_overview' ) );
 		
 		//add_action( 'wp_ajax_wc_ast_trackship_automation_form_update', array( $this, 'wc_ast_trackship_automation_form_update') );
 		
@@ -230,7 +232,8 @@ class WC_Trackship_Admin {
 	* WC sub menu
 	*/
 	public function register_woocommerce_menu() {
-		add_menu_page( 'TrackShip', 'TrackShip', 'manage_options', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), 'dashicons-location', 56 );
+		$icon = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHdpZHRoPSI0MHB4IiBoZWlnaHQ9IjQwcHgiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNDAgNDAiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBhdGggaWQ9IlhNTElEXzRfIiBmaWxsPSIjRjBGNkZDIiBkPSJNMjQuMiwyMi4xYzAsMi4zLTEuOSw0LjItNC4yLDQuMnMtNC4yLTEuOS00LjItNC4yYzAtMi4zLDEuOS00LjIsNC4yLTQuMg0KCVMyNC4yLDE5LjgsMjQuMiwyMi4xeiBNMzMuNCwxMC4ybC01LjcsMy41YzIuMywyLjEsMy43LDUsMy43LDguNGMwLDYuMy01LjEsMTEuMy0xMS4zLDExLjNTOC43LDI4LjQsOC43LDIyLjFTMTMuOCwxMC44LDIwLDEwLjgNCglsMCwwdjRsMTIuOS03LjRMMjAsMHY0LjJsMCwwYy05LjksMC0xNy45LDgtMTcuOSwxNy45QzIuMSwzMiwxMC4xLDQwLDIwLDQwaDE3LjlWMjIuMUMzNy45LDE3LjUsMzYuMiwxMy40LDMzLjQsMTAuMnoiLz4NCjwvc3ZnPg0K';
+		add_menu_page( 'TrackShip', 'TrackShip', 'manage_options', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), $icon, 56 );
 		add_submenu_page( 'trackship-dashboard', 'Dashboard', 'Dashboard', 'manage_options', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ) );
 		if ( trackship_for_woocommerce()->is_trackship_connected() ) {
 			add_submenu_page( 'trackship-dashboard', 'Settings', 'Settings', 'manage_options', 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
@@ -1012,6 +1015,54 @@ class WC_Trackship_Admin {
 	}
 	
 	/*
+	* Return add maping table row
+	*/
+	public function remove_tracking_event() {
+		check_ajax_referer( 'wc_ast_tools', 'security' );
+		$days = isset( $_POST['days'] ) ? sanitize_text_field($_POST['days']) : false;
+		$args = array(
+			'post_type'  => 'shop_order',
+			'posts_per_page' => '1000',
+			'meta_query' => array(
+				'relation' => 'AND',
+				'shipment_status' => array(
+					'key' => 'shipment_status',
+					'value' => 'delivered',
+					'compare' => 'LIKE',
+				),
+				array(
+					'key' => 'shipment_events_deleted',
+					'compare' => 'NOT EXISTS'
+				),
+			),
+			'date_query' => array(
+				 array(
+					 'before' => '-' . $days . ' days',
+					 'column' => 'post_date',
+				 ),
+			 ),
+		);
+		$query = new WP_Query( $args );
+		while ( $query->have_posts() ) {
+			$query->the_post();
+			
+			$order_id = get_the_id();
+			$shipment_status = get_post_meta( $order_id, 'shipment_status', true );
+			foreach( $shipment_status as $key => $val ){
+				$shipment_status[$key]['tracking_events'] = array();
+				$shipment_status[$key]['tracking_destination_events'] = array();
+			}
+			update_post_meta( $order_id, 'shipment_status', $shipment_status );
+			update_post_meta( $order_id, 'shipment_events_deleted', 1 );
+		}
+		$json = array(
+			'order_count' => $query->post_count,
+			'found_orders' => $query->found_posts
+		);
+		wp_send_json($json);
+	}
+	
+	/*
 	* Save Custom Mapping data
 	*/
 	public function trackship_custom_mapping_form_update() {
@@ -1039,14 +1090,13 @@ class WC_Trackship_Admin {
 		return $tracking_provider;
 	}
 
-	public function get_tracking_analytics_overview() {
-		global $wpdb;		
-		$paid_order_statuses =  array('completed','delivered','shipped');
-		
-		$end_date = gmdate('Y-m-d', strtotime('today - 30 days'));
-		$start_date = gmdate('Y-m-d');				
+	public function get_tracking_analytics_overview( $days ) {
+		global $wpdb;
 
-		//"wc-" . implode( "','wc-", $paid_order_statuses ) . "", 
+		$temp_day = $days - 1;
+		$start_date = gmdate('Y-m-d 00:00:00', strtotime( 'today - ' . $temp_day . ' days' ) );
+		$end_date = gmdate('Y-m-d 23:59:59');
+		
 		$shipment_status_results = $wpdb->get_results( $wpdb->prepare( "
 			SELECT 				
 				posts.post_status as ordr_status,  								
@@ -1058,13 +1108,13 @@ class WC_Trackship_Admin {
 				LEFT JOIN {$wpdb->postmeta} AS shipment_tracking_items ON(posts.ID = shipment_tracking_items.post_id)
 				LEFT JOIN {$wpdb->postmeta} AS shipment_status ON(posts.ID = shipment_status.post_id)				
 			WHERE 
-				posts.post_status IN ( 'wc-completed','wc-delivered','wc-shipped' )
+				posts.post_status IN ( 'wc-completed','wc-delivered','wc-shipped', 'wc-partial-shipped' )
 				AND posts.post_type IN ( 'shop_order' )											
 				AND shipment_tracking_items.meta_key IN ( '_wc_shipment_tracking_items')
 				AND shipment_tracking_items.meta_key IS NOT NULL	
 				AND shipment_status.meta_key IN ( 'shipment_status')	
+				AND post_date > %s
 				AND post_date < %s
-				AND post_date > %s	
 				
 			ORDER BY
 				posts.ID DESC
@@ -1082,7 +1132,6 @@ class WC_Trackship_Admin {
 			}					
 		}
 		
-				
 		$tracking_issues = 0;
 		$active_shipments = 0;
 		$delivered_shipments = 0;
@@ -1114,7 +1163,8 @@ class WC_Trackship_Admin {
 			
 			$avg_shipment_days_array[] = $days;
 			
-			$avg_shipment_length = $this->get_average( $avg_shipment_days_array );						
+			$avg_shipment_length = $this->get_average( $avg_shipment_days_array );
+			$avg_shipment_length = round( (int) $avg_shipment_length );					
 			
 			if ( in_array( $status, array( 'carrier_unsupported', 'INVALID_TRACKING_NUM', 'unknown', 'wrong_shipping_provider' ) ) ) {
 				$tracking_issues ++;
@@ -1125,8 +1175,10 @@ class WC_Trackship_Admin {
 			if ( 'delivered' != $status ) {
 				$active_shipments ++;
 			}
-		}		
-			
+		}
+		
+		$active_shipments .= ' ' . $this->calculate_percent( $active_shipments, count($shipment_status_merge));
+		$delivered_shipments .= ' ' . $this->calculate_percent( $delivered_shipments, count($shipment_status_merge));
 		$result = array();
 		
 		$result['total_shipments'] = count($shipment_status_merge);
@@ -1136,6 +1188,19 @@ class WC_Trackship_Admin {
 		$result['avg_shipment_length'] = $avg_shipment_length;
 		$result['total_orders'] = count($shipment_status_results);
 		return $result;
+	}
+	
+	public function refresh_tracking_analytics_overview(){
+		$days = wc_clean( $_POST['selected_option'] );
+		$result = $this->get_tracking_analytics_overview( $days );		
+		
+		$total_shipments = $result['total_shipments'];
+		$active_shipments = $result['active_shipments'];
+		$delivered_shipments = $result['delivered_shipments'];
+		$avg_shipment_length = $result['avg_shipment_length'];
+		
+		echo json_encode( array( 'total_shipments' => $total_shipments,'active_shipments' => $active_shipments,'delivered_shipments' => $delivered_shipments, 'avg_shipment_length' => $avg_shipment_length ) );
+		exit;
 	}
 
 	/*
@@ -1348,6 +1413,12 @@ class WC_Trackship_Admin {
 		return $notifications_data;
 	}
 	
+	public function calculate_percent( $first, $second ) {
+		if ( $second == 0 ) return '';
+		$percent = $first * 100 / $second;
+		return '(' . round( $percent, 2 ).'%)';
+	}
+
 	/*
 	* transaltion function for loco generater
 	* this function is not called from any function
