@@ -117,7 +117,7 @@ span.wc_order_id {
 }
 /**** Layout 1 Progressbar CSS ***/
 .tracker-progress-bar.tracking_layout_1 .progress {
-	height: 15px;
+	height: 8px;
 	border-radius: 10px;
 }
 .tracker-progress-bar.tracking_layout_1 .progress .progress-bar:before {
@@ -133,10 +133,6 @@ span.wc_order_id {
 .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.in_transit:before {
 	content: url(icons/in_transit-o.png);
 	left: 33%;
-}
-.tracker-progress-bar.tracking_layout_1 .progress .progress-bar.not_shipped:before {
-	content: url(icons/not_shipped.png);
-	left: 17%;
 }
 .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.pending_trackship:before, .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.pending:before, .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.unknown:before, .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.carrier_unsupported:before, .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.balance_zero:before {
 	content: url(icons/shipped-o.png);
@@ -224,6 +220,10 @@ span.wc_order_id {
 }
 .tracking-detail .tracking-details {
 	font-size: 14px;
+}
+.est-delivery-date.tracking-number {
+	margin-bottom: 15px;
+	display: block;
 }
 ul.timeline {
 	list-style: none!important;

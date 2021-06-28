@@ -23,6 +23,14 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 							'label'	=> __( 'Map Providers', 'trackship-for-woocommerce' ),
 							'slug'	=> 'map-providers'
 						),
+						array(
+							'label'	=> __( 'Tools', 'trackship-for-woocommerce' ),
+							'slug'	=> 'tools'
+						),
+						array(
+							'label'	=> __( 'Status', 'trackship-for-woocommerce' ),
+							'slug'	=> 'status'
+						),
 					);
 					?>
 				<?php foreach ( $array as $key => $val ) { ?>
@@ -37,7 +45,7 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 				<?php foreach ( $array as $key => $val ) { ?>
 					<section id="content_trackship_<?php esc_html_e( $val[ 'slug' ] ); ?>" class="inner_tab_section">
 						<div class="tab_inner_container">
-							<?php include $val[ 'slug' ] . '.php'; ?>
+							<?php include __DIR__ . '/' . $val[ 'slug' ] . '.php'; ?>
 						</div>
 					</section>
 				<?php } ?>

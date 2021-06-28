@@ -28,11 +28,8 @@ if ( 1 == $hide_tracking_events ) {
 						<li>
 							<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 							<p>
-							<?php
-							echo esc_html( apply_filters( 'trackship_tracking_event_description', $value->message ) );
-							echo ( null != $value->tracking_location->city ) ? ' - ' : '';
-							?>
-							<span><?php echo esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ); ?></span>
+							<?php echo esc_html( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
+							<span><?php echo ( null != $value->tracking_location->city ) ? ' - ' : ''; ?><?php echo esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ); ?></span>
 							</p>					
 						</li>						
 					<?php $a++; } ?>
@@ -51,11 +48,8 @@ if ( 1 == $hide_tracking_events ) {
 						<li>
 							<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 							<p>
-							<?php
-							echo esc_html( apply_filters( 'trackship_tracking_event_description', $value->message ) );
-							echo ( null != $value->tracking_location->city ) ? ' - ' : '';
-							?>
-							<span><?php echo esc_html( esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ) ); ?></span>
+							<?php echo esc_html( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
+							<span><?php echo ( null != $value->tracking_location->city ) ? ' - ' : ''; ?><?php echo esc_html( esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ) ); ?></span>
 							</p>					
 						</li>						
 					<?php $a++; } ?>
@@ -82,11 +76,8 @@ if ( 1 == $hide_tracking_events ) {
 						<li>
 							<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 							<p>
-								<?php
-								echo esc_html( apply_filters( 'trackship_tracking_event_description', $value->message ) );
-								echo ( null != $value->tracking_location->city ) ? ' - ' : '';
-								?>
-								<span><?php echo esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ); ?></span>
+								<?php echo esc_html( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
+								<span><?php echo ( null != $value->tracking_location->city ) ? ' - ' : ''; ?><?php echo esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ); ?></span>
 							</p>					
 						</li>						
 					<?php $a++; } ?>
@@ -105,11 +96,8 @@ if ( 1 == $hide_tracking_events ) {
 						<li>
 							<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 							<p>
-								<?php
-								echo esc_html( apply_filters( 'trackship_tracking_event_description', $value->message ) );
-								echo ( null != $value->tracking_location->city ) ? ' - ' : '';
-								?>
-								<span><?php echo esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ); ?></span>
+								<?php echo esc_html( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
+								<span><?php echo ( null != $value->tracking_location->city ) ? ' - ' : ''; ?><?php echo esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ); ?></span>
 							</p>					
 						</li>						
 					<?php $a++; } ?>
@@ -138,11 +126,8 @@ if ( 1 == $hide_tracking_events ) {
 							<li>
 								<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 								<p>
-									<?php
-									echo esc_html( apply_filters( 'trackship_tracking_event_description', $value->message ) );
-									echo ( null != $value->tracking_location->city ) ? ' - ' : '';
-									?>
-									<span><?php echo esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ); ?></span>
+									<?php echo esc_html( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
+									<span><?php echo ( null != $value->tracking_location->city ) ? ' - ' : ''; ?><?php echo esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ); ?></span>
 								</p>
 							</li>					
 						<?php } ?>								
@@ -161,11 +146,8 @@ if ( 1 == $hide_tracking_events ) {
 						<li>
 							<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 							<p>
-							<?php
-							echo esc_html( apply_filters( 'trackship_tracking_event_description', $value->message ) );
-							echo ( null != $value->tracking_location->city ) ? ' - ' : '';
-							?>
-							<span><?php echo esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ); ?></span>
+							<?php echo esc_html( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
+							<span><?php echo ( null != $value->tracking_location->city ) ? ' - ' : ''; ?><?php echo esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ); ?></span>
 							</p>
 						</li>						
 					<?php } ?>

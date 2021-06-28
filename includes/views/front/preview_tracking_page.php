@@ -6,6 +6,10 @@
 	.col.tracking-detail{
 		margin: 50px auto 100px;
 	}
+	.est_delivery_date {
+		margin-bottom: 15px;
+		display: block;
+	}
 	.customize-partial-edit-shortcut-button {display: none;}
 	<?php if ( $border_color ) { ?>
 		.col.tracking-detail{

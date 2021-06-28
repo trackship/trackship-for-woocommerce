@@ -321,7 +321,7 @@ class WC_TrackShip_Front {
 			} else if ( isset($shipment_status[$key]['status']) ) {
 				$tracker->ep_status = $shipment_status[$key]['status'];
 			} else {
-				$tracker->ep_status = 'not_shipped';
+				$tracker->ep_status = '';
 			}
 			
 			$tracker->est_delivery_date = isset( $shipment_status[$key]['est_delivery_date'] ) ? $shipment_status[$key]['est_delivery_date'] : '';
@@ -392,7 +392,7 @@ class WC_TrackShip_Front {
 						
 						if ( empty( $trackind_detail_by_status_rev ) ) {
 							
-							$pending_message = __( 'Tracking information is not available, please try again in a few minutes.', 'trackship-for-woocommerce' );
+							$pending_message = __( 'Tracking information is not available, please try again later.', 'trackship-for-woocommerce' );
 							?>
 							<p class="pending_message"><?php esc_html_e( apply_filters( 'trackship_pending_status_message', $pending_message, $tracker->ep_status ) ); ?></p>
 							<?php

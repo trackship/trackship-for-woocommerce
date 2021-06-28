@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: TrackShip for WooCommerce 
- * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers. 
- * Version: 1.0.4
+ * Plugin Name: TrackShip for WooCommerce
+ * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
+ * Version: 1.0.6
  * Author: TrackShip
  * Author URI: https://trackship.info/
  * License: GPL-2.0+
@@ -23,7 +23,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.0.4';
+	public $version = '1.0.6';
 	
 	/**
 	 * Initialize the main plugin function
@@ -62,7 +62,9 @@ class Trackship_For_Woocommerce {
 		
 		//plugin install class init
 		$this->ts_install->init();
-			
+
+		//plugin shipments class init
+		$this->shipments->init();
 	}
 	
 	/**
@@ -170,6 +172,9 @@ class Trackship_For_Woocommerce {
 		$this->late_shipments = WC_TrackShip_Late_Shipments::get_instance();
 
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-api-call.php';
+		
+		require_once $this->get_plugin_path() . '/includes/shipments/class-wc-trackship-shipments.php';
+		$this->shipments = WC_Trackship_Shipments::get_instance();
 	}
 	
 	/**
@@ -216,6 +221,7 @@ class Trackship_For_Woocommerce {
 		
 		//load tracking page customizer
 		require_once $this->get_plugin_path() . '/includes/customizer/class-wc-tracking-page-customizer.php';
+		require_once $this->get_plugin_path() . '/includes/customizer/class-wc-tracking-widget-email-customizer.php';
 		
 		//load plugin textdomain
 		load_plugin_textdomain( 'trackship-for-woocommerce', false, dirname( plugin_basename(__FILE__) ) . '/language/' );

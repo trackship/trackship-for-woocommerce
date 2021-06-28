@@ -1,175 +1,71 @@
-<?php
-
-$completed_order_with_tracking = $this->completed_order_with_tracking();		
-$completed_order_with_zero_balance = $this->completed_order_with_zero_balance();							
-$completed_order_with_do_connection = $this->completed_order_with_do_connection();
-$plan_array = array(
-	'Free Trial'	=> 50,
-	'Mini'			=> 100,
-	'Small'			=> 300,
-	'MEDIUM'		=> 500,
-	'Large'			=> 1000,
-	'X-LARGE'		=> 2000,
-	'XX-LARGE'		=> 3000,
-	'XXX-LARGE'		=> 5000,
-	'HUGE'			=> 10000,
-	'Giant 30K'		=> 30000,
-	'Giant 50K'		=> 50000,
-	'Giant 60k'		=> 60000,
-	'Giant 100k'	=> 100000,
-);
-
-$url = 'https://my.trackship.info/wp-json/tracking/get_user_plan';								
-$args[ 'body' ] = array(
-	'user_key' => trackship_for_woocommerce()->actions->get_trackship_key(),				
-);
-$response = wp_remote_post( $url, $args );
-if ( is_wp_error( $response ) ) {
-	$plan_data = array();
-} else {
-	$plan_data = json_decode( $response[ 'body' ] );					
-} ?>
+<?php $nonce = wp_create_nonce( 'wc_ast_tools'); ?>
+<input type="hidden" id="wc_ast_dashboard_tab" name="wc_ast_dashboard_tab" value="<?php echo esc_attr( $nonce ); ?>" />
+<?php //$tracking_analytics = $this->get_tracking_analytics_overview( 30 ); ?>
 <?php if ( trackship_for_woocommerce()->is_trackship_connected() ) { ?>
-    <div><h3 style="margin-top:0; font-weight: 400; font-style: italic; color: #333;"><?php esc_html_e( 'TrackShip > Dashboard', 'trackship-for-woocommerce' ); ?></h3></div>
-    <?php if ( $completed_order_with_tracking > 0 || $completed_order_with_zero_balance > 0 || $completed_order_with_do_connection > 0 ) {
-        $total_orders = $completed_order_with_tracking + $completed_order_with_zero_balance + $completed_order_with_do_connection; ?>
-        
-        <div class="trackship-notice">
-            <?php //%s used for replacement ?>
-            <p><?php echo sprintf( esc_html( 'We detected %s Shipped orders from the last 30 days that were not sent to TrackShip, you can bulk send them to TrackShip', 'trackship-for-woocommerce'), esc_html( $total_orders ) ) ; ?></p>
-            <button class="button-primary btn_green2 bulk_shipment_status_button"><?php esc_html_e( 'Get Shipment Status', 'trackship-for-woocommerce' ); ?></button>
+    <?php /* ?>
+	<div class="flexcontainer">
+        <div class="flexcolumn right_border">
+            <div class="shipping_time">
+            	<select class="select_option" name="shipping_time" id="shipping_time"> 
+					<option value="1">Today</option>
+                    <option value="7">Last 7 Days</option>
+                    <option value="30" selected>Last 30 Days</option>
+                </select>
+			</div>
         </div>
-    <?php } ?>
-    
-    <div class="ts-dashboard-widgets-container row">
-        <div class="ts-postbox-container col-lg-6">
-            <div class="ts-dashboard-widget">
-                <div class="ts-widget-header"><h2><?php esc_html_e( 'TrackShip Connection Status', 'trackship-for-woocommerce' ); ?></h2></div>
-                <div class="ts-widget-content mh70">
-                    <div class="ts-widget-row">
-                        <div class="ts-widget__section">
-                            <span><?php esc_html_e( 'Connection Status', 'trackship-for-woocommerce' ); ?>: </span>
-                            <a href="https://trackship.info/my-account/?utm_source=wpadmin&utm_medium=sidebar&utm_campaign=upgrade" class="button-primary button-trackship btn_large" target="_blank" style="float: right;padding: 7px 10px 6px 3px;line-height: 1;" >
-                                <span class="dashicons dashicons-yes" style="margin:0;"></span>
-                                <span><?php esc_html_e( 'Connected', 'trackship-for-woocommerce' ); ?></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="flexcolumn right_border fullfillment_counter">
+            <strong class="total_shipments_count"><?php echo esc_html( $tracking_analytics['total_shipments'] ); ?></strong>
+            <span>Total Shipments</span>	
         </div>
-        
-        <div class="ts-postbox-container col-lg-6">
-            <div class="ts-dashboard-widget">
-                <div class="ts-widget-header"><h2><?php esc_html_e( 'TrackShip Account', 'trackship-for-woocommerce' ); ?></h2></div>
-                <div class="ts-widget-content mh70">
-                    <div class="ts-widget-row">
-                        <div class="ts-widget__section">
-                            <div style="float:left;" class="subscription_detail">
-                                <p>
-                                    <span>
-                                        <?php esc_html_e( 'Subscription ', 'trackship-for-woocommerce' ); ?>:
-                                        <?php
-                                        if ( isset( $plan_data->subscription_plan ) ) {
-                                            echo esc_html( $plan_data->subscription_plan );
-                                        }
-                                        ?>
-                                    </span>
-                                </p>
-                                <p><?php esc_html_e( 'Trackers Balance', 'trackship-for-woocommerce' ); ?>: <?php echo esc_html( get_option('trackers_balance') ); echo isset( $plan_array[ $plan_data->subscription_plan ] ) ? ' / ' . $plan_array[$plan_data->subscription_plan] : ''; ?></p>
-                            </div>
-                            <div style="float:right;" class="account_dashboard_btn">
-                                <a href="https://trackship.info/my-account/?utm_source=wpadmin&utm_medium=sidebar&utm_campaign=upgrade" class="account_dashboard_btn button-primary btn_large btn_outline" target="_blank" ><?php esc_html_e( 'Account Dashboard', 'trackship-for-woocommerce' ); ?></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="flexcolumn right_border fullfillment_counter"> 
+            <strong class="active_shipments_count"><?php echo esc_html( $tracking_analytics['active_shipments'] ); ?></strong>
+            <span style="color: #005b9a;">Active Shipments</span>
         </div>
-        
+        <div class="flexcolumn right_border fullfillment_counter"> 
+            <strong class="delivered_shipments_count"><?php echo esc_html( $tracking_analytics['delivered_shipments'] ); ?></strong>
+            <span style="color: #59c889;">Delivered</span>
+        </div>
+        <div class="flexcolumn fullfillment_counter"> 
+            <strong class="avg_shipment_length_count"><?php echo esc_html( $tracking_analytics['avg_shipment_length'] ); ?></strong>
+            <span>Avg. Shipping Time</span>
+        </div>
     </div>
-    
-    <div class="ts-dashboard-widgets-container row">
-        
-        <div class="ts-postbox-container col-lg-6">
-            <div class="ts-dashboard-widget" style="margin-bottom:0">
-                <div class="ts-widget-header">
-                    <h2>
-                        <?php esc_html_e( 'Tracking Analytics', 'trackship-for-woocommerce' ); ?>
-                        <small><?php esc_html_e( 'Last 30 days', 'trackship-for-woocommerce' ); ?></small>
-                    </h2>
-                </div>
-    
-                <?php $tracking_analytics = $this->get_tracking_analytics_overview(); ?>
-                <div class="ts-widget-content ">
-                    <div class="ts-widget-row mh100">
-                        <div class="ts-widget__section ts-widget-rborder ts-widget-bborder">
-                            <h3><?php esc_html_e( 'Total Shipments', 'trackship-for-woocommerce' ); ?></h3>	
-                            <span class="ts-widget-analytics-number"><?php echo esc_html( $tracking_analytics['total_shipments'] ); ?></span>
-                            <span>(<?php echo esc_html( $tracking_analytics['total_orders'] ); ?> <?php esc_html_e( 'Orders', 'woocommerce' ); ?>)</span>
-                        </div>
-                        <div class="ts-widget__section ts-widget-bborder">
-                            <h3><?php esc_html_e( 'Avg Shipment Length', 'trackship-for-woocommerce' ); ?></h3>
-                            <span class="ts-widget-analytics-number"><?php echo esc_html( round( (int) $tracking_analytics['avg_shipment_length'] ) ); ?></span>
-                            <span><?php esc_html_e( 'days' ); ?></span>
-                        </div>
-                    </div>
-                    <div class="ts-widget-row mh100">
-                        <div class="ts-widget__section ts-widget-rborder">
-                            <h3><?php esc_html_e( 'Active Shipments', 'trackship-for-woocommerce' ); ?></h3>	
-                            <span class="ts-widget-analytics-number"><?php echo esc_html( $tracking_analytics['active_shipments'] ); ?></span>
-                        </div>
-                        <div class="ts-widget__section">
-                            <h3><?php esc_html_e( 'Delivered', 'trackship-for-woocommerce' ); ?></h3>
-                            <span class="ts-widget-analytics-number"><?php echo esc_html( $tracking_analytics['delivered_shipments'] ); ?></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <div class="ts-postbox-container col-lg-6">
-            <div class="ts-dashboard-widget" style="margin-bottom:0">
-                <div class="ts-widget-header">
-                    <h2 class="mh22"><?php esc_html_e( 'Guides', 'trackship-for-woocommerce' ); ?></h2>
-                </div>
-    
-                <?php $tracking_analytics = $this->get_tracking_analytics_overview(); ?>
-                <div class="ts-widget-content ">
-                    <div class="ts-widget-row ts-widget-guides">
-                        <a target="_blank" href="https://trackship.info/docs/trackship-for-woocommerce/tracking-page/#customize-the-tracking-page-widget">
-                            <div class="ts-widget__section ts-widget-bborder">
-                                <p>
-                                    <span class="dashicons dashicons-arrow-right-alt2"></span><?php esc_html_e( 'How to Set up and customize the Tracking Page', 'trackship-for-woocommerce' ); ?>
-                                </p>
-                            </div>
-                        </a>
-                        <a target="_blank" href="https://trackship.info/docs/trackship-for-woocommerce/compatibility/sms-for-woocommerce/">
-                            <div class="ts-widget__section ts-widget-bborder">
-                                <p>
-                                    <span class="dashicons dashicons-arrow-right-alt2"></span><?php esc_html_e( 'Further Engage Customers with Delivery Updates via SMS', 'trackship-for-woocommerce' ); ?>
-                                </p>
-                            </div>
-                        </a>
-                        <a target="_blank" href="https://trackship.info/docs/trackship-for-woocommerce/compatibility/automatewoo/">
-                            <div class="ts-widget__section ts-widget-bborder">
-                                <p>
-                                    <span class="dashicons dashicons-arrow-right-alt2"></span><?php esc_html_e( 'How to Automate your post-shipping Workflow', 'trackship-for-woocommerce' ); ?>
-                                </p>
-                            </div>
-                        </a>
-                        <a target="_blank" href="https://trackship.info/docs/trackship-for-woocommerce/shipment-status-notifications/">
-                            <div class="ts-widget__section">
-                                <p>
-                                    <span class="dashicons dashicons-arrow-right-alt2"></span><?php esc_html_e( 'Customize the Shipment Status Email Notifications', 'trackship-for-woocommerce' ); ?>
-                                </p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>	
+	<?php */ ?>
+	<div><h2><?php esc_html_e( 'Shipments Dashboard', 'trackship-for-woocommerce' ); ?></h2></div>
+
+	<?php $ship_status = array(
+        'all_tracking_statuses' => 'All Tracking Statuses',
+        'pre_transit' => 'Pre Transit',
+        'in_transit' => 'In Transit',
+        'exception' => 'Exception',
+        'out_for_delivery' => 'Out for Delivery',
+        'return_to_sender' => 'Return to Sender',
+        'available_for_pickup' => 'Available for Pickup',
+        //'late_shipment' => 'Late Shipments'
+    ); ?>
+    <div>
+        <select class="select_option" name="active_shipment" id="active_shipment"> 
+            <option value="active">Active</option>
+            <option value="delivered">Delivered</option>
+        </select>
+        <select  class="dashboard_shipment_status select_option" name="shipment_status" id="shipment_status"> 
+            <?php foreach ( $ship_status as $key => $val ) { ?>
+                <option value="<?php echo esc_html( $key ); ?>"><?php echo esc_html( $val ); ?></option>
+            <?php } ?>
+        </select> 
+        <!--<select class="select_option" name="ts4wc_shipment_times" id="ts4wc_shipment_times"> 
+            <option value="all_shipping_times">All Shipping Times</option>
+            <option value="1-3">1-3 days</option>
+            <option value="3-7">3-7 days</option>
+            <option value="7-10">7-10 days</option>
+            <option value="10+">10+</option>
+        </select>-->
+        <span style="float:right">
+            <input type="text" id="search_bar" name="search_bar" placeholder="Order ID">
+            <button class="serch_button" type="button">Search</button>
+        </span>  
+    </div>
+	<?php require_once( trackship_for_woocommerce()->get_plugin_path() . '/includes/shipments/views/trackship_shipments.php' );?>	
 <?php } else { ?>
 	<div class="woocommerce trackship_admin_layout">
 		<div class="trackship_admin_content" >
@@ -178,4 +74,4 @@ if ( is_wp_error( $response ) ) {
 			</div>
 		</div>
 	</div>
-<?php }
+<?php } ?>
