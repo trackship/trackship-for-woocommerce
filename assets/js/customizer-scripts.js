@@ -9,7 +9,8 @@ jQuery(document).ready(function() {
      * Change description
      */	 	
 	jQuery('#customize-theme-controls #accordion-section-themes').hide();			
-	jQuery( '#sub-accordion-section-trackship_shipment_status_email .customize-section-title > h3 .customize-action' ).append( '<span class="dashicons dashicons-arrow-right" style="padding-top:4px;"></span> TrackShip' );
+	jQuery( '#sub-accordion-section-trackship_shipment_status_email .customize-section-title > h3 .customize-action, #sub-accordion-section-ast_tracking_page_section .customize-section-title > h3 .customize-action' ).append( '<span class="dashicons dashicons-arrow-right" style="padding-top:4px; margin: 0 -5px;"></span> TrackShip' );
+	jQuery( '.accordion-section .panel-title' ).html(wcast_customizer.customizer_title);
 });	
 
 // Handle mobile button click
@@ -96,8 +97,16 @@ jQuery('#customize-footer-actions .preview-tablet').click(function(e) {
             var url;
             if ( isExpanded ) {
 				jQuery('#save').trigger('click');
-                url = wcast_customizer.tracking_page_preview_url;
-                api.previewer.previewUrl.set( url );
+				
+				var tracking_widget_type = jQuery("#_customize-input-tracking_widget_type").val();
+	
+				if ( tracking_widget_type == 'tracking_email_widget' ) {
+					wp.customize.previewer.previewUrl(wcast_customizer.tracking_widget_email_preview_url);
+					wp.customize.previewer.refresh();					
+				} else {			
+					wp.customize.previewer.previewUrl(wcast_customizer.tracking_page_preview_url);
+					wp.customize.previewer.refresh();
+				}
             }
         } );
     } );
@@ -156,5 +165,18 @@ wp.customize( 'wcast_shipment_status_type', function( value ) {
 			wp.customize.previewer.previewUrl(wcast_customizer.customer_exception_preview_url);
 			wp.customize.previewer.refresh();	
 		} 				
+	});
+});
+
+wp.customize( 'tracking_widget_type', function( value ) {		
+	value.bind( function( tracking_widget_type ) {
+		
+		if(tracking_widget_type == 'tracking_page_widget'){
+			wp.customize.previewer.previewUrl(wcast_customizer.tracking_page_preview_url);
+			wp.customize.previewer.refresh();	
+		} else {			
+			wp.customize.previewer.previewUrl(wcast_customizer.tracking_widget_email_preview_url);
+			wp.customize.previewer.refresh();
+		}
 	});
 });

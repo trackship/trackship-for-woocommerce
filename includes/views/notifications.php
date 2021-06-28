@@ -18,7 +18,7 @@
     ?>				
     
     <input id="tab_email_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-type="email" <?php echo 'email' == $tab_type ? 'checked' : ''; ?> >
-    <label for="tab_email_notifications" class="inner_tab_label first_inner_label ts_tabs_label"><?php esc_html_e( 'Email Notifications', 'trackship-for-woocommerce' ); ?></label>				
+    <label for="tab_email_notifications" class="inner_tab_label ts_tabs_label"><?php esc_html_e( 'Email Notifications', 'trackship-for-woocommerce' ); ?></label>				
     
     <input id="tab_sms_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-type="sms" <?php echo 'sms' == $tab_type ? 'checked' : ''; ?> >
     <label for="tab_sms_notifications" class="inner_tab_label ts_tabs_label"><?php esc_html_e( 'SMS Notifications', 'trackship-for-woocommerce' ); ?></label>
@@ -60,17 +60,19 @@
         </table>	
         
         <?php do_action( 'after_shipment_status_email_notifications' ); ?>
-        
+	</section>
+    
+    <section class="inner_tab_section late-shipment-status-email-section" style="margin-top:20px;border: 0;">
         <form method="post" id="trackship_late_shipments_form" action="" enctype="multipart/form-data">					
             <table class="form-table heading-table shipment-status-email-table">
                 <tbody>
-                    <tr valign="top">
-                        <td>
+                    <tr valign="top" style="background:#fff">
+                        <td style="padding:0;">
                             <h3 style=""><?php esc_html_e( 'Admin Notifications', 'trackship-for-woocommerce' ); ?></h3>
                         </td>
                         <td></td>						
                     </tr>
-                    <tr class="<?php echo 1 == $wcast_enable_late_shipments_admin_email ? 'enable' : 'disable'; ?> ">
+                    <tr class="late-shipment-tr <?php echo 1 == $wcast_enable_late_shipments_admin_email ? 'enable' : 'disable'; ?> ">
                         <td class="forminp status-label-column">
                             <span class="shipment_status_toggle">								
                                 <input type="hidden" name="wcast_enable_late_shipments_admin_email" value="0"/>
@@ -80,7 +82,7 @@
                             <?php esc_html_e('Late Shipment', 'trackship-for-woocommerce'); ?>
                         </td>
                         <td class="forminp">
-                            <a class="edit_customizer_a late_shipments_a button-primary btn_ts_transparent btn_ts_sidebar" href="javascript:void(0);"><?php esc_html_e('Customize', 'trackship-for-woocommerce'); ?></a>
+                            <a class="edit_customizer_a late_shipments_a button-primary btn_ts_transparent btn_ts_sidebar" href="javascript:void(0);"><?php esc_html_e('Settings', 'trackship-for-woocommerce'); ?></a>
                         </td>
                     </tr>
                 </tbody>
@@ -94,16 +96,7 @@
             ?>
             
             <table class="form-table late-shipments-email-content-table hide_table">
-                <tr class="">
-                    <th scope="row" class="titledesc">
-                        <label for=""><?php esc_html_e('Late Shipment Days', 'trackship-for-woocommerce'); ?></label>	
-                    </th>	
-                    <td class="forminp">
-                        <fieldset>
-                            <input class="input-text" type="number" name="wcast_late_shipments_days" id="wcast_late_shipments_days" min="1" value="<?php echo esc_html( $wcast_late_shipments_days ); ?>">
-                        </fieldset>
-                    </td>
-                </tr>
+                
                 <tr class="">
                     <th scope="row" class="titledesc">
                         <label for=""><?php esc_html_e('Recipient(s)', 'trackship-for-woocommerce'); ?></label>	
@@ -156,7 +149,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">
+                    <td colspan="2" style="padding-left: 15px;">
                         <button name="save" class="button-primary woocommerce-save-button btn_green2 btn_large" type="submit" value="Save changes"><?php esc_html_e( 'Save Changes', 'trackship-for-woocommerce' ); ?></button>
                         <div class="spinner"></div>								
                         <?php wp_nonce_field( 'ts_late_shipments_email_form', 'ts_late_shipments_email_form_nonce' ); ?>

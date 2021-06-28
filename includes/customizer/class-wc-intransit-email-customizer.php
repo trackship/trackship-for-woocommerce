@@ -131,10 +131,7 @@ class TSWC_Intransit_Customizer_Email {
 			'wcast_intransit_hide_shipping_item_price' => 1,	
 			'wcast_intransit_show_shipping_address' => 1,
 			'wcast_intransit_email_code_block' => '',
-			'track_button_Text' => __( 'Track your order', 'trackship-for-woocommerce' ),
-			'track_button_font_size' => 16,
-			'track_button_color' => '#59c889',
-			'track_button_text_color' => '#fff',
+			
 		);
 
 		return apply_filters( 'skyrocket_customizer_defaults', $customizer_defaults );
@@ -396,104 +393,7 @@ class TSWC_Intransit_Customizer_Email {
 				),
 				'active_callback' => array( $this, 'active_callback' ),
 			)
-		);
-		
-		// Test of Toggle Switch Custom Control
-		$wp_customize->add_setting( 'shipment_email_settings[track_button_heading]',
-			array(
-				'default' => '',
-				'transport' => 'postMessage',
-				'sanitize_callback' => '',
-				'type' => 'option',
-			)
-		);
-		$wp_customize->add_control( new TrackShip_Heading_Control( $wp_customize, 'shipment_email_settings[track_button_heading]',
-			array(
-				'label' => __( 'Track button', 'trackship-for-woocommerce' ),
-				'section' => 'trackship_shipment_status_email',
-				'priority' => 100
-			)
-		) );
-		
-		// Track button Text Text		
-		$wp_customize->add_setting( 'shipment_email_settings[track_button_Text]',
-			array(
-				'default' => $this->defaults['track_button_Text'],
-				'transport' => 'refresh',
-				'type'  => 'option',
-				'sanitize_callback' => ''
-			)
-		);
-		$wp_customize->add_control( 'shipment_email_settings[track_button_Text]',
-			array(
-				'label' => __( 'Track button Text', 'trackship-for-woocommerce' ),
-				'section' => 'trackship_shipment_status_email',
-				'type' => 'text',
-				'input_attrs' => array(
-					'class' => '',
-					'style' => '',
-					'placeholder' => __( $this->defaults['track_button_Text'], 'trackship-for-woocommerce' ),
-				),
-				'active_callback' => array( $this, 'active_callback' ),
-				'priority' => 100
-			)
-		);
-		
-		// Button font size
-		$wp_customize->add_setting( 'shipment_email_settings[track_button_font_size]',
-			array(
-				'default' => $this->defaults['track_button_font_size'],
-				'transport' => 'refresh',
-				'sanitize_callback' => '',
-				'type' => 'option',
-			)
-		);
-		$wp_customize->add_control( 'shipment_email_settings[track_button_font_size]',
-			array(
-				'label' => __( 'Button font size', 'trackship-for-woocommerce' ),
-				'section' => 'trackship_shipment_status_email',
-				'type' => 'select',
-				'choices' => $font_size_array,
-				'priority' => 100
-			)
-		);
-		
-		// Button color
-		$wp_customize->add_setting( 'shipment_email_settings[track_button_color]',
-			array(
-				'default' => $this->defaults['track_button_color'],
-				'transport' => 'refresh',
-				'sanitize_callback' => '',
-				'type' => 'option',
-			)
-		);
-		$wp_customize->add_control( 'shipment_email_settings[track_button_color]',
-			array(
-				'label' => __( 'Button color', 'trackship-for-woocommerce' ),
-				'section' => 'trackship_shipment_status_email',
-				'type' => 'color',
-				'priority' => 100
-			)
-		);
-		
-		// Button font color
-		$wp_customize->add_setting( 'shipment_email_settings[track_button_text_color]',
-			array(
-				'default' => $this->defaults['track_button_text_color'],
-				'transport' => 'refresh',
-				'sanitize_callback' => '',
-				'type' => 'option',
-			)
-		);
-		$wp_customize->add_control( 'shipment_email_settings[track_button_text_color]',
-			array(
-				'label' => __( 'Button font color', 'trackship-for-woocommerce' ),
-				'section' => 'trackship_shipment_status_email',
-				'type' => 'color',
-				'priority' => 100
-			)
-		);
-		
+		);	
 	}		
 	
 	public function active_callback() {
