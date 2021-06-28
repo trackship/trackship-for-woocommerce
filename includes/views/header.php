@@ -4,10 +4,12 @@ $menu_items = array(
 	array(
 		'label' => __( 'Get Support', 'trackship-for-woocommerce' ),
 		'link' => 'https://trackship.info/support/?support=1',
+		'image' => 'get-support-icon.svg',
 	),
 	array(
 		'label' =>__( 'Documentation', 'trackship-for-woocommerce' ),
 		'link' => 'https://trackship.info/documentation/',
+		'image' => 'documentation-icon.svg',
 	),
 );
 ?>
@@ -29,7 +31,9 @@ $menu_items = array(
 						<?php foreach ( $menu_items as $item ) { ?>
 							<li class="woocommerce-list__item has-action">
 								<a href="<?php echo esc_url( $item['link'] ); ?>" class="woocommerce-list__item-inner" target="_blank">
-									<div class="woocommerce-list__item-before"> <span class="dashicons dashicons-media-document"></span> </div>
+									<div class="woocommerce-list__item-before">
+                                    	<img class="ts4wc_help_logo" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/<?php echo $item['image']; ?>">
+									</div>
 									<div class="woocommerce-list__item-text">
 										<span class="woocommerce-list__item-title">
 											<div class="woocommerce-list-Text">

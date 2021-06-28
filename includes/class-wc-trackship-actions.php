@@ -195,7 +195,15 @@ class WC_Trackship_Actions {
 			$admin = WC_Trackship_Admin::get_instance();
 			
 			$data = $this->get_delivered_data();								
-						
+			
+			$wcast_late_shipments_days = isset( $_POST['wcast_late_shipments_days'] ) ? sanitize_text_field( $_POST['wcast_late_shipments_days'] ) : '';
+			
+			$late_shipments_email_settings = array(
+				'wcast_late_shipments_days' => $wcast_late_shipments_days,
+			);
+			
+			update_option( 'late_shipments_email_settings', $late_shipments_email_settings );
+			
 			foreach ( $data as $key => $val ) {
 				if ( 'wcast_enable_delivered_email' == $key ) {					
 					if ( isset( $_POST['wcast_enable_delivered_email'] ) ) {											
@@ -265,7 +273,6 @@ class WC_Trackship_Actions {
 		echo 'ts_late_shipments_email_form_update_callback';
 		if ( ! empty( $_POST ) && check_admin_referer( 'ts_late_shipments_email_form', 'ts_late_shipments_email_form_nonce' ) ) {
 			
-			$wcast_late_shipments_days = isset( $_POST['wcast_late_shipments_days'] ) ? sanitize_text_field( $_POST['wcast_late_shipments_days'] ) : '';
 			$wcast_late_shipments_email_to = isset( $_POST['wcast_late_shipments_email_to'] ) ? sanitize_text_field( $_POST['wcast_late_shipments_email_to'] ) : '';			
 			$wcast_late_shipments_email_subject = isset( $_POST['wcast_late_shipments_email_subject'] ) ? sanitize_text_field( $_POST['wcast_late_shipments_email_subject'] ) : '';			
 			$wcast_late_shipments_email_content = isset( $_POST['wcast_late_shipments_email_content'] ) ? sanitize_text_field( $_POST['wcast_late_shipments_email_content'] ) : '';
@@ -275,7 +282,6 @@ class WC_Trackship_Actions {
 
 			$late_shipments_email_settings = array(
 				'wcast_enable_late_shipments_admin_email' => $wcast_enable_late_shipments_admin_email,
-				'wcast_late_shipments_days' => $wcast_late_shipments_days,
 				'wcast_late_shipments_email_to' => $wcast_late_shipments_email_to,
 				'wcast_late_shipments_email_subject' => $wcast_late_shipments_email_subject,
 				'wcast_late_shipments_email_content' => $wcast_late_shipments_email_content,

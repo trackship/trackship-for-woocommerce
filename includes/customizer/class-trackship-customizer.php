@@ -39,14 +39,14 @@ class WC_Trackship_Customizer {
 		*/
 		$wp_customize->add_section( 'ast_tracking_page_section',
 			array(
-				'title' => __( 'Tracking Page Widget', 'trackship-for-woocommerce' ),
+				'title' => __( 'Tracking Widget', 'trackship-for-woocommerce' ),
 				'description' => ''
 			)
 		);
 		
 		$wp_customize->add_section( 'trackship_shipment_status_email',
 			array(
-				'title' => __( 'Shipping and Delivery Emails', 'trackship-for-woocommerce' ),
+				'title' => __( 'Email notification', 'trackship-for-woocommerce' ),
 				'description' => '',				
 			)
 		);	
@@ -70,18 +70,20 @@ class WC_Trackship_Customizer {
 			$r_mail = isset ($_REQUEST['email']) ? sanitize_text_field( $_REQUEST['email'] ) : '';
 			// Send variables to Javascript
 			wp_localize_script( 'wcast-customizer-scripts', 'wcast_customizer', array(
-				'ajax_url'              => admin_url('admin-ajax.php'),
-				'shipment_status' => $shipment_status,
-				'tracking_page_preview_url'        => $this->get_tracking_preview_url(),				
-				'customer_failure_preview_url'  => $this->get_customer_failure_preview_url(),
-				'customer_exception_preview_url'  => $this->get_customer_exception_preview_url(),
-				'customer_intransit_preview_url'  => $this->get_customer_intransit_preview_url(),
-				'customer_onhold_preview_url'  => $this->get_customer_onhold_preview_url(),
-				'customer_outfordelivery_preview_url' => $this->get_customer_outfordelivery_preview_url(),
-				'customer_delivered_preview_url' => $this->get_customer_delivered_preview_url(),
-				'customer_returntosender_preview_url' => $this->get_customer_returntosender_preview_url(),
-				'customer_availableforpickup_preview_url' => $this->get_customer_availableforpickup_preview_url(),
-				'trigger_click'        => '#accordion-section-' . $r_mail . ' h3', $r_mail
+				'ajax_url'									=> admin_url('admin-ajax.php'),
+				'shipment_status'							=> $shipment_status,
+				'tracking_page_preview_url'					=> $this->get_tracking_preview_url(),
+				'tracking_widget_email_preview_url'			=> $this->get_tracking_widget_email_preview_url(),				
+				'customer_failure_preview_url'				=> $this->get_customer_failure_preview_url(),
+				'customer_exception_preview_url'			=> $this->get_customer_exception_preview_url(),
+				'customer_intransit_preview_url'			=> $this->get_customer_intransit_preview_url(),
+				'customer_onhold_preview_url'				=> $this->get_customer_onhold_preview_url(),
+				'customer_outfordelivery_preview_url'		=> $this->get_customer_outfordelivery_preview_url(),
+				'customer_delivered_preview_url'			=> $this->get_customer_delivered_preview_url(),
+				'customer_returntosender_preview_url'		=> $this->get_customer_returntosender_preview_url(),
+				'customer_availableforpickup_preview_url'	=> $this->get_customer_availableforpickup_preview_url(),
+				'customizer_title'							=> 'TrackShip',
+				'trigger_click'								=> '#accordion-section-' . $r_mail . ' h3', $r_mail
 			) );	
 
 			wp_localize_script( 'wp-color-picker', 'wpColorPickerL10n', array(
@@ -105,7 +107,16 @@ class WC_Trackship_Customizer {
 			), home_url( '' ) );		
 
 		return $tracking_preview_url;
-	}		
+	}	
+	
+	public static function get_tracking_widget_email_preview_url() {		
+			$tracking_widget_email_preview_url = add_query_arg( array(
+				'action' => 'preview_tracking_email_widget',
+			), home_url( '' ) );		
+
+		return $tracking_widget_email_preview_url;
+	}
+		
 	
 	/**
 	 * Get Tracking page preview URL
@@ -348,6 +359,8 @@ class WC_Trackship_Customizer {
 			'track_button_font_size' => 16,
 			'track_button_color' => '#3c4758',
 			'track_button_text_color' => '#fff',
+			'track_button_border_radius' => 3,
+			'widget_padding' => 15,
 		);
 		
 		return isset ( $customizer_defaults[ $key ] ) ? $customizer_defaults[ $key ] : null;
