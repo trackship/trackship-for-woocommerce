@@ -373,7 +373,8 @@ class TSWC_Returntosender_Customizer_Email {
 	public function preview_returntosender_email() {
 		$preview_id     = get_theme_mod('wcast_intransit_email_preview_order_id');
 		
-		$order_id = trackship_for_woocommerce()->ts_actions->get_custom_order_number( $preview_id );
+		$order = new WC_Order($preview_id);
+		$order_id = $order->get_order_number();
 		
 		$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_returntosender_email_settings', 'wcast_returntosender_email_heading', $this->defaults['wcast_returntosender_email_heading']);		
 		$email_heading = str_replace( '{site_title}', $this->get_blogname(), $email_heading );

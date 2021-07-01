@@ -378,7 +378,8 @@ class TSWC_Outfordelivery_Customizer_Email {
 		// Load WooCommerce emails.
 		$preview_id     = get_theme_mod('wcast_intransit_email_preview_order_id');		
 		
-		$order_id = trackship_for_woocommerce()->ts_actions->get_custom_order_number( $preview_id );
+		$order = new WC_Order($preview_id);
+		$order_id = $order->get_order_number();
 		
 		$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_outfordelivery_email_settings', 'wcast_outfordelivery_email_heading', $this->defaults['wcast_outfordelivery_email_heading']);
 		$email_heading = str_replace( '{site_title}', $this->get_blogname(), $email_heading );
