@@ -377,7 +377,8 @@ class TSWC_Exception_Customizer_Email {
 	public function preview_exception_email() {
 		$preview_id     = get_theme_mod('wcast_intransit_email_preview_order_id');
 		
-		$order_id = trackship_for_woocommerce()->ts_actions->get_custom_order_number( $preview_id );
+		$order = new WC_Order($preview_id);
+		$order_id = $order->get_order_number();
 		
 		$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_exception_email_settings', 'wcast_exception_email_heading', $this->defaults['wcast_exception_email_heading']);
 				
