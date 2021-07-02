@@ -196,8 +196,7 @@ class WC_TrackShip_Front {
 		$order_id = isset( $_POST['order_id'] ) ? wc_clean( $_POST['order_id'] ) : '';		
 		$email = isset( $_POST['order_email'] ) ? sanitize_email( $_POST['order_email'] ) : '';
 		
-		$wast = WC_Advanced_Shipment_Tracking_Actions::get_instance();
-		$order_id = $wast->get_formated_order_id($order_id);
+		$order_id = trackship_for_woocommerce()->ts_actions->get_formated_order_id($order_id);
 		
 		$order = wc_get_order( $order_id );
 		
@@ -209,7 +208,7 @@ class WC_TrackShip_Front {
 			die();	
 		}
 		
-		$order_id = $wast->get_formated_order_id($order_id);									
+		$order_id = trackship_for_woocommerce()->ts_actions->get_formated_order_id( $order_id );									
 		$order_email = $order->get_billing_email();
 		
 		if ( strtolower( $order_email ) != strtolower( $email ) ) {
@@ -220,13 +219,8 @@ class WC_TrackShip_Front {
 			die();	
 		}
 		
-		if ( version_compare( WC_VERSION, '3.0', '<' ) ) {
-			$tracking_items = get_post_meta( $order_id, '_wc_shipment_tracking_items', true );			
-		} else {			
-			$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );			
-		} 
-		
-		$shipment_status = get_post_meta( $order_id, 'shipment_status', true);
+		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
+		$shipment_status = get_post_meta( $order_id, 'shipment_status', true );
 		
 		if ( !$tracking_items ) {
 			ob_start();		
@@ -304,6 +298,9 @@ class WC_TrackShip_Front {
 				}				
 			<?php } ?>
 			.woocommerce-account.woocommerce-view-order .tracking-header span.wc_order_id {display: none;}
+			<?php if ( $remove_trackship_branding ) { ?>
+				.trackship_branding {display:none;}
+			<?php } ?>
 		</style>
 		<?php
 		
@@ -403,11 +400,9 @@ class WC_TrackShip_Front {
 						} 
 						?>
 					</div>
-					<?php if ( ! $remove_trackship_branding ) { ?>
-						<div class="trackship_branding">
-							<p><a href="https://trackship.info/trackings/?number=<?php esc_html_e( $tracking_number ); ?>" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
-						</div>
-					<?php } ?>
+                    <div class="trackship_branding">
+                        <p><a href="https://trackship.info/trackings/?number=<?php esc_html_e( $tracking_number ); ?>" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
+                    </div>
 				</div>
 			<?php }
 			$num++;
@@ -433,7 +428,7 @@ class WC_TrackShip_Front {
 			return;
 		}
 		
-		if ( in_array( $tracker->ep_status, array( 'not_shipped', 'pending_trackship', 'pending', 'unknown', 'carrier_unsupported', 'balance_zero' ) ) ) {
+		if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'unknown', 'carrier_unsupported', 'balance_zero' ) ) ) {
 			$width = '17%';
 		} elseif ( in_array( $tracker->ep_status, array( 'in_transit', 'on_hold' ) ) ) {
 			$width = '33%';
@@ -463,20 +458,6 @@ class WC_TrackShip_Front {
 		$hide_tracking_events = get_option( 'wc_ast_hide_tracking_events', $ts_tracking_page_customizer->defaults[ 'wc_ast_hide_tracking_events' ] );
 		include 'views/front/layout1_tracking_details.php';		
 	}		
-	
-	/**
-	 * Convert string to date
-	*/
-	public static function convertString( $date ) { 
-		// convert date and time to seconds 
-		$sec = strtotime($date); 
-  
-		// convert seconds into a specific format 
-		$date = gmdate('m/d/Y H:i', $sec); 
-  
-		// print final date and time 
-		return $date; 
-	}
 	
 	/*
 	* Tracking Page preview

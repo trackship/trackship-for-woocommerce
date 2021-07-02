@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: TrackShip for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-19 13:58+0000\n"
-"PO-Revision-Date: 2021-06-25 11:40+0000\n"
+"PO-Revision-Date: 2021-07-02 06:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -39,9 +39,9 @@ msgstr "Admin-meddelanden"
 msgid "As it Happens"
 msgstr "När det händer"
 
-#: includes/class-wc-trackship-actions.php:567
+#: includes/class-wc-trackship-actions.php:566
 #: includes/class-wc-trackship-actions.php:629
-#: includes/class-wc-trackship-admin.php:1398
+#: includes/class-wc-trackship-admin.php:1428
 #: includes/customizer/class-wc-availableforpickup-email-customizer.php:123
 #: includes/customizer/class-wc-intransit-email-customizer.php:197
 msgid "Available For Pickup"
@@ -74,20 +74,20 @@ msgstr "Finns för upphämtning"
 msgid "Available variables:"
 msgstr "Tillgängliga variabler:"
 
-#: includes/customizer/class-wc-tracking-widget-email-customizer.php:257
+#: includes/customizer/class-wc-tracking-widget-email-customizer.php:238
 msgid "Button color"
 msgstr "Knappfärg"
 
-#: includes/customizer/class-wc-tracking-widget-email-customizer.php:275
+#: includes/customizer/class-wc-tracking-widget-email-customizer.php:256
 msgid "Button font color"
 msgstr "Knappsatsfärg"
 
-#: includes/customizer/class-wc-tracking-widget-email-customizer.php:293
+#: includes/customizer/class-wc-tracking-widget-email-customizer.php:274
 msgid "Button radius"
 msgstr "Knappradie"
 
-#: includes/class-wc-trackship-actions.php:572
-#: includes/class-wc-trackship-actions.php:647
+#: includes/class-wc-trackship-actions.php:571
+#: includes/class-wc-trackship-actions.php:650
 msgid "Carrier Unsupported"
 msgstr "Operatören stöds inte"
 
@@ -117,11 +117,11 @@ msgstr "Anslut din butik"
 msgid "Connected"
 msgstr "Ansluten"
 
-#: includes/class-wc-trackship-admin.php:99
+#: includes/class-wc-trackship-admin.php:100
 msgid "Copy Tracking page"
 msgstr "Kopiera spårningssida"
 
-#: includes/class-wc-trackship-admin.php:103
+#: includes/class-wc-trackship-admin.php:104
 msgid "Copy View order page"
 msgstr "Kopiera Visa beställningssida"
 
@@ -142,12 +142,6 @@ msgstr "Daily Digest på"
 msgid "Dark Font"
 msgstr "Mörkt typsnitt"
 
-#: includes/class-wc-trackship-actions.php:1271
-#: includes/class-wc-trackship-actions.php:1279
-#: includes/class-wc-trackship-actions.php:1296
-msgid "data not available."
-msgstr "data inte tillgänglig."
-
 #: includes/customizer/class-trackship-customizer.php:92
 msgid "Default"
 msgstr "Standard"
@@ -160,11 +154,11 @@ msgstr "Ta bort information om spårningshändelse"
 msgid "Delete tracking events for orders delivered more then "
 msgstr "Ta bort spårningshändelser för beställningar som levereras mer än"
 
-#: includes/class-wc-trackship-actions.php:569
+#: includes/class-wc-trackship-actions.php:568
 #: includes/class-wc-trackship-actions.php:623
 #: includes/class-wc-trackship-admin.php:902
 #: includes/class-wc-trackship-admin.php:920
-#: includes/class-wc-trackship-admin.php:1405
+#: includes/class-wc-trackship-admin.php:1435
 #: includes/customizer/class-wc-delivered-email-customizer.php:123
 #: includes/customizer/class-wc-intransit-email-customizer.php:199
 #: includes/views/settings.php:43
@@ -250,7 +244,7 @@ msgstr "E-postmeddelanden"
 msgid "Email Subject"
 msgstr "E-postämne"
 
-#: includes/customizer/class-wc-tracking-page-customizer.php:162
+#: includes/customizer/class-wc-tracking-page-customizer.php:166
 msgid "Email widget"
 msgstr "E-postwidget"
 
@@ -303,11 +297,11 @@ msgstr "Aktivera e-post för leverans"
 msgid "Enable Return To Sender email"
 msgstr "Aktivera Return to Sender email"
 
-#: includes/customizer/class-wc-tracking-page-customizer.php:288
+#: includes/customizer/class-wc-tracking-page-customizer.php:292
 msgid "Enable Tracking # link to Carrier"
 msgstr "Aktivera spårningslänk till operatör"
 
-#: includes/class-wc-trackship-admin.php:1323
+#: includes/class-wc-trackship-admin.php:1353
 msgid "Enable Tracking Page"
 msgstr "Aktivera spårningssida"
 
@@ -320,24 +314,26 @@ msgstr ""
 "Ange e-postmeddelanden här eller använd variabler som {customer_email}. "
 "Flera e-postmeddelanden kan separeras med kommatecken."
 
+#: templates/emails/tracking-info.php:61
 #: includes/views/front/tracking_page_header.php:42
 msgid "Est. Delivery Date"
 msgstr "Est. Leveransdatum"
 
-#: includes/customizer/class-wc-tracking-page-customizer.php:202
-#: includes/customizer/class-wc-tracking-page-customizer.php:205
+#: includes/customizer/class-wc-tracking-page-customizer.php:206
+#: includes/customizer/class-wc-tracking-page-customizer.php:209
 msgid "Events Display Type"
 msgstr "Händelsevisningstyp"
 
-#: includes/class-wc-trackship-admin.php:1376
+#: includes/class-wc-trackship-actions.php:573
+#: includes/class-wc-trackship-admin.php:1406
 #: includes/customizer/class-wc-exception-email-customizer.php:124
 #: includes/customizer/class-wc-intransit-email-customizer.php:201
 msgid "Exception"
 msgstr "Undantag"
 
-#: includes/class-wc-trackship-actions.php:570
-#: includes/class-wc-trackship-actions.php:635
-#: includes/class-wc-trackship-admin.php:1362
+#: includes/class-wc-trackship-actions.php:569
+#: includes/class-wc-trackship-actions.php:638
+#: includes/class-wc-trackship-admin.php:1392
 #: includes/customizer/class-wc-failure-email-customizer.php:123
 #: includes/customizer/class-wc-intransit-email-customizer.php:200
 msgid "Failed Attempt"
@@ -352,8 +348,12 @@ msgstr "Filtrera efter leveransstatus"
 msgid "Found in your order confirmation email."
 msgstr "Finns i din beställningsbekräftelse via e-post."
 
-#: includes/class-wc-trackship-actions.php:541
-#: includes/class-wc-trackship-actions.php:949 includes/views/settings.php:12
+#: includes/views/notifications.php:173
+msgid "Get it now"
+msgstr "Hämta den nu"
+
+#: includes/class-wc-trackship-actions.php:540
+#: includes/class-wc-trackship-actions.php:953 includes/views/settings.php:12
 #: includes/views/tools.php:19
 msgid "Get Shipment Status"
 msgstr "Få leveransstatus"
@@ -442,19 +442,19 @@ msgstr ""
 "Hallå där. vi trodde att du skulle vilja veta att din senaste beställning "
 "från {site_title} är ute för leverans."
 
-#: includes/customizer/class-wc-tracking-page-customizer.php:270
+#: includes/customizer/class-wc-tracking-page-customizer.php:274
 msgid "Hide the Shipping Provider logo"
 msgstr "Dölj logotypen för leverantör"
 
-#: includes/customizer/class-wc-tracking-page-customizer.php:210
+#: includes/customizer/class-wc-tracking-page-customizer.php:214
 msgid "Hide tracking events"
 msgstr "Dölj spårningshändelser"
 
-#: includes/customizer/class-wc-tracking-page-customizer.php:306
+#: includes/customizer/class-wc-tracking-page-customizer.php:310
 msgid "Hide TrackShip Branding"
 msgstr "Dölj TrackShip Branding"
 
-#: includes/customizer/class-wc-tracking-page-customizer.php:185
+#: includes/customizer/class-wc-tracking-page-customizer.php:189
 msgid "Icons"
 msgstr "Ikoner"
 
@@ -466,9 +466,9 @@ msgstr ""
 "Om du får olika namn från din frakttjänst kan du mappa leverantörernas namn "
 "till de som finns på TrackShip."
 
-#: includes/class-wc-trackship-actions.php:566
+#: includes/class-wc-trackship-actions.php:565
 #: includes/class-wc-trackship-actions.php:614
-#: includes/class-wc-trackship-admin.php:1355
+#: includes/class-wc-trackship-admin.php:1385
 #: includes/customizer/class-trackship-customizer.php:350
 #: includes/customizer/class-wc-intransit-email-customizer.php:126
 #: includes/customizer/class-wc-intransit-email-customizer.php:194
@@ -476,21 +476,17 @@ msgid "In Transit"
 msgstr "I transit"
 
 #: includes/class-wc-trackship-actions.php:574
-#: includes/class-wc-trackship-actions.php:644
+#: includes/class-wc-trackship-actions.php:647
 msgid "Invalid Tracking Number"
 msgstr "Ogiltigt spårningsnummer"
 
-#: includes/class-wc-trackship-actions.php:650
+#: includes/class-wc-trackship-actions.php:653
 msgid "Invalid User Key"
 msgstr "Ogiltig användarnyckel"
 
 #: templates/emails/tswc-email-order-details.php:35
 msgid "Items in this shipment"
 msgstr "Objekt i denna sändning"
-
-#: includes/class-wc-trackship-admin.php:200
-msgid "Last Update on"
-msgstr "Senaste uppdatering den"
 
 #: includes/customizer/class-wc-late-shipments-email-customizer.php:28
 #: includes/views/notifications.php:82
@@ -523,9 +519,12 @@ msgstr "Kartleverantörer"
 msgid "More info"
 msgstr "Mer information"
 
-#: includes/class-wc-trackship-actions.php:413
-#: includes/class-wc-trackship-actions.php:416
-#: includes/class-wc-trackship-actions.php:419
+#: includes/class-wc-trackship-actions.php:415
+#: includes/class-wc-trackship-actions.php:418
+#: includes/class-wc-trackship-actions.php:421
+#: includes/class-wc-trackship-actions.php:937
+#: includes/class-wc-trackship-actions.php:940
+#: includes/class-wc-trackship-actions.php:943
 msgid "more info"
 msgstr "mer information"
 
@@ -538,7 +537,7 @@ msgid "Number of days for late shipments"
 msgstr "Antal dagar för sena leveranser"
 
 #: includes/class-wc-trackship-actions.php:617
-#: includes/class-wc-trackship-admin.php:1384
+#: includes/class-wc-trackship-admin.php:1414
 #: includes/customizer/class-wc-intransit-email-customizer.php:195
 #: includes/customizer/class-wc-onhold-email-customizer.php:125
 msgid "On Hold"
@@ -558,8 +557,8 @@ msgstr "Beställ e-post"
 msgid "Order ID"
 msgstr "Beställnings-ID"
 
-#: includes/class-wc-trackship-front.php:208
-#: includes/class-wc-trackship-front.php:219
+#: includes/class-wc-trackship-front.php:207
+#: includes/class-wc-trackship-front.php:218
 msgid "Order not found."
 msgstr "Beställningen hittades inte."
 
@@ -576,15 +575,15 @@ msgstr "Ursprungsdetaljer"
 msgid "Other"
 msgstr "Övrig"
 
-#: includes/class-wc-trackship-actions.php:568
+#: includes/class-wc-trackship-actions.php:567
 #: includes/class-wc-trackship-actions.php:626
-#: includes/class-wc-trackship-admin.php:1369
+#: includes/class-wc-trackship-admin.php:1399
 #: includes/customizer/class-wc-intransit-email-customizer.php:198
 #: includes/customizer/class-wc-outfordelivery-email-customizer.php:124
 msgid "Out For Delivery"
 msgstr "Ut för leverans"
 
-#: includes/customizer/class-wc-tracking-widget-email-customizer.php:362
+#: includes/customizer/class-wc-tracking-widget-email-customizer.php:339
 msgid "Out for Delivery"
 msgstr "Ut för leverans"
 
@@ -592,12 +591,12 @@ msgstr "Ut för leverans"
 msgid "Padding of widget"
 msgstr "Vaddering av widget"
 
-#: includes/class-wc-trackship-actions.php:563
-#: includes/class-wc-trackship-actions.php:641
+#: includes/class-wc-trackship-actions.php:562
+#: includes/class-wc-trackship-actions.php:644
 msgid "Pending TrackShip"
 msgstr "Väntande TrackShip"
 
-#: includes/class-wc-trackship-actions.php:413
+#: includes/class-wc-trackship-actions.php:415
 msgid ""
 "Pending TrackShip is a temporary status that will display for a few minutes "
 "until we update the order with the first tracking event from the shipping "
@@ -626,28 +625,28 @@ msgstr ""
 msgid "Please refresh the page and try again."
 msgstr "Uppdatera sidan och försök igen."
 
-#: includes/customizer/class-wc-availableforpickup-email-customizer.php:399
-#: includes/customizer/class-wc-availableforpickup-email-customizer.php:407
-#: includes/customizer/class-wc-delivered-email-customizer.php:417
-#: includes/customizer/class-wc-delivered-email-customizer.php:425
-#: includes/customizer/class-wc-exception-email-customizer.php:399
-#: includes/customizer/class-wc-exception-email-customizer.php:408
-#: includes/customizer/class-wc-failure-email-customizer.php:398
-#: includes/customizer/class-wc-failure-email-customizer.php:407
-#: includes/customizer/class-wc-intransit-email-customizer.php:459
-#: includes/customizer/class-wc-intransit-email-customizer.php:468
-#: includes/customizer/class-wc-onhold-email-customizer.php:399
-#: includes/customizer/class-wc-onhold-email-customizer.php:408
-#: includes/customizer/class-wc-outfordelivery-email-customizer.php:399
-#: includes/customizer/class-wc-outfordelivery-email-customizer.php:408
-#: includes/customizer/class-wc-returntosender-email-customizer.php:394
-#: includes/customizer/class-wc-returntosender-email-customizer.php:403
-#: includes/customizer/class-wc-tracking-widget-email-customizer.php:347
-#: includes/customizer/class-wc-tracking-widget-email-customizer.php:356
+#: includes/customizer/class-wc-availableforpickup-email-customizer.php:400
+#: includes/customizer/class-wc-availableforpickup-email-customizer.php:408
+#: includes/customizer/class-wc-delivered-email-customizer.php:418
+#: includes/customizer/class-wc-delivered-email-customizer.php:426
+#: includes/customizer/class-wc-exception-email-customizer.php:400
+#: includes/customizer/class-wc-exception-email-customizer.php:409
+#: includes/customizer/class-wc-failure-email-customizer.php:399
+#: includes/customizer/class-wc-failure-email-customizer.php:408
+#: includes/customizer/class-wc-intransit-email-customizer.php:460
+#: includes/customizer/class-wc-intransit-email-customizer.php:469
+#: includes/customizer/class-wc-onhold-email-customizer.php:400
+#: includes/customizer/class-wc-onhold-email-customizer.php:409
+#: includes/customizer/class-wc-outfordelivery-email-customizer.php:400
+#: includes/customizer/class-wc-outfordelivery-email-customizer.php:409
+#: includes/customizer/class-wc-returntosender-email-customizer.php:395
+#: includes/customizer/class-wc-returntosender-email-customizer.php:404
+#: includes/customizer/class-wc-tracking-widget-email-customizer.php:324
+#: includes/customizer/class-wc-tracking-widget-email-customizer.php:333
 msgid "Please select order to preview."
 msgstr "Välj ordning för att förhandsgranska."
 
-#: includes/class-wc-trackship-actions.php:565
+#: includes/class-wc-trackship-actions.php:564
 #: includes/class-wc-trackship-actions.php:620
 msgid "Pre Transit"
 msgstr "Pre Transit"
@@ -656,7 +655,7 @@ msgstr "Pre Transit"
 msgid "Preview order"
 msgstr "Förhandsgranska beställning"
 
-#: includes/customizer/class-wc-tracking-page-customizer.php:177
+#: includes/customizer/class-wc-tracking-page-customizer.php:181
 msgid "Progress Bar style"
 msgstr "Progress Bar-stil"
 
@@ -672,9 +671,9 @@ msgstr "Progress Bar-stil"
 msgid "Recipient(s)"
 msgstr "Mottagare"
 
-#: includes/class-wc-trackship-actions.php:573
+#: includes/class-wc-trackship-actions.php:572
 #: includes/class-wc-trackship-actions.php:632
-#: includes/class-wc-trackship-admin.php:1391
+#: includes/class-wc-trackship-admin.php:1421
 #: includes/customizer/class-wc-intransit-email-customizer.php:196
 #: includes/customizer/class-wc-returntosender-email-customizer.php:122
 msgid "Return To Sender"
@@ -705,12 +704,12 @@ msgstr "Välj ordning för att förhandsgranska"
 msgid "Select shipment status"
 msgstr "Välj leveransstatus"
 
-#: includes/class-wc-trackship-admin.php:1329
+#: includes/class-wc-trackship-admin.php:1359
 #| msgid "Select tracking page"
 msgid "Select tracking page:"
 msgstr "Välj spårningssida"
 
-#: includes/class-wc-trackship-admin.php:1406
+#: includes/class-wc-trackship-admin.php:1436
 msgid "Send only when all shipments for the order are delivered"
 msgstr "Skicka endast när alla leveranser för beställningen levereras"
 
@@ -720,25 +719,25 @@ msgid "Settings"
 msgstr "inställningar"
 
 #. %s: search for number of shipments
-#: includes/class-wc-trackship-front.php:381
+#: includes/class-wc-trackship-front.php:378
 #: templates/emails/tswc-tpi-email-order-details.php:69
 #, php-format
 msgid "Shipment %1$s out of %2$s"
 msgstr "Leverans %1$s av %2$s"
 
-#: includes/class-wc-trackship-actions.php:1259
-msgid "Shipment providers"
-msgstr "Fraktleverantörer"
-
-#: includes/class-wc-trackship-actions.php:354
-#: includes/class-wc-trackship-actions.php:1262
+#: includes/class-wc-trackship-actions.php:353
 #: includes/customizer/class-wc-intransit-email-customizer.php:186
 msgid "Shipment status"
 msgstr "Leveransstatus"
 
-#: includes/views/dashboard.php:32
+#: includes/views/dashboard.php:33
 msgid "Shipments Dashboard"
 msgstr "Leverans Dashboard"
+
+#: templates/emails/tracking-info.php:39
+#: includes/views/front/tracking_page_header.php:33
+msgid "Shipped"
+msgstr "Levereras"
 
 #: includes/class-wc-trackship-api-call.php:103
 #, php-format
@@ -749,11 +748,11 @@ msgstr "Fraktinformation (% s -% s) skickades till TrackShip."
 msgid "Shipping Provider"
 msgstr "Fraktleverantör"
 
-#: includes/customizer/class-wc-tracking-page-customizer.php:209
+#: includes/customizer/class-wc-tracking-page-customizer.php:213
 msgid "Show all Events"
 msgstr "Visa alla händelser"
 
-#: includes/customizer/class-wc-tracking-page-customizer.php:211
+#: includes/customizer/class-wc-tracking-page-customizer.php:215
 msgid "Show last event & expand"
 msgstr "Visa senaste händelse och utöka"
 
@@ -761,7 +760,7 @@ msgstr "Visa senaste händelse och utöka"
 msgid "Show tracking details"
 msgstr "Visa spårningsinformation"
 
-#: includes/customizer/class-wc-tracking-page-customizer.php:184
+#: includes/customizer/class-wc-tracking-page-customizer.php:188
 msgid "Simple"
 msgstr "Enkel"
 
@@ -777,7 +776,7 @@ msgstr "Status"
 msgid "Subscription "
 msgstr "Prenumeration"
 
-#: includes/class-wc-trackship-actions.php:527
+#: includes/class-wc-trackship-actions.php:526
 msgid ""
 "The shipment status updates will run in the background, please refresh the "
 "page in a few minutes."
@@ -816,8 +815,10 @@ msgstr ""
 msgid "Tools"
 msgstr "Verktyg"
 
-#: includes/class-wc-trackship-actions.php:410
-#: includes/class-wc-trackship-actions.php:424
+#: includes/class-wc-trackship-actions.php:409
+#: includes/class-wc-trackship-actions.php:413
+#: includes/class-wc-trackship-actions.php:933
+#: includes/class-wc-trackship-actions.php:946
 #: templates/emails/late-shipment-tracking-info.php:29
 #: templates/emails/tswc-tpi-email-order-details.php:80
 #: templates/tracking/tracking-form.php:16
@@ -845,7 +846,7 @@ msgstr "Spåra din order"
 msgid "Trackers Balance"
 msgstr "Trackers balans"
 
-#: includes/class-wc-trackship-admin.php:1427
+#: includes/class-wc-trackship-admin.php:1457
 msgid "Tracking Analytics"
 msgstr "Spårningsanalys"
 
@@ -854,26 +855,22 @@ msgstr "Spårningsanalys"
 msgid "Tracking Details"
 msgstr "Spårningsdetaljer"
 
-#: includes/class-wc-trackship-front.php:235
+#: includes/class-wc-trackship-front.php:229
 msgid "Tracking details not found"
 msgstr "Spårningsinformation hittades inte"
 
-#: includes/class-wc-trackship-front.php:395
+#: includes/class-wc-trackship-front.php:392
 #| msgid ""
 #| "Tracking information is not available, please try again in a few minutes."
 msgid "Tracking information is not available, please try again later."
 msgstr ""
 "Spårningsinformation är inte tillgänglig. Försök igen om några minuter."
 
-#: includes/class-wc-trackship-actions.php:1265
-msgid "Tracking issues"
-msgstr "Spårningsfrågor"
-
 #: includes/views/content.php:15 includes/views/tracking-page.php:6
 msgid "Tracking Page"
 msgstr "Spårningssida"
 
-#: includes/customizer/class-wc-tracking-page-customizer.php:161
+#: includes/customizer/class-wc-tracking-page-customizer.php:165
 #| msgid "Tracking Page Widget"
 msgid "Tracking page widget"
 msgstr "Spårningssida-widget"
@@ -901,13 +898,13 @@ msgstr "TrackShip-leverantör"
 msgid "Trigger Alert"
 msgstr "Trigger Alert"
 
-#: includes/class-wc-trackship-actions.php:564
-#: includes/class-wc-trackship-actions.php:638
+#: includes/class-wc-trackship-actions.php:563
+#: includes/class-wc-trackship-actions.php:641
 msgid "Unknown"
 msgstr "Okänd"
 
-#: includes/class-wc-trackship-actions.php:409
-#: includes/class-wc-trackship-actions.php:927
+#: includes/class-wc-trackship-actions.php:412
+#: includes/class-wc-trackship-actions.php:931
 msgid "Updated "
 msgstr "Uppdaterad"
 
@@ -935,32 +932,28 @@ msgstr "se mindre"
 msgid "view more"
 msgstr "visa mer"
 
-#: includes/class-wc-trackship-actions.php:1302
-msgid "View more on TrackShip"
-msgstr "Se mer på TrackShip"
-
-#: includes/customizer/class-wc-tracking-page-customizer.php:241
+#: includes/customizer/class-wc-tracking-page-customizer.php:245
 msgid "Widget background color"
 msgstr "Widget bakgrundsfärg"
 
-#: includes/customizer/class-wc-tracking-page-customizer.php:227
+#: includes/customizer/class-wc-tracking-page-customizer.php:231
 msgid "Widget border color"
 msgstr "Widget kantfärg"
 
-#: includes/customizer/class-wc-tracking-page-customizer.php:255
+#: includes/customizer/class-wc-tracking-page-customizer.php:259
 #| msgid "Widget Font Color"
 msgid "Widget Font color"
 msgstr "Widget teckensnittsfärg"
 
-#: includes/customizer/class-wc-tracking-page-customizer.php:180
+#: includes/customizer/class-wc-tracking-page-customizer.php:184
 msgid "Widget Tracker Type"
 msgstr "Widget Tracker-typ"
 
-#: includes/customizer/class-wc-tracking-page-customizer.php:158
+#: includes/customizer/class-wc-tracking-page-customizer.php:162
 msgid "Widget Type"
 msgstr "Widget typ"
 
-#: includes/class-wc-trackship-actions.php:653
+#: includes/class-wc-trackship-actions.php:656
 msgid "Wrong Shipping Provider"
 msgstr "Fel leverantör"
 
@@ -997,6 +990,6 @@ msgstr "Din beställning # {order_number} är i väntan"
 msgid "Your order #{order_number} is out for delivery"
 msgstr "Din beställning {{order_number} är ute för leverans"
 
-#: includes/class-wc-trackship-actions.php:143
+#: includes/class-wc-trackship-actions.php:142
 msgid "Your settings have been successfully saved."
 msgstr "Dina inställningar har sparats."

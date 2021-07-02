@@ -94,15 +94,15 @@ class WC_Trackship_Admin {
 			?>
             
 			<div class="ts4wc_tracking-widget-header">
-                <button class="button btn_outline copy_tracking_page trackship-tip" title="Copy the secure link to the Tracking page" data-tracking_page_link=<?php echo esc_url( $tracking_page_link ); ?> >
+				<span style="line-height: 30px; font-size: 14px;"><?php echo 'Order #' . $order->get_order_number(); ?></span>
+                <button class="button btn_outline copy_tracking_page trackship-tip" title="Copy the secure link to the Tracking page" style="border: 0;float:right;" data-tracking_page_link=<?php echo esc_url( $tracking_page_link ); ?> >
                     <span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
-                    <span style="vertical-align: middle;" ><?php esc_html_e( 'Copy Tracking page', 'trackship-for-woocommerce' ); ?></span>
+                    <span style="vertical-align: middle;line-height: 30px;" ><?php esc_html_e( 'Copy Tracking page', 'trackship-for-woocommerce' ); ?></span>
                 </button>
-                <button class="button btn_outline copy_view_order_page trackship-tip" title="Copy the secure link to the View Order details page" data-view_order_link=<?php echo esc_url( $order->get_view_order_url() ); ?> >
+                <button class="button btn_outline copy_view_order_page trackship-tip" title="Copy the secure link to the View Order details page" style="border: 0;float:right;" data-view_order_link=<?php echo esc_url( $order->get_view_order_url() ); ?> >
                     <span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
-                    <span style="vertical-align: middle;" ><?php esc_html_e( 'Copy View order page', 'trackship-for-woocommerce' ); ?></span>
+                    <span style="vertical-align: middle;line-height: 30px;" ><?php esc_html_e( 'Copy View order page', 'trackship-for-woocommerce' ); ?></span>
                 </button>
-                <img class="ts4wc_logo" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png">
 			</div>
             
 			<?php
@@ -195,12 +195,12 @@ class WC_Trackship_Admin {
 						?>
 					</div>
 					<?php
-					if ( isset( $shipment_status[ $key ]['status_date'] ) ) {
+					/*if ( isset( $shipment_status[ $key ]['status_date'] ) ) {
 						echo '<small class="last-update-on">';
 						esc_html_e( 'Last Update on', 'trackship-for-woocommerce' );
 						esc_html_e( gmdate( ' M d, Y', strtotime( $shipment_status[ $key ]['status_date'] ) ) );
 						echo '</small>';
-					}
+					}*/
 					?>
 				</div>
 			<?php } ?>
@@ -233,10 +233,10 @@ class WC_Trackship_Admin {
 	*/
 	public function register_woocommerce_menu() {
 		$icon = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHdpZHRoPSI0MHB4IiBoZWlnaHQ9IjQwcHgiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNDAgNDAiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBhdGggaWQ9IlhNTElEXzRfIiBmaWxsPSIjRjBGNkZDIiBkPSJNMjQuMiwyMi4xYzAsMi4zLTEuOSw0LjItNC4yLDQuMnMtNC4yLTEuOS00LjItNC4yYzAtMi4zLDEuOS00LjIsNC4yLTQuMg0KCVMyNC4yLDE5LjgsMjQuMiwyMi4xeiBNMzMuNCwxMC4ybC01LjcsMy41YzIuMywyLjEsMy43LDUsMy43LDguNGMwLDYuMy01LjEsMTEuMy0xMS4zLDExLjNTOC43LDI4LjQsOC43LDIyLjFTMTMuOCwxMC44LDIwLDEwLjgNCglsMCwwdjRsMTIuOS03LjRMMjAsMHY0LjJsMCwwYy05LjksMC0xNy45LDgtMTcuOSwxNy45QzIuMSwzMiwxMC4xLDQwLDIwLDQwaDE3LjlWMjIuMUMzNy45LDE3LjUsMzYuMiwxMy40LDMzLjQsMTAuMnoiLz4NCjwvc3ZnPg0K';
-		add_menu_page( 'TrackShip', 'TrackShip', 'manage_options', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), $icon, 56 );
-		add_submenu_page( 'trackship-dashboard', 'Dashboard', 'Dashboard', 'manage_options', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ) );
+		add_menu_page( 'TrackShip', 'TrackShip', 'manage_options', 'trackship-shipments', array( $this, 'shipments_page_callback' ), $icon, 56 );
+		add_submenu_page( 'trackship-shipments', 'Shipments', 'Shipments', 'manage_options', 'trackship-shipments', array( $this, 'shipments_page_callback' ) );
 		if ( trackship_for_woocommerce()->is_trackship_connected() ) {
-			add_submenu_page( 'trackship-dashboard', 'Settings', 'Settings', 'manage_options', 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
+			add_submenu_page( 'trackship-shipments', 'Settings', 'Settings', 'manage_options', 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
 		}
 	}
 	
@@ -256,7 +256,7 @@ class WC_Trackship_Admin {
 	/*
 	* callback for Dashboard
 	*/
-	public function dashboard_page_callback() {
+	public function shipments_page_callback() {
 		?>
 		<div class="zorem-layout">
 			<?php include 'views/header.php'; ?>
@@ -977,7 +977,51 @@ class WC_Trackship_Admin {
 			<?php
 		}
 		echo '<div id=admin_tracking_widget class=popupwrapper style="display:none;"><div class=popuprow></div><div class=popupclose></div></div>';
-	}
+		?>
+        <div id=admin_error_more_info_widget class=popupwrapper style="display:none;">
+            <div class="more_info_popup popuprow" style="padding:20px">
+                <?php
+				$ssl = '<a href="https://trackship.info/docs/trackship-for-woocommerce/getting-started/connect-trackship-to-your-store/#requirements">SSL Requirements</a>';
+				$map_link = '<a href="admin.php?page=trackship-for-woocommerce&tab=map-providers">Map Providers settings</a>';
+                $array_more_info = array(
+                    'pending_trackShip' => array(
+                        'heading'	=> 'Pending TrackShip',
+                        'detail'	=> 'This is a temporary status that indicated that the tracking info was sent to TrackShip and the first tracking data will update shortly. please try to refresh the orders admin in a few minutes.',
+						'img'		=> 'pending-trackship.png',
+                    ),
+                    'connection_issue' => array(
+                        'heading'	=> 'TrackShip connection issue',
+                        'detail'	=> 'This means that you got SSL issue on your store, check the ' . $ssl . ' for more details..',
+						'img'		=> 'invalid.png',
+                    ),
+                    'INVALID_TRACKING_NUM' => array(
+                        'heading'	=> 'Invalid Tracking Number',
+                        'detail'	=> 'The Tracking number you entered for this order returns invalid from the shipping provider.',
+						'img'		=> 'invalid-tracking-number.png',
+                    ),
+                    'wrong_shipping_provider' => array(
+                        'heading'	=> 'Wrong Shipping Provider',
+                        'detail'	=> 'The Shipping Provider name is invalid for this tracking number.',
+						'img'		=> 'wrong-shipiing-provider.png',
+                    ),
+                    'carrier_unsupported' => array(
+                        'heading'	=> 'Carrier Unsupported',
+                        'detail'	=> 'TrackShip does not support this shipping provider, if your shipping software sends a different name then the one on TrackShip, you can map the shipping providers names on the the ' . $map_link,
+						'img'		=> 'carrier-unsupported.png',
+                    ),
+                );
+                ?>
+                <?php foreach ( $array_more_info as $key => $value ) { ?>
+                    <div class="error_details">
+                        <h2 class="<?php echo $key; ?>"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/<?php echo $value['img']; ?>" style="height: 18px;padding-right:10px;"><?php echo $value['heading']; ?></h2>
+                        <p><?php echo $value['detail']; ?></p>
+                    </div>
+                <?php } ?>
+            </div>
+        	<div class=popupclose></div>
+		</div>
+	 <?php
+     }
 	
 	public function get_trackship_provider() {
 		
@@ -1177,16 +1221,18 @@ class WC_Trackship_Admin {
 			}
 		}
 		
-		$active_shipments .= ' ' . $this->calculate_percent( $active_shipments, count($shipment_status_merge));
-		$delivered_shipments .= ' ' . $this->calculate_percent( $delivered_shipments, count($shipment_status_merge));
+		$active_shipments_percent = ' ' . $this->calculate_percent( $active_shipments, count($shipment_status_merge));
+		$delivered_shipments_percent = ' ' . $this->calculate_percent( $delivered_shipments, count($shipment_status_merge));
 		$result = array();
 		
-		$result['total_shipments'] = count($shipment_status_merge);
-		$result['tracking_issues'] = $tracking_issues;
-		$result['active_shipments'] = $active_shipments;
-		$result['delivered_shipments'] = $delivered_shipments;
-		$result['avg_shipment_length'] = $avg_shipment_length;
-		$result['total_orders'] = count($shipment_status_results);
+		$result['total_shipments']				= count($shipment_status_merge);
+		$result['tracking_issues']				= $tracking_issues;
+		$result['active_shipments']				= $active_shipments;
+		$result['active_shipments_percent']		= $active_shipments_percent;
+		$result['delivered_shipments']			= $delivered_shipments;
+		$result['delivered_shipments_percent']	= $delivered_shipments_percent;
+		$result['avg_shipment_length']			= $avg_shipment_length;
+		$result['total_orders']					= count($shipment_status_results);
 		return $result;
 	}
 	
@@ -1277,22 +1323,6 @@ class WC_Trackship_Admin {
 		);
 		return $form_data;
 	}
-	
-	/*
-	* Trackship Automation form save
-	*/	
-	/*public function wc_ast_trackship_automation_form_update() {
-		if ( ! empty( $_POST ) && check_admin_referer( 'wc_ast_trackship_automation_form', 'wc_ast_trackship_automation_form_nonce' ) ) {
-				
-			$data = $this->get_delivered_data();						
-			
-			foreach ( $data as $key => $val ) {																							
-				if ( isset( $_POST[ $key ] ) ) {
-					update_option( $key, wc_clean($_POST[ $key ]) );
-				}
-			}
-		}
-	}*/
 	
 	/*
 	* get settings tab array data

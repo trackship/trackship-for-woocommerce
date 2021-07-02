@@ -7,11 +7,10 @@ jQuery('.shipping_date').on('cancel.daterangepicker', function(ev, picker) {
 });
 
 jQuery(document).ready(function() {	
-	'use strict';
-	
+	'use strict';	
 	var url;
 	var $table = jQuery("#shipments_table").DataTable({		
-		dom: "it<'datatable_footer'pl>",
+		dom: "i<'table_scroll't><'datatable_footer'pl>",
 		searching: false,
 		"processing": true,
 		"serverSide": true,
@@ -35,8 +34,8 @@ jQuery(document).ready(function() {
 			},
 		},
 		
-		"lengthMenu": [[10, 25, 50, 100, 200], [10, 25, 50, 100, 200]],
-		"pageLength":10,
+		"lengthMenu": [[25, 50, 100, 200], [25, 50, 100, 200]],
+		"pageLength":25,
 		"drawCallback": function(settings) {
 			jQuery(window).resize();
 			jQuery(".trackship-tip").tipTip();
@@ -59,28 +58,31 @@ jQuery(document).ready(function() {
 				},									
 			},	
 			{
+				"width": "150px",
 				'orderable': false,	
 				"mRender":function(data,type,full) {
 					return '<span class="shipment_status_label '+full.shipment_status_id+'">' + full.shipment_status + '</span>';
 				},				
 			},	
 			{
+				"width": "150px",
 				'orderable': false,		
 				'data': 'formated_tracking_provider',
 			},	
 			{
-				"width": "160px",
+				"width": "260px",
 				'orderable': false,		
 				"mRender":function(data,type,full) {
-					return '<a target="_blank" href="'+full.tracking_url+'">' + full.tracking_number + '</a>';
+					return '<span class="copied_tracking_numnber dashicons dashicons-admin-page" data-number="' + full.tracking_number + '"></span><a target="_blank" href="'+full.tracking_url+'">' + full.tracking_number + '</a>';
 				},				
 			},	
 			{
+				"width": "150px",
 				'orderable': false,		
 				'data': 'ship_to',
 			},
 			{
-				"width": "100px",
+				"width": "150px",
 				'orderable': false,	
 				"mRender":function(data,type,full) {
 					return full.shipment_length ;
@@ -172,6 +174,8 @@ jQuery(document).on("change", "#shipping_time", function(){
 		success: function(response) {
 			jQuery('.total_shipments_count').html(response.total_shipments);
 			jQuery('.active_shipments_count').html(response.active_shipments);
+			jQuery('.active_shipments_percent').html(response.active_shipments_percent);
+			jQuery('.delivered_shipments_percent').html(response.delivered_shipments_percent);
 			jQuery('.delivered_shipments_count').html(response.delivered_shipments);
 			jQuery('.avg_shipment_length_count').html(response.avg_shipment_length);
 		},
