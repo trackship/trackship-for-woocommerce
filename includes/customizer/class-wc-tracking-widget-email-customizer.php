@@ -223,26 +223,7 @@ class TSWC_Tracking_widget_email_Customizer {
 				'active_callback' => array( $this, 'active_callback' ),
 			)
 		) );
-		
-		// Button font size
-		/*$wp_customize->add_setting( 'shipment_email_settings[track_button_font_size]',
-			array(
-				'default' => $this->defaults['track_button_font_size'],
-				'transport' => 'refresh',
-				'sanitize_callback' => '',
-				'type' => 'option',
-			)
-		);
-		$wp_customize->add_control( 'shipment_email_settings[track_button_font_size]',
-			array(
-				'label' => __( 'Button font size', 'trackship-for-woocommerce' ),
-				'section' => 'ast_tracking_page_section',
-				'type' => 'select',
-				'choices' => $font_size_array,				
-				'active_callback' => array( $this, 'active_callback' ),
-			)
-		);*/
-		
+				
 		// Button color
 		$wp_customize->add_setting( 'shipment_email_settings[track_button_color]',
 			array(
@@ -333,10 +314,6 @@ class TSWC_Tracking_widget_email_Customizer {
 	public function preview_intransit_email() {
 		// Load WooCommerce emails.
 		$preview_id     = get_theme_mod( 'wcast_intransit_email_preview_order_id' );
-		
-		$order_id = trackship_for_woocommerce()->ts_actions->get_custom_order_number( $preview_id );
-		
-						
 		
 		$sent_to_admin = false;
 		$plain_text = false;

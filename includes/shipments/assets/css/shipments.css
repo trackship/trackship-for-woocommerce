@@ -28,18 +28,19 @@
 }
 #shipping_date {
 	text-align: center;
-    border: 1px solid #e0e0e0;
-    padding: 10px;
-    border-radius: 5px;
-    background: #fafafa;
-    font-weight: 500;
+	border: 1px solid #e0e0e0;
+	padding: 10px;
+	border-radius: 5px;
+	background: #fafafa;
+	font-weight: 500;
 }
 span.date_placeholder {
-    padding-right: 20px;
+	padding-right: 20px;
 }
 table.dataTable thead th, table.dataTable thead td {
 	border-bottom: 1px solid #e0e0e0;
-	font-weight: 500;
+	font-weight: 400;
+	font-size: 12px;
 	padding: 10px 10px;
 	background-color: #ffffff;
 }
@@ -54,22 +55,22 @@ table.dataTable tbody a {
 	line-height: 2em;
 }
 table.dataTable tbody td span {
-    display: inline-block;
-    line-height: 1.9em;
+	display: inline-block;
+	line-height: 1.9em;
 }
 table.dataTable tbody td:last-child span {
-    display: block;
-    line-height: 1.4em;
+	display: block;
+	line-height: 1.4em;
+	float: right;
 }
-
 tr.tabel_heading_th th {
-    background: #fafafa !important;
+	background: #fafafa !important;
 }
 table.dataTable tbody tr.hover, table.dataTable tbody tr.focus {
 	background: #fafafa !important;
 }
 table.dataTable.no-footer {
-	border-bottom: 0; 
+	border-bottom: 0;
 }
 table.dataTable tbody .shipment_status_label {
 	display: block;
@@ -121,73 +122,84 @@ table.dataTable tbody .shipment_status_label.pending_trackship {
 	display: block;
 }
 .datatable_footer {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    flex-flow: row wrap;
-    align-content: center;
-    justify-content: center;
-    margin: 20px 0 0;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	flex-flow: row wrap;
+	align-content: center;
+	justify-content: center;
+	margin: 20px 0 0;
 }
 .dataTables_wrapper .datatable_footer .dataTables_paginate {
-    float: none;
-    text-align: left;
-    display: inline-block;
-    margin: 0 15px;
+	float: none;
+	text-align: left;
+	display: inline-block;
+	margin: 0 15px;
 }
 .dataTables_wrapper .datatable_footer .dataTables_length {
-    float: none;
-    text-align: left;
-    display: inline-block;
-    margin: 0 15px;
+	float: none;
+	text-align: left;
+	display: inline-block;
+	margin: 0 15px;
 }
 .datatable_footer .dataTables_paginate .paginate_button {
-    background: #f5f5f5 !important;
-    border: 1px solid #bdbdbd !important;
-    width: 30px;
-    height: 30px;
-    margin-left: 0;
-    font-size: 0;
+	background: #f5f5f5 !important;
+	border: 1px solid #bdbdbd !important;
+	width: 30px;
+	height: 30px;
+	margin-left: 0;
+	font-size: 0;
 }
 .datatable_footer .dataTables_paginate .paginate_button.previous.disabled::after {
-    color: #bdbdbd;
+	color: #bdbdbd;
 }
 .datatable_footer .dataTables_paginate .paginate_button.previous::after {
-    font-family: Dashicons;
-    content: "\f341";
-    font-size: 20px;
-    line-height: 29px;
-    color: #444444;
+	font-family: Dashicons;
+	content: "\f341";
+	font-size: 20px;
+	line-height: 29px;
+	color: #444444;
 }
 .datatable_footer .dataTables_paginate .paginate_button {
-    background: #f5f5f5 !important;
-    border: 1px solid #bdbdbd !important;
-    width: 30px;
-    height: 30px;
-    margin-left: 0;
-    font-size: 0;
+	background: #f5f5f5 !important;
+	border: 1px solid #bdbdbd !important;
+	width: 30px;
+	height: 30px;
+	margin-left: 0;
+	font-size: 0;
 }
 .datatable_footer .dataTables_paginate .paginate_button.next::after {
-    font-family: Dashicons;
-    content: "\f345";
-    font-size: 20px;
-    line-height: 29px;
-    color: #444444;
+	font-family: Dashicons;
+	content: "\f345";
+	font-size: 20px;
+	line-height: 29px;
+	color: #444444;
 }
 .dataTables_wrapper .datatable_footer .dataTables_length label {
-    color: #757575;
+	color: #757575;
 	line-height: 30px;
 }
 .datatable_footer .dataTables_length select {
-    height: 30px;
-    width: 50px;
-    line-height: 14px;
-    padding: 0 5px;
-    margin: 0 5px;
-    color: #757575;
+	height: 30px;
+	width: 50px;
+	line-height: 14px;
+	padding: 0 5px;
+	margin: 0 5px;
+	color: #757575;
 }
 .shipment_length img {
-    width: 17px;
-    margin-left: 5px;
-    vertical-align: middle;
+	width: 17px;
+	margin-left: 5px;
+	vertical-align: middle;
+}
+.table_scroll {
+	overflow-x: auto;
+	clear:both;
+}
+table.dataTable th:last-child {
+    text-align: right;
+}
+table.dataTable span.dashicons.dashicons-admin-page {
+    font-size: 15px;
+    color: #03a9f4;
 }

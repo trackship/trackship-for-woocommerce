@@ -66,7 +66,7 @@ class WC_Trackship_Shipments {
 		
 		$page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
 				
-		if( 'trackship-for-woocommerce' != $page && 'trackship-dashboard' != $page ) {
+		if( 'trackship-for-woocommerce' != $page && 'trackship-shipments' != $page ) {
 			return;
 		}
 		
@@ -165,9 +165,7 @@ class WC_Trackship_Shipments {
 		";
 		
 		$orders_data = $wpdb->get_results($order_query,ARRAY_A);
-		
-		
-		
+
 		$wp_date_format = get_option( 'date_format' );
 		if($wp_date_format == 'd/m/Y'){
 			$date_format = 'd/m'; 
@@ -191,7 +189,6 @@ class WC_Trackship_Shipments {
 				
 				foreach( (array)$tracking_items as $key => $item ){
 					
-					
 					$date_shipped = '';
 					if(!empty($item['date_shipped'])){
 						$date_shipped = date_i18n('Y-m-d', $item['date_shipped'] );
@@ -210,7 +207,6 @@ class WC_Trackship_Shipments {
 					}					
 					
 					$shipment_length = $this->get_shipment_length($shipment_status[$key]);
-					
 					
 					$result[$i] = new \stdClass();
 					$result[$i]->order_id = $order['ID'];
@@ -233,8 +229,10 @@ class WC_Trackship_Shipments {
 					
 					$late_shipment = $wcast_late_shipments_days <= $shipment_length ? '<img class="trackship-tip" title="late shipment" src="' . esc_url( trackship_for_woocommerce()->plugin_dir_url() ) . 'assets/css/icons/invalid-tracking-number.png">' : '';
 					$late_shipment = $_POST['active_shipment'] != 'delivered' ? $late_shipment : '' ;
-
-					$result[$i]->shipment_length = '<span class="shipment_length">' . $shipment_length . ' days ' . $late_shipment . '</span>';
+					
+					$days = $shipment_length == '0' ? 'Today' : (int)$shipment_length . ' days';
+					
+					$result[$i]->shipment_length = '<span class="shipment_length">' . $days . $late_shipment . '</span>';
 					
 					if( is_plugin_active( 'ast-pro/ast-pro.php' ) ){
 						$result[$i]->tracking_url = $item['ast_tracking_link'];

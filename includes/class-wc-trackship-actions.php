@@ -78,7 +78,6 @@ class WC_Trackship_Actions {
 				add_filter( 'request', array( $this, 'filter_orders_by_shipment_status_query' ) );
 			}
 			
-			add_action( 'wp_dashboard_setup', array( $this, 'ast_add_dashboard_widgets') );	
 		}
 		
 		// trigger when order status changed to shipped or completed
@@ -155,7 +154,7 @@ class WC_Trackship_Actions {
 		
 		$page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
 		
-		if ( 'trackship-for-woocommerce' != $page && 'trackship-dashboard' != $page ) {
+		if ( 'trackship-for-woocommerce' != $page && 'trackship-shipments' != $page ) {
 			return;
 		}
 		// remove code in future, added by hitesh
@@ -402,14 +401,17 @@ class WC_Trackship_Actions {
 							?>
 							<li id="shipment-item-<?php esc_html_e( $tracking_item['tracking_id'] ); ?>" class="tracking-item-<?php esc_html_e( $tracking_item['tracking_id'] ); ?>" >                            	
 								<div class="ast-shipment-status shipment-<?php esc_html_e( sanitize_title($status) ); ?> has_est_delivery_<?php esc_html_e( $has_est_delivery ? 1 : 0 ); ?>">
-
-									<span class="">
-										<span class="shipment-icon icon-default icon-<?php esc_html_e( $status ); ?> ast-shipment-tracking-status"> <?php esc_html_e( apply_filters( 'trackship_status_filter', $status ) ); ?></span>
+                                    <?php  $class = !in_array( $status, array( 'expired', 'carrier_unsupported', 'wrong_shipping_provider', 'INVALID_TRACKING_NUM', 'connection_issue','pending_trackship' ) ) ? 'open_tracking_details' : 'open_more_info_popup'; ?>
+                                    
+									<span class="<?php echo esc_html( $class ); ?>" data-orderid="<?php esc_html_e( $post->ID ); ?>" data-tracking_id="<?php esc_html_e( $tracking_item['tracking_id'] ); ?>" data-nonce="<?php esc_html_e( wp_create_nonce( 'tswc-' . $post->ID ) ); ?>" style="display:block;">
+                                    	<span class="shipment-icon icon-default icon-<?php esc_html_e( $status ); ?> ast-shipment-tracking-status"> <?php esc_html_e( apply_filters( 'trackship_status_filter', $status ) ); ?></span>
+                                        <?php if ( $has_est_delivery ) { ?>
+                                            <span class="wcast-shipment-est-delivery ft11">Est. Delivery <?php esc_html_e( $est_delivery_date1 ); ?> <a class="ts4wc_track_button ft12"><?php esc_html_e( 'Track', 'trackship-for-woocommerce' ); ?></a></span>
+                                        <?php } ?>
 										<?php if ( '' != $status_date && !$has_est_delivery ) { ?>
                                             <span class="showif_has_est_delivery_0 ft11"><?php esc_html_e( 'Updated ', 'trackship-for-woocommerce' ); esc_html_e( gmdate( $date_format, strtotime($status_date) ) ); ?> 
-                                                <a class="ts4wc_track_button ft12 open_tracking_details" data-orderid="<?php esc_html_e( $post->ID ); ?>" data-tracking_id="<?php esc_html_e( $tracking_item['tracking_id'] ); ?>" data-nonce=<?php esc_html_e( wp_create_nonce( 'tswc-' . $post->ID ) ); ?> ><?php esc_html_e( 'Track', 'trackship-for-woocommerce' ); ?></a>
-                                               
-                                                <?php if ( 'pending_trackship' == $status ) { ?>
+                                                <a class="ts4wc_track_button ft12"><?php esc_html_e( 'Track', 'trackship-for-woocommerce' ); ?></a>
+												<?php if ( 'pending_trackship' == $status ) { ?>
                                                     <a href="javascript:;" class="trackship-tip" title="<?php esc_html_e( 'Pending TrackShip is a temporary status that will display for a few minutes until we update the order with the first tracking event from the shipping provider. Please refresh the orders admin in 2-3 minutes.', 'trackship-for-woocommerce' ); ?>" ><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a>
                                                 <?php } ?>
                                                 <?php if ( in_array( $status, array( 'expired', 'carrier_unsupported', 'wrong_shipping_provider', 'INVALID_TRACKING_NUM') ) ) { ?>
@@ -419,9 +421,6 @@ class WC_Trackship_Actions {
                                                     <a href="https://trackship.info/docs/trackship-for-woocommerce/connect-trackship-to-your-store/#requirements" target="_blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a>
                                                 <?php } ?>
                                             </span>
-                                        <?php } ?>
-										<?php if ( $has_est_delivery ) { ?>
-                                            <span class="wcast-shipment-est-delivery ft11">Est. Delivery <?php esc_html_e( $est_delivery_date1 ); ?> <a class="ts4wc_track_button ft12 open_tracking_details" data-orderid="<?php esc_html_e( $post->ID ); ?>" data-tracking_id="<?php esc_html_e( $tracking_item['tracking_id'] ); ?>" data-nonce=<?php esc_html_e( wp_create_nonce( 'tswc-' . $post->ID ) ); ?> ><?php esc_html_e( 'Track', 'trackship-for-woocommerce' ); ?></a></span>
                                         <?php } ?>
 									</span>
 								</div>
@@ -570,7 +569,8 @@ class WC_Trackship_Actions {
 				'failure' => (object) array( 'term' => __( 'Failed Attempt', 'trackship-for-woocommerce' ) ),
 				'cancelled' => (object) array( 'term' => __( 'Cancelled', 'woocommerce' ) ),
 				'carrier_unsupported' => (object) array( 'term' => __( 'Carrier Unsupported', 'trackship-for-woocommerce' ) ),
-				'return_to_sender' => (object) array( 'term' => __( 'Return To Sender', 'trackship-for-woocommerce' ) ),				
+				'return_to_sender' => (object) array( 'term' => __( 'Return To Sender', 'trackship-for-woocommerce' ) ),
+				'exception' => (object) array( 'term' => __( 'Exception', 'trackship-for-woocommerce' ) ),				
 				'INVALID_TRACKING_NUM' => (object) array( 'term' => __( 'Invalid Tracking Number', 'trackship-for-woocommerce' ) ),
 			);
 
@@ -630,6 +630,9 @@ class WC_Trackship_Actions {
 				break;
 			case 'return_to_sender':
 				$status = __( 'Return To Sender', 'trackship-for-woocommerce' );
+				break;
+			case 'exception':
+				$status = __( 'Exception', 'woocommerce' );
 				break;
 			case 'failure':
 				$status = __( 'Failed Attempt', 'trackship-for-woocommerce' );
@@ -915,33 +918,34 @@ class WC_Trackship_Actions {
 						if ( 'delivered' != $status  && 'return_to_sender' != $status && !empty($est_delivery_date) ) {
 							$has_est_delivery = true;
 						}
-						
 						?>
-						<div class="ast-shipment-status-div">	
+                        <?php  $class = !in_array( $status, array( 'expired', 'carrier_unsupported', 'wrong_shipping_provider', 'INVALID_TRACKING_NUM', 'connection_issue','pending_trackship' ) ) ? 'open_tracking_details' : 'open_more_info_popup'; ?>
+                        
+						<div class="ast-shipment-status-div <?php esc_html_e( $class ); ?>" data-orderid="<?php esc_html_e( $order_id ); ?>" data-tracking_id="<?php echo esc_html( $tracking_id ); ?>" data-nonce="<?php esc_html_e( wp_create_nonce( 'tswc-' . $order_id ) ); ?>">	
 							<span class="ast-shipment-status shipment-<?php echo esc_html( sanitize_title($status) ); ?>">
 
 								<span class="shipment-icon icon-default icon-<?php esc_html_e( $status ); ?>" >
 									<strong><?php echo esc_html( apply_filters('trackship_status_filter', $status) ); ?></strong>
 								</span>
 								<?php if ( '' != $status_date && !$has_est_delivery ) { ?>
-                                    <span style="display: block; margin-top: 10px;"><?php esc_html_e( 'Updated ', 'trackship-for-woocommerce' ); esc_html_e( gmdate( $date_format, strtotime($status_date) ) ); ?> 
+                                    <span style="display: block; margin-top: 5px;"><?php esc_html_e( 'Updated ', 'trackship-for-woocommerce' ); esc_html_e( gmdate( $date_format, strtotime($status_date) ) ); ?> 
                                     	<?php if ( !$has_est_delivery && !in_array( $status, array( 'carrier_unsupported', 'wrong_shipping_provider', 'INVALID_TRACKING_NUM', 'pending_trackship', 'connection_issue' ) ) ) { ?>
-                                        	<a class="ts4wc_track_button ft12 open_tracking_details" data-orderid="<?php esc_html_e( $order_id ); ?>" data-tracking_id="<?php echo esc_html( $tracking_id ); ?>" data-nonce="<?php esc_html_e( wp_create_nonce( 'tswc-' . $order_id ) ); ?>" >Track</a>
+                                        	<a class="ts4wc_track_button ft12"><?php esc_html_e( 'Track', 'trackship-for-woocommerce' ); ?></a>
 										<?php } ?>
                                        
                                         <?php if ( 'pending_trackship' == $status ) { ?>
-                                            <a href="javascript:;" class="trackship-tip" title="Pending TrackShip is a temporary status that will display for a few minutes until we update the order with the first tracking event from the shipping provider. Please refresh the orders admin in 2-3 minutes." >more info</a>
+                                            <a href="javascript:;" class="trackship-tip" title="Pending TrackShip is a temporary status that will display for a few minutes until we update the order with the first tracking event from the shipping provider. Please refresh the orders admin in 2-3 minutes." ><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a>
                                         <?php } ?>
                                         <?php if ( in_array( $status, array( 'carrier_unsupported', 'wrong_shipping_provider', 'INVALID_TRACKING_NUM') ) ) { ?>
-                                            <a href="https://trackship.info/docs/trackship-resources/shipment-tracking-status-reference/#trackship-status-messages" target="_blank">more info</a>
+                                            <a href="https://trackship.info/docs/trackship-resources/shipment-tracking-status-reference/#trackship-status-messages" target="_blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a>
                                         <?php } ?>
                                         <?php if ( 'connection_issue' == $status ) { ?>
-                                            <a href="https://trackship.info/docs/trackship-for-woocommerce/connect-trackship-to-your-store/#requirements" target="_blank">more info</a>
+                                            <a href="https://trackship.info/docs/trackship-for-woocommerce/connect-trackship-to-your-store/#requirements" target="_blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a>
+                                        <?php } ?>
+                                        <?php if ( $has_est_delivery ) { ?>
+                                            <span class="wcast-shipment-est-delivery ft11" style="display: block; margin-top: 5px;">Est. Delivery <?php esc_html_e( $est_delivery_date1 ); ?> <a class="ts4wc_track_button ft12 open_tracking_details"> <?php esc_html_e( 'Track', 'trackship-for-woocommerce' ); ?></a></span>
                                         <?php } ?>
                                     </span>
-                                <?php } ?>
-								<?php if ( $has_est_delivery ) { ?>
-                                    <span class="wcast-shipment-est-delivery ft11" style="display: block; margin-top: 10px;">Est. Delivery <?php esc_html_e( $est_delivery_date1 ); ?> <a class="ts4wc_track_button ft12 open_tracking_details" data-orderid="<?php esc_html_e( $order_id ); ?>" data-tracking_id="<?php echo esc_html( $tracking_id ); ?>" data-nonce="<?php esc_html_e( wp_create_nonce( 'tswc-' . $order_id ) ); ?>" > Track</a></span>
                                 <?php } ?>
 							</span>
 						</div>	
@@ -1042,268 +1046,7 @@ class WC_Trackship_Actions {
 			$order->add_order_note( $note );
 		}
 	}	
-	
-	/**
-	* Add a new dashboard widget.
-	*/
-	public function ast_add_dashboard_widgets() {
-		//amcharts js	
-		wp_enqueue_script( 'amcharts', trackship_for_woocommerce()->plugin_dir_url() . 'assets/js/amcharts/amcharts.js', array(), trackship_for_woocommerce()->version );
-		wp_enqueue_script( 'amcharts-light-theme', trackship_for_woocommerce()->plugin_dir_url() . 'assets/js/amcharts/light.js', array(), trackship_for_woocommerce()->version );
-		wp_enqueue_script( 'amcharts-serial', trackship_for_woocommerce()->plugin_dir_url() . 'assets/js/amcharts/serial.js', array(), trackship_for_woocommerce()->version );		
-		wp_enqueue_style( 'dashboard_widget_styles', trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/dashboard_widget.css', array(), trackship_for_woocommerce()->version );
 		
-		wp_add_dashboard_widget( 'trackship_dashboard_widget', 'Tracking Analytics <small>(last 30 days)</small>', array( $this, 'dashboard_widget_function') );
-	}
-	
-	/**
-	* Output the contents of the dashboard widget
-	*/
-	public function dashboard_widget_function( $post, $callback_args ) {				
-				
-		global $wpdb;		
-		$paid_order_statuses =  array('completed','delivered','shipped');		
-		$shipment_status_results = $wpdb->get_results( $wpdb->prepare( "
-			SELECT p.ID, pm.* FROM {$wpdb->prefix}posts AS p
-			INNER JOIN {$wpdb->prefix}postmeta AS pm ON p.ID = pm.post_id
-			WHERE p.post_status IN ( 'wc-completed','wc-delivered','wc-shipped' )
-			AND p.post_type LIKE %s
-			AND pm.meta_key = 'shipment_status'
-			AND post_date > %s
-		", 'shop_order', gmdate('Y-m-d', strtotime('-30 days')) ) );
-
-		$tracking_items_results = $wpdb->get_results( $wpdb->prepare( "
-			SELECT p.ID, pm.* FROM {$wpdb->prefix}posts AS p
-			INNER JOIN {$wpdb->prefix}postmeta AS pm ON p.ID = pm.post_id
-			WHERE p.post_status IN ( 'wc-completed','wc-delivered','wc-shipped' )
-			AND p.post_type LIKE %s
-			AND pm.meta_key = '_wc_shipment_tracking_items'
-			AND post_date > %s
-		", 'shop_order', gmdate('Y-m-d', strtotime('-30 days')) ) );		
-					
-		$shipment_status = array();
-		$shipment_status_merge = array();
-		$tracking_item_merge = array();
-		
-		foreach ( $shipment_status_results as $order ) {
-			$order_id = $order->ID;														
-			$shipment_status = unserialize($order->meta_value);			
-						
-			if ( is_array( $shipment_status ) ) {
-				$shipment_status_merge = array_merge($shipment_status_merge, $shipment_status);				
-			}					
-		}
-				
-		foreach ( $tracking_items_results as $order ) {
-			$order_id = $order->ID;						
-			$tracking_items = unserialize($order->meta_value);
-			
-			if ( $tracking_items ) {								
-				foreach ( $tracking_items as $key => $tracking_item ) { 				
-					if ( isset( $shipment_status[$key] ) ) {							
-						$tracking_item_merge[] = $tracking_item;							
-					}
-				}								
-			}			
-		}
-		
-		$shipment_status_arr = array();
-
-		foreach ( (array) $shipment_status_merge as $key => $item ) {
-			if ( isset($item['status'] ) ) {
-				$shipment_status_arr[$item['status']][$key] = $item;
-			}
-		}
-		
-		$tracking_provider_arr = array();
-		
-		foreach ( $tracking_item_merge as $key => $item ) {	
-			$tracking_provider = $wpdb->get_var( $wpdb->prepare( "SELECT provider_name FROM {$wpdb->get_blog_prefix(0)}woo_shippment_provider WHERE ts_slug = %s", $item['tracking_provider'] ) );
-			$tracking_provider_arr[$tracking_provider][$key] = $item;
-		}		
-		
-		$tracking_issue_array = array();
-		foreach ( $shipment_status_arr as $status => $val ) {
-			if ( 'carrier_unsupported' == $status || 'INVALID_TRACKING_NUM' == $status || 'unknown' == $status || 'wrong_shipping_provider' == $status ) {
-				$tracking_issue_array[$status] = $val; 
-			}
-		}
-		
-		ksort($shipment_status_arr, SORT_NUMERIC);
-		ksort($tracking_provider_arr, SORT_NUMERIC);
-		?>
-		<script type="text/javascript">
-			 AmCharts.makeChart("ast_dashboard_status_chart",
-				{
-					"type": "serial",
-					"categoryField": "shipment_status",
-					"startDuration": 1,
-					"handDrawScatter": 4,
-					"theme": "light",
-					"categoryAxis": {
-						"autoRotateAngle": 0,
-						"autoRotateCount": 0,
-						"autoWrap": true,
-						"gridPosition": "start",
-						"minHorizontalGap": 10,
-						"offset": 1
-					},
-					"trendLines": [],
-					"graphs": [
-						{
-							"balloonText": " [[shipment_status]] : [[value]]",
-							"bulletBorderThickness": 7,
-							"colorField": "color",
-							"fillAlphas": 1,
-							"id": "AmGraph-1",
-							"lineColorField": "color",
-							"title": "graph 1",
-							"type": "column",
-							"valueField": "count"
-						}
-					],
-					"guides": [],
-					"valueAxes": [
-						{
-							"id": "ValueAxis-1",
-							"title": ""
-						}
-					],
-					"allLabels": [],
-					"balloon": {},
-					"titles": [
-						{
-							"id": "Title-1",
-							"size": 15,
-							"text": ""
-						}
-					],
-					"dataProvider": [
-						<?php foreach ( $shipment_status_arr as $status => $array ) { ?>
-							{
-								"shipment_status": "<?php esc_html_e( apply_filters( 'trackship_status_filter', $status) ); ?>",
-								"count": <?php esc_html_e( count($array) ); ?>,
-								"color": "#BBE285",								
-							},
-						<?php } ?>
-					]					
-				}
-			);
-		</script>
-		<script type="text/javascript">
-			 AmCharts.makeChart("ast_dashboard_providers_chart",
-				{
-					"type": "serial",
-					"categoryField": "shipment_provider",
-					"startDuration": 1,
-					"handDrawScatter": 4,
-					"theme": "light",
-					"categoryAxis": {
-						"autoRotateAngle": 0,
-						"autoRotateCount": 0,
-						"autoWrap": true,
-						"gridPosition": "start",
-						"minHorizontalGap": 10,
-						"offset": 1
-					},
-					"trendLines": [],
-					"graphs": [
-						{
-							"balloonText": " [[shipment_provider]] : [[value]]",
-							"bulletBorderThickness": 7,
-							"colorField": "color",
-							"fillAlphas": 1,
-							"id": "AmGraph-1",
-							"lineColorField": "color",
-							"title": "graph 1",
-							"type": "column",
-							"valueField": "count"
-						}
-					],
-					"guides": [],
-					"valueAxes": [
-						{
-							"id": "ValueAxis-1",
-							"title": ""
-						}
-					],
-					"allLabels": [],
-					"balloon": {},
-					"titles": [
-						{
-							"id": "Title-1",
-							"size": 15,
-							"text": ""
-						}
-					],
-					"dataProvider": [
-						<?php foreach ( $tracking_provider_arr as $provider => $array ) { ?>
-							{
-								"shipment_provider": "<?php esc_html_e( $provider ); ?>",
-								"count": <?php esc_html_e( count($array) ); ?>,
-								"color": "#BBE285",	
-							},
-						<?php } ?>
-					]					
-				}
-			);
-		</script>	
-		<style>
-		a[href="http://www.amcharts.com"] {
-			display: none !important;
-		}
-		</style>	
-		<div class="ast-dashborad-widget">			
-			
-			<input id="tab_s_providers" type="radio" name="tabs" class="widget_tab_input" checked>
-			<label for="tab_s_providers" class="widget_tab_label first_label"><?php esc_html_e('Shipment providers', 'trackship-for-woocommerce'); ?></label>
-			
-			<input id="tab_s_status" type="radio" name="tabs" class="widget_tab_input">
-			<label for="tab_s_status" class="widget_tab_label"><?php esc_html_e('Shipment status', 'trackship-for-woocommerce'); ?></label>
-			
-			<input id="tab_t_issues" type="radio" name="tabs" class="widget_tab_input">
-			<label for="tab_t_issues" class="widget_tab_label"><?php esc_html_e('Tracking issues', 'trackship-for-woocommerce'); ?></label>
-			
-			<section id="content_s_providers" class="widget_tab_section">
-				<?php if ( $tracking_provider_arr ) { ?>
-					<div id="ast_dashboard_providers_chart" class="" style="width: 100%;height: 300px;"></div>
-				<?php } else { ?>
-					<p style="padding: 8px 12px;"><?php esc_html_e('data not available.', 'trackship-for-woocommerce'); ?></p>
-				<?php } ?>
-			</section>	
-			
-			<section id="content_s_status" class="widget_tab_section">	
-				<?php if ( $shipment_status_arr ) { ?>
-					<div id="ast_dashboard_status_chart" class="" style="width: 100%;height: 300px;"></div>				
-				<?php } else { ?>
-					<p style="padding: 8px 12px;"><?php esc_html_e('data not available.', 'trackship-for-woocommerce'); ?></p>
-				<?php } ?>
-			</section>
-
-			<section id="content_t_issues" class="widget_tab_section">	
-				<?php if ( $tracking_issue_array ) { ?>					
-					<table class="table widefat fixed striped" style="border: 0;border-bottom: 1px solid #e5e5e5;">
-						<tbody>
-							<?php foreach ( $tracking_issue_array as $status => $array ) { ?>
-								<tr>
-									<td><a href="<?php echo esc_url( get_site_url() ); ?>/wp-admin/edit.php?s&post_status=all&post_type=shop_order&_shop_order_shipment_status=<?php esc_html_e( $status ); ?>"><?php esc_html_e( apply_filters('trackship_status_filter', $status) ); ?></a></td>
-									<td><?php echo count($array); ?></td>
-								</tr>
-							<?php } ?>
-						</tbody>
-					</table>
-				<?php } else { ?>
-					<p style="padding: 8px 12px;"><?php esc_html_e('data not available.', 'trackship-for-woocommerce'); ?></p>
-				<?php } ?>
-			</section>			
-			
-		</div>
-		<div class="widget_footer">	
-			<a class="" href="https://trackship.info/my-account/analytics/" target="blank"><?php esc_html_e( 'View more on TrackShip', 'trackship-for-woocommerce' ); ?></a>
-		</div>
-	<?php
-	}
-	
 	/**
 	* Create tracking page after store is connected
 	*/
@@ -1474,79 +1217,187 @@ class WC_Trackship_Actions {
 	public function schedule_while_adding_tracking( $order_id ) {
 		$this->schedule_trackship_trigger( $order_id );
 	}
-	
+		
 	/*
-	* Get custom order number
+	* Get formated order id
 	*/
-	public function get_custom_order_number( $order_id ) {
+	public function get_formated_order_id( $order_id ) {
 		
 		if ( is_plugin_active( 'custom-order-numbers-for-woocommerce/custom-order-numbers-for-woocommerce.php' ) ) {
-			$custom_order_number = get_post_meta( $order_id, '_alg_wc_custom_order_number', true );
-			if ( !empty( $custom_order_number ) ) {
-				return $custom_order_number;
-			}
+			$alg_wc_custom_order_numbers_enabled = get_option( 'alg_wc_custom_order_numbers_enabled' );
+			$alg_wc_custom_order_numbers_prefix  = get_option( 'alg_wc_custom_order_numbers_prefix' );
+			$new_order_id = str_replace( $alg_wc_custom_order_numbers_prefix, '', $order_id );
+						
+			if ( 'yes' == $alg_wc_custom_order_numbers_enabled ) {
+				$args = array(
+					'post_type'		=>	'shop_order',			
+					'posts_per_page'    => '1',
+					'meta_query'        => array(
+						'relation' => 'AND', 
+						array(
+						'key'       => '_alg_wc_custom_order_number',
+						'value'     => $new_order_id,
+						),
+					),
+					'post_status' => array_keys( wc_get_order_statuses() ) , 	
+				);
+				$posts = get_posts( $args );
+				$my_query = new WP_Query( $args );				
+				
+				if ( $my_query->have_posts() ) {
+					while ( $my_query->have_posts()) {
+						$my_query->the_post();
+						if ( get_the_ID() ) {
+							$order_id = get_the_ID();
+						}									
+					} // end while
+				} // end if
+				$order_id;
+				wp_reset_postdata();	
+			}			
 		}		
 		
-		if ( is_plugin_active( 'woocommerce-sequential-order-numbers/woocommerce-sequential-order-numbers.php' ) ) {					
-			$order = wc_get_order( $order_id );
-			$custom_order_number = $order->get_order_number();
-			if ( !empty( $custom_order_number ) ) {
-				return $custom_order_number;
+		if ( is_plugin_active( 'woocommerce-sequential-order-numbers/woocommerce-sequential-order-numbers.php' ) ) {
+						
+			$s_order_id = wc_sequential_order_numbers()->find_order_by_order_number( $order_id );			
+			if ( $s_order_id ) {
+				$order_id = $s_order_id;
 			}
 		}
 		
-		if ( is_plugin_active( 'woocommerce-sequential-order-numbers-pro/woocommerce-sequential-order-numbers-pro.php' ) ) {				
-			$order = wc_get_order( $order_id );
-			$custom_order_number = $order->get_order_number();
-			if ( !empty( $custom_order_number ) ) {
-				return $custom_order_number;
+		if ( is_plugin_active( 'woocommerce-sequential-order-numbers-pro/woocommerce-sequential-order-numbers-pro.php' ) ) {
+			
+			// search for the order by custom order number
+			$query_args = array(
+				'numberposts' => 1,
+				'meta_key'    => '_order_number_formatted',
+				'meta_value'  => $order_id,
+				'post_type'   => 'shop_order',
+				'post_status' => 'any',
+				'fields'      => 'ids',
+			);
+			
+			$posts = get_posts( $query_args );			
+			if( !empty( $posts ) ) {
+				list( $order_id ) = $posts;			
+			}			
+		}
+		
+		if ( is_plugin_active( 'woocommerce-jetpack/woocommerce-jetpack.php' ) ) {
+			
+			$wcj_order_numbers_enabled = get_option( 'wcj_order_numbers_enabled' );
+			// Get prefix and suffix options
+			$prefix = do_shortcode( get_option( 'wcj_order_number_prefix', '' ) );
+			$prefix .= date_i18n( get_option( 'wcj_order_number_date_prefix', '' ) );
+			$suffix = do_shortcode( get_option( 'wcj_order_number_suffix', '' ) );
+			$suffix .= date_i18n( get_option( 'wcj_order_number_date_suffix', '' ) );
+	
+			// Ignore suffix and prefix from search input
+			$search_no_suffix            = preg_replace( "/\A{$prefix}/i", '', $order_id );
+			$search_no_suffix_and_prefix = preg_replace( "/{$suffix}\z/i", '', $search_no_suffix );
+			$final_search                = empty( $search_no_suffix_and_prefix ) ? $search : $search_no_suffix_and_prefix;	
+			
+			if ( 'yes' == $wcj_order_numbers_enabled ) {
+				$query_args = array(
+					'numberposts' => 1,
+					'meta_key'    => '_wcj_order_number',
+					'meta_value'  => $final_search,
+					'post_type'   => 'shop_order',
+					'post_status' => 'any',
+					'fields'      => 'ids',
+				);
+				
+				$posts = get_posts( $query_args );
+				if ( !empty( $posts ) ) {	
+					list( $order_id ) = $posts;			
+				}			
 			}
 		}
 		
-		if ( is_plugin_active( 'woocommerce-jetpack/woocommerce-jetpack.php' ) ) {			
-			$custom_order_number = get_post_meta( $order_id, '_wcj_order_number', true );
-			$order = wc_get_order( $order_id );	
-			if ( class_exists( 'WCJ_Order_Numbers' ) ) {	
-				$WCJ_Order_Numbers = new WCJ_Order_Numbers();
-				$custom_order_number = $WCJ_Order_Numbers->display_order_number( $order_id, $order );				
-				if ( !empty( $custom_order_number ) ) {
-					return $custom_order_number;
-				}
-			}
-		}
-		
-		if ( is_plugin_active( 'wp-lister-amazon/wp-lister-amazon.php' ) ) {			
-			$custom_order_number = get_post_meta( $order_id, '_wpla_amazon_order_id', true );
-			if ( !empty( $custom_order_number ) ) {
-				return $custom_order_number;				
-			} 
+		if ( is_plugin_active( 'wp-lister-amazon/wp-lister-amazon.php' ) ) {
+			$wpla_use_amazon_order_number = get_option( 'wpla_use_amazon_order_number' );
+			if ( 1 == $wpla_use_amazon_order_number ) {
+				$query_args = array(
+					'numberposts' => 1,
+					'meta_key'    => '_wpla_amazon_order_id',
+					'meta_value'  => $order_id,
+					'post_type'   => 'shop_order',
+					'post_status' => 'any',
+					'fields'      => 'ids',
+				);
+				
+				$posts = get_posts( $query_args );			
+				if ( !empty( $posts ) ) {	
+					list( $order_id ) = $posts;			
+				}	
+			}			
 		}	
 		
 		if ( is_plugin_active( 'wp-lister/wp-lister.php' ) || is_plugin_active( 'wp-lister-for-ebay/wp-lister.php' ) ) {
-			$custom_order_number = get_post_meta( $order_id, '_ebay_extended_order_id', true );
-			if ( empty($custom_order_number ) ) {
-				$custom_order_number = get_post_meta( $order_id, '_ebay_order_id', true );
-			}
-			if ( !empty( $custom_order_number ) ) {
-				return $custom_order_number;
-			}
-		}	
-		
-		if ( is_plugin_active( 'yith-woocommerce-sequential-order-number-premium/init.php' ) ) {			
-			$custom_order_number = get_post_meta( $order_id, '_ywson_custom_number_order_complete', true );
-			if ( !empty( $custom_order_number ) ) {
-				return $custom_order_number;
-			}
+			$args = array(
+				'post_type'		=>	'shop_order',			
+				'posts_per_page'    => '1',
+				'meta_query'        => array(
+					'relation' => 'OR', 
+					array(
+						'key'       => '_ebay_extended_order_id',
+						'value'     => $order_id
+					),
+					array(
+						'key'       => '_ebay_order_id',
+						'value'     => $order_id
+					),					
+				),	
+				'post_status' => 'any',	
+			);
+			
+			$posts = get_posts( $args );
+			$my_query = new WP_Query( $args );				
+			
+			if ( $my_query->have_posts() ) {
+				while ( $my_query->have_posts() ) {
+					$my_query->the_post();
+					if ( get_the_ID() ) {
+						$order_id = get_the_ID();
+					}									
+				} // end while
+			} // end if
+			wp_reset_postdata();
 		}
 		
-		if ( is_plugin_active( 'wt-woocommerce-sequential-order-numbers/wt-advanced-order-number.php' ) ) {			
-			$custom_order_number = get_post_meta($order_id, '_order_number', true);			
-			if ( !empty( $custom_order_number ) ) {
-				return $custom_order_number;
-			}
+		if ( is_plugin_active( 'yith-woocommerce-sequential-order-number-premium/init.php' ) ) {
+			$query_args = array(
+				'numberposts' => 1,
+				'meta_key'    => '_ywson_custom_number_order_complete',
+				'meta_value'  => $order_id,
+				'post_type'   => 'shop_order',
+				'post_status' => 'any',
+				'fields'      => 'ids',
+			);
+			
+			$posts = get_posts( $query_args );			
+			if ( !empty( $posts ) ) {	
+				list( $order_id ) = $posts;			
+			}	
 		}
 		
-		return apply_filters( 'ast_custom_order_number', $order_id );	
+		if ( is_plugin_active( 'wt-woocommerce-sequential-order-numbers/wt-advanced-order-number.php' ) ) {						
+			$query_args = array(
+				'numberposts' => 1,
+				'meta_key'    => '_order_number',
+				'meta_value'  => $order_id,
+				'post_type'   => 'shop_order',
+				'post_status' => 'any',
+				'fields'      => 'ids',
+			);
+			
+			$posts = get_posts( $query_args );			
+			if( !empty( $posts ) ) {
+				list( $order_id ) = $posts;			
+			}			
+		}
+		
+		return apply_filters( 'ast_formated_order_id', $order_id );
 	}
 	
 	public function get_shipment_status( $order_id, $formatted = true ) {

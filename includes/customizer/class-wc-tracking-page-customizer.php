@@ -129,6 +129,10 @@ class TSWC_Tracking_Page_Customizer {
 		return apply_filters( 'ast_customizer_defaults', $customizer_defaults );
 	}	
 	
+	public function save_tracking_widget_type( $input, $setting ) {
+		return 'tracking_page_widget';
+	}
+	
 	/**
 	 * Register our sample default controls
 	 */
@@ -148,8 +152,8 @@ class TSWC_Tracking_Page_Customizer {
 			array(
 				'default' => $this->defaults['tracking_widget_type'],
 				'transport' => 'refresh',
-				'sanitize_callback' => '',
-				'type' => 'option',				
+				'sanitize_callback' => array( $this, 'save_tracking_widget_type' ),
+				'type' => 'option',					
 			)
 		);		
 		$wp_customize->add_control( 'tracking_widget_type', array(
