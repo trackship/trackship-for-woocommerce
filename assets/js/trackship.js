@@ -578,6 +578,15 @@ jQuery(document).on("click", ".copy_tracking_page", function(){
 });
 
 /*
+* click on tracking number from dashboard
+*/
+jQuery(document).on("click", ".copied_tracking_numnber", function(){
+	var text = jQuery(this).data("number");
+	copyTextToClipboard(text);
+	jQuery(document).trackship_snackbar( 'Tracking number copied to clipboard' );
+});
+
+/*
 * click on copy_view_order_page
 */
 jQuery(document).on("click", ".copy_view_order_page", function(){
@@ -663,4 +672,12 @@ jQuery(document).on( "click", ".tools_tab_ts4wc .remove-icon.dashicons-no-alt", 
 	var cookies = document.cookie = "Notice=delete " + expires ;
 	jQuery('#content_trackship_settings .tools_tab_ts4wc').hide();
 	console.log(cookies);
+});
+
+/*
+* click on more info
+*/
+jQuery(document).on("click", ".open_more_info_popup", function(){
+	jQuery("#admin_error_more_info_widget").show();
+	return false;
 });

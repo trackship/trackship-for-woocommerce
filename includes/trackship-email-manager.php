@@ -278,7 +278,7 @@ class WC_TrackShip_Email_Manager {
 		if ( $user ) {
 			$username = $user->user_login;
 		}
-		$string =  str_replace( '{order_number}', $order_id, $string );
+		$string =  str_replace( '{order_number}', $order->get_order_number(), $string );
 		$string =  str_replace( '{customer_email}', $customer_email, $string );
 		$string =  str_replace( '{customer_first_name}', $first_name, $string );
 		$string =  str_replace( '{customer_last_name}', $last_name, $string );
@@ -302,7 +302,7 @@ class WC_TrackShip_Email_Manager {
 		if ( $user ) {
 			$username = $user->user_login;
 		}
-		$string =  str_replace( '{order_number}', $order_id, $string );
+		$string =  str_replace( '{order_number}', $order->get_order_number(), $string );
 		$string =  str_replace( '{customer_email}', $customer_email, $string );
 		$string =  str_replace( '{customer_first_name}', $first_name, $string );
 		$string =  str_replace( '{customer_last_name}', $last_name, $string );
@@ -361,7 +361,7 @@ class WC_TrackShip_Email_Manager {
 		} else {
 			$email_content = str_replace( '{customer_username}', '', $email_content );
 		}
-		$email_content = str_replace( '{order_number}', $order_id, $email_content );
+		$email_content = str_replace( '{order_number}', $order->get_order_number(), $email_content );
 		if ( $wc_ast_api_key && $api_enabled ) {		
 			$email_content = str_replace( '{est_delivery_date}', $est_delivery_date, $email_content );		
 		}
