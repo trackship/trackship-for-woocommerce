@@ -170,7 +170,7 @@
                     <div class="ast-col as-col-8">
                         <h3>SMSWOO – SMS for WooCommerce</h3>
                         <p>The SMS for WooCommerce (SMSWOO) plugin connects your WooCommerce store with SMS API services such as Twilio, Vonage (Nexmo), ClickSend and others to send your customers automated SMS notifications from your store. Once SMSWOO and TrackShip for WooCommerce are both installed on your store, you can send automatic Shipment Status SMS updates to your customers.</p>
-                        <a href="https://www.zorem.com/product/sms-for-woocommerce/" class="button button-primary button-trackship" target="blank">From $79</a>
+                        <a href="https://www.zorem.com/product/sms-for-woocommerce/" class="button button-primary button-trackship" target="blank"><?php esc_html_e( 'Get it now', 'trackship-for-woocommerce' ); ?></a>
                     </div>							
                 </div>
             </div>

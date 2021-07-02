@@ -436,13 +436,25 @@ class TSWC_Intransit_Customizer_Email {
 	public function preview_intransit_email() {
 		// Load WooCommerce emails.
 		$preview_id     = get_theme_mod( 'wcast_intransit_email_preview_order_id' );
+		$order = wc_get_order( $preview_id );
 		
-		$order = new WC_Order($preview_id);
-		$order_id = $order->get_order_number();
+		if ( '' == $preview_id || 'mockup' == $preview_id ) {
+			echo '<div style="padding: 35px 40px; background-color: white;">';
+				esc_html_e( 'Please select order to preview.', 'trackship-for-woocommerce' );
+			echo '</div>';
+			return;
+		}		
+		
+		if ( ! $order ) {
+			echo '<div style="padding: 35px 40px; background-color: white;">';
+				esc_html_e( 'Please select order to preview.', 'trackship-for-woocommerce' );
+			echo '</div>';
+			return;
+		}
 		
 		$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_intransit_email_settings', 'wcast_intransit_email_heading', $this->defaults['wcast_intransit_email_heading']);		
 		$email_heading = str_replace( '{site_title}', $this->get_blogname(), $email_heading );
-		$email_heading = str_replace( '{order_number}', $order_id, $email_heading );
+		$email_heading = str_replace( '{order_number}', $order->get_order_number(), $email_heading );
 		$email_heading = str_replace( '{shipment_status}', 'In Transit', $email_heading );
 		
 		$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_intransit_email_settings', 'wcast_intransit_email_content', $this->defaults['wcast_intransit_email_content']);				
@@ -454,22 +466,6 @@ class TSWC_Intransit_Customizer_Email {
 		$sent_to_admin = false;
 		$plain_text = false;
 		$email = '';
-		
-		if ( '' == $preview_id || 'mockup' == $preview_id ) {
-			echo '<div style="padding: 35px 40px; background-color: white;">';
-				esc_html_e( 'Please select order to preview.', 'trackship-for-woocommerce' );
-			echo '</div>';
-			return;
-		}		
-		
-		$order = wc_get_order( $preview_id );
-		
-		if ( ! $order ) {
-			echo '<div style="padding: 35px 40px; background-color: white;">';
-				esc_html_e( 'Please select order to preview.', 'trackship-for-woocommerce' );
-			echo '</div>';
-			return;
-		}
 		
 		// get the preview email subject
 		$email_heading = __( $email_heading, 'trackship-for-woocommerce' );

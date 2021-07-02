@@ -36,7 +36,7 @@ if ( $tracking_items ) :
                                 if ( $ship_status ) {
                                     if ( in_array( $ship_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown' ) ) ) {
                                         echo '<span class="shipment_status shipped" >';
-                                            esc_html_e( 'Shipped' );
+                                            esc_html_e( 'Shipped', 'trackship-for-woocommerce' );
                                         echo '</span>';
                                     } else {
                                         $icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/icons/' . esc_html( $ship_status ) . '-o.png';
@@ -58,7 +58,8 @@ if ( $tracking_items ) :
                                 $est_delivery_date = isset( $shipment_status[$key]['est_delivery_date'] ) ? $shipment_status[$key]['est_delivery_date'] : false;
                                 if ( $est_delivery_date ) {
                                     echo '<p style="margin: 0;"><span class="est_delivery_date">';
-                                    echo 'Est. delivery: ' . '<b>' . esc_html( gmdate( 'l, M d', strtotime( $est_delivery_date ) ) ) . '</b>';
+									esc_html_e( 'Est. Delivery Date', 'trackship-for-woocommerce' );
+									echo ': <b>' . date_i18n( 'l, M d', strtotime( $est_delivery_date ) ) . '</b>';
                                     echo '</span></p>';
                                 }
                                 ?>
