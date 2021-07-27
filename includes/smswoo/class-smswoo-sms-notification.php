@@ -137,7 +137,6 @@ class tswc_smswoo_sms_notification {
 		}
 		
 		if ( function_exists( 'ast_get_tracking_items' ) ) {
-			
 			$tracking_items = ast_get_tracking_items( $object->order->get_id() );
 			$tracking_number = array_column($tracking_items, 'tracking_number');
 			
@@ -147,6 +146,10 @@ class tswc_smswoo_sms_notification {
 			
 			$tracking_provider = array_column($tracking_items, 'formatted_tracking_provider');
 			$replacements[ '%tracking_provider%' ] = implode( ', ', $tracking_provider );
+			$replacements[ '{tracking_provider}' ] = implode( ', ', $tracking_provider );
+			
+			$shipping_provider = array_column($tracking_items, 'formatted_tracking_provider');
+			$replacements[ '%tracking_provider%' ] = implode( ', ', $shipping_provider );
 			$replacements[ '{tracking_provider}' ] = implode( ', ', $shipping_provider );
 			
 			$tracking_link = array_column($tracking_items, 'formatted_tracking_link');
@@ -192,8 +195,6 @@ class tswc_smswoo_sms_notification {
 		//retun if sms is scheduled
 		if( $bool )return;
 		
-		$timestamp   = time();
-		
 		$sms_provider = $this->get_sms_provider();
 		
 		$sms_gateway = new $sms_provider();
@@ -238,10 +239,6 @@ class tswc_smswoo_sms_notification {
 		if ( $this->_customer_sms && $smswoo_enable_order_note_log ) {
 
 			$order = $this->order;
-
-			$datetime = new DateTime( '@{$timestamp}', new DateTimeZone( 'UTC' ) );
-			$datetime->setTimezone( new DateTimeZone( wc_timezone_string() ) );
-			$send_date = date_i18n( wc_date_format() . ' ' . wc_time_format(), $timestamp + $datetime->getOffset() );
 
 			ob_start();
 			?>
@@ -324,7 +321,7 @@ class tswc_smswoo_sms_notification {
 			$message = apply_filters( 'smswoo_customer_sms_send', $message, $this->order );
 			
 			// send the SMS to customer!
-			if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) && get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_customer' ) && $this->user_subscribed_sms( $order_id ) ){
+			if ( !in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) && get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_customer' ) ){
 				
 				// allow modification of the "to" phone number
 				$phone = apply_filters( 'smswoo_sms_customer_phone', $this->order->get_billing_phone( 'edit' ), $this->order );
@@ -333,7 +330,7 @@ class tswc_smswoo_sms_notification {
 			}
 			
 			// send the SMS to admin!
-			if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) && get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_admin' ) ){
+			if ( !in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) && get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_admin' ) ){
 				
 				// allow modification of the "to" phone number
 				$phone = apply_filters( 'smswoo_sms_customer_admin', get_option( 'smswoo_admin_phone_number' ), $this->order );
