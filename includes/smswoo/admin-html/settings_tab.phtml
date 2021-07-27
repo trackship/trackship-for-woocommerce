@@ -1,0 +1,21 @@
+<form method="post" class="zorem_plugin_setting_tab_form trackship_sms_settings">
+    <div class="outer_form_table">
+		<table class="form-table heading-table" style="margin-top: 20px;">
+			<tbody>				
+				<tr valign="top">
+					<td>
+						<h1><?php esc_html_e( 'SMS Service Provider', 'trackship-for-woocommerce' ); ?></h1>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<?php $this->get_html( $this->get_sms_provider_data() ); ?>
+        <button name="save" class="button-primary button-trackship btn_large button-primary woocommerce-save-button button-smswoo" type="submit" ><?php esc_html_e( 'Save Changes', 'trackship-for-woocommerce' )?></button>
+        <div class="spinner workflow_spinner" style="float:none"></div>
+    </div>
+    <div class="">
+        <?php $nonce = wp_create_nonce( 'smswoo_settings_tab' ); ?>
+        <input type="hidden" name="smswoo_settings_tab_nonce" value="<?php echo $nonce;?>">
+        <input type="hidden" name="action" value="smswoo_settings_tab_save">
+    </div>
+</form>
