@@ -142,6 +142,7 @@ class TSWC_Tracking_Page_Customizer {
 		*/
 		require_once trailingslashit( dirname(__FILE__) ) . 'custom-controls.php';
 		
+		$class = in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? 'disable_branding' : '';
 		$font_size_array[ '' ] = __( 'Select' );
 		for ( $i = 10; $i <= 30; $i++ ) {
 			$font_size_array[ $i ] = $i . 'px';
@@ -160,7 +161,7 @@ class TSWC_Tracking_Page_Customizer {
 			'type' => 'select',
 			'section' => 'ast_tracking_page_section', // Add a default or your own section
 			'label' => __( 'Widget Type', 'trackship-for-woocommerce' ),
-			'description' => __( '' ),
+			'description' => '',
 			'choices' => array(
 				'tracking_page_widget' => __( 'Tracking page widget', 'trackship-for-woocommerce' ),
 				'tracking_email_widget' => __( 'Email widget', 'trackship-for-woocommerce' ),
@@ -304,15 +305,17 @@ class TSWC_Tracking_Page_Customizer {
 				'sanitize_callback' => '',
 				'type' => 'option',
 			)
-		);
-		$wp_customize->add_control( 'wc_ast_remove_trackship_branding',
+		);		
+		$wp_customize->add_control( new TrackShip_checkbox_Custom_Control( $wp_customize, 'wc_ast_remove_trackship_branding',
 			array(
-				'label' => __( 'Hide TrackShip Branding', 'trackship-for-woocommerce' ),				
+				'label' => __( 'Hide TrackShip Branding', 'trackship-for-woocommerce' ),						
 				'section' => 'ast_tracking_page_section',
-				'type' => 'checkbox',
-				'active_callback' => array( $this, 'active_callback' ),				
+				'input_attrs' => array(
+					'class' => $class,
+				),
+				'active_callback' => array( $this, 'active_callback' ),
 			)
-		);
+		) );
 						
 	}
 	

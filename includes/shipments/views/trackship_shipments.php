@@ -40,4 +40,4 @@ global $typenow, $wpdb;
 			</div>		
 		</div>
 	</section>
-</div>	
+</div>

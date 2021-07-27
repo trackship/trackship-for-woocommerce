@@ -78,8 +78,9 @@ class WC_TrackShip_Email_Manager {
 				if ( $wcast_show_order_details ) {
 					
 					$tpi_order = false;
+					$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 					if ( function_exists( 'ast_pro' ) ) {
-						$tpi_order = ast_pro()->ast_tpi->check_if_tpi_order( $tracking_item, $order );
+						$tpi_order = ast_pro()->ast_tpi->check_if_tpi_order( $tracking_items, $order );
 					}
 					
 					if ( $tpi_order ) {
@@ -90,12 +91,12 @@ class WC_TrackShip_Email_Manager {
 								'order'         => $order,
 								'sent_to_admin' => $sent_to_admin,
 								'plain_text'    => $plain_text,
+								'tracking_items'=> array($tracking_item),
 								'email'         => '',
 							),
 							'woocommerce-advanced-shipment-tracking/', 
 							trackship_for_woocommerce()->get_plugin_path() . '/templates/'
 						);
-						
 					} else {
 						$message.= wc_get_template_html(
 							'emails/tswc-email-order-details.php',
@@ -206,8 +207,9 @@ class WC_TrackShip_Email_Manager {
 				
 				if ( $wcast_show_order_details ) {
 					$tpi_order = false;
+					$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 					if ( function_exists( 'ast_pro' ) ) {
-						$tpi_order = ast_pro()->ast_tpi->check_if_tpi_order( $tracking_item, $order );
+						$tpi_order = ast_pro()->ast_tpi->check_if_tpi_order( $tracking_items, $order );
 					}
 					
 					if ( $tpi_order ) {
@@ -218,6 +220,7 @@ class WC_TrackShip_Email_Manager {
 								'order'         => $order,
 								'sent_to_admin' => $sent_to_admin,
 								'plain_text'    => $plain_text,
+								'tracking_items'=> array($tracking_item),
 								'email'         => '',
 							),
 							'woocommerce-advanced-shipment-tracking/', 
@@ -319,7 +322,7 @@ class WC_TrackShip_Email_Manager {
 	 * Code for format recipients 
 	 */	
 	public function email_to( $string, $order, $order_id ) {
-		$customer_email = $order->get_billing_email();
+		$customer_email = $order ? $order->get_billing_email() : '';
 		$admin_email = get_option('admin_email');
 		$string =  str_replace( '{admin_email}', $admin_email, $string );
 		$string =  str_replace( '{customer_email}', $customer_email, $string );

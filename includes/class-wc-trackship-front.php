@@ -403,6 +403,9 @@ class WC_TrackShip_Front {
                     <div class="trackship_branding">
                         <p><a href="https://trackship.info/trackings/?number=<?php esc_html_e( $tracking_number ); ?>" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
                     </div>
+                    <?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
+                        <style> .trackship_branding{display:block !important;} </style>
+                    <?php } ?>
 				</div>
 			<?php }
 			$num++;

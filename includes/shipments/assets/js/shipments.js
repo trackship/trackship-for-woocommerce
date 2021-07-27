@@ -1,3 +1,30 @@
+/* show_popup jquery */
+(function( $ ){
+	'use strict';
+	$.fn.show_popup = function() {
+		var val = jQuery( '.disable_pro' ).val();
+		if ( val === 'disable_pro' ) {
+			jQuery("#free_user_popup").show();
+		}
+		return this;
+	}; 
+})( jQuery );
+
+/* ajax_loader jquery */
+(function( $ ){
+	'use strict';
+	$.fn.ajax_loader = function( class_id ) {
+		jQuery( class_id ).block({
+			message: null,
+			overlayCSS: {
+				background: "#fff",
+				opacity: 0.6
+			}	
+		});
+		return this;
+	}; 
+})( jQuery );
+
 jQuery('.shipping_date').on('apply.daterangepicker', function(ev, picker) {
 	jQuery(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD')).trigger("change");
 });
@@ -9,7 +36,8 @@ jQuery('.shipping_date').on('cancel.daterangepicker', function(ev, picker) {
 jQuery(document).ready(function() {	
 	'use strict';	
 	var url;
-	var $table = jQuery("#shipments_table").DataTable({		
+	
+	var $table = jQuery("#shipments_table").DataTable({
 		dom: "i<'table_scroll't><'datatable_footer'pl>",
 		searching: false,
 		"processing": true,
@@ -29,8 +57,7 @@ jQuery(document).ready(function() {
 				d.tracking_code = jQuery("#tracking_code").val();
 				d.shipping_date = jQuery("#shipping_date").val();
 				d.order_id = jQuery("#order_id").val();		
-				d.shipment_type	= jQuery("#shipment_type").val();					
-				//d.length = 100;				
+				d.shipment_type	= jQuery("#shipment_type").val();							
 			},
 		},
 		
@@ -39,6 +66,7 @@ jQuery(document).ready(function() {
 		"drawCallback": function(settings) {
 			jQuery(window).resize();
 			jQuery(".trackship-tip").tipTip();
+			jQuery("#shipments_table").unblock();
 		},		
 		oLanguage: {
 			sProcessing: '<div id=loader><div class="fa-3x"><i class="fas fa-sync fa-spin"></i></div>'
@@ -84,9 +112,7 @@ jQuery(document).ready(function() {
 			{
 				"width": "150px",
 				'orderable': false,	
-				"mRender":function(data,type,full) {
-					return full.shipment_length ;
-				},					
+				'data': 'shipment_length',				
 			},	
 			{
 				"width": "50px",	
@@ -96,27 +122,37 @@ jQuery(document).ready(function() {
 				},	
 			},		
 		],
-	});	
-	
+			
+	});
 	
 	jQuery('#active_shipment').change(function() {
+		jQuery(document).show_popup();
+		jQuery(document).ajax_loader("#shipments_table");
 		var label1 = jQuery( "#active_shipment" ).val();
-		$table.ajax.reload();		
+		$table.ajax.reload();
 	});
 	jQuery('#shipment_status').change(function() {
+		jQuery(document).show_popup();
+		jQuery(document).ajax_loader("#shipments_table");
 		var label2 = jQuery( "#shipment_status" ).val();
 		$table.ajax.reload();
 	});
 	jQuery('#ts4wc_shipment_times').change(function() {
+		jQuery(document).show_popup();
+		jQuery(document).ajax_loader("#shipments_table");
 		var label3 = jQuery( "#ts4wc_shipment_times" ).val();
 		$table.ajax.reload();
 	});	
 	jQuery('.serch_button').click(function() {
+		jQuery(document).show_popup();
+		jQuery(document).ajax_loader("#shipments_table");
 		var label4 = jQuery( "#search_bar" ).val();
-		$table.ajax.reload();
+		$table.ajax.reload();		
 	});	
 	
 	jQuery(document).on("click", ".shipments_get_shipment_status", function(){
+		jQuery(document).show_popup();
+		jQuery(document).ajax_loader("#shipments_table");
 		var order_id = jQuery(this).data('orderid');
 		
 		var ajax_data = {
@@ -158,8 +194,16 @@ jQuery(document).on("click", ".bulk_action_submit", function(){
 	}	
 });
 
+jQuery(document).ready(function() {
+	'use strict';
+	jQuery( '#shipping_time' ).trigger('change');
+});
+
 jQuery(document).on("change", "#shipping_time", function(){
 	'use strict';
+	jQuery(document).show_popup();
+	
+	jQuery(document).ajax_loader(".flexcontainer");
 	var selected_option = jQuery( "#shipping_time" ).val();
 	var ajax_data = {
 		action: 'get_tracking_analytics_overview',
@@ -178,9 +222,20 @@ jQuery(document).on("change", "#shipping_time", function(){
 			jQuery('.delivered_shipments_percent').html(response.delivered_shipments_percent);
 			jQuery('.delivered_shipments_count').html(response.delivered_shipments);
 			jQuery('.avg_shipment_length_count').html(response.avg_shipment_length);
+			jQuery(".flexcontainer").unblock();
 		},
 		error: function(response) {
-			console.log(response);		
+			console.log(response);
 		}
 	});
+});
+
+jQuery(document).on("click", ".inner_tab_label.inner_sms_tab", function(){
+	jQuery(document).show_popup();
+});
+
+jQuery(document).on( "click", ".popupclose", function(){
+	'use strict';
+	jQuery(".popupwrapper").hide();
+	jQuery( "#tab_email_notifications" ).trigger('click');
 });

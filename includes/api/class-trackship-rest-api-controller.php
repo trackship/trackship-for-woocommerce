@@ -142,8 +142,8 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	public function tracking_webhook( $request ) {
 		$content = print_r($request, true);
 		$logger = wc_get_logger();
-		$context = array( 'source' => 'trackship_webhook' );
-		$logger->info( "New trackship_webhook \n\n" . $content . "\n\n", $context );
+		$context = array( 'source' => 'trackship_tracking_update' );
+		$logger->info( "trackship_tracking_update \n" . $content . "\n", $context );
 		
 		//validation
 		$user_key = $request['user_key'];
@@ -189,12 +189,18 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			
 			update_post_meta( $order_id, 'shipment_status', $shipment_status );
 			
+			//tracking page link in $shipment_status
 			$shipment_status = trackship_for_woocommerce()->actions->get_shipment_status( $order_id );
 			
 			$trackship->trigger_tracking_email( $order_id, $previous_status, $tracking_event_status, $tracking_item, $shipment_status[$key] );
 			
 			$ts_shipment_status[$key]['status'] = $tracking_event_status;
-			update_post_meta( $order_id, "ts_shipment_status", $ts_shipment_status);
+			update_post_meta( $order_id, 'ts_shipment_status', $ts_shipment_status);
+			
+			$args = array(
+				'shipment_status'	=> $shipment_status[$key]['status'],
+			);
+			trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_item['tracking_number'], $args );
 		}
 		
 		$trackship->check_tracking_delivered( $order_id );
