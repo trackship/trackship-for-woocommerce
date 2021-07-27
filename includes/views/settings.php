@@ -44,7 +44,7 @@ if ( 'delete' != $cookie && $total_orders > 0 ) { ?>
                 }
                 ?>
             </div>
-            <input class="input-text regular-input color_input" type="text" name="wc_ast_status_label_color" id="wc_ast_status_label_color" style="" value="<?php echo esc_html( get_option( 'wc_ast_status_label_color', '#59c889' ) ); ?>" placeholder="">
+            <input class="input-text regular-input color_input" type="text" name="wc_ast_status_label_color" id="wc_ast_status_label_color" style="" value="<?php echo esc_html( get_option( 'wc_ast_status_label_color', '#09d3ac' ) ); ?>" placeholder="">
             <select class="select ts_custom_order_color_select" id="wc_ast_status_label_font_color" name="wc_ast_status_label_font_color">	
                 <option value="#fff" <?php echo '#fff' == get_option('wc_ast_status_label_font_color', '#fff') ? 'selected' : ''; ?>> <?php esc_html_e( 'Light Font', 'trackship-for-woocommerce' ); ?>
                 </option>
@@ -68,3 +68,5 @@ if ( 'delete' != $cookie && $total_orders > 0 ) { ?>
         </div>      	    
     </div>
 </form>
+<?php do_action( 'after_trackship_settings' );
+	

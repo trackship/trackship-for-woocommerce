@@ -2,22 +2,26 @@
 Contributors: TrackShip
 Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 5.3
-Tested up to: 5.7.2
+Tested up to: 5.8
 Requires PHP: 7.0
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-TrackShip seamlessly integrates with WooCommerce and into your fulfillment workflow, auto-tracks your orders with 300+ shipping providers and adds a branded tracking system into the WooCommerce dashboard.
+TrackShip seamlessly integrates with WooCommerce and into your fulfillment workflow, auto-tracks your orders with 300+ shipping providers and brings a branded tracking experience to your WooCommerce store, integrates into your fulfillment workflow, automates the post-shipping workflow and takes care of all the touchpoints with your customers after shipping.
 
-[TrackShip](https://trackship.info/) is a Multi-Carrier Shipment Tracking platform that supports [300+ shipping providers](https://trackship.info/shipping-providers/) across the globe. TrackShip automatically tracks all your shipments and proactively updates the shipment status back to your store, until the package is delivered to the customer.
+* Automate your Post-Shipping workflow
+* Reduce time spent on customer service
+* Further engage customers after shipping
+* Provide a superior post-purchase customer experience
+* Increase customer satisfaction and repeat purchases
 
-TrackShip helps you to reduce time spent on post-shipping inquiries and customer service, further engage customers after shipping, provide a superior post-purchase experience and increase customer satisfaction and repeat purchases.
-
-[Try TrackShip for Free! 50 Shipment Trackers for every new account >](https://trackship.info/) 
+[Start for Free, 50 free shipment trackers / month >](https://trackship.info/) 
 
 https://www.youtube.com/watch?v=PhnqDorKN_c
 
+= Automatic Shipment Tracking = 
+TrackShip auto-tracks your orders  from shipping to delivery with 300+ shipping providers and carriers around the world. After you fulfill an order, TrackShip auto-tracks the shipments with the shipping providers APIs and updates your store whenever there is an update to the shipment status.
 = Quick and Easy Setup =
 Set up TrackShip on your WooCommerce store in just a few minutes, no developer needed. Install the trackShip for WooCommerce plugin, connect your store, set up your preferences and TrackShip will automatically track your fulfilled orders. 
 = Built For Woocommerce =
@@ -45,7 +49,6 @@ Analyze shipping and delivery performance, with tracking data straight from your
 * Custom Order Status “Delivered”
 * Post-Shipping order status automation
 * Shipment status and Est. delivery displays on the orders admins
-
 * White Label Tracking Page widget
 * View order page display (tracking page widget)
 * Tracking Analytics widget
@@ -84,16 +87,21 @@ integration with other WooCommerce plugins:
 Check out TrackShip for WooCommerce [documentation](https://trackship.info/docs/trackship-for-woocommerce/) for more details on how to set up and work with TrackShip
 
 == Frequently Asked Questions ==
+= What is a Shipment Tracker?
+A shipment tracks one tracking number from the time it's shipped until it has been delivered, no matter how many status events were created during its life cycle.
+= What if I have multiple stores?
+You can add each one to TrackShip and you'll pay one price based on the combined monthly order volume of all your stores. One subscription for all your WooCommerce and Shopify stores.
+= Will TrackShip affect my site’s performance?
+Not at all. When you fulfill an order, the shipping information is sent to TrackShip and it does all the heavy-lifting for you, we check the status of the shipment with the shipping provider every few hours and we update your store whenever there is an update in the status, and it does not impacts your load time in any way.
+= Do I need a developer to connect TrackShip to my store?
+Absolutely not! You can easily connect your store with TrackShip in a few simple steps and start enjoying a branded tracking experience in less than 10 minutes..
 = I connected my store but the shipment status is not showing for my orders
 The trigger to auto-track shipments by TrackShip is to add tracking to order and change the order status from Processing to Shipped (Completed). TrackShip will not automatically track orders that were Shipped before you connected your store.
 You can trigger these orders to TrackShip by using the [Get Shipment Status](https://trackship.info/docs/setup-trackship-on-woocommerce/woocommerce-orders-admin/#get-shipment-status) option on the WooCommerce orders admin in the bulk actions menu.
-
 = My store is connected but many of my orders still show “Connection error” shipment status
 These messages are from before you connected your store, TrackShip auto-track shipments when you change the order status from Processing to Shipped (Completed). 
 TrackShip will not automatically track orders that were shipped when you had a connection issue.
 You can trigger these orders to TrackShip by using the [Get Shipment Status](https://trackship.info/docs/setup-trackship-on-woocommerce/woocommerce-orders-admin/#get-shipment-status) option on the WooCommerce orders admin in the bulk actions menu.
-= What is a Shipment Tracker?
-A Shipment Tracker represents One tracking number that you send to track on TrackShip, a tracker starts from when you ship the order until the shipment is finally delivered to the customers. When you add multiple tracking numbers to a single order, each tracking number is a separate Shipment Tracker.
 = How often do you check for tracking status updates?
 TrackShip checks the shipment status with the shipping providers APIs every 2-4 hours. We check for updates more often once the package is in the "unknown" status, until the first tracking event is received from the providers API and when the shipment is out for delivery.
 = Which shipping providers (carriers) do you support?
@@ -111,6 +119,16 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended).
 
 == Changelog ==
+= 1.0.8 - 2021-07-23 =
+* Dev - Create trackship shipment table for analytics and shipment
+* Fix - Fixed issue in shipment email for tracking per item order
+* Enhancement - SMSWOO functionality added
+* Dev - add popup for trackship pro
+* Dev - Late shipment functionality improved
+* Dev - Tracking page customizer improved
+* Dev - Tested with WC 5.5.1
+* Dev - Tested with WC 5.8
+
 = 1.0.7 - 2021-07-02 =
 * Dev - remove analytics widget from dashboard
 * Enhancement - Design updated in Shop order page
@@ -163,4 +181,3 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 
 = 1.0 =
 * Initial version.
-

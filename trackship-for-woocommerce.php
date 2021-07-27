@@ -2,14 +2,14 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 1.0.7
+ * Version: 1.0.8
  * Author: TrackShip
  * Author URI: https://trackship.info/
  * License: GPL-2.0+
  * License URI: 
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
- * WC tested up to: 5.4.1
+ * WC tested up to: 5.5.2
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,7 +23,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.0.7';
+	public $version = '1.0.8';
 	
 	/**
 	 * Initialize the main plugin function
@@ -56,9 +56,6 @@ class Trackship_For_Woocommerce {
 		
 		//admin class init
 		$this->admin->init();
-		
-		//lat shipments class init
-		$this->late_shipments->init();
 		
 		//plugin install class init
 		$this->ts_install->init();
@@ -175,6 +172,17 @@ class Trackship_For_Woocommerce {
 		
 		require_once $this->get_plugin_path() . '/includes/shipments/class-wc-trackship-shipments.php';
 		$this->shipments = WC_Trackship_Shipments::get_instance();
+		
+		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-notice.php';
+		$this->trackship_admin_notice = WC_TrackShip_Admin_notice::get_instance();
+		
+		require_once $this->get_plugin_path() . '/includes/class-wc-admin-notices.php';	
+		
+		if ( ! function_exists( 'SMSWOO' ) ) {
+			//SMSWOO
+			require_once $this->get_plugin_path() . '/includes/smswoo/class-smswoo-init.php';
+			$this->smswoo_init = TSWC_SMSWOO_Init::get_instance();
+		}
 	}
 	
 	/**

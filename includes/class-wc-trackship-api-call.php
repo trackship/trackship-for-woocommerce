@@ -32,10 +32,15 @@ class WC_TrackShip_Api_Call {
 		if ( $tracking_items ) {
 			
 			foreach ( ( array ) $tracking_items as $key => $val ) {				
+				
+				$tracking_number = trim( $val['tracking_number'] );
+				if ( ! isset( $tracking_number ) ) {
+					continue;
+				}
+				
 				if ( isset( $shipment_status[$key]['status'] ) && 'delivered' == $shipment_status[$key]['status'] ) {
 					continue;
 				}
-				$tracking_number = trim($val['tracking_number']);
 				
 				if ( isset( $val['tracking_provider'] ) && '' != $val['tracking_provider'] ) {
 					$tracking_provider = $val['tracking_provider'];
@@ -44,91 +49,98 @@ class WC_TrackShip_Api_Call {
 				}
 
 				$tracking_provider = apply_filters( 'convert_provider_name_to_slug', $tracking_provider );
+					
+				//do api call to TrackShip
+				$response = $this->get_trackship_data( $order, $tracking_number, $tracking_provider );
 				
-				if ( isset( $tracking_number ) ) {
+				if ( is_wp_error( $response ) ) {
+					$error_message = $response->get_error_message();
 					
-					//do api call
-					$response = $this->get_trackship_data( $order, $tracking_number, $tracking_provider );
+					$logger = wc_get_logger();
+					$context = array( 'source' => 'Trackship_apicall_is_wp_error' );
+					$logger->error( "Something went wrong: {$error_message} For Order id :" . $order->get_id(), $context );
 					
-					if ( is_wp_error( $response ) ) {
-						$error_message = $response->get_error_message();
-						
-						$logger = wc_get_logger();
-						$context = array( 'source' => 'Trackship_apicall_is_wp_error' );
-						$logger->error( "Something went wrong: {$error_message} For Order id :" . $order->get_id(), $context );
-						
-						//error like 403 500 502 
-						$timestamp = time() + 5*60;
-						$args = array( $order->get_id() );
-						$hook = 'wcast_retry_trackship_apicall';
-						wp_schedule_single_event( $timestamp, $hook, $args );
+					//error like 403 500 502 
+					$timestamp = time() + 5*60;
+					$args = array( $order->get_id() );
+					$hook = 'wcast_retry_trackship_apicall';
+					wp_schedule_single_event( $timestamp, $hook, $args );
+					
+					$shipment_status = get_post_meta( $order->get_id(), 'shipment_status', true);
+					if ( is_string( $shipment_status ) ) {
+						$shipment_status = array();
+					}
+					$shipment_status[$key]['status'] = "Something went wrong: {$error_message}";
+					$shipment_status[$key]['status_date'] = gmdate('Y-m-d H:i:s');
+					update_post_meta( $order->get_id(), 'shipment_status', $shipment_status);
+
+				} else {
+					
+					$code = $response['response']['code'];
+
+					if ( 200 == $code ) {
+						//update trackers_balance, status_msg
+						if ( !$this->isJson($response['body']) ) {
+							return;
+						}
+						$body = json_decode($response['body'], true);
 						
 						$shipment_status = get_post_meta( $order->get_id(), 'shipment_status', true);
-						if ( is_string( $shipment_status ) ) {
+						
+						if ( is_string($shipment_status) ) {
 							$shipment_status = array();
 						}
-						$shipment_status[$key]['status'] = "Something went wrong: {$error_message}";
-						$shipment_status[$key]['status_date'] = gmdate('Y-m-d H:i:s');
-						update_post_meta( $order->get_id(), 'shipment_status', $shipment_status);
-
-					} else {
 						
-						$code = $response['response']['code'];
-
-						if ( 200 == $code ) {
-							//update trackers_balance, status_msg
-							if ( !$this->isJson($response['body']) ) {
-								return;
-							}
-							$body = json_decode($response['body'], true);
-							
-							$shipment_status = get_post_meta( $order->get_id(), 'shipment_status', true);
-							
-							if ( is_string($shipment_status) ) {
-								$shipment_status = array();
-							}
-							
-							$shipment_status[$key]['pending_status'] = $body['status_msg'];
-														
-							
-							$shipment_status[$key]['status_date'] = gmdate('Y-m-d H:i:s');
-							$shipment_status[$key]['est_delivery_date'] = '';														
-							
-							update_post_meta( $order->get_id(), 'shipment_status', $shipment_status);
-							
-							if ( isset( $body['trackers_balance'] ) ) {
-								update_option( 'trackers_balance', $body['trackers_balance'] );
-							}
-							// The text for the note
-							$note = sprintf( __( 'Shipping information (%s - %s) was sent to TrackShip.', 'trackship-for-woocommerce' ), $tracking_provider, $tracking_number );
-							// Add the note
-							$order->add_order_note( $note );
-							
-							$ts_shipment_status = get_post_meta( $order->get_id(), 'ts_shipment_status', true);
-							if ( is_string( $ts_shipment_status ) ) {
-								$ts_shipment_status = array();
-							}
-							$ts_shipment_status[$key]['status'] = $shipment_status[$key]['pending_status'];
-							update_post_meta( $order->get_id(), 'ts_shipment_status', $ts_shipment_status );
-							
-						} else {
-							//error like 400
-							$body = json_decode($response['body'], true);															
-							$shipment_status = get_post_meta( $order->get_id(), 'shipment_status', true);
-							if ( is_string($shipment_status) ) {
-								$shipment_status = array();
-							}
-							$shipment_status[$key]['status'] = 'Error message : ' . $body['message'];
-							$shipment_status[$key]['status_date'] = gmdate('Y-m-d H:i:s');
-							$shipment_status[$key]['est_delivery_date'] = '';
-							update_post_meta( $order->get_id(), 'shipment_status', $shipment_status);
-							
-							$logger = wc_get_logger();
-							$context = array( 'source' => 'Trackship_apicall_error' );
-							$logger->error( 'Error code : ' . $code . ' For Order id :' . $order->get_id(), $context );
-							$logger->error( 'Body : ' . $response['body'], $context );
-						}						
-					}					
+						$shipment_status[$key]['pending_status'] = $body['status_msg'];
+						
+						$shipment_status[$key]['status_date'] = gmdate('Y-m-d H:i:s');
+						$shipment_status[$key]['est_delivery_date'] = '';														
+						
+						update_post_meta( $order->get_id(), 'shipment_status', $shipment_status);
+						
+						if ( isset( $body['trackers_balance'] ) ) {
+							update_option( 'trackers_balance', $body['trackers_balance'] );
+						}
+						if ( isset( $body['user_plan'] ) ) {
+							update_option( 'user_plan', $body['user_plan'] );
+						}
+						// The text for the note
+						$note = sprintf( __( 'Shipping information (%s - %s) was sent to TrackShip.', 'trackship-for-woocommerce' ), $tracking_provider, $tracking_number );
+						// Add the note
+						$order->add_order_note( $note );
+						
+						$ts_shipment_status = get_post_meta( $order->get_id(), 'ts_shipment_status', true);
+						if ( is_string( $ts_shipment_status ) ) {
+							$ts_shipment_status = array();
+						}
+						$ts_shipment_status[$key]['status'] = $shipment_status[$key]['pending_status'];
+						update_post_meta( $order->get_id(), 'ts_shipment_status', $ts_shipment_status );
+						
+						$args = array(
+							'shipment_status'	=> $shipment_status[$key]['pending_status'],
+							'shipping_provider'	=> $tracking_provider,
+							'shipping_date'		=> date_i18n('Y-m-d', $val['date_shipped'] ),
+							'shipping_country'	=> WC()->countries->countries[ $order->get_shipping_country() ],
+						);
+						trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $val['tracking_number'], $args );
+						
+					} else {
+						//error like 400
+						$body = json_decode($response['body'], true);															
+						$shipment_status = get_post_meta( $order->get_id(), 'shipment_status', true);
+						if ( is_string($shipment_status) ) {
+							$shipment_status = array();
+						}
+						$shipment_status[$key]['status'] = 'Error message : ' . $body['message'];
+						$shipment_status[$key]['status_date'] = gmdate('Y-m-d H:i:s');
+						$shipment_status[$key]['est_delivery_date'] = '';
+						update_post_meta( $order->get_id(), 'shipment_status', $shipment_status);
+						
+						$logger = wc_get_logger();
+						$context = array( 'source' => 'Trackship_apicall_error' );
+						$logger->error( 'Error code : ' . $code . ' For Order id :' . $order->get_id(), $context );
+						$logger->error( 'Body : ' . $response['body'], $context );
+					}
 				}
 			}
 		}

@@ -18,10 +18,10 @@
     ?>				
     
     <input id="tab_email_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-type="email" <?php echo 'email' == $tab_type ? 'checked' : ''; ?> >
-    <label for="tab_email_notifications" class="inner_tab_label ts_tabs_label"><?php esc_html_e( 'Email Notifications', 'trackship-for-woocommerce' ); ?></label>				
+    <label for="tab_email_notifications" class="inner_tab_label ts_tabs_label inner_email_tab"><?php esc_html_e( 'Email Notifications', 'trackship-for-woocommerce' ); ?></label>				
     
     <input id="tab_sms_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-type="sms" <?php echo 'sms' == $tab_type ? 'checked' : ''; ?> >
-    <label for="tab_sms_notifications" class="inner_tab_label ts_tabs_label"><?php esc_html_e( 'SMS Notifications', 'trackship-for-woocommerce' ); ?></label>
+    <label for="tab_sms_notifications" class="inner_tab_label ts_tabs_label inner_sms_tab"><?php esc_html_e( 'SMS Notifications', 'trackship-for-woocommerce' ); ?></label>
     
     <section class="inner_tab_section shipment-status-email-section">
         <?php $nonce = wp_create_nonce( 'tswc_shipment_status_email'); ?>
@@ -91,14 +91,13 @@
             $late_shipments_email_settings = get_option('late_shipments_email_settings');
             $wcast_late_shipments_days = isset( $late_shipments_email_settings['wcast_late_shipments_days'] ) ? $late_shipments_email_settings['wcast_late_shipments_days'] : '';
             $wcast_late_shipments_email_to = isset( $late_shipments_email_settings['wcast_late_shipments_email_to'] ) ? $late_shipments_email_settings['wcast_late_shipments_email_to'] : '';			
-            $wcast_late_shipments_trigger_alert = isset( $late_shipments_email_settings['wcast_late_shipments_trigger_alert'] ) ? $late_shipments_email_settings['wcast_late_shipments_trigger_alert'] : '';			
             $wcast_late_shipments_daily_digest_time = isset( $late_shipments_email_settings['wcast_late_shipments_daily_digest_time'] ) ? $late_shipments_email_settings['wcast_late_shipments_daily_digest_time'] : '' ;
             ?>
             
             <table class="form-table late-shipments-email-content-table hide_table">
                 
                 <tr class="">
-                    <th scope="row" class="titledesc">
+                    <th style="padding: 15px;" scope="row" class="titledesc">
                         <label for=""><?php esc_html_e('Recipient(s)', 'trackship-for-woocommerce'); ?></label>	
                     </th>	
                     <td class="forminp">
@@ -117,31 +116,11 @@
                 }
                 ?>
                 <tr class="">
-                    <th scope="row" class="titledesc">
+                    <th style="padding: 15px;" scope="row" class="titledesc">
                         <label for=""><?php esc_html_e('Trigger Alert', 'trackship-for-woocommerce'); ?></label>	
                     </th>
-                    <?php 
-                    if ( 'daily_digest_on' == $wcast_late_shipments_trigger_alert ) {
-                        $checked = 'checked';
-                    } else {
-                        $checked = '';
-                    }
-                    if ( 'as_it_happens' == $wcast_late_shipments_trigger_alert ) {
-                        $check = 'checked';
-                    } else {
-                        $check = '';
-                    }
-                    ?>
                     <td class="forminp">
-                        <label class="" for="trigger_alert_as_it_happens">												
-                            <input type="radio" id="trigger_alert_as_it_happens" name="wcast_late_shipments_trigger_alert" value="as_it_happens" <?php echo esc_html( $check ); ?>>
-                            <span class=""><?php esc_html_e('As it Happens', 'trackship-for-woocommerce'); ?></span>	
-                        </label>
-                        <label class="" for="trigger_alert_daily_digest_on">												
-                            <input type="radio" id="trigger_alert_daily_digest_on" name="wcast_late_shipments_trigger_alert" value="daily_digest_on" <?php echo esc_html( $checked ); ?> >
-                            <span class=""><?php esc_html_e('Daily Digest on', 'trackship-for-woocommerce'); ?></span>								
-                        </label>
-                        <select class="select daily_digest_time" name="wcast_late_shipments_daily_digest_time"> 
+                        <select class="select daily_digest_time" name="wcast_late_shipments_daily_digest_time">
                             <?php foreach ( (array) $send_time_array as $key1 => $val1 ) { ?>
                                 <option <?php echo $wcast_late_shipments_daily_digest_time == $key1 ? 'selected' : ''; ?> value="<?php echo esc_html( $key1 ); ?>" ><?php echo esc_html( $val1 ); ?></option>
                             <?php } ?>
@@ -151,31 +130,19 @@
                 <tr>
                     <td colspan="2" style="padding-left: 15px;">
                         <button name="save" class="button-primary woocommerce-save-button btn_green2 btn_large" type="submit" value="Save changes"><?php esc_html_e( 'Save Changes', 'trackship-for-woocommerce' ); ?></button>
-                        <div class="spinner"></div>								
+                        <div class="spinner"></div>
                         <?php wp_nonce_field( 'ts_late_shipments_email_form', 'ts_late_shipments_email_form_nonce' ); ?>
                         <input type="hidden" name="action" value="ts_late_shipments_email_form_update">
                     </td>
                 </tr>
-            </table>								
+            </table>
         </form>
-    </section>	
+    </section>
     <section class="inner_tab_section shipment-status-sms-section">
-        <?php 
-        if ( !class_exists( 'SMS_for_WooCommerce' ) ) { ?>
-            <div class="smswoo_notification_section">
-                <div class="ast-row">
-                    <div class="ast-col as-col-4">
-                        <img src="<?php echo trackship_for_woocommerce()->plugin_dir_url()?>assets/images/smswoo-addons-icon.png">
-                    </div>
-                    <div class="ast-col as-col-8">
-                        <h3>SMSWOO – SMS for WooCommerce</h3>
-                        <p>The SMS for WooCommerce (SMSWOO) plugin connects your WooCommerce store with SMS API services such as Twilio, Vonage (Nexmo), ClickSend and others to send your customers automated SMS notifications from your store. Once SMSWOO and TrackShip for WooCommerce are both installed on your store, you can send automatic Shipment Status SMS updates to your customers.</p>
-                        <a href="https://www.zorem.com/product/sms-for-woocommerce/" class="button button-primary button-trackship" target="blank"><?php esc_html_e( 'Get it now', 'trackship-for-woocommerce' ); ?></a>
-                    </div>							
-                </div>
-            </div>
-        <?php }
-        do_action( 'shipment_status_sms_section' );	
-        ?>
-    </section>	
+		<?php if ( ! function_exists( 'SMSWOO' ) && in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
+			<input type="hidden" class="disable_pro" name="disable_pro" value="disable_pro">
+		<?php }
+		do_action( 'shipment_status_sms_section' );
+		?>
+	</section>	
 </div>				

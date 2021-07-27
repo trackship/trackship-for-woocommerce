@@ -374,7 +374,7 @@ class TSWC_Tracking_widget_email_Customizer {
 				'new_status' => 'out_for_delivery',
 			), 'woocommerce-advanced-shipment-tracking/', trackship_for_woocommerce()->get_plugin_path() . '/templates/' );
 		}
-		
+		$message = '<div id="ts-email-widget-wrapper">' . $message . '<div>';
 		
 		$mailer = WC()->mailer();
 		// create a new email
@@ -384,7 +384,7 @@ class TSWC_Tracking_widget_email_Customizer {
 		add_filter( 'safe_style_css', array( trackship_customizer(), 'safe_style_css_callback' ), 10, 1 );
 		
 		// wrap the content with the email template and then add styles
-		$email_html = apply_filters( 'woocommerce_mail_content', $email->style_inline( $mailer->wrap_message( $email_heading, $message ) ) );
+		$email_html = apply_filters( 'woocommerce_mail_content', $email->style_inline( $message ) );
 		echo wp_kses_post( $email_html );
 	}
 }

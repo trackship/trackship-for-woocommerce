@@ -93,6 +93,7 @@ if ( $tracking_items ) :
 		</div>
 	</div>
 	<style>
+	#ts-email-widget-wrapper{max-width: 600px;margin: 50px auto;font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;font-size: 14px;line-height: 150%;}
 	.tracker-progress-bar .progress {
 		background-color: #f5f5f5;
 		margin-top: 10px;
