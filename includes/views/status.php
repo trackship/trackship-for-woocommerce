@@ -28,7 +28,9 @@ if ( is_wp_error( $response ) ) {
 	$plan_data = array();
 } else {
 	$plan_data = json_decode( $response[ 'body' ] );					
-} ?>
+}
+update_option( 'user_plan', $plan_data->subscription_plan );
+?>
 <table class="form-table heading-table">
     <tbody>				
         <tr valign="top">

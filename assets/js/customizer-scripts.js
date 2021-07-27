@@ -135,6 +135,7 @@ jQuery(document).on("change", ".preview_order_select", function(){
 jQuery(document).ready(function() {	
 	var shipment_status = wcast_customizer.shipment_status;
 	jQuery(".preview_shipment_status_type").val(shipment_status);
+	jQuery(".disable_branding").attr("disabled", true);
 });
 
 wp.customize( 'wcast_shipment_status_type', function( value ) {		

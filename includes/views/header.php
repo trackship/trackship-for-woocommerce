@@ -74,7 +74,7 @@ $menu_items = array(
 	width: 24px;
 	height: 24px;
 	font-size: 24px;
-	color: #59c889;
+	color: #09d3ac;
 }
 .woocommerce-layout__activity-panel-tabs .woocommerce-layout__activity-panel-tab {
 	display: flex;

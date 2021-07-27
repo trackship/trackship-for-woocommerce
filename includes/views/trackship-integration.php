@@ -9,7 +9,7 @@ wp_enqueue_script( 'trackship_script' );
 		<div class="ts_col_inner">
 			<h1 class="ts_landing_header">Your Post-Shipping &amp; Delivery Autopilot</h1>
 			<p class="ts_landing_description">Trackship is a Multi-Carrier Shipment Tracking API that seamlessly integrates into your WooCommerce store and auto-tracks your shipments, automates your orders workflow, reduces the time spent on customer service and lets you provide a superior post-purchase experience to your customers.</p>	
-			<h3>Start for Free. 50 Free trackers for new accounts!</h3>	
+			<h3>Start for Free!</h3>	
 		</div>
 	</div>
 	<a href="https://trackship.info/my-account/?utm_source=wpadmin&utm_campaign=tspage" class="button-primary btn_green2 btn_large connect-your-store"><span><?php esc_html_e( 'Connect your store', 'trackship-for-woocommerce' ); ?></span><span class="dashicons dashicons-arrow-right-alt2"></span></a>

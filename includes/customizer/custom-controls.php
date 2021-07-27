@@ -119,9 +119,9 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 		 * Render the control in the customizer
 		 */
 		public function render_content() {
-		?>
+			?>
 			<div class="slider-custom-control">
-				<span class="customize-control-title"><?php _e( $this->label, 'woo-advanced-shipment-tracking' ); ?></span>				
+				<span class="customize-control-title"><?php esc_html_e( $this->label, 'trackship-for-woocommerce' ); ?></span>				
 				<div class="slider" slider-min-value="<?php echo esc_attr( $this->input_attrs['min'] ); ?>" slider-max-value="<?php echo esc_attr( $this->input_attrs['max'] ); ?>" slider-step-value="<?php echo esc_attr( $this->input_attrs['step'] ); ?>">
 				</div>				
 				<span class="slider-reset dashicons dashicons-image-rotate" slider-reset-value="<?php echo esc_attr( $this->input_attrs['default'] ); ?>"></span>
@@ -177,11 +177,9 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 	/**
 	 * Text Radio Button Custom Control
 	 *
-	 * @author Anthony Hortin <http://maddisondesigns.com>
-	 * @license http://www.gnu.org/licenses/gpl-2.0.html
 	 * @link https://github.com/maddisondesigns
 	 */
-	 class TrackShip_Text_Radio_Button_Custom_Control extends TrackShip_Custom_Control {
+	class TrackShip_Text_Radio_Button_Custom_Control extends TrackShip_Custom_Control {
 		/**
 		 * The type of control being rendered
 		 */
@@ -196,12 +194,12 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 		 * Render the control in the customizer
 		 */
 		public function render_content() {
-		?>
+			?>
 			<div class="text_radio_button_control">
-				<?php if( !empty( $this->label ) ) { ?>
+				<?php if ( !empty( $this->label ) ) { ?>
 					<span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
 				<?php } ?>
-				<?php if( !empty( $this->description ) ) { ?>
+				<?php if ( !empty( $this->description ) ) { ?>
 					<span class="customize-control-description"><?php echo esc_html( $this->description ); ?></span>
 				<?php } ?>
 
@@ -216,6 +214,49 @@ if ( class_exists( 'WP_Customize_Control' ) ) {
 			</div>
 		<?php
 		}
+	}
+	
+	/**
+	* Checkbox Custom Control
+	**/
+	class TrackShip_checkbox_Custom_Control extends TrackShip_Custom_Control {
+		
+		/**
+		 * The type of control being rendered
+		 */
+		public $type = 'checkbox';		
+		
+		/**
+		 * Constructor
+		 */
+		public function __construct( $manager, $id, $args = array(), $options = array() ) {
+			parent::__construct( $manager, $id, $args );
+			// Check if this is a multi-select field
+			// Check if a class string has been specified
+			if ( isset( $this->input_attrs['class'] ) && $this->input_attrs['class'] ) {
+				$this->class1 = $this->input_attrs['class'];
+			}
+		}		
+		/**
+		 * Render the control in the customizer
+		 */
+		public function render_content() {
+			$defaultValue = $this->value();			
+			?>
+            
+            <span class="customize-inside-control-row">
+                <input
+                id="<?php echo esc_attr( $this->id ); ?>"
+                class="<?php echo esc_attr( $this->class1 ); ?>"
+                type="checkbox"
+                value="<?php echo esc_attr( $defaultValue ); ?>"
+                <?php $this->link(); ?>
+                <?php checked( $defaultValue ); ?>
+                />
+                <label for="<?php echo esc_attr( $this->id ); ?>"><?php echo esc_html( $this->label ); ?></label>
+            </span>
+		<?php
+		}	
 	}
 }
 

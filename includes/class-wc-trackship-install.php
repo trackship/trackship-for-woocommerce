@@ -11,18 +11,22 @@ class WC_Trackship_Install {
 	public function __construct() {
 		global $wpdb;
 		$this->table = $wpdb->prefix . 'trackship_shipping_provider';
+		$this->shipment_table = $wpdb->prefix . 'trackship_shipment';
 		if ( is_multisite() ) {
 			if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 				require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 			}
 			if ( is_plugin_active_for_network( 'trackship-for-woocommerce/trackship-for-woocommerce.php' ) ) {
 				$main_blog_prefix = $wpdb->get_blog_prefix( BLOG_ID_CURRENT_SITE );
-				$this->table = $main_blog_prefix . 'trackship_shipping_provider';	
+				$this->table = $main_blog_prefix . 'trackship_shipping_provider';
+				$this->shipment_table = $main_blog_prefix . 'trackship_shipment';	
 			} else {
 				$this->table = $wpdb->prefix . 'trackship_shipping_provider';
+				$this->shipment_table = $wpdb->prefix . 'trackship_shipment';
 			}
 		} else {
-			$this->table = $wpdb->prefix . 'trackship_shipping_provider';	
+			$this->table = $wpdb->prefix . 'trackship_shipping_provider';
+			$this->shipment_table = $wpdb->prefix . 'trackship_shipment';	
 		}
 		$this->init();			
 	}
@@ -53,7 +57,8 @@ class WC_Trackship_Install {
 	*/
 	public function init() {			
 		add_action( 'init', array( $this, 'update_database_check' ) );
-		add_action( 'update_ts_shipment_status_order_mete', array( $this, 'update_ts_shipment_status_order_mete' ), 10, 1 );	
+		add_action( 'update_ts_shipment_status_order_mete', array( $this, 'update_ts_shipment_status_order_mete' ), 10, 1 );
+		add_action( 'migrate_trackship_shipment_table', array( $this, 'migrate_trackship_shipment_table' ) );
 	}
 	
 	/*
@@ -113,6 +118,127 @@ class WC_Trackship_Install {
 				$this->update_shipping_providers();
 				update_option( 'trackship_db', '1.4' );
 			}
+
+			if ( version_compare( get_option( 'trackship_db' ), '1.5', '<' ) ) {
+				global $wpdb;
+				$woo_trackship_shipment = $this->shipment_table;
+				if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipment ) ) ) {
+					
+					$charset_collate = $wpdb->get_charset_collate();			
+					$sql = "CREATE TABLE $woo_trackship_shipment (
+						`id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+						`order_id` BIGINT(20) ,
+						`order_number` VARCHAR(20) ,
+						`tracking_number` VARCHAR(80) ,
+						`shipping_provider` VARCHAR(50) ,
+						`shipment_status` VARCHAR(30) ,
+						`shipping_date` DATE ,
+						`shipping_country` TEXT ,
+						`shipping_length` VARCHAR(10) ,
+						`updated_date` DATE ,
+						`late_shipment_email` TINYINT DEFAULT 0,
+						PRIMARY KEY (`id`),
+						INDEX `shipping_date` (`shipping_date`),
+						INDEX `status` (`shipment_status`),
+						INDEX `tracking_number` (`tracking_number`),
+						INDEX `shipping_length` (`shipping_length`),
+						INDEX `order_id` (`order_id`),
+						INDEX `order_id_tracking_number` (`order_id`,`tracking_number`),
+						INDEX `updated_date` (`updated_date`),
+						INDEX `late_shipment_email` (`late_shipment_email`)
+					) $charset_collate;";
+					require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+					dbDelta( $sql );
+				}
+				$this->update_analytics_table();
+				update_option( 'trackship_db', '1.5' );
+			}
+		}
+	}
+	
+	public function update_analytics_table() {
+		global $wpdb;
+		$woo_trackship_shipment = $this->shipment_table;
+		$start_date = gmdate('Y-m-d 00:00:00', strtotime( 'today - ' .  60 . ' days' ) );
+		$total_order = $wpdb->get_var("
+			SELECT 				
+				COUNT(*)
+				FROM    {$wpdb->posts} AS posts				
+				LEFT JOIN {$wpdb->postmeta} AS shipment_status ON(posts.ID = shipment_status.post_id)
+									
+			WHERE 
+				posts.post_status IN ('wc-completed','wc-delivered', 'wc-shipped', 'wc-partial-shipped')
+				AND posts.post_type IN ( 'shop_order' )
+				AND shipment_status.meta_key IN ( 'shipment_status')
+				AND shipment_status.meta_key IS NOT NULL
+				AND posts.post_date > '{$start_date}'
+		");
+		$total_cron = (int)($total_order/300) + 1;
+		for ( $i = 1; $i <= $total_cron; $i++ ) {
+			as_schedule_single_action( time(), 'migrate_trackship_shipment_table' );
+		}
+	}
+	
+	public function migrate_trackship_shipment_table() {
+		
+		global $wpdb;
+		$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
+		$args = array(
+			'post_type'			=> 'shop_order',
+			'posts_per_page'	=> '300',
+			'post_status'		=> array( 'wc-completed','wc-delivered', 'wc-shipped', 'wc-partial-shipped' ),
+			'meta_query'		=> array(
+				'relation'		=> 'AND',
+				'shipment_status' => array(
+					'key'		=> 'shipment_status',
+					'compare'	=> 'EXISTS',
+				),
+				'shipment_table_updated' => array(
+					'key'		=> 'shipment_table_updated',
+					'value'		=> 1,
+					'compare' => 'NOT EXISTS'
+				),
+			),
+			'date_query' => array(
+				 array(
+					 'after' => '-60 days',
+					 'column' => 'post_date',
+				 ),
+			 ),
+		);
+		$query = new WP_Query( $args );
+		
+		while ( $query->have_posts() ) {
+			$query->the_post();
+			$order_id = get_the_id();
+			$order = wc_get_order( $order_id );
+			$tracking_items = trackship_for_woocommerce()->get_tracking_items($order_id);
+			$shipment_status = $order->get_meta( 'shipment_status' );
+			foreach( (array) $tracking_items as $key => $item ){
+				if ( isset( $shipment_status[$key]['pending_status'] ) ) {
+					$ship_status = $shipment_status[$key]['pending_status'];
+				} else {
+					$ship_status = $shipment_status[$key]['status'];
+				}
+				
+				if ( !empty( $item['date_shipped'] ) ) {
+					$shipping_date = gmdate('Y-m-d', $item['date_shipped'] );
+				}
+				$shipment_length = trackship_for_woocommerce()->shipments->get_shipment_length( $shipment_status[$key] );
+				
+				$data = array(
+					'order_id'			=> $order_id,
+					'order_number'		=> $order->get_order_number(),
+					'tracking_number'	=> $item['tracking_number'],
+					'shipping_provider'	=> $item['tracking_provider'],
+					'shipment_status'	=> $ship_status,
+					'shipping_date'		=> $shipping_date,
+					'shipping_length'	=> $shipment_length,
+					'shipping_country'	=> WC()->countries->countries[ $order->get_shipping_country() ],
+				);
+				$wpdb->insert( $woo_trackship_shipment, $data );
+			}
+			update_post_meta( $order_id, 'shipment_table_updated', 1 );
 		}
 	}
 	

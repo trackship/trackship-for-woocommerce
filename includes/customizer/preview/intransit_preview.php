@@ -9,7 +9,7 @@ if (!defined('ABSPATH')) {
 		<meta name="viewport" content="width=device-width" />
 		<style type="text/css" id="ast_designer_custom_css">.woocommerce-store-notice.demo_store, .mfp-hide {display: none;}</style>
 	</head>
-	<body class="ast_preview_body">
+	<body class="ast_preview_body" style="margin:0;">
 		<div id="overlay"></div>
 		<div id="ast_preview_wrapper" style="display: block;">
 			<?php self::preview_intransit_email(); ?>

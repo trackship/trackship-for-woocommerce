@@ -47,7 +47,6 @@ class WC_Trackship_Actions {
 		//ajax save admin trackship settings
 		add_action( 'wp_ajax_wc_ast_trackship_form_update', array( $this, 'wc_ast_trackship_form_update_callback' ) );
 		add_action( 'wp_ajax_trackship_tracking_page_form_update', array( $this, 'trackship_tracking_page_form_update_callback' ) );
-		add_action( 'wp_ajax_ts_late_shipments_email_form_update', array( $this, 'ts_late_shipments_email_form_update_callback' ) );
 		
 		$api_enabled = get_option( 'wc_ast_api_enabled', 0 );
 		
@@ -120,6 +119,34 @@ class WC_Trackship_Actions {
 			// trigger Trackship for spacific order
 			add_action( 'woocommerce_order_status_' . $order_status, array( $this, 'schedule_when_order_status_changed' ), 8, 2 );
 		}
+		
+		add_action( 'admin_init', array( $this, 'register_scheduled_cron') );
+		
+		//Cron for update shipment length 
+		add_action( 'scheduled_cron_shipment_length', array( $this, 'scheduled_cron_shipment_length_callback') );
+		add_action( 'update_shipment_length', array( $this, 'update_shipment_length' ) );
+		//add_action( 'wp_ajax_remove_delete_data', array( $this, 'remove_delete_data' ) );
+		//add_action( 'wp_ajax_update_shipment_length', array( $this, 'update_shipment_length' ) );
+	}
+	
+	
+	/**
+	* delete trackship_shipment table 
+	*/
+	public function remove_delete_data() {
+		global $wpdb;
+		$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
+		$total_order = $wpdb->get_results("
+			SELECT *
+				FROM {$woo_trackship_shipment}
+		");
+		foreach( $total_order as $key => $value ){
+			echo $value->order_id . '<br>';
+			delete_post_meta( $value->order_id, 'shipment_table_updated' );
+		}
+		update_option( 'trackship_db', '1.4' );
+		$wpdb->query("DROP TABLE $woo_trackship_shipment");
+		exit;
 	}
 	
 	/**
@@ -131,11 +158,13 @@ class WC_Trackship_Actions {
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		
 		wp_register_style( 'trackshipcss', trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/trackship.css', array(), trackship_for_woocommerce()->version );
+		wp_register_style( 'smswoo_ts',  trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/smswoo_ts.css', array(), trackship_for_woocommerce()->version );
 		wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
 		
 		wp_register_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.min.js', array( 'jquery' ), WC_VERSION, true );
 		wp_register_script( 'jquery-blockui', WC()->plugin_url() . '/assets/js/jquery-blockui/jquery.blockUI' . $suffix . '.js', array( 'jquery' ), '2.70', true );
 		wp_register_script( 'trackship_script', trackship_for_woocommerce()->plugin_dir_url() . 'assets/js/trackship.js', array( 'jquery', 'wp-util' ), trackship_for_woocommerce()->version );
+		wp_register_script( 'smswoo_ts', trackship_for_woocommerce()->plugin_dir_url() . 'assets/js/smswoo_ts.js', array( 'jquery', 'wp-util' ), trackship_for_woocommerce()->version );
 		
 		wp_localize_script( 'trackship_script', 'trackship_script', array(
 			'i18n' => array(				
@@ -165,7 +194,7 @@ class WC_Trackship_Actions {
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_style( 'woocommerce_admin_styles' );
 		wp_enqueue_style( 'trackshipcss' );
-		
+
 		wp_enqueue_script( 'wp-color-picker' );	
 		wp_enqueue_script( 'jquery-tiptip' );
 		wp_enqueue_script( 'jquery-blockui' );
@@ -182,6 +211,72 @@ class WC_Trackship_Actions {
 		wp_enqueue_script( 'wc-enhanced-select');
 		
 		wp_enqueue_script( 'trackship_script' );
+		if ( !class_exists( 'SMS_for_WooCommerce' ) ) {
+			wp_enqueue_script( 'smswoo_ts' );
+			wp_enqueue_style( 'smswoo_ts' );
+		}
+	}
+	
+	/*
+	* Scheduled cron
+	*/
+	public function register_scheduled_cron() {
+		if ( ! wp_next_scheduled( 'scheduled_cron_shipment_length' ) ) {
+			wp_schedule_event( time(), 'daily', 'scheduled_cron_shipment_length' );
+		}
+	}
+	
+	/*
+	* Set shipment length
+	*/
+	public function scheduled_cron_shipment_length_callback() {
+		global $wpdb;
+		$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
+		$total_order = $wpdb->get_var("
+			SELECT 				
+				COUNT(*)
+				FROM {$woo_trackship_shipment}			
+			WHERE 
+				shipment_status NOT LIKE ( 'delivered')
+		");
+		$total_cron = (int)($total_order/300) + 1;
+		for ( $i = 1; $i <= $total_cron; $i++ ) {
+			as_schedule_single_action( time(), 'update_shipment_length' );
+		}
+	}
+	
+	/*
+	* Update shipment length
+	*/
+	public function update_shipment_length() {
+		global $wpdb;
+		$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
+		$today = date('Y-m-d');
+		$total_order = $wpdb->get_results("
+			SELECT *
+				FROM {$woo_trackship_shipment}
+			WHERE
+				shipment_status NOT LIKE ( 'delivered')
+				AND ( updated_date < '{$today}' OR updated_date IS NULL )
+			LIMIT 300
+		");
+		//echo $wpdb->last_query;
+		//echo '<pre>';print_r($total_order);echo '</pre>';exit;
+		foreach( $total_order as $key => $value ){
+			$order_id = $value->order_id;
+			$order = wc_get_order( $order_id );
+			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
+			$shipment_status = $order->get_meta( 'shipment_status' );
+
+			foreach( (array) $tracking_items as $key1 => $item ){
+				$shipment_length = trackship_for_woocommerce()->shipments->get_shipment_length( $shipment_status[$key1] );
+				$where = array(
+					'order_id'			=> $order_id,
+					'tracking_number'	=> $value->tracking_number,
+				);
+				$wpdb->update( $woo_trackship_shipment, array( 'shipping_length' => $shipment_length, 'updated_date' => $today ), $where );
+			}
+		}
 	}
 	
 	/*
@@ -189,6 +284,9 @@ class WC_Trackship_Actions {
 	*/
 	public function wc_ast_trackship_form_update_callback() {
 		
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			exit( 'You are not allowed' );
+		}
 		if ( ! empty( $_POST ) && check_admin_referer( 'wc_ast_trackship_form', 'wc_ast_trackship_form_nonce' ) ) {
 			
 			$admin = WC_Trackship_Admin::get_instance();
@@ -197,10 +295,8 @@ class WC_Trackship_Actions {
 			
 			$wcast_late_shipments_days = isset( $_POST['wcast_late_shipments_days'] ) ? sanitize_text_field( $_POST['wcast_late_shipments_days'] ) : '';
 			
-			$late_shipments_email_settings = array(
-				'wcast_late_shipments_days' => $wcast_late_shipments_days,
-			);
-			
+			$late_shipments_email_settings = get_option( 'late_shipments_email_settings', array() );
+			$late_shipments_email_settings[ 'wcast_late_shipments_days' ] = $wcast_late_shipments_days;
 			update_option( 'late_shipments_email_settings', $late_shipments_email_settings );
 			
 			foreach ( $data as $key => $val ) {
@@ -265,37 +361,6 @@ class WC_Trackship_Actions {
 		}
 	}
 	
-	/*
-	* late shipmenta form save
-	*/
-	public function ts_late_shipments_email_form_update_callback() {
-		echo 'ts_late_shipments_email_form_update_callback';
-		if ( ! empty( $_POST ) && check_admin_referer( 'ts_late_shipments_email_form', 'ts_late_shipments_email_form_nonce' ) ) {
-			
-			$wcast_late_shipments_email_to = isset( $_POST['wcast_late_shipments_email_to'] ) ? sanitize_text_field( $_POST['wcast_late_shipments_email_to'] ) : '';			
-			$wcast_late_shipments_email_subject = isset( $_POST['wcast_late_shipments_email_subject'] ) ? sanitize_text_field( $_POST['wcast_late_shipments_email_subject'] ) : '';			
-			$wcast_late_shipments_email_content = isset( $_POST['wcast_late_shipments_email_content'] ) ? sanitize_text_field( $_POST['wcast_late_shipments_email_content'] ) : '';
-			$wcast_late_shipments_trigger_alert = isset( $_POST['wcast_late_shipments_trigger_alert'] ) ? sanitize_text_field( $_POST['wcast_late_shipments_trigger_alert'] ) : '';			
-			$wcast_late_shipments_daily_digest_time = isset( $_POST['wcast_late_shipments_daily_digest_time'] ) ? sanitize_text_field( $_POST['wcast_late_shipments_daily_digest_time'] ) : '';
-			$wcast_enable_late_shipments_admin_email = isset( $_POST['wcast_enable_late_shipments_admin_email'] ) ? sanitize_text_field( $_POST['wcast_enable_late_shipments_admin_email'] ) : '';
-
-			$late_shipments_email_settings = array(
-				'wcast_enable_late_shipments_admin_email' => $wcast_enable_late_shipments_admin_email,
-				'wcast_late_shipments_email_to' => $wcast_late_shipments_email_to,
-				'wcast_late_shipments_email_subject' => $wcast_late_shipments_email_subject,
-				'wcast_late_shipments_email_content' => $wcast_late_shipments_email_content,
-				'wcast_late_shipments_trigger_alert' => $wcast_late_shipments_trigger_alert,
-				'wcast_late_shipments_daily_digest_time' => $wcast_late_shipments_daily_digest_time,
-			);
-			
-			update_option( 'late_shipments_email_settings', $late_shipments_email_settings );
-			
-			$Late_Shipments = new WC_TrackShip_Late_Shipments();
-			$Late_Shipments->remove_cron();
-			$Late_Shipments->setup_cron();
-		}
-	}
-
 	/*
 	* get settings tab array data
 	* return array
@@ -475,6 +540,9 @@ class WC_Trackship_Actions {
 	* bulk shipment status action for completed order with tracking details and without shipment status
 	*/
 	public function bulk_shipment_status_from_settings_fun() {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			exit( 'You are not allowed' );
+		}
 		$args = array(
 			'status' => 'wc-completed',
 			'limit'	 => 100,	
@@ -969,6 +1037,8 @@ class WC_Trackship_Actions {
 	 * Delete tracking information from TrackShip when tracking deleted from AST
 	 */
 	public function delete_tracking_number_from_trackship( $tracking_items, $tracking_id, $order_id ) {
+		global $wpdb;
+		$shipment_table = $wpdb->prefix . 'trackship_shipment';
 		
 		$api_enabled = get_option( 'wc_ast_api_enabled', 0);
 		if ( $api_enabled ) {			
@@ -978,6 +1048,7 @@ class WC_Trackship_Actions {
 					$tracking_provider = $tracking_item['tracking_provider'];					
 					$api = new WC_TrackShip_Api_Call();
 					$array = $api->delete_tracking_number_from_trackship( $order_id, $tracking_number, $tracking_provider );
+					$wpdb->delete( $shipment_table, array( 'order_id' => $order_id, 'tracking_number' => $tracking_number ) );
 				}				
 			}						
 		}	
@@ -1192,6 +1263,12 @@ class WC_Trackship_Actions {
 			
 			$shipment_statuses[$key]['pending_status'] = 'pending_trackship';
 			$shipment_statuses[$key]['status_date'] = gmdate( 'y-m-d' );
+
+			// set temp pending in shipment table 
+			$args = array(
+				'shipment_status' => 'pending_trackship',
+			);
+			trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_item['tracking_number'], $args );
 		}
 		//echo '<pre>';print_r($shipment_statuses);echo '</pre>';
 		update_post_meta( $order_id, 'shipment_status', $shipment_statuses );
@@ -1420,6 +1497,24 @@ class WC_Trackship_Actions {
 		} else {
 			return array();
 		}
+	}
+	
+	public function update_shipment_data( $order_id, $tracking_number, $args = array() ) {
+		global $wpdb;
+		$shipment_table = $wpdb->prefix . 'trackship_shipment';
+		$row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $shipment_table WHERE order_id = %d AND tracking_number = %s", $order_id, $tracking_number ) );
+		if ( $row ) {
+			$where = array(
+				'order_id'			=> $order_id,
+				'tracking_number'	=> $tracking_number,
+			);
+			$wpdb->update( $shipment_table, $args, $where );
+		} else {
+			$args['order_id'] = $order_id;
+			$args['order_number'] =  wc_get_order( $order_id )->get_order_number();
+			$args['tracking_number'] = $tracking_number;
+			$wpdb->insert( $shipment_table, $args );
+		}	
 	}
 	
 	public function get_tracking_page_link( $order_id ) {
