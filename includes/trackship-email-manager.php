@@ -164,11 +164,11 @@ class WC_TrackShip_Email_Manager {
 				
 				$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_email_settings', 'wcast_delivered_status_email_content', $wcast_delivered_customizer_email->defaults['wcast_delivered_status_email_content']);				
 				
-				$wcast_show_tracking_details = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_email_settings', 'wcast_delivered_status_show_tracking_details', $wcast_delivered_customizer_email->defaults['wcast_delivered_status_show_tracking_details']);
+				$wcast_show_tracking_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_email_settings', 'wcast_delivered_status_show_tracking_details', $wcast_delivered_customizer_email->defaults['wcast_delivered_status_show_tracking_details']);
 				
-				$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_email_settings', 'wcast_delivered_status_show_order_details', $wcast_delivered_customizer_email->defaults['wcast_delivered_status_show_order_details']);				
+				$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_email_settings', 'wcast_delivered_status_show_order_details', $wcast_delivered_customizer_email->defaults['wcast_delivered_status_show_order_details']);				
 				
-				$wcast_show_shipping_address = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_email_settings', 'wcast_delivered_status_show_shipping_address', $wcast_delivered_customizer_email->defaults['wcast_delivered_status_show_shipping_address']);
+				$wcast_show_shipping_address = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_email_settings', 'wcast_delivered_status_show_shipping_address', $wcast_delivered_customizer_email->defaults['wcast_delivered_status_show_shipping_address']);
 				
 				$sent_to_admin = false;
 				$plain_text = false;				

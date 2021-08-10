@@ -31,6 +31,14 @@ if ( is_wp_error( $response ) ) {
 }
 update_option( 'user_plan', $plan_data->subscription_plan );
 ?>
+<script>
+	var user_plan = '<?php $plan_data->subscription_plan; ?>';
+</script>
+<?php if ( !function_exists( 'SMSWOO' ) ) { ?>
+	<script>
+        var smswoo_active = 'no';
+    </script>
+<?php } ?>
 <table class="form-table heading-table">
     <tbody>				
         <tr valign="top">
@@ -53,7 +61,7 @@ update_option( 'user_plan', $plan_data->subscription_plan );
 		</div>
     </div>
 	<div>
-        <a href="https://trackship.info/my-account/?utm_source=wpadmin&utm_medium=sidebar&utm_campaign=upgrade" class="button-primary button-trackship btn_large" target="_blank" style="line-height: 35px; margin-right:15px" >
+        <a href="https://trackship.info/my-account/?utm_source=wpadmin&utm_medium=sidebar&utm_campaign=upgrade" class="button-primary button-trackship btn_large" target="_blank" style="line-height: 35px; margin-right:15px;background-color: #09d3ac; border-color: #09d3ac;" >
             <span class="dashicons dashicons-yes" style="margin:0;"></span>
             <span><?php esc_html_e( 'Connected', 'trackship-for-woocommerce' ); ?></span>
         </a>

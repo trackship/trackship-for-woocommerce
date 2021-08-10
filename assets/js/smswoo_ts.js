@@ -1,11 +1,13 @@
-/* zorem_snackbar jquery */
+/* trackship_snackbar jquery */
 (function( $ ){
-	$.fn.zorem_snackbar = function(msg) {
-		var zorem_snackbar = $("<div></div>").addClass('zorem_snackbar show_snackbar').text( msg );
-		$("body").append(zorem_snackbar);
-		
-		setTimeout(function(){ zorem_snackbar.remove(); }, 3000);
-		
+	$.fn.trackship_snackbar = function(msg) {
+		if ( jQuery('.snackbar-logs').length === 0 ){
+			$("body").append("<section class=snackbar-logs></section>");
+		}
+		var trackship_snackbar = $("<article></article>").addClass('snackbar-log snackbar-log-success snackbar-log-show').text( msg );
+		$(".snackbar-logs").empty();
+		$(".snackbar-logs").append(trackship_snackbar);
+		setTimeout(function(){ trackship_snackbar.remove(); }, 3000);
 		return this;
 	}; 
 })( jQuery );
@@ -29,7 +31,7 @@ jQuery(document).on("submit", ".zorem_plugin_setting_tab_form", function(){
 		success: function(response) {
 			jQuery(".zorem_plugin_setting_tab_form").unblock();
 			jQuery( '.smswoo-top.smswoo-open .smswoo-top-click' ).trigger('click');
-			jQuery(document).zorem_snackbar( trackship_script.i18n.data_saved );
+			jQuery(document).trackship_snackbar( trackship_script.i18n.data_saved );
 		},
 		error: function(response) {
 			console.log(response);
@@ -109,5 +111,5 @@ jQuery(document).on( "click", ".shipment-status-sms-section .clipboard", functio
 	jQuery(".clipboard").removeClass("active");
 	jQuery(this).addClass("active");
 	
-	jQuery(document).zorem_snackbar( clipboard_text + ' is copied to clipboard.' );
+	jQuery(document).trackship_snackbar( clipboard_text + ' is copied to clipboard.' );
 });

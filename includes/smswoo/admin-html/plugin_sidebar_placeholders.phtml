@@ -1,17 +1,15 @@
 <?php
-$placeholders = array(
-	'%shop_name%', '%order_id%', '%order_count%', '%order_amount%', '%order_status%', '%billing_name%', '%shipping_name%', '%shipping_method%', '%billing_first%', '%billing_last%'
-);
+$placeholders = array( '{shop_name}', '{order_id}', '{shipping_name}', '{shipping_first}', '{shipping_last}' );
 
 if( trackship_for_woocommerce()->is_ast_active() ){
-	$placeholders[] = '%tracking_number%';
-	$placeholders[] = '%tracking_provider%';
-	$placeholders[] = '%tracking_link%';
+	$placeholders[] = '{tracking_number}';
+	$placeholders[] = '{tracking_provider}';
+	$placeholders[] = '{tracking_link}';
 }
 
 if( trackship_for_woocommerce()->is_trackship_connected() ){
-	$placeholders[] = '%shipment_status%';
-	$placeholders[] = '%est_delivery_date%';
+	$placeholders[] = '{shipment_status}';
+	$placeholders[] = '{est_delivery_date}';
 }
 
 ?>
