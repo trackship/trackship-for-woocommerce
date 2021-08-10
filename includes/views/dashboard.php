@@ -1,9 +1,9 @@
 <?php $nonce = wp_create_nonce( 'wc_ast_tools'); ?>
 <input type="hidden" id="wc_ast_dashboard_tab" name="wc_ast_dashboard_tab" value="<?php echo esc_attr( $nonce ); ?>" />
 <?php if ( trackship_for_woocommerce()->is_trackship_connected() ) { ?>
-    <?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
-		<input type="hidden" class="disable_pro" name="disable_pro" value="disable_pro">
-	<?php } ?>
+	<script>
+        var user_plan = '<?php get_option( 'user_plan' ); ?>';
+    </script>
     <div class="flexcontainer">
         <div class="flexcolumn right_border">
             <div class="shipping_time">
@@ -30,7 +30,7 @@
             <span style="color: #09d3ac; display:block;">Delivered</span>
         </div>
         <div class="flexcolumn fullfillment_counter"> 
-            <strong class="avg_shipment_length_count"><?php //echo esc_html( $tracking_analytics['avg_shipment_length'] ); ?></strong>
+            <strong class="avg_shipment_length_count"></strong>
             <span style="display:block;">Avg. Shipping Time</span>
         </div>
     </div>

@@ -241,11 +241,18 @@ class WC_Trackship_Admin {
 	* WC sub menu
 	*/
 	public function register_woocommerce_menu() {
-		$icon = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHdpZHRoPSI0MHB4IiBoZWlnaHQ9IjQwcHgiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNDAgNDAiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBhdGggaWQ9IlhNTElEXzRfIiBmaWxsPSIjRjBGNkZDIiBkPSJNMjQuMiwyMi4xYzAsMi4zLTEuOSw0LjItNC4yLDQuMnMtNC4yLTEuOS00LjItNC4yYzAtMi4zLDEuOS00LjIsNC4yLTQuMg0KCVMyNC4yLDE5LjgsMjQuMiwyMi4xeiBNMzMuNCwxMC4ybC01LjcsMy41YzIuMywyLjEsMy43LDUsMy43LDguNGMwLDYuMy01LjEsMTEuMy0xMS4zLDExLjNTOC43LDI4LjQsOC43LDIyLjFTMTMuOCwxMC44LDIwLDEwLjgNCglsMCwwdjRsMTIuOS03LjRMMjAsMHY0LjJsMCwwYy05LjksMC0xNy45LDgtMTcuOSwxNy45QzIuMSwzMiwxMC4xLDQwLDIwLDQwaDE3LjlWMjIuMUMzNy45LDE3LjUsMzYuMiwxMy40LDMzLjQsMTAuMnoiLz4NCjwvc3ZnPg0K';
-		add_menu_page( 'TrackShip', 'TrackShip', 'manage_woocommerce', 'trackship-shipments', array( $this, 'shipments_page_callback' ), $icon, 56 );
-		add_submenu_page( 'trackship-shipments', 'Shipments', 'Shipments', 'manage_woocommerce', 'trackship-shipments', array( $this, 'shipments_page_callback' ) );
+		$fullfillment_icon = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHdpZHRoPSI0MHB4IiBoZWlnaHQ9IjQwcHgiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNDAgNDAiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBhdGggaWQ9IlhNTElEXzEyXyIgZmlsbD0iI0YwRjZGQyIgZD0iTTI1LjMsMjIuNWMzLjQtMi4zLDguMy0yLDExLjQsMC44YzEuOSwxLjYsMywzLjksMy4zLDYuM3YxLjVjLTAuMyw0LjctNC4yLDguNi04LjksOC45aC0xLjMNCgljLTQtMC4zLTcuNy0zLjMtOC42LTcuMkMyMC4zLDI5LDIyLDI0LjYsMjUuMywyMi41IE0zMy42LDI3Yy0xLjUsMS4xLTIuNywyLjYtNCwzLjljLTAuNy0wLjctMS4zLTEuNC0yLjEtMg0KCWMtMS4xLTAuNi0yLjcsMC4yLTIuNywxLjVjMCwxLjMsMS4yLDIsMiwzYzEsMC44LDEuOSwyLjMsMy4zLDJjMS4xLTAuNSwxLjgtMS41LDIuNi0yLjJjMS4xLTEuMiwyLjUtMi4zLDMuNS0zLjcNCglDMzYuOSwyNy45LDM1LjEsMjYuMiwzMy42LDI3TDMzLjYsMjd6Ii8+DQo8cGF0aCBpZD0iWE1MSURfMTBfIiBmaWxsPSIjRjBGNkZDIiBkPSJNMzIsMy4yYy0wLjgtMS4zLTEuNC0zLjQtMy40LTMuMkMyMSwwLDEzLjMsMCw1LjcsMGMtMi0wLjItMi41LDEuOS0zLjQsMy4yDQoJQzEuNCw0LjktMC4yLDYuNSwwLDguNmMwLDcuMywwLDE0LjYsMCwyMS45Yy0wLjEsMiwxLjcsMy44LDMuNywzLjdjNC42LDAuMSw5LjIsMCwxMy45LDBjLTEuMy00LjcsMC0xMC4xLDMuNi0xMy41DQoJYzMuNC0zLjMsOC41LTQuNCwxMy0zLjFjMC0zLDAtNi4xLDAtOS4xQzM0LjQsNi41LDMyLjksNC45LDMyLDMuMnogTTIzLjYsMTMuNWMwLDEtMC45LDEuOS0xLjksMS45SDEzYy0xLDAtMS45LTAuOS0xLjktMS45di0wLjMNCgljMC0xLDAuOS0xLjksMS45LTEuOWg4LjdjMSwwLDEuOSwwLjksMS45LDEuOUwyMy42LDEzLjVMMjMuNiwxMy41eiBNNC4xLDcuNmMwLjgtMS4zLDEuNS0yLjUsMi4yLTMuOGM3LjIsMCwxNC40LDAsMjEuNiwwDQoJYzAuOCwxLjMsMS41LDIuNSwyLjIsMy44QzIxLjUsNy42LDEyLjgsNy42LDQuMSw3LjZ6Ii8+DQo8L3N2Zz4NCg==';
+		
+		if ( !class_exists('Ast_Pro') && !class_exists('Advanced_local_pickup_PRO') ) {
+			add_menu_page( 'Fulfillment', 'Fulfillment', 'manage_woocommerce', 'fulfillment-dashboard', array( $this, 'shipments_page_callback' ), $fullfillment_icon, '55.7' );
+		}
+		add_submenu_page( 'fulfillment-dashboard', 'Shipments', 'Shipments', 'manage_woocommerce', 'trackship-shipments', array( $this, 'shipments_page_callback' ), 1 );
+		
 		if ( trackship_for_woocommerce()->is_trackship_connected() ) {
-			add_submenu_page( 'trackship-shipments', 'Settings', 'Settings', 'manage_woocommerce', 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
+			add_submenu_page( 'woocommerce', 'TrackShip', 'TrackShip', 'manage_woocommerce', 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
+		}
+		if ( !class_exists('Ast_Pro') ) {
+			remove_submenu_page( 'fulfillment-dashboard', 'fulfillment-dashboard' );
 		}
 	}
 	
@@ -974,7 +981,7 @@ class WC_Trackship_Admin {
 	*/	
 	public function footer_function() {
 		if ( !is_plugin_active( 'woocommerce-order-status-manager/woocommerce-order-status-manager.php' ) ) {
-			$bg_color = get_option('wc_ast_status_label_color', '#c9d7e1');
+			$bg_color = get_option('wc_ast_status_label_color', '#09d3ac');
 			$color = get_option('wc_ast_status_label_font_color', '#000');
 			?>
 			<style>
@@ -1044,7 +1051,7 @@ class WC_Trackship_Admin {
                             <p style="font-size: 16px;"><?php esc_html_e( 'Starting from $9 a month', 'trackship-for-woocommerce' ) ?></p>
                         </ul>
                         <div>
-                            <a href="https://trackship.info/my-account/?utm_source=wpadmin&utm_medium=TS4WC&utm_campaign=shipment"><button class="button-primary button-trackship btn_large" style="font-size: 17px; padding: 8px 30px;"><?php esc_html_e( 'UPGRADE TO PRO', 'trackship-for-woocommerce' ) ?><span style="line-height: 18px;" class="dashicons dashicons-arrow-right-alt2"></span></button></a>
+                            <a href="https://trackship.info/my-account/?utm_source=wpadmin&utm_medium=TS4WC&utm_campaign=shipment"><button class="button-primary button-trackship btn_large" style="font-size: 17px; padding: 8px 30px; background-color: #09d3ac;border-color:#09d3ac;"><?php esc_html_e( 'UPGRADE TO PRO', 'trackship-for-woocommerce' ) ?><span style="line-height: 18px;" class="dashicons dashicons-arrow-right-alt2"></span></button></a>
                         </div>
                     </div>
                     <div style="position: relative; width: 100%;">
@@ -1199,12 +1206,9 @@ class WC_Trackship_Admin {
 		$tracking_issues = 0;
 		$active_shipments = 0;
 		$delivered_shipments = 0;
-		$avg_shipment_days_array = array();
-		$avg_shipment_length = '';
 		$total_shipments = 0;
-		foreach ($shipment_status_results as $key => $val) {					
-			$avg_shipment_days_array[] = $val->shipping_length;
-							
+		foreach ($shipment_status_results as $key => $val) {
+			
 			if ( in_array( $val->shipment_status, array( 'carrier_unsupported', 'INVALID_TRACKING_NUM', 'unknown', 'wrong_shipping_provider' ) ) ) {
 				$tracking_issues ++;
 			}
@@ -1216,9 +1220,8 @@ class WC_Trackship_Admin {
 			}
 			$total_shipments ++;
 		}
-		$avg_shipment_length = $this->get_average( $avg_shipment_days_array );
-		$avg_shipment_length = round( (int) $avg_shipment_length );		
-		
+		$avg_shipment_length = $wpdb->get_row( $wpdb->prepare( "SELECT ROUND(AVG(shipping_length)) as avg_shipping_length FROM {$woo_trackship_shipment} WHERE shipping_date > %s", $start_date ) );
+
 		$active_shipments_percent = ' ' . $this->calculate_percent( $active_shipments, $total_shipments);
 		$delivered_shipments_percent = ' ' . $this->calculate_percent( $delivered_shipments, $total_shipments);
 		$result = array();
@@ -1229,7 +1232,7 @@ class WC_Trackship_Admin {
 		$result['active_shipments_percent']		= $active_shipments_percent;
 		$result['delivered_shipments']			= $delivered_shipments;
 		$result['delivered_shipments_percent']	= $delivered_shipments_percent;
-		$result['avg_shipment_length']			= $avg_shipment_length;
+		$result['avg_shipment_length']			= $avg_shipment_length->avg_shipping_length;
 		return $result;
 	}
 	
@@ -1252,7 +1255,7 @@ class WC_Trackship_Admin {
 	}
 
 	/*
-	*
+	* number of days
 	*/
 	public function get_num_of_days( $first_date, $last_date ) {
 		$date1 = strtotime($first_date);
@@ -1261,14 +1264,8 @@ class WC_Trackship_Admin {
 		return gmdate( 'd', $diff );
 	}
 	
-	public function get_average( $array ) {
-		$count = count($array);
-		$count = 0 == $count ? 1 : $count;
-		return round(array_sum($array) / $count, 2);
-	}
-	
 	/*
-	* late shipmenta form save
+	* late shipments form save
 	*/
 	public function ts_late_shipments_email_form_update_callback() {
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {

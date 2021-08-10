@@ -107,6 +107,8 @@ class tswc_smswoo_sms_notification {
 			'{shipping_method}' => $this->order->get_shipping_method(),
 			'{billing_first}'   => $this->order->get_billing_first_name( 'edit' ),
 			'{billing_last}'    => $this->order->get_billing_last_name( 'edit' ),
+			'{shipping_first}'   => $this->order->get_shipping_first_name( 'edit' ),
+			'{shipping_last}'    => $this->order->get_shipping_last_name( 'edit' ),
 		);
 
 		/**
