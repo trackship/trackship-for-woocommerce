@@ -115,6 +115,9 @@ class WC_TrackShip_Late_Shipments {
 	public function send_late_shipments_email() {	
 		
 		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+			$logger = wc_get_logger();
+			$context = array( 'source' => 'trackship_late_shipments_email' );
+			$logger->info( 'Late Shipments email not sent. Upgrade your plan', $context );
 			return;
 		}
 		global $wpdb;
@@ -135,9 +138,10 @@ class WC_TrackShip_Late_Shipments {
 				AND shipping_length > {$day}
 		");
 		
-		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) || $count == 0 ) {
 			return;
 		}
+		
 		// late shipment query in trackship_shipment table
 		$total_order = $wpdb->get_results("
 			SELECT *

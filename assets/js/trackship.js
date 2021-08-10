@@ -43,6 +43,11 @@
 
 		save_trackship_late_shipments_form: function( event ) {			
 			event.preventDefault();
+			email_address = document.getElementById("wcast_late_shipments_email_to").value;
+			if (email_address === "") {
+				alert("Please fill the email address");
+				return false;
+			}
 			
 			$("#trackship_late_shipments_form").find(".spinner").addClass("active");			
 			var ajax_data = $("#trackship_late_shipments_form").serialize();
@@ -344,6 +349,7 @@ jQuery(document).ready(function() {
 			$("body").append("<section class=snackbar-logs></section>");
 		}
 		var trackship_snackbar = $("<article></article>").addClass('snackbar-log snackbar-log-success snackbar-log-show').text( msg );
+		$(".snackbar-logs").empty();
 		$(".snackbar-logs").append(trackship_snackbar);
 		setTimeout(function(){ trackship_snackbar.remove(); }, 3000);
 		return this;
@@ -357,6 +363,7 @@ jQuery(document).ready(function() {
 			$("body").append("<section class=snackbar-logs></section>");
 		}
 		var trackship_snackbar_warning = $("<article></article>").addClass( 'snackbar-log snackbar-log-error snackbar-log-show' ).html( msg );
+		$(".snackbar-logs").empty();
 		$(".snackbar-logs").append(trackship_snackbar_warning);
 		setTimeout(function(){ trackship_snackbar_warning.remove(); }, 3000);
 		return this;

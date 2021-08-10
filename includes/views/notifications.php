@@ -79,10 +79,10 @@
                                 <input class="ast-tgl ast-tgl-flat" id="wcast_enable_late_shipments_admin_email" name="wcast_enable_late_shipments_admin_email" data-settings="late_shipments_email_settings" type="checkbox" <?php echo 1 == $wcast_enable_late_shipments_admin_email ? 'checked' : ''; ?> value="1"/>
                                 <label class="ast-tgl-btn ast-tgl-btn-green" for="wcast_enable_late_shipments_admin_email"></label>	
                             </span>
-                            <?php esc_html_e('Late Shipment', 'trackship-for-woocommerce'); ?>
+                            <?php esc_html_e('Late Shipments', 'trackship-for-woocommerce'); ?>
                         </td>
                         <td class="forminp">
-                            <a class="edit_customizer_a late_shipments_a button-primary btn_ts_transparent btn_ts_sidebar" href="javascript:void(0);"><?php esc_html_e('Settings', 'trackship-for-woocommerce'); ?></a>
+                            <a class="edit_customizer_a late_shipments_a button-primary btn_ts_transparent btn_ts_sidebar" style="padding: 0 17px;" href="javascript:void(0);"><?php esc_html_e('Settings', 'trackship-for-woocommerce'); ?></a>
                         </td>
                     </tr>
                 </tbody>
@@ -102,7 +102,7 @@
                     </th>	
                     <td class="forminp">
                         <fieldset>
-                            <input class="input-text regular-input " style="width: 60%;" type="text" name="wcast_late_shipments_email_to" id="wcast_late_shipments_email_to" placeholder="<?php esc_html_e( 'E.g. {admin_email}, admin@example.org' ); ?>" value="<?php echo esc_html($wcast_late_shipments_email_to ); ?>">
+                            <input class="input-text regular-input " style="width: 60%;" type="text" name="wcast_late_shipments_email_to" id="wcast_late_shipments_email_to" placeholder="<?php esc_html_e( 'E.g. {admin_email}, admin@example.org' ); ?>" value="<?php echo esc_html($wcast_late_shipments_email_to, get_option( 'admin_email' ) ); ?>">
                         </fieldset>
                     </td>
                 </tr>
@@ -117,7 +117,7 @@
                 ?>
                 <tr class="">
                     <th style="padding: 15px;" scope="row" class="titledesc">
-                        <label for=""><?php esc_html_e('Trigger Alert', 'trackship-for-woocommerce'); ?></label>	
+                        <label for=""><?php esc_html_e('Send email at', 'trackship-for-woocommerce'); ?></label>	
                     </th>
                     <td class="forminp">
                         <select class="select daily_digest_time" name="wcast_late_shipments_daily_digest_time">
