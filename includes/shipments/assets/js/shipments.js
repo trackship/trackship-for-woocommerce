@@ -2,8 +2,10 @@
 (function( $ ){
 	'use strict';
 	$.fn.show_popup = function() {
-		var val = jQuery( '.disable_pro' ).val();
-		if ( val === 'disable_pro' ) {
+		//var val = jQuery( '.disable_pro' ).val();
+		var free_plan = ["Free Trial", "Free 50", "No active plan"];
+		
+		if ( jQuery.inArray( user_plan, free_plan) ) {
 			jQuery("#free_user_popup").show();
 		}
 		return this;
@@ -231,7 +233,9 @@ jQuery(document).on("change", "#shipping_time", function(){
 });
 
 jQuery(document).on("click", ".inner_tab_label.inner_sms_tab", function(){
-	jQuery(document).show_popup();
+	if ( smswoo_active == 'no' ) {
+		jQuery(document).show_popup();
+	}
 });
 
 jQuery(document).on( "click", ".popupclose", function(){

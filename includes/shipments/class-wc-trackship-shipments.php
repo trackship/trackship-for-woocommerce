@@ -95,7 +95,7 @@ class WC_Trackship_Shipments {
 		
 		$limit = "limit ".sanitize_text_field($_POST['start']).", ".sanitize_text_field($_POST['length'])."";
 		$late_shipments_email_settings = get_option( 'late_shipments_email_settings' );
-		$wcast_late_shipments_days = isset( $late_shipments_email_settings['wcast_late_shipments_days'] ) ? $late_shipments_email_settings['wcast_late_shipments_days'] : '7';
+		$wcast_late_shipments_days = isset($late_shipments_email_settings['wcast_late_shipments_days']) && is_null( $late_shipments_email_settings['wcast_late_shipments_days'] ) ? $late_shipments_email_settings['wcast_late_shipments_days'] : 7;
 		$days = $wcast_late_shipments_days - 1 ;
 		$late_ship_condi = 'late_shipment' == $_POST['shipment_status'] ? "AND shipping_length > {$days}" : '';
 		$order_number = isset( $_POST['search_bar'] ) ? sanitize_text_field($_POST['search_bar']) : false;
