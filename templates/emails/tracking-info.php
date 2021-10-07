@@ -70,7 +70,7 @@ if ( $tracking_items ) :
 					<div style="display:block;"></div>
                     <?php if ( 't_layout_1' == $tracking_page_layout ) { ?>
                         <div class="widget_progress_bar" style="display:block;width:100%;margin-top:10px;">
-                            <?php $widget_icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ) . '-new-widget.png'; ?>
+                            <?php $widget_icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ) . '-widget.png'; ?>
                             <img src="<?php echo $widget_icon_url; ?>">
                         </div>
 					<?php } else { ?>
@@ -122,7 +122,7 @@ if ( $tracking_items ) :
 		display: block;text-align: center;
 		<?php echo 20 == trackship_customizer()->get_value( 'shipment_email_settings', 'track_button_font_size' ) ? 'padding: 12px 20px;' : 'padding: 10px 15px;'; ?>
 	}
-	.shipment_status {font-size: 24px;margin: 10px 0 0;display: inline-block;color: #53c3bd;vertical-align: middle;}
+	.shipment_status {font-size: 20px;margin: 10px 0;display: inline-block;color: #53c3bd;vertical-align: middle;}
 	.shipment_status .shipped {color: #03a9f4;}
 	.shipment_status .on_hold {color: #ffd700;}
 	.shipment_status .return_to_sender {color: #951621;}

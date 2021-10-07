@@ -392,22 +392,8 @@ class TSWC_Delivered_Customizer_Email {
 	 * Code for preview of delivered email
 	*/
 	public function preview_delivered_email() {
-		$preview_id     = get_theme_mod('wcast_intransit_email_preview_order_id');
-		$order = wc_get_order( $preview_id );
-		
-		if ( '' == $preview_id || 'mockup' == $preview_id ) {
-			echo '<div style="padding: 35px 40px; background-color: white;">';
-				esc_html_e( 'Please select order to preview.', 'trackship-for-woocommerce' );
-			echo '</div>';
-			return;
-		}
-		
-		if ( !$order ) {
-			echo '<div style="padding: 35px 40px; background-color: white;">';
-				esc_html_e( 'Please select order to preview.', 'trackship-for-woocommerce' );
-			echo '</div>';
-			return;
-		}
+		$preview_id     = 1;
+		$order = trackship_customizer()->get_wc_order_for_preview( 'mockup' );
 		
 		$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_email_settings', 'wcast_delivered_status_email_heading', $this->defaults['wcast_delivered_status_email_heading']);		
 		$email_heading = str_replace( '{site_title}', $this->get_blogname(), $email_heading );
@@ -440,13 +426,14 @@ class TSWC_Delivered_Customizer_Email {
 			$message = preg_replace_callback($regex, array( $this, '_appendCampaignToString'), $message);	
 		}
 		
-		$shipment_status = trackship_for_woocommerce()->actions->get_shipment_status( $preview_id );
+		$shipment_status = trackship_customizer()->get_wc_shipment_status_for_preview( 'delivered' );
+		$tracking_items = trackship_customizer()->get_tracking_items_for_preview();
 		
 		if ( $wcast_show_tracking_details ) {
 			$local_template	= get_stylesheet_directory() . '/woocommerce/emails/tracking-info.php';			
 			if ( file_exists( $local_template ) && is_writable( $local_template ) ) {				
 				$message .= wc_get_template_html( 'emails/tracking-info.php', array( 
-					'tracking_items' => trackship_for_woocommerce()->get_tracking_items( $preview_id, true ),
+					'tracking_items' => $tracking_items,
 					'shipment_status' => $shipment_status,
 					'order_id' => $preview_id,
 					'show_shipment_status' => true,
@@ -454,7 +441,7 @@ class TSWC_Delivered_Customizer_Email {
 				), 'woocommerce-advanced-shipment-tracking/', get_stylesheet_directory() . '/woocommerce/' );
 			} else {
 				$message .= wc_get_template_html( 'emails/tracking-info.php', array( 
-					'tracking_items' => trackship_for_woocommerce()->get_tracking_items( $preview_id, true ),
+					'tracking_items' => $tracking_items,
 					'shipment_status' => $shipment_status,
 					'order_id' => $preview_id,
 					'show_shipment_status' => true,
