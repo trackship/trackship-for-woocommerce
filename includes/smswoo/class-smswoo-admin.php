@@ -82,7 +82,7 @@ class tswc_smswoo_admin {
 							<th colspan="2">
 									<?php if ( ( $button == 'true' ) ) {?>
 										<div style="float:right;">
-											<div class="spinner workflow_spinner" style="float:none"></div>
+											<div class="spinner workflow_spinner"></div>
 											<button name="save" class="button-primary button-trackship btn_large button-primary woocommerce-save-button button-smswoo" type="submit" ><?php esc_html_e( 'Save Changes', 'trackship-for-woocommerce' )?></button>
 										</div>
 									<?php } ?>
@@ -128,7 +128,7 @@ class tswc_smswoo_admin {
 							<td colspan="2">
                                 <fieldset>
                                     <button class="button-primary btn_green2 button-smswoo <?php echo $array['button_class'];?>" id="<?php echo $id?>" type="button"><?php echo $array['title'];?></button>
-                                    <div class="spinner test_sms_spinner" style="float:none"></div>
+                                    <div class="spinner test_sms_spinner"></div>
                                 </fieldset>
                             </td>
 						</tr>
@@ -170,7 +170,7 @@ class tswc_smswoo_admin {
 							</label><p class="description"><?php echo (isset($array['desc']))? $array['desc']: ''?></p>
 						<?php } elseif( $array['type'] == 'textarea' ){ ?>
 							<fieldset>
-								<textarea rows="3" cols="20" class="input-text regular-input" type="textarea" name="<?php echo $id?>" id="<?php echo $id?>" style="" placeholder="<?php if(!empty($array['placeholder'])){echo $array['placeholder'];} ?>"><?php echo get_option( $id, isset($array['default']) ? $array['default'] : false )?></textarea>
+								<textarea rows="3" cols="20" class="input-text regular-input" type="textarea" name="<?php echo $id?>" id="<?php echo $id?>" placeholder="<?php if(!empty($array['placeholder'])){echo $array['placeholder'];} ?>"><?php echo get_option( $id, isset($array['default']) ? $array['default'] : false )?></textarea>
 							</fieldset>
                         <?php }  elseif( isset( $array['type'] ) && $array['type'] == 'dropdown' ){?>
                         	<?php
@@ -429,7 +429,7 @@ class tswc_smswoo_admin {
 		$checked = '';
 		?>
 		<div class="smswoo-container">
-        	<?php foreach( (array)$arrays as $id => $array ){
+        	<?php foreach ( (array) $arrays as $id => $array ) {
 				$enabled_customer = $array['id'] . "_enabled_customer";
 				$enabled_admin = $array['id'] . "_enabled_admin";
 				  
@@ -440,16 +440,24 @@ class tswc_smswoo_admin {
                 	<div class="smswoo-top">
                     	<div class="smswoo-top-click"></div>
                         <div>
+							<?php $image_name = 'in_transit' == $array['slug'] ? 'in-transit' : $array['slug']; ?>
+                            <?php $image_name = 'available_for_pickup' == $image_name ? 'available-for-pickup' : $image_name; ?>
+                            <?php $image_name = 'out_for_delivery' == $image_name ? 'out-for-delivery' : $image_name; ?>
+							<?php $image_name = in_array( $image_name, array( 'failure', 'exception' ) ) ? 'failure' : $image_name; ?> 
+                            <?php $image_name = 'on_hold' == $image_name ? 'on-hold' : $image_name; ?>
+                            <?php $image_name = 'return_to_sender' == $image_name ? 'return-to-sender' : $image_name; ?>
+                            <?php $image_name = 'delivered' == $image_name ? 'delivered' : $image_name; ?>
+                        	<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/<?php echo esc_html( $image_name ); ?>.png">
+							<span class="smswoo-label <?php echo $array['id']?>"><?php echo $array['label'];?></span>
+                        </div>
+                        <span class="smswoo-right smswoo-mr20 smswoo-shipment-sendto">
+                        	<span class="smswoo-shipment-sendto-customer btn_ts_transparent btn_outline"><?php echo __( 'Edit', 'trackship-for-woocommerce' )?></span>
                             <span class="smswoo-inlineblock">
                                 <input type="hidden" name="<?php echo $enabled_customer?>" value="0"/>
                                 <input type="checkbox" id="<?php echo $enabled_customer?>" name="<?php echo $enabled_customer?>" class="tgl tgl-flat smswoo-shipment-checkbox" value="1" <?php echo $checked_customer ? 'checked' : ''?> data-row_class="enable_customer" />
                                 <label class="tgl-btn" for="<?php echo $enabled_customer?>"></label>
                             </span>
-                            <span class="smswoo-label <?php echo $array['id']?>"><?php echo $array['label'];?></span>
-                        </div>
-                        <span class="smswoo-right smswoo-mr20 smswoo-shipment-sendto">
-                        	<span class="smswoo-shipment-sendto-customer btn_ts_transparent btn_outline"><?php echo __( 'Customize', 'trackship-for-woocommerce' )?></span>
-                            <button name="save" class="button-primary woocommerce-save-button button-smswoo hide button-trackship" type="submit" value="Save changes"><?php echo __( 'Save & Close', 'trackship-for-woocommerce' )?></button>
+                            <button name="save" class="button-primary woocommerce-save-button button-smswoo hide button-trackship" type="submit" value="Save changes"><?php echo __( 'Save & close', 'trackship-for-woocommerce' )?></button>
                         </span>
                     </div>
                     <div class="smswoo-bottom">
@@ -503,6 +511,7 @@ class tswc_smswoo_admin {
 			$slug = 'wc-' === substr( $slug, 0, 3 ) ? substr( $slug, 3 ) : $slug;
 
 			$settings[] = [
+				'slug'		=> $slug,
 				'id'		=> 'smswoo_trackship_status_' . $slug . '_sms_template',
 				'label'		=> sprintf( '%s', $label ),
 				'css'		=> 'min-width:500px;',
