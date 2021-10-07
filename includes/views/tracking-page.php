@@ -7,7 +7,7 @@
                 </tr>
             </tbody>
 		</table>	
-		<?php $this->get_html_ul( $this->get_tracking_page_data() ); ?>	
+		<?php $this->get_html_ul( $this->get_tracking_page_data() ); ?>
         <div class="settings_ul_submit" style="margin-top: 20px;">
             <button name="save" class="button-primary button-trackship btn_large" type="submit" value="Save changes">
                 <?php esc_html_e( 'Save Changes', 'trackship-for-woocommerce' ); ?>

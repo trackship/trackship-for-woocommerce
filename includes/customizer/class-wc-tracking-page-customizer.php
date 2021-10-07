@@ -115,7 +115,6 @@ class TSWC_Tracking_Page_Customizer {
 	public function wcast_generate_defaults() {
 		$customizer_defaults = array(
 			'wc_ast_select_tracking_page_layout' => 't_layout_1',
-			'tracking_widget_type' => 'tracking_page_widget',			
 			'wc_ast_select_border_color' => '#cccccc',
 			'wc_ast_select_bg_color' => '#fafafa',
 			'wc_ast_hide_tracking_provider_image' => 0,
@@ -123,15 +122,11 @@ class TSWC_Tracking_Page_Customizer {
 			'wc_ast_remove_trackship_branding' => 0,
 			'wc_ast_hide_tracking_events' => 2,
 			'wc_ast_select_font_color' => '#333',
-			'wc_ast_select_primary_color' => '',
+			'widget_padding' => 15,
 		);
 
 		return apply_filters( 'ast_customizer_defaults', $customizer_defaults );
 	}	
-	
-	public function save_tracking_widget_type( $input, $setting ) {
-		return 'tracking_page_widget';
-	}
 	
 	/**
 	 * Register our sample default controls
@@ -147,26 +142,70 @@ class TSWC_Tracking_Page_Customizer {
 		for ( $i = 10; $i <= 30; $i++ ) {
 			$font_size_array[ $i ] = $i . 'px';
 		}		
-
-		//select tracking widget type
-		$wp_customize->add_setting( 'tracking_widget_type',
+		
+		//Widget Background color		
+		$wp_customize->add_setting( 'wc_ast_select_bg_color',
 			array(
-				'default' => $this->defaults['tracking_widget_type'],
+				'default' => $this->defaults['wc_ast_select_bg_color'],
 				'transport' => 'refresh',
-				'sanitize_callback' => array( $this, 'save_tracking_widget_type' ),
-				'type' => 'option',					
+				'sanitize_callback' => '',
+				'type' => 'option',
 			)
-		);		
-		$wp_customize->add_control( 'tracking_widget_type', array(
-			'type' => 'select',
-			'section' => 'ast_tracking_page_section', // Add a default or your own section
-			'label' => __( 'Widget Type', 'trackship-for-woocommerce' ),
-			'description' => '',
-			'choices' => array(
-				'tracking_page_widget' => __( 'Tracking page widget', 'trackship-for-woocommerce' ),
-				'tracking_email_widget' => __( 'Email widget', 'trackship-for-woocommerce' ),
-			),
-		) );
+		);
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'wc_ast_select_bg_color', array(
+			'label' => __( 'Widget background color', 'trackship-for-woocommerce' ),
+			'section' => 'ast_tracking_page_section',
+		)));
+		
+		//Widget font color	
+		$wp_customize->add_setting( 'wc_ast_select_font_color',
+			array(
+				'default' => $this->defaults['wc_ast_select_font_color'],
+				'transport' => 'refresh',
+				'sanitize_callback' => '',
+				'type' => 'option',
+			)
+		);
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'wc_ast_select_font_color', array(
+			'label' => __( 'Widget Font color', 'trackship-for-woocommerce' ),
+			'section' => 'ast_tracking_page_section',
+		)));
+		
+		//Widget border color
+		$wp_customize->add_setting( 'wc_ast_select_border_color',
+			array(
+				'default' => $this->defaults['wc_ast_select_border_color'],
+				'transport' => 'refresh',
+				'sanitize_callback' => '',
+				'type' => 'option',
+			)
+		);
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'wc_ast_select_border_color', array(
+			'label' => __( 'Widget border color', 'trackship-for-woocommerce' ),
+			'section' => 'ast_tracking_page_section',
+		)));
+		
+		// Table content font widget padding  
+		$wp_customize->add_setting( 'wc_ast_select_widget_padding',
+			array(
+				'default' => $this->defaults['widget_padding'],
+				'transport' => 'refresh',
+				'sanitize_callback' => '',
+				'type' => 'option',
+			)
+		);
+		$wp_customize->add_control( new TrackShip_Slider_Custom_Control( $wp_customize, 'wc_ast_select_widget_padding',
+			array(
+				'label' => __( 'Padding of widget', 'trackship-for-woocommerce' ),
+				'section' => 'ast_tracking_page_section',
+				'input_attrs' => array(
+					'default' => $this->defaults['widget_padding'],
+					'step'  => 1,
+					'min'   => 10,
+					'max'   => 30,
+				),
+			)
+		));
 		
 		//select progress bar design
 		$wp_customize->add_setting( 'wc_ast_select_tracking_page_layout',
@@ -179,7 +218,7 @@ class TSWC_Tracking_Page_Customizer {
 		);
 		$wp_customize->add_control( new TrackShip_Select_Custom_Control( $wp_customize, 'wc_ast_select_tracking_page_layout',
 			array(
-				'label' => __( 'Progress Bar style', 'trackship-for-woocommerce' ),						
+				'label' => __( 'Tracker Type', 'trackship-for-woocommerce' ),
 				'section' => 'ast_tracking_page_section',
 				'input_attrs' => array(
 					'placeholder' => __( 'Widget Tracker Type', 'trackship-for-woocommerce' ),
@@ -189,6 +228,22 @@ class TSWC_Tracking_Page_Customizer {
 					't_layout_2' => __( 'Simple', 'trackship-for-woocommerce' ),
 					't_layout_1' => __( 'Icons', 'trackship-for-woocommerce' ),
 				),
+			)
+		) );
+		
+		// Heading Control
+		$wp_customize->add_setting( 'wc_ast_select_display_option_heading',
+			array(
+				'default' => '',
+				'transport' => 'postMessage',
+				'sanitize_callback' => '',
+				'type' => 'option',
+			)
+		);
+		$wp_customize->add_control( new TrackShip_Heading_Control( $wp_customize, 'wc_ast_select_display_option_heading',
+			array(
+				'label' => __( 'Display Options', 'trackship-for-woocommerce' ),
+				'section' => 'ast_tracking_page_section',				
 			)
 		) );
 		
@@ -219,47 +274,26 @@ class TSWC_Tracking_Page_Customizer {
 			)
 		) );
 		
-		//Select border color
-		$wp_customize->add_setting( 'wc_ast_select_border_color',
+		//enable link
+		$wp_customize->add_setting( 'wc_ast_link_to_shipping_provider',
 			array(
-				'default' => $this->defaults['wc_ast_select_border_color'],
-				'transport' => 'refresh',
+				'default' => $this->defaults['wc_ast_link_to_shipping_provider'],
+				'transport' => 'postMessage',
 				'sanitize_callback' => '',
 				'type' => 'option',
 			)
 		);
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'wc_ast_select_border_color', array(
-			'label' => __( 'Widget border color', 'trackship-for-woocommerce' ),
-			'section' => 'ast_tracking_page_section',
-		)));
-		
-		//Select Background color		
-		$wp_customize->add_setting( 'wc_ast_select_bg_color',
+		$wp_customize->add_control( new TrackShip_checkbox_Custom_Control( $wp_customize, 'wc_ast_link_to_shipping_provider',
 			array(
-				'default' => $this->defaults['wc_ast_select_bg_color'],
-				'transport' => 'refresh',
-				'sanitize_callback' => '',
-				'type' => 'option',
+				'label' => __( 'Enable Tracking # link to Carrier', 'trackship-for-woocommerce' ),				
+				'section' => 'ast_tracking_page_section',
+				//'type' => 'checkbox',
+				'input_attrs' => array(
+					'class' => $class,
+				),
+				'active_callback' => array( $this, 'active_callback' ),			
 			)
-		);
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'wc_ast_select_bg_color', array(
-			'label' => __( 'Widget background color', 'trackship-for-woocommerce' ),
-			'section' => 'ast_tracking_page_section',
-		)));
-		
-		//Select font color	
-		$wp_customize->add_setting( 'wc_ast_select_font_color',
-			array(
-				'default' => $this->defaults['wc_ast_select_font_color'],
-				'transport' => 'refresh',
-				'sanitize_callback' => '',
-				'type' => 'option',
-			)
-		);
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'wc_ast_select_font_color', array(
-			'label' => __( 'Widget Font color', 'trackship-for-woocommerce' ),
-			'section' => 'ast_tracking_page_section',
-		)));
+		) );
 		
 		//hide tracking provider image	
 		$wp_customize->add_setting( 'wc_ast_hide_tracking_provider_image',
@@ -279,27 +313,6 @@ class TSWC_Tracking_Page_Customizer {
 			)
 		);
 		
-		//enable link
-		$wp_customize->add_setting( 'wc_ast_link_to_shipping_provider',
-			array(
-				'default' => $this->defaults['wc_ast_link_to_shipping_provider'],
-				'transport' => 'postMessage',
-				'sanitize_callback' => '',
-				'type' => 'option',
-			)
-		);
-		//$wp_customize->add_control( 'wc_ast_link_to_shipping_provider',
-		$wp_customize->add_control( new TrackShip_checkbox_Custom_Control( $wp_customize, 'wc_ast_link_to_shipping_provider',
-			array(
-				'label' => __( 'Enable Tracking # link to Carrier', 'trackship-for-woocommerce' ),				
-				'section' => 'ast_tracking_page_section',
-				//'type' => 'checkbox',
-				'input_attrs' => array(
-					'class' => $class,
-				),
-				'active_callback' => array( $this, 'active_callback' ),			
-			)
-		) );
 		
 		//remove trackship branding
 		$wp_customize->add_setting( 'wc_ast_remove_trackship_branding',

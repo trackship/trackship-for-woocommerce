@@ -246,6 +246,9 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			$args = array(
 				'shipment_status'	=> $shipment_status[$key]['status'],
 			);
+			if ( $tracking_est_delivery_date ) {
+				$args['est_delivery_date'] = $shipment_status[$key]['est_delivery_date'];
+			}
 			trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_item['tracking_number'], $args );
 		}
 		

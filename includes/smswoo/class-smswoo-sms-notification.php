@@ -159,6 +159,27 @@ class tswc_smswoo_sms_notification {
 			$replacements[ '{tracking_link}' ] = implode( ', ', $tracking_link );
 		}
 		
+		if ( is_plugin_active( 'woocommerce-shipment-tracking/woocommerce-shipment-tracking.php' ) ) {
+			$st = WC_Shipment_Tracking_Actions::get_instance();
+			
+			$formatted_items = $st->get_tracking_items( $object->order->get_id(), true );
+			
+			$tracking_number = array_column( $formatted_items, 'tracking_number');
+			$replacements[ '%tracking_number%' ] = implode( ', ', $tracking_number );
+			$replacements[ '{tracking_number}' ] = implode( ', ', $tracking_number );
+			
+			$tracking_provider = array_column( $formatted_items, 'formatted_tracking_provider');
+			$replacements[ '%tracking_provider%' ] = implode( ', ', $tracking_provider );
+			$replacements[ '{tracking_provider}' ] = implode( ', ', $tracking_provider );
+			
+			$replacements[ '%shipping_provider%' ] = implode( ', ', $tracking_provider );
+			$replacements[ '{shipping_provider}' ] = implode( ', ', $tracking_provider );
+			
+			$tracking_link = array_column( $formatted_items, 'formatted_tracking_link');
+			$replacements[ '%tracking_link%' ] = implode( ', ', $tracking_link );
+			$replacements[ '{tracking_link}' ] = implode( ', ', $tracking_link );
+		}
+		
 		if( trackship_for_woocommerce()->is_trackship_connected() ){
 			
 			$shipment_status = get_post_meta( $object->order->get_id(), 'shipment_status', array() );
@@ -244,7 +265,7 @@ class tswc_smswoo_sms_notification {
 
 			ob_start();
 			?>
-			SMSWoo
+			TrackShip SMS
 			<?php _e( 'Status', 'trackship-for-woocommerce' ); ?>: <?php echo esc_html( $status_message ); ?>
 			<br />
 			<?php _e( 'Content', 'trackship-for-woocommerce' ); ?>: <?php echo esc_html( $message ); ?>

@@ -11,6 +11,11 @@
 		display: block;
 	}
 	.customize-partial-edit-shortcut-button {display: none;}
+	<?php if ( $padding ) { ?>
+		body .col.tracking-detail{
+			padding: <?php echo esc_html( $padding ); ?>px;
+		}
+	<?php } ?>
 	<?php if ( $border_color ) { ?>
 		.col.tracking-detail{
 			border: 1px solid <?php echo esc_html( $border_color ); ?>;

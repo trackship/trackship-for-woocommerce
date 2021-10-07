@@ -2,7 +2,7 @@
     <tbody>
         <tr valign="top">
             <td>
-                <h1><?php esc_html_e( 'Notifications', 'trackship-for-woocommerce' ); ?></h1>
+                <h1><?php esc_html_e( 'Shipment Notifications', 'trackship-for-woocommerce' ); ?></h1>
             </td>
         </tr>
     </tbody>
@@ -18,10 +18,13 @@
     ?>				
     
     <input id="tab_email_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-type="email" <?php echo 'email' == $tab_type ? 'checked' : ''; ?> >
-    <label for="tab_email_notifications" class="inner_tab_label ts_tabs_label inner_email_tab"><?php esc_html_e( 'Email Notifications', 'trackship-for-woocommerce' ); ?></label>				
+    <label for="tab_email_notifications" class="inner_tab_label ts_tabs_label inner_email_tab"><?php esc_html_e( 'Email', 'trackship-for-woocommerce' ); ?></label>				
     
     <input id="tab_sms_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-type="sms" <?php echo 'sms' == $tab_type ? 'checked' : ''; ?> >
-    <label for="tab_sms_notifications" class="inner_tab_label ts_tabs_label inner_sms_tab"><?php esc_html_e( 'SMS Notifications', 'trackship-for-woocommerce' ); ?></label>
+    <label for="tab_sms_notifications" class="inner_tab_label ts_tabs_label inner_sms_tab"><?php esc_html_e( 'SMS', 'trackship-for-woocommerce' ); ?></label>
+    
+    <input id="tab_admin_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-type="admin" <?php echo 'admin' == $tab_type ? 'checked' : ''; ?> >
+    <label for="tab_admin_notifications" class="inner_tab_label ts_tabs_label inner_admin_tab"><?php esc_html_e( 'Admin', 'trackship-for-woocommerce' ); ?></label>
     
     <section class="inner_tab_section shipment-status-email-section">
         <?php $nonce = wp_create_nonce( 'tswc_shipment_status_email'); ?>
@@ -62,16 +65,10 @@
         <?php do_action( 'after_shipment_status_email_notifications' ); ?>
 	</section>
     
-    <section class="inner_tab_section late-shipment-status-email-section" style="margin-top:20px;border: 0;">
-        <form method="post" id="trackship_late_shipments_form" action="" enctype="multipart/form-data">					
+    <section class="inner_tab_section late-shipment-status-email-section">
+        <form method="post" id="trackship_late_shipments_form" action="" enctype="multipart/form-data" style="margin:20px;">					
             <table class="form-table heading-table shipment-status-email-table">
                 <tbody>
-                    <tr valign="top" style="background:#fff">
-                        <td style="padding:0;">
-                            <h3 style=""><?php esc_html_e( 'Admin Notifications', 'trackship-for-woocommerce' ); ?></h3>
-                        </td>
-                        <td></td>						
-                    </tr>
                     <tr class="late-shipment-tr <?php echo 1 == $wcast_enable_late_shipments_admin_email ? 'enable' : 'disable'; ?> ">
                         <td class="forminp status-label-column">
                             <span class="shipment_status_toggle">								
@@ -79,7 +76,7 @@
                                 <input class="ast-tgl ast-tgl-flat" id="wcast_enable_late_shipments_admin_email" name="wcast_enable_late_shipments_admin_email" data-settings="late_shipments_email_settings" type="checkbox" <?php echo 1 == $wcast_enable_late_shipments_admin_email ? 'checked' : ''; ?> value="1"/>
                                 <label class="ast-tgl-btn ast-tgl-btn-green" for="wcast_enable_late_shipments_admin_email"></label>	
                             </span>
-                            <?php esc_html_e('Late Shipments', 'trackship-for-woocommerce'); ?>
+                            <?php esc_html_e('Late Shipments Daily Digest', 'trackship-for-woocommerce'); ?>
                         </td>
                         <td class="forminp">
                             <a class="edit_customizer_a late_shipments_a button-primary btn_ts_transparent btn_ts_sidebar" style="padding: 0 17px;" href="javascript:void(0);"><?php esc_html_e('Settings', 'trackship-for-woocommerce'); ?></a>
@@ -144,5 +141,5 @@
 		<?php }
 		do_action( 'shipment_status_sms_section' );
 		?>
-	</section>	
+	</section>
 </div>				

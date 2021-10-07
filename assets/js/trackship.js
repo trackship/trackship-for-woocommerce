@@ -58,9 +58,12 @@
 			});			
 		},	
 	};
-	$(window).load(function(e) {		
+	/*$(window).load(function(e) {		
         trackship_js.init();
-    });
+    });*/
+	$(window).on('load', function() {
+		trackship_js.init();
+	});
 
 })( jQuery, trackship_script, wp, ajaxurl );
 

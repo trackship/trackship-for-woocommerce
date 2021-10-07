@@ -13,20 +13,21 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 if ( $tracking_items ) : 
 	$track_button_Text = trackship_customizer()->get_value( 'shipment_email_settings', 'track_button_Text' );
-	$tracking_page_layout =  get_option('wc_ast_select_tracking_page_layout', 't_layout_1' );
-	$text_align = is_rtl() ? 'right' : 'left'; 
-	$border_color = get_option('wc_ast_select_border_color', '#cccccc' );
-	$background_color = get_option('wc_ast_select_bg_color', '#fafafa' );
-	$font_color = get_option('wc_ast_select_font_color', '#333' );
+	$tracking_page_layout = trackship_customizer()->get_value( 'shipment_email_settings', 'tracking_page_layout' );
+	$text_align = is_rtl() ? 'right' : 'left';
+	$shipment_email_settings = get_option( 'shipment_email_settings' );
+	$border_color = $shipment_email_settings['border_color'];
+	$background_color = $shipment_email_settings['bg_color'];
+	$font_color = $shipment_email_settings['font_color'];
 	?>
 	<div class="tracking_info">
 		<div class="tracking_list">
 			<?php foreach ( $tracking_items as $key => $tracking_item ) { ?>
 				<?php
-					//$ship_status = isset( $shipment_status[ $key ][ 'status' ] ) ? $shipment_status[ $key ][ 'status' ] : false;
-					$ship_status = $new_status;
-					$tracking_link = isset( $shipment_status[ $key ][ 'tracking_page' ] ) && get_option( 'wc_ast_use_tracking_page', 1 ) ? $shipment_status[ $key ][ 'tracking_page' ] : $tracking_item[ 'formatted_tracking_link' ];
-					do_action( 'before_tracking_widget_email', $tracking_item, $order_id );
+				//$ship_status = isset( $shipment_status[ $key ][ 'status' ] ) ? $shipment_status[ $key ][ 'status' ] : false;
+				$ship_status = $new_status;
+				$tracking_link = isset( $shipment_status[ $key ][ 'tracking_page' ] ) && get_option( 'wc_ast_use_tracking_page', 1 ) ? $shipment_status[ $key ][ 'tracking_page' ] : $tracking_item[ 'formatted_tracking_link' ];
+				do_action( 'before_tracking_widget_email', $tracking_item, $order_id );
 				?>
 				<div class="tracking_index display-table">
 					<div style="display: table;width: 100%;">

@@ -313,7 +313,7 @@ class TSWC_Intransit_Customizer_Email {
 			)
 		) );
 				
-		// Display Shipment Provider image/thumbnail
+		// Display the Shipping items
 		$wp_customize->add_setting( 'wcast_intransit_email_settings[wcast_intransit_show_order_details]',
 			array(
 				'default' => $this->defaults['wcast_intransit_show_order_details'],
@@ -332,7 +332,7 @@ class TSWC_Intransit_Customizer_Email {
 			)
 		);
 
-		// Display Shipment Provider image/thumbnail
+		// Display the shipping address
 		$wp_customize->add_setting( 'wcast_intransit_email_settings[wcast_intransit_show_shipping_address]',
 			array(
 				'default' => $this->defaults['wcast_intransit_show_shipping_address'],
@@ -351,6 +351,24 @@ class TSWC_Intransit_Customizer_Email {
 			)
 		);				
 		
+		// Google Analytics Heading
+		$wp_customize->add_setting( 'wcast_intransit_email_settings[analytics_heading]',
+			array(
+				'default' => '',
+				'transport' => 'postMessage',
+				'sanitize_callback' => '',
+				'type' => 'option',
+			)
+		);
+		$wp_customize->add_control( new TrackShip_Heading_Control( $wp_customize, 'wcast_intransit_email_settings[analytics_heading]',
+			array(
+				'label' => __( 'Google Analytics', 'trackship-for-woocommerce' ),
+				'section' => 'trackship_shipment_status_email',
+				'active_callback' => array( $this, 'active_callback' ),		
+			)
+		) );
+		
+		// Google Analytics link tracking
 		$wp_customize->add_setting( 'wcast_intransit_email_settings[wcast_intransit_analytics_link]',
 			array(
 				'default' => '',
