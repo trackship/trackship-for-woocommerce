@@ -68,11 +68,13 @@
 		</div>
 		<div class="tracker-progress-bar <?php echo 't_layout_1' == $tracking_page_layout ? 'tracking_layout_1' : ''; ?>">
 			<div class="progress out_for_delivery">
-				<div class="progress-bar out_for_delivery" style="width: 60%;"></div>
-                <div class="progress-icon icon1"></div>
-                <div class="progress-icon icon2"></div>
-                <div class="progress-icon icon3"></div>
-                <div class="progress-icon icon4"></div>
+				<div class="progress-bar out_for_delivery" <?php echo 't_layout_1' == $tracking_page_layout ? 'style="width: 0%;"' : 'style="width: 60%;"'; ?>></div>
+				<?php if ( 't_layout_1' == $tracking_page_layout ) { ?>
+					<div class="progress-icon icon1"></div>
+					<div class="progress-icon icon2"></div>
+					<div class="progress-icon icon3"></div>
+					<div class="progress-icon icon4"></div>
+				<?php } ?>
 			</div>
 		</div>
 		<div class="tracking-details" style="<?php echo 1 == $hide_tracking_events ? 'display:none' : ''; ?>">

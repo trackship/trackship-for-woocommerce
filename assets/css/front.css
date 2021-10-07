@@ -72,6 +72,19 @@ span.wc_order_id {
 .track-order-section {
 	text-align: left;
 }
+.order_id_email:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+.order_track_form .search_order_form div {
+	width: 100%;
+	padding: 15px 20px;
+	border: 1px solid #e0e0e0;
+}
+.search_order_form .form-row button {
+	margin-bottom: 0;
+}
 .shipment-header {
 	font-weight: 600;
 	display: flex;
@@ -113,12 +126,15 @@ span.wc_order_id {
 	color: #cd2128;
 }
 .tracker-progress-bar {
-	margin: 20px 0;
+	margin: 30px 0;
 	position: relative;
+}
+.tracking-layout-2 .tracker-progress-bar {
+	margin: 20px 0;
 }
 /**** Layout 1 Progressbar CSS ***/
 .tracker-progress-bar.tracking_layout_1 .progress {
-	height: 8px;
+	height: 5px;
 	border-radius: 10px;
 }
 .tracker-progress-bar.tracking_layout_1 .progress .progress-bar:before {
@@ -128,67 +144,63 @@ span.wc_order_id {
 	height: 30px;
 }
 .tracking_layout_1 .progress .progress-icon { 
-	width: 30px;
-    height: 30px;
+	width: 40px;
+    height: 40px;
     position: absolute;
-	top: -10px;
+	top: -15px;
 }
 /* icon - 1 */
 .tracking_layout_1 .progress .progress-icon.icon1 { 
-	content: url(icons/pre_transit-gray.svg);
+	content: url(icons/pre_transit-gray.png);
 }
 .tracking_layout_1 .progress.pre_transit .progress-icon.icon1 { 
-	content: url(icons/pre_transit.svg);
+	content: url(icons/pre_transit-color.png);
 }
 .tracking_layout_1 .progress.failure .progress-icon.icon1 { 
-	content: url(icons/failure.svg);
+	content: url(icons/failure-color.png);
 }
 .tracking_layout_1 .progress.pending_trackship .progress-icon.icon1,
 .tracking_layout_1 .progress.pending .progress-icon.icon1,
 .tracking_layout_1 .progress.unknown .progress-icon.icon1,
 .tracking_layout_1 .progress.carrier_unsupported .progress-icon.icon1,
 .tracking_layout_1 .progress.balance_zero .progress-icon.icon1 { 
-	content: url(icons/shipped.svg);
+	content: url(icons/shipped-color.png);
 }
 /* icon - 2 */
 .tracking_layout_1 .progress .progress-icon.icon2 { 
-	content: url(icons/in_transit-gray.svg);
+	content: url(icons/in_transit-gray.png);
 	left: 30%;
 }
 .tracking_layout_1 .progress.in_transit .progress-icon.icon2 { 
-	content: url(icons/in_transit.svg);
+	content: url(icons/in_transit-color.png);
 }
 .tracking_layout_1 .progress.on_hold .progress-icon.icon2 { 
-	content: url(icons/on_hold.svg);
+	content: url(icons/on_hold-color.png);
 }
 /* icon - 3 */
 .tracking_layout_1 .progress .progress-icon.icon3 { 
-	content: url(icons/out_for_delivery-gray.svg);
+	content: url(icons/out_for_delivery-gray.png);
 	left: 60%;
 }
 .tracking_layout_1 .progress.out_for_delivery .progress-icon.icon3 { 
-	content: url(icons/out_for_delivery.svg);
+	content: url(icons/out_for_delivery-color.png);
 }
 .tracking_layout_1 .progress.available_for_pickup .progress-icon.icon3 { 
-	content: url(icons/available_for_pickup.svg);
+	content: url(icons/available_for_pickup-color.png);
 }
 .tracking_layout_1 .progress.return_to_sender .progress-icon.icon3 { 
-	content: url(icons/return_to_sender.svg);
+	content: url(icons/return_to_sender-color.png);
 }
 .tracking_layout_1 .progress.exception .progress-icon.icon3 { 
-	content: url(icons/failure.svg);
+	content: url(icons/failure-color.png);
 }
 /* icon - 4 */
 .tracking_layout_1 .progress .progress-icon.icon4 { 
-	content: url(icons/delivered-gray.svg);
-	right: 0;
-}
-.tracking_layout_1 .progress .progress-icon.icon4 { 
-	content: url(icons/delivered-gray.svg);
+	content: url(icons/delivered-gray.png);
 	right: 0;
 }
 .tracking_layout_1 .progress.delivered .progress-icon.icon4 { 
-	content: url(icons/delivered.svg);
+	content: url(icons/delivered-color.png);
 }
 /**** Layout 2 CSS ***/
 .tracker-progress-bar .progress {
@@ -379,4 +391,29 @@ h1.shipment_status_heading.pending_trackship, h1.shipment_status_heading.pending
 	overflow-y: overlay;
 	text-align: left;
 	border: 1px solid #e0e0e0;
+}
+
+@media screen and (min-width: 600px) {
+.order_track_form .search_order_form {
+	display: inline-flex;
+}
+.order_track_form .search_order_form .order_id_email {
+	border-right: 0;	
+}
+}
+@media screen and (max-width: 600px) {
+.order_track_form .search_order_form {
+	display: block;
+}
+.order_track_form .search_order_form .order_id_email {
+	border-bottom: 0;
+	padding-bottom: 0;
+}
+.order_track_form .search_order_form .by_tracking_number {
+	border-top: 0;
+	padding-top: 0;
+}
+.order_track_form .search_order_form .order_id_email p.form-row:last-child {
+	display: none;	
+}
 }

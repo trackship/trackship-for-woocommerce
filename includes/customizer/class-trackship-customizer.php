@@ -315,32 +315,6 @@ class WC_Trackship_Customizer {
 	}
 	
 	/**
-	 * Get Order Ids
-	 *
-	 * @return array
-	 */
-	public static function get_order_ids() {		
-		$order_array = array();
-		$order_array['mockup'] = __( 'Select order to preview', 'trackship-for-woocommerce' );
-		
-		$orders = wc_get_orders( array(
-			'limit'        => 20,
-			'orderby'      => 'date',
-			'order'        => 'DESC',
-			'meta_key'     => '_wc_shipment_tracking_items', // The postmeta key field
-			'meta_compare' => 'EXISTS', // The comparison argument
-		));	
-			
-		foreach ( $orders as $order ) {								
-			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order->get_id() );
-			if ( $tracking_items ) {
-				$order_array[ $order->get_id() ] = $order->get_id() . ' - ' . $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();					
-			}				
-		}
-		return $order_array;
-	}
-	
-	/**
 	 * Code for initialize default value for customizer
 	*/
 	public function get_defaults( $key ) {
@@ -392,6 +366,88 @@ class WC_Trackship_Customizer {
 		return $value;
 	}
 	
+	/**
+	 * Get WooCommerce order for preview
+	 *	 
+	 * @param string $order_status
+	 * @return object
+	 */
+	public function get_wc_order_for_preview( $order_status = null, $order_id = null ) {
+		if ( ! empty( $order_id ) && 'mockup' != $order_id ) {
+			return wc_get_order( $order_id );
+		} else {			
+
+			// Instantiate order object
+			$order = new WC_Order();			
+			
+			// Other order properties
+			$order->set_props( array(
+				'id'                 => 1,
+				'status'             => ( null === $order_status ? 'processing' : $order_status ),
+				'shipping_first_name' => 'Sherlock',
+				'shipping_last_name'  => 'Holmes',
+				'shipping_company'    => 'Detectives Ltd.',
+				'shipping_address_1'  => '221B Baker Street',
+				'shipping_city'       => 'London',
+				'shipping_postcode'   => 'NW1 6XE',
+				'shipping_country'    => 'GB',
+				'billing_first_name' => 'Sherlock',
+				'billing_last_name'  => 'Holmes',
+				'billing_company'    => 'Detectives Ltd.',
+				'billing_address_1'  => '221B Baker Street',
+				'billing_city'       => 'London',
+				'billing_postcode'   => 'NW1 6XE',
+				'billing_country'    => 'GB',
+				'billing_email'      => 'sherlock@holmes.co.uk',
+				'billing_phone'      => '02079304832',
+				'date_created'       => gmdate( 'Y-m-d H:i:s' ),
+				'total'              => 24.90,				
+			) );
+
+			// Item #1
+			$order_item = new WC_Order_Item_Product();
+			$order_item->set_props( array(
+				'name'     => 'A Study in Scarlet',
+				'subtotal' => '9.95',
+				'sku'      => 'kwd_ex_1',
+			) );
+			$order->add_item( $order_item );
+
+			// Item #2
+			$order_item = new WC_Order_Item_Product();
+			$order_item->set_props( array(
+				'name'     => 'The Hound of the Baskervilles',
+				'subtotal' => '14.95',
+				'sku'      => 'kwd_ex_2',
+			) );
+			$order->add_item( $order_item );						
+
+			// Return mockup order
+			return $order;
+		}
+	}
+	
+	public function get_wc_shipment_status_for_preview( $status = 'in_transit' ) {
+		$shipment_status = array();
+		$shipment_status[] = array(
+			'status_date' => '2021-07-27 15:28:02',
+			'est_delivery_date' => '',
+			'status' => $status,
+			'tracking_events' => array(),
+			'tracking_page' => '',
+		);
+		return $shipment_status;
+	}
+	
+	public function get_tracking_items_for_preview() {
+		$tracking_items = array();
+		$tracking_items[] = array(
+			'tracking_provider' => 'usps',
+			'tracking_number' => '4208001392612927',
+			'formatted_tracking_provider' => 'USPS',			
+		);
+		return $tracking_items;
+	}
 }
 
 /**

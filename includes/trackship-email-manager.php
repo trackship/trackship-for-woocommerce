@@ -403,7 +403,6 @@ class WC_TrackShip_Email_Manager {
 		if ( version_compare( WC_VERSION, '3.0', '<' ) ) {
 			$tracking_items = get_post_meta( $order_id, '_wc_shipment_tracking_items', true );				
 		} else {
-			$order          = new WC_Order( $order_id );
 			$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );			
 		}
 		
