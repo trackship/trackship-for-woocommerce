@@ -1,9 +1,6 @@
 <?php $nonce = wp_create_nonce( 'wc_ast_tools'); ?>
 <input type="hidden" id="wc_ast_dashboard_tab" name="wc_ast_dashboard_tab" value="<?php echo esc_attr( $nonce ); ?>" />
 <?php if ( trackship_for_woocommerce()->is_trackship_connected() ) { ?>
-	<script>
-        var user_plan = '<?php get_option( 'user_plan' ); ?>';
-    </script>
     <div class="flexcontainer">
         <div class="flexcolumn right_border">
             <div class="shipping_time">
