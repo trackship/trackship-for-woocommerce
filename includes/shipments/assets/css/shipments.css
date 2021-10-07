@@ -1,0 +1,210 @@
+*, ::after, ::before {
+	box-sizing: border-box;
+}
+.woocommerce_page_trackship-shipments #wpcontent {
+	padding-left: 0;
+}
+.woocommerce_page_trackship-shipments .trackship_admin_content {
+	padding: 0 30px 0 30px;
+}
+.woocommerce.trackship_admin_layout table.form-table.heading-table td h3 {
+	margin: 0 0 10px;
+}
+.dataTables_wrapper .dataTables_info {
+	font-size: 12px;
+	margin: 10px 0;
+	padding-top: 0;
+}
+.dataTables_wrapper .dataTables_paginate {
+	margin-bottom: 10px;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+	border: 1px solid #ccc;
+	font-size: 12px;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+	background: #09d3ac;
+	color: #fff !important;
+}
+#shipping_date {
+	text-align: center;
+	border: 1px solid #e0e0e0;
+	padding: 10px;
+	border-radius: 5px;
+	background: #fafafa;
+	font-weight: 500;
+}
+span.date_placeholder {
+	padding-right: 20px;
+}
+table.dataTable thead th, table.dataTable thead td {
+	border-bottom: 1px solid #e0e0e0;
+	font-weight: 400;
+	font-size: 12px;
+	padding: 10px 10px;
+	background-color: #ffffff;
+}
+.manage-column .select_all_checkbox {
+	margin-left: 0;
+}
+table.dataTable tbody td {
+	border-bottom: 1px solid #e0e0e0;
+}
+table.dataTable tbody a {
+	color: #3858e9;
+    line-height: 2em;
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+}
+table.dataTable tbody td span {
+	display: inline-block;
+	line-height: 1.9em;
+}
+table.dataTable tbody td:last-child span {
+	display: block;
+	line-height: 1.4em;
+	float: right;
+}
+tr.tabel_heading_th th {
+	background: #fafafa !important;
+}
+table.dataTable tbody tr.hover, table.dataTable tbody tr.focus {
+	background: #fafafa !important;
+}
+table.dataTable.no-footer {
+	border-bottom: 0;
+}
+table.dataTable tbody .shipment_status_label {
+	display: block;
+	line-height: 2.2em;
+	font-weight: 600;
+}
+table.dataTable tbody .shipment_status_label:before {
+	font-family: dashicons;
+	font-size: 18px;
+	vertical-align: bottom;
+	margin-right: 5px;
+}
+table.dataTable tbody .shipment_status_label.pre_transit {
+	color: #37609a;
+}
+table.dataTable tbody .shipment_status_label.in_transit {
+	color: #7ad1cc;
+}
+table.dataTable tbody .shipment_status_label.on_hold {
+	color: #feeb77;
+}
+table.dataTable tbody .shipment_status_label.available_for_pickup {
+	color: #ff9800;
+}
+table.dataTable tbody .shipment_status_label.return_to_sender {
+	color: #A8414A;
+}
+table.dataTable tbody .shipment_status_label.failure {
+	color: #CD2128;
+}
+table.dataTable tbody .shipment_status_label.out_for_delivery {
+	color: #95CB65;
+}
+table.dataTable tbody .shipment_status_label.delivered {
+	color: #0F8042;
+}
+table.dataTable tbody .shipment_status_label.pending_trackship {
+	color: #BD3D84;
+}
+.wp-core-ui .btn_green2.bulk_action_submit {
+	line-height: 27px;
+	height: 30px;
+	vertical-align: top;
+}
+.trackship_admin_content select {
+	vertical-align: top;
+}
+.provider_span {
+	display: block;
+}
+.datatable_footer {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	flex-flow: row wrap;
+	align-content: center;
+	justify-content: center;
+	margin: 20px 0 0;
+}
+.dataTables_wrapper .datatable_footer .dataTables_paginate {
+	float: none;
+	text-align: left;
+	display: inline-block;
+	margin: 0 15px;
+}
+.dataTables_wrapper .datatable_footer .dataTables_length {
+	float: none;
+	text-align: left;
+	display: inline-block;
+	margin: 0 15px;
+}
+.datatable_footer .dataTables_paginate .paginate_button {
+	background: #f5f5f5 !important;
+	border: 1px solid #bdbdbd !important;
+	width: 30px;
+	height: 30px;
+	margin-left: 0;
+	font-size: 0;
+}
+.datatable_footer .dataTables_paginate .paginate_button.previous.disabled::after {
+	color: #bdbdbd;
+}
+.datatable_footer .dataTables_paginate .paginate_button.previous::after {
+	font-family: Dashicons;
+	content: "\f341";
+	font-size: 20px;
+	line-height: 29px;
+	color: #444444;
+}
+.datatable_footer .dataTables_paginate .paginate_button {
+	background: #f5f5f5 !important;
+	border: 1px solid #bdbdbd !important;
+	width: 30px;
+	height: 30px;
+	margin-left: 0;
+	font-size: 0;
+}
+.datatable_footer .dataTables_paginate .paginate_button.next::after {
+	font-family: Dashicons;
+	content: "\f345";
+	font-size: 20px;
+	line-height: 29px;
+	color: #444444;
+}
+.dataTables_wrapper .datatable_footer .dataTables_length label {
+	color: #757575;
+	line-height: 30px;
+}
+.datatable_footer .dataTables_length select {
+	height: 30px;
+	width: 50px;
+	line-height: 14px;
+	padding: 0 5px;
+	margin: 0 5px;
+	color: #757575;
+}
+.shipment_length img {
+	width: 17px;
+	margin-left: 5px;
+	vertical-align: middle;
+}
+.table_scroll {
+	overflow-x: auto;
+	clear:both;
+}
+table.dataTable th:last-child {
+    text-align: right;
+}
+table.dataTable span.dashicons.dashicons-admin-page {
+    font-size: 15px;
+    color: #3858e9;
+}
