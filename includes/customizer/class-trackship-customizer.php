@@ -39,18 +39,37 @@ class WC_Trackship_Customizer {
 		*/
 		$wp_customize->add_section( 'ast_tracking_page_section',
 			array(
+				'title' => __( 'Tracking Page Widget', 'trackship-for-woocommerce' ),
+				'description' => '',
+				'priority' => 1,
+			)
+		);
+		
+		$wp_customize->add_panel( 'trackship_shipment_status_email_panel',
+			array(
+				'title' => __( 'Email Notifications', 'trackship-for-woocommerce' ),
+				'description' => '',
+				'priority' => 2,
+			)
+		);
+		
+		$wp_customize->add_section( 'trackship_shipment_status_email_widget',
+			array(
 				'title' => __( 'Tracking Widget', 'trackship-for-woocommerce' ),
-				'description' => ''
+				'description' => '',	
+				'panel' => 'trackship_shipment_status_email_panel',	
+				'priority' => 1,	
 			)
 		);
 		
 		$wp_customize->add_section( 'trackship_shipment_status_email',
 			array(
-				'title' => __( 'Email notification', 'trackship-for-woocommerce' ),
-				'description' => '',				
+				'title' => __( 'Email Type & Text', 'trackship-for-woocommerce' ),
+				'description' => '',	
+				'panel' => 'trackship_shipment_status_email_panel',			
+				'priority' => 2,
 			)
-		);	
-
+		);
 	}
 	
 	/**
@@ -83,6 +102,7 @@ class WC_Trackship_Customizer {
 				'customer_returntosender_preview_url'		=> $this->get_customer_returntosender_preview_url(),
 				'customer_availableforpickup_preview_url'	=> $this->get_customer_availableforpickup_preview_url(),
 				'customizer_title'							=> 'TrackShip',
+				'email_customizer_title'					=> 'Email Notifications',
 				'trigger_click'								=> '#accordion-section-' . $r_mail . ' h3', $r_mail
 			) );	
 
@@ -288,7 +308,7 @@ class WC_Trackship_Customizer {
 	*/
 	public static function is_own_section( $key ) {
 				
-		if ( 'ast_tracking_page_section' === $key || 'trackship_shipment_status_email' === $key ) {
+		if ( 'ast_tracking_page_section' === $key || 'trackship_shipment_status_email' === $key || 'trackship_shipment_status_email_widget' === $key ) {
 			return true;
 		}
 

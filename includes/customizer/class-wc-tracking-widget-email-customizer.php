@@ -83,7 +83,7 @@ class TSWC_Tracking_widget_email_Customizer {
 	 * @return bool
 	 */
 	public function is_own_customizer_request() {
-		return isset( $_REQUEST['email'] ) && 'ast_tracking_page_section' === $_REQUEST['email'] ;
+		return isset( $_REQUEST['email'] ) && 'trackship_shipment_status_email_widget' === $_REQUEST['email'] ;
 	}
 	
 	/**
@@ -94,7 +94,7 @@ class TSWC_Tracking_widget_email_Customizer {
 		return add_query_arg( array(
 			'wcast-customizer' => '1',
 			'email' => $email,						
-			'autofocus[section]' => 'ast_tracking_page_section',
+			'autofocus[section]' => 'trackship_shipment_status_email_widget',
 			'url'                  => urlencode( add_query_arg( array( 'action' => 'preview_tracking_email_widget' ), home_url( '/' ) ) ),
 			'return'               => urlencode( $this->get_email_settings_page_url( $return_tab ) ),								
 		), admin_url( 'customize.php' ) );
@@ -119,7 +119,11 @@ class TSWC_Tracking_widget_email_Customizer {
 			'track_button_text_color'		=> '#fff',
 			'track_button_font_size'		=> 15,
 			'widget_padding'				=> 15,
+			'tracking_page_layout'			=> 't_layout_1',
 			'track_button_border_radius'	=> 3,
+			'border_color'					=> '#cccccc',
+			'bg_color'						=> '#fafafa',
+			'font_color'					=> '#333',
 		);
 
 		return apply_filters( 'ast_customizer_defaults', $customizer_defaults );
@@ -139,6 +143,48 @@ class TSWC_Tracking_widget_email_Customizer {
 			$font_size_array[ $i ] = $i . 'px';
 		}
 		
+		//Widget border color  shipment_email_settings[widget_padding]
+		$wp_customize->add_setting( 'shipment_email_settings[border_color]',
+			array(
+				'default' => $this->defaults['border_color'],
+				'transport' => 'refresh',
+				'sanitize_callback' => '',
+				'type' => 'option',
+			)
+		);
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'shipment_email_settings[border_color]', array(
+			'label' => __( 'Widget border color', 'trackship-for-woocommerce' ),
+			'section' => 'trackship_shipment_status_email_widget',
+		)));
+		
+		//Widget Background color		
+		$wp_customize->add_setting( 'shipment_email_settings[bg_color]',
+			array(
+				'default' => $this->defaults['bg_color'],
+				'transport' => 'refresh',
+				'sanitize_callback' => '',
+				'type' => 'option',
+			)
+		);
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'shipment_email_settings[bg_color]', array(
+			'label' => __( 'Widget background color', 'trackship-for-woocommerce' ),
+			'section' => 'trackship_shipment_status_email_widget',
+		)));
+		
+		//Widget font color	
+		$wp_customize->add_setting( 'shipment_email_settings[font_color]',
+			array(
+				'default' => $this->defaults['font_color'],
+				'transport' => 'refresh',
+				'sanitize_callback' => '',
+				'type' => 'option',
+			)
+		);
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'shipment_email_settings[font_color]', array(
+			'label' => __( 'Widget Font color', 'trackship-for-woocommerce' ),
+			'section' => 'trackship_shipment_status_email_widget',
+		)));
+		
 		// Table content font widget padding
 		$wp_customize->add_setting( 'shipment_email_settings[widget_padding]',
 			array(
@@ -151,16 +197,39 @@ class TSWC_Tracking_widget_email_Customizer {
 		$wp_customize->add_control( new TrackShip_Slider_Custom_Control( $wp_customize, 'shipment_email_settings[widget_padding]',
 			array(
 				'label' => __( 'Padding of widget', 'trackship-for-woocommerce' ),
-				'section' => 'ast_tracking_page_section',
+				'section' => 'trackship_shipment_status_email_widget',
 				'input_attrs' => array(
 					'default' => $this->defaults['widget_padding'],
 					'step'  => 1,
 					'min'   => 10,
 					'max'   => 30,
 				),
-				'active_callback' => array( $this, 'active_callback' ),
 			)
 		));
+		
+		//select progress bar design  
+		$wp_customize->add_setting( 'shipment_email_settings[tracking_page_layout]',
+			array(
+				'default' => $this->defaults['tracking_page_layout'],
+				'transport' => 'refresh',
+				'sanitize_callback' => '',
+				'type' => 'option',
+			)
+		);
+		$wp_customize->add_control( new TrackShip_Select_Custom_Control( $wp_customize, 'shipment_email_settings[tracking_page_layout]',
+			array(
+				'label' => __( 'Tracker Type', 'trackship-for-woocommerce' ),
+				'section' => 'trackship_shipment_status_email_widget',
+				'input_attrs' => array(
+					'placeholder' => __( 'Widget Tracker Type', 'trackship-for-woocommerce' ),
+					'class' => '',
+				),
+				'choices' => array(
+					't_layout_2' => __( 'Simple', 'trackship-for-woocommerce' ),
+					't_layout_1' => __( 'Icons', 'trackship-for-woocommerce' ),
+				),
+			)
+		) );
 		
 		// Test of Toggle Switch Custom Control
 		$wp_customize->add_setting( 'shipment_email_settings[track_button_heading]',
@@ -174,8 +243,7 @@ class TSWC_Tracking_widget_email_Customizer {
 		$wp_customize->add_control( new TrackShip_Heading_Control( $wp_customize, 'shipment_email_settings[track_button_heading]',
 			array(
 				'label' => __( 'Track button', 'trackship-for-woocommerce' ),
-				'section' => 'ast_tracking_page_section',				
-				'active_callback' => array( $this, 'active_callback' ),
+				'section' => 'trackship_shipment_status_email_widget',				
 			)
 		) );
 		
@@ -191,14 +259,14 @@ class TSWC_Tracking_widget_email_Customizer {
 		$wp_customize->add_control( 'shipment_email_settings[track_button_Text]',
 			array(
 				'label' => __( 'Track button Text', 'trackship-for-woocommerce' ),
-				'section' => 'ast_tracking_page_section',
+				'section' => 'trackship_shipment_status_email_widget',
 				'type' => 'text',
 				'input_attrs' => array(
 					'class' => '',
 					'style' => '',
 					'placeholder' => __( $this->defaults['track_button_Text'], 'trackship-for-woocommerce' ),
 				),
-				'active_callback' => array( $this, 'active_callback' ),				
+				//'active_callback' => array( $this, 'active_callback' ),				
 			)
 		);
 		
@@ -215,12 +283,12 @@ class TSWC_Tracking_widget_email_Customizer {
 		$wp_customize->add_control( new TrackShip_Text_Radio_Button_Custom_Control( $wp_customize, 'shipment_email_settings[track_button_font_size]',
 			array(
 				'label' => __( 'Button size', 'ast-pro' ),				
-				'section' => 'ast_tracking_page_section',
+				'section' => 'trackship_shipment_status_email_widget',
 				'choices' => array(
 					15 => __( 'Normal', 'ast-pro' ),
 					20 => __( 'Large', 'ast-pro'  )
 				),
-				'active_callback' => array( $this, 'active_callback' ),
+				//'active_callback' => array( $this, 'active_callback' ),
 			)
 		) );
 				
@@ -236,9 +304,9 @@ class TSWC_Tracking_widget_email_Customizer {
 		$wp_customize->add_control( 'shipment_email_settings[track_button_color]',
 			array(
 				'label' => __( 'Button color', 'trackship-for-woocommerce' ),
-				'section' => 'ast_tracking_page_section',
+				'section' => 'trackship_shipment_status_email_widget',
 				'type' => 'color',
-				'active_callback' => array( $this, 'active_callback' ),
+				//'active_callback' => array( $this, 'active_callback' ),
 			)
 		);
 		
@@ -254,9 +322,9 @@ class TSWC_Tracking_widget_email_Customizer {
 		$wp_customize->add_control( 'shipment_email_settings[track_button_text_color]',
 			array(
 				'label' => __( 'Button font color', 'trackship-for-woocommerce' ),
-				'section' => 'ast_tracking_page_section',
+				'section' => 'trackship_shipment_status_email_widget',
 				'type' => 'color',
-				'active_callback' => array( $this, 'active_callback' ),
+				//'active_callback' => array( $this, 'active_callback' ),
 			)
 		);
 		
@@ -272,14 +340,14 @@ class TSWC_Tracking_widget_email_Customizer {
 		$wp_customize->add_control( new TrackShip_Slider_Custom_Control( $wp_customize, 'shipment_email_settings[track_button_border_radius]',
 			array(
 				'label' => __( 'Button radius', 'trackship-for-woocommerce' ),
-				'section' => 'ast_tracking_page_section',
+				'section' => 'trackship_shipment_status_email_widget',
 				'input_attrs' => array(
 					'default' => $this->defaults['track_button_border_radius'],
 					'step'  => 1,
 					'min'   => 0,
 					'max'   => 10,
 				),
-				'active_callback' => array( $this, 'active_callback' ),
+				//'active_callback' => array( $this, 'active_callback' ),
 			)
 		));
 			
@@ -313,27 +381,11 @@ class TSWC_Tracking_widget_email_Customizer {
 	*/
 	public function preview_intransit_email() {
 		// Load WooCommerce emails.
-		$preview_id     = get_theme_mod( 'wcast_intransit_email_preview_order_id' );
+		$preview_id = 1;;
 		
 		$sent_to_admin = false;
 		$plain_text = false;
 		$email = '';
-		
-		if ( '' == $preview_id || 'mockup' == $preview_id ) {
-			echo '<div style="padding: 35px 40px; background-color: white;">';
-				esc_html_e( 'Please select order to preview.', 'trackship-for-woocommerce' );
-			echo '</div>';
-			return;
-		}		
-		
-		$order = wc_get_order( $preview_id );
-		
-		if ( ! $order ) {
-			echo '<div style="padding: 35px 40px; background-color: white;">';
-				esc_html_e( 'Please select order to preview.', 'trackship-for-woocommerce' );
-			echo '</div>';
-			return;
-		}
 		
 		// get the preview email subject
 		$email_heading = __( 'Out for Delivery', 'trackship-for-woocommerce' );

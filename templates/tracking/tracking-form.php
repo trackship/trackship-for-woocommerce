@@ -18,7 +18,7 @@
 			</div>
 			<div class="by_tracking_number">
             	<p><?php echo esc_html( apply_filters( 'ast_tracking_page_traking_number_front_text', __( 'Or, enter the tracking number for your order:', 'trackship-for-woocommerce' ) ) ); ?></p>
-				<p class="form-row"><label for="order_tracking_number"><?php echo esc_html( apply_filters( 'tracking_page_tracking_number_label', __( 'Tracking number', 'trackship-for-woocommerce' ) ) ); ?></label><input class="input-text" type="text" name="order_tracking_number" id="order_tracking_number" value="" placeholder="<?php esc_html_e( 'Order tracking number.', 'trackship-for-woocommerce' ); ?>"></p>
+				<p class="form-row"><label for="order_tracking_number"><?php echo esc_html( apply_filters( 'tracking_page_tracking_number_label', __( 'Tracking Number', 'trackship-for-woocommerce' ) ) ); ?></label><input class="input-text" type="text" name="order_tracking_number" id="order_tracking_number" value="" placeholder="<?php esc_html_e( 'Order tracking number.', 'trackship-for-woocommerce' ); ?>"></p>
                 <p class="form-row"><button type="submit" class="button btn btn-secondary" name="track" value="Track"><?php echo esc_html( apply_filters( 'ast_tracking_page_front_track_label', __( 'Track Order', 'trackship-for-woocommerce' ) ) ); ?></button></p>
 			</div>
 		</div>

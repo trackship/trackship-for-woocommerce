@@ -7,10 +7,13 @@ jQuery(document).ready(function() {
 
     /**
      * Change description
-     */	 	
+     */
 	jQuery('#customize-theme-controls #accordion-section-themes').hide();			
 	jQuery( '#sub-accordion-section-trackship_shipment_status_email .customize-section-title > h3 .customize-action, #sub-accordion-section-ast_tracking_page_section .customize-section-title > h3 .customize-action' ).append( '<span class="dashicons dashicons-arrow-right" style="padding-top:4px; margin: 0 -5px;"></span> TrackShip' );
 	jQuery( '.accordion-section .panel-title' ).html(wcast_customizer.customizer_title);
+	jQuery( '#sub-accordion-section-trackship_shipment_status_email_widget .customize-section-description-container h3 span.customize-action' ).html('Customizing > TrackShip Emails');
+	jQuery( '#sub-accordion-section-trackship_shipment_status_email .customize-section-description-container h3 span.customize-action' ).html('Customizing > TrackShip Emails');
+	jQuery( '#sub-accordion-panel-trackship_shipment_status_email_panel .accordion-section .panel-title' ).html(wcast_customizer.email_customizer_title);
 });	
 
 // Handle mobile button click
@@ -97,40 +100,27 @@ jQuery('#customize-footer-actions .preview-tablet').click(function(e) {
             var url;
             if ( isExpanded ) {
 				jQuery('#save').trigger('click');
-				
-				var tracking_widget_type = jQuery("#_customize-input-tracking_widget_type").val();
-	
-				if ( tracking_widget_type == 'tracking_email_widget' ) {
-					wp.customize.previewer.previewUrl(wcast_customizer.tracking_widget_email_preview_url);
-					wp.customize.previewer.refresh();					
-				} else {			
-					wp.customize.previewer.previewUrl(wcast_customizer.tracking_page_preview_url);
-					wp.customize.previewer.refresh();
-				}
+				wp.customize.previewer.previewUrl(wcast_customizer.tracking_page_preview_url);
+				wp.customize.previewer.refresh();
             }
         } );
     } );
 } ( wp.customize ) );
 
+(function ( api ) {
+    api.section( 'trackship_shipment_status_email_widget', function( section ) {		
+        section.expanded.bind( function( isExpanded ) {				
+            var url;
+            if ( isExpanded ) {
+				jQuery('#save').trigger('click');
+				wp.customize.previewer.previewUrl(wcast_customizer.tracking_widget_email_preview_url);
+				wp.customize.previewer.refresh();	
+            }
+        } );
+    } );
+} ( wp.customize ) );
+	
 
-jQuery(document).on("change", ".preview_order_select", function(){
-	var wcast_preview_order_id = jQuery(this).val();
-	var data = {
-		action: 'update_email_preview_order',
-		wcast_preview_order_id: wcast_preview_order_id,	
-	};
-	jQuery.ajax({
-		url: ajaxurl,		
-		data: data,
-		type: 'POST',
-		success: function(response) {			
-			jQuery(".preview_order_select option[value="+wcast_preview_order_id+"]").attr('selected', 'selected');			
-		},
-		error: function(response) {
-			console.log(response);			
-		}
-	});	
-});
 
 jQuery(document).ready(function() {	
 	var shipment_status = wcast_customizer.shipment_status;

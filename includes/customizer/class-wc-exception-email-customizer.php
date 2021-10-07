@@ -313,6 +313,24 @@ class TSWC_Exception_Customizer_Email {
 			)
 		);
 		
+		// Google Analytics Heading
+		$wp_customize->add_setting( 'wcast_exception_email_settings[analytics_heading]',
+			array(
+				'default' => '',
+				'transport' => 'postMessage',
+				'sanitize_callback' => '',
+				'type' => 'option',
+			)
+		);
+		$wp_customize->add_control( new TrackShip_Heading_Control( $wp_customize, 'wcast_exception_email_settings[analytics_heading]',
+			array(
+				'label' => __( 'Google Analytics', 'trackship-for-woocommerce' ),
+				'section' => 'trackship_shipment_status_email',
+				'active_callback' => array( $this, 'active_callback' ),		
+			)
+		) );
+		
+		// Google Analytics link tracking
 		$wp_customize->add_setting( 'wcast_exception_email_settings[wcast_exception_analytics_link]',
 			array(
 				'default' => '',

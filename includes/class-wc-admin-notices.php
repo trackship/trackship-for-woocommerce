@@ -13,13 +13,6 @@ class WC_TS4WC_Admin_Notices_Under_WC_Admin {
 	private static $instance;
 	
 	/**
-	 * Initialize the main plugin function
-	*/
-    public function __construct() {
-		$this->init();	
-    }
-	
-	/**
 	 * Get the class instance
 	 *
 	 * @return WC_Advanced_Shipment_Tracking_Admin_notice
@@ -34,28 +27,15 @@ class WC_TS4WC_Admin_Notices_Under_WC_Admin {
 	}
 	
 	/*
-	* init from parent mail class
+	* Admin notice in WC admin
 	*/
-	public function init(){										
-		add_action('init', array( $this, 'admin_notices_for_TrackShip_pro' ) );		
-	}
-
 	public function admin_notices_for_TrackShip_pro() {
 		
 		if ( ! class_exists( 'Automattic\WooCommerce\Admin\Notes\WC_Admin_Notes' ) ) {
 			return;
-		}
-		
-		$already_set = get_transient( 'trackship_wc_admin' );
-		
-		if( 'yes' == $already_set ){
-			return;
-		}	
-		
-		set_transient( 'trackship_wc_admin', 'yes' );				
+		}			
 		
 		$note_name = 'trackship_wc_admin_notice';
-		//$data_store = WC_Data_Store::load( 'admin-note' );		
 		
 		// Otherwise, add the note
 		$activated_time = current_time( 'timestamp', 0 );
@@ -90,27 +70,3 @@ class WC_TS4WC_Admin_Notices_Under_WC_Admin {
 		$note->save();
 	}				
 }
-
-/**
- * Returns an instance of ts4wc
- *
- * @since 1.0.8
- *
- * @return ts4wc
-*/
-function WC_TS4WC_Admin_Notices_Under_WC_Admin() {
-	static $instance;
-
-	if ( ! isset( $instance ) ) {		
-		$instance = new WC_TS4WC_Admin_Notices_Under_WC_Admin();
-	}
-
-	return $instance;
-}
-
-/**
- * Register this class globally.
- *
- * Backward compatibility.
-*/
-WC_TS4WC_Admin_Notices_Under_WC_Admin();

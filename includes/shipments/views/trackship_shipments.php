@@ -29,7 +29,8 @@ global $typenow, $wpdb;
                             <th id="columnname" class="manage-column column-columnname" scope="col"><?php _e('Order', 'woocommerce'); ?></th>							
                             <th id="columnname" class="manage-column column-columnname" scope="col"><?php _e('Shipment Status', 'ast-pro'); ?></th>							
                             <th id="columnname" class="manage-column column-columnname" scope="col"><?php _e('Shipping Provider', 'ast-pro'); ?></th>
-                            <th id="columnname" class="manage-column column-destination" scope="col"><?php _e('Tracking Number', 'ast-pro'); ?></th>							
+                            <th id="columnname" class="manage-column column-destination" scope="col"><?php _e('Tracking Number', 'ast-pro'); ?></th>
+							<th id="columnname" class="manage-column column-destination" scope="col"><?php _e('Est. delivery', 'ast-pro'); ?></th>							
                             <th id="columnname" class="manage-column column-columnname" scope="col"><?php _e('Ship To', 'ast-pro'); ?></th>
                             <th id="columnname" class="manage-column column-columnname" scope="col"><?php _e('Shipping Time', 'ast-pro'); ?></th>
                             <th id="columnname" class="manage-column column-columnname" scope="col"><?php _e('Actions', 'ast-pro'); ?></th>
