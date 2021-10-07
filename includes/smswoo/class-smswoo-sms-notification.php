@@ -220,6 +220,10 @@ class tswc_smswoo_sms_notification {
 		
 		$sms_provider = $this->get_sms_provider();
 		
+		if ( ! $sms_provider ) {
+			return;
+		}
+		
 		$sms_gateway = new $sms_provider();
 		$order_id    = ! empty( $this->order ) ? $this->order->get_id() : '';
 		
