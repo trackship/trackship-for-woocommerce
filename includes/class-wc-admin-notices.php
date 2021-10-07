@@ -39,7 +39,7 @@ class WC_TS4WC_Admin_Notices_Under_WC_Admin {
 		
 		// Otherwise, add the note
 		$activated_time = current_time( 'timestamp', 0 );
-		$activated_time_formatted = date( 'F jS', $activated_time );
+		$activated_time_formatted = gmdate( 'F jS', $activated_time );
 		$note = new Automattic\WooCommerce\Admin\Notes\WC_Admin_Note();
 		$note->set_title( 'TrackShip' );
 		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {

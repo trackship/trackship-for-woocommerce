@@ -31,56 +31,56 @@ if ( $tracking_items ) :
 				?>
 				<div class="tracking_index display-table">
 					<div style="display: table;width: 100%;">
-                        <div class="display-table-cell v-align-top" >
-                            <p style="margin-bottom:0;">
-                                <?php 
-                                if ( $ship_status ) {
-                                    if ( in_array( $ship_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown' ) ) ) {
-                                        echo '<span class="shipment_status shipped" >';
-                                            esc_html_e( 'Shipped', 'trackship-for-woocommerce' );
-                                        echo '</span>';
-                                    } else {
-                                        ?>
-                                        <p style="margin: 5px 0 0;"><span class="tracking_info"><?php echo esc_html( $tracking_item['formatted_tracking_provider'] ); ?> <a href="<?php echo esc_url( $tracking_link ); ?>" style="text-decoration:none"><?php echo esc_html( $tracking_item['tracking_number'] ); ?></a></span></p>
-                                        <div class="shipment_status <?php echo esc_html( $ship_status ); ?>">
-                                            <?php
-                                            echo '<span class="' . esc_html( $ship_status ) . '">';
-                                                esc_html_e( apply_filters( 'trackship_status_filter', $ship_status ) );
-                                            echo '</span>'; ?>
-                                        </div>
-                                    <?php }
-                                }
-                                
+						<div class="display-table-cell v-align-top" >
+							<p style="margin-bottom:0;">
+								<?php 
+								if ( $ship_status ) {
+									if ( in_array( $ship_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown' ) ) ) {
+										echo '<span class="shipment_status shipped" >';
+										esc_html_e( 'Shipped', 'trackship-for-woocommerce' );
+										echo '</span>';
+									} else {
+										?>
+										<p style="margin: 5px 0 0;"><span class="tracking_info"><?php echo esc_html( $tracking_item['formatted_tracking_provider'] ); ?> <a href="<?php echo esc_url( $tracking_link ); ?>" style="text-decoration:none"><?php echo esc_html( $tracking_item['tracking_number'] ); ?></a></span></p>
+										<div class="shipment_status <?php echo esc_html( $ship_status ); ?>">
+											<?php
+											echo '<span class="' . esc_html( $ship_status ) . '">';
+											esc_html_e( apply_filters( 'trackship_status_filter', $ship_status ) );
+											echo '</span>';
+											?>
+										</div>
+										<?php
+									}
+								}
                                 $est_delivery_date = isset( $shipment_status[$key]['est_delivery_date'] ) ? $shipment_status[$key]['est_delivery_date'] : false;
-                                if ( $est_delivery_date ) {
-                                    echo '<p style="margin: 0;"><span class="est_delivery_date">';
+								if ( $est_delivery_date ) {
+									echo '<p style="margin: 0;"><span class="est_delivery_date">';
 									esc_html_e( 'Est. Delivery Date', 'trackship-for-woocommerce' );
 									echo ': <b>' . date_i18n( 'l, M d', strtotime( $est_delivery_date ) ) . '</b>';
-                                    echo '</span></p>';
-                                }
-                                ?>
-                            </p>
-                            
+									echo '</span></p>';
+								}
+								?>
+							</p>
                         </div>
-                        <div class="display-table-cell" >
-                            <?php if ( 'delivered' != $ship_status ) { ?>
-                                <a href="<?php echo esc_url( $tracking_link ); ?>" class="track_your_order"><?php esc_html_e( $track_button_Text ); ?></a>
-                            <?php } ?>
-                        </div>
+						<div class="display-table-cell" >
+							<?php if ( 'delivered' != $ship_status ) { ?>
+								<a href="<?php echo esc_url( $tracking_link ); ?>" class="track_your_order"><?php esc_html_e( $track_button_Text ); ?></a>
+							<?php } ?>
+						</div>
 					</div>
 					<div style="display:block;"></div>
-                    <?php if ( 't_layout_1' == $tracking_page_layout ) { ?>
-                        <div class="widget_progress_bar" style="display:block;width:100%;margin-top:10px;">
-                            <?php $widget_icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ) . '-widget.png'; ?>
-                            <img src="<?php echo $widget_icon_url; ?>">
-                        </div>
+					<?php if ( 't_layout_1' == $tracking_page_layout ) { ?>
+						<div class="widget_progress_bar" style="display:block;width:100%;margin-top:10px;">
+							<?php $widget_icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ) . '-widget.png'; ?>
+							<img src="<?php echo esc_url( $widget_icon_url ); ?>">
+						</div>
 					<?php } else { ?>
-                    <div class="tracker-progress-bar">
-                        <div class="progress">
-                            <div class="progress-bar <?php echo esc_html( $ship_status ); ?>" ></div>
-                        </div>
-                    </div>
-                    <?php } ?>
+					<div class="tracker-progress-bar">
+						<div class="progress">
+							<div class="progress-bar <?php echo esc_html( $ship_status ); ?>" ></div>
+						</div>
+					</div>
+					<?php } ?>
 				</div>
 			<?php } ?>
 		</div>

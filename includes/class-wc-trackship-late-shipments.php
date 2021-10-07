@@ -138,7 +138,7 @@ class WC_TrackShip_Late_Shipments {
 				AND shipping_length > {$day}
 		");
 		
-		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) || $count == 0 ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) || 0 == $count ) {
 			return;
 		}
 		
@@ -184,6 +184,7 @@ class WC_TrackShip_Late_Shipments {
 		//Email Subject
 		$subject =  __( 'Late shipment', 'trackship-for-woocommerce' );
 		// Email heading
+		/* translators: %s: search for a count */
 		$email_heading = sprintf( __( 'We detected %d late shipments:', 'trackship-for-woocommerce' ) , $count );
 		
 		//Email Content

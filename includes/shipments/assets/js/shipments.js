@@ -32,24 +32,24 @@ jQuery('.shipping_date').on('cancel.daterangepicker', function(ev, picker) {
 	jQuery(this).val('').trigger("change");
 });
 
-jQuery(document).ready(function() {	
-	'use strict';	
+jQuery(document).ready(function() {
+	'use strict';
 	var url;
-	
-	var $table = jQuery("#shipments_table").DataTable({
-		dom: "i<'table_scroll't><'datatable_footer'pl>",
+	var $table = jQuery("#active_shipments_table").DataTable({
+		dom: "i<'table_scroll't><'datatable_footer'ilp>",
 		searching: false,
 		"processing": true,
 		"serverSide": true,
-		"pagingType": "simple",	
-		"order": [[ 5, "desc" ]],		
+		//"pagingType": "simple",
+		"sPaginationType": "input",
+		"order": [[ 5, "desc" ]],
 		"ajax": {
 			'type': 'POST',
 			'url': ajaxurl+'?action=get_trackship_shipments',
-			'data': function ( d ) {				
+			'data': function ( d ) {
 				d.ajax_nonce = jQuery("#nonce_trackship_shipments").val();	
-				d.active_shipment = jQuery("#active_shipment").val();
-				d.shipment_status = jQuery("#shipment_status").val();
+				d.active_shipment = jQuery("#shipment_status").val();
+				d.shipping_provider = jQuery("#shipping_provider").val();
 				d.ts4wc_shipment_times = jQuery("#ts4wc_shipment_times").val();
 				d.search_bar = jQuery("#search_bar").val();
 				d.shipping_provider = jQuery("#shipping_provider").val();
@@ -65,7 +65,8 @@ jQuery(document).ready(function() {
 		"drawCallback": function(settings) {
 			jQuery(window).resize();
 			jQuery(".trackship-tip").tipTip();
-			jQuery("#shipments_table").unblock();
+			jQuery("#active_shipments_table").unblock();
+			jQuery(document).show_popup();
 		},		
 		oLanguage: {
 			sProcessing: '<div id=loader><div class="fa-3x"><i class="fas fa-sync fa-spin"></i></div>'
@@ -73,7 +74,7 @@ jQuery(document).ready(function() {
 		
 		"columns":[
 			{
-				"width": "110px",
+				"width": "100px",
 				'orderable': false,		
 				'data': 'et_shipped_at',
 			},			
@@ -92,7 +93,7 @@ jQuery(document).ready(function() {
 				},				
 			},	
 			{
-				"width": "150px",
+				"width": "140px",
 				'orderable': false,		
 				'data': 'formated_tracking_provider',
 			},	
@@ -102,58 +103,55 @@ jQuery(document).ready(function() {
 				"mRender":function(data,type,full) {
 					return '<span class="copied_tracking_numnber dashicons dashicons-admin-page" data-number="' + full.tracking_number + '"></span><a class="shipment_tracking_number" target="_blank" href="'+full.tracking_url+'">' + full.tracking_number + '</a>';
 				},				
-			},	
+			},
 			{
 				"width": "150px",
+				'orderable': false,
+				'data': 'ship_to',
+			},
+			{
+				"width": "100px",
+				'orderable': false,	
+				'data': 'shipment_length',
+			},	
+			{
+				"width": "105px",
 				'orderable': false,		
 				'data': 'est_delivery_date',
 			},
 			{
-				"width": "150px",
-				'orderable': false,		
-				'data': 'ship_to',
-			},
-			{
-				"width": "150px",
-				'orderable': false,	
-				'data': 'shipment_length',				
-			},	
-			{
-				"width": "80px",	
+				"width": "80px",
 				'orderable': false,
 				'data': 'refresh_button',
 			},
 		],
-	});
-	
-	jQuery('#active_shipment').change(function() {
-		jQuery(document).show_popup();
-		jQuery(document).ajax_loader("#shipments_table");
-		var label1 = jQuery( "#active_shipment" ).val();
-		$table.ajax.reload();
-	});
-	jQuery('#shipment_status').change(function() {
-		jQuery(document).show_popup();
-		jQuery(document).ajax_loader("#shipments_table");
-		var label2 = jQuery( "#shipment_status" ).val();
-		$table.ajax.reload();
-	});
-	jQuery('#ts4wc_shipment_times').change(function() {
-		jQuery(document).show_popup();
-		jQuery(document).ajax_loader("#shipments_table");
-		var label3 = jQuery( "#ts4wc_shipment_times" ).val();
-		$table.ajax.reload();
 	});	
-	jQuery('.serch_button').click(function() {
+
+	jQuery(document).on("change", "#shipment_status", function(){
+		var active_shipment = jQuery(this).val();
 		jQuery(document).show_popup();
-		jQuery(document).ajax_loader("#shipments_table");
-		var label4 = jQuery( "#search_bar" ).val();
+		jQuery(document).ajax_loader("#active_shipments_table");
+		$table.ajax.reload();
+		
+		if ( active_shipment === 'delivered' ) {
+			$table.columns(8).visible(false);			
+		} else {
+			$table.columns(8).visible(true);						
+		}		
+	});
+	jQuery(document).on("change", "#shipping_provider", function(){
+		jQuery(document).show_popup();
+		jQuery(document).ajax_loader("#active_shipments_table");
+		$table.ajax.reload();
+	});
+	jQuery(document).on("click", ".serch_button", function(){
+		jQuery(document).show_popup();
+		jQuery(document).ajax_loader("#active_shipments_table");
 		$table.ajax.reload();		
 	});	
 	
 	jQuery(document).on("click", ".shipments_get_shipment_status", function(){
 		jQuery(document).show_popup();
-		//jQuery(document).ajax_loader("#shipments_table");
 		jQuery(this).addClass( 'spin' );
 		var order_id = jQuery(this).data('orderid');
 		
@@ -179,7 +177,7 @@ jQuery(document).ready(function() {
 jQuery(document).on("click", ".bulk_action_submit", function(){
 	var selected_option = jQuery('#bulk_action').children("option:selected").val();
 	if( selected_option == 'get_shipment_status' ){
-		var data = jQuery("#shipments_table input[name='order_id[]']").serializeArray();
+		var data = jQuery("#active_shipments_table input[name='order_id[]']").serializeArray();
 		if( data.length !== 0 ){
 			jQuery.ajax({
 				url: ajaxurl+'?action=bulk_shipment_status_from_shipments',
@@ -196,43 +194,8 @@ jQuery(document).on("click", ".bulk_action_submit", function(){
 	}	
 });
 
-jQuery(document).ready(function() {
-	'use strict';
-	jQuery( '#shipping_time' ).trigger('change');
-});
-
-jQuery(document).on("change", "#shipping_time", function(){
-	'use strict';
-	jQuery(document).show_popup();
-	
-	jQuery(document).ajax_loader(".flexcontainer");
-	var selected_option = jQuery( "#shipping_time" ).val();
-	var ajax_data = {
-		action: 'get_tracking_analytics_overview',
-		selected_option: selected_option,
-		security: jQuery( '#wc_ast_dashboard_tab' ).val()
-	};
-	jQuery.ajax({
-		url: ajaxurl,
-		data: ajax_data,
-		type: 'POST',	
-		dataType:"json",
-		success: function(response) {
-			jQuery('.total_shipments_count').html(response.total_shipments);
-			jQuery('.active_shipments_count').html(response.active_shipments);
-			jQuery('.active_shipments_percent').html(response.active_shipments_percent);
-			jQuery('.delivered_shipments_percent').html(response.delivered_shipments_percent);
-			jQuery('.delivered_shipments_count').html(response.delivered_shipments);
-			jQuery('.avg_shipment_length_count').html(response.avg_shipment_length);
-			jQuery(".flexcontainer").unblock();
-		},
-		error: function(response) {
-			console.log(response);
-		}
-	});
-});
-
 jQuery(document).on("click", ".inner_tab_label.inner_sms_tab", function(){
+	'use strict';
 	if ( smswoo_active == 'no' ) {
 		jQuery(document).show_popup();
 	}
@@ -242,4 +205,12 @@ jQuery(document).on( "click", ".popupclose", function(){
 	'use strict';
 	jQuery(".popupwrapper").hide();
 	jQuery( "#tab_email_notifications" ).trigger('click');
+});
+
+jQuery( document ).ready(function() {
+	'use strict';
+	var current_plan = jQuery(".dashboard_hidden_field").val();
+	if ( jQuery.inArray( current_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+		jQuery("#free_user_popup").show();
+	}
 });
