@@ -31,9 +31,6 @@ if ( is_wp_error( $response ) ) {
 }
 update_option( 'user_plan', $plan_data->subscription_plan );
 ?>
-<script>
-	var user_plan = '<?php $plan_data->subscription_plan; ?>';
-</script>
 <?php if ( !function_exists( 'SMSWOO' ) ) { ?>
 	<script>
         var smswoo_active = 'no';
