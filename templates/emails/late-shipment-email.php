@@ -15,7 +15,7 @@ if ( $orders ) :
 		<tr>
 			<th><?php esc_html_e( 'Order number', 'trackship-for-woocommerce' ); ?></th>
 			<th><?php esc_html_e( 'Shipment Status', 'trackship-for-woocommerce' ); ?></th>
-            <th><?php esc_html_e( 'Shipping provider', 'trackship-for-woocommerce' ); ?></th>
+			<th><?php esc_html_e( 'Shipping provider', 'trackship-for-woocommerce' ); ?></th>
 			<th><?php esc_html_e( 'Tracking Number', 'trackship-for-woocommerce' ); ?></th>
 			<th><?php esc_html_e( 'Shipping days', 'trackship-for-woocommerce' ); ?></th>
 		</tr>
@@ -33,18 +33,18 @@ if ( $orders ) :
 			$order_url = wc_get_order( $val1->order_id )->get_edit_order_url();
 			?>
 			<tr>
-				<td><a href="<?php echo esc_html( $order_url ); ?>"><?php echo $val1->order_number; ?></a></td>
-				<td><?php echo $shipment_status; ?></td>
-                <td><?php echo $shipping_provider; ?></td>
-				<td><a href="<?php echo esc_url( $tracking_url ); ?>"><?php echo $val1->tracking_number; ?></a></td>
-				<td><?php echo $val1->shipping_length . ' days'; ?></td>
+				<td><a href="<?php echo esc_html( $order_url ); ?>"><?php echo esc_html( $val1->order_number ); ?></a></td>
+				<td><?php echo esc_html( $shipment_status ); ?></td>
+				<td><?php echo esc_html( $shipping_provider ); ?></td>
+				<td><a href="<?php echo esc_url( $tracking_url ); ?>"><?php echo esc_html( $val1->tracking_number ); ?></a></td>
+				<td><?php echo esc_html( $val1->shipping_length ) . ' days'; ?></td>
 			</tr>
 		<?php } ?>
 	</table>
-    <div>
-        <a href="<?php echo admin_url(); ?>admin.php?page=trackship-shipments"><button class="all_late_ship">View all late shipments</button></a>
-    </div>	
-    <style>
+	<div>
+		<a href="<?php echo esc_url( admin_url() ); ?>admin.php?page=trackship-shipments"><button class="all_late_ship">View all late shipments</button></a>
+	</div>	
+	<style>
 		table.late_shipment tr td, table.late_shipment tr th{border:1px solid #e0e0e0;}
 		button.all_late_ship {font-weight: normal;border-radius: 3px;text-decoration: none;color: #fff;background: #3c4758;margin-top: 15px;padding: 12px 20px;border: 0;}
 	</style>

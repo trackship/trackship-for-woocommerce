@@ -387,13 +387,14 @@ class WC_TrackShip_Front {
 				?>
 					<div class="shipment-header">
 						<?php if ( $total_trackings > 1 ) { ?>
-                            <p class="shipment_heading">
+							<p class="shipment_heading">
+							<?php /* translators: %s: search for a num and todal tracking */ ?>
                             <?php printf( esc_html__( 'Shipment %1$s out of %2$s', 'trackship-for-woocommerce' ), esc_html($num), esc_html($total_trackings) ); ?>
-                            </p>
-                        <?php } ?>
-                    </div>
+							</p>
+						<?php } ?>
+					</div>
 					<div class="tracking-detail col <?php echo 't_layout_1' != $tracking_page_layout ? 'tracking-layout-2' : ''; ?> ">
-                    	<div class="shipment-content">
+						<div class="shipment-content">
 						<?php
 						
 						esc_html_e( $this->tracking_page_header( $order, $tracking_provider, $tracking_number, $tracker, $item ) );
@@ -413,14 +414,15 @@ class WC_TrackShip_Front {
 						} 
 						?>
 					</div>
-                    <div class="trackship_branding">
-                        <p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://trackship.info/trackings/?number=<?php esc_html_e( $tracking_number ); ?>" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
-                    </div>
-                    <?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
-                        <style> .trackship_branding{display:block !important;} </style>
-                    <?php } ?>
+					<div class="trackship_branding">
+						<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://trackship.info/trackings/?number=<?php esc_html_e( $tracking_number ); ?>" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
+					</div>
+					<?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
+						<style> .trackship_branding{display:block !important;} </style>
+					<?php } ?>
 				</div>
-			<?php }
+				<?php
+			}
 			$num++;
 		}	
 	}
@@ -464,13 +466,13 @@ class WC_TrackShip_Front {
 		?>
 		<div class="tracker-progress-bar <?php esc_html_e( 't_layout_1' == $tracking_page_layout ? 'tracking_layout_1' : '' ); ?>">
 			<div class="progress <?php esc_html_e( $tracker->ep_status ); ?>">
-            	<div class="progress-bar <?php esc_html_e( $tracker->ep_status ); ?>" style="width: <?php esc_html_e( $width ); ?>;"></div>
-                <?php if ( 't_layout_1' == $tracking_page_layout ) { ?>
-                    <div class="progress-icon icon1"></div>
-                    <div class="progress-icon icon2"></div>
-                    <div class="progress-icon icon3"></div>
-                    <div class="progress-icon icon4"></div>
-                <?php } ?>
+				<div class="progress-bar <?php esc_html_e( $tracker->ep_status ); ?>" style="width: <?php esc_html_e( $width ); ?>;"></div>
+				<?php if ( 't_layout_1' == $tracking_page_layout ) { ?>
+					<div class="progress-icon icon1"></div>
+					<div class="progress-icon icon2"></div>
+					<div class="progress-icon icon3"></div>
+					<div class="progress-icon icon4"></div>
+				<?php } ?>
 			</div>
 		</div>
 	<?php

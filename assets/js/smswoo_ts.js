@@ -13,25 +13,23 @@
 })( jQuery );
 
 /*ajax call for settings tab form save*/
-jQuery(document).on("submit", ".zorem_plugin_setting_tab_form", function(){
+jQuery(document).on("click", ".zorem_plugin_setting_tab_form .woocommerce-save-button", function(){
 	'use strict';
-	jQuery(".zorem_plugin_setting_tab_form").block({
-		message: null,
-		overlayCSS: {
-			background: "#fff",
-			opacity: 0.6
-		}	
-	});
-	var form = jQuery(this);
+	var form = jQuery( '.zorem_plugin_setting_tab_form' );
+	form.find(".spinner").addClass("active");
 	jQuery.ajax({
 		url: ajaxurl,
 		data: form.serialize(),
 		type: 'POST',
 		dataType:"json",	
 		success: function(response) {
-			jQuery(".zorem_plugin_setting_tab_form").unblock();
+			form.find(".spinner").removeClass("active");
 			jQuery( '.smswoo-top.smswoo-open .smswoo-top-click' ).trigger('click');
 			jQuery(document).trackship_snackbar( trackship_script.i18n.data_saved );
+			jQuery( '.heading_panel' ).removeClass( 'active' );
+			jQuery( '.heading_panel' ).siblings( '.panel_content' ).removeClass('active').slideUp( 'slow' );
+			jQuery( '.heading_panel' ).find('span.dashicons').addClass('dashicons-arrow-right-alt2');
+			jQuery( '.heading_panel' ).find('button.button-primary').hide();
 		},
 		error: function(response) {
 			console.log(response);
