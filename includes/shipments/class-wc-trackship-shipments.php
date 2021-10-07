@@ -70,6 +70,8 @@ class WC_Trackship_Shipments {
 			return;
 		}
 		
+		$user_plan = get_option( 'user_plan' );
+		
 		//Daterangepicker library
 		wp_enqueue_style( 'daterangepicker', trackship_for_woocommerce()->plugin_dir_url().'/includes/shipments/assets/css/daterangepicker.css', array(), '3.14.1', 'all');				
 		wp_enqueue_script( 'moment_js', trackship_for_woocommerce()->plugin_dir_url() . '/includes/shipments/assets/js/moment.min.js',  array ( 'jquery' ), '2.18.1', true);
@@ -82,7 +84,8 @@ class WC_Trackship_Shipments {
 		wp_enqueue_style( 'shipments_styles',  trackship_for_woocommerce()->plugin_dir_url() . '/includes/shipments/assets/css/shipments.css', array(), trackship_for_woocommerce()->version );
 		wp_enqueue_script( 'shipments_script',  trackship_for_woocommerce()->plugin_dir_url() . '/includes/shipments/assets/js/shipments.js', array( 'jquery' ), trackship_for_woocommerce()->version, true );			
 		wp_localize_script('shipments_script', 'shipments_script', array(
-			'admin_url'   =>  admin_url(),			
+			'admin_url'   =>  admin_url(),
+			'user_plan'   =>  $user_plan,
 		));
 	}		
 	

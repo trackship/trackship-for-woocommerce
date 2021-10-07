@@ -2,10 +2,7 @@
 (function( $ ){
 	'use strict';
 	$.fn.show_popup = function() {
-		//var val = jQuery( '.disable_pro' ).val();
-		var free_plan = ["Free Trial", "Free 50", "No active plan"];
-		
-		if ( jQuery.inArray( user_plan, free_plan) ) {
+		if ( jQuery.inArray( shipments_script.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
 			jQuery("#free_user_popup").show();
 		}
 		return this;
