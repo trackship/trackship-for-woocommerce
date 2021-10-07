@@ -7,6 +7,12 @@ form.order_track_form input {
 	width: 100%;
 	margin-bottom: 10px;
 }
+.order_track_form {
+	max-width: 500px;
+    margin: 0 auto 20px;	
+	border: 1px solid #e0e0e0;
+	min-height: 340px;	
+}
 .progress {
 	display: -ms-flexbox;
 	display: flex;
@@ -25,6 +31,30 @@ form.order_track_form input {
 	white-space: nowrap;
 	background-color: #C1C1C1;
 	transition: width 0.6s ease
+}
+.order_track_form input.ts_from_input {
+    display: none;
+}
+.order_track_form input.ts_from_input:checked + label {
+    color: #09d3ac;
+	border-bottom: 3px solid #09d3ac;
+	margin-bottom: -3px;
+}
+.order_track_form label.ts_from_label {
+	width: 49%;
+    padding: 15px;
+    display: inline-block;
+    line-height: 1;
+    font-weight: 500;
+	text-align: center;
+	cursor: pointer;
+	margin: 0;
+}
+.search_order_form .tracking_form {
+	padding: 15px 20px;
+}
+.search_order_form .by_tracking_number {
+	display: none;
 }
 .tracking-detail .text-center {
 	text-align: center;
@@ -76,11 +106,6 @@ span.wc_order_id {
     content: '';
     display: table;
     clear: both;
-}
-.order_track_form .search_order_form div {
-	width: 100%;
-	padding: 15px 20px;
-	border: 1px solid #e0e0e0;
 }
 .search_order_form .form-row button {
 	margin-bottom: 0;
@@ -253,7 +278,6 @@ span.wc_order_id {
 }
 .tracking_destination_details_by_date {
 	margin-bottom: 10px;
-	border-bottom: 1px solid #e0e0e0;
 }
 .tracking-detail .provider_image {
 	width: 45px;
@@ -392,29 +416,4 @@ h1.shipment_status_heading.pending_trackship, h1.shipment_status_heading.pending
 	overflow-y: overlay;
 	text-align: left;
 	border: 1px solid #e0e0e0;
-}
-
-@media screen and (min-width: 600px) {
-.order_track_form .search_order_form {
-	display: inline-flex;
-}
-.order_track_form .search_order_form .order_id_email {
-	border-right: 0;	
-}
-}
-@media screen and (max-width: 600px) {
-.order_track_form .search_order_form {
-	display: block;
-}
-.order_track_form .search_order_form .order_id_email {
-	border-bottom: 0;
-	padding-bottom: 0;
-}
-.order_track_form .search_order_form .by_tracking_number {
-	border-top: 0;
-	padding-top: 0;
-}
-.order_track_form .search_order_form .order_id_email p.form-row:last-child {
-	display: none;	
-}
 }
