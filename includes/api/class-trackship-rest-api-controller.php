@@ -101,7 +101,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		
 	}
 	
-	public function check_ts4wc_installed() {
+	public function check_ts4wc_installed( $request ) {
 		// check TS4WC installed 
 		$wc_ast_api_key = get_option('wc_ast_api_key');
 		$wc_ast_api_enabled = get_option('wc_ast_api_enabled');		

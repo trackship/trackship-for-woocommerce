@@ -248,9 +248,8 @@ class WC_Trackship_Admin {
 		}
 		add_submenu_page( 'fulfillment-dashboard', 'Shipments', 'Shipments', 'manage_woocommerce', 'trackship-shipments', array( $this, 'shipments_page_callback' ), 1 );
 		
-		if ( trackship_for_woocommerce()->is_trackship_connected() ) {
-			add_submenu_page( 'woocommerce', 'TrackShip', 'TrackShip', 'manage_woocommerce', 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
-		}
+		add_submenu_page( 'woocommerce', 'TrackShip', 'TrackShip', 'manage_woocommerce', 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
+
 		if ( !class_exists('Ast_Pro') ) {
 			remove_submenu_page( 'fulfillment-dashboard', 'fulfillment-dashboard' );
 		}
