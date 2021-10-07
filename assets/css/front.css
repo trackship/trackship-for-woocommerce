@@ -59,7 +59,7 @@ span.wc_order_id {
 	color: #3c4758;
 }
 .trackship_branding img {
-	width: 80px;
+	width: 85px;
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -85,8 +85,8 @@ span.wc_order_id {
 .shipment_status_heading {
 	font-weight: 600;
 	color: #35609a;
-	font-size: 36px;
-	margin-bottom: 10px;
+	font-size: 24px;
+    margin-bottom: 0;
 }
 .tracking_number_div .tracking_page_provider_name {
 	display: block;
@@ -113,7 +113,8 @@ span.wc_order_id {
 	color: #cd2128;
 }
 .tracker-progress-bar {
-	margin-bottom: 20px;
+	margin: 20px 0;
+	position: relative;
 }
 /**** Layout 1 Progressbar CSS ***/
 .tracker-progress-bar.tracking_layout_1 .progress {
@@ -126,41 +127,68 @@ span.wc_order_id {
 	width: 30px;
 	height: 30px;
 }
-.tracker-progress-bar.tracking_layout_1 .progress .progress-bar.pre_transit:before {
-	content: url(icons/pre_transit-o.png);
-	left: 2%;
+.tracking_layout_1 .progress .progress-icon { 
+	width: 30px;
+    height: 30px;
+    position: absolute;
+	top: -10px;
 }
-.tracker-progress-bar.tracking_layout_1 .progress .progress-bar.in_transit:before {
-	content: url(icons/in_transit-o.png);
-	left: 33%;
+/* icon - 1 */
+.tracking_layout_1 .progress .progress-icon.icon1 { 
+	content: url(icons/pre_transit-gray.svg);
 }
-.tracker-progress-bar.tracking_layout_1 .progress .progress-bar.pending_trackship:before, .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.pending:before, .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.unknown:before, .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.carrier_unsupported:before, .tracker-progress-bar.tracking_layout_1 .progress .progress-bar.balance_zero:before {
-	content: url(icons/shipped-o.png);
-	left: 17%;
+.tracking_layout_1 .progress.pre_transit .progress-icon.icon1 { 
+	content: url(icons/pre_transit.svg);
 }
-.tracker-progress-bar.tracking_layout_1 .progress .progress-bar.available_for_pickup:before {
-	content: url(icons/available_for_pickup-o.png);
-	left: 64%;
+.tracking_layout_1 .progress.failure .progress-icon.icon1 { 
+	content: url(icons/failure.svg);
 }
-.tracker-progress-bar.tracking_layout_1 .progress .progress-bar.on_hold:before {
-	content: url(icons/on_hold-o.png);
-	left: 33%;
+.tracking_layout_1 .progress.pending_trackship .progress-icon.icon1,
+.tracking_layout_1 .progress.pending .progress-icon.icon1,
+.tracking_layout_1 .progress.unknown .progress-icon.icon1,
+.tracking_layout_1 .progress.carrier_unsupported .progress-icon.icon1,
+.tracking_layout_1 .progress.balance_zero .progress-icon.icon1 { 
+	content: url(icons/shipped.svg);
 }
-.tracker-progress-bar.tracking_layout_1 .progress .progress-bar.out_for_delivery:before {
-	content: url(icons/out_for_delivery-o.png);
-	left: 64%;
+/* icon - 2 */
+.tracking_layout_1 .progress .progress-icon.icon2 { 
+	content: url(icons/in_transit-gray.svg);
+	left: 30%;
 }
-.tracker-progress-bar.tracking_layout_1 .progress .progress-bar.delivered:before {
-	content: url(icons/delivered-o.png);
-	right: 2.5%;
+.tracking_layout_1 .progress.in_transit .progress-icon.icon2 { 
+	content: url(icons/in_transit.svg);
 }
-.tracker-progress-bar.tracking_layout_1 .progress .progress-bar.return_to_sender:before {
-	content: url(icons/return_to_sender-o.png);
-	left: 64%;
+.tracking_layout_1 .progress.on_hold .progress-icon.icon2 { 
+	content: url(icons/on_hold.svg);
 }
-.tracker-progress-bar.tracking_layout_1 .progress .progress-bar.failure:before {
-	content: url(icons/failure-o.png);
-	left: 4%;
+/* icon - 3 */
+.tracking_layout_1 .progress .progress-icon.icon3 { 
+	content: url(icons/out_for_delivery-gray.svg);
+	left: 60%;
+}
+.tracking_layout_1 .progress.out_for_delivery .progress-icon.icon3 { 
+	content: url(icons/out_for_delivery.svg);
+}
+.tracking_layout_1 .progress.available_for_pickup .progress-icon.icon3 { 
+	content: url(icons/available_for_pickup.svg);
+}
+.tracking_layout_1 .progress.return_to_sender .progress-icon.icon3 { 
+	content: url(icons/return_to_sender.svg);
+}
+.tracking_layout_1 .progress.exception .progress-icon.icon3 { 
+	content: url(icons/failure.svg);
+}
+/* icon - 4 */
+.tracking_layout_1 .progress .progress-icon.icon4 { 
+	content: url(icons/delivered-gray.svg);
+	right: 0;
+}
+.tracking_layout_1 .progress .progress-icon.icon4 { 
+	content: url(icons/delivered-gray.svg);
+	right: 0;
+}
+.tracking_layout_1 .progress.delivered .progress-icon.icon4 { 
+	content: url(icons/delivered.svg);
 }
 /**** Layout 2 CSS ***/
 .tracker-progress-bar .progress {
@@ -168,7 +196,7 @@ span.wc_order_id {
 	display: flex;
 	height: 40px;
 	overflow: hidden;
-	background-color: #f5f5f5;
+	background-color: #e0e0e0;
 	border-radius: 5px;
 	border: 1px solid #eee;
 }

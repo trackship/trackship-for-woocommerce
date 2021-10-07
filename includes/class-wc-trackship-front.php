@@ -401,7 +401,7 @@ class WC_TrackShip_Front {
 						?>
 					</div>
                     <div class="trackship_branding">
-                        <p><a href="https://trackship.info/trackings/?number=<?php esc_html_e( $tracking_number ); ?>" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
+                        <p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://trackship.info/trackings/?number=<?php esc_html_e( $tracking_number ); ?>" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
                     </div>
                     <?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
                         <style> .trackship_branding{display:block !important;} </style>
@@ -432,15 +432,11 @@ class WC_TrackShip_Front {
 		}
 		
 		if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'unknown', 'carrier_unsupported', 'balance_zero' ) ) ) {
-			$width = '17%';
+			$width = '0';
 		} elseif ( in_array( $tracker->ep_status, array( 'in_transit', 'on_hold' ) ) ) {
-			$width = '33%';
-		} elseif ( 'out_for_delivery' == $tracker->ep_status ) {
-			$width = '67%';				
-		} elseif ( 'available_for_pickup' == $tracker->ep_status ) {
-			$width = '67%';				
-		} elseif ( 'return_to_sender' == $tracker->ep_status ) {
-			$width = '67%';				
+			$width = '30%';
+		} elseif ( in_array( $tracker->ep_status, array( 'out_for_delivery', 'available_for_pickup', 'return_to_sender' ) ) ) {
+			$width = '60%';			
 		} elseif ( 'delivered' == $tracker->ep_status ) {
 			$width = '100%';				
 		} else {
@@ -449,8 +445,12 @@ class WC_TrackShip_Front {
 		$tracking_page_layout = get_option( 'wc_ast_select_tracking_page_layout', 't_layout_1' );
 		?>
 		<div class="tracker-progress-bar <?php esc_html_e( 't_layout_1' == $tracking_page_layout ? 'tracking_layout_1' : '' ); ?>">
-			<div class="progress">
-				<div class="progress-bar <?php esc_html_e( $tracker->ep_status ); ?>" style="width: <?php esc_html_e( $width ); ?>;"></div>
+			<div class="progress <?php esc_html_e( $tracker->ep_status ); ?>">
+            	<div class="progress-bar <?php esc_html_e( $tracker->ep_status ); ?>" style="width: <?php esc_html_e( $width ); ?>;"></div>
+                <div class="progress-icon icon1" style=""></div>
+                <div class="progress-icon icon2" style=""></div>
+                <div class="progress-icon icon3" style=""></div>
+                <div class="progress-icon icon4" style=""></div>
 			</div>
 		</div>
 	<?php
