@@ -40,32 +40,38 @@ span.date_placeholder {
 table.dataTable thead th, table.dataTable thead td {
 	border-bottom: 1px solid #e0e0e0;
 	font-weight: 400;
-	font-size: 12px;
 	padding: 10px 10px;
 	background-color: #ffffff;
+	box-sizing: border-box;
 }
 .manage-column .select_all_checkbox {
 	margin-left: 0;
 }
 table.dataTable tbody td {
 	border-bottom: 1px solid #e0e0e0;
+	vertical-align: middle;
+}
+table.dataTable.fullfilments_table td:last-child {
+	text-align: right;
+}
+table.dataTable {
+	border: 1px solid #e0e0e0;
+	box-sizing: border-box;
 }
 table.dataTable tbody a {
 	color: #3858e9;
     line-height: 2em;
-    max-width: 130px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    display: inline-block;
+}
+table.dataTable tbody a.shipment_tracking_number {
+    line-height: 0;
 }
 table.dataTable tbody td span {
 	display: inline-block;
-	line-height: 1.9em;
+	line-height: 1.5em;
 }
 table.dataTable tbody td:last-child span {
 	display: block;
-	line-height: 1.4em;
+	line-height: 20px;
 	float: right;
 }
 tr.tabel_heading_th th {
@@ -79,8 +85,11 @@ table.dataTable.no-footer {
 }
 table.dataTable tbody .shipment_status_label {
 	display: block;
-	line-height: 2.2em;
-	font-weight: 600;
+    font-weight: 600;
+    background-color: #f5f7fb;
+    padding: 4px 8px;
+    border-radius: 10px;
+    width: fit-content;
 }
 table.dataTable tbody .shipment_status_label:before {
 	font-family: dashicons;
@@ -88,32 +97,44 @@ table.dataTable tbody .shipment_status_label:before {
 	vertical-align: bottom;
 	margin-right: 5px;
 }
-table.dataTable tbody .shipment_status_label.pre_transit {
-	color: #37609a;
+table.dataTable tbody .shipment_status_label:before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 10px;
+    vertical-align: unset;
 }
-table.dataTable tbody .shipment_status_label.in_transit {
-	color: #7ad1cc;
+table.dataTable tbody .shipment_status_label.carrier_unsupported:before {
+	background-color: #f44336;
 }
-table.dataTable tbody .shipment_status_label.on_hold {
-	color: #feeb77;
+table.dataTable tbody .shipment_status_label.pre_transit:before {
+	background-color: #37609a;
 }
-table.dataTable tbody .shipment_status_label.available_for_pickup {
-	color: #ff9800;
+table.dataTable tbody .shipment_status_label.in_transit:before {
+	background-color: #7ad1cc;
 }
-table.dataTable tbody .shipment_status_label.return_to_sender {
-	color: #A8414A;
+table.dataTable tbody .shipment_status_label.on_hold:before {
+	background-color: #feeb77;
 }
-table.dataTable tbody .shipment_status_label.failure {
-	color: #CD2128;
+table.dataTable tbody .shipment_status_label.available_for_pickup:before {
+	background-color: #ff9800;
 }
-table.dataTable tbody .shipment_status_label.out_for_delivery {
-	color: #95CB65;
+table.dataTable tbody .shipment_status_label.return_to_sender:before {
+	background-color: #A8414A;
 }
-table.dataTable tbody .shipment_status_label.delivered {
-	color: #0F8042;
+table.dataTable tbody .shipment_status_label.failure:before {
+	background-color: #CD2128;
 }
-table.dataTable tbody .shipment_status_label.pending_trackship {
-	color: #BD3D84;
+table.dataTable tbody .shipment_status_label.out_for_delivery:before {
+	background-color: #95CB65;
+}
+table.dataTable tbody .shipment_status_label.delivered:before {
+	background-color: #0F8042;
+}
+table.dataTable tbody .shipment_status_label.pending_trackship:before {
+	background-color: #BD3D84;
 }
 .wp-core-ui .btn_green2.bulk_action_submit {
 	line-height: 27px;
@@ -155,7 +176,7 @@ table.dataTable tbody .shipment_status_label.pending_trackship {
 	margin-left: 0;
 	font-size: 0;
 }
-.datatable_footer .dataTables_paginate .paginate_button.previous.disabled::after {
+.datatable_footer .dataTables_paginate#shipments_table_paginate .paginate_button.disabled::after {
 	color: #bdbdbd;
 }
 .datatable_footer .dataTables_paginate .paginate_button.previous::after {
@@ -207,4 +228,17 @@ table.dataTable th:last-child {
 table.dataTable span.dashicons.dashicons-admin-page {
     font-size: 15px;
     color: #3858e9;
+}
+.shipments_get_shipment_status.spin .dashicons {
+   animation: dashicons-spin 1s infinite;
+   animation-timing-function: linear;
+}
+
+@keyframes dashicons-spin {
+   0% {
+      transform: rotate( 0deg );
+   }
+   100% {
+      transform: rotate( 360deg );
+   }
 }

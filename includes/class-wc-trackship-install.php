@@ -56,7 +56,7 @@ class WC_Trackship_Install {
 	* init from parent mail class
 	*/
 	public function init() {			
-		add_action( 'init', array( $this, 'update_database_check' ) );
+		add_action( 'admin_init', array( $this, 'update_database_check' ) );
 		add_action( 'update_ts_shipment_status_order_mete', array( $this, 'update_ts_shipment_status_order_mete' ), 10, 1 );
 		add_action( 'migrate_trackship_shipment_table', array( $this, 'migrate_trackship_shipment_table' ) );
 	}
@@ -65,94 +65,116 @@ class WC_Trackship_Install {
 	* database update
 	*/
 	public function update_database_check() {
-		if ( is_admin() ) {
 			
-			if ( version_compare( get_option( 'trackship_db' ), '1.0', '<' ) ) {
-				update_option( 'trackship_trigger_order_statuses', array( 'completed' ) );
-				update_option( 'trackship_db', '1.0' );
+		if ( version_compare( get_option( 'trackship_db' ), '1.0', '<' ) ) {
+			update_option( 'trackship_trigger_order_statuses', array( 'completed' ) );
+			update_option( 'trackship_db', '1.0' );
+		}
+		
+		if ( version_compare( get_option( 'trackship_db' ), '1.2', '<' ) ) {
+
+			global $wpdb;
+			$woo_ts_shipment_table_name = $this->table;
+			if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_ts_shipment_table_name ) ) ) {
+				$charset_collate = $wpdb->get_charset_collate();			
+				$sql = "CREATE TABLE $woo_ts_shipment_table_name (
+					id mediumint(9) NOT NULL AUTO_INCREMENT,
+					provider_name varchar(500) DEFAULT '' NOT NULL,
+					ts_slug text NULL DEFAULT NULL,
+					PRIMARY KEY  (id)
+				) $charset_collate;";			
+				require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+				dbDelta( $sql );
+				$this->update_shipping_providers();												
 			}
 			
-			if ( version_compare( get_option( 'trackship_db' ), '1.2', '<' ) ) {
+			$this->update_shipping_providers();
 
-				global $wpdb;
-				$woo_ts_shipment_table_name = $this->table;
-				if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_ts_shipment_table_name ) ) ) {
-					$charset_collate = $wpdb->get_charset_collate();			
-					$sql = "CREATE TABLE $woo_ts_shipment_table_name (
-						id mediumint(9) NOT NULL AUTO_INCREMENT,
-						provider_name varchar(500) DEFAULT '' NOT NULL,
-						ts_slug text NULL DEFAULT NULL,
-						PRIMARY KEY  (id)
-					) $charset_collate;";			
-					require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-					dbDelta( $sql );
-					$this->update_shipping_providers();												
-				}
+			update_option( 'trackship_db', '1.2' );
+		}
+		
+		if ( version_compare( get_option( 'trackship_db' ), '1.3', '<' ) ) {
+		
+			as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 1 ), '' );
+			as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 2 ), '' );
+			as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 3 ), '' );
+			as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 4 ), '' );
+			as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 5 ), '' );
+			as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 6 ), '' );
+			as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 7 ), '' );
+			as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 8 ), '' );
+			as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 9 ), '' );
+			as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 10 ), '' );				
+
+			update_option( 'trackship_db', '1.3' );
+		}
+		
+		if ( version_compare( get_option( 'trackship_db' ), '1.4', '<' ) ) {
+			global $wpdb;
+			$wpdb->query("ALTER TABLE $this->table 
+				DROP COLUMN provider_url,
+				DROP COLUMN shipping_country");
+			$this->update_shipping_providers();
+			update_option( 'trackship_db', '1.4' );
+		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.5', '<' ) ) {
+			global $wpdb;
+			$woo_trackship_shipment = $this->shipment_table;
+			if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipment ) ) ) {
 				
-				$this->update_shipping_providers();
-
-				update_option( 'trackship_db', '1.2' );
+				$charset_collate = $wpdb->get_charset_collate();			
+				$sql = "CREATE TABLE $woo_trackship_shipment (
+					`id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+					`order_id` BIGINT(20) ,
+					`order_number` VARCHAR(20) ,
+					`tracking_number` VARCHAR(80) ,
+					`shipping_provider` VARCHAR(50) ,
+					`shipment_status` VARCHAR(30) ,
+					`shipping_date` DATE ,
+					`shipping_country` TEXT ,
+					`shipping_length` VARCHAR(10) ,
+					`updated_date` DATE ,
+					`late_shipment_email` TINYINT DEFAULT 0,
+					PRIMARY KEY (`id`),
+					INDEX `shipping_date` (`shipping_date`),
+					INDEX `status` (`shipment_status`),
+					INDEX `tracking_number` (`tracking_number`),
+					INDEX `shipping_length` (`shipping_length`),
+					INDEX `order_id` (`order_id`),
+					INDEX `order_id_tracking_number` (`order_id`,`tracking_number`),
+					INDEX `updated_date` (`updated_date`),
+					INDEX `late_shipment_email` (`late_shipment_email`)
+				) $charset_collate;";
+				require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+				dbDelta( $sql );
 			}
+			$this->update_analytics_table();
+			trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_pro();
+			update_option( 'trackship_db', '1.5' );
+		}
+		
+		if ( version_compare( get_option( 'trackship_db' ), '1.6', '<' ) ) {
 			
-			if ( version_compare( get_option( 'trackship_db' ), '1.3', '<' ) ) {
+			$border_color = get_option('wc_ast_select_border_color', '#cccccc' );
+			$background_color = get_option('wc_ast_select_bg_color', '#fafafa' );
+			$font_color = get_option('wc_ast_select_font_color', '#333' );
+			$tracking_page_layout = get_option('wc_ast_select_tracking_page_layout', '#333' );
 			
-				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 1 ), '' );
-				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 2 ), '' );
-				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 3 ), '' );
-				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 4 ), '' );
-				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 5 ), '' );
-				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 6 ), '' );
-				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 7 ), '' );
-				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 8 ), '' );
-				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 9 ), '' );
-				as_schedule_single_action( time(), 'update_ts_shipment_status_order_mete' , array( 'order_page' => 10 ), '' );				
-
-				update_option( 'trackship_db', '1.3' );
-			}
+			$shipment_email_settings = get_option( 'shipment_email_settings' );
 			
-			if ( version_compare( get_option( 'trackship_db' ), '1.4', '<' ) ) {
-				global $wpdb;
-				$wpdb->query("ALTER TABLE $this->table 
-					DROP COLUMN provider_url,
-					DROP COLUMN shipping_country");
-				$this->update_shipping_providers();
-				update_option( 'trackship_db', '1.4' );
-			}
+			$shipment_email_settings['border_color'] = $border_color;
+			$shipment_email_settings['bg_color'] = $background_color;
+			$shipment_email_settings['font_color'] = $font_color;
+			$shipment_email_settings['tracking_page_layout'] = $tracking_page_layout;
+			
+			update_option( 'shipment_email_settings', $shipment_email_settings );
 
-			if ( version_compare( get_option( 'trackship_db' ), '1.5', '<' ) ) {
-				global $wpdb;
-				$woo_trackship_shipment = $this->shipment_table;
-				if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipment ) ) ) {
-					
-					$charset_collate = $wpdb->get_charset_collate();			
-					$sql = "CREATE TABLE $woo_trackship_shipment (
-						`id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
-						`order_id` BIGINT(20) ,
-						`order_number` VARCHAR(20) ,
-						`tracking_number` VARCHAR(80) ,
-						`shipping_provider` VARCHAR(50) ,
-						`shipment_status` VARCHAR(30) ,
-						`shipping_date` DATE ,
-						`shipping_country` TEXT ,
-						`shipping_length` VARCHAR(10) ,
-						`updated_date` DATE ,
-						`late_shipment_email` TINYINT DEFAULT 0,
-						PRIMARY KEY (`id`),
-						INDEX `shipping_date` (`shipping_date`),
-						INDEX `status` (`shipment_status`),
-						INDEX `tracking_number` (`tracking_number`),
-						INDEX `shipping_length` (`shipping_length`),
-						INDEX `order_id` (`order_id`),
-						INDEX `order_id_tracking_number` (`order_id`,`tracking_number`),
-						INDEX `updated_date` (`updated_date`),
-						INDEX `late_shipment_email` (`late_shipment_email`)
-					) $charset_collate;";
-					require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-					dbDelta( $sql );
-				}
-				$this->update_analytics_table();
-				update_option( 'trackship_db', '1.5' );
-			}
+			global $wpdb;
+			$woo_trackship_shipment = $this->shipment_table;
+			$wpdb->query("ALTER TABLE $woo_trackship_shipment
+				ADD est_delivery_date DATE");
+			update_option( 'trackship_db', '1.6' );
 		}
 	}
 	
