@@ -22,6 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $text_align = is_rtl() ? 'right' : 'left';
 $address    = $order->get_formatted_billing_address();
 $shipping   = $order->get_formatted_shipping_address();
+
 if ( !empty($shipping) ) { ?>
 	<h2 style="text-align:<?php echo esc_html( $text_align ); ?>"><?php esc_html_e( 'Shipping address', 'woocommerce' ); ?></h2>
 	<address class="address" style="border:0;padding:0;" ><?php echo wp_kses_post( $shipping ); ?></address>

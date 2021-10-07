@@ -3,16 +3,25 @@ jQuery(document).on("submit", ".order_track_form", function(){
 	var error;
 	var order_id = form.find("#order_id");
 	var order_email = form.find("#order_email");
+	var tracking_number = form.find("#order_tracking_number");
 	
-	if( order_id.val() === '' ){		
-		showerror( order_id );error = true;
-	} else{
-		hideerror(order_id);
-	}	
-	if(order_email.val() == '' ){		
-		showerror(order_email);error = true;
+	if (tracking_number.val() == '') {
+		if( order_id.val() === '' ){		
+			showerror( order_id );error = true;
+		} else{
+			hideerror(order_id);
+		}
+		if(order_email.val() == '' ){		
+			showerror(order_email);error = true;
+		} else {
+			hideerror(order_email);
+		}
 	} else {
-		hideerror(order_email);
+		if(tracking_number.val() == '' ){		
+			showerror(tracking_number);error = true;
+		} else {
+			hideerror(tracking_number);
+		}
 	}
 	
 	if(error == true){
