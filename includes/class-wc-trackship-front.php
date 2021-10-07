@@ -193,13 +193,20 @@ class WC_TrackShip_Front {
 			return;
 		}
 		
-		$order_id = isset( $_POST['order_id'] ) ? wc_clean( $_POST['order_id'] ) : '';		
+		$order_id = isset( $_POST['order_id'] ) ? wc_clean( $_POST['order_id'] ) : '';
 		$email = isset( $_POST['order_email'] ) ? sanitize_email( $_POST['order_email'] ) : '';
+		$tracking_number = isset( $_POST['order_tracking_number'] ) ? wc_clean( $_POST['order_tracking_number'] ) : '';
 		
 		$order_id = trackship_for_woocommerce()->ts_actions->get_formated_order_id($order_id);
 		
-		$order = wc_get_order( $order_id );
+		if ( !empty( $tracking_number ) ) {
+			global $wpdb;
+			$shipment_table = $wpdb->prefix . 'trackship_shipment';
+			$row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $shipment_table WHERE tracking_number = %s", $tracking_number ) );
+			$order_id = $row ? $row->order_id : '';
+		}
 		
+		$order = wc_get_order( $order_id );
 		if ( empty( $order ) ) {
 			ob_start();		
 			$this->track_form_template();
@@ -208,15 +215,15 @@ class WC_TrackShip_Front {
 			die();	
 		}
 		
-		$order_id = trackship_for_woocommerce()->ts_actions->get_formated_order_id( $order_id );									
-		$order_email = $order->get_billing_email();
-		
-		if ( strtolower( $order_email ) != strtolower( $email ) ) {
-			ob_start();		
-			$this->track_form_template();
-			$form = ob_get_clean();	
-			echo json_encode( array('success' => 'false', 'message' => __( 'Order not found.', 'trackship-for-woocommerce' ), 'html' => $form ));
-			die();	
+		if ( empty( $tracking_number ) ) {
+			$order_email = $order->get_billing_email();
+			if ( strtolower( $order_email ) != strtolower( $email ) ) {
+				ob_start();		
+				$this->track_form_template();
+				$form = ob_get_clean();	
+				echo json_encode( array('success' => 'false', 'message' => __( 'Order not found.', 'trackship-for-woocommerce' ), 'html' => $form ));
+				die();	
+			}
 		}
 		
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
@@ -431,26 +438,33 @@ class WC_TrackShip_Front {
 			return;
 		}
 		
-		if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'unknown', 'carrier_unsupported', 'balance_zero' ) ) ) {
-			$width = '0';
-		} elseif ( in_array( $tracker->ep_status, array( 'in_transit', 'on_hold' ) ) ) {
-			$width = '30%';
-		} elseif ( in_array( $tracker->ep_status, array( 'out_for_delivery', 'available_for_pickup', 'return_to_sender' ) ) ) {
-			$width = '60%';			
-		} elseif ( 'delivered' == $tracker->ep_status ) {
-			$width = '100%';				
-		} else {
-			$width = '0';
-		}
 		$tracking_page_layout = get_option( 'wc_ast_select_tracking_page_layout', 't_layout_1' );
+		
+		if ( 't_layout_1' == $tracking_page_layout ) {
+			$width = '0';
+		} else {
+			if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'unknown', 'carrier_unsupported', 'balance_zero' ) ) ) {
+				$width = '0';
+			} elseif ( in_array( $tracker->ep_status, array( 'in_transit', 'on_hold' ) ) ) {
+				$width = '30%';
+			} elseif ( in_array( $tracker->ep_status, array( 'out_for_delivery', 'available_for_pickup', 'return_to_sender' ) ) ) {
+				$width = '60%';			
+			} elseif ( 'delivered' == $tracker->ep_status ) {
+				$width = '100%';				
+			} else {
+				$width = '0';
+			}
+		}
 		?>
 		<div class="tracker-progress-bar <?php esc_html_e( 't_layout_1' == $tracking_page_layout ? 'tracking_layout_1' : '' ); ?>">
 			<div class="progress <?php esc_html_e( $tracker->ep_status ); ?>">
             	<div class="progress-bar <?php esc_html_e( $tracker->ep_status ); ?>" style="width: <?php esc_html_e( $width ); ?>;"></div>
-                <div class="progress-icon icon1" style=""></div>
-                <div class="progress-icon icon2" style=""></div>
-                <div class="progress-icon icon3" style=""></div>
-                <div class="progress-icon icon4" style=""></div>
+                <?php if ( 't_layout_1' == $tracking_page_layout ) { ?>
+                    <div class="progress-icon icon1"></div>
+                    <div class="progress-icon icon2"></div>
+                    <div class="progress-icon icon3"></div>
+                    <div class="progress-icon icon4"></div>
+                <?php } ?>
 			</div>
 		</div>
 	<?php

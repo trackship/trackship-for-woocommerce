@@ -48,8 +48,9 @@ if ( !empty($kt_woomail) && isset( $kt_woomail['font_size'] ) ) {
 						$sku           = $product->get_sku();
 						$purchase_note = $product->get_purchase_note();
 						$image         = $product->get_image( $image_size );
+					} else {
+						$image         = '<img src=' . esc_url( trackship_for_woocommerce()->plugin_dir_url() ) . 'assets/images/dummy-product-image.jpg>';
 					}
-				
 					?>
 					<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_order_item_class', 'order_item', $item, $order ) ); ?>">
 						<td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;border-left:0;border:0;border-bottom:1px solid #e0e0e0;padding: 12px 5px;width: 70px;">
