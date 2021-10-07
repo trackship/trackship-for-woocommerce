@@ -145,7 +145,8 @@ class WC_Trackship_Shipments {
 			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $value->order_id );
 			foreach ( $tracking_items as $key1 => $val1 ) {
 				if ( $val1['tracking_number'] == $value->tracking_number ) {
-					$tracking_url = $val1['ast_tracking_link'] ? $val1['ast_tracking_link'] : $val1['formatted_tracking_link'];
+					$tracking_url = isset( $val1['ast_tracking_link'] ) && $val1['ast_tracking_link'] ? $val1['ast_tracking_link'] : $val1['formatted_tracking_link'];
+					$tracking_provider = $val1['formatted_tracking_provider'] ? $val1['formatted_tracking_provider'] : $value->shipping_provider;
 				}
 			}
 			
@@ -155,6 +156,9 @@ class WC_Trackship_Shipments {
 			$late_shipment = $wcast_late_shipments_days <= $value->shipping_length ? '<img class="trackship-tip" title="late shipment" src="' . esc_url( trackship_for_woocommerce()->plugin_dir_url() ) . 'assets/css/icons/invalid-tracking-number.png">' : '';
 			$late_shipment = $_POST['active_shipment'] != 'delivered' ? $late_shipment : '' ;
 			
+			$active_shipment = '<a href="javascript:void(0);" class="shipments_get_shipment_status" data-orderid="' . $value->order_id . '"><span class="dashicons dashicons-update"></span></a>';
+			$delivered_shipment = '<span class="dashicons dashicons-minus"></span>';
+			
 			$result[$i] = new \stdClass();
 			$result[$i]->et_shipped_at = date_i18n( $date_format, strtotime( $value->shipping_date ) );
 			$result[$i]->order_id = $value->order_id;
@@ -162,10 +166,12 @@ class WC_Trackship_Shipments {
 			$result[$i]->shipment_status = apply_filters("trackship_status_filter", $value->shipment_status );
 			$result[$i]->shipment_status_id = $value->shipment_status;
 			$result[$i]->shipment_length = '<span class="shipment_length">' . $shipping_length . $late_shipment . '</span>';
-			$result[$i]->formated_tracking_provider = $value->shipping_provider;
+			$result[$i]->formated_tracking_provider = $tracking_provider;
 			$result[$i]->tracking_number = $value->tracking_number;
 			$result[$i]->tracking_url = $tracking_url;
+			$result[$i]->est_delivery_date = $value->est_delivery_date;
 			$result[$i]->ship_to = $value->shipping_country;
+			$result[$i]->refresh_button = 'delivered' == $value->shipment_status ? $delivered_shipment : $active_shipment;
 			
 			$i++;
 		}

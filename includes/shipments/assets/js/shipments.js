@@ -73,12 +73,12 @@ jQuery(document).ready(function() {
 		
 		"columns":[
 			{
-				"width": "100px",
+				"width": "110px",
 				'orderable': false,		
 				'data': 'et_shipped_at',
 			},			
 			{
-				"width": "50px",
+				"width": "80px",
 				'orderable': false,	
 				"mRender":function(data,type,full) {
 					return '<a href="'+shipments_script.admin_url+'post.php?post='+full.order_id+'&action=edit">' + full.order_number + '</a>';
@@ -92,7 +92,7 @@ jQuery(document).ready(function() {
 				},				
 			},	
 			{
-				"width": "130px",
+				"width": "150px",
 				'orderable': false,		
 				'data': 'formated_tracking_provider',
 			},	
@@ -100,9 +100,14 @@ jQuery(document).ready(function() {
 				"width": "150px",
 				'orderable': false,		
 				"mRender":function(data,type,full) {
-					return '<span class="copied_tracking_numnber dashicons dashicons-admin-page" data-number="' + full.tracking_number + '"></span><a target="_blank" href="'+full.tracking_url+'">' + full.tracking_number + '</a>';
+					return '<span class="copied_tracking_numnber dashicons dashicons-admin-page" data-number="' + full.tracking_number + '"></span><a class="shipment_tracking_number" target="_blank" href="'+full.tracking_url+'">' + full.tracking_number + '</a>';
 				},				
 			},	
+			{
+				"width": "150px",
+				'orderable': false,		
+				'data': 'est_delivery_date',
+			},
 			{
 				"width": "150px",
 				'orderable': false,		
@@ -114,14 +119,11 @@ jQuery(document).ready(function() {
 				'data': 'shipment_length',				
 			},	
 			{
-				"width": "50px",	
-				'orderable': false,	
-				"mRender":function(data,type,full) {
-					return '<a href="javascript:void(0);" class="shipments_get_shipment_status" data-orderid="' + full.order_id + '"><span class="dashicons dashicons-update"></span></a>';
-				},	
-			},		
+				"width": "80px",	
+				'orderable': false,
+				'data': 'refresh_button',
+			},
 		],
-			
 	});
 	
 	jQuery('#active_shipment').change(function() {
@@ -151,7 +153,8 @@ jQuery(document).ready(function() {
 	
 	jQuery(document).on("click", ".shipments_get_shipment_status", function(){
 		jQuery(document).show_popup();
-		jQuery(document).ajax_loader("#shipments_table");
+		//jQuery(document).ajax_loader("#shipments_table");
+		jQuery(this).addClass( 'spin' );
 		var order_id = jQuery(this).data('orderid');
 		
 		var ajax_data = {

@@ -47,7 +47,7 @@ class WC_TrackShip_Admin_notice {
 	public function trackship_admin_notice() { 		
 		if ( get_option('trackship_admin_notice_ignore') ) {
 			return;
-		}	
+		}
 		
 		$dismissable_url = esc_url(  add_query_arg( 'trackship-ignore-notice', 'true' ) );
 		$sms_tab_url = admin_url( '/admin.php?page=trackship-for-woocommerce&tab=notifications' );
