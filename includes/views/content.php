@@ -64,7 +64,6 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 				include 'trackship-integration.php';
 			}
 			?>
-					
 		</div>                   					
    </div>				
 </div>
