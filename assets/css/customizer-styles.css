@@ -1,156 +1,3 @@
-#accordion-section-default_controls_section>h3:before {
-	content: ' ';
-	background-image: url(icons/ast-icon.png);
-	width: 20px;
-	height: 20px;
-	background-size: contain;
-	display: inline-block;
-	vertical-align: middle;
-	background-repeat: no-repeat;
-}
-#accordion-section-customer_partial_shipped_email>h3:before {
-	content: ' ';
-	background-image: url(icons/partial-shipped-icon.png);
-	width: 20px;
-	height: 20px;
-	background-size: contain;
-	display: inline-block;
-	vertical-align: middle;
-	background-repeat: no-repeat;
-}
-#accordion-section-customer_updated_tracking_email>h3:before {
-	content: ' ';
-	background-image: url(icons/updated-tracking-icon.png);
-	width: 20px;
-	height: 20px;
-	background-size: contain;
-	display: inline-block;
-	vertical-align: middle;
-	background-repeat: no-repeat;
-}
-#accordion-panel-wcast_emails_panel>h3:before, #accordion-panel-wcast_admin_emails_panel>h3:before, #accordion-panel-wcast_naviation_panel>h3:before {
-	font-family: 'Dashicons';
-	font-size: 20px;
-	font-weight: thin !important;
-	position: relative;
-	line-height: 0;
-	vertical-align: middle;
-	opacity: .6;
-	top: -1px;
-	content: "\f465";
-}
-#accordion-panel-ast_tracking_display_panel>h3:before {
-	font-family: 'Dashicons';
-	font-size: 20px;
-	font-weight: thin !important;
-	position: relative;
-	line-height: 0;
-	vertical-align: middle;
-	opacity: .6;
-	top: -1px;
-	content: "\f231";
-}
-#accordion-section-customer_delivered_email>h3:before {
-	content: ' ';
-	background-image: url(icons/Delivered-o.png);
-	width: 20px;
-	height: 20px;
-	background-size: cover;
-	display: inline-block;
-	vertical-align: middle;
-}
-#accordion-section-customer_shipped_email>h3:before {
-	content: ' ';
-	background-image: url(icons/shipped-o.png);
-	width: 20px;
-	height: 20px;
-	background-size: cover;
-	display: inline-block;
-	vertical-align: middle;
-}
-#accordion-section-customer_failure_email>h3:before {
-	content: ' ';
-	background-image: url(icons/failure-v4.png);
-	width: 20px;
-	height: 20px;
-	background-size: cover;
-	display: inline-block;
-	vertical-align: middle;
-}
-#accordion-section-customer_intransit_email>h3:before {
-	content: ' ';
-	background-image: url(icons/in-transit-v4.png);
-	width: 20px;
-	height: 20px;
-	background-size: cover;
-	display: inline-block;
-	vertical-align: middle;
-}
-#accordion-section-customer_onhold_email>h3:before {
-	content: ' ';
-	background-image: url(icons/On-hold-v3.png);
-	width: 20px;
-	height: 20px;
-	background-size: cover;
-	display: inline-block;
-	vertical-align: middle;
-}
-#accordion-section-customer_outfordelivery_email>h3:before {
-	content: ' ';
-	background-image: url(icons/out-for-delivery-v4.png);
-	width: 20px;
-	height: 20px;
-	background-size: cover;
-	display: inline-block;
-	vertical-align: middle;
-}
-#accordion-section-customer_delivered_status_email>h3:before {
-	content: ' ';
-	background-image: url(icons/delivered-v4.png);
-	width: 20px;
-	height: 20px;
-	background-size: cover;
-	display: inline-block;
-	vertical-align: middle;
-}
-#accordion-section-customer_returntosender_email>h3:before {
-	content: ' ';
-	background-image: url(icons/return-to-sender-v4.png);
-	width: 20px;
-	height: 20px;
-	background-size: cover;
-	display: inline-block;
-	vertical-align: middle;
-}
-#accordion-section-customer_availableforpickup_email>h3:before {
-	content: ' ';
-	background-image: url(icons/available-for-picup-v4.png);
-	width: 20px;
-	height: 20px;
-	background-size: cover;
-	display: inline-block;
-	vertical-align: middle;
-}
-#accordion-section-admin_late_shipments_email>h3:before {
-	content: ' ';
-	background-image: url(icons/late-shipment-v3.png);
-	width: 20px;
-	height: 20px;
-	background-size: cover;
-	display: inline-block;
-	vertical-align: middle;
-}
-#accordion-section-tracking_page_section>h3:before {
-	font-family: 'Dashicons';
-	font-size: 20px;
-	font-weight: thin !important;
-	position: relative;
-	line-height: 0;
-	vertical-align: middle;
-	opacity: .6;
-	top: -1px;
-	content: "\f231";
-}
 /* Mobile preview */
 .preview-mobile #customize-preview iframe {
 	width: 606px;
@@ -227,8 +74,8 @@ li#accordion-panel-widgets {
 	display: none !important;
 }
 .customize-control+.customize-control {
-	border-top: 1px solid #ddd;
-	padding-top: 10px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
 	margin-bottom: 10px !important;
 	margin-top: 0 !important;
 }
@@ -236,35 +83,36 @@ li#accordion-panel-widgets {
 	margin-top: 0 !important;
 }
 .customize-control-title {
-	display: block !important;
-	font-size: 14px !important;
-	line-height: 1.75 !important;
-	font-weight: 600 !important;
-	margin-bottom: 4px !important;
+    display: block !important;
+    font-size: 14px !important;
+    line-height: 1.75 !important;
+    font-weight: 600 !important;
+    margin-bottom: 4px !important;
 }
 .customize-control-color .wp-color-result .wp-color-result-text, .customize-control-alpha-color .wp-color-result .wp-color-result-text {
 	line-height: 2.54545455 !important;
 }
 .wp-picker-container .wp-color-result.button {
-	border-color: #e0e0e0;
+    border-color: #e0e0e0;
 }
 .customize-control .slider-custom-control input[type=number] {
-	margin: 6px 4px;
+    margin: 6px 4px;
 }
 .control-section#sub-accordion-section-ast_tracking_page_section #customize-control-wc_ast_select_bg_color {
-	margin-bottom: 12px;
-	margin-top: 0;
+    margin-bottom: 12px;
+    margin-top: 0;
 }
 .customize-section-description-container.section-meta {
-	margin-bottom: 12px;
+    margin-bottom: 12px;
 }
 #customize-control-wc_ast_hide_tracking_events, #customize-control-wc_ast_select_display_option_heading, #customize-control-shipment_email_settings-track_button_Text, #customize-control-shipment_email_settings-track_button_heading, #customize-control-wcast_intransit_email_settings-wcast_intransit_analytics_link, #customize-control-wcast_intransit_email_settings-analytics_heading {
 	border-top: 0;
 	padding-top: 0;
 }
 li#customize-control-wc_ast_select_display_option_heading, li#customize-control-shipment_email_settings-track_button_heading {
-	margin-top: 5px !important;
+    margin-top: 5px !important;
 }
+
 /* ==========================================================================
    Text Radio Buttons
    ========================================================================== */
@@ -276,12 +124,12 @@ li#customize-control-wc_ast_select_display_option_heading, li#customize-control-
 .text_radio_button_control .radio-buttons {
 	display: inline-block;
 	width: 100%;
-	box-sizing: border-box;
+    box-sizing: border-box;
 }
 .text_radio_button_control .radio-button-label {
 	cursor: pointer;
 	display: inline-block;
-	width: 49%;
+    width: 49%;
 	margin-right: -2px;
 }
 .text_radio_button_control .radio-button-label > input {
@@ -296,7 +144,7 @@ li#customize-control-wc_ast_select_display_option_heading, li#customize-control-
 	padding: 10px 0;
 	display: inline-block;
 	width: 100%;
-	text-align: center;
+    text-align: center;
 }
 .text_radio_button_control .radio-button-label span:hover {
 	background-color: rgba(255, 255, 255, .2);
