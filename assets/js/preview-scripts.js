@@ -433,7 +433,7 @@
 			$( '.col.tracking-detail' ).css( 'border', '1px solid ' + to );
 			$( 'body .col.tracking-detail .trackship_branding' ).css( 'border-top', '1px solid ' + to );
 			$( 'body .tracking-detail .h4-heading' ).css( 'border-bottom', '1px solid ' + to );
-			$( 'body .tracking_number_wrap' ).css( 'border-bottom', '1px solid ' + to );
+			//$( 'body .tracking_number_wrap' ).css( 'border-bottom', '1px solid ' + to );
 		});
 	});
 	

@@ -7,6 +7,12 @@ form.order_track_form input {
 	width: 100%;
 	margin-bottom: 10px;
 }
+.order_track_form {
+	max-width: 500px;
+	margin: 0 auto 20px;
+	border: 1px solid #e0e0e0;
+	min-height: 340px;
+}
 .progress {
 	display: -ms-flexbox;
 	display: flex;
@@ -25,6 +31,36 @@ form.order_track_form input {
 	white-space: nowrap;
 	background-color: #C1C1C1;
 	transition: width 0.6s ease
+}
+ul.tpi_product_tracking_ul {
+	margin: 0 0 10px 0;
+}
+.h4-heading.tpi_products_heading {
+	margin-bottom: 10px;
+}
+.order_track_form input.ts_from_input {
+	display: none;
+}
+.order_track_form input.ts_from_input:checked + label {
+	color: #09d3ac;
+	border-bottom: 3px solid #09d3ac;
+	margin-bottom: -3px;
+}
+.order_track_form label.ts_from_label {
+	width: 49%;
+	padding: 15px;
+	display: inline-block;
+	line-height: 1;
+	font-weight: 500;
+	text-align: center;
+	cursor: pointer;
+	margin: 0;
+}
+.search_order_form .tracking_form {
+	padding: 15px 20px;
+}
+.search_order_form .by_tracking_number {
+	display: none;
 }
 .tracking-detail .text-center {
 	text-align: center;
@@ -50,10 +86,6 @@ form.order_track_form input {
 span.wc_order_id {
 	float: right;
 }
-.tracking_number_wrap {
-	border-bottom: 1px solid #ccc;
-	margin-bottom: 10px;
-}
 .trackship_branding p {
 	margin: 0;
 	color: #3c4758;
@@ -73,14 +105,9 @@ span.wc_order_id {
 	text-align: left;
 }
 .order_id_email:after {
-    content: '';
-    display: table;
-    clear: both;
-}
-.order_track_form .search_order_form div {
-	width: 100%;
-	padding: 15px 20px;
-	border: 1px solid #e0e0e0;
+	content: '';
+	display: table;
+	clear: both;
 }
 .search_order_form .form-row button {
 	margin-bottom: 0;
@@ -89,7 +116,7 @@ span.wc_order_id {
 	font-weight: 600;
 	display: flex;
 	margin: 0 auto;
-    max-width: 600px;
+	max-width: 600px;
 }
 .shipment_heading {
 	margin-bottom: 0;
@@ -97,33 +124,9 @@ span.wc_order_id {
 }
 .shipment_status_heading {
 	font-weight: 600;
-	color: #35609a;
+	color: #424242;
 	font-size: 24px;
-    margin-bottom: 0;
-}
-.tracking_number_div .tracking_page_provider_name {
-	display: block;
-}
-.shipment_status_heading.in_transit {
-	color: #53c3bd;
-}
-.shipment_status_heading.out_for_delivery {
-	color: #90ca5e;
-}
-.shipment_status_heading.return_to_sender {
-	color: #a8414a;
-}
-.shipment_status_heading.available_for_pickup {
-	color: #f49d1d;
-}
-.shipment_status_heading.delivered {
-	color: #0f8042;
-}
-.shipment_status_heading.on_hold {
-	color: #ffde00;
-}
-.shipment_status_heading.failure {
-	color: #cd2128;
+	margin-bottom: 0;
 }
 .tracker-progress-bar {
 	margin: 30px 0;
@@ -143,65 +146,61 @@ span.wc_order_id {
 	width: 30px;
 	height: 30px;
 }
-.tracking_layout_1 .progress .progress-icon { 
+.tracking_layout_1 .progress .progress-icon {
 	width: 40px;
-    height: 40px;
-    position: absolute;
+	height: 40px;
+	position: absolute;
 	top: -15px;
 }
 /* icon - 1 */
-.tracking_layout_1 .progress .progress-icon.icon1 { 
+.tracking_layout_1 .progress .progress-icon.icon1 {
 	content: url(icons/pre_transit-gray.png);
 	left: 0;
 }
-.tracking_layout_1 .progress.pre_transit .progress-icon.icon1 { 
-	content: url(icons/pre_transit-color.png);
+.tracking_layout_1 .progress.pre_transit .progress-icon.icon1 {
+	content: url(icons/pre-transit.png);
 }
-.tracking_layout_1 .progress.failure .progress-icon.icon1 { 
-	content: url(icons/failure-color.png);
+.tracking_layout_1 .progress.failure .progress-icon.icon1 {
+	content: url(icons/failure.png);
 }
-.tracking_layout_1 .progress.pending_trackship .progress-icon.icon1,
-.tracking_layout_1 .progress.pending .progress-icon.icon1,
-.tracking_layout_1 .progress.unknown .progress-icon.icon1,
-.tracking_layout_1 .progress.carrier_unsupported .progress-icon.icon1,
-.tracking_layout_1 .progress.balance_zero .progress-icon.icon1 { 
+.tracking_layout_1 .progress.pending_trackship .progress-icon.icon1, .tracking_layout_1 .progress.pending .progress-icon.icon1, .tracking_layout_1 .progress.unknown .progress-icon.icon1, .tracking_layout_1 .progress.carrier_unsupported .progress-icon.icon1, .tracking_layout_1 .progress.balance_zero .progress-icon.icon1 {
 	content: url(icons/shipped-color.png);
 }
 /* icon - 2 */
-.tracking_layout_1 .progress .progress-icon.icon2 { 
+.tracking_layout_1 .progress .progress-icon.icon2 {
 	content: url(icons/in_transit-gray.png);
 	left: 30%;
 }
-.tracking_layout_1 .progress.in_transit .progress-icon.icon2 { 
-	content: url(icons/in_transit-color.png);
+.tracking_layout_1 .progress.in_transit .progress-icon.icon2 {
+	content: url(icons/in-transit.png);
 }
-.tracking_layout_1 .progress.on_hold .progress-icon.icon2 { 
-	content: url(icons/on_hold-color.png);
+.tracking_layout_1 .progress.on_hold .progress-icon.icon2 {
+	content: url(icons/on-hold.png);
 }
 /* icon - 3 */
-.tracking_layout_1 .progress .progress-icon.icon3 { 
+.tracking_layout_1 .progress .progress-icon.icon3 {
 	content: url(icons/out_for_delivery-gray.png);
 	left: 60%;
 }
-.tracking_layout_1 .progress.out_for_delivery .progress-icon.icon3 { 
-	content: url(icons/out_for_delivery-color.png);
+.tracking_layout_1 .progress.out_for_delivery .progress-icon.icon3 {
+	content: url(icons/out-for-delivery.png);
 }
-.tracking_layout_1 .progress.available_for_pickup .progress-icon.icon3 { 
-	content: url(icons/available_for_pickup-color.png);
+.tracking_layout_1 .progress.available_for_pickup .progress-icon.icon3 {
+	content: url(icons/available-for-pickup.png);
 }
-.tracking_layout_1 .progress.return_to_sender .progress-icon.icon3 { 
-	content: url(icons/return_to_sender-color.png);
+.tracking_layout_1 .progress.return_to_sender .progress-icon.icon3 {
+	content: url(icons/return-to-sender.png);
 }
-.tracking_layout_1 .progress.exception .progress-icon.icon3 { 
-	content: url(icons/failure-color.png);
+.tracking_layout_1 .progress.exception .progress-icon.icon3 {
+	content: url(icons/failure.png);
 }
 /* icon - 4 */
-.tracking_layout_1 .progress .progress-icon.icon4 { 
+.tracking_layout_1 .progress .progress-icon.icon4 {
 	content: url(icons/delivered-gray.png);
 	right: 0;
 }
-.tracking_layout_1 .progress.delivered .progress-icon.icon4 { 
-	content: url(icons/delivered-color.png);
+.tracking_layout_1 .progress.delivered .progress-icon.icon4 {
+	content: url(icons/delivered.png);
 }
 /**** Layout 2 CSS ***/
 .tracker-progress-bar .progress {
@@ -253,7 +252,6 @@ span.wc_order_id {
 }
 .tracking_destination_details_by_date {
 	margin-bottom: 10px;
-	border-bottom: 1px solid #e0e0e0;
 }
 .tracking-detail .provider_image {
 	width: 45px;
@@ -313,9 +311,6 @@ ul.timeline > li > p {
 }
 .tracking_number_div ul li {
 	margin: 0;
-}
-h1.shipment_status_heading.pending_trackship, h1.shipment_status_heading.pending, h1.shipment_status_heading.carrier_unsupported, h1.shipment_status_heading.unknown, h1.shipment_status_heading.balance_zero {
-	color: #03a9f4;
 }
 /*** RTL CSS ***/
 
@@ -392,29 +387,4 @@ h1.shipment_status_heading.pending_trackship, h1.shipment_status_heading.pending
 	overflow-y: overlay;
 	text-align: left;
 	border: 1px solid #e0e0e0;
-}
-
-@media screen and (min-width: 600px) {
-.order_track_form .search_order_form {
-	display: inline-flex;
-}
-.order_track_form .search_order_form .order_id_email {
-	border-right: 0;	
-}
-}
-@media screen and (max-width: 600px) {
-.order_track_form .search_order_form {
-	display: block;
-}
-.order_track_form .search_order_form .order_id_email {
-	border-bottom: 0;
-	padding-bottom: 0;
-}
-.order_track_form .search_order_form .by_tracking_number {
-	border-top: 0;
-	padding-top: 0;
-}
-.order_track_form .search_order_form .order_id_email p.form-row:last-child {
-	display: none;	
-}
 }

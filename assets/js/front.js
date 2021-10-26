@@ -149,3 +149,16 @@ jQuery(document).on("click", ".open_tracking_lightbox", function(){
 jQuery(document).on("click", ".popupclose", function(){
 	jQuery('.ts_tracking_popup').hide();	
 });
+
+jQuery(document).on("click", ".order_track_form .search_order_form .ts_from_input", function(){
+	var div = jQuery(this).data('name');
+	if ( div === 'order_id_email' ) {
+		jQuery( '.search_order_form .by_tracking_number' ).slideUp( "slow", function() {
+			jQuery( '.search_order_form .order_id_email' ).slideDown("slow");
+		});
+	} else {
+		jQuery( '.search_order_form .order_id_email' ).slideUp( "slow", function() {
+			jQuery( '.search_order_form .by_tracking_number' ).slideDown("slow");
+		});
+	}
+});

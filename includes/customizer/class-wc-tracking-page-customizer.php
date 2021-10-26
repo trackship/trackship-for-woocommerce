@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * Customizer Setup and Custom Controls
  *
@@ -106,7 +109,7 @@ class TSWC_Tracking_Page_Customizer {
 	 * @return string
 	 */
 	public function get_email_settings_page_url( $return_tab ) {
-		return admin_url( 'admin.php?page=trackship-for-woocommerce&tab=tracking-page' );
+		return admin_url( 'admin.php?page=trackship-for-woocommerce&tab=settings' );
 	}
 	
 	/**

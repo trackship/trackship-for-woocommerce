@@ -29,9 +29,6 @@
 		body .tracking-detail .h4-heading {
 			border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
 		}
-		body .tracking_number_wrap {
-			border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
-		}
 	<?php }	?>
 	<?php if ( $background_color ) { ?>
 		body .col.tracking-detail{
@@ -61,7 +58,7 @@
 				<div class="tracking_number_div">
 					<ul>
 						<li>
-						<div>USPS</div> 
+						<span>USPS</span> 
 						<a href="https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=9410803699300126968507" target="blank"><strong>9410803699300126968507</strong></a>
 						<strong>9410803699300126968507</strong>
 						</li>

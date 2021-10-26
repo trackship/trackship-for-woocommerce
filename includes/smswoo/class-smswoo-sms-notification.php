@@ -220,6 +220,10 @@ class tswc_smswoo_sms_notification {
 		
 		$sms_provider = $this->get_sms_provider();
 		
+		if ( ! $sms_provider ) {
+			return;
+		}
+		
 		$sms_gateway = new $sms_provider();
 		$order_id    = ! empty( $this->order ) ? $this->order->get_id() : '';
 		
@@ -310,6 +314,12 @@ class tswc_smswoo_sms_notification {
 	 */
 	function trigger_sms_on_shipment_status_change( $order_id, $old_status, $new_status, $tracking_item, $shipment_status ){
 		$this->order = wc_get_order( $order_id );
+		
+		$toggle = get_option( 'all-shipment-status-sms-delivered' );
+		$all_delivered = trackship_for_woocommerce()->ts_actions->is_all_shipments_delivered( $order_id );
+		if ( 'delivered' == $new_status && $toggle && !$all_delivered ) {
+			return;
+		}
 		
 		$logger = wc_get_logger();
 		$context = array( 'source' => 'smswoo' );
