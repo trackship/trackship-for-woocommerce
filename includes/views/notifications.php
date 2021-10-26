@@ -1,3 +1,8 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+?>
 <div class="outer_form_table ts_notifications_outer_table">
 	<?php 
 	$wcast_enable_late_shipments_admin_email = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_enable_late_shipments_admin_email', '');
@@ -5,6 +10,7 @@
 	$tab_type = isset( $_GET['type'] ) ? sanitize_text_field($_GET['type']) : 'email';
 	
 	$ts_notifications = $this->trackship_shipment_status_notifications_data();
+	//echo '<pre>';print_r($ts_notifications);echo '</pre>';
 	?>				
 	<div class="trackship_tab_name">
 		<input id="tab_email_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-type="email" <?php echo 'email' == $tab_type ? 'checked' : ''; ?> >
@@ -31,7 +37,7 @@
                             <?php $image_name = 'delivered-status' == $image_name ? 'delivered' : $image_name; ?>
                         	<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/<?php echo esc_html( $image_name ); ?>.png">
                             <strong class="shipment-status-label <?php echo esc_html( $val['slug'] ); ?>"><?php echo esc_html( $val['title'] ); ?></strong>
-                            <?php if ( 'delivered-other' == $key ) { ?>
+                            <?php if ( 'delivered' == $key ) { ?>
 								<label for="all-shipment-status-<?php echo $key; ?>">
 									<input type="hidden" name="all-shipment-status-<?php echo $key?>" value="no">
 									<input name="all-shipment-status-<?php echo $key?>" type="checkbox" id="all-shipment-status-<?php echo $key?>" value="yes" <?php echo get_option( 'all-shipment-status-'.$key ) == 1 ? 'checked' : '' ?> >
@@ -63,7 +69,7 @@
                 <tbody>
                     <tr class="late-shipment-tr <?php echo 1 == $wcast_enable_late_shipments_admin_email ? 'enable' : 'disable'; ?> ">
                         <td class="forminp status-label-column">
-                        	<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/in-transit.png">
+                        	<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/late-shipment.png">
                             <strong><?php esc_html_e('Late Shipments', 'trackship-for-woocommerce'); ?></strong>
                         </td>
                         <td class="forminp">

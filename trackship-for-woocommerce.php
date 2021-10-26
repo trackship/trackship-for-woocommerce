@@ -9,7 +9,7 @@
  * License URI: 
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
- * WC tested up to: 5.6
+ * WC tested up to: 5.8.0
 */
 
 if ( ! defined( 'ABSPATH' ) ) {

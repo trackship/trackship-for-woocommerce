@@ -46,6 +46,7 @@ class WC_Trackship_Admin {
 		add_action( 'wp_ajax_trackship_mapping_form_update', array( $this, 'trackship_custom_mapping_form_update') );
 		add_filter( 'convert_provider_name_to_slug', array( $this, 'detect_custom_mapping_provider') );	
 		add_action( 'wp_ajax_ts_late_shipments_email_form_update', array( $this, 'ts_late_shipments_email_form_update_callback' ) );
+		add_action( 'wp_ajax_dashboard_page_count_query', array( $this, 'dashboard_page_count_query' ) );
 		
 		add_action( 'add_meta_boxes', array( $this, 'register_metabox') );
 		
@@ -57,6 +58,8 @@ class WC_Trackship_Admin {
 		
 		add_action( 'woocommerce_auth_page_footer', array( $this, 'remove_connect_store_border' ), 5 );
 		
+		add_filter('woocommerce_order_is_download_permitted', array( $this, 'add_onhold_status_to_download_permission' ), 10, 2);
+
 		$newstatus = get_option( 'wc_ast_status_delivered', 0);
 		if ( true == $newstatus ) {
 			//register order status 
@@ -71,8 +74,17 @@ class WC_Trackship_Admin {
 			add_filter( 'bulk_actions-edit-shop_order', array( $this, 'add_bulk_actions'), 50, 1 );
 			//add reorder button
 			add_filter( 'woocommerce_valid_order_statuses_for_order_again', array( $this, 'add_reorder_button_delivered'), 50, 1 );
+			//add button in preview
+			add_filter( 'woocommerce_admin_order_preview_actions', array( $this, 'additional_admin_order_preview_buttons_actions'), 5, 2 );
+			//add actions in column
+			add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_delivered_order_status_actions_button'), 100, 2 );
 		}
 
+	}
+	
+	public function add_onhold_status_to_download_permission($data, $order) {
+		if ( $order->has_status( 'delivered' ) ) { return true; }
+		return $data;
 	}
 	
 	public function remove_connect_store_border() {
@@ -228,20 +240,16 @@ class WC_Trackship_Admin {
 	* WC sub menu
 	*/
 	public function register_woocommerce_menu() {
-		$fullfillment_icon = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHdpZHRoPSI0MHB4IiBoZWlnaHQ9IjQwcHgiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNDAgNDAiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBhdGggaWQ9IlhNTElEXzEyXyIgZmlsbD0iI0YwRjZGQyIgZD0iTTI1LjMsMjIuNWMzLjQtMi4zLDguMy0yLDExLjQsMC44YzEuOSwxLjYsMywzLjksMy4zLDYuM3YxLjVjLTAuMyw0LjctNC4yLDguNi04LjksOC45aC0xLjMNCgljLTQtMC4zLTcuNy0zLjMtOC42LTcuMkMyMC4zLDI5LDIyLDI0LjYsMjUuMywyMi41IE0zMy42LDI3Yy0xLjUsMS4xLTIuNywyLjYtNCwzLjljLTAuNy0wLjctMS4zLTEuNC0yLjEtMg0KCWMtMS4xLTAuNi0yLjcsMC4yLTIuNywxLjVjMCwxLjMsMS4yLDIsMiwzYzEsMC44LDEuOSwyLjMsMy4zLDJjMS4xLTAuNSwxLjgtMS41LDIuNi0yLjJjMS4xLTEuMiwyLjUtMi4zLDMuNS0zLjcNCglDMzYuOSwyNy45LDM1LjEsMjYuMiwzMy42LDI3TDMzLjYsMjd6Ii8+DQo8cGF0aCBpZD0iWE1MSURfMTBfIiBmaWxsPSIjRjBGNkZDIiBkPSJNMzIsMy4yYy0wLjgtMS4zLTEuNC0zLjQtMy40LTMuMkMyMSwwLDEzLjMsMCw1LjcsMGMtMi0wLjItMi41LDEuOS0zLjQsMy4yDQoJQzEuNCw0LjktMC4yLDYuNSwwLDguNmMwLDcuMywwLDE0LjYsMCwyMS45Yy0wLjEsMiwxLjcsMy44LDMuNywzLjdjNC42LDAuMSw5LjIsMCwxMy45LDBjLTEuMy00LjcsMC0xMC4xLDMuNi0xMy41DQoJYzMuNC0zLjMsOC41LTQuNCwxMy0zLjFjMC0zLDAtNi4xLDAtOS4xQzM0LjQsNi41LDMyLjksNC45LDMyLDMuMnogTTIzLjYsMTMuNWMwLDEtMC45LDEuOS0xLjksMS45SDEzYy0xLDAtMS45LTAuOS0xLjktMS45di0wLjMNCgljMC0xLDAuOS0xLjksMS45LTEuOWg4LjdjMSwwLDEuOSwwLjksMS45LDEuOUwyMy42LDEzLjVMMjMuNiwxMy41eiBNNC4xLDcuNmMwLjgtMS4zLDEuNS0yLjUsMi4yLTMuOGM3LjIsMCwxNC40LDAsMjEuNiwwDQoJYzAuOCwxLjMsMS41LDIuNSwyLjIsMy44QzIxLjUsNy42LDEyLjgsNy42LDQuMSw3LjZ6Ii8+DQo8L3N2Zz4NCg==';
+		$icon = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHdpZHRoPSIyMHB4IiBoZWlnaHQ9IjIwcHgiIHZpZXdCb3g9Ii03NiA0NyAyMCAyMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAtNzYgNDcgMjAgMjA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+DQoJLnN0MHtmaWxsOiNBN0FBQUQ7fQ0KCS5zdDF7ZmlsbDojNDk0OTQ5O30NCjwvc3R5bGU+DQo8cGF0aCBpZD0iWE1MSURfNjBfIiBjbGFzcz0ic3QwIiBkPSJNLTU4LDQ3aC0xMy42Yy0yLjQsMC00LjMsMS45LTQuMyw0LjFWNTNjMCwyLjMsMS45LDQuMSw0LjEsNC4xaDJ2NS42YzAsMi40LDEuOCw0LjMsNC4xLDQuMw0KCWgyLjN2LTMuOGgtMi43di01LjljMC0yLjEtMS44LTMuOS0zLjktMy45aC0yLjF2LTIuNkgtNThWNDd6Ii8+DQo8cGF0aCBpZD0iWE1MSURfNTlfIiBjbGFzcz0ic3QxIiBkPSJNLTYxLjYsNjUuMWMwLDEtMC45LDEuOS0xLjksMS45cy0xLjktMC45LTEuOS0xLjlzMC45LTEuOSwxLjktMS45DQoJQy02Mi40LDYzLjMtNjEuNiw2NC4xLTYxLjYsNjUuMSIvPg0KPHBhdGggaWQ9IlhNTElEXzU4XyIgY2xhc3M9InN0MSIgZD0iTS01Ni4xLDQ4LjljMCwxLTAuOSwxLjktMS45LDEuOXMtMS45LTAuOS0xLjktMS45Uy01OSw0Ny01OCw0N1MtNTYuMSw0Ny45LTU2LjEsNDguOSIvPg0KPC9zdmc+DQo=';
 		
-		if ( !class_exists('Ast_Pro') && !class_exists('Advanced_local_pickup_PRO') ) {
-			add_menu_page( __( 'Fulfillment', 'trackship-for-woocommerce' ), __( 'Fulfillment', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'fulfillment-dashboard', array( $this, 'shipments_page_callback' ), $fullfillment_icon, '55.7' );
-		}
-		add_submenu_page( 'fulfillment-dashboard', 'Shipments', __( 'Shipments', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-shipments', array( $this, 'shipments_page_callback' ), 1 );
+		add_menu_page( __( 'TrackShip', 'trackship-for-woocommerce' ), __( 'TrackShip', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), $icon, '55.5' );
 		
-		add_submenu_page( 'fulfillment-dashboard', 'Dashboard', __( 'Dashboard', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), 1 );
+		add_submenu_page( 'trackship-dashboard', 'Dashboard', __( 'Dashboard', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), 1 );
 		
-		add_submenu_page( 'woocommerce', 'TrackShip', __( 'TrackShip', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
-
-		if ( !class_exists('Ast_Pro') ) {
-			remove_submenu_page( 'fulfillment-dashboard', 'fulfillment-dashboard' );
-		}
+		add_submenu_page( 'trackship-dashboard', 'Shipments', __( 'Shipments', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-shipments', array( $this, 'shipments_page_callback' ), 1 );
+		
+		add_submenu_page( 'trackship-dashboard', 'Settings', __( 'Settings', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
+		
 	}
 	
 	/*
@@ -250,7 +258,7 @@ class WC_Trackship_Admin {
 	public function settings_page_callback() {
 		?>
 		<div class="zorem-layout">
-			<?php include 'views/header.php'; ?>
+			<?php include 'views/header2.php'; ?>
 			<?php do_action('ast_settings_admin_notice'); ?>
 			<?php include 'views/content.php'; ?>
 		</div>
@@ -287,12 +295,55 @@ class WC_Trackship_Admin {
 			<div class="trackship_admin_content">
 				<section id="content_trackship_fullfill_dashboard" class="">
 					<div class="tab_inner_container">
-						<?php include 'views/dashboard.php'; ?>
+						<?php if ( trackship_for_woocommerce()->is_trackship_connected() ) { ?>
+							<?php include 'views/dashboard.php'; ?>
+						<?php } else { ?>
+							<div class="woocommerce trackship_admin_layout">
+								<div class="trackship_admin_content" >
+									<div class="trackship_nav_div">	
+										<?php include 'trackship-integration.php'; ?>
+									</div>
+								</div>
+							</div>
+						<?php } ?>
 					</div>
 				</section>
 			</div>
 		</div>
 		<?php
+	}
+	
+	/*
+	* Query for Dashboard
+	*/
+	public function dashboard_page_count_query() {
+		
+		check_ajax_referer( 'wc_ast_tools', 'security' );
+		$start_date = wc_clean( $_POST['selected_option'] );
+		
+		global $wpdb;
+		$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
+		$total_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipping_date > %s", $start_date ) );
+		$active_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipment_status NOT LIKE ( %s ) AND shipping_date > %s", '%delivered%', $start_date ) );
+		$delivered_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipment_status LIKE ( %s ) AND shipping_date > %s", '%delivered%', $start_date ) );
+		$tracking_issues = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row	
+			WHERE 
+				shipment_status NOT LIKE ( %s )
+				AND shipment_status NOT LIKE ( '%pre_transit%')
+				AND shipment_status NOT LIKE ( '%in_transit%')
+				AND shipment_status NOT LIKE ( '%out_for_delivery%')
+				AND shipment_status NOT LIKE ( '%return_to_sender%')
+				AND shipment_status NOT LIKE ( '%available_for_pickup%')
+				AND shipment_status NOT LIKE ( '%exception%')
+				AND shipping_date > %s
+		", '%delivered%', $start_date ) );
+		
+		$result['total_shipment']		= $total_shipment;
+		$result['active_shipment']		= $active_shipment;
+		$result['delivered_shipment']	= $delivered_shipment;
+		$result['tracking_issues']		= $tracking_issues;
+		
+		wp_send_json($result);
 	}
 	
 	/*
@@ -984,6 +1035,63 @@ class WC_Trackship_Admin {
 	}
 
 	/*
+	* Add delivered action button in preview order list to change order status from completed to delivered
+	*/
+	public function additional_admin_order_preview_buttons_actions( $actions, $order ) {
+		
+		$wc_ast_status_delivered = get_option( 'wc_ast_status_delivered' );
+		if ( $wc_ast_status_delivered ) {
+			// Below set your custom order statuses (key / label / allowed statuses) that needs a button
+			$custom_statuses = array(
+				'delivered' => array( // The key (slug without "wc-")
+					'label'     => __( 'Delivered', 'ast-pro' ), // Label name
+					'allowed'   => array( 'completed'), // Button displayed for this statuses (slugs without "wc-")
+				),
+			);
+		
+			// Loop through your custom orders Statuses
+			foreach ( $custom_statuses as $status_slug => $values ) {
+				if ( $order->has_status( $values['allowed'] ) ) {
+					$actions[ 'status' ][ 'group' ] = __( 'Change status: ', 'woocommerce' );
+					$actions[ 'status' ][ 'actions' ][ $status_slug ] = array(
+						'url'    => wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=' . $status_slug . '&order_id=' . $order->get_id() ), 'woocommerce-mark-order-status' ),
+						'name'   => $values['label'],
+						'title'  => __( 'Change order status to', 'ast-pro' ) . ' ' . strtolower( $values['label'] ),
+						'action' => $status_slug,
+					);
+				}
+			}
+		}		
+		return $actions;
+	}
+	
+	/*
+	* Add action button in order list to change order status from completed to delivered
+	*/
+	public function add_delivered_order_status_actions_button( $actions, $order ) {
+		
+		$wc_ast_status_delivered = get_option( 'wc_ast_status_delivered' );
+		
+		if ( $wc_ast_status_delivered ) {
+			if ( $order->has_status( array( 'completed' ) ) || $order->has_status( array( 'shipped' ) ) ) {
+				
+				// Get Order ID (compatibility all WC versions)
+				$order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
+				
+				// Set the action button
+				$actions['delivered'] = array(
+					'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=delivered&order_id=' . $order_id ), 'woocommerce-mark-order-status' ),
+					'name'      => __( 'Mark order as delivered', 'ast-pro' ),
+					'icon' => '<i class="fa fa-truck">&nbsp;</i>',
+					'action'    => 'delivered_icon', // keep "view" class for a clean button CSS
+				);
+			}	
+		}
+		
+		return $actions;
+	}
+
+	/*
 	* change style of delivered order label
 	*/	
 	public function footer_function() {
@@ -1002,44 +1110,53 @@ class WC_Trackship_Admin {
 		echo '<div id=admin_tracking_widget class=popupwrapper style="display:none;"><div class=popuprow></div><div class=popupclose></div></div>';
 		?>
 		<div id=admin_error_more_info_widget class=popupwrapper style="display:none;">
-			<div class="more_info_popup popuprow" style="padding:20px">
+			<div class="more_info_popup popuprow">
 				<?php
-				$ssl = '<a href="https://trackship.info/docs/trackship-for-woocommerce/getting-started/connect-trackship-to-your-store/#requirements">SSL Requirements</a>';
-				$map_link = '<a href="admin.php?page=trackship-for-woocommerce&tab=map-providers">Map Providers settings</a>';
+				$ssl = '<a href="http://help.trackship.info/en/articles/5626635-requirements">SSL Requirements</a>';
 				$array_more_info = array(
 					'pending_trackShip' => array(
 						'heading'	=> 'Pending TrackShip',
 						'detail'	=> 'This is a temporary status that indicated that the tracking info was sent to TrackShip and the first tracking data will update shortly. please try to refresh the orders admin in a few minutes.',
-						'img'		=> 'pending-trackship.png',
+						'image'		=> 'pending-trackship.png',
 					),
-					'connection_issue' => array(
-						'heading'	=> 'TrackShip connection issue',
-						'detail'	=> 'This means that you got SSL issue on your store, check the ' . $ssl . ' for more details..',
-						'img'		=> 'invalid.png',
-					),
-					'INVALID_TRACKING_NUM' => array(
-						'heading'	=> 'Invalid Tracking Number',
-						'detail'	=> 'The Tracking number you entered for this order returns invalid from the shipping provider.',
-						'img'		=> 'invalid-tracking-number.png',
-					),
-					'wrong_shipping_provider' => array(
-						'heading'	=> 'Wrong Shipping Provider',
-						'detail'	=> 'The Shipping Provider name is invalid for this tracking number.',
-						'img'		=> 'wrong-shipiing-provider.png',
+					'invalid_tracking' => array(
+						'heading'	=> 'Invalid Tracking',
+						'detail'	=> 'The Tracking number you entered for this order does not match the shipping carrier.',
+						'image'		=> 'unknown.png',
 					),
 					'carrier_unsupported' => array(
 						'heading'	=> 'Carrier Unsupported',
-						'detail'	=> 'TrackShip does not support this shipping provider, if your shipping software sends a different name then the one on TrackShip, you can map the shipping providers names on the the ' . $map_link,
-						'img'		=> 'carrier-unsupported.png',
+						'detail'	=> 'This message indicates that TrackShip does not support the shipping provider you used.',
+						'image'		=> 'label_cancelled.png',
+					),
+					'insufficient_balance' => array(
+						'heading'	=> 'Insufficient Balance',
+						'detail'	=> 'The Shipment Tracking balance in your TrackShip account is 0, please upgrade your billing plan.',
+						'image'		=> 'failure.png',
+					),
+					'ssl_error' => array(
+						'heading'	=> 'SSL Error',
+						'detail'	=> 'This means that you got SSL issue on your store, check the ' . $ssl . ' for more details.',
+						'image'		=> 'failure.png',
+					),
+					'Unauthorized' => array(
+						'heading'	=> 'Unauthorized',
+						'detail'	=> 'Your store connection key does not exist or the user is not found on TrackShip. Please log in to your TrackShip account, disconnect your store, and re-connect it.',
+						'image'		=> 'failure.png',
 					),
 				);
 				?>
-				<?php foreach ( $array_more_info as $key => $value ) { ?>
-					<div class="error_details">
-						<h2 class="<?php echo esc_html( $key ); ?>"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/<?php echo esc_html( $value['img'] ); ?>" style="height: 18px;padding-right:10px;"><?php echo esc_html( $value['heading'] ); ?></h2>
-						<p><?php echo esc_html( $value['detail'] ); ?></p>
-					</div>
-				<?php } ?>
+				<div class="more_info_error_detail">
+					<?php foreach ( $array_more_info as $key => $value ) { ?>
+						<div class="error_details">
+							<div class="">
+								<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/<?php echo esc_html( $value['image'] ); ?>">
+								<span class="shipment_status_label <?php echo esc_html( $key ); ?>"><?php echo esc_html( $value['heading'] ); ?></span>
+							</div>
+							<p><?php echo ( $value['detail'] ); ?></p>
+						</div>
+					<?php } ?>
+				</div>
 			</div>
 			<div class=popupclose></div>
 		</div>

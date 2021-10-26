@@ -1,7 +1,11 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 'settings';
 ?>
 <div class="woocommerce trackship_admin_layout">
+	<span class="woocommerce-layout__activity-panel"><?php include 'header-sidebar.php'; ?></span>
 	<div class="trackship_admin_content" >
 		<div class="trackship_nav_div">	
 			<?php if ( trackship_for_woocommerce()->is_trackship_connected() ) { ?>
@@ -18,28 +22,20 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 						'show'	=> true,
 					),
 					array(
-						'label'	=> __( 'Status', 'trackship-for-woocommerce' ),
-						'slug'	=> 'status',
+						'label'	=> __( 'Tools', 'trackship-for-woocommerce' ),
+						'slug'	=> 'tools',
 						'show'	=> true,
-					),
-					array(
-						'label'	=> __( 'Fulfillment Dashboard', 'trackship-for-woocommerce' ),
-						'link'	=> admin_url( 'admin.php?page=trackship-dashboard' ),
-						'show'	=> false,
 					),
 				);
 				?>
-				<?php foreach ( $array as $key => $val ) { ?>
-                	<?php if ( isset( $val[ 'link' ] ) && $val[ 'link' ] ) { ?>
-                    	<label class="tab_label"><a href="<?php echo esc_url( $val[ 'link' ] ); ?>"><?php esc_html_e( $val[ 'label' ] ); ?></a></label>
-                    <?php } ?>
-					<?php if ( $val[ 'show' ] ) { ?>
+				<div>
+					<?php foreach ( $array as $key => $val ) { ?>
 						<input id="tab_trackship_<?php esc_html_e( $val[ 'slug' ] ); ?>" type="radio" name="tabs" class="tab_input" data-label="<?php esc_html_e( $val[ 'label' ] ); ?>" data-tab="<?php esc_html_e( $val[ 'slug' ] ); ?>" <?php echo $val[ 'slug' ] == $menu_tab ? 'checked' : ''; ?> >
 						<label for="tab_trackship_<?php esc_html_e( $val[ 'slug' ] ); ?>" class="tab_label <?php echo 'settings' == $val[ 'slug' ] ? 'first_label' : ''; ?>">
 							<?php esc_html_e( $val[ 'label' ] ); ?>
 						</label>
-					<?php } ?>
-				<?php } ?>
+					<?php } ?>					
+				</div>
 				<div class="menu_devider"></div>
 				<?php foreach ( $array as $key => $val ) { ?>
 					<?php if ( $val[ 'show' ] ) { ?>
@@ -50,7 +46,6 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 						</section>
 					<?php } ?>
 				<?php } ?>
-
 			<?php
 			} else {
 				include 'trackship-integration.php';

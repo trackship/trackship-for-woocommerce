@@ -1,4 +1,9 @@
-<?php $nonce = wp_create_nonce( 'wc_ast_tools'); ?>
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+$nonce = wp_create_nonce( 'wc_ast_tools');
+?>
 <input type="hidden" id="wc_ast_dashboard_tab" name="wc_ast_dashboard_tab" value="<?php echo esc_attr( $nonce ); ?>" />
 <?php
 if ( trackship_for_woocommerce()->is_trackship_connected() ) {
@@ -38,7 +43,7 @@ if ( trackship_for_woocommerce()->is_trackship_connected() ) {
 			</select>
 		</span>
 		<span class="shipment_search_bar">
-			<input type="text" id="search_bar" name="search_bar" placeholder="<?php esc_html_e( 'Order Number', 'trackship-for-woocommerce' ); ?>">
+			<input type="text" id="search_bar" name="search_bar" placeholder="">
 			<button class="serch_button" type="button"><?php esc_html_e( 'Search', 'trackship-for-woocommerce' ); ?></button>
 		</span>  
 	</div>
