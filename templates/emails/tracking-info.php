@@ -24,7 +24,6 @@ if ( $tracking_items ) :
 		<div class="tracking_list">
 			<?php foreach ( $tracking_items as $key => $tracking_item ) { ?>
 				<?php
-				//$ship_status = isset( $shipment_status[ $key ][ 'status' ] ) ? $shipment_status[ $key ][ 'status' ] : false;
 				$ship_status = $new_status;
 				$tracking_link = isset( $shipment_status[ $key ][ 'tracking_page' ] ) && get_option( 'wc_ast_use_tracking_page', 1 ) ? $shipment_status[ $key ][ 'tracking_page' ] : $tracking_item[ 'formatted_tracking_link' ];
 				do_action( 'before_tracking_widget_email', $tracking_item, $order_id );
@@ -72,7 +71,7 @@ if ( $tracking_items ) :
 					<?php if ( 't_layout_1' == $tracking_page_layout ) { ?>
 						<div class="widget_progress_bar" style="display:block;width:100%;margin-top:10px;">
 							<?php $widget_icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ) . '-widget.png'; ?>
-							<img src="<?php echo esc_url( $widget_icon_url ); ?>">
+							<img style="width:100%;" src="<?php echo esc_url( $widget_icon_url ); ?>">
 						</div>
 					<?php } else { ?>
 					<div class="tracker-progress-bar">
@@ -86,7 +85,7 @@ if ( $tracking_items ) :
 		</div>
 	</div>
 	<style>
-	#ts-email-widget-wrapper{max-width: 600px;margin: 50px auto;font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;font-size: 14px;line-height: 150%;}
+	#ts-email-widget-wrapper{max-width: 500px;margin: 50px auto;font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;font-size: 14px;line-height: 150%;}
 	.tracker-progress-bar .progress {
 		background-color: #f5f5f5;
 		margin-top: 10px;
@@ -101,7 +100,7 @@ if ( $tracking_items ) :
 	.progress-bar.exception{background-color: #cd2128;width:33%;height:40px;}
 	.progress-bar.on_hold{background-color: #ffde00;width:33%;height:40px;}
 	.progress-bar.available_for_pickup{background-color: #f49d1d;width:67%;height:40px;}
-	.progress-bar.delivered{background-color: #0f8042;width:67%;height:40px;}
+	.progress-bar.delivered{background-color: #0f8042;width:100%;height:40px;}
 	ul.tracking_list{padding: 0;list-style: none;}
 	ul.tracking_list .tracking_list_li{margin-bottom: 5px;}
 	ul.tracking_list .tracking_list_li .product_list_ul{padding-left: 10px;}
@@ -123,21 +122,10 @@ if ( $tracking_items ) :
 		display: block;text-align: center;
 		<?php echo 20 == trackship_customizer()->get_value( 'shipment_email_settings', 'track_button_font_size' ) ? 'padding: 12px 20px;' : 'padding: 10px 15px;'; ?>
 	}
-	.shipment_status {font-size: 20px;margin: 10px 0;display: inline-block;color: #53c3bd;vertical-align: middle;}
-	.shipment_status .shipped {color: #03a9f4;}
-	.shipment_status .on_hold {color: #ffd700;}
-	.shipment_status .return_to_sender {color: #951621;}
-	.shipment_status .available_for_pickup {color: #f49d1d;}
-	.shipment_status .out_for_delivery {color: #95CB65;}
-	.shipment_status .delivered {color: #0F8042;}
-	.shipment_status .failure {color: #CD2128;}
-	.shipment_status .exception {color: #cd2128;}
+	.shipment_status {font-size: 24px;margin: 10px 0;display: inline-block;color: #333;vertical-align: middle;font-weight:500;}
 	.mb-0{margin:0;}
 	.v-align-top{vertical-align:top;}
 	span.est_delivery_date { margin-top: 5px; display: inline-block; }
-	</style>
-
-<style>
 	@media screen and (max-width: 460px) {
 		.display-table{display:block;}
 		.display-table-cell{display:block;margin-top: 10px;}

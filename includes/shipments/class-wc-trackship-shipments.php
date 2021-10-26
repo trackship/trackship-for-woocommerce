@@ -96,8 +96,8 @@ class WC_Trackship_Shipments {
 		global $wpdb;
 		$woo_trackship_shipment = $this->shipment_table;
 		
-		$limit = "limit ".sanitize_text_field($_POST['start']).", ".sanitize_text_field($_POST['length'])."";
-		$order_number = isset( $_POST['search_bar'] ) ? sanitize_text_field($_POST['search_bar']) : false;
+		$limit = 'limit ' . sanitize_text_field($_POST['start']).', '.sanitize_text_field($_POST['length']);
+		$search_bar = isset( $_POST['search_bar'] ) ? sanitize_text_field($_POST['search_bar']) : false;
 		
 		$late_shipments_email_settings = get_option( 'late_shipments_email_settings' );
 		$wcast_late_shipments_days = isset( $late_shipments_email_settings['wcast_late_shipments_days'] ) ? $late_shipments_email_settings['wcast_late_shipments_days'] : '7';
@@ -129,7 +129,7 @@ class WC_Trackship_Shipments {
 			SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row	
 				WHERE 
 					{$shipment_status}
-					AND order_number LIKE ( '%{$order_number}%' )
+					AND ( order_id LIKE ( '%{$search_bar}%' ) OR order_number LIKE ( '%{$search_bar}%' ) OR shipping_provider LIKE ( '%{$search_bar}%' ) OR tracking_number LIKE ( '%{$search_bar}%' ) OR shipping_country LIKE ( '%{$search_bar}%' ) )
 					AND shipping_provider LIKE ( '%{$shipping_provider}%' )
 		");
 		
@@ -138,35 +138,36 @@ class WC_Trackship_Shipments {
 				FROM {$woo_trackship_shipment} 
 			WHERE 
 				{$shipment_status}
-				AND order_number LIKE ( '%{$order_number}%' )
+				AND ( order_id LIKE ( '%{$search_bar}%' ) OR order_number LIKE ( '%{$search_bar}%' ) OR shipping_provider LIKE ( '%{$search_bar}%' ) OR tracking_number LIKE ( '%{$search_bar}%' ) OR shipping_country LIKE ( '%{$search_bar}%' ) )
 				AND shipping_provider LIKE ( '%{$shipping_provider}%' )
 			ORDER BY
 				order_id DESC
 			{$limit}
 		");
 		
-		$date_format = 'd/m/Y' == get_option( 'date_format' ) ? 'd/m/Y' : 'm/d/Y';
+		$date_format = 'M d';
 			
 		$result = array();
 		$i = 0;
 		$total_data = 1;
 		
-		foreach( $order_query as $key => $value ){			
+		foreach( $order_query as $key => $value ){
 			
 			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $value->order_id );
+			
 			foreach ( $tracking_items as $key1 => $val1 ) {
 				if ( $val1['tracking_number'] == $value->tracking_number ) {
 					$tracking_url = isset( $val1['ast_tracking_link'] ) && $val1['ast_tracking_link'] ? $val1['ast_tracking_link'] : $val1['formatted_tracking_link'];
 					$tracking_provider = $val1['formatted_tracking_provider'] ? $val1['formatted_tracking_provider'] : $value->shipping_provider;
+					$tracking_number_colom = '<span class="copied_tracking_numnber dashicons dashicons-admin-page" data-number="' . $value->tracking_number . '"></span><a class="open_tracking_details shipment_tracking_number" data-tracking_id="' . $val1['tracking_id'] . '" data-orderid="' . $value->order_id . '" data-nonce="' . wp_create_nonce( 'tswc-' . $value->order_id ) . '">' . $value->tracking_number . '</a>';
 				}
 			}
 			
 			$shipping_length = in_array( $value->shipping_length, array( 0, 1 ) ) ? 'Today' : (int)$value->shipping_length. ' days';
 			$shipping_length = $value->shipping_length ? $shipping_length : '';
 			
-			$late_shipment_acive = $wcast_late_shipments_days <= $value->shipping_length && 'delivered' != $value->shipment_status ? '<img class="trackship-tip" title="late shipment" src="' . esc_url( trackship_for_woocommerce()->plugin_dir_url() ) . 'assets/css/icons/invalid-tracking-number.png">' : '';
-			$late_shipment_delivered = $wcast_late_shipments_days <= $value->shipping_length && 'delivered' == $value->shipment_status ? '<img class="trackship-tip" title="late shipment" src="' . esc_url( trackship_for_woocommerce()->plugin_dir_url() ) . 'assets/css/icons/late-shipment-delivered.png">' : '';
-			$late_shipment = 'delivered' == $value->shipment_status ? $late_shipment_delivered : $late_shipment_acive ;
+			$late_class = 'delivered' == $value->shipment_status ? '' : 'not_delivered' ;
+			$late_shipment = $wcast_late_shipments_days <= $value->shipping_length ? '<span class="dashicons dashicons-info trackship-tip ' . $late_class . '" title="late shipment"></span>' : '';
 			
 			$active_shipment = '<a href="javascript:void(0);" class="shipments_get_shipment_status" data-orderid="' . $value->order_id . '"><span class="dashicons dashicons-update"></span></a>';
 			
@@ -178,9 +179,9 @@ class WC_Trackship_Shipments {
 			$result[$i]->shipment_status_id = $value->shipment_status;
 			$result[$i]->shipment_length = '<span class="shipment_length">' . $shipping_length . $late_shipment . '</span>';
 			$result[$i]->formated_tracking_provider = $tracking_provider;
-			$result[$i]->tracking_number = $value->tracking_number;
+			$result[$i]->tracking_number_colom = $tracking_number_colom;
 			$result[$i]->tracking_url = $tracking_url;
-			$result[$i]->est_delivery_date = $value->est_delivery_date;
+			$result[$i]->est_delivery_date = $value->est_delivery_date ? date_i18n( $date_format, strtotime( $value->est_delivery_date ) ) : '';
 			$result[$i]->ship_to = $value->shipping_country;
 			$result[$i]->refresh_button = 'delivered' == $value->shipment_status ? '' : $active_shipment;
 			

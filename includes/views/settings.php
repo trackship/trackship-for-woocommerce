@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 $completed_order_with_tracking = $this->completed_order_with_tracking();		
 $completed_order_with_zero_balance = $this->completed_order_with_zero_balance();							
 $completed_order_with_do_connection = $this->completed_order_with_do_connection();

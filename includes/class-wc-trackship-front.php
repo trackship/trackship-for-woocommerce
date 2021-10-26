@@ -296,9 +296,6 @@ class WC_TrackShip_Front {
 				body .tracking-detail .h4-heading {
 					border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
 				}
-				body .tracking_number_wrap {
-					border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
-				}
 			<?php } ?>
 			<?php if ( $background_color ) { ?>
 				body .col.tracking-detail{
@@ -442,7 +439,8 @@ class WC_TrackShip_Front {
 	
 	public function tracking_progress_bar( $tracker ) {
 		
-		if ( in_array( $tracker->ep_status, array( 'INVALID_TRACKING_NUM', 'carrier_unsupported', 'invalid_user_key', 'wrong_shipping_provider', 'deleted', 'pending' ) ) ) {
+		/* Added Version 1.2 - To be removed in future wrong_shipping_provider and INVALID_TRACKING_NUM */
+		if ( in_array( $tracker->ep_status, array( 'invalid_tracking', 'carrier_unsupported', 'invalid_user_key', 'invalid_carrier', 'deleted', 'pending', 'wrong_shipping_provider', 'INVALID_TRACKING_NUM' ) ) ) {
 			return;
 		}
 		
@@ -481,7 +479,11 @@ class WC_TrackShip_Front {
 	public function layout1_tracking_details( $trackind_detail_by_status_rev, $tracking_details_by_date, $trackind_destination_detail_by_status_rev, $tracking_destination_details_by_date, $tracker, $order_id, $tracking_provider, $tracking_number ) {  
 		$ts_tracking_page_customizer = new TSWC_Tracking_Page_Customizer();
 		$hide_tracking_events = get_option( 'wc_ast_hide_tracking_events', $ts_tracking_page_customizer->defaults[ 'wc_ast_hide_tracking_events' ] );
-		include 'views/front/layout1_tracking_details.php';		
+		$action = isset( $_POST['action'] ) ? sanitize_text_field( $_POST['action'] ) : '';
+		if ( 'get_admin_tracking_widget' == $action ) {
+			$hide_tracking_events = 2;
+		}
+		include 'views/front/layout1_tracking_details.php';
 	}		
 	
 	/*

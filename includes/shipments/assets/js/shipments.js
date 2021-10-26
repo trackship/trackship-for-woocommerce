@@ -69,58 +69,57 @@ jQuery(document).ready(function() {
 			jQuery(document).show_popup();
 		},		
 		oLanguage: {
-			sProcessing: '<div id=loader><div class="fa-3x"><i class="fas fa-sync fa-spin"></i></div>'
+			sProcessing: '<div id=loader><div class="fa-3x"><i class="fas fa-sync fa-spin"></i></div>',
+			"sEmptyTable": "No data is available for this status",
 		},
 		
 		"columns":[
 			{
-				"width": "100px",
+				"width": "120px",
 				'orderable': false,		
 				'data': 'et_shipped_at',
 			},			
 			{
-				"width": "80px",
+				"width": "100px",
 				'orderable': false,	
 				"mRender":function(data,type,full) {
 					return '<a href="'+shipments_script.admin_url+'post.php?post='+full.order_id+'&action=edit">' + full.order_number + '</a>';
 				},									
 			},	
 			{
-				"width": "150px",
+				"width": "175px",
 				'orderable': false,	
 				"mRender":function(data,type,full) {
 					return '<span class="shipment_status_label '+full.shipment_status_id+'">' + full.shipment_status + '</span>';
 				},				
 			},	
 			{
-				"width": "140px",
+				"width": "160px",
 				'orderable': false,		
 				'data': 'formated_tracking_provider',
 			},	
 			{
-				"width": "150px",
+				"width": "200px",
 				'orderable': false,		
-				"mRender":function(data,type,full) {
-					return '<span class="copied_tracking_numnber dashicons dashicons-admin-page" data-number="' + full.tracking_number + '"></span><a class="shipment_tracking_number" target="_blank" href="'+full.tracking_url+'">' + full.tracking_number + '</a>';
-				},				
+				'data': 'tracking_number_colom',				
 			},
 			{
-				"width": "150px",
+				"width": "170px",
 				'orderable': false,
 				'data': 'ship_to',
 			},
 			{
-				"width": "100px",
+				"width": "120px",
 				'orderable': false,	
 				'data': 'shipment_length',
 			},	
 			{
-				"width": "105px",
+				"width": "125px",
 				'orderable': false,		
 				'data': 'est_delivery_date',
 			},
 			{
-				"width": "80px",
+				"width": "100px",
 				'orderable': false,
 				'data': 'refresh_button',
 			},
@@ -132,6 +131,9 @@ jQuery(document).ready(function() {
 		jQuery(document).show_popup();
 		jQuery(document).ajax_loader("#active_shipments_table");
 		$table.ajax.reload();
+		
+		var url = window.location.protocol + "//" + window.location.host + window.location.pathname+"?page=trackship-shipments&status="+active_shipment;
+		window.history.pushState({path:url},'',url);
 		
 		if ( active_shipment === 'delivered' ) {
 			$table.columns(8).visible(false);			
@@ -174,6 +176,34 @@ jQuery(document).ready(function() {
 	});	
 });
 
+jQuery(document).on("click", ".dashboard_input_tab .tab_input", function(){
+	'use strict';
+	jQuery(document).ajax_loader(".fullfillment_dashboard_section_content");
+	
+	var selected_option = jQuery( this ).data('tab');
+	var ajax_data = {
+		action: 'dashboard_page_count_query',
+		selected_option: selected_option,
+		security: jQuery( '#wc_ast_dashboard_tab' ).val()
+	};
+	jQuery.ajax({
+		url: ajaxurl,
+		data: ajax_data,
+		type: 'POST',	
+		dataType:"json",
+		success: function(response) {
+			jQuery('.innner_content .total_shipment').html(response.total_shipment);
+			jQuery('.innner_content .active_shipment').html(response.active_shipment);
+			jQuery('.innner_content .delivered_shipment').html(response.delivered_shipment);
+			jQuery('.innner_content .tracking_issues').html(response.tracking_issues);
+			jQuery(".fullfillment_dashboard_section_content").unblock();
+		},
+		error: function(response) {
+			console.log(response);
+		}
+	});
+});
+
 jQuery(document).on("click", ".bulk_action_submit", function(){
 	var selected_option = jQuery('#bulk_action').children("option:selected").val();
 	if( selected_option == 'get_shipment_status' ){
@@ -213,4 +243,11 @@ jQuery( document ).ready(function() {
 	if ( jQuery.inArray( current_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
 		jQuery("#free_user_popup").show();
 	}
+	var urlParams = new URLSearchParams(window.location.search);
+	var has_status = urlParams.has('status'); // conditions
+	if ( has_status ) {
+		var status = urlParams.get('status');
+		jQuery('#shipment_status').val(status).change();
+	}
 });
+

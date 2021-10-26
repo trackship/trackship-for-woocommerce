@@ -1,3 +1,8 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+?>
 <div class="d_table">		
 	<form method="post" id="trackship_mapping_form" action="" enctype="multipart/form-data">
 		<div class="heading_panel section_mapping_heading">

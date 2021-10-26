@@ -36,7 +36,7 @@ table.dataTable thead th, table.dataTable thead td {
 	padding: 10px 8px;
 	box-sizing: border-box;
 	font-size: 13px;
-    color: #3c4758;
+	color: #3c4758;
 }
 table.dataTable.fullfilments_table tbody tr {
 	background: none;
@@ -44,17 +44,21 @@ table.dataTable.fullfilments_table tbody tr {
 table.dataTable.fullfilments_table tbody tr:last-child td {
 	border-bottom: 0;
 }
-table.dataTable thead th {
-	font-weight: 600;
-}
 .manage-column .select_all_checkbox {
 	margin-left: 0;
 }
 table.dataTable tbody td {
 	border-bottom: 1px solid #e0e0e0;
 	vertical-align: middle;
+	padding: 10px;
 }
 table.dataTable.fullfilments_table td:last-child {
+	text-align: right;
+}
+table.dataTable.fullfilments_table td.dataTables_empty {
+	text-align: left;
+}
+.rtl table.dataTable.fullfilments_table td.dataTables_empty {
 	text-align: right;
 }
 table.dataTable {
@@ -64,20 +68,41 @@ table.dataTable {
 }
 table.dataTable tbody a {
 	color: #3858e9;
-    line-height: 2em;
+	line-height: 2em;
+	display: inline;
 }
 table.dataTable tbody a.shipment_tracking_number {
-    line-height: 0;
-	display: inline;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 130px;
+	display: inline-block;
+	line-height: 20px;
+	height: 16px;
+	cursor: pointer;
 }
 table.dataTable tbody td span {
 	display: inline-block;
 	line-height: 1.5em;
 }
 table.dataTable tbody td:last-child span {
+	color: #09d3ac;
 	display: block;
 	line-height: 20px;
 	float: right;
+	font-size: 24px;
+	padding-right: 25px;
+}
+span.dashicons.dashicons-info {
+	line-height: 21px;
+	margin: 0 5px;
+}
+span.dashicons.dashicons-info.not_delivered {
+	color: #f44336;
+}
+.rtl table.dataTable tbody td:last-child span {
+	padding-right: 0;
+	padding-left: 25px;
 }
 table.dataTable tbody tr.hover, table.dataTable tbody tr.focus {
 	background: #fafafa !important;
@@ -87,26 +112,25 @@ table.dataTable.no-footer {
 }
 table.dataTable tbody .shipment_status_label {
 	display: block;
-    font-weight: 600;
-    background-color: #f5f7fb;
-    padding: 4px 8px;
-    border-radius: 10px;
-    width: fit-content;
+	background-color: #f5f7fb;
+	padding: 4px 8px;
+	border-radius: 10px;
+	width: fit-content;
 }
 table.dataTable tbody .shipment_status_label:before {
 	font-family: dashicons;
 	font-size: 18px;
 	margin: 0 5px 0 0;
-    content: '';
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    background-color: black;
-    border-radius: 10px;
-    vertical-align: unset;
+	content: '';
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	background-color: black;
+	border-radius: 10px;
+	vertical-align: unset;
 }
 .rtl table.dataTable tbody .shipment_status_label:before {
-	margin: 0 0 0 5px;	
+	margin: 0 0 0 5px;
 }
 table.dataTable tbody .shipment_status_label.carrier_unsupported:before {
 	background-color: #f44336;
@@ -220,22 +244,25 @@ table.dataTable tbody .shipment_status_label.pending_trackship:before {
 }
 .table_scroll {
 	overflow-x: auto;
-	clear:both;
+	clear: both;
 }
 table.dataTable th:last-child {
-    text-align: right;
+	text-align: right;
 }
 table.dataTable span.dashicons.dashicons-admin-page {
-    font-size: 15px;
-    color: #3858e9;
+	font-size: 15px;
+	color: #3858e9;
 	display: inline;
-	padding-right: 3px;
+	padding: 0 3px 0 0;
 	vertical-align: middle;
 	cursor: pointer;
 }
+.rtl table.dataTable span.dashicons.dashicons-admin-page {
+	padding: 0 0 0 3px;
+}
 .shipments_get_shipment_status.spin .dashicons {
-   animation: dashicons-spin 1s infinite;
-   animation-timing-function: linear;
+	animation: dashicons-spin 1s infinite;
+	animation-timing-function: linear;
 }
 #delivered_shipments_table_wrapper {
 	display: none;
@@ -244,17 +271,16 @@ table.dataTable span.dashicons.dashicons-admin-page {
 	width: 30px;
 }
 span.shipments_go_to_page {
-    margin: 0 5px 0 15px;
+	margin: 0 5px 0 15px;
 }
 .rtl span.shipments_go_to_page {
-    margin: 0 15px 0 5px;
+	margin: 0 15px 0 5px;
 }
-
-@keyframes dashicons-spin {
-   0% {
-      transform: rotate( 0deg );
-   }
-   100% {
-      transform: rotate( 360deg );
-   }
+ @keyframes dashicons-spin {
+ 0% {
+ transform: rotate( 0deg );
+}
+ 100% {
+ transform: rotate( 360deg );
+}
 }
