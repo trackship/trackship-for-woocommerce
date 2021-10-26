@@ -175,6 +175,8 @@ jQuery(document).ready(function() {
 jQuery(document).on("click", ".trackship_admin_content .trackship_nav_div .tab_input", function(){
 	"use strict";
 	var tab = jQuery(this).data('tab');
+	var label = jQuery(this).data('label');
+	jQuery('.zorem-layout__header .header-breadcrumbs-last').text(label);
 	var url = window.location.protocol + "//" + window.location.host + window.location.pathname+"?page=trackship-for-woocommerce&tab="+tab;
 	window.history.pushState({path:url},'',url);
 	jQuery( '.trackship_nav_div .inner_tab_section' ).hide();
