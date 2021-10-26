@@ -739,6 +739,12 @@ class WC_Trackship_Actions {
 			case 'invalid_carrier':
 				$status = __( 'Invalid Carrier', 'woocommerce' );
 				break;
+			case 'expired':
+				$status = __( 'Expired', 'trackship-for-woocommerce' );
+				break;
+			case 'label_cancelled':
+				$status = __( 'Label Cancelled', 'trackship-for-woocommerce' );
+				break;
 			/* Added Version 1.2 - To be removed in future wrong_shipping_provider and INVALID_TRACKING_NUM */
 			case 'wrong_shipping_provider':
 				$status = __( 'Invalid Carrier', 'trackship-for-woocommerce' );

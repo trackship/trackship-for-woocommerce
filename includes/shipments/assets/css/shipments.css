@@ -150,7 +150,7 @@ table.dataTable tbody .shipment_status_label.available_for_pickup:before {
 table.dataTable tbody .shipment_status_label.return_to_sender:before {
 	background-color: #A8414A;
 }
-table.dataTable tbody .shipment_status_label.failure:before {
+table.dataTable tbody .shipment_status_label.failure:before, table.dataTable tbody .shipment_status_label.label_cancelled:before, table.dataTable tbody .shipment_status_label.expired:before {
 	background-color: #CD2128;
 }
 table.dataTable tbody .shipment_status_label.out_for_delivery:before {
@@ -161,6 +161,9 @@ table.dataTable tbody .shipment_status_label.delivered:before {
 }
 table.dataTable tbody .shipment_status_label.pending_trackship:before {
 	background-color: #BD3D84;
+}
+table.dataTable tbody .shipment_status_label.unknown:before {
+	background: #8a2f1b;
 }
 .wp-core-ui .btn_green2.bulk_action_submit {
 	line-height: 27px;
