@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 $placeholders = array( '{shop_name}', '{order_id}', '{shipping_name}', '{shipping_first}', '{shipping_last}' );
 
 if( trackship_for_woocommerce()->is_ast_active() ){

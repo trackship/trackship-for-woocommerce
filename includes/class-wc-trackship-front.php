@@ -296,9 +296,6 @@ class WC_TrackShip_Front {
 				body .tracking-detail .h4-heading {
 					border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
 				}
-				body .tracking_number_wrap {
-					border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
-				}
 			<?php } ?>
 			<?php if ( $background_color ) { ?>
 				body .col.tracking-detail{
@@ -387,13 +384,14 @@ class WC_TrackShip_Front {
 				?>
 					<div class="shipment-header">
 						<?php if ( $total_trackings > 1 ) { ?>
-                            <p class="shipment_heading">
+							<p class="shipment_heading">
+							<?php /* translators: %s: search for a num and todal tracking */ ?>
                             <?php printf( esc_html__( 'Shipment %1$s out of %2$s', 'trackship-for-woocommerce' ), esc_html($num), esc_html($total_trackings) ); ?>
-                            </p>
-                        <?php } ?>
-                    </div>
+							</p>
+						<?php } ?>
+					</div>
 					<div class="tracking-detail col <?php echo 't_layout_1' != $tracking_page_layout ? 'tracking-layout-2' : ''; ?> ">
-                    	<div class="shipment-content">
+						<div class="shipment-content">
 						<?php
 						
 						esc_html_e( $this->tracking_page_header( $order, $tracking_provider, $tracking_number, $tracker, $item ) );
@@ -413,14 +411,15 @@ class WC_TrackShip_Front {
 						} 
 						?>
 					</div>
-                    <div class="trackship_branding">
-                        <p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://trackship.info/trackings/?number=<?php esc_html_e( $tracking_number ); ?>" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
-                    </div>
-                    <?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
-                        <style> .trackship_branding{display:block !important;} </style>
-                    <?php } ?>
+					<div class="trackship_branding">
+						<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://trackship.info/trackings/?number=<?php esc_html_e( $tracking_number ); ?>" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
+					</div>
+					<?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
+						<style> .trackship_branding{display:block !important;} </style>
+					<?php } ?>
 				</div>
-			<?php }
+				<?php
+			}
 			$num++;
 		}	
 	}
@@ -440,7 +439,8 @@ class WC_TrackShip_Front {
 	
 	public function tracking_progress_bar( $tracker ) {
 		
-		if ( in_array( $tracker->ep_status, array( 'INVALID_TRACKING_NUM', 'carrier_unsupported', 'invalid_user_key', 'wrong_shipping_provider', 'deleted', 'pending' ) ) ) {
+		/* Added Version 1.2 - To be removed in future wrong_shipping_provider and INVALID_TRACKING_NUM */
+		if ( in_array( $tracker->ep_status, array( 'invalid_tracking', 'carrier_unsupported', 'invalid_user_key', 'invalid_carrier', 'deleted', 'pending', 'wrong_shipping_provider', 'INVALID_TRACKING_NUM' ) ) ) {
 			return;
 		}
 		
@@ -464,13 +464,13 @@ class WC_TrackShip_Front {
 		?>
 		<div class="tracker-progress-bar <?php esc_html_e( 't_layout_1' == $tracking_page_layout ? 'tracking_layout_1' : '' ); ?>">
 			<div class="progress <?php esc_html_e( $tracker->ep_status ); ?>">
-            	<div class="progress-bar <?php esc_html_e( $tracker->ep_status ); ?>" style="width: <?php esc_html_e( $width ); ?>;"></div>
-                <?php if ( 't_layout_1' == $tracking_page_layout ) { ?>
-                    <div class="progress-icon icon1"></div>
-                    <div class="progress-icon icon2"></div>
-                    <div class="progress-icon icon3"></div>
-                    <div class="progress-icon icon4"></div>
-                <?php } ?>
+				<div class="progress-bar <?php esc_html_e( $tracker->ep_status ); ?>" style="width: <?php esc_html_e( $width ); ?>;"></div>
+				<?php if ( 't_layout_1' == $tracking_page_layout ) { ?>
+					<div class="progress-icon icon1"></div>
+					<div class="progress-icon icon2"></div>
+					<div class="progress-icon icon3"></div>
+					<div class="progress-icon icon4"></div>
+				<?php } ?>
 			</div>
 		</div>
 	<?php
@@ -479,7 +479,11 @@ class WC_TrackShip_Front {
 	public function layout1_tracking_details( $trackind_detail_by_status_rev, $tracking_details_by_date, $trackind_destination_detail_by_status_rev, $tracking_destination_details_by_date, $tracker, $order_id, $tracking_provider, $tracking_number ) {  
 		$ts_tracking_page_customizer = new TSWC_Tracking_Page_Customizer();
 		$hide_tracking_events = get_option( 'wc_ast_hide_tracking_events', $ts_tracking_page_customizer->defaults[ 'wc_ast_hide_tracking_events' ] );
-		include 'views/front/layout1_tracking_details.php';		
+		$action = isset( $_POST['action'] ) ? sanitize_text_field( $_POST['action'] ) : '';
+		if ( 'get_admin_tracking_widget' == $action ) {
+			$hide_tracking_events = 2;
+		}
+		include 'views/front/layout1_tracking_details.php';
 	}		
 	
 	/*

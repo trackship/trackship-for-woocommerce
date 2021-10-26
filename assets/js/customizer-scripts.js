@@ -61,7 +61,7 @@ jQuery('#customize-footer-actions .preview-tablet').click(function(e) {
         section.expanded.bind( function( isExpanded ) {	
 			var url;
             if ( isExpanded ) {
-				jQuery('#save').trigger('click');
+				//jQuery('#save').trigger('click');
 				var shipment_status = jQuery(".preview_shipment_status_type option:selected").val();				
 				
 				if(shipment_status == 'in_transit'){					
@@ -99,7 +99,7 @@ jQuery('#customize-footer-actions .preview-tablet').click(function(e) {
         section.expanded.bind( function( isExpanded ) {				
             var url;
             if ( isExpanded ) {
-				jQuery('#save').trigger('click');
+				//jQuery('#save').trigger('click');
 				wp.customize.previewer.previewUrl(wcast_customizer.tracking_page_preview_url);
 				wp.customize.previewer.refresh();
             }
@@ -112,7 +112,7 @@ jQuery('#customize-footer-actions .preview-tablet').click(function(e) {
         section.expanded.bind( function( isExpanded ) {				
             var url;
             if ( isExpanded ) {
-				jQuery('#save').trigger('click');
+				//jQuery('#save').trigger('click');
 				wp.customize.previewer.previewUrl(wcast_customizer.tracking_widget_email_preview_url);
 				wp.customize.previewer.refresh();	
             }

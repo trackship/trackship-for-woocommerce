@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * Customizer Setup and Custom Controls
  *
@@ -118,11 +121,11 @@ class TSWC_Tracking_widget_email_Customizer {
 			'track_button_color'			=> '#3c4858',
 			'track_button_text_color'		=> '#fff',
 			'track_button_font_size'		=> 15,
-			'widget_padding'				=> 15,
+			'widget_padding'				=> 20,
 			'tracking_page_layout'			=> 't_layout_1',
-			'track_button_border_radius'	=> 3,
-			'border_color'					=> '#cccccc',
-			'bg_color'						=> '#fafafa',
+			'track_button_border_radius'	=> 0,
+			'border_color'					=> '#e8e8e8',
+			'bg_color'						=> '#fff',
 			'font_color'					=> '#333',
 		);
 
@@ -201,7 +204,7 @@ class TSWC_Tracking_widget_email_Customizer {
 				'input_attrs' => array(
 					'default' => $this->defaults['widget_padding'],
 					'step'  => 1,
-					'min'   => 10,
+					'min'   => 0,
 					'max'   => 30,
 				),
 			)
@@ -225,7 +228,7 @@ class TSWC_Tracking_widget_email_Customizer {
 					'class' => '',
 				),
 				'choices' => array(
-					't_layout_2' => __( 'Simple', 'trackship-for-woocommerce' ),
+					't_layout_2' => __( 'Progress Bar', 'trackship-for-woocommerce' ),
 					't_layout_1' => __( 'Icons', 'trackship-for-woocommerce' ),
 				),
 			)
@@ -265,8 +268,7 @@ class TSWC_Tracking_widget_email_Customizer {
 					'class' => '',
 					'style' => '',
 					'placeholder' => __( $this->defaults['track_button_Text'], 'trackship-for-woocommerce' ),
-				),
-				//'active_callback' => array( $this, 'active_callback' ),				
+				),			
 			)
 		);
 		
@@ -288,7 +290,6 @@ class TSWC_Tracking_widget_email_Customizer {
 					15 => __( 'Normal', 'ast-pro' ),
 					20 => __( 'Large', 'ast-pro'  )
 				),
-				//'active_callback' => array( $this, 'active_callback' ),
 			)
 		) );
 				
@@ -306,7 +307,6 @@ class TSWC_Tracking_widget_email_Customizer {
 				'label' => __( 'Button color', 'trackship-for-woocommerce' ),
 				'section' => 'trackship_shipment_status_email_widget',
 				'type' => 'color',
-				//'active_callback' => array( $this, 'active_callback' ),
 			)
 		);
 		
@@ -324,7 +324,6 @@ class TSWC_Tracking_widget_email_Customizer {
 				'label' => __( 'Button font color', 'trackship-for-woocommerce' ),
 				'section' => 'trackship_shipment_status_email_widget',
 				'type' => 'color',
-				//'active_callback' => array( $this, 'active_callback' ),
 			)
 		);
 		
@@ -347,7 +346,6 @@ class TSWC_Tracking_widget_email_Customizer {
 					'min'   => 0,
 					'max'   => 10,
 				),
-				//'active_callback' => array( $this, 'active_callback' ),
 			)
 		));
 			
@@ -372,63 +370,95 @@ class TSWC_Tracking_widget_email_Customizer {
 		if ( ! self::is_own_preview_request() ) {
 			return;
 		}
-		include trackship_for_woocommerce()->get_plugin_path() . '/includes/customizer/preview/intransit_preview.php';		
+		include trackship_for_woocommerce()->get_plugin_path() . '/includes/customizer/preview/outfordelivery_preview.php';		
 		exit;		
 	}
 	
 	/**
-	 * Code for preview of in transit email
-	*/
-	public function preview_intransit_email() {
+	 * Code for preview of out for delivery email
+	*/	
+	public function preview_outfordelivery_email() {
 		// Load WooCommerce emails.
-		$preview_id = 1;;
+		$preview_id     = 1;
+		$order = trackship_customizer()->get_wc_order_for_preview( 'mockup' );
+		
+		$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_outfordelivery_email_settings', 'wcast_outfordelivery_email_heading', $this->defaults['wcast_outfordelivery_email_heading']);
+		$email_heading = str_replace( '{site_title}', $this->get_blogname(), $email_heading );
+		$email_heading =  str_replace( '{order_number}', $order->get_order_number(), $email_heading );
+		
+		$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_outfordelivery_email_settings', 'wcast_outfordelivery_email_content', $this->defaults['wcast_outfordelivery_email_content']);
+		
+		$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_outfordelivery_email_settings', 'wcast_outfordelivery_show_order_details', $this->defaults['wcast_outfordelivery_show_order_details']);	
+		
+		$wcast_show_shipping_address = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_outfordelivery_email_settings', 'wcast_outfordelivery_show_shipping_address', $this->defaults['wcast_outfordelivery_show_shipping_address']);
 		
 		$sent_to_admin = false;
 		$plain_text = false;
 		$email = '';
 		
+		
+		$mailer = WC()->mailer();
+				
 		// get the preview email subject
-		$email_heading = __( 'Out for Delivery', 'trackship-for-woocommerce' );
-						
-		//$shipment_status = trackship_for_woocommerce()->actions->get_shipment_status( $preview_id );
+		$email_heading = __( $email_heading, 'trackship-for-woocommerce' );
+		//ob_start();
 		
-		//echo '<pre>';print_r(trackship_for_woocommerce()->get_tracking_items( $preview_id ));echo '</pre>';
-		$shipment_status = array();
-		$shipment_status[0]['est_delivery_date'] = '9410803699300126968507';
-		$shipment_status[0]['status'] = 'out_for_delivery';
-		$shipment_status[0]['tracking_page'] = '#';
+		$message = wc_trackship_email_manager()->email_content($email_content, $preview_id, $order);
 		
-		$tracking_item = array();
-		$tracking_item[0]['tracking_provider'] = 'usps';
-		$tracking_item[0]['tracking_number'] = '9410803699300126968507';
-		$tracking_item[0]['date_shipped'] = '1623801600';
-		$tracking_item[0]['formatted_tracking_provider'] = 'USPS';
-		$tracking_item[0]['formatted_tracking_link'] = '#';
-		$tracking_item[0]['ast_tracking_link'] = '#';
-		$tracking_item[0]['tracking_provider_image'] = '';
+		$wcast_outfordelivery_analytics_link = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_outfordelivery_email_settings', 'wcast_outfordelivery_analytics_link', '');	
+				
+		if ( $wcast_outfordelivery_analytics_link ) {	
+			$regex = '#(<a href=")([^"]*)("[^>]*?>)#i';
+			$message = preg_replace_callback($regex, array( $this, '_appendCampaignToString'), $message);	
+		}
 		
+		$shipment_status = trackship_customizer()->get_wc_shipment_status_for_preview( 'out_for_delivery' );
+		$tracking_items = trackship_customizer()->get_tracking_items_for_preview();
+
 		$local_template	= get_stylesheet_directory() . '/woocommerce/emails/tracking-info.php';			
-		
 		if ( file_exists( $local_template ) && is_writable( $local_template ) ) {				
-			$message = wc_get_template_html( 'emails/tracking-info.php', array( 
-				'tracking_items' => $tracking_item,
+			$message .= wc_get_template_html( 'emails/tracking-info.php', array( 
+				'tracking_items' => $tracking_items,
 				'shipment_status' => $shipment_status,
-				'order_id' => 1,
+				'order_id' => $preview_id,
 				'show_shipment_status' => true,
 				'new_status' => 'out_for_delivery',
 			), 'woocommerce-advanced-shipment-tracking/', get_stylesheet_directory() . '/woocommerce/' );
 		} else {
-			$message = wc_get_template_html( 'emails/tracking-info.php', array( 
-				'tracking_items' => $tracking_item,
+			$message .= wc_get_template_html( 'emails/tracking-info.php', array( 
+				'tracking_items' => $tracking_items,
 				'shipment_status' => $shipment_status,
 				'order_id' => $preview_id,
 				'show_shipment_status' => true,
 				'new_status' => 'out_for_delivery',
 			), 'woocommerce-advanced-shipment-tracking/', trackship_for_woocommerce()->get_plugin_path() . '/templates/' );
 		}
-		$message = '<div id="ts-email-widget-wrapper">' . $message . '<div>';
+
+		if ( 1 == $wcast_show_order_details ) {			
+			$message .= wc_get_template_html(
+				'emails/tswc-email-order-details.php',
+				array(
+					'order'         => $order,
+					'sent_to_admin' => $sent_to_admin,
+					'plain_text'    => $plain_text,
+					'email'         => $email,
+				),
+				'woocommerce-advanced-shipment-tracking/', 
+				trackship_for_woocommerce()->get_plugin_path() . '/templates/'
+			);	
+		}				
 		
-		$mailer = WC()->mailer();
+		if ( 1 == $wcast_show_shipping_address ) {
+			$message .= wc_get_template_html(
+				'emails/shipping-email-addresses.php', array(
+					'order'         => $order,
+					'sent_to_admin' => $sent_to_admin,
+				),
+				'woocommerce-advanced-shipment-tracking/', 
+				trackship_for_woocommerce()->get_plugin_path() . '/templates/'
+			);
+		}
+		
 		// create a new email
 		$email = new WC_Email();
 		
@@ -436,9 +466,9 @@ class TSWC_Tracking_widget_email_Customizer {
 		add_filter( 'safe_style_css', array( trackship_customizer(), 'safe_style_css_callback' ), 10, 1 );
 		
 		// wrap the content with the email template and then add styles
-		$email_html = apply_filters( 'woocommerce_mail_content', $email->style_inline( $message ) );
+		$email_html = apply_filters( 'woocommerce_mail_content', $email->style_inline( $mailer->wrap_message( $email_heading, $message ) ) );
 		echo wp_kses_post( $email_html );
-	}
+	}	
 }
 
 /**

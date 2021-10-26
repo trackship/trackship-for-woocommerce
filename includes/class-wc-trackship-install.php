@@ -181,7 +181,7 @@ class WC_Trackship_Install {
 	public function update_analytics_table() {
 		global $wpdb;
 		$woo_trackship_shipment = $this->shipment_table;
-		$start_date = gmdate('Y-m-d 00:00:00', strtotime( 'today - ' .  60 . ' days' ) );
+		$start_date = gmdate( 'Y-m-d 00:00:00', strtotime( 'today - ' . 60 . ' days' ) );
 		$total_order = $wpdb->get_var("
 			SELECT 				
 				COUNT(*)
@@ -195,7 +195,7 @@ class WC_Trackship_Install {
 				AND shipment_status.meta_key IS NOT NULL
 				AND posts.post_date > '{$start_date}'
 		");
-		$total_cron = (int)($total_order/300) + 1;
+		$total_cron = ( int ) ( $total_order/300 ) + 1;
 		for ( $i = 1; $i <= $total_cron; $i++ ) {
 			as_schedule_single_action( time(), 'migrate_trackship_shipment_table' );
 		}
@@ -236,7 +236,7 @@ class WC_Trackship_Install {
 			$order = wc_get_order( $order_id );
 			$tracking_items = trackship_for_woocommerce()->get_tracking_items($order_id);
 			$shipment_status = $order->get_meta( 'shipment_status' );
-			foreach( (array) $tracking_items as $key => $item ){
+			foreach ( (array) $tracking_items as $key => $item ) {
 				if ( isset( $shipment_status[$key]['pending_status'] ) ) {
 					$ship_status = $shipment_status[$key]['pending_status'];
 				} else {
@@ -270,7 +270,7 @@ class WC_Trackship_Install {
 	public function update_ts_shipment_status_order_mete( $order_page ) {
 		
 		$wc_ast_api_key = get_option( 'wc_ast_api_key' ); 
-		if( !$wc_ast_api_key ) {
+		if ( !$wc_ast_api_key ) {
 			return;
 		}	
 		

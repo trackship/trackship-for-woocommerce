@@ -1,4 +1,7 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 /**
  * Handles email sending
  */
@@ -133,6 +136,7 @@ class WC_TrackShip_Email_Manager {
 				add_filter( 'wp_mail_from_name', array( $this, 'get_from_name' ) );
 				
 				$email_send = wp_mail( $recipient, $subject, $message, $email->get_headers() );
+				
 				$logger = wc_get_logger();
 				$context = array( 'source' => 'trackship_shipment_status_email_log' );
 				$logger->error( 'Order_Id: ' . $order_id . ' Shipment_Status: ' . $new_status . ' Email_Sent: ' . $email_send, $context );
@@ -144,6 +148,13 @@ class WC_TrackShip_Email_Manager {
 	 * Code for send delivered shipment status email
 	 */
 	public function delivered_shippment_status_email_trigger( $order_id, $order, $old_status, $new_status, $tracking_item, $shipment_status ) {	
+		
+		$toggle = get_option( 'all-shipment-status-delivered' );
+		$all_delivered = trackship_for_woocommerce()->ts_actions->is_all_shipments_delivered( $order_id );
+		
+		if ( $toggle && !$all_delivered ) {
+			return;
+		}
 		
 		$wcast_delivered_customizer_email = new TSWC_Delivered_Customizer_Email();		
 		
@@ -183,21 +194,29 @@ class WC_TrackShip_Email_Manager {
 				
 				$status = 'delivered_status';	
 				$message = $this->append_analytics_link($email_content, $status);
-								
+				
+				$tracking_items = array($tracking_item);
+				$shipment_statuses = array($shipment_status);
+				
+				if ( $toggle && $all_delivered ) {
+					$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id, false );
+					$shipment_statuses = get_post_meta( $order_id, 'shipment_status', true );
+				}
+				
 				if ( $wcast_show_tracking_details ) {
 					$local_template	= get_stylesheet_directory() . '/woocommerce/emails/tracking-info.php';			
 					if ( file_exists( $local_template ) && is_writable( $local_template ) ) {				
 						$message .= wc_get_template_html( 'emails/tracking-info.php', array( 
-							'tracking_items' => array($tracking_item),
-							'shipment_status' => array($shipment_status),
+							'tracking_items' => $tracking_items,
+							'shipment_status' => $shipment_statuses,
 							'order_id' => $order_id,
 							'show_shipment_status' => false,
 							'new_status' => $new_status,
 						), 'woocommerce-advanced-shipment-tracking/', get_stylesheet_directory() . '/woocommerce/' );
 					} else {
 						$message .= wc_get_template_html( 'emails/tracking-info.php', array( 
-							'tracking_items' => array($tracking_item),
-							'shipment_status' => array($shipment_status),
+							'tracking_items' => $tracking_items,
+							'shipment_status' => $shipment_statuses,
 							'order_id' => $order_id,
 							'show_shipment_status' => false,
 							'new_status' => $new_status,
@@ -213,14 +232,16 @@ class WC_TrackShip_Email_Manager {
 					}
 					
 					if ( $tpi_order ) {
-						
+						if ( $toggle && $all_delivered ) {
+							$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id, false );
+						}
 						$message.= wc_get_template_html(
 							'emails/tswc-tpi-email-order-details.php',
 							array(
 								'order'         => $order,
 								'sent_to_admin' => $sent_to_admin,
 								'plain_text'    => $plain_text,
-								'tracking_items'=> array($tracking_item),
+								'tracking_items'=> $tracking_items,
 								'email'         => '',
 							),
 							'woocommerce-advanced-shipment-tracking/', 
@@ -262,7 +283,7 @@ class WC_TrackShip_Email_Manager {
 				add_filter( 'wp_mail_from_name', array( $this, 'get_from_name' ) );
 				
 				$email_send = wp_mail( $recipient, $subject, $message, $email->get_headers() );
-								
+				
 				$logger = wc_get_logger();
 				$context = array( 'source' => 'trackship_shipment_status_email_log' );
 				$logger->error( 'Order_Id: ' . $order_id . ' Shipment_Status: ' . $new_status . ' Email_Sent: ' . $email_send, $context );

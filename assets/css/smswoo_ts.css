@@ -7,7 +7,10 @@
 	margin: 0;
 }
 .smswoo-row.smswoo-shipment-row {
-	border-bottom: 1px solid #e8e8e8;
+	border: 1px solid #e8e8e8;
+	margin-bottom: 10px;
+	background: #fff;
+	border-radius: 5px;
 }
 .shipment-status-sms-section .smswoo-top {
 	padding: 15px;
@@ -17,14 +20,15 @@
 	justify-content: space-between;
 	align-items: center;
 }
-.shipment-status-sms-section span.smswoo-label {
-	margin-left: 15px;
-	color: #fff;
-	padding: 6px 11px;
-	border-radius: 3px;
+.shipment-status-sms-section .smswoo-top img {
 	vertical-align: middle;
-	display: inline-block;
-	background: grey;
+}
+.shipment-status-sms-section span.smswoo-label {
+	margin: 0 10px;
+    display: inline-block;
+    font-weight: 600;
+    font-size: 14px;
+	vertical-align: middle;
 }
 .shipment-status-sms-section .smswoo-top-click {
 	position: absolute;
@@ -35,14 +39,6 @@
 }
 .shipment-status-sms-section .smswoo-right {
 	float: right;
-}
-.shipment-status-sms-section .smswoo-shipment-sendto span {
-	border: 1px solid #bdbdbd;
-	padding: 0px 10px;
-	border-radius: 4px;
-	font-size: 13px;
-	line-height: 28px;
-	display: inline-block;
 }
 .shipment-status-sms-section .smawoo-textarea-placeholder {
 	width: 40%;
@@ -86,29 +82,6 @@ code.btn.clipboard.placeholder {
 }
 .shipment-status-sms-section .smswoo-right .button-smswoo {
 	padding: 2px 5px;
-}
-/* AST order status label color*/ 
-.smswoo-row .smswoo-top .smswoo_trackship_status_in_transit_sms_template {
-	background-color: #7ad1cc;
-}
-.smswoo-row .smswoo-top .smswoo_trackship_status_on_hold_sms_template {
-	background-color: #feeb77;
-	color: #3c4858 !important;
-}
-.smswoo-row .smswoo-top .smswoo_trackship_status_return_to_sender_sms_template {
-	background-color: #A8414A;
-}
-.smswoo-row .smswoo-top .smswoo_trackship_status_available_for_pickup_sms_template {
-	background-color: #ff9800;
-}
-.smswoo-row .smswoo-top .smswoo_trackship_status_out_for_delivery_sms_template {
-	background-color: #95CB65;
-}
-.smswoo-row .smswoo-top .smswoo_trackship_status_delivered_sms_template {
-	background-color: #09d3ac;
-}
-.smswoo-row .smswoo-top .smswoo_trackship_status_failure_sms_template {
-	background-color: #f44336;
 }
 /** Toggle CSS start**/
 input[type=checkbox].tgl {
@@ -158,6 +131,7 @@ input[type=checkbox].tgl {
 	background: #f2f2f2;
 	border: 1px solid #bdbdbd;
 	border-radius: 2em;
+	vertical-align: text-bottom;
 }
 .tgl-flat + .tgl-btn:after {
 	-webkit-transition: all .2s ease;
@@ -169,10 +143,17 @@ input[type=checkbox].tgl {
 .tgl-flat:checked + .tgl-btn {
 	border: 1px solid #ccc;
 	background: #fff;
+	vertical-align: text-bottom;
 }
 .tgl-flat:checked + .tgl-btn:after {
 	left: 55%;
 	background: #09d3ac;
+}
+.rtl .tgl-flat:checked + .rtl .tgl-btn:after {
+  left: 55%;
+}
+.rtl .tgl + .tgl-btn:after{
+	right:0;
 }
 /** Toggle CSS  over**/
 /* Animations to fade the snackbar in and out */

@@ -13,37 +13,72 @@
 })( jQuery );
 
 /*ajax call for settings tab form save*/
-jQuery(document).on("submit", ".zorem_plugin_setting_tab_form", function(){
+jQuery(document).on("click", ".zorem_plugin_setting_tab_form .woocommerce-save-button", function(){
 	'use strict';
-	jQuery(".zorem_plugin_setting_tab_form").block({
-		message: null,
-		overlayCSS: {
-			background: "#fff",
-			opacity: 0.6
-		}	
-	});
-	var form = jQuery(this);
-	jQuery.ajax({
-		url: ajaxurl,
-		data: form.serialize(),
-		type: 'POST',
-		dataType:"json",	
-		success: function(response) {
-			jQuery(".zorem_plugin_setting_tab_form").unblock();
-			jQuery( '.smswoo-top.smswoo-open .smswoo-top-click' ).trigger('click');
-			jQuery(document).trackship_snackbar( trackship_script.i18n.data_saved );
-		},
-		error: function(response) {
-			console.log(response);
-		}
-	});
+	save_sms_settings();
 	return false;
 });
 
 /*ajax call for settings tab form toggle*/
 jQuery(document).on("change", ".zorem_plugin_setting_tab_form .tgl-flat", function(){
 	'use strict';
-	jQuery(this).parents('form').submit();
+	save_sms_settings();
+});
+
+function save_sms_settings(){
+	'use strict';
+	var form = jQuery( '.zorem_plugin_setting_tab_form' );
+	form.find(".spinner").addClass("active");
+	jQuery.ajax({
+		url: ajaxurl,
+		data: form.serialize(),
+		type: 'POST',
+		dataType:"json",	
+		success: function(response) {
+			form.find(".spinner").removeClass("active");
+			jQuery( '.smswoo-top.smswoo-open .smswoo-top-click' ).trigger('click');
+			jQuery(document).trackship_snackbar( trackship_script.i18n.data_saved );
+			jQuery( '.heading_panel' ).removeClass( 'active' );
+			jQuery( '.heading_panel' ).siblings( '.panel_content' ).removeClass('active').slideUp( 'slow' );
+			jQuery( '.heading_panel' ).find('span.dashicons').addClass('dashicons-arrow-right-alt2');
+			jQuery( '.heading_panel' ).find('button.button-primary').hide();
+		},
+		error: function(response) {
+			console.log(response);
+		}
+	});
+	return false;
+}
+
+/*ajex call for general tab form save*/	 
+jQuery(document).on("change", "#all-shipment-status-sms-delivered", function(){
+	"use strict";
+	
+	if(jQuery(this).prop("checked") == true){
+		var checked = 1;		
+	} else {
+		var checked = 0;		
+	}
+	
+	var ajax_data = {
+		action: 'update_all_shipment_status_sms_delivered',
+		sms_delivered: checked,
+		security: jQuery( '#delivered_sms' ).val()
+	};
+	
+	jQuery.ajax({
+		url: ajaxurl,
+		data: ajax_data,		
+		type: 'POST',
+		success: function(response) {	
+			jQuery(document).trackship_snackbar( trackship_script.i18n.data_saved );
+		},
+		error: function(response) {
+			console.log(response);
+			jQuery(document).trackship_snackbar_warning( trackship_script.i18n.data_saved );		
+		}
+	});
+	return false;
 });
 
 /** show/ hide event **/

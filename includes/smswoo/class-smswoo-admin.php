@@ -47,6 +47,8 @@ class tswc_smswoo_admin {
 		//hook into AST for shipment SMS notification
 		add_action( 'shipment_status_sms_section', array( $this, 'shipment_status_notification_tab'), 10, 1 );
 		
+		//Ajax save delivered email
+		add_action( 'wp_ajax_update_all_shipment_status_sms_delivered', array( $this, 'update_all_shipment_status_sms_delivered') );		
 	}
 	
 	public function build_html($template,$data = NULL) {
@@ -82,7 +84,7 @@ class tswc_smswoo_admin {
 							<th colspan="2">
 									<?php if ( ( $button == 'true' ) ) {?>
 										<div style="float:right;">
-											<div class="spinner workflow_spinner" style="float:none"></div>
+											<div class="spinner workflow_spinner"></div>
 											<button name="save" class="button-primary button-trackship btn_large button-primary woocommerce-save-button button-smswoo" type="submit" ><?php esc_html_e( 'Save Changes', 'trackship-for-woocommerce' )?></button>
 										</div>
 									<?php } ?>
@@ -128,7 +130,7 @@ class tswc_smswoo_admin {
 							<td colspan="2">
                                 <fieldset>
                                     <button class="button-primary btn_green2 button-smswoo <?php echo $array['button_class'];?>" id="<?php echo $id?>" type="button"><?php echo $array['title'];?></button>
-                                    <div class="spinner test_sms_spinner" style="float:none"></div>
+                                    <div class="spinner test_sms_spinner"></div>
                                 </fieldset>
                             </td>
 						</tr>
@@ -170,7 +172,7 @@ class tswc_smswoo_admin {
 							</label><p class="description"><?php echo (isset($array['desc']))? $array['desc']: ''?></p>
 						<?php } elseif( $array['type'] == 'textarea' ){ ?>
 							<fieldset>
-								<textarea rows="3" cols="20" class="input-text regular-input" type="textarea" name="<?php echo $id?>" id="<?php echo $id?>" style="" placeholder="<?php if(!empty($array['placeholder'])){echo $array['placeholder'];} ?>"><?php echo get_option( $id, isset($array['default']) ? $array['default'] : false )?></textarea>
+								<textarea rows="3" cols="20" class="input-text regular-input" type="textarea" name="<?php echo $id?>" id="<?php echo $id?>" placeholder="<?php if(!empty($array['placeholder'])){echo $array['placeholder'];} ?>"><?php echo get_option( $id, isset($array['default']) ? $array['default'] : false )?></textarea>
 							</fieldset>
                         <?php }  elseif( isset( $array['type'] ) && $array['type'] == 'dropdown' ){?>
                         	<?php
@@ -346,7 +348,7 @@ class tswc_smswoo_admin {
 	*
 	* @since   1.0
 	*/
-	function smswoo_settings_tab_save_callback(){
+	public function smswoo_settings_tab_save_callback(){
 		
 		check_ajax_referer( 'smswoo_settings_tab', 'smswoo_settings_tab_nonce' );
 		
@@ -416,6 +418,16 @@ class tswc_smswoo_admin {
 	}
 	
 	/*
+	* Save delivered email setting
+	*/
+	public function update_all_shipment_status_sms_delivered() {
+		check_ajax_referer( 'all_shipment_delivered', 'security' );
+		$all_status = isset( $_POST['sms_delivered'] ) ? wc_clean( $_POST['sms_delivered'] ) : '';
+		update_option( 'all-shipment-status-sms-delivered', $all_status );
+		exit;
+	}
+	
+	/*
 	*
 	*/
 	public function shipment_status_notification_tab(){
@@ -429,49 +441,66 @@ class tswc_smswoo_admin {
 		$checked = '';
 		?>
 		<div class="smswoo-container">
-        	<?php foreach( (array)$arrays as $id => $array ){
+			<?php foreach ( (array) $arrays as $id => $array ) {
 				$enabled_customer = $array['id'] . "_enabled_customer";
 				$enabled_admin = $array['id'] . "_enabled_admin";
-				  
+				
 				$checked_customer = get_option( $enabled_customer );
 				$checked_admin = get_option( $enabled_admin );
 				?>
 				<div class="smswoo-row smswoo-shipment-row <?php echo ( $checked_customer ) ? 'enable_customer' : ''?> <?php echo ( $checked_admin ) ? 'enable_admin' : ''?>">
-                	<div class="smswoo-top">
-                    	<div class="smswoo-top-click"></div>
-                        <div>
-                            <span class="smswoo-inlineblock">
-                                <input type="hidden" name="<?php echo $enabled_customer?>" value="0"/>
-                                <input type="checkbox" id="<?php echo $enabled_customer?>" name="<?php echo $enabled_customer?>" class="tgl tgl-flat smswoo-shipment-checkbox" value="1" <?php echo $checked_customer ? 'checked' : ''?> data-row_class="enable_customer" />
-                                <label class="tgl-btn" for="<?php echo $enabled_customer?>"></label>
-                            </span>
-                            <span class="smswoo-label <?php echo $array['id']?>"><?php echo $array['label'];?></span>
-                        </div>
-                        <span class="smswoo-right smswoo-mr20 smswoo-shipment-sendto">
-                        	<span class="smswoo-shipment-sendto-customer btn_ts_transparent btn_outline"><?php echo __( 'Customize', 'trackship-for-woocommerce' )?></span>
-                            <button name="save" class="button-primary woocommerce-save-button button-smswoo hide button-trackship" type="submit" value="Save changes"><?php echo __( 'Save & Close', 'trackship-for-woocommerce' )?></button>
-                        </span>
-                    </div>
-                    <div class="smswoo-bottom">
-                        <div class="smswoo-ast-textarea">
-                            <div class="smawoo-textarea-placeholder">
-                                <textarea class="smswoo-textarea" name="<?php echo $array['id']?>" id="<?php echo $array['id']?>" cols="30" rows="5"><?php echo get_option( $array['id'], $array['default'] )?></textarea>
-                                <span class="mdl-list__item-secondary-action smswoo-inlineblock">
-                                <label class="mdl-switch " for="<?php echo $enabled_admin?>" >
-                                    <?php echo __( 'Send to admin', 'trackship-for-woocommerce' )?>
-                                    <input type="hidden" name="<?php echo $enabled_admin?>" value="0"/>
-                                    <input type="checkbox" id="<?php echo $enabled_admin?>" name="<?php echo $enabled_admin?>" class="mdl-switch__input smswoo-shipment-checkbox" value="1" <?php echo $checked_admin ? 'checked' : ''?> data-row_class="enable_admin" />
+					<div class="smswoo-top">
+						<div class="smswoo-top-click"></div>
+						<div>
+							<?php $image_name = 'in_transit' == $array['slug'] ? 'in-transit' : $array['slug']; ?>
+							<?php $image_name = 'available_for_pickup' == $image_name ? 'available-for-pickup' : $image_name; ?>
+							<?php $image_name = 'out_for_delivery' == $image_name ? 'out-for-delivery' : $image_name; ?>
+							<?php $image_name = in_array( $image_name, array( 'failure', 'exception' ) ) ? 'failure' : $image_name; ?> 
+							<?php $image_name = 'on_hold' == $image_name ? 'on-hold' : $image_name; ?>
+							<?php $image_name = 'return_to_sender' == $image_name ? 'return-to-sender' : $image_name; ?>
+							<?php $image_name = 'delivered' == $image_name ? 'delivered' : $image_name; ?>
+							<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/<?php echo esc_html( $image_name ); ?>.png">
+							<span class="smswoo-label <?php echo $array['id']?>"><?php echo $array['label'];?></span>
+							<?php if ( 'delivered' == $array['slug'] ) { ?>
+								<label style="position:relative;">
+									<input type="hidden" name="all-shipment-status-sms-delivered" value="no">
+									<input name="all-shipment-status-sms-delivered" type="checkbox" id="all-shipment-status-sms-delivered" value="yes" <?php echo get_option( 'all-shipment-status-sms-delivered' ) == 1 ? 'checked' : '' ?> >
+									<?php echo __( 'Send only when all shipments for the order are delivered', 'trackship-for-woocommerce' ); ?>
+									<?php $nonce = wp_create_nonce( 'all_shipment_delivered'); ?>
+									<input type="hidden" id="delivered_sms" name="delivered_sms" value="<?php echo esc_attr( $nonce ); ?>" />
 								</label>
-                            </span>
-                            </div>
-                            <div class="zorem_plugin_sidebar smswoo_sidebar">
-                                <?php echo $this->build_html( "plugin_sidebar_placeholders" );?>
-                            </div>
-                        </div>    
+						<?php } ?>
+						</div>
+                        <span class="smswoo-right smswoo-mr20 smswoo-shipment-sendto">
+							<span class="smswoo-shipment-sendto-customer btn_ts_transparent btn_outline"><?php echo __( 'Edit', 'trackship-for-woocommerce' )?></span>
+							<span class="smswoo-inlineblock">
+								<input type="hidden" name="<?php echo $enabled_customer?>" value="0"/>
+								<input type="checkbox" id="<?php echo $enabled_customer?>" name="<?php echo $enabled_customer?>" class="tgl tgl-flat smswoo-shipment-checkbox" value="1" <?php echo $checked_customer ? 'checked' : ''?> data-row_class="enable_customer" />
+								<label class="tgl-btn" for="<?php echo $enabled_customer?>"></label>
+							</span>
+							<button name="save" class="button-primary woocommerce-save-button button-smswoo hide button-trackship" type="submit" value="Save changes"><?php echo __( 'Save & close', 'trackship-for-woocommerce' )?></button>
+						</span>
+					</div>
+					<div class="smswoo-bottom">
+						<div class="smswoo-ast-textarea">
+							<div class="smawoo-textarea-placeholder">
+								<textarea class="smswoo-textarea" name="<?php echo $array['id']?>" id="<?php echo $array['id']?>" cols="30" rows="5"><?php echo get_option( $array['id'], $array['default'] )?></textarea>
+								<span class="mdl-list__item-secondary-action smswoo-inlineblock">
+								<label class="mdl-switch " for="<?php echo $enabled_admin?>" >
+									<?php echo __( 'Send to admin', 'trackship-for-woocommerce' )?>
+									<input type="hidden" name="<?php echo $enabled_admin?>" value="0"/>
+									<input type="checkbox" id="<?php echo $enabled_admin?>" name="<?php echo $enabled_admin?>" class="mdl-switch__input smswoo-shipment-checkbox" value="1" <?php echo $checked_admin ? 'checked' : ''?> data-row_class="enable_admin" />
+								</label>
+							</span>
+							</div>
+							<div class="zorem_plugin_sidebar smswoo_sidebar">
+								<?php echo $this->build_html( "plugin_sidebar_placeholders" );?>
+							</div>
+						</div>    
                         <div>
                             	
                         </div>
-                    </div>
+					</div>
 					<?php //echo '<pre>';print_r($array);echo '</pre>';?>
 				</div>
 			<?php } ?>
@@ -503,6 +532,7 @@ class tswc_smswoo_admin {
 			$slug = 'wc-' === substr( $slug, 0, 3 ) ? substr( $slug, 3 ) : $slug;
 
 			$settings[] = [
+				'slug'		=> $slug,
 				'id'		=> 'smswoo_trackship_status_' . $slug . '_sms_template',
 				'label'		=> sprintf( '%s', $label ),
 				'css'		=> 'min-width:500px;',
