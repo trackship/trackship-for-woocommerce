@@ -94,29 +94,33 @@ class WC_Trackship_Admin {
 	}
 	
 	public function get_admin_tracking_widget_cb() {
-		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+		if ( !current_user_can( 'manage_product' ) && !current_user_can( 'manage_woocommerce' ) ) {
 			exit( 'You are not allowed' );
 		}
+		$page = isset( $_POST['page'] ) ? sanitize_text_field( $_POST['page'] ) : '' ;
+		$tracking_id = isset( $_POST['tracking_id'] ) && 'wcpv-vendor-order' == $page ? sanitize_text_field( $_POST['tracking_id'] ) : null ;
 		$order_id = isset( $_POST['order_id'] ) ? sanitize_text_field( $_POST['order_id'] ) : '' ;
 		$order = wc_get_order( $order_id );
 		check_ajax_referer( 'tswc-' . $order_id, 'security' );
 		
-		if ( current_user_can( 'manage_woocommerce' ) ) {
+		if ( current_user_can( 'manage_product' ) || current_user_can( 'manage_woocommerce' ) ) {
 			$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id );
 			?>
             <div class="ts4wc_tracking-widget-header">
 				<span style="line-height: 30px; font-size: 14px;"><?php echo 'Order #' . esc_html( $order->get_order_number() ); ?></span>
-				<button class="button btn_outline copy_tracking_page trackship-tip" title="Copy the secure link to the Tracking page" style="border: 0;float:right;" data-tracking_page_link=<?php echo esc_url( $tracking_page_link ); ?> >
-					<span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
-					<span style="vertical-align: middle;line-height: 30px;" ><?php esc_html_e( 'Copy Tracking page', 'trackship-for-woocommerce' ); ?></span>
-				</button>
-				<button class="button btn_outline copy_view_order_page trackship-tip" title="Copy the secure link to the View Order details page" style="border: 0;float:right;" data-view_order_link=<?php echo esc_url( $order->get_view_order_url() ); ?> >
-					<span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
-					<span style="vertical-align: middle;line-height: 30px;" ><?php esc_html_e( 'Copy View order page', 'trackship-for-woocommerce' ); ?></span>
-				</button>
+				<?php if ( 'wcpv-vendor-order' != $page ) {  ?>
+					<button class="button btn_outline copy_tracking_page trackship-tip" title="Copy the secure link to the Tracking page" style="border: 0;float:right;" data-tracking_page_link=<?php echo esc_url( $tracking_page_link ); ?> >
+						<span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
+						<span style="vertical-align: middle;line-height: 30px;" ><?php esc_html_e( 'Copy Tracking page', 'trackship-for-woocommerce' ); ?></span>
+					</button>
+					<button class="button btn_outline copy_view_order_page trackship-tip" title="Copy the secure link to the View Order details page" style="border: 0;float:right;" data-view_order_link=<?php echo esc_url( $order->get_view_order_url() ); ?> >
+						<span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
+						<span style="vertical-align: middle;line-height: 30px;" ><?php esc_html_e( 'Copy View order page', 'trackship-for-woocommerce' ); ?></span>
+					</button>
+				<?php } ?>
 			</div>
 			<?php
-			trackship_for_woocommerce()->front->show_tracking_page_widget( $order_id );
+			trackship_for_woocommerce()->front->admin_tracking_page_widget( $order_id, $tracking_id );
 		} else {
 			esc_html_e( 'Please refresh the page and try again.', 'trackship-for-woocommerce' );
 		}
@@ -244,11 +248,13 @@ class WC_Trackship_Admin {
 		
 		add_menu_page( __( 'TrackShip', 'trackship-for-woocommerce' ), __( 'TrackShip', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), $icon, '55.5' );
 		
-		add_submenu_page( 'trackship-dashboard', 'Dashboard', __( 'Dashboard', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), 1 );
-		
-		add_submenu_page( 'trackship-dashboard', 'Shipments', __( 'Shipments', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-shipments', array( $this, 'shipments_page_callback' ), 1 );
-		
-		add_submenu_page( 'trackship-dashboard', 'Settings', __( 'Settings', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
+		if ( trackship_for_woocommerce()->is_trackship_connected() ) {
+			add_submenu_page( 'trackship-dashboard', 'Dashboard', __( 'Dashboard', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), 1 );
+			
+			add_submenu_page( 'trackship-dashboard', 'Shipments', __( 'Shipments', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-shipments', array( $this, 'shipments_page_callback' ), 1 );
+			
+			add_submenu_page( 'trackship-dashboard', 'Settings', __( 'Settings', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
+		}
 		
 	}
 	
@@ -301,7 +307,7 @@ class WC_Trackship_Admin {
 							<div class="woocommerce trackship_admin_layout">
 								<div class="trackship_admin_content" >
 									<div class="trackship_nav_div">	
-										<?php include 'trackship-integration.php'; ?>
+										<?php include 'views/trackship-integration.php'; ?>
 									</div>
 								</div>
 							</div>
@@ -320,12 +326,13 @@ class WC_Trackship_Admin {
 		
 		check_ajax_referer( 'wc_ast_tools', 'security' );
 		$start_date = wc_clean( $_POST['selected_option'] );
+		$end_date = gmdate( 'Y-m-d' );
 		
 		global $wpdb;
 		$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
-		$total_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipping_date > %s", $start_date ) );
-		$active_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipment_status NOT LIKE ( %s ) AND shipping_date > %s", '%delivered%', $start_date ) );
-		$delivered_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipment_status LIKE ( %s ) AND shipping_date > %s", '%delivered%', $start_date ) );
+		$total_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipping_date BETWEEN %s AND %s", $start_date, $end_date ) );
+		$active_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipment_status NOT LIKE ( %s ) AND shipping_date BETWEEN %s AND %s", '%delivered%', $start_date, $end_date ) );
+		$delivered_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipment_status LIKE ( %s ) AND shipping_date BETWEEN %s AND %s", '%delivered%', $start_date, $end_date ) );
 		$tracking_issues = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row	
 			WHERE 
 				shipment_status NOT LIKE ( %s )
@@ -335,8 +342,8 @@ class WC_Trackship_Admin {
 				AND shipment_status NOT LIKE ( '%return_to_sender%')
 				AND shipment_status NOT LIKE ( '%available_for_pickup%')
 				AND shipment_status NOT LIKE ( '%exception%')
-				AND shipping_date > %s
-		", '%delivered%', $start_date ) );
+				AND shipping_date BETWEEN %s AND %s
+		", '%delivered%', $start_date, $end_date ) );
 		
 		$result['total_shipment']		= $total_shipment;
 		$result['active_shipment']		= $active_shipment;
