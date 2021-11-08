@@ -99,7 +99,19 @@ class WC_TrackShip_Front {
 		$order = wc_get_order( $order_id );
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 		$shipment_status = get_post_meta( $order->get_id(), 'shipment_status', true );
-		$this->display_tracking_page( $order_id, $tracking_items, $shipment_status );
+		$this->display_tracking_page( $order_id, $tracking_items, $shipment_status );	
+	}
+	
+	public function admin_tracking_page_widget( $order_id, $tracking_id ) {
+		$order = wc_get_order( $order_id );
+		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
+		foreach ( $tracking_items as $key => $tracking_item ) {
+			if ( $tracking_item['tracking_id'] != $tracking_id && null != $tracking_id ) {
+				unset($tracking_items[$key]);
+			}
+		}
+		$shipment_status = get_post_meta( $order->get_id(), 'shipment_status', true );
+		$this->display_tracking_page( $order_id, $tracking_items, $shipment_status );	
 	}
 			
 	/**
@@ -390,7 +402,7 @@ class WC_TrackShip_Front {
 							</p>
 						<?php } ?>
 					</div>
-					<div class="tracking-detail col <?php echo 't_layout_1' != $tracking_page_layout ? 'tracking-layout-2' : ''; ?> ">
+					<div class="tracking-detail col <?php echo !in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking-layout-2' : ''; ?> ">
 						<div class="shipment-content">
 						<?php
 						
@@ -446,7 +458,7 @@ class WC_TrackShip_Front {
 		
 		$tracking_page_layout = get_option( 'wc_ast_select_tracking_page_layout', 't_layout_1' );
 		
-		if ( 't_layout_1' == $tracking_page_layout ) {
+		if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ) {
 			$width = '0';
 		} else {
 			if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'unknown', 'carrier_unsupported', 'balance_zero' ) ) ) {
@@ -462,10 +474,10 @@ class WC_TrackShip_Front {
 			}
 		}
 		?>
-		<div class="tracker-progress-bar <?php esc_html_e( 't_layout_1' == $tracking_page_layout ? 'tracking_layout_1' : '' ); ?>">
+		<div class="tracker-progress-bar <?php echo in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking_icon_layout ' . $tracking_page_layout : ''; ?>">
 			<div class="progress <?php esc_html_e( $tracker->ep_status ); ?>">
 				<div class="progress-bar <?php esc_html_e( $tracker->ep_status ); ?>" style="width: <?php esc_html_e( $width ); ?>;"></div>
-				<?php if ( 't_layout_1' == $tracking_page_layout ) { ?>
+				<?php if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ) { ?>
 					<div class="progress-icon icon1"></div>
 					<div class="progress-icon icon2"></div>
 					<div class="progress-icon icon3"></div>

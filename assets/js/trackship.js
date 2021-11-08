@@ -507,6 +507,8 @@ jQuery(document).on( "click", ".open_tracking_details", function(){
 		action:		'get_admin_tracking_widget',
 		order_id:	jQuery(this).data('orderid'),
 		security:	jQuery(this).data('nonce'),
+		page:		jQuery(this).data('page'),
+		tracking_id:jQuery(this).data('tracking_id'),
 	}
 	jQuery.ajax({
 		url: ajaxurl,
