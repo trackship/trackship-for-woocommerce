@@ -135,72 +135,79 @@ span.wc_order_id {
 .tracking-layout-2 .tracker-progress-bar {
 	margin: 20px 0;
 }
-/**** Layout 1 Progressbar CSS ***/
-.tracker-progress-bar.tracking_layout_1 .progress {
+/**** Layout 1 and 3 Progressbar CSS ***/
+.tracker-progress-bar.tracking_icon_layout .progress {
 	height: 5px;
 	border-radius: 10px;
 }
-.tracker-progress-bar.tracking_layout_1 .progress .progress-bar:before {
+.tracker-progress-bar.tracking_icon_layout .progress .progress-bar:before {
 	display: inline-block;
 	position: absolute;
 	width: 30px;
 	height: 30px;
 }
-.tracking_layout_1 .progress .progress-icon {
+.tracking_icon_layout .progress .progress-icon {
 	width: 40px;
 	height: 40px;
 	position: absolute;
 	top: -15px;
 }
 /* icon - 1 */
-.tracking_layout_1 .progress .progress-icon.icon1 {
-	content: url(icons/pre_transit-gray.png);
+.tracking_icon_layout .progress .progress-icon.icon1 {
 	left: 0;
 }
-.tracking_layout_1 .progress.pre_transit .progress-icon.icon1 {
+.tracking_icon_layout.t_layout_1 .progress .progress-icon.icon1 {
+	content: url(icons/pre_transit-gray.png);
+}
+.tracking_icon_layout .progress.pre_transit .progress-icon.icon1 {
 	content: url(icons/pre-transit.png);
 }
-.tracking_layout_1 .progress.failure .progress-icon.icon1 {
+.tracking_icon_layout .progress.failure .progress-icon.icon1 {
 	content: url(icons/failure.png);
 }
-.tracking_layout_1 .progress.pending_trackship .progress-icon.icon1, .tracking_layout_1 .progress.pending .progress-icon.icon1, .tracking_layout_1 .progress.unknown .progress-icon.icon1, .tracking_layout_1 .progress.carrier_unsupported .progress-icon.icon1, .tracking_layout_1 .progress.balance_zero .progress-icon.icon1 {
+.tracking_icon_layout .progress.pending_trackship .progress-icon.icon1, .tracking_icon_layout .progress.pending .progress-icon.icon1, .tracking_icon_layout .progress.unknown .progress-icon.icon1, .tracking_icon_layout .progress.carrier_unsupported .progress-icon.icon1, .tracking_icon_layout .progress.balance_zero .progress-icon.icon1, .tracking_icon_layout .progress.expired .progress-icon.icon1, .tracking_icon_layout .progress.label_cancelled .progress-icon.icon1, .tracking_icon_layout .progress.unauthorized .progress-icon.icon1, .tracking_icon_layout .progress.connection_issue .progress-icon.icon1, .tracking_icon_layout .progress.invalid_tracking .progress-icon.icon1 {
 	content: url(icons/shipped-color.png);
 }
 /* icon - 2 */
-.tracking_layout_1 .progress .progress-icon.icon2 {
-	content: url(icons/in_transit-gray.png);
+.tracking_icon_layout .progress .progress-icon.icon2 {
 	left: 30%;
 }
-.tracking_layout_1 .progress.in_transit .progress-icon.icon2 {
+.tracking_icon_layout.t_layout_1 .progress .progress-icon.icon2 {
+	content: url(icons/in_transit-gray.png);
+}
+.tracking_icon_layout .progress.in_transit .progress-icon.icon2 {
 	content: url(icons/in-transit.png);
 }
-.tracking_layout_1 .progress.on_hold .progress-icon.icon2 {
+.tracking_icon_layout .progress.on_hold .progress-icon.icon2 {
 	content: url(icons/on-hold.png);
 }
 /* icon - 3 */
-.tracking_layout_1 .progress .progress-icon.icon3 {
-	content: url(icons/out_for_delivery-gray.png);
+.tracking_icon_layout .progress .progress-icon.icon3 {
 	left: 60%;
 }
-.tracking_layout_1 .progress.out_for_delivery .progress-icon.icon3 {
+.tracking_icon_layout.t_layout_1 .progress .progress-icon.icon3 {
+	content: url(icons/out_for_delivery-gray.png);
+}
+.tracking_icon_layout .progress.out_for_delivery .progress-icon.icon3 {
 	content: url(icons/out-for-delivery.png);
 }
-.tracking_layout_1 .progress.available_for_pickup .progress-icon.icon3 {
+.tracking_icon_layout .progress.available_for_pickup .progress-icon.icon3 {
 	content: url(icons/available-for-pickup.png);
 }
-.tracking_layout_1 .progress.return_to_sender .progress-icon.icon3 {
+.tracking_icon_layout .progress.return_to_sender .progress-icon.icon3 {
 	content: url(icons/return-to-sender.png);
 }
-.tracking_layout_1 .progress.exception .progress-icon.icon3 {
+.tracking_icon_layout .progress.exception .progress-icon.icon3 {
 	content: url(icons/failure.png);
 }
 /* icon - 4 */
-.tracking_layout_1 .progress .progress-icon.icon4 {
+.tracking_icon_layout.t_layout_1 .progress .progress-icon.icon4 {
 	content: url(icons/delivered-gray.png);
 	right: 0;
 }
-.tracking_layout_1 .progress.delivered .progress-icon.icon4 {
+.tracking_icon_layout .progress.delivered .progress-icon.icon4 {
 	content: url(icons/delivered.png);
+	right: 0;
 }
 /**** Layout 2 CSS ***/
 .tracker-progress-bar .progress {
