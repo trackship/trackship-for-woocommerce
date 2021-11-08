@@ -99,9 +99,8 @@ class WC_Trackship_Shipments {
 		$limit = 'limit ' . sanitize_text_field($_POST['start']).', '.sanitize_text_field($_POST['length']);
 		$search_bar = isset( $_POST['search_bar'] ) ? sanitize_text_field($_POST['search_bar']) : false;
 		
-		$late_shipments_email_settings = get_option( 'late_shipments_email_settings' );
-		$wcast_late_shipments_days = isset( $late_shipments_email_settings['wcast_late_shipments_days'] ) ? $late_shipments_email_settings['wcast_late_shipments_days'] : '7';
-		$days = $wcast_late_shipments_days - 1 ;
+		$late_ship_day = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_days', 7 );
+		$days = $late_ship_day - 1 ;
 		$acive_shipment_status = $_POST['active_shipment'] ;
 		
 		if ( $acive_shipment_status == 'active' ) {
@@ -167,7 +166,7 @@ class WC_Trackship_Shipments {
 			$shipping_length = $value->shipping_length ? $shipping_length : '';
 			
 			$late_class = 'delivered' == $value->shipment_status ? '' : 'not_delivered' ;
-			$late_shipment = $wcast_late_shipments_days <= $value->shipping_length ? '<span class="dashicons dashicons-info trackship-tip ' . $late_class . '" title="late shipment"></span>' : '';
+			$late_shipment = $late_ship_day <= $value->shipping_length ? '<span class="dashicons dashicons-info trackship-tip ' . $late_class . '" title="late shipment"></span>' : '';
 			
 			$active_shipment = '<a href="javascript:void(0);" class="shipments_get_shipment_status" data-orderid="' . $value->order_id . '"><span class="dashicons dashicons-update"></span></a>';
 			
@@ -224,7 +223,7 @@ class WC_Trackship_Shipments {
 	/*
 	*
 	*/
-	function get_num_of_days( $first_date, $last_date ){
+	public function get_num_of_days( $first_date, $last_date ){
 		$date1 = strtotime($first_date);
 		$date2 = strtotime($last_date);
 		$diff = abs($date2 - $date1);
