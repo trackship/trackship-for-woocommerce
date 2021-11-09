@@ -99,7 +99,7 @@ class WC_TrackShip_Front {
 		$order = wc_get_order( $order_id );
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 		$shipment_status = get_post_meta( $order->get_id(), 'shipment_status', true );
-		$this->display_tracking_page( $order_id, $tracking_items, $shipment_status );	
+		$this->display_tracking_page( $order_id, $tracking_items, $shipment_status );
 	}
 	
 	public function admin_tracking_page_widget( $order_id, $tracking_id ) {

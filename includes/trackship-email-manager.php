@@ -234,7 +234,6 @@ class WC_TrackShip_Email_Manager {
 						if ( $toggle && $all_delivered ) {
 							$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id, false );
 						}
-						
 						$message.= wc_get_template_html(
 							'emails/tswc-tpi-email-order-details.php',
 							array(
