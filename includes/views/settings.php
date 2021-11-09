@@ -61,12 +61,11 @@ if ( 'delete' != $cookie && $total_orders > 0 ) { ?>
 					</select>							
 				</div>
 				<?php
-				$late_shipments_email_settings = get_option('late_shipments_email_settings');
-				$wcast_late_shipments_days = isset( $late_shipments_email_settings['wcast_late_shipments_days'] ) ? $late_shipments_email_settings['wcast_late_shipments_days'] : '';
+				$late_shipments_days = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_days', 7 );
 				?>
 				<div class="late_shipment_days_settings">
 					<label><?php esc_html_e('Number of days for late shipments', 'trackship-for-woocommerce'); ?></label>	
-					<input class="input-text" type="number" name="wcast_late_shipments_days" id="wcast_late_shipments_days" min="1" value="<?php echo esc_html( $wcast_late_shipments_days ); ?>">
+					<input class="input-text" type="number" name="wcast_late_shipments_days" id="wcast_late_shipments_days" min="1" value="<?php echo esc_html( $late_shipments_days ); ?>">
 				</div>
 			</div>
 		</div>

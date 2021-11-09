@@ -6,8 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $wpdb;
 $woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
 
-$late_shipments_email_settings = get_option( 'late_shipments_email_settings' );
-$late_shipments_days = isset( $late_shipments_email_settings['wcast_late_shipments_days'] ) ? $late_shipments_email_settings['wcast_late_shipments_days'] : '7';
+$late_shipments_days = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_days', 7 );
 $days = $late_shipments_days - 1 ;
 $late_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipping_length > %d", $days ) );
 $tracking_issues = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row	

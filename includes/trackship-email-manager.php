@@ -225,12 +225,11 @@ class WC_TrackShip_Email_Manager {
 				}					
 				
 				if ( $wcast_show_order_details ) {
-					$tpi_order = false;
-					$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
-					if ( function_exists( 'ast_pro' ) ) {
-						$tpi_order = ast_pro()->ast_tpi->check_if_tpi_order( $tracking_items, $order );
-					}
 					
+					$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
+					$tpi_order = function_exists( 'ast_pro' ) ? ast_pro()->ast_tpi->check_if_tpi_order( $tracking_items, $order ) : false;
+					
+					$tracking_items = array( $tracking_item );
 					if ( $tpi_order ) {
 						if ( $toggle && $all_delivered ) {
 							$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id, false );

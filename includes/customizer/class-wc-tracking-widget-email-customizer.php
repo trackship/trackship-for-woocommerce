@@ -230,6 +230,7 @@ class TSWC_Tracking_widget_email_Customizer {
 				'choices' => array(
 					't_layout_2' => __( 'Progress Bar', 'trackship-for-woocommerce' ),
 					't_layout_1' => __( 'Icons', 'trackship-for-woocommerce' ),
+					't_layout_3' => __( 'Single icon', 'trackship-for-woocommerce' ),
 				),
 			)
 		) );

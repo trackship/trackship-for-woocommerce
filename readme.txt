@@ -4,7 +4,7 @@ Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 5.3
 Tested up to: 5.8
 Requires PHP: 7.0
-Stable tag: 1.2
+Stable tag: 1.2.1
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,14 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended).
 
 == Changelog ==
+= 1.2.1 - 2021-11-09 =
+* Dev - 3 new(Fast2sms, MSG91, SMS Alert) SMS provider added 
+* Dev - Compatibility added with Product vendor plugin
+* Fix - Fixed issue when late shipment days in settings is not set
+* Fix - Fixed shipping item issue in TPI delivered email
+* Dev - Translations updated.
+* Dev - Tested with WC 5.9
+
 = 1.2 - 2021-10-26 =
 * Enhancement - new TrackShip menu added in WordPress
 * Enhancement - TrackShip dashboard added in TrackShip menu

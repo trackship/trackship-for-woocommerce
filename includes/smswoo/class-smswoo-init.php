@@ -56,7 +56,9 @@ class tswc_smswoo_init {
 		require_once 'services/class-smswoo-nexmo.php';
 		require_once 'services/class-smswoo-twilio.php';
 		require_once 'services/class-smswoo-clicksend.php';
-		
+		require_once 'services/class-smswoo-fast2sms.php';
+		require_once 'services/class-smswoo-msg91.php';
+		require_once 'services/class-smswoo-smsalert.php';
 	}
 	
 }

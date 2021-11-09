@@ -271,20 +271,35 @@ class tswc_smswoo_admin {
 					'smswoo_nexmo'		=> 'Nexmo',
 					'smswoo_twilio'		=> 'Twilio',
 					'smswoo_clicksend'	=> 'ClickSend',
+					'smswoo_fast2sms'	=> 'Fast2sms',
+					'smswoo_msg91'		=> 'Msg91',
+					'smswoo_smsalert'	=> 'SMS Alert',
 				),
 				'link' => array(
 					'smswoo_nexmo' => array(
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'Nexmo' ),
-						'link' => 'https://www.zorem.com/docs/sms-for-woocommerce/sms-api-providers/nexmo/?utm_source=wp-admin&utm_medium=SMSWOO&utm_campaign=settings',
+						'link' => 'https://trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-vonage-formally-nexmo-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 					'smswoo_twilio' => array(
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'Twilio' ),
-						'link' => 'https://www.zorem.com/docs/sms-for-woocommerce/sms-api-providers/twilio/?utm_source=wp-admin&utm_medium=SMSWOO&utm_campaign=settings',
+						'link' => 'https://trackship.info/docs/trackship-for-woocommerce/how-to/sms-api-providers/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 					'smswoo_clicksend' => array(
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'ClickSend' ),
-						'link' => 'https://www.zorem.com/docs/sms-for-woocommerce/sms-api-providers/clicksend/?utm_source=wp-admin&utm_medium=SMSWOO&utm_campaign=settings',
-					)
+						'link' => 'https://trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-clicksend-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+					),
+					'smswoo_fast2sms' => array(
+						'title' => __( 'How to find your Fast2sms API Authorization Key', 'smswoo' ),
+						'link' => 'https://trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-fast2sms-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+					),	
+					'smswoo_msg91' => array(
+						'title' => __( 'How to find your MSG91 API Authentication Key', 'smswoo' ),
+						'link' => 'https://trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-msg91-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+					),
+					'smswoo_smsalert' => array(
+						'title' => __( 'How to find your SMS Alert API Authentication Key', 'smswoo' ),
+						'link' => 'https://trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-sms-alert-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+					),
 				),
 			),
 			'smswoo_nexmo_key' => array(
@@ -329,13 +344,36 @@ class tswc_smswoo_admin {
 				'id'		=> 'smswoo_clicksend_key',
 				'class'		=> 'smswoo_sms_provider smswoo_clicksend_sms_provider',
 			),
+			'smswoo_fast2sms_key' => array(
+				'title'		=> __( 'Fast2sms API Authorization Key', 'smswoo' ),
+				//'desc'		=> __( "Fast2sms API Authorization Key", 'smswoo'),
+				'type'		=> 'text',
+				'show'		=> true,
+				'id'		=> 'smswoo_fast2sms_key',
+				'class'		=> 'smswoo_sms_provider smswoo_fast2sms_sms_provider',
+			),
+			'smswoo_msg91_authkey' => array(
+				'title'		=> __( 'MSG91 Authentication Key', 'smswoo' ),
+				'type'		=> 'text',
+				'show'		=> true,
+				'id'		=> 'smswoo_msg91_authkey',
+				'class'		=> 'smswoo_sms_provider smswoo_msg91_sms_provider',
+			),
+			'smswoo_smsalert_key' => array(
+				'title'		=> __( 'SMS Alert API Authorization Key', 'smswoo' ),
+				//'desc'		=> __( "Fast2sms API Authorization Key", 'smswoo'),
+				'type'		=> 'text',
+				'show'		=> true,
+				'id'		=> 'smswoo_smsalert_key',
+				'class'		=> 'smswoo_sms_provider smswoo_smsalert_sms_provider',
+			),
 			'smswoo_sender_phone_number' => array(
 				'title'		=> __( "Sender phone number / Sender ID", 'trackship-for-woocommerce' ),
 				'desc'		=> __( 'This field appears as a from or Sender ID', 'trackship-for-woocommerce'),
 				'type'		=> 'text',
 				'show'		=> true,
 				'id'		=> 'smswoo_sender_phone_number',
-				'class'		=> 'smswoo_sms_provider smswoo_nexmo_sms_provider smswoo_twilio_sms_provider smswoo_clicksend_sms_provider', //add provider class if need this field in another provider
+				'class'		=> 'smswoo_sms_provider smswoo_nexmo_sms_provider smswoo_twilio_sms_provider smswoo_clicksend_sms_provider smswoo_smsalert_sms_provider smswoo_msg91_sms_provider', //add provider class if need this field in another provider
 			),
         );
 		$settings = apply_filters( "smswoo_sms_provider_array", $settings );
