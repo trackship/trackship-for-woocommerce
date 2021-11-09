@@ -230,6 +230,7 @@ class TSWC_Tracking_Page_Customizer {
 				'choices' => array(
 					't_layout_2' => __( 'Simple', 'trackship-for-woocommerce' ),
 					't_layout_1' => __( 'Icons', 'trackship-for-woocommerce' ),
+					't_layout_3' => __( 'Single icon', 'trackship-for-woocommerce' ),
 				),
 			)
 		) );

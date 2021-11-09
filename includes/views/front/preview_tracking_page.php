@@ -68,10 +68,10 @@
 			<h1 class="shipment_status_heading out_for_delivery">Out For Delivery</h1>
 			<span class="est_delivery_date">Est. Delivery Date: <strong>Thursday, Oct 01</strong></span>	
 		</div>
-		<div class="tracker-progress-bar <?php echo 't_layout_1' == $tracking_page_layout ? 'tracking_layout_1' : ''; ?>">
+		<div class="tracker-progress-bar <?php echo in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking_icon_layout ' . $tracking_page_layout : ''; ?>">
 			<div class="progress out_for_delivery">
-				<div class="progress-bar out_for_delivery" <?php echo 't_layout_1' == $tracking_page_layout ? 'style="width: 0%;"' : 'style="width: 60%;"'; ?>></div>
-				<?php if ( 't_layout_1' == $tracking_page_layout ) { ?>
+				<div class="progress-bar out_for_delivery" <?php echo in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'style="width: 0%;"' : 'style="width: 60%;"'; ?>></div>
+				<?php if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ) { ?>
 					<div class="progress-icon icon1"></div>
 					<div class="progress-icon icon2"></div>
 					<div class="progress-icon icon3"></div>
