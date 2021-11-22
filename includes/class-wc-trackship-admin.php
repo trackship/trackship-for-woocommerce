@@ -79,11 +79,23 @@ class WC_Trackship_Admin {
 			//add actions in column
 			add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_delivered_order_status_actions_button'), 100, 2 );
 		}
+		
+		//add_action( 'vi_woo_orders_tracking_single_edit_tracking_change', array( $this, 'woo_order_tracking_tracking_info' ), 10, 5 );
 
 	}
 	
-	public function add_onhold_status_to_download_permission($data, $order) {
-		if ( $order->has_status( 'delivered' ) ) { return true; }
+	/*public function woo_order_tracking_tracking_info( $tracking_change, $current_tracking_data, $item_id, $order_id, $response ) {
+		//echo '<pre>';print_r($tracking_change);echo '</pre>';
+		print_r($current_tracking_data);
+		echo '<pre>';print_r($item_id);echo '</pre>';
+		echo '<pre>';print_r($order_id);echo '</pre>';
+		echo '<pre>';print_r($response);echo '</pre>';
+	}*/
+	
+	public function add_onhold_status_to_download_permission( $data, $order ) {
+		if ( $order->has_status( 'delivered' ) ) {
+			return true;
+		}
 		return $data;
 	}
 	
@@ -106,9 +118,9 @@ class WC_Trackship_Admin {
 		if ( current_user_can( 'manage_product' ) || current_user_can( 'manage_woocommerce' ) ) {
 			$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id );
 			?>
-            <div class="ts4wc_tracking-widget-header">
+			<div class="ts4wc_tracking-widget-header">
 				<span style="line-height: 30px; font-size: 14px;"><?php echo 'Order #' . esc_html( $order->get_order_number() ); ?></span>
-				<?php if ( 'wcpv-vendor-order' != $page ) {  ?>
+				<?php if ( 'wcpv-vendor-order' != $page ) { ?>
 					<button class="button btn_outline copy_tracking_page trackship-tip" title="Copy the secure link to the Tracking page" style="border: 0;float:right;" data-tracking_page_link=<?php echo esc_url( $tracking_page_link ); ?> >
 						<span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
 						<span style="vertical-align: middle;line-height: 30px;" ><?php esc_html_e( 'Copy Tracking page', 'trackship-for-woocommerce' ); ?></span>
@@ -325,7 +337,7 @@ class WC_Trackship_Admin {
 	public function dashboard_page_count_query() {
 		
 		check_ajax_referer( 'wc_ast_tools', 'security' );
-		$start_date = wc_clean( $_POST['selected_option'] );
+		$start_date = isset( $_POST['selected_option'] ) ? wc_clean( $_POST['selected_option'] ) : '';
 		$end_date = gmdate( 'Y-m-d' );
 		
 		global $wpdb;
@@ -336,14 +348,14 @@ class WC_Trackship_Admin {
 		$tracking_issues = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row	
 			WHERE 
 				shipment_status NOT LIKE ( %s )
-				AND shipment_status NOT LIKE ( '%pre_transit%')
-				AND shipment_status NOT LIKE ( '%in_transit%')
-				AND shipment_status NOT LIKE ( '%out_for_delivery%')
-				AND shipment_status NOT LIKE ( '%return_to_sender%')
-				AND shipment_status NOT LIKE ( '%available_for_pickup%')
-				AND shipment_status NOT LIKE ( '%exception%')
+				AND shipment_status NOT LIKE ( %s )
+				AND shipment_status NOT LIKE ( %s )
+				AND shipment_status NOT LIKE ( %s )
+				AND shipment_status NOT LIKE ( %s )
+				AND shipment_status NOT LIKE ( %s )
+				AND shipment_status NOT LIKE ( %s )
 				AND shipping_date BETWEEN %s AND %s
-		", '%delivered%', $start_date, $end_date ) );
+		", '%delivered%', '%pre_transit%', '%in_transit%','%out_for_delivery%', '%return_to_sender%', '%available_for_pickup%', '%exception%', $start_date, $end_date ) );
 		
 		$result['total_shipment']		= $total_shipment;
 		$result['active_shipment']		= $active_shipment;
@@ -1160,7 +1172,7 @@ class WC_Trackship_Admin {
 								<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/<?php echo esc_html( $value['image'] ); ?>">
 								<span class="shipment_status_label <?php echo esc_html( $key ); ?>"><?php echo esc_html( $value['heading'] ); ?></span>
 							</div>
-							<p><?php echo ( $value['detail'] ); ?></p>
+							<p><?php echo wp_kses_post( $value['detail'] ); ?></p>
 						</div>
 					<?php } ?>
 				</div>
@@ -1191,7 +1203,7 @@ class WC_Trackship_Admin {
 				</div>
 			</div>
 			<?php $page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : ''; ?>
-			<?php if ( !in_array( $page, array( 'trackship-shipments', 'trackship-dashboard' ) ) ) { ?>
+			<?php if ( !in_array( $page, array( 'trackship-shipments' ) ) ) { ?>
 				<div class="popupclose"></div>
 			<?php } ?>
 		</div>

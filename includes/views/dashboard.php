@@ -12,13 +12,13 @@ $late_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_tra
 $tracking_issues = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row	
 	WHERE 
 		shipment_status NOT LIKE ( %s )
-		AND shipment_status NOT LIKE ( '%pre_transit%')
-		AND shipment_status NOT LIKE ( '%in_transit%')
-		AND shipment_status NOT LIKE ( '%out_for_delivery%')
-		AND shipment_status NOT LIKE ( '%return_to_sender%')
-		AND shipment_status NOT LIKE ( '%available_for_pickup%')
-		AND shipment_status NOT LIKE ( '%exception%')
-", '%delivered%' ) );
+		AND shipment_status NOT LIKE ( %s )
+		AND shipment_status NOT LIKE ( %s )
+		AND shipment_status NOT LIKE ( %s )
+		AND shipment_status NOT LIKE ( %s )
+		AND shipment_status NOT LIKE ( %s )
+		AND shipment_status NOT LIKE ( %s )
+", '%delivered%', '%pre_transit%', '%in_transit%', '%out_for_delivery%', '%return_to_sender%', '%available_for_pickup%', '%exception%' ) );
 $return_to_sender_shipment = $wpdb->get_var( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipment_status LIKE ( '%return_to_sender%')" );
 
 $this_month = gmdate('Y-m-01 00:00:00' );
@@ -65,14 +65,17 @@ $array = array(
 	'month_to_date' => array(
 		'label'	=> __( 'Month to date', 'trackship-for-woocommerce' ),
 		'time'	=> $this_month,
+		'class' => 'first_label',
 	),
 	'last_30' => array(
 		'label'	=> __( 'Last 30 days', 'trackship-for-woocommerce' ),
 		'time'	=> $last_30,
+		'class' => 'not_show',
 	),
 	'last_60' => array(
 		'label'	=> __( 'Last 60 days', 'trackship-for-woocommerce' ),
 		'time'	=> $last_60,
+		'class' => 'not_show',
 	),
 );
 $plan_array = array(
@@ -135,8 +138,8 @@ $store_text = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No activ
 	<div class="fullfillment_dashboard_section last_section">
 		<h3><?php esc_html_e( 'Shipping & Delivery Overview', 'trackship-for-woocommerce' ); ?></h3>
 		<div class="dashboard_input_tab">
-	        <?php foreach ( $array as $key => $val ) { ?>
-				<input id="dashboard_<?php esc_html_e( $key ); ?>" type="radio" name="tabs" class="tab_input" data-tab="<?php esc_html_e( $val[ 'time' ] ); ?>" <?php echo $key == 'month_to_date' ? 'checked' : ''; ?> >
+			<?php foreach ( $array as $key => $val ) { ?>
+				<input id="dashboard_<?php esc_html_e( $key ); ?>" type="radio" name="tabs" class="tab_input <?php esc_html_e( $val[ 'class' ] ); ?>" data-tab="<?php esc_html_e( $val[ 'time' ] ); ?>" <?php echo 'month_to_date' == $key ? 'checked' : ''; ?> >
 				<label for="dashboard_<?php esc_html_e( $key ); ?>" class="tab_label">
 					<?php esc_html_e( $val[ 'label' ] ); ?>
 				</label>
@@ -153,7 +156,7 @@ $store_text = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No activ
 				</div>
 			<?php } ?>
 		</div>
-        <div class="detailed_stats"><a target="_blank" href="<?php echo esc_url( admin_url( 'admin.php?page=trackship-shipments' ) ); ?>"><?php esc_html_e( 'View detailed stats', 'trackship-for-woocommerce' ); ?></a></div>
+		<div class="detailed_stats"><a target="_blank" href="<?php echo esc_url( admin_url( 'admin.php?page=trackship-shipments' ) ); ?>"><?php esc_html_e( 'View detailed stats', 'trackship-for-woocommerce' ); ?></a></div>
 		<div class="fullfillment_dashboard_status">
 			<h4><?php esc_html_e( 'Status', 'trackship-for-woocommerce' ); ?></h4>
 			<div class="ts_subscription">

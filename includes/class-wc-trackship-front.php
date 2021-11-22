@@ -327,7 +327,7 @@ class WC_TrackShip_Front {
 		<?php
 		
 		$num = 1;
-		$total_trackings = sizeof( $tracking_items );
+		$total_trackings = count( $tracking_items );
 		
 		foreach ( $tracking_items as $key => $item ) {
 			$tracking_number = $item['tracking_number'];
@@ -398,7 +398,7 @@ class WC_TrackShip_Front {
 						<?php if ( $total_trackings > 1 ) { ?>
 							<p class="shipment_heading">
 							<?php /* translators: %s: search for a num and todal tracking */ ?>
-                            <?php printf( esc_html__( 'Shipment %1$s out of %2$s', 'trackship-for-woocommerce' ), esc_html($num), esc_html($total_trackings) ); ?>
+							<?php printf( esc_html__( 'Shipment %1$s out of %2$s', 'trackship-for-woocommerce' ), esc_html($num), esc_html($total_trackings) ); ?>
 							</p>
 						<?php } ?>
 					</div>
@@ -424,7 +424,7 @@ class WC_TrackShip_Front {
 						?>
 					</div>
 					<div class="trackship_branding">
-						<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://trackship.info/trackings/?number=<?php esc_html_e( $tracking_number ); ?>" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
+						<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://track.trackship.info/tracking?number=<?php esc_html_e( $tracking_number ); ?>" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
 					</div>
 					<?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
 						<style> .trackship_branding{display:block !important;} </style>
@@ -474,7 +474,7 @@ class WC_TrackShip_Front {
 			}
 		}
 		?>
-		<div class="tracker-progress-bar <?php echo in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking_icon_layout ' . $tracking_page_layout : ''; ?>">
+		<div class="tracker-progress-bar <?php echo in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking_icon_layout ' . esc_html( $tracking_page_layout ) : ''; ?>">
 			<div class="progress <?php esc_html_e( $tracker->ep_status ); ?>">
 				<div class="progress-bar <?php esc_html_e( $tracker->ep_status ); ?>" style="width: <?php esc_html_e( $width ); ?>;"></div>
 				<?php if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ) { ?>

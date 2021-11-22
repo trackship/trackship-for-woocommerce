@@ -532,14 +532,10 @@ class tswc_smswoo_admin {
 							</span>
 							</div>
 							<div class="zorem_plugin_sidebar smswoo_sidebar">
-								<?php echo $this->build_html( "plugin_sidebar_placeholders" );?>
+								<?php echo $this->build_html( 'plugin_sidebar_placeholders' ); ?>
 							</div>
-						</div>    
-                        <div>
-                            	
-                        </div>
+						</div>
 					</div>
-					<?php //echo '<pre>';print_r($array);echo '</pre>';?>
 				</div>
 			<?php } ?>
 		</div>
@@ -551,7 +547,7 @@ class tswc_smswoo_admin {
 	*
 	* @since   1.0
 	*/
-	function get_customer_tracking_status_settings() {
+	public function get_customer_tracking_status_settings() {
 		
 		$tracking_status = array(
 			'in_transit'			=> __( 'In Transit', 'trackship-for-woocommerce' ),
@@ -565,7 +561,7 @@ class tswc_smswoo_admin {
 		);
 				
 		// Display a textarea setting for each available order status
-		foreach( $tracking_status as $slug => $label ) {
+		foreach ( $tracking_status as $slug => $label ) {
 
 			$slug = 'wc-' === substr( $slug, 0, 3 ) ? substr( $slug, 3 ) : $slug;
 
@@ -578,7 +574,7 @@ class tswc_smswoo_admin {
 				'default'	=> "Hi, Your order no %order_id% on %shop_name% is now {$label}.",
 			];
 		}
-        return $settings;
-    }
+		return $settings;
+	}
 	
 }

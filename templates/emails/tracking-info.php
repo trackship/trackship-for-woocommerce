@@ -51,16 +51,19 @@ if ( $tracking_items ) :
 										<?php
 									}
 								}
-                                $est_delivery_date = isset( $shipment_status[$key]['est_delivery_date'] ) ? $shipment_status[$key]['est_delivery_date'] : false;
-								if ( $est_delivery_date ) {
+								$show_est_delivery_date = apply_filters( 'show_est_delivery_date', true );
+								$est_delivery_date = isset( $shipment_status[$key]['est_delivery_date'] ) ? $shipment_status[$key]['est_delivery_date'] : false;
+								if ( $est_delivery_date && $show_est_delivery_date ) {
 									echo '<p style="margin: 0;"><span class="est_delivery_date">';
 									esc_html_e( 'Est. Delivery Date', 'trackship-for-woocommerce' );
-									echo ': <b>' . date_i18n( 'l, M d', strtotime( $est_delivery_date ) ) . '</b>';
+									echo ': <b>';
+									echo esc_html( date_i18n( 'l, M d', strtotime( $est_delivery_date ) ) );
+									echo '</b>';
 									echo '</span></p>';
 								}
 								?>
 							</p>
-                        </div>
+						</div>
 						<div class="display-table-cell" >
 							<?php if ( 'delivered' != $ship_status ) { ?>
 								<a href="<?php echo esc_url( $tracking_link ); ?>" class="track_your_order"><?php esc_html_e( $track_button_Text ); ?></a>
@@ -69,7 +72,7 @@ if ( $tracking_items ) :
 					</div>
 					<div style="display:block;"></div>
 					<?php if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ) { ?>
-						<?php $icon_layout = 't_layout_1' == $tracking_page_layout ? '-widget.png' : '-widget-v2.png' ?>
+						<?php $icon_layout = 't_layout_1' == $tracking_page_layout ? '-widget.png' : '-widget-v2.png'; ?>
 						<div class="widget_progress_bar" style="display:block;width:100%;margin-top:10px;">
 							<?php $widget_icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ) . esc_html( $icon_layout ); ?>
 							<img style="width:100%;" src="<?php echo esc_url( $widget_icon_url ); ?>">
