@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</ul>
 		</div>
 	</div>
-	<h1 class="shipment_status_heading <?php esc_html_e( $tracker->ep_status ); ?>">
+	<div class="shipment_status_heading <?php esc_html_e( $tracker->ep_status ); ?>">
 		<?php
 		if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown', 'balance_zero' ) ) ) {
 			esc_html_e( 'Shipped', 'trackship-for-woocommerce' );
@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			esc_html_e( apply_filters( 'trackship_status_filter', $tracker->ep_status ) );
 		}
 		?>
-	</h1>
+	</div>
 
 	<?php if ( $tracker->est_delivery_date ) { ?>
 		<span class="est-delivery-date tracking-number">

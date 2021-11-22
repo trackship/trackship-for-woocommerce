@@ -176,8 +176,24 @@ jQuery(document).ready(function() {
 	});	
 });
 
+jQuery(document).on("click", ".fullfillment_dashboard_section .fullfillment_table tr", function(){
+	'use strict';
+	var current_plan = jQuery(".dashboard_hidden_field").val();
+	if ( jQuery.inArray( current_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+		jQuery("#free_user_popup").show();
+	}
+});
+
 jQuery(document).on("click", ".dashboard_input_tab .tab_input", function(){
 	'use strict';
+	var current_plan = jQuery(".dashboard_hidden_field").val();
+	if ( jQuery.inArray( current_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+		if (jQuery( this ).hasClass('not_show')) {
+			jQuery("#free_user_popup").show();
+			jQuery('.dashboard_input_tab .tab_input.first_label').trigger("click");
+			return;
+		}
+	}
 	jQuery(document).ajax_loader(".fullfillment_dashboard_section_content");
 	
 	var selected_option = jQuery( this ).data('tab');
@@ -241,7 +257,7 @@ jQuery( document ).ready(function() {
 	'use strict';
 	var current_plan = jQuery(".dashboard_hidden_field").val();
 	if ( jQuery.inArray( current_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
-		jQuery("#free_user_popup").show();
+		jQuery('.fullfillment_dashboard_section .fullfillment_table tr').removeAttr('onclick');
 	}
 	var urlParams = new URLSearchParams(window.location.search);
 	var has_status = urlParams.has('status'); // conditions
@@ -250,4 +266,3 @@ jQuery( document ).ready(function() {
 		jQuery('#shipment_status').val(status).change();
 	}
 });
-

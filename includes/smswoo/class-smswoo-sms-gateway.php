@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'smswoo_sms_gateway' ) ) {
 
 	/**
-	 * smswoo SMS Gateway abstract class
+	 * Smswoo SMS Gateway abstract class
 	 *
 	 * @class   smswoo_sms_gateway
 	 * @package zorem
@@ -26,24 +26,12 @@ if ( ! class_exists( 'smswoo_sms_gateway' ) ) {
 	 */
 	abstract class smswoo_sms_gateway {
 
-		/**
-		 * @var string the number SMS messages will be sent from
-		 */
 		protected $_from_number;
 
-		/**
-		 * @var string using Alphanumeric Sender ID
-		 */
 		protected $_from_asid;
 
-		/**
-		 * @var array the response of the SMS service
-		 */
 		protected $_log;
 
-		/**
-		 * @var array the response of the SMS service
-		 */
 		protected $_logger;
 
 		/**
@@ -81,7 +69,7 @@ if ( ! class_exists( 'smswoo_sms_gateway' ) ) {
 		}
 		
 		/**
-		 * validate number
+		 * Validate number
 		 *
 		 * @since   1.0
 		 *
@@ -110,7 +98,7 @@ if ( ! class_exists( 'smswoo_sms_gateway' ) ) {
 		}
 
 		/**
-		 * add log send log
+		 * Add log send log
 		 *
 		 * @since   1.0.0
 		 *
@@ -122,10 +110,10 @@ if ( ! class_exists( 'smswoo_sms_gateway' ) ) {
 			
 			$smswoo_enable_log = get_option( 'smswoo_enable_log', 1 );
 			
-			if( $smswoo_enable_log ){
+			if ( $smswoo_enable_log ) {
 				$context = array( 'source' => 'smswoo' );
 	
-				$log = strtoupper( ( $args['type'] != 'test' ? 'Order #' . $args['order'] . ' - ' : '' ) . $args['type'] . ' MESSAGE' ) . "\r\n";
+				$log = strtoupper( ( 'test' != $args['type'] ? 'Order #' . $args['order'] . ' - ' : '' ) . $args['type'] . ' MESSAGE' ) . "\r\n";
 				$log .= 'Status: ' . ( $args['success'] ? 'SUCCESS' : 'FAILED - ' . $args['status_message'] ) . "\r\n";
 				$log .= 'Phone: ' . $args['phone'] . "\r\n";
 				$log .= 'Message: ' . $args['message'] . "\r\n";
