@@ -65,10 +65,10 @@
 					</ul>
 				</div>
 			</div>
-			<h1 class="shipment_status_heading out_for_delivery">Out For Delivery</h1>
+			<div class="shipment_status_heading out_for_delivery">Out For Delivery</div>
 			<span class="est_delivery_date">Est. Delivery Date: <strong>Thursday, Oct 01</strong></span>	
 		</div>
-		<div class="tracker-progress-bar <?php echo in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking_icon_layout ' . $tracking_page_layout : ''; ?>">
+		<div class="tracker-progress-bar <?php echo in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking_icon_layout ' . esc_html( $tracking_page_layout ) : ''; ?>">
 			<div class="progress out_for_delivery">
 				<div class="progress-bar out_for_delivery" <?php echo in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'style="width: 0%;"' : 'style="width: 60%;"'; ?>></div>
 				<?php if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ) { ?>
@@ -143,7 +143,7 @@
 	</div>
 	<div class="trackship_branding" >
 		<p>
-        	<span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span>
+			<span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span>
 			<a href="https://trackship.info" title="TrackShip" target="blank"><img src="<?php echo esc_html( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a>
 		</p>
 	</div>

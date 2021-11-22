@@ -127,6 +127,10 @@ class TSWC_Tracking_widget_email_Customizer {
 			'border_color'					=> '#e8e8e8',
 			'bg_color'						=> '#fff',
 			'font_color'					=> '#333',
+			'wcast_outfordelivery_email_heading' => __( 'Out For Delivery', 'trackship-for-woocommerce' ),
+			'wcast_outfordelivery_email_content' => __( "Hi there. we thought you'd like to know that your recent order from {site_title} is out for delivery.", 'trackship-for-woocommerce' ),
+			'wcast_outfordelivery_show_order_details' => 1,
+			'wcast_outfordelivery_show_shipping_address' => 1,
 		);
 
 		return apply_filters( 'ast_customizer_defaults', $customizer_defaults );
