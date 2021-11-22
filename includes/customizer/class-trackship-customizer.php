@@ -451,7 +451,7 @@ class WC_Trackship_Customizer {
 		$shipment_status = array();
 		$shipment_status[] = array(
 			'status_date' => '2021-07-27 15:28:02',
-			'est_delivery_date' => '',
+			'est_delivery_date' => '2021-07-30 15:28:02',
 			'status' => $status,
 			'tracking_events' => array(),
 			'tracking_page' => '',

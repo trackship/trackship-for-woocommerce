@@ -10,7 +10,7 @@ $cookie = isset( $_COOKIE['Notice'] ) ? sanitize_text_field( $_COOKIE['Notice'] 
 if ( 'delete' != $cookie && $total_orders > 0 ) { ?>
 	<div class="tools_tab_ts4wc">
 		<div class="trackship-notice" style="border: 0;">
-			<?php //%s used for replacement ?>
+			<?php /* translators: %s: search for a total_orders */ ?>
 			<p><?php printf( esc_html__( 'We detected %s Shipped orders from the last 30 days that were not sent to TrackShip, you can bulk send them to TrackShip', 'trackship-for-woocommerce' ), esc_html( $total_orders ) ); ?><span class="dashicons remove-icon dashicons-no-alt"></span></p>
 			<button class="button-primary button-trackship bulk_shipment_status_button" <?php echo 0 == $total_orders ? 'disabled' : ''; ?>><?php esc_html_e( 'Get Shipment Status', 'trackship-for-woocommerce' ); ?></button>
 		</div>

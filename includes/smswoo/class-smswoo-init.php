@@ -27,7 +27,7 @@ class tswc_smswoo_init {
 	public static function get_instance() {
 
 		if ( null === self::$instance ) {
-			self::$instance = new self;
+			self::$instance = new self();
 		}
 
 		return self::$instance;
@@ -36,7 +36,7 @@ class tswc_smswoo_init {
 	/*
 	 * init function
 	*/
-	public function init(){
+	public function init() {
 		
 		//admin
 		require_once 'class-smswoo-admin.php';
