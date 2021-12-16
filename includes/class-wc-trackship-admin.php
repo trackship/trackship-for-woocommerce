@@ -84,12 +84,84 @@ class WC_Trackship_Admin {
 
 	}
 	
-	/*public function woo_order_tracking_tracking_info( $tracking_change, $current_tracking_data, $item_id, $order_id, $response ) {
-		//echo '<pre>';print_r($tracking_change);echo '</pre>';
-		print_r($current_tracking_data);
-		echo '<pre>';print_r($item_id);echo '</pre>';
-		echo '<pre>';print_r($order_id);echo '</pre>';
-		echo '<pre>';print_r($response);echo '</pre>';
+	/*public function woo_order_tracking_tracking_info( $tracking_change, $tracking_data, $item_id, $order_id, $response ) {
+		
+		/*$content = print_r($response, true);
+		$logger = wc_get_logger();
+		$context = array( 'source' => 'AAA_tracking_update' );
+		$logger->info( "response \n" . $content . "\n", $context );*/
+		
+		/*$tracking_item = array();
+		$tracking_url = str_replace( '{tracking_number}', $tracking_data['tracking_number'], $tracking_data['carrier_url'] );
+		
+		$tracking_item['tracking_provider']				= $tracking_data['carrier_slug'];
+		$tracking_item['formatted_tracking_provider']	= $tracking_data['carrier_name'];
+		$tracking_item['formatted_tracking_link']		= $tracking_url;
+		$tracking_item['tracking_number']				= $tracking_data['tracking_number'];
+		$tracking_item['item_id']						= $response['item_id'];
+		$tracking_item['status_shipped']				= '';
+		$tracking_item['date_shipped']					= date( 'Y-m-d H:i:s', $tracking_change ? $tracking_data['last_update'] : $tracking_data['time'] );
+		$tracking_item['tracking_id']					= md5( "{$tracking_item['tracking_provider']}-{$tracking_item['tracking_number']}" . microtime() );
+		
+		$tracking_items = array();				
+		if ( $response['item_id'] ) {
+			$tracking_items = $this->get_tracking_items( $order_id );
+			foreach( $tracking_items as $key => $value ) {
+				if ( $value['item_id'] == $item_id ) {
+					unset( $tracking_items[$key] );
+				}
+			}
+		}
+		$tracking_items[] = $tracking_item;													
+		
+		$this->save_tracking_items( $order_id, $tracking_items );
+	}*/
+	
+	/*
+	 * Gets all tracking item from the post meta array for an order
+	 *
+	 * @param int  $order_id  Order ID
+	 * @param bool $formatted Wether or not to reslove the final tracking link
+	 *                        and provider in the returned tracking item.
+	 *                        Default to false.
+	 *
+	 * @return array List of tracking items
+	 */
+	/*public function get_tracking_items( $order_id ) {
+		global $wpdb;
+		$order = wc_get_order( $order_id );			
+		if ( $order ) {	
+			if ( version_compare( WC_VERSION, '3.0', '<' ) ) {			
+				$tracking_items = get_post_meta( $order_id, '_wc_shipment_tracking_items', true );
+			} else {
+				$order          = new WC_Order( $order_id );		
+				$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );			
+			}
+			
+			if ( is_array( $tracking_items ) ) {
+				return $tracking_items;
+			} else {
+				return array();
+			}
+		} else {
+			return array();
+		}
+	}*/
+	
+	/**
+	 * Saves the tracking items array to post_meta.
+	 *
+	 * @param int   $order_id       Order ID
+	 * @param array $tracking_items List of tracking item
+	 */
+	/*public function save_tracking_items( $order_id, $tracking_items ) {
+		if ( version_compare( WC_VERSION, '3.0', '<' ) ) {
+			update_post_meta( $order_id, '_wc_shipment_tracking_items', $tracking_items );
+		} else {			
+			$order = new WC_Order( $order_id );			
+			$order->update_meta_data( '_wc_shipment_tracking_items', $tracking_items );
+			$order->save_meta_data();
+		}
 	}*/
 	
 	public function add_onhold_status_to_download_permission( $data, $order ) {
@@ -1207,6 +1279,24 @@ class WC_Trackship_Admin {
 				<div class="popupclose"></div>
 			<?php } ?>
 		</div>
+        <div id="" class="popupwrapper sync_provider_popup" style="display:none;">
+			<div class="popuprow trackship_provider">
+				<div class="popup_header">
+					<h3 class="popup_title"><?php esc_html_e( 'Sync TrackShip Providers', 'trackship-for-woocommerce'); ?></h3>						
+					<span class="dashicons dashicons-no-alt popup_close_icon"></span>
+				</div>	
+				<div class="popup_body">	
+					<p class="sync_message"><?php esc_html_e( 'Syncing the TrackShip providers list add or updates the pre-set TrackShip providers and will not effect custom shipping providers.', 'trackship-for-woocommerce' ); ?></p>
+					<ul class="synch_result">
+						<li class="providers_updated"><?php esc_html_e( 'Providers list Updated', 'trackship-for-woocommerce' ); ?></li>
+					</ul>
+					<button class="sync_trackship_providers_btn button-primary button-trackship"><?php esc_html_e( 'Sync TrackShip Providers', 'trackship-for-woocommerce' ); ?></button>
+					<div class="spinner"></div>
+				</div>
+                <input type="hidden" id="nonce_trackship_provider" value="<?php esc_html_e( wp_create_nonce( 'nonce_trackship_provider' ) ); ?>">
+			</div>	
+			<div class="popupclose"></div>
+		</div>
 	<?php
 	}
 	
@@ -1272,11 +1362,12 @@ class WC_Trackship_Admin {
 				),
 			),
 			'date_query' => array(
-				 array(
-					 'before' => '-' . $days . ' days',
-					 'column' => 'post_date',
-				 ),
-			 ),
+				array(
+					'before' => '-' . $days . ' days',
+					'column' => 'post_date',
+				),
+			),
+			'post_status' => array_keys( wc_get_order_statuses() )
 		);
 		$query = new WP_Query( $args );
 		while ( $query->have_posts() ) {
