@@ -25,7 +25,8 @@ if ( $orders ) :
 			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $val1->order_id );
 			foreach ( $tracking_items as $key2 => $val2 ) {
 				if ( $val2['tracking_number'] == $val1->tracking_number ) {
-					$tracking_url = $val2['ast_tracking_link'] ? $val2['ast_tracking_link'] : $val2['formatted_tracking_link'];
+					$formatted_tracking_link = isset( $val2['formatted_tracking_link'] ) ? $val2['formatted_tracking_link'] : '';
+					$tracking_url = isset( $val2['ast_tracking_link'] ) && $val2['ast_tracking_link']  ? $val2['ast_tracking_link'] : $formatted_tracking_link;
 					$shipping_provider = $val2['formatted_tracking_provider'] ? $val2['formatted_tracking_provider'] : $val2['tracking_provider'];
 				}
 			}

@@ -424,7 +424,7 @@ class WC_TrackShip_Front {
 						?>
 					</div>
 					<div class="trackship_branding">
-						<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://track.trackship.info/tracking?number=<?php esc_html_e( $tracking_number ); ?>" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
+						<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://track.trackship.info/track/<?php esc_html_e( $tracking_number ); ?>" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
 					</div>
 					<?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
 						<style> .trackship_branding{display:block !important;} </style>
@@ -461,7 +461,7 @@ class WC_TrackShip_Front {
 		if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ) {
 			$width = '0';
 		} else {
-			if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'unknown', 'carrier_unsupported', 'balance_zero' ) ) ) {
+			if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'unknown', 'carrier_unsupported', 'insufficient_balance', 'invalid_carrier' ) ) ) {
 				$width = '0';
 			} elseif ( in_array( $tracker->ep_status, array( 'in_transit', 'on_hold' ) ) ) {
 				$width = '30%';

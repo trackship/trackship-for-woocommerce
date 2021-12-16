@@ -50,7 +50,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php endif; ?>
 					</tbody>
 				</table>	
-				<button class="button-primary add_custom_mapping_h3 button-trackship"><?php esc_html_e('Add mapping', 'trackship-for-woocommerce' ); ?><span class="dashicons dashicons-plus ptw-dashicons"></span></button><div class="add-custom-mapping spinner"></div>
+				<button class="button-primary add_custom_mapping_h3 button-trackship"><?php esc_html_e('Add mapping', 'trackship-for-woocommerce' ); ?><span class="dashicons dashicons-plus ptw-dashicons"></span></button><span class="dashicons dashicons-update update_shipping_provider"></span><div class="add-custom-mapping spinner"></div>
 			</div>
 		</div>
 	</form>

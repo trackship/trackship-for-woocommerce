@@ -153,11 +153,12 @@ class WC_Trackship_Shipments {
 		foreach( $order_query as $key => $value ){
 			
 			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $value->order_id );
-			
+		
 			foreach ( $tracking_items as $key1 => $val1 ) {
 				if ( $val1['tracking_number'] == $value->tracking_number ) {
-					$tracking_url = isset( $val1['ast_tracking_link'] ) && $val1['ast_tracking_link'] ? $val1['ast_tracking_link'] : $val1['formatted_tracking_link'];
-					$tracking_provider = $val1['formatted_tracking_provider'] ? $val1['formatted_tracking_provider'] : $value->shipping_provider;
+					$formatted_tracking_link = isset( $val1['formatted_tracking_link'] ) ? $val1['formatted_tracking_link'] : '';
+					$tracking_url = isset( $val1['ast_tracking_link'] ) && $val1['ast_tracking_link'] ? $val1['ast_tracking_link'] : $formatted_tracking_link;
+					$tracking_provider = isset( $val1['formatted_tracking_provider'] ) && $val1['formatted_tracking_provider'] ? $val1['formatted_tracking_provider'] : $value->shipping_provider;
 					$tracking_number_colom = '<span class="copied_tracking_numnber dashicons dashicons-admin-page" data-number="' . $value->tracking_number . '"></span><a class="open_tracking_details shipment_tracking_number" data-tracking_id="' . $val1['tracking_id'] . '" data-orderid="' . $value->order_id . '" data-nonce="' . wp_create_nonce( 'tswc-' . $value->order_id ) . '">' . $value->tracking_number . '</a>';
 				}
 			}

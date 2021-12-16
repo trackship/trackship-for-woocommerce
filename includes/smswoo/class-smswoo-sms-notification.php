@@ -122,22 +122,22 @@ class tswc_smswoo_sms_notification {
 		}
 		
 		if ( function_exists( 'ast_get_tracking_items' ) ) {
-			$tracking_items = ast_get_tracking_items( $object->order->get_id() );
+			$tracking_item = $this->tracking_item;
 			
-			$tracking_number = array_column($tracking_items, 'tracking_number');
-			$replacements[ '%tracking_number%' ] = implode( ', ', $tracking_number );
-			$replacements[ '{tracking_number}' ] = implode( ', ', $tracking_number );
+			$tracking_number = $tracking_item['tracking_number'];
+			$replacements[ '%tracking_number%' ] = $tracking_number;
+			$replacements[ '{tracking_number}' ] = $tracking_number;
 			
-			$tracking_provider = array_column($tracking_items, 'formatted_tracking_provider');
-			$replacements[ '%tracking_provider%' ] = implode( ', ', $tracking_provider );
-			$replacements[ '{tracking_provider}' ] = implode( ', ', $tracking_provider );
+			$tracking_provider = $tracking_item['formatted_tracking_provider'];
+			$replacements[ '%tracking_provider%' ] = $tracking_provider;
+			$replacements[ '{tracking_provider}' ] = $tracking_provider;
 			
-			$replacements[ '%tracking_provider%' ] = implode( ', ', $tracking_provider );
-			$replacements[ '{tracking_provider}' ] = implode( ', ', $tracking_provider );
+			$replacements[ '%shipping_provider%' ] = $tracking_provider;
+			$replacements[ '{shipping_provider}' ] = $tracking_provider;
 			
-			$tracking_link = array_column($tracking_items, 'ast_tracking_link');
-			$replacements[ '%tracking_link%' ] = implode( ', ', $tracking_link );
-			$replacements[ '{tracking_link}' ] = implode( ', ', $tracking_link );
+			$tracking_link = $tracking_item['ast_tracking_link'];
+			$replacements[ '%tracking_link%' ] = $tracking_link;
+			$replacements[ '{tracking_link}' ] = $tracking_link;
 		}
 		
 		if ( is_plugin_active( 'woocommerce-shipment-tracking/woocommerce-shipment-tracking.php' ) ) {
@@ -160,6 +160,15 @@ class tswc_smswoo_sms_notification {
 			$replacements[ '%tracking_link%' ] = implode( ', ', $tracking_link );
 			$replacements[ '{tracking_link}' ] = implode( ', ', $tracking_link );
 		}
+		
+		/*if ( is_plugin_active( 'woo-orders-tracking/woo-orders-tracking.php' ) ) {
+			$tracking_items = $this->tracking_item;
+			$replacements[ '{tracking_number}' ] = $tracking_items['tracking_number'];
+			
+			$replacements[ '{tracking_provider}' ] = $tracking_items['formatted_tracking_provider'];
+			
+			$replacements[ '{tracking_link}' ] = $tracking_items['formatted_tracking_link'];
+		}*/
 		
 		if ( trackship_for_woocommerce()->is_trackship_connected() ) {
 			$status = apply_filters( 'trackship_status_filter', $this->new_status );
@@ -295,6 +304,7 @@ class tswc_smswoo_sms_notification {
 	 */
 	public function trigger_sms_on_shipment_status_change( $order_id, $old_status, $new_status, $tracking_item, $shipment_status ) {
 		$this->new_status = $new_status;
+		$this->tracking_item = $tracking_item;
 		$this->shipment_status = $shipment_status;
 		$this->order = wc_get_order( $order_id );
 		
