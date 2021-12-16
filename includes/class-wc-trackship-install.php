@@ -59,6 +59,7 @@ class WC_Trackship_Install {
 		add_action( 'admin_init', array( $this, 'update_database_check' ) );
 		add_action( 'update_ts_shipment_status_order_mete', array( $this, 'update_ts_shipment_status_order_mete' ), 10, 1 );
 		add_action( 'migrate_trackship_shipment_table', array( $this, 'migrate_trackship_shipment_table' ) );
+		add_action( 'wp_ajax_update_trackship_providers', array( $this, 'update_trackship_providers' ) );
 	}
 	
 	/*
@@ -292,6 +293,13 @@ class WC_Trackship_Install {
 				}
 			}			
 		}		
+	}
+	
+	public function update_trackship_providers() {
+		if ( check_ajax_referer( 'nonce_trackship_provider', 'security' ) ) {
+			$this->update_shipping_providers();
+			wp_send_json( array('success' => 'true') );
+		}
 	}
 	
 	/**

@@ -1158,6 +1158,43 @@ opacity: 1;
 	overflow-y: overlay;
 	text-align: left;
 }
+.popuprow.trackship_provider {
+    max-width: 400px;
+    border: 1px solid #e0e0e0;
+}
+.popuprow .popup_header {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 15px 20px;
+}
+.popuprow .popup_header h3.popup_title {
+    font-size: 16px;
+    display: inline-block;
+    margin: 0;
+    color: #005b9a;
+    font-weight: 400;
+}
+.popuprow .popup_header .popup_close_icon {
+    color: #005b9a;
+    width: 60px;
+    height: 50px;
+    font-size: 30px;
+    border-left: 1px solid #e0e0e0;
+    position: absolute;
+    right: 0;
+    top: 0px;
+    cursor: pointer;
+    line-height: 50px;
+}
+.popuprow .popup_body {
+    padding: 20px 25px;
+}
+.popup_body .sync_message {
+    margin-top: 0;
+}
+.popuprow .popup_body .synch_result {
+    display: none;
+    margin: 0 0 20px;
+}
 .popupclose {
 	position: absolute;
 	width: 100%;
@@ -1439,6 +1476,7 @@ span.dashicons.dashicons-plus.ptw-dashicons {
 #trackship-tracking-items .tracking-content {
 	padding: 10px;
 	margin-bottom: 10px;
+	background: #efefef none repeat scroll 0 0;
 }
 #trackship-tracking-items small.last-update-on {
 	display: inline;
@@ -1609,6 +1647,10 @@ section#content_trackship_tools {
 .select2-container--default .select2-selection--multiple .select2-selection__rendered li {
 	border-radius: 10px;
 }
+.widefat .column-wc_actions a.delivered_icon.button::after {
+    font-family: woocommerce;
+    content: "\e01a";
+}
 span.percentage {
 	font-size: 16px;
 	float: right;
@@ -1652,6 +1694,15 @@ body #admin_tracking_widget .tracking-detail .shipment-content, body #admin_trac
 	width: 100%;
 	bottom: 0;
 	position: absolute;
+}
+span.dashicons.dashicons-update.update_shipping_provider {
+    width: 26px;
+    height: 26px;
+    font-size: 26px;
+    vertical-align: middle;
+	color: #3858e9;
+    margin: 0 10px;
+	cursor: pointer;
 }
 /** Accordion Design **/
 section#content_trackship_settings.inner_tab_section, section#content_trackship_notifications.inner_tab_section {

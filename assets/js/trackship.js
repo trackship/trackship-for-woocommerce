@@ -549,6 +549,43 @@ jQuery(document).on( "click", ".popupclose", function(){
 	jQuery(".popupwrapper").hide();
 });
 
+jQuery(document).on("click", ".popup_close_icon", function(){
+	jQuery(".popupwrapper").hide();
+});
+
+jQuery(document).on("click", ".update_shipping_provider", function(){		
+	jQuery('.sync_provider_popup').show();
+	jQuery('.sync_message').show();
+	jQuery(".sync_trackship_providers_btn").show();
+	jQuery('.synch_result').hide();
+});
+
+jQuery(document).on("click", ".sync_trackship_providers_btn", function(){
+	
+	jQuery('.sync_provider_popup .spinner').addClass('active');
+	var nonce = jQuery( '#nonce_trackship_provider' ).val();
+	
+	var ajax_data = {
+		action: 'update_trackship_providers',
+		security: nonce,		
+	};
+	jQuery.ajax({
+		url: ajaxurl,
+		data: ajax_data,
+		type: 'POST',
+		dataType: "json",
+		success: function(response) {
+			jQuery('.sync_provider_popup .spinner').removeClass('active');
+			jQuery('.sync_message').hide();
+			jQuery(".sync_trackship_providers_btn").hide();
+			jQuery('.synch_result').show();
+		},
+		error: function(response) {
+			console.log(response);			
+		}
+	});
+});
+
 jQuery(document).on("click", ".view_old_details", function(){
 	jQuery(this).hide();
 	jQuery(this).closest('.tracking-details').find('.hide_old_details').show();

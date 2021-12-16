@@ -4,7 +4,7 @@ Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 5.3
 Tested up to: 5.8
 Requires PHP: 7.0
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,13 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended).
 
 == Changelog ==
+= 1.2.3 - 2021-12-16 =
+* Dev - sync Trackship provider button added in Map Shipping provider
+* Dev - Shipment status SMS code improved for Tracking per item
+* Dev - code improved for Shipment statsus email in email content for variable {est_delivery_date}
+* Fix - Fixed issue in delete tracking events
+* Dev - Tested with WC 6.0
+
 = 1.2.2 - 2021-11-22 =
 * Dev - Tracking page footer branding link changed
 * Dev - Add `show_est_delivery_date` filter for remove Est delivery date from email.
