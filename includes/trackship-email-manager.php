@@ -21,6 +21,7 @@ class WC_TrackShip_Email_Manager {
 	 */
 	public function shippment_status_email_trigger( $order_id, $order, $old_status, $new_status, $tracking_item, $shipment_status ) {
 		
+		$this->shipment_status = $shipment_status;
 		$status = str_replace('_', '', $new_status);
 		$status_class = 'TSWC_' . ucfirst( $status ) . '_Customizer_Email';
 		$wcast_status_customizer_email = new $status_class();
@@ -420,27 +421,10 @@ class WC_TrackShip_Email_Manager {
 	 * Code for get estimate delivery date
 	 */
 	public function get_est_delivery_date( $order_id, $order ) {
-		if ( version_compare( WC_VERSION, '3.0', '<' ) ) {
-			$tracking_items = get_post_meta( $order_id, '_wc_shipment_tracking_items', true );				
-		} else {
-			$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );			
-		}
 		
-		$html = '';
-		$wc_ast_api_key = get_option('wc_ast_api_key');
-		$shipment_status = get_post_meta( $order_id, 'shipment_status', true);
-		if ( $tracking_items ) {
-			foreach ( $tracking_items as $key => $item ) {
-				$tracking_number = $item['tracking_number'];				
-				if ( isset( $shipment_status[$key]['est_delivery_date'] ) && '' != $shipment_status[$key]['est_delivery_date'] ) {
-					$est_delivery_date = $shipment_status[$key]['est_delivery_date'];
-					$unixTimestamp = strtotime($est_delivery_date);				
-					$day = gmdate('l', $unixTimestamp);					
-					$html .= '<div>Estimated Delivery Date for Tracking Number - ' . $tracking_number . '</div><h3 style="margin:0 0 10px;">' . $day . ', ' . gmdate('M d', strtotime($est_delivery_date)) . '</h3>';					
-				}				
-			}	
-		}
-		return $html;
+		$shipment_status = $this->shipment_status;
+		$est_delivery_date = $shipment_status['est_delivery_date'];
+		return $est_delivery_date ? date_i18n( 'l, M d', strtotime( $est_delivery_date ) ) : 'Not Available';
 	}
 	
 	/**
