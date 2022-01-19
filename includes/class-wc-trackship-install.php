@@ -12,22 +12,8 @@ class WC_Trackship_Install {
 		global $wpdb;
 		$this->table = $wpdb->prefix . 'trackship_shipping_provider';
 		$this->shipment_table = $wpdb->prefix . 'trackship_shipment';
-		if ( is_multisite() ) {
-			if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
-				require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-			}
-			if ( is_plugin_active_for_network( 'trackship-for-woocommerce/trackship-for-woocommerce.php' ) ) {
-				$main_blog_prefix = $wpdb->get_blog_prefix( BLOG_ID_CURRENT_SITE );
-				$this->table = $main_blog_prefix . 'trackship_shipping_provider';
-				$this->shipment_table = $main_blog_prefix . 'trackship_shipment';	
-			} else {
-				$this->table = $wpdb->prefix . 'trackship_shipping_provider';
-				$this->shipment_table = $wpdb->prefix . 'trackship_shipment';
-			}
-		} else {
-			$this->table = $wpdb->prefix . 'trackship_shipping_provider';
-			$this->shipment_table = $wpdb->prefix . 'trackship_shipment';	
-		}
+		$this->shipment_table_meta = $wpdb->prefix . 'trackship_shipment_meta';
+
 		$this->init();			
 	}
 	
@@ -176,6 +162,32 @@ class WC_Trackship_Install {
 			$wpdb->query("ALTER TABLE $woo_trackship_shipment
 				ADD est_delivery_date DATE");
 			update_option( 'trackship_db', '1.6' );
+		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.8', '<' ) ) {
+			global $wpdb;
+			$table = $this->shipment_table_meta;
+			if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $table ) ) ) {
+				$charset_collate = $wpdb->get_charset_collate();			
+				$sql = "CREATE TABLE $table (
+					`meta_id` BIGINT(20),
+					`origin_country` VARCHAR(20) ,
+					`destination_country` VARCHAR(20) ,
+					`delivery_number` VARCHAR(80) ,
+					`delivery_provider` VARCHAR(30) ,
+					`shipping_service` VARCHAR(30) ,
+					`tracking_events` LONGTEXT ,
+					PRIMARY KEY (`meta_id`),
+					INDEX `meta_id` (`meta_id`)
+				) $charset_collate;";
+				require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+				dbDelta( $sql );
+			}
+			
+			$delivered_settings = get_option( 'wcast_delivered_email_settings' );
+			update_option( 'wcast_delivered_status_email_settings', $delivered_settings );
+			delete_option( 'wcast_delivered_email_settings' );
+			update_option( 'trackship_db', '1.8' );
 		}
 	}
 	

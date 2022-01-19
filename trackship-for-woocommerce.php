@@ -2,14 +2,14 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 1.2.3
+ * Version: 1.3
  * Author: TrackShip
  * Author URI: https://trackship.info/
  * License: GPL-2.0+
  * License URI: 
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
- * WC tested up to: 6.0
+ * WC tested up to: 6.1.0
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,7 +23,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.2.3';
+	public $version = '1.3';
 	
 	/**
 	 * Initialize the main plugin function
@@ -181,6 +181,9 @@ class Trackship_For_Woocommerce {
 		
 		require_once $this->get_plugin_path() . '/includes/class-wc-admin-notices.php';
 		$this->wc_admin_notice = WC_TS4WC_Admin_Notices_Under_WC_Admin::get_instance();
+
+		
+		//$this->admin_customizer = TS4WC_Admin_Customizer::get_instance();
 		
 		if ( ! function_exists( 'SMSWOO' ) ) {
 			//SMSWOO
@@ -217,23 +220,21 @@ class Trackship_For_Woocommerce {
 	* include file on plugin load
 	*/
 	public function on_plugins_loaded() {
-		
+		$wc_ast_api_key = get_option('wc_ast_api_key');
+
+		require_once $this->get_plugin_path() . '/includes/customizer/trackship-customizer.php';
 		//load customizer
-		require_once $this->get_plugin_path() . '/includes/customizer/class-trackship-customizer.php';
-		require_once $this->get_plugin_path() . '/includes/customizer/class-wc-intransit-email-customizer.php';
-		require_once $this->get_plugin_path() . '/includes/customizer/class-wc-failure-email-customizer.php';
-		require_once $this->get_plugin_path() . '/includes/customizer/class-wc-outfordelivery-email-customizer.php';
-		require_once $this->get_plugin_path() . '/includes/customizer/class-wc-delivered-email-customizer.php';
-		require_once $this->get_plugin_path() . '/includes/customizer/class-wc-returntosender-email-customizer.php';
-		require_once $this->get_plugin_path() . '/includes/customizer/class-wc-availableforpickup-email-customizer.php';
-		require_once $this->get_plugin_path() . '/includes/customizer/class-wc-onhold-email-customizer.php';
-		require_once $this->get_plugin_path() . '/includes/customizer/class-wc-exception-email-customizer.php';
-		require_once $this->get_plugin_path() . '/includes/customizer/class-wc-late-shipments-email-customizer.php';
+		if ( $wc_ast_api_key ) {
+			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-intransit-email-customizer.php';
+			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-outfordelivery-email-customizer.php';
+			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-availableforpickup-email-customizer.php';
+			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-failure-email-customizer.php';
+			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-onhold-email-customizer.php';
+			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-exception-email-customizer.php';
+			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-returntosender-email-customizer.php';
+			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-delivered-email-customizer.php';
+		}
 		require_once $this->get_plugin_path() . '/includes/trackship-email-manager.php';
-		
-		//load tracking page customizer
-		require_once $this->get_plugin_path() . '/includes/customizer/class-wc-tracking-page-customizer.php';
-		require_once $this->get_plugin_path() . '/includes/customizer/class-wc-tracking-widget-email-customizer.php';
 		
 		//load plugin textdomain
 		load_plugin_textdomain( 'trackship-for-woocommerce', false, dirname( plugin_basename(__FILE__) ) . '/language/' );
@@ -258,7 +259,10 @@ class Trackship_For_Woocommerce {
 	*/
 	public function tsw_plugin_action_links( $links ) {
 		$links = array_merge( array(
-			'<a href="' . esc_url( admin_url( '/admin.php?page=trackship-for-woocommerce' ) ) . '">' . esc_html( 'Settings' ) . '</a>'
+			'<a href="' . esc_url( admin_url( '/admin.php?page=trackship-for-woocommerce' ) ) . '">' . esc_html( 'Settings' ) . '</a>',
+			'<a href="https://trackship.info/docs/trackship-for-woocommerce/">' . __( 'Docs' ) . '</a>',
+			'<a href="https://wordpress.org/support/plugin/trackship-for-woocommerce/#new-topic-0">' . __( 'Support' ) . '</a>',
+			'<a href="https://wordpress.org/support/plugin/trackship-for-woocommerce/reviews/#new-post">' . __( 'Review' ) . '</a>'
 		), $links );
 		return $links;
 	}

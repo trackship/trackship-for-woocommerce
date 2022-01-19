@@ -1541,24 +1541,73 @@ class WC_Trackship_Actions {
 		}
 	}
 	
-	public function update_shipment_data( $order_id, $tracking_number, $args = array() ) {
+	public function update_shipment_data( $order_id, $tracking_number, $args = array(), $args2 = array()  ) {
 		global $wpdb;
 		$shipment_table = $wpdb->prefix . 'trackship_shipment';
+		$shipment_meta = $wpdb->prefix . 'trackship_shipment_meta';
 		$row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $shipment_table WHERE order_id = %d AND tracking_number = %s", $order_id, $tracking_number ) );
 		if ( $row ) {
-			$where = array(
-				'order_id'			=> $order_id,
-				'tracking_number'	=> $tracking_number,
-			);
-			$wpdb->update( $shipment_table, $args, $where );
+			//update
+			// main table
+			if ( $args ) {
+				$where = array(
+					'order_id'			=> $order_id,
+					'tracking_number'	=> $tracking_number,
+				);
+				$wpdb->update( $shipment_table, $args, $where );
+			}
+			//meta table
+			if ( $args2 ) {
+				$where2 = array(
+					'meta_id' => $row->id,
+				);
+				$wpdb->update( $shipment_meta, $args2, $where2 );
+			}
+
 		} else {
+			//insert
+			// main table
 			$args['order_id'] = $order_id;
 			$args['order_number'] =  wc_get_order( $order_id )->get_order_number();
 			$args['tracking_number'] = $tracking_number;
 			$wpdb->insert( $shipment_table, $args );
-		}	
+			$id = $wpdb->insert_id;
+
+			//meta table
+			$data2 = [
+				'meta_id'	=> $id
+			];
+			$wpdb->insert( $shipment_meta, $data2 );
+		}
+		
 	}
 	
+	public function get_tracking_shipment_row ( $order_id , $tracking_number ) {
+		global $wpdb;
+		$result = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT * FROM {$wpdb->prefix}trackship_shipment t
+				LEFT JOIN {$wpdb->prefix}trackship_shipment_meta m  
+        		ON t.id = m.meta_id
+				WHERE t.order_id = %d
+				AND t.tracking_number = %s",
+				$order_id, $tracking_number
+			)
+		);
+		//var_dump( $wpdb->last_query);exit;
+		return $result;
+	}
+
+	/*
+	* Get provider name from Slug
+	*/
+	public function get_provider_name ( $slug ) {
+		global $wpdb;
+		$table = $wpdb->prefix . 'trackship_shipping_provider';
+		$tracking_provider = $wpdb->get_var( $wpdb->prepare( "SELECT provider_name FROM $table WHERE ts_slug = %s", $slug ) );
+		return $tracking_provider;
+	}
+
 	public function get_tracking_page_link( $order_id ) {
 		
 		$page_id = get_option( 'wc_ast_trackship_page_id' );

@@ -278,18 +278,24 @@ class WC_TrackShip_Front {
 		
 		global $wpdb;
 		
-		$ts_tracking_page_customizer = new TSWC_Tracking_Page_Customizer();		
+		$tracking_page_defaults = trackship_admin_customizer();
 		
-		$border_color = get_option('wc_ast_select_border_color', $ts_tracking_page_customizer->defaults['wc_ast_select_border_color'] );
-		$background_color = get_option('wc_ast_select_bg_color', $ts_tracking_page_customizer->defaults['wc_ast_select_bg_color'] );
-		$font_color = get_option('wc_ast_select_font_color', $ts_tracking_page_customizer->defaults['wc_ast_select_font_color'] );
-		$hide_tracking_events = get_option('wc_ast_hide_tracking_events', $ts_tracking_page_customizer->defaults['wc_ast_hide_tracking_events'] );
-		$tracking_page_layout = get_option('wc_ast_select_tracking_page_layout', $ts_tracking_page_customizer->defaults['wc_ast_select_tracking_page_layout'] );
-		$remove_trackship_branding =  get_option('wc_ast_remove_trackship_branding', $ts_tracking_page_customizer->defaults['wc_ast_remove_trackship_branding'] );
-		$padding = get_option('wc_ast_select_widget_padding', $ts_tracking_page_customizer->defaults['wc_ast_remove_trackship_branding'] );
+		$border_color = get_option('wc_ast_select_border_color', $tracking_page_defaults->defaults['wc_ast_select_border_color'] );
+		$link_color = get_option( 'wc_ast_select_link_color', $tracking_page_defaults->defaults['wc_ast_select_link_color'] );
+		$background_color = get_option('wc_ast_select_bg_color', $tracking_page_defaults->defaults['wc_ast_select_bg_color'] );
+		$font_color = get_option('wc_ast_select_font_color', $tracking_page_defaults->defaults['wc_ast_select_font_color'] );
+		$hide_tracking_events = get_option('wc_ast_hide_tracking_events', $tracking_page_defaults->defaults['wc_ast_hide_tracking_events'] );
+		$tracking_page_layout = get_option('wc_ast_select_tracking_page_layout', $tracking_page_defaults->defaults['wc_ast_select_tracking_page_layout'] );
+		$remove_trackship_branding =  get_option('wc_ast_remove_trackship_branding', $tracking_page_defaults->defaults['wc_ast_remove_trackship_branding'] );
+		$padding = get_option('wc_ast_select_widget_padding', $tracking_page_defaults->defaults['wc_ast_select_widget_padding'] );
 		?>
 		
 		<style>
+			<?php if ( $link_color ) { ?>
+				.col.tracking-detail .tracking_number_wrap a {
+					color: <?php echo esc_html( $link_color ); ?>;
+				}				
+			<?php } ?>
 			<?php if ( $padding ) { ?>
 				body .col.tracking-detail{
 					padding: <?php echo esc_html( $padding ); ?>px;
@@ -312,7 +318,7 @@ class WC_TrackShip_Front {
 			<?php if ( $background_color ) { ?>
 				body .col.tracking-detail{
 					background: <?php echo esc_html( $background_color ); ?>;
-				}				
+				}
 			<?php } ?>
 			<?php if ( $font_color ) { ?>
 				body .tracking-detail .shipment-content, body .tracking-detail .shipment-content h4 {
@@ -441,6 +447,8 @@ class WC_TrackShip_Front {
 	*/
 	public function tracking_page_header( $order, $tracking_provider, $tracking_number, $tracker, $item ) {
 		$hide_tracking_provider_image = get_option('wc_ast_hide_tracking_provider_image');
+		$hide_from_to = get_option('wc_ast_hide_from_to', trackship_admin_customizer()->defaults['wc_ast_hide_from_to'] );
+		$hide_last_mile = get_option( 'wc_ast_hide_list_mile_tracking', trackship_admin_customizer()->defaults['wc_ast_hide_list_mile_tracking'] );
 		$provider_name = isset( $item[ 'formatted_tracking_provider' ] ) && !empty( $item[ 'formatted_tracking_provider' ] ) ? $item[ 'formatted_tracking_provider' ] : $item[ 'tracking_provider' ] ;
 		$provider_image = isset( $item[ 'tracking_provider_image' ] ) ? $item[ 'tracking_provider_image' ] : false ;
 		$formatted_tracking_link = isset( $item[ 'formatted_tracking_link' ] ) ? $item[ 'formatted_tracking_link' ] : false ;
@@ -489,8 +497,8 @@ class WC_TrackShip_Front {
 	}
 	
 	public function layout1_tracking_details( $trackind_detail_by_status_rev, $tracking_details_by_date, $trackind_destination_detail_by_status_rev, $tracking_destination_details_by_date, $tracker, $order_id, $tracking_provider, $tracking_number ) {  
-		$ts_tracking_page_customizer = new TSWC_Tracking_Page_Customizer();
-		$hide_tracking_events = get_option( 'wc_ast_hide_tracking_events', $ts_tracking_page_customizer->defaults[ 'wc_ast_hide_tracking_events' ] );
+		$tracking_page_defaults = trackship_admin_customizer();
+		$hide_tracking_events = get_option( 'wc_ast_hide_tracking_events', $tracking_page_defaults->defaults[ 'wc_ast_hide_tracking_events' ] );
 		$action = isset( $_POST['action'] ) ? sanitize_text_field( $_POST['action'] ) : '';
 		if ( 'get_admin_tracking_widget' == $action ) {
 			$hide_tracking_events = 2;
@@ -504,24 +512,33 @@ class WC_TrackShip_Front {
 	public static function preview_tracking_page() {
 		
 		$action = isset( $_REQUEST[ 'action' ] ) ? sanitize_text_field( $_REQUEST[ 'action'] ) : '';
+		//echo '<pre>';print_r($_GET);echo '</pre>';
+		$type = isset( $_GET["type"] ) ? $_GET["type"] : "" ;
+		$status = isset( $_GET["status"] ) ? $_GET["status"] : "" ;
 		
 		if ( 'preview_tracking_page' != $action ) {
 			return;
 		}
 		
 		wp_head();
+
+		show_admin_bar( false );
 		
-		$ts_tracking_page_customizer = new TSWC_Tracking_Page_Customizer();
+		$tracking_page_defaults = trackship_admin_customizer();
 		
-		$tracking_page_layout = get_option( 'wc_ast_select_tracking_page_layout', $ts_tracking_page_customizer->defaults['wc_ast_select_tracking_page_layout'] );
-		$hide_tracking_events = get_option( 'wc_ast_hide_tracking_events', $ts_tracking_page_customizer->defaults['wc_ast_hide_tracking_events'] );
-		$border_color = get_option( 'wc_ast_select_border_color', $ts_tracking_page_customizer->defaults['wc_ast_select_border_color'] );
-		$font_color = get_option( 'wc_ast_select_font_color', $ts_tracking_page_customizer->defaults['wc_ast_select_font_color'] );
+		$tracking_page_layout = get_option( 'wc_ast_select_tracking_page_layout', $tracking_page_defaults->defaults['wc_ast_select_tracking_page_layout'] );
+		$hide_tracking_events = get_option( 'wc_ast_hide_tracking_events', $tracking_page_defaults->defaults['wc_ast_hide_tracking_events'] );
+		$border_color = get_option( 'wc_ast_select_border_color', $tracking_page_defaults->defaults['wc_ast_select_border_color'] );
+		$link_color = get_option( 'wc_ast_select_link_color', $tracking_page_defaults->defaults['wc_ast_select_link_color'] );
+		$font_color = get_option( 'wc_ast_select_font_color', $tracking_page_defaults->defaults['wc_ast_select_font_color'] );
 		$wc_ast_link_to_shipping_provider = get_option( 'wc_ast_link_to_shipping_provider' );
 		$hide_tracking_provider_image = get_option( 'wc_ast_hide_tracking_provider_image' );
 		$remove_trackship_branding =  get_option( 'wc_ast_remove_trackship_branding' );
+		$font_color = get_option( 'wc_ast_select_font_color', $tracking_page_defaults->defaults['wc_ast_select_font_color'] );
 		$background_color = get_option( 'wc_ast_select_bg_color' );
-		$padding = get_option('wc_ast_select_widget_padding', $ts_tracking_page_customizer->defaults['wc_ast_remove_trackship_branding'] );
+		$hide_from_to = get_option('wc_ast_hide_from_to', $tracking_page_defaults->defaults['wc_ast_hide_from_to'] );
+		$hide_last_mile = get_option( 'wc_ast_hide_list_mile_tracking', $tracking_page_defaults->defaults['wc_ast_hide_list_mile_tracking'] );
+		$padding = get_option('wc_ast_select_widget_padding', $tracking_page_defaults->defaults['wc_ast_select_widget_padding'] );
 		
 		include 'views/front/preview_tracking_page.php';
 		wp_footer();
