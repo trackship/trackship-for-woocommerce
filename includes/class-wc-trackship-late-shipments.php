@@ -180,7 +180,6 @@ class WC_TrackShip_Late_Shipments {
 		$sent_to_admin = false;
 		$plain_text = false;
 		
-		$wcast_late_shipments_settings = new TSWC_Late_Shipments_Customizer_Email();
 		//Email Subject
 		$subject =  __( 'Late shipment', 'trackship-for-woocommerce' );
 		// Email heading
@@ -203,7 +202,7 @@ class WC_TrackShip_Late_Shipments {
 		add_filter( 'wp_mail_from', array( wc_trackship_email_manager(), 'get_from_address' ) );
 		add_filter( 'wp_mail_from_name', array( wc_trackship_email_manager(), 'get_from_name' ) );
 		
-		$email_to = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_email_to', $wcast_late_shipments_settings->defaults['wcast_late_shipments_email_to']);
+		$email_to = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'late_shipments_email_settings', 'wcast_late_shipments_email_to', '{admin_email}' );
 		$email_to = explode( ',', $email_to );
 		$email_send = array();
 		foreach ( $email_to as $email_addr ) {
