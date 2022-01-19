@@ -11,6 +11,11 @@
 		display: block;
 	}
 	.customize-partial-edit-shortcut-button {display: none;}
+	<?php if ( $link_color ) { ?>
+		.col.tracking-detail .tracking_number_wrap a {
+			color: <?php echo esc_html( $link_color ); ?>;
+		}				
+	<?php } ?>
 	<?php if ( $padding ) { ?>
 		body .col.tracking-detail{
 			padding: <?php echo esc_html( $padding ); ?>px;
@@ -53,24 +58,33 @@
 					</a>
 				</span>
 				<div class="provider_image_div" style="">
-					<img class="provider_image" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/usps.png?v=3.1.1">
+					<img class="provider_image" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/4px.png?v=3.1.1">
 				</div>
 				<div class="tracking_number_div">
 					<ul>
 						<li>
-						<span>USPS</span> 
-						<a href="https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=9410803699300126968507" target="blank"><strong>9410803699300126968507</strong></a>
-						<strong>9410803699300126968507</strong>
+						<span>4PX</span> 
+						<a href="http://track.4px.com/query/304188629639" target="blank"><strong>304188629639</strong></a>
+						<strong>304188629639</strong>
+						</li>
+						<li class="last_mile_tracking_number">
+							<span>USPS last-mile tracking number</span> 
+							<strong style="display:inline-block;">5333452683184862313</strong>
 						</li>
 					</ul>
 				</div>
 			</div>
-			<div class="shipment_status_heading out_for_delivery">Out For Delivery</div>
+			<div class="shipping_from_to">
+				<span class="shipping_from">India</span>
+				<img class="shipping_to_img" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/arrow.png">
+				<span class="shipping_to">United states</span>
+			</div>
+			<div class="shipment_status_heading <?php echo esc_html($status); ?>"><?php esc_html_e( apply_filters( 'trackship_status_filter', $status ) ); ?></div>
 			<span class="est_delivery_date">Est. Delivery Date: <strong>Thursday, Oct 01</strong></span>	
 		</div>
 		<div class="tracker-progress-bar <?php echo in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking_icon_layout ' . esc_html( $tracking_page_layout ) : ''; ?>">
-			<div class="progress out_for_delivery">
-				<div class="progress-bar out_for_delivery" <?php echo in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'style="width: 0%;"' : 'style="width: 60%;"'; ?>></div>
+			<div class="progress <?php echo esc_html($status); ?>">
+				<div class="progress-bar <?php echo esc_html($status); ?>" <?php echo in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'style="width: 0%;"' : 'style="width: 60%;"'; ?>></div>
 				<?php if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ) { ?>
 					<div class="progress-icon icon1"></div>
 					<div class="progress-icon icon2"></div>
@@ -149,6 +163,12 @@
 	</div>
 </div>
 <style>
+<?php if ( $hide_from_to ) { ?>
+	.shipping_from_to{display:none;}
+<?php } ?>
+<?php if ( $hide_last_mile ) { ?>
+	.last_mile_tracking_number{display:none;}
+<?php } ?>	
 <?php if ( $remove_trackship_branding ) { ?>
 	.trackship_branding{display:none;}
 <?php } ?>

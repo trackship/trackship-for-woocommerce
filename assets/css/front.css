@@ -128,6 +128,17 @@ span.wc_order_id {
 	font-size: 24px;
 	margin-bottom: 0;
 }
+.shipping_from_to {
+	font-size: 14px;
+	margin-bottom: 5px;
+}
+.shipping_from_to span {
+	vertical-align: middle;
+}
+.shipping_from_to .shipping_to_img {
+    margin: 0 8px;
+	height: 17px;
+}
 .tracker-progress-bar {
 	margin: 30px 0;
 	position: relative;
@@ -311,6 +322,7 @@ ul.timeline > li > p {
 	display: inline-block;
 	vertical-align: middle;
 	margin-bottom: 10px;
+	font-size: 14px;
 }
 .tracking_number_div ul {
 	list-style: none !important;
@@ -318,6 +330,10 @@ ul.timeline > li > p {
 }
 .tracking_number_div ul li {
 	margin: 0;
+}
+.tracking_number_div ul li strong{
+	font-size: 13px;
+	margin: 0 3px;
 }
 /*** RTL CSS ***/
 
@@ -394,4 +410,18 @@ ul.timeline > li > p {
 	overflow-y: overlay;
 	text-align: left;
 	border: 1px solid #e0e0e0;
+}
+
+@media screen and (max-width: 425px) {
+.tracking_number_div ul li span{
+	vertical-align: middle;
+}
+.tracking_number_div ul li strong{
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+	display: inline-block;
+	vertical-align: middle;
+}
 }

@@ -246,10 +246,18 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			$args = array(
 				'shipment_status'	=> $shipment_status[$key]['status'],
 			);
+			$args2 = array(
+				'origin_country'		=> $request['origin_country'],
+				'destination_country'	=> $request['destination_country'],
+				'delivery_number'		=> $request['delivery_number'],
+				'delivery_provider'		=> $request['delivery_provider'],
+				'shipping_service'		=> $request['shipping_service'],
+				'tracking_events'		=> $request['tracking_events']
+			);
 			if ( $tracking_est_delivery_date ) {
 				$args['est_delivery_date'] = $shipment_status[$key]['est_delivery_date'];
 			}
-			trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_item['tracking_number'], $args );
+			trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_item['tracking_number'], $args, $args2 );
 		}
 		
 		$trackship->check_tracking_delivered( $order_id );

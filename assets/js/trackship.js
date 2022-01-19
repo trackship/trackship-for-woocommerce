@@ -554,7 +554,7 @@ jQuery(document).on("click", ".popup_close_icon", function(){
 });
 
 jQuery(document).on("click", ".update_shipping_provider", function(){		
-	jQuery('.sync_provider_popup').show();
+	jQuery('.sync_trackship_provider_popup').show();
 	jQuery('.sync_message').show();
 	jQuery(".sync_trackship_providers_btn").show();
 	jQuery('.synch_result').hide();
@@ -562,7 +562,7 @@ jQuery(document).on("click", ".update_shipping_provider", function(){
 
 jQuery(document).on("click", ".sync_trackship_providers_btn", function(){
 	
-	jQuery('.sync_provider_popup .spinner').addClass('active');
+	jQuery('.sync_trackship_provider_popup .spinner').addClass('active');
 	var nonce = jQuery( '#nonce_trackship_provider' ).val();
 	
 	var ajax_data = {
@@ -575,7 +575,7 @@ jQuery(document).on("click", ".sync_trackship_providers_btn", function(){
 		type: 'POST',
 		dataType: "json",
 		success: function(response) {
-			jQuery('.sync_provider_popup .spinner').removeClass('active');
+			jQuery('.sync_trackship_provider_popup .spinner').removeClass('active');
 			jQuery('.sync_message').hide();
 			jQuery(".sync_trackship_providers_btn").hide();
 			jQuery('.synch_result').show();

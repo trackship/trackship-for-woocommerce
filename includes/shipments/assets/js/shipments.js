@@ -87,7 +87,7 @@ jQuery(document).ready(function() {
 				},									
 			},	
 			{
-				"width": "175px",
+				"width": "185px",
 				'orderable': false,	
 				"mRender":function(data,type,full) {
 					return '<span class="shipment_status_label '+full.shipment_status_id+'">' + full.shipment_status + '</span>';

@@ -23,14 +23,13 @@ class WC_TrackShip_Email_Manager {
 		
 		$this->shipment_status = $shipment_status;
 		$status = str_replace('_', '', $new_status);
-		$status_class = 'TSWC_' . ucfirst( $status ) . '_Customizer_Email';
-		$wcast_status_customizer_email = new $status_class();
+		$default = trackship_admin_customizer()->wcast_shipment_settings_defaults( $status );
 		
-		$email_subject = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_email_subject', $wcast_status_customizer_email->defaults['wcast_' . $status . '_email_subject']);				
+		$email_subject = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'wcast_' . $status . '_email_settings', 'wcast_' . $status . '_email_subject', $default['wcast_' . $status . '_email_subject']);
 		
 		$subject = $this->email_subject($email_subject, $order_id, $order);
-				
-		$email_to = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_email_to', $wcast_status_customizer_email->defaults['wcast_' . $status . '_email_to']);								
+		
+		$email_to = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_email_to', $default['wcast_' . $status . '_email_to']);								
 		
 		$email_to = explode(',', $email_to);				
 		
@@ -38,13 +37,13 @@ class WC_TrackShip_Email_Manager {
 		
 		if ( 1 == $enable ) {
 			foreach ( $email_to as $email ) {																
-				$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_email_heading', $wcast_status_customizer_email->defaults['wcast_' . $status . '_email_heading']);								
+				$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_email_heading', $default['wcast_' . $status . '_email_heading']);								
 									
-				$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_email_content', $wcast_status_customizer_email->defaults['wcast_' . $status . '_email_content']);							
+				$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_email_content', $default['wcast_' . $status . '_email_content']);							
 				
-				$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_show_order_details', $wcast_status_customizer_email->defaults['wcast_' . $status . '_show_order_details'] );
+				$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_show_order_details', $default['wcast_' . $status . '_show_order_details'] );
 				
-				$wcast_show_shipping_address = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array( 'wcast_' . $status . '_email_settings', 'wcast_' . $status . '_show_shipping_address', $wcast_status_customizer_email->defaults['wcast_' . $status . '_show_shipping_address']);
+				$wcast_show_shipping_address = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array( 'wcast_' . $status . '_email_settings', 'wcast_' . $status . '_show_shipping_address', $default['wcast_' . $status . '_show_shipping_address']);
 				
 				$sent_to_admin = false;
 				$plain_text = false;
@@ -157,30 +156,30 @@ class WC_TrackShip_Email_Manager {
 			return;
 		}
 		
-		$wcast_delivered_customizer_email = new TSWC_Delivered_Customizer_Email();		
+		$default = trackship_admin_customizer()->wcast_shipment_settings_defaults( 'delivered_status' );
 		
-		$email_subject = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_email_settings', 'wcast_delivered_status_email_subject', $wcast_delivered_customizer_email->defaults['wcast_delivered_status_email_subject']);
+		$email_subject = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_email_subject', $default['wcast_delivered_status_email_subject']);
 		
 		$subject = $this->email_subject($email_subject, $order_id, $order);
 		
-		$email_to = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_email_settings', 'wcast_delivered_status_email_to', $wcast_delivered_customizer_email->defaults['wcast_delivered_status_email_to']);		
+		$email_to = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_email_to', $default['wcast_delivered_status_email_to']);		
 		
-		$enable = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_email_settings', 'wcast_enable_delivered_status_email', $wcast_delivered_customizer_email->defaults['wcast_enable_delivered_status_email']);	
+		$enable = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_enable_delivered_status_email', $default['wcast_enable_delivered_status_email']);	
 		
 		$email_to = explode( ',', $email_to );
 		
 		if ( 1 == $enable ) {	
 			foreach ( $email_to as $email ) {													
 				
-				$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_email_settings', 'wcast_delivered_status_email_heading', $wcast_delivered_customizer_email->defaults['wcast_delivered_status_email_heading']);				
+				$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_email_heading', $default['wcast_delivered_status_email_heading']);				
 				
-				$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_email_settings', 'wcast_delivered_status_email_content', $wcast_delivered_customizer_email->defaults['wcast_delivered_status_email_content']);				
+				$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_email_content', $default['wcast_delivered_status_email_content']);				
 				
-				$wcast_show_tracking_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_email_settings', 'wcast_delivered_status_show_tracking_details', $wcast_delivered_customizer_email->defaults['wcast_delivered_status_show_tracking_details']);
+				$wcast_show_tracking_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_show_tracking_details', $default['wcast_delivered_status_show_tracking_details']);
 				
-				$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_email_settings', 'wcast_delivered_status_show_order_details', $wcast_delivered_customizer_email->defaults['wcast_delivered_status_show_order_details']);				
+				$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_show_order_details', $default['wcast_delivered_status_show_order_details']);				
 				
-				$wcast_show_shipping_address = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_email_settings', 'wcast_delivered_status_show_shipping_address', $wcast_delivered_customizer_email->defaults['wcast_delivered_status_show_shipping_address']);
+				$wcast_show_shipping_address = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_show_shipping_address', $default['wcast_delivered_status_show_shipping_address']);
 				
 				$sent_to_admin = false;
 				$plain_text = false;				
@@ -390,7 +389,7 @@ class WC_TrackShip_Email_Manager {
 			$email_content = str_replace( '{est_delivery_date}', $est_delivery_date, $email_content );		
 		}
 		
-		return $email_content;
+		return '<p class="shipment_email_content">' . $email_content . '</p>';
 	}
 	
 	/**
@@ -398,7 +397,7 @@ class WC_TrackShip_Email_Manager {
 	 */
 	public function append_analytics_link( $message, $status ) {
 		if ( 'delivered_status' == $status ) {
-			$analytics_link = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'wcast_delivered_email_settings', 'wcast_delivered_status_analytics_link', '' );	
+			$analytics_link = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'wcast_delivered_status_email_settings', 'wcast_delivered_status_analytics_link', '' );	
 		} else {
 			$analytics_link = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'wcast_' . $status . '_email_settings', 'wcast_' . $status . '_analytics_link', '' );
 		}		
@@ -422,8 +421,8 @@ class WC_TrackShip_Email_Manager {
 	 */
 	public function get_est_delivery_date( $order_id, $order ) {
 		
-		$shipment_status = $this->shipment_status;
-		$est_delivery_date = $shipment_status['est_delivery_date'];
+		$shipment_status = isset( $this->shipment_status ) && $this->shipment_status ? $this->shipment_status : array();
+		$est_delivery_date = isset( $shipment_status['est_delivery_date'] ) && $shipment_status['est_delivery_date'] ? $shipment_status['est_delivery_date'] : '';
 		return $est_delivery_date ? date_i18n( 'l, M d', strtotime( $est_delivery_date ) ) : 'Not Available';
 	}
 	

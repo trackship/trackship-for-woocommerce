@@ -40,7 +40,7 @@ class WC_Trackship_Admin {
 		
 		add_action( 'admin_menu', array( $this, 'register_woocommerce_menu' ), 110 );
 		
-		add_action( 'admin_footer', array( $this, 'footer_function'), 1 );		
+		add_action( 'admin_footer', array( $this, 'footer_function'), 1 );	
 		add_action( 'wp_ajax_add_trackship_mapping_row', array( $this, 'add_trackship_mapping_row' ) );
 		add_action( 'wp_ajax_remove_tracking_event', array( $this, 'remove_tracking_event' ) );
 		add_action( 'wp_ajax_trackship_mapping_form_update', array( $this, 'trackship_custom_mapping_form_update') );
@@ -330,7 +330,7 @@ class WC_Trackship_Admin {
 	public function register_woocommerce_menu() {
 		$icon = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHdpZHRoPSIyMHB4IiBoZWlnaHQ9IjIwcHgiIHZpZXdCb3g9Ii03NiA0NyAyMCAyMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAtNzYgNDcgMjAgMjA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+DQoJLnN0MHtmaWxsOiNBN0FBQUQ7fQ0KCS5zdDF7ZmlsbDojNDk0OTQ5O30NCjwvc3R5bGU+DQo8cGF0aCBpZD0iWE1MSURfNjBfIiBjbGFzcz0ic3QwIiBkPSJNLTU4LDQ3aC0xMy42Yy0yLjQsMC00LjMsMS45LTQuMyw0LjFWNTNjMCwyLjMsMS45LDQuMSw0LjEsNC4xaDJ2NS42YzAsMi40LDEuOCw0LjMsNC4xLDQuMw0KCWgyLjN2LTMuOGgtMi43di01LjljMC0yLjEtMS44LTMuOS0zLjktMy45aC0yLjF2LTIuNkgtNThWNDd6Ii8+DQo8cGF0aCBpZD0iWE1MSURfNTlfIiBjbGFzcz0ic3QxIiBkPSJNLTYxLjYsNjUuMWMwLDEtMC45LDEuOS0xLjksMS45cy0xLjktMC45LTEuOS0xLjlzMC45LTEuOSwxLjktMS45DQoJQy02Mi40LDYzLjMtNjEuNiw2NC4xLTYxLjYsNjUuMSIvPg0KPHBhdGggaWQ9IlhNTElEXzU4XyIgY2xhc3M9InN0MSIgZD0iTS01Ni4xLDQ4LjljMCwxLTAuOSwxLjktMS45LDEuOXMtMS45LTAuOS0xLjktMS45Uy01OSw0Ny01OCw0N1MtNTYuMSw0Ny45LTU2LjEsNDguOSIvPg0KPC9zdmc+DQo=';
 		
-		add_menu_page( __( 'TrackShip', 'trackship-for-woocommerce' ), __( 'TrackShip', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), $icon, '55.5' );
+		add_menu_page( __( 'TrackShip', 'trackship-for-woocommerce' ), __( 'TrackShip', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), $icon, '55.4' );
 		
 		if ( trackship_for_woocommerce()->is_trackship_connected() ) {
 			add_submenu_page( 'trackship-dashboard', 'Dashboard', __( 'Dashboard', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), 1 );
@@ -1194,7 +1194,8 @@ class WC_Trackship_Admin {
 			.order-status.status-delivered,.status-label-li .order-label.wc-delivered{
 				background: <?php echo esc_html( $bg_color ); ?>;
 				color: <?php echo esc_html( $color ); ?>;
-			}		
+			}
+			#toplevel_page_trackship_customizer { display: none !important; }
 			</style>
 			<?php
 		}
@@ -1279,7 +1280,7 @@ class WC_Trackship_Admin {
 				<div class="popupclose"></div>
 			<?php } ?>
 		</div>
-        <div id="" class="popupwrapper sync_provider_popup" style="display:none;">
+        <div id="" class="popupwrapper sync_trackship_provider_popup" style="display:none;">
 			<div class="popuprow trackship_provider">
 				<div class="popup_header">
 					<h3 class="popup_title"><?php esc_html_e( 'Sync TrackShip Providers', 'trackship-for-woocommerce'); ?></h3>						
@@ -1513,9 +1514,7 @@ class WC_Trackship_Admin {
 		} else {
 			$page_desc = '';
 		}
-		
-		$ts_tracking_page_customizer = new TSWC_Tracking_Page_Customizer();
-								
+										
 		$form_data = array(
 			'wc_ast_use_tracking_page' => array(
 				'type'		=> 'tgl_checkbox',
@@ -1542,7 +1541,7 @@ class WC_Trackship_Admin {
 				'title'		=> '',						
 				'show'		=> true,				
 				'class'     => '',
-				'customize_link' => $ts_tracking_page_customizer->get_customizer_url( 'ast_tracking_page_section', 'trackship' ),
+				'customize_link' => admin_url( 'admin.php?page=trackship_customizer' ),
 			),	
 		);
 		return $form_data;
@@ -1555,57 +1554,57 @@ class WC_Trackship_Admin {
 				'slug' => 'in-transit',
 				'option_name'	=> 'wcast_intransit_email_settings',
 				'enable_status_name' => 'wcast_enable_intransit_email',		
-				'customizer_url' => TSWC_Intransit_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'in_transit', 'trackship' ),	
+				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=in_transit' ),	
 			),
 			'available_for_pickup' => array(					
 				'title'	=> __( 'Available For Pickup', 'trackship-for-woocommerce' ),
 				'slug'  => 'available-for-pickup',
 				'option_name'	=> 'wcast_availableforpickup_email_settings',
 				'enable_status_name' => 'wcast_enable_availableforpickup_email',		
-				'customizer_url' => TSWC_Availableforpickup_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'available_for_pickup', 'trackship' ),	
+				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=available_for_pickup' ),	
 			),
 			'out_for_delivery' => array(					
 				'title'	=> __( 'Out For Delivery', 'trackship-for-woocommerce' ),
 				'slug'  => 'out-for-delivery',
 				'option_name'	=> 'wcast_outfordelivery_email_settings',
 				'enable_status_name' => 'wcast_enable_outfordelivery_email',		
-				'customizer_url' => TSWC_Outfordelivery_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'out_for_delivery', 'trackship' ),	
+				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=out_for_delivery' ),	
 			),
 			'failure' => array(					
 				'title'	=> __( 'Failed Attempt', 'trackship-for-woocommerce' ),
 				'slug'  => 'failed-attempt',
 				'option_name'	=> 'wcast_failure_email_settings',
 				'enable_status_name' => 'wcast_enable_failure_email',		
-				'customizer_url' => TSWC_Failure_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'failure', 'trackship' ),	
+				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=failure' ),	
 			),
 			'on_hold' => array(					
 				'title'	=> __( 'On Hold', 'trackship-for-woocommerce' ),
 				'slug'  => 'on-hold',
 				'option_name'	=> 'wcast_onhold_email_settings',
 				'enable_status_name' => 'wcast_enable_onhold_email',		
-				'customizer_url' => TSWC_Onhold_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'on_hold', 'trackship' ),	
+				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=on_hold' ),	
 			),
 			'exception' => array(					
 				'title'	=> __( 'Exception', 'trackship-for-woocommerce' ),
 				'slug'  => 'exception',
 				'option_name'	=> 'wcast_exception_email_settings',
 				'enable_status_name' => 'wcast_enable_exception_email',		
-				'customizer_url' => TSWC_Exception_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'exception', 'trackship' ),	
+				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=exception' ),	
 			),
 			'return_to_sender' => array(					
 				'title'	=> __( 'Return To Sender', 'trackship-for-woocommerce' ),
 				'slug'  => 'return-to-sender',
 				'option_name'	=> 'wcast_returntosender_email_settings',
 				'enable_status_name' => 'wcast_enable_returntosender_email',		
-				'customizer_url' => TSWC_Returntosender_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'return_to_sender', 'trackship' ),	
+				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=return_to_sender' ),	
 			),
 			'delivered' => array(					
 				'title'	=> __( 'Delivered', 'trackship-for-woocommerce' ),
 				'title2'=> __( 'Send only when all shipments for the order are delivered', 'trackship-for-woocommerce' ),
 				'slug'  => 'delivered-status',
-				'option_name'	=> 'wcast_delivered_email_settings',
+				'option_name'	=> 'wcast_delivered_status_email_settings',
 				'enable_status_name' => 'wcast_enable_delivered_status_email',		
-				'customizer_url' => TSWC_Delivered_Customizer_Email::get_customizer_url( 'trackship_shipment_status_email', 'delivered', 'trackship' ),
+				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=delivered' ),
 			),
 		);
 		return $notifications_data;
