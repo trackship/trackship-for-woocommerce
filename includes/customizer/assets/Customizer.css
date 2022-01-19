@@ -194,6 +194,18 @@ input[type=text] {
     width: calc(100% - 46px);
     display: inline-block;
 }
+.zoremmail-layout-content-preview.customizer-unloading #overlay {
+	position: fixed; /* Sit on top of the page content */	
+	top: 0; 
+	left: 300px;
+	right: 45px;
+	bottom: 0;
+	background-color: rgba(7, 29, 87, 0.5); /* Black background with opacity */
+	z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+	cursor: default; /* Add a pointer on hover */
+	background: url('../assets/loader.svg') 50% 50% no-repeat rgba(7, 29, 87, 0.5);
+	background-size: 50px;
+}
 .menu-sub-codeinfo.codeinfo code {
     padding: 10px;
     display: block;
@@ -402,5 +414,8 @@ input[type=checkbox].tgl {
 @media screen and (min-width: 1667px) {
 .zoremmail-layout.zoremmail-layout-has-sider {
     margin-left: 18%;
+}
+.zoremmail-layout-content-preview.customizer-unloading #overlay {
+	left: 18%;
 }
 }

@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<strong><?php esc_html_e( $tracking_number ); ?></strong>	
 					<?php } ?>
 				</li>
-				<?php if ( !$hide_last_mile && $row->delivery_provider && $row->delivery_number ) { ?>
+				<?php if ( !$hide_last_mile && isset( $row->delivery_provider ) && $row->delivery_provider && $row->delivery_number ) { ?>
 					<li class="last_mile_tracking_number">
 						<?php $delivery_provider = trackship_for_woocommerce()->actions->get_provider_name( $row->delivery_provider ); ?>
 						<span><?php echo esc_html( $delivery_provider ); ?> <?php esc_html_e( 'last-mile tracking number', 'trackship-for-woocommerce' ); ?></span>
@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</ul>
 		</div>	
 	</div>
-	<?php if ( !$hide_from_to && $row->origin_country && $row->destination_country && $row->destination_country != $row->origin_country ) { ?>
+	<?php if ( !$hide_from_to && isset( $row->origin_country ) && $row->origin_country && $row->destination_country && $row->destination_country != $row->origin_country ) { ?>
 		<div class="shipping_from_to">
 			<span class="shipping_from"><?php echo esc_html( WC()->countries->countries[ $row->origin_country ] ) ?></span>
 			<img class="shipping_to_img" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/arrow.png">
