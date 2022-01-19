@@ -822,7 +822,6 @@ class WC_Trackship_Actions {
 	*/
 	public function update_shipment_status_email_status_fun() {
 		check_ajax_referer( 'tswc_shipment_status_email', 'security' );
-		//print_r($_POST); exit;
 		$settings_data = isset( $_POST['settings_data'] ) ? wc_clean( $_POST['settings_data'] ) : '';
 		$status_settings = get_option( $settings_data );
 		$enable_status_email = isset( $_POST['wcast_enable_status_email'] ) ? wc_clean( $_POST['wcast_enable_status_email'] ) : '';
