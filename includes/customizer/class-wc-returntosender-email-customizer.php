@@ -13,54 +13,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 class TSWC_Returntosender_Customizer_Email {
 	// Get our default values
 	public function __construct() {
-		// Get our Customizer defaults
-		$this->defaults = $this->wcast_generate_defaults();
-		$wc_ast_api_key = get_option('wc_ast_api_key');
-		if ( !$wc_ast_api_key ) {
+		// Only proceed if this is own request.
+		if ( ! self::is_own_preview_request() ) {
 			return;
 		}
-		// Register our sample default controls
-		add_action( 'customize_register', array( $this, 'wcast_register_sample_default_controls' ) );
+		// Get our Customizer defaults
+		$this->defaults = trackship_admin_customizer()->wcast_shipment_settings_defaults( 'returntosender' );
 		
-		// Only proceed if this is own request.
-		if ( ! self::is_own_customizer_request() && ! self::is_own_preview_request() ) {
-			return;
-		}							
-		// Register our sections
-		add_action( 'customize_register', array( trackship_customizer(), 'wcast_add_customizer_sections' ) );	
-		
-		// Remove unrelated components.
-		add_filter( 'customize_loaded_components', array( trackship_customizer(), 'remove_unrelated_components' ), 99, 2 );
-
-		// Remove unrelated sections.
-		add_filter( 'customize_section_active', array( trackship_customizer(), 'remove_unrelated_sections' ), 10, 2 );	
-		
-		// Unhook divi front end.
-		add_action( 'woomail_footer', array( trackship_customizer(), 'unhook_divi' ), 10 );
-
-		// Unhook Flatsome js
-		add_action( 'customize_preview_init', array( trackship_customizer(), 'unhook_flatsome' ), 50  );
-		
-		add_filter( 'customize_controls_enqueue_scripts', array( trackship_customizer(), 'enqueue_customizer_scripts' ) );				
-		
-		add_action( 'parse_request', array( $this, 'set_up_preview' ) );	
-		
-		add_action( 'customize_preview_init', array( $this, 'enqueue_preview_scripts' ) );	
-
-	}
-	
-	/**
-	 * Add css and js for preview
-	*/	
-	public function enqueue_preview_scripts() {		 
-		wp_enqueue_script('wcast-email-preview-scripts', trackship_for_woocommerce()->plugin_dir_url() . 'assets/js/preview-scripts.js', array('jquery', 'customize-preview'), trackship_for_woocommerce()->version, true);
-		wp_enqueue_style('wcast-preview-styles', trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/preview-styles.css', array(), trackship_for_woocommerce()->version  );
-		// Send variables to Javascript
-		$preview_id     = get_theme_mod('wcast_email_preview_order_id');
-		wp_localize_script('wcast-email-preview-scripts', 'wcast_preview', array(
-			'site_title'   => $this->get_blogname(),
-			'order_number' => $preview_id,			
-		));
+		add_action( 'parse_request', array( $this, 'set_up_preview' ) );
 	}
 	
 	/**
@@ -82,308 +42,12 @@ class TSWC_Returntosender_Customizer_Email {
 	}
 	
 	/**
-	 * Checks to see if we are opening our custom customizer controls
-	 *
-	 * @return bool
-	 */
-	public static function is_own_customizer_request() {
-		return isset( $_REQUEST['email'] ) && 'trackship_shipment_status_email' === $_REQUEST['email'];
-	}
-	
-	/**
-	 * Get Customizer URL
-	 *
-	 */
-	public static function get_customizer_url( $email, $shipment_status, $return_tab ) {		
-			$customizer_url = add_query_arg( array(
-				'wcast-customizer' => '1',
-				'email' => $email,
-				'shipment_status' => $shipment_status,
-				'autofocus[section]' => 'trackship_shipment_status_email',
-				'url'                  => urlencode( add_query_arg( array( 'wcast-returntosender-email-customizer-preview' => '1' ), home_url( '/' ) ) ),
-				'return'               => urlencode( self::get_email_settings_page_url($return_tab) ),
-			), admin_url( 'customize.php' ) );		
-
-		return $customizer_url;
-	}
-	
-	/**
-	 * Get WooCommerce email settings page URL
-	 *
-	 * @return string
-	 */
-	public static function get_email_settings_page_url( $return_tab ) {
-		return admin_url( 'admin.php?page=trackship-for-woocommerce&tab=notifications' );
-	}
-	
-	/**
-	 * Code for initialize default value for customizer
-	*/
-	public function wcast_generate_defaults() {		
-		$customizer_defaults = array(			
-			'wcast_returntosender_email_subject' => __( 'Your order #{order_number} has returned to sender', 'trackship-for-woocommerce' ),
-			'wcast_returntosender_email_heading' => __( 'Return To Sender', 'trackship-for-woocommerce' ),
-			'wcast_returntosender_email_content' => __( "Hi there. we thought you'd like to know that your recent order from {site_title} has been returned to sender.", 'trackship-for-woocommerce' ),				
-			'wcast_enable_returntosender_email'  => '',
-			'wcast_returntosender_email_to'  => 	'{customer_email}',
-			'wcast_returntosender_show_tracking_details' => '',
-			'wcast_returntosender_show_order_details' => 1,		
-			'wcast_returntosender_hide_shipping_item_price' => 1,				
-			'wcast_returntosender_show_shipping_address' => 1,
-			'wcast_returntosender_email_code_block' => '',
-		);
-
-		return apply_filters( 'skyrocket_customizer_defaults', $customizer_defaults );
-	}
-	
-	/**
-	 * Register our sample default controls
-	 */
-	public function wcast_register_sample_default_controls( $wp_customize ) {		
-		/**
-		* Load all our Customizer Custom Controls
-		*/
-		require_once trailingslashit( dirname(__FILE__) ) . 'custom-controls.php';
-						
-		// Display Shipment Provider image/thumbnail
-		$wp_customize->add_setting( 'wcast_returntosender_email_settings[wcast_enable_returntosender_email]',
-			array(
-				'default' => $this->defaults['wcast_enable_returntosender_email'],
-				'transport' => 'postMessage',
-				'type'  => 'option',
-				'sanitize_callback' => ''
-			)
-		);
-		$wp_customize->add_control( 'wcast_returntosender_email_settings[wcast_enable_returntosender_email]',
-			array(
-				'label' => __( 'Enable Return To Sender email', 'trackship-for-woocommerce' ),
-				'description' => '',
-				'section' => 'trackship_shipment_status_email',
-				'type' => 'checkbox',
-				'active_callback' => array( $this, 'active_callback' ),
-			)
-		);	
-			
-		// Header Text		
-		$wp_customize->add_setting( 'wcast_returntosender_email_settings[wcast_returntosender_email_to]',
-			array(
-				'default' => $this->defaults['wcast_returntosender_email_to'],
-				'transport' => 'postMessage',
-				'type'  => 'option',
-				'sanitize_callback' => ''
-			)
-		);
-		$wp_customize->add_control( 'wcast_returntosender_email_settings[wcast_returntosender_email_to]',
-			array(
-				'label' => __( 'Recipient(s)', 'trackship-for-woocommerce' ),
-				'description' => esc_html__( 'Use the {customer_email} placeholder, you can add comma separated email addresses.', 'trackship-for-woocommerce' ),
-				'section' => 'trackship_shipment_status_email',
-				'type' => 'text',
-				'input_attrs' => array(
-					'class' => '',
-					'style' => '',
-					'placeholder' => 'E.g. {customer.email}, admin@example.org',
-				),
-				'active_callback' => array( $this, 'active_callback' ),
-			)
-		);		
-		
-		// Header Text		
-		$wp_customize->add_setting( 'wcast_returntosender_email_settings[wcast_returntosender_email_subject]',
-			array(
-				'default' => $this->defaults['wcast_returntosender_email_subject'],
-				'transport' => 'postMessage',
-				'type'  => 'option',
-				'sanitize_callback' => ''
-			)
-		);
-		$wp_customize->add_control( 'wcast_returntosender_email_settings[wcast_returntosender_email_subject]',
-			array(
-				'label' => __( 'Email Subject', 'trackship-for-woocommerce' ),
-				'description' => esc_html__( 'Available variables:', 'trackship-for-woocommerce' ) . ' {site_title}, {order_number}',
-				'section' => 'trackship_shipment_status_email',
-				'type' => 'text',
-				'input_attrs' => array(
-					'class' => '',
-					'style' => '',
-					'placeholder' => __( $this->defaults['wcast_returntosender_email_subject'], 'trackship-for-woocommerce' ),
-				),
-				'active_callback' => array( $this, 'active_callback' ),
-			)
-		);
-		
-		// Header Text		
-		$wp_customize->add_setting( 'wcast_returntosender_email_settings[wcast_returntosender_email_heading]',
-			array(
-				'default' => $this->defaults['wcast_returntosender_email_heading'],
-				'transport' => 'refresh',
-				'type'  => 'option',
-				'sanitize_callback' => ''
-			)
-		);
-		$wp_customize->add_control( 'wcast_returntosender_email_settings[wcast_returntosender_email_heading]',
-			array(
-				'label' => __( 'Email heading', 'trackship-for-woocommerce' ),
-				'description' => esc_html__( 'Available variables:', 'trackship-for-woocommerce' ) . ' {site_title}, {order_number}',
-				'section' => 'trackship_shipment_status_email',
-				'type' => 'text',
-				'input_attrs' => array(
-					'class' => '',
-					'style' => '',
-					'placeholder' => __( $this->defaults['wcast_returntosender_email_heading'], 'trackship-for-woocommerce' ),
-				),
-				'active_callback' => array( $this, 'active_callback' ),
-			)
-		);
-		
-		// Test of TinyMCE control
-		$wp_customize->add_setting( 'wcast_returntosender_email_settings[wcast_returntosender_email_content]',
-			array(
-				'default' => $this->defaults['wcast_returntosender_email_content'],
-				'transport' => 'refresh',
-				'type'  => 'option',
-				'sanitize_callback' => 'wp_kses_post'
-			)
-		);
-		$wp_customize->add_control( new TrackShip_TinyMCE_Custom_Control( $wp_customize, 'wcast_returntosender_email_settings[wcast_returntosender_email_content]',
-			array(
-				'label' => __( 'Email content', 'trackship-for-woocommerce' ),
-				'description' => '',
-				'section' => 'trackship_shipment_status_email',
-				'input_attrs' => array(
-					'toolbar1' => 'bold italic bullist numlist alignleft aligncenter alignright link',
-					'mediaButtons' => true,
-					'placeholder' => __( $this->defaults['wcast_returntosender_email_content'], 'trackship-for-woocommerce' ),
-				),
-				'active_callback' => array( $this, 'active_callback' ),
-			)
-		) );
-		
-		$wp_customize->add_setting( 'wcast_returntosender_email_code_block',
-			array(
-				'default' => $this->defaults['wcast_returntosender_email_code_block'],
-				'transport' => 'postMessage',
-				'sanitize_callback' => ''
-			)
-		);
-		$wp_customize->add_control( new TrackShip_Codeinfoblock_Control( $wp_customize, 'wcast_returntosender_email_code_block',
-			array(
-				'label' => __( 'Available variables:', 'trackship-for-woocommerce' ),
-				'description' => '<code>{site_title}<br>{customer_email}<br>{customer_first_name}<br>{customer_last_name}<br>{customer_company_name}<br>{customer_username}<br>{order_number}<br>{est_delivery_date}</code>',
-				'section' => 'trackship_shipment_status_email',
-				'active_callback' => array( $this, 'active_callback' ),				
-			)
-		) );	
-				
-		// Display Shipment Provider image/thumbnail
-		$wp_customize->add_setting( 'wcast_returntosender_email_settings[wcast_returntosender_show_order_details]',
-			array(
-				'default' => $this->defaults['wcast_returntosender_show_order_details'],
-				'transport' => 'refresh',
-				'type'  => 'option',
-				'sanitize_callback' => ''
-			)
-		);
-		$wp_customize->add_control( 'wcast_returntosender_email_settings[wcast_returntosender_show_order_details]',
-			array(
-				'label' => __( 'Display the Shipping items', 'trackship-for-woocommerce' ),
-				'description' => '',
-				'section' => 'trackship_shipment_status_email',
-				'type' => 'checkbox',
-				'active_callback' => array( $this, 'active_callback' ),
-			)
-		);
-
-		// Display Shipment Provider image/thumbnail
-		$wp_customize->add_setting( 'wcast_returntosender_email_settings[wcast_returntosender_show_shipping_address]',
-			array(
-				'default' => $this->defaults['wcast_returntosender_show_shipping_address'],
-				'transport' => 'refresh',
-				'type'  => 'option',
-				'sanitize_callback' => ''
-			)
-		);
-		$wp_customize->add_control( 'wcast_returntosender_email_settings[wcast_returntosender_show_shipping_address]',
-			array(
-				'label' => __( 'Display the shipping address', 'trackship-for-woocommerce' ),
-				'description' => '',
-				'section' => 'trackship_shipment_status_email',
-				'type' => 'checkbox',
-				'active_callback' => array( $this, 'active_callback' ),
-			)
-		);
-		
-		// Google Analytics Heading
-		$wp_customize->add_setting( 'wcast_returntosender_email_settings[analytics_heading]',
-			array(
-				'default' => '',
-				'transport' => 'postMessage',
-				'sanitize_callback' => '',
-				'type' => 'option',
-			)
-		);
-		$wp_customize->add_control( new TrackShip_Heading_Control( $wp_customize, 'wcast_returntosender_email_settings[analytics_heading]',
-			array(
-				'label' => __( 'Google Analytics', 'trackship-for-woocommerce' ),
-				'section' => 'trackship_shipment_status_email',
-				'active_callback' => array( $this, 'active_callback' ),		
-			)
-		) );
-		
-		// Google Analytics link tracking
-		$wp_customize->add_setting( 'wcast_returntosender_email_settings[wcast_returntosender_analytics_link]',
-			array(
-				'default' => '',
-				'transport' => 'refresh',
-				'type'  => 'option',	
-				'sanitize_callback' => ''
-			)
-		);
-		$wp_customize->add_control( 'wcast_returntosender_email_settings[wcast_returntosender_analytics_link]',
-			array(
-				'label' => __( 'Google Analytics link tracking', 'trackship-for-woocommerce' ),
-				'description' => esc_html__( 'This will be appended to URL in the email content', 'trackship-for-woocommerce' ),
-				'section' => 'trackship_shipment_status_email',
-				'type' => 'text',
-				'input_attrs' => array(
-					'class' => '',
-					'style' => '',
-					'placeholder' => '',
-				),
-				'active_callback' => array( $this, 'active_callback' ),
-			)
-		);				
-	}	
-	
-	public function active_callback() {
-		if ( self::is_own_preview_request() ) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public function active_callback_only_show_order_details() {
-		
-		$show_order_details = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_returntosender_email_settings', 'wcast_returntosender_show_order_details', $this->defaults['wcast_returntosender_show_order_details']);		
-		
-		if ( self::is_own_preview_request() && $show_order_details ) {
-			return true;
-		} else {
-			return false;
-		}
-	}	
-	/**
 	 * Set up preview
 	 *
 	 * @return void
 	 */
 	public function set_up_preview() {
 		
-		// Make sure this is own preview request.
-		if ( ! self::is_own_preview_request() ) {
-			return;
-		}
 		include trackship_for_woocommerce()->get_plugin_path() . '/includes/customizer/preview/returntosender_preview.php';		
 		exit;			
 	}
@@ -393,7 +57,7 @@ class TSWC_Returntosender_Customizer_Email {
 	*/	
 	public function preview_returntosender_email() {
 		$preview_id     = 1;
-		$order = trackship_customizer()->get_wc_order_for_preview( 'mockup' );
+		$order = trackship_admin_customizer()->get_wc_order_for_preview( 'mockup' );
 		
 		$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_returntosender_email_settings', 'wcast_returntosender_email_heading', $this->defaults['wcast_returntosender_email_heading']);		
 		$email_heading = str_replace( '{site_title}', $this->get_blogname(), $email_heading );
@@ -403,6 +67,8 @@ class TSWC_Returntosender_Customizer_Email {
 		
 		$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_returntosender_email_settings', 'wcast_returntosender_show_order_details', $this->defaults['wcast_returntosender_show_order_details']);	
 		
+		$wcast_show_product_image = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_returntosender_email_settings', 'wcast_returntosender_show_product_image', $this->defaults['wcast_returntosender_show_product_image']);
+
 		$wcast_show_shipping_address = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_returntosender_email_settings', 'wcast_returntosender_show_shipping_address', $this->defaults['wcast_returntosender_show_shipping_address']);		
 		
 		$sent_to_admin = false;
@@ -424,8 +90,8 @@ class TSWC_Returntosender_Customizer_Email {
 			$message = preg_replace_callback($regex, array( $this, '_appendCampaignToString'), $message);	
 		}
 		
-		$shipment_status = trackship_customizer()->get_wc_shipment_status_for_preview( 'return_to_sender' );
-		$tracking_items = trackship_customizer()->get_tracking_items_for_preview();
+		$shipment_status = trackship_admin_customizer()->get_wc_shipment_status_for_preview( 'return_to_sender' );
+		$tracking_items = trackship_admin_customizer()->get_tracking_items_for_preview();
 		
 		$local_template	= get_stylesheet_directory() . '/woocommerce/emails/tracking-info.php';			
 		if ( file_exists( $local_template ) && is_writable( $local_template ) ) {				
@@ -454,6 +120,7 @@ class TSWC_Returntosender_Customizer_Email {
 					'sent_to_admin' => $sent_to_admin,
 					'plain_text'    => $plain_text,
 					'email'         => $email,
+					'wcast_show_product_image' => $wcast_show_product_image,
 				),
 				'woocommerce-advanced-shipment-tracking/', 
 				trackship_for_woocommerce()->get_plugin_path() . '/templates/'
@@ -474,8 +141,9 @@ class TSWC_Returntosender_Customizer_Email {
 		// create a new email
 		$email = new WC_Email();
 		
-		add_filter( 'wp_kses_allowed_html', array( trackship_customizer(), 'my_allowed_tags' ) );
-		add_filter( 'safe_style_css', array( trackship_customizer(), 'safe_style_css_callback' ), 10, 1 );
+		add_filter( 'wp_kses_allowed_html', array( trackship_admin_customizer(), 'my_allowed_tags' ) );
+		add_filter( 'safe_style_css', array( trackship_admin_customizer(), 'safe_style_css_callback' ), 10, 1 );
+		add_filter( 'woocommerce_email_styles', array( trackship_admin_customizer(), 'shipment_email_preview_css' ), 9999, 2 );
 		
 		// wrap the content with the email template and then add styles
 		$email_html = apply_filters( 'woocommerce_mail_content', $email->style_inline( $mailer->wrap_message( $email_heading, $message ) ) );
