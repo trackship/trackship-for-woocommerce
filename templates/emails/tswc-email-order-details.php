@@ -32,7 +32,6 @@ $kt_woomail = get_option( 'kt_woomail' );
 if ( !empty($kt_woomail) && isset( $kt_woomail['font_size'] ) ) {
 	$table_font_size = 'font-size:' . $kt_woomail['font_size'] . 'px';
 }
-
 ?>
 <br>
 <h2><?php esc_html_e( 'Items in this shipment', 'trackship-for-woocommerce' ); ?></h2>
@@ -54,11 +53,14 @@ if ( !empty($kt_woomail) && isset( $kt_woomail['font_size'] ) ) {
 					} else {
 						$image         = '<img src=' . esc_url( trackship_for_woocommerce()->plugin_dir_url() ) . 'assets/images/dummy-product-image.jpg>';
 					}
+					//echo $image = $wcast_show_product_image ? $image : '';
 					?>
 					<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_order_item_class', 'order_item', $item, $order ) ); ?>">
-						<td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;border-left:0;border:0;border-bottom:1px solid #e0e0e0;padding: 12px 5px;width: 70px;">
-							<?php echo wp_kses_post( apply_filters( 'woocommerce_order_item_thumbnail', $image, $item ) ); ?>
-						</td>
+						<?php if ( $wcast_show_product_image ) { ?>
+							<td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;border-left:0;border:0;border-bottom:1px solid #e0e0e0;padding: 12px 5px;width: 70px;">
+								<?php echo wp_kses_post( apply_filters( 'woocommerce_order_item_thumbnail', $image, $item ) ); ?>
+							</td>
+						<?php } ?>
 						<td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;border-left:0;border:0;border-bottom:1px solid #e0e0e0;padding: 12px 5px;">
 							<?php 
 							$qty = $item->get_quantity();
