@@ -42,9 +42,10 @@ $ship_status = array(
 		<?php } ?>
 		</select>
 	</span>
+	<button class="serch_button" type="button"><?php esc_html_e( 'Search', 'trackship-for-woocommerce' ); ?></button>
 	<span class="shipment_search_bar">
 		<input type="text" id="search_bar" name="search_bar" placeholder="">
-		<button class="serch_button" type="button"><?php esc_html_e( 'Search', 'trackship-for-woocommerce' ); ?></button>
+		<span class="dashicons dashicons-no"></span>
 	</span>  
 </div>
 <?php require_once( trackship_for_woocommerce()->get_plugin_path() . '/includes/shipments/views/trackship_shipments.php' ); ?>
