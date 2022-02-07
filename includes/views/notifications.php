@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	$ts_notifications = $this->trackship_shipment_status_notifications_data();
 	?>
 	<div class="trackship_tab_name" style="margin-top: -10px;">
-		<input id="tab_email_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-tab="email-notification" data-type="email" <?php echo in_array( $tab_type, array( 'notifications', 'email-notification' ) ) ? 'checked' : ''; ?> >
+		<input id="tab_email_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-tab="email-notification" data-type="email" <?php echo 'checked'; ?> >
 		<label for="tab_email_notifications" class="inner_tab_label ts_tabs_label inner_email_tab"><?php esc_html_e( 'Email Notifications', 'trackship-for-woocommerce' ); ?></label>				
     
 		<input id="tab_sms_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-tab="sms-notification" data-type="sms" <?php echo 'sms-notification' == $tab_type ? 'checked' : ''; ?> >
