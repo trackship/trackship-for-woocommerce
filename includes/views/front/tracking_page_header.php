@@ -32,8 +32,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</li>
 				<?php if ( !$hide_last_mile && isset( $row->delivery_provider ) && $row->delivery_provider && $row->delivery_number ) { ?>
 					<li class="last_mile_tracking_number">
-						<?php $delivery_provider = trackship_for_woocommerce()->actions->get_provider_name( $row->delivery_provider ); ?>
-						<span><?php echo esc_html( $delivery_provider ); ?> <?php esc_html_e( 'last-mile tracking number', 'trackship-for-woocommerce' ); ?></span>
+						<?php //$delivery_provider = trackship_for_woocommerce()->actions->get_provider_name( $row->delivery_provider ); ?>
+						<span><?php esc_html_e( 'Delivery tracking Number', 'trackship-for-woocommerce' ); ?></span>
 						<strong> <?php echo esc_html( $row->delivery_number ) ?></strong>
 					</li>
 				<?php } ?>

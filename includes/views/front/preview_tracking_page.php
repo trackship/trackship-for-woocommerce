@@ -68,7 +68,7 @@
 						<strong>304188629639</strong>
 						</li>
 						<li class="last_mile_tracking_number">
-							<span>USPS last-mile tracking number</span> 
+							<span>Delivery tracking Number </span> 
 							<strong style="display:inline-block;">5333452683184862313</strong>
 						</li>
 					</ul>
