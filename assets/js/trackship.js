@@ -72,11 +72,11 @@
 				return false;
 			}
 			
-			$("#trackship_late_shipments_form").find(".spinner").addClass("active");			
+			$("#trackship_late_shipments_form").find(".spinner").addClass("active").slideDown( 'slow' );			
 			var ajax_data = $("#trackship_late_shipments_form").serialize();
 			
 			$.post( ajaxurl, ajax_data, function(response) {
-				$("#trackship_late_shipments_form").find(".spinner").removeClass("active");
+				$("#trackship_late_shipments_form").find(".spinner").removeClass("active").slideUp( 'slow' );
 				jQuery(document).trackship_snackbar( trackship_script.i18n.data_saved );
 			});			
 		},	
@@ -190,8 +190,11 @@ jQuery(document).on("click", ".trackship_admin_content .trackship_nav_div .tab_i
 jQuery(document).on( "click", ".ts_notifications_outer_table .inner_tab_input", function(){
 	'use strict';
 	var type = jQuery(this).data( "type" );
+	var tab = jQuery(this).data('tab');
 	jQuery( '.tab_inner_container .inner_tab_section' ).hide();
 	jQuery( '.outer_form_table.ts_notifications_outer_table .shipment-status-'+type+'-section' ).show();
+	var url = window.location.protocol + "//" + window.location.host + window.location.pathname+"?page=trackship-for-woocommerce&tab="+tab;
+	window.history.pushState({path:url},'',url);
 	jQuery(window).trigger('resize');
 });
 
@@ -241,8 +244,25 @@ jQuery(document).on("click", ".trackship-notice .bulk_shipment_status_button", f
 			jQuery( '.trackship-notice .bulk_shipment_status_button' ).attr("disabled", true);
 			jQuery(document).trackship_snackbar( 'Tracking info sent to Trackship for all Orders.' );
 		},
-		error: function(response) {
-			console.log(response);			
+		error: function(response, jqXHR, exception) {
+			console.log(response);
+			var warning_msg = '';
+			if (jqXHR.status === 0) {
+				warning_msg = 'Not connect.\n Verify Network.';
+			} else if (jqXHR.status === 404) {
+				warning_msg = 'Requested page not found. [404]';
+			} else if (jqXHR.status === 500) {
+				warning_msg = 'Internal Server Error [500].';
+			} else if (exception === 'parsererror') {
+				warning_msg = 'Requested JSON parse failed.';
+			} else if (exception === 'timeout') {
+				warning_msg = 'Time out error.';
+			} else if (exception === 'abort') {
+				warning_msg = 'Ajax request aborted.';
+			} else {
+				warning_msg = 'Uncaught Error.\n' + jqXHR.responseText;
+			}
+			jQuery(document).trackship_snackbar_warning( warning_msg );
 		}
 	});
 	return false;
@@ -294,8 +314,25 @@ jQuery(document).on("change", ".shipment_status_toggle input", function(){
 			jQuery("#content5 ").unblock();
 			jQuery(document).trackship_snackbar( trackship_script.i18n.data_saved );
 		},
-		error: function(response) {					
-			jQuery(document).trackship_snackbar_warning( "Settingd not saved" );
+		error: function(response, jqXHR, exception) {
+			console.log(response);
+			var warning_msg = '';
+			if (jqXHR.status === 0) {
+				warning_msg = 'Not connect.\n Verify Network.';
+			} else if (jqXHR.status === 404) {
+				warning_msg = 'Requested page not found. [404]';
+			} else if (jqXHR.status === 500) {
+				warning_msg = 'Internal Server Error [500].';
+			} else if (exception === 'parsererror') {
+				warning_msg = 'Requested JSON parse failed.';
+			} else if (exception === 'timeout') {
+				warning_msg = 'Time out error.';
+			} else if (exception === 'abort') {
+				warning_msg = 'Ajax request aborted.';
+			} else {
+				warning_msg = 'Uncaught Error.\n' + jqXHR.responseText;
+			}
+			jQuery(document).trackship_snackbar_warning( warning_msg );
 		}
 	});
 });
@@ -323,9 +360,25 @@ jQuery(document).on("change", "#all-shipment-status-delivered", function(){
 		success: function(response) {	
 			jQuery(document).trackship_snackbar( trackship_script.i18n.data_saved );
 		},
-		error: function(response) {
+		error: function(response, jqXHR, exception) {
 			console.log(response);
-			jQuery(document).trackship_snackbar_warning( trackship_script.i18n.data_saved );		
+			var warning_msg = '';
+			if (jqXHR.status === 0) {
+				warning_msg = 'Not connect.\n Verify Network.';
+			} else if (jqXHR.status === 404) {
+				warning_msg = 'Requested page not found. [404]';
+			} else if (jqXHR.status === 500) {
+				warning_msg = 'Internal Server Error [500].';
+			} else if (exception === 'parsererror') {
+				warning_msg = 'Requested JSON parse failed.';
+			} else if (exception === 'timeout') {
+				warning_msg = 'Time out error.';
+			} else if (exception === 'abort') {
+				warning_msg = 'Ajax request aborted.';
+			} else {
+				warning_msg = 'Uncaught Error.\n' + jqXHR.responseText;
+			}
+			jQuery(document).trackship_snackbar_warning( warning_msg );
 		}
 	});
 	return false;
@@ -446,9 +499,26 @@ jQuery(document).on( "click", ".add_custom_mapping_h3", function(){
 			jQuery( '.map-provider-table .select2' ).select2();
 			spinner.removeClass("active");
 		},
-		error: function(response) {
-			console.log(response);	
-			spinner.removeClass("active");		
+		error: function(response, jqXHR, exception) {
+			console.log(response);
+			spinner.removeClass("active");
+			var warning_msg = '';
+			if (jqXHR.status === 0) {
+				warning_msg = 'Not connect.\n Verify Network.';
+			} else if (jqXHR.status === 404) {
+				warning_msg = 'Requested page not found. [404]';
+			} else if (jqXHR.status === 500) {
+				warning_msg = 'Internal Server Error [500].';
+			} else if (exception === 'parsererror') {
+				warning_msg = 'Requested JSON parse failed.';
+			} else if (exception === 'timeout') {
+				warning_msg = 'Time out error.';
+			} else if (exception === 'abort') {
+				warning_msg = 'Ajax request aborted.';
+			} else {
+				warning_msg = 'Uncaught Error.\n' + jqXHR.responseText;
+			}
+			jQuery(document).trackship_snackbar_warning( warning_msg );
 		}
 	});
 	return false;	
@@ -580,8 +650,26 @@ jQuery(document).on("click", ".sync_trackship_providers_btn", function(){
 			jQuery(".sync_trackship_providers_btn").hide();
 			jQuery('.synch_result').show();
 		},
-		error: function(response) {
-			console.log(response);			
+		error: function(response, jqXHR, exception) {
+			console.log(response);
+			jQuery('.sync_trackship_provider_popup .spinner').removeClass('active');
+			var warning_msg = '';
+			if (jqXHR.status === 0) {
+				warning_msg = 'Not connect.\n Verify Network.';
+			} else if (jqXHR.status === 404) {
+				warning_msg = 'Requested page not found. [404]';
+			} else if (jqXHR.status === 500) {
+				warning_msg = 'Internal Server Error [500].';
+			} else if (exception === 'parsererror') {
+				warning_msg = 'Requested JSON parse failed.';
+			} else if (exception === 'timeout') {
+				warning_msg = 'Time out error.';
+			} else if (exception === 'abort') {
+				warning_msg = 'Ajax request aborted.';
+			} else {
+				warning_msg = 'Uncaught Error.\n' + jqXHR.responseText;
+			}
+			jQuery(document).trackship_snackbar_warning( warning_msg );
 		}
 	});
 });
@@ -687,6 +775,45 @@ jQuery(document).on( "click", ".tracking-event-delete-notice .bulk_shipment_stat
 				warning_msg = 'Uncaught Error.\n' + jqXHR.responseText;
 			}
 			
+			jQuery(document).trackship_snackbar_warning( warning_msg );
+			console.log(response);	
+		}
+	});
+	return false;	
+});
+
+jQuery(document).on( "click", ".tracking_notification_log_delete .delete_notification", function(){
+	var ajax_data = {
+		action: 'remove_trackship_logs',
+		security: jQuery( '#wc_ast_tools' ).val()
+	};
+	jQuery.ajax({
+		url: ajaxurl,		
+		data: ajax_data,		
+		type: 'POST',
+		dataType:"json",				
+		success: function(response) {
+			jQuery(document).trackship_snackbar( 'Notifications logs deleted more than 30 days.' );
+		},
+		error: function(response) {
+			var warning_msg = '';
+			if (jqXHR.status === 0) {
+				warning_msg = 'Not connect.\n Verify Network.';
+			} else if (jqXHR.status === 404) {
+				warning_msg = 'Requested page not found. [404]';
+			} else if (jqXHR.status === 500) {
+				warning_msg = 'Internal Server Error [500].';
+			} else if (exception === 'parsererror') {
+				warning_msg = 'Requested JSON parse failed.';
+			} else if (exception === 'timeout') {
+				warning_msg = 'Time out error.';
+			} else if (exception === 'abort') {
+				warning_msg = 'Ajax request aborted.';
+			} else if ( jqXHR.responseText === '-1' ) {
+				msg = 'Security check fail, please refresh and try again.';
+			}else {
+				warning_msg = 'Uncaught Error.\n' + jqXHR.responseText;
+			}
 			jQuery(document).trackship_snackbar_warning( warning_msg );
 			console.log(response);	
 		}

@@ -23,12 +23,11 @@ body.trackship_admin_settings {
 	margin: 0;
 	padding: 0;
 }
-#content_trackship_dashboard .tab_inner_container select.select_option {
+#content_trackship_dashboard .tab_inner_container select.select_option, #content_trackship_logs .tab_inner_container select.select_option {
 	border-color: #e0e0e0;
 	height: 40px;
 	padding: 0 40px 0 15px;
 	border-radius: 5px;
-	background: #fff;
 }
 .zorem-layout__header {
 	background: #fff;
@@ -41,7 +40,7 @@ body.trackship_admin_settings {
 	z-index: 1001;
 	align-items: center;
 	height: 60px;
-	padding: 15px;
+	padding: 15px 20px;
 }
 .zorem-layout__header .zorem-layout__header-breadcrumbs {
 	font-size: 14px;
@@ -119,7 +118,7 @@ label.tab_label a {
 section.inner_tab_section {
 	display: none;
 }
-section#content_trackship_settings, section#content_trackship_notifications, section#content_trackship_tools {
+section#content_trackship_settings, section#content_trackship_notifications, section#content_trackship_tools, section#content_trackship_logs {
 	margin: 0 20px;
 }
 .trackship_admin_content section#content_trackship_dashboard {
@@ -744,17 +743,17 @@ span.late_shipment_save_button {
 	margin: 4px;
 	cursor: pointer;
 }
-.shipment_search_bar {
+.shipment_search_bar, .log_search_bar {
 	float: right;
 }
 .woocommerce.trackship_admin_layout .form-table.shipment-status-email-table tr td:first-child {
 	border-right: 0;
-	border-radius: 5px 0 0 5px;
+	border-radius: 3px 0 0 3px;
 	width: 70%;
 }
 .woocommerce.trackship_admin_layout .form-table.shipment-status-email-table tr td:nth-child(2) {
 	border-left: 0;
-	border-radius: 0 5px 5px 0;
+	border-radius: 0 3px 3px 0;
 }
 .fullfillment_dashboard .fullfillment_table thead td {
 	text-align: right;
@@ -1160,6 +1159,18 @@ opacity: 1;
 .popuprow.trackship_provider {
     max-width: 400px;
     border: 1px solid #e0e0e0;
+}
+.popupwrapper.trackship_logs_details {
+    font-size: 14px;
+}
+.popupwrapper.trackship_logs_details span {
+	padding: 0 5px;
+}
+.popupwrapper.trackship_logs_details .popuprow {
+	width: 600px;
+}
+.popupwrapper.trackship_logs_details .popup_body div {
+	margin: 5px 0;
 }
 .popuprow .popup_header {
     border-bottom: 1px solid #e0e0e0;
@@ -1611,6 +1622,24 @@ td.shipment_tracking.column-shipment_tracking li {
 	height: 40px;
 	border-radius: 5px;
 	background: #fff;
+	width: 225px;
+}
+span.log_search_bar, span.shipment_search_bar {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+	margin: 0 5px;
+}
+span.log_search_bar span, span.shipment_search_bar span {
+    position: absolute;
+    display: none;
+    right: 10px;
+    cursor: pointer;
+	color: #3858e9;
+}
+span.log_search_bar input, span.shipment_search_bar input {
+    padding-right: 18px;
+    box-sizing: border-box;
 }
 .serch_button {
 	height: 40px;
@@ -1621,6 +1650,7 @@ td.shipment_tracking.column-shipment_tracking li {
 	border-radius: 5px;
 	cursor: pointer;
 	font-weight: 600;
+	float: right;
 }
 section#content_trackship_tools {
 	margin-top: 20px;
@@ -1642,6 +1672,7 @@ section#content_trackship_tools {
 	background: #3858e9;
 	border-color: #3858e9;
 	padding: 0 10px;
+	margin: 0 10px;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__rendered li {
 	border-radius: 10px;
@@ -1703,6 +1734,11 @@ span.dashicons.dashicons-update.update_shipping_provider {
     margin: 0 10px;
 	cursor: pointer;
 }
+.tracking_notification_log_delete p {
+	line-height: 35px;
+    display: inline-block;
+    margin: 0;
+}
 /** Accordion Design **/
 section#content_trackship_settings.inner_tab_section, section#content_trackship_notifications.inner_tab_section {
 	padding: 0;
@@ -1719,7 +1755,7 @@ section#content_trackship_settings.inner_tab_section, section#content_trackship_
 	padding: 15px;
 	background: #fff;
 	border: 1px solid #e0e0e0;
-	border-radius: 5px;
+	border-radius: 3px;
 	margin-top: 10px;
 	cursor: pointer;
 }
@@ -1897,10 +1933,10 @@ span.fullfillment_status {
 	flex: 0 0 50%;
 	max-width: 50%;
 }
-.tab_inner_container .tools_tab_ts4wc.tools_tab button.button-primary.bulk_shipment_status_button {
+.tab_inner_container .tools_tab_ts4wc.tools_tab button.button-primary.bulk_shipment_status_button, .button-trackship-red.delete_notification {
 	float: right;
 }
-.rtl .tab_inner_container .tools_tab_ts4wc.tools_tab button.button-primary.bulk_shipment_status_button {
+.rtl .tab_inner_container .tools_tab_ts4wc.tools_tab button.button-primary.bulk_shipment_status_button, .rtl .button-trackship-red.delete_notification {
 	float: left;
 }
 }
