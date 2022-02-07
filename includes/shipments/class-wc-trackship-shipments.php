@@ -10,7 +10,7 @@ class WC_Trackship_Shipments {
 	*/
     public function __construct() {
 		global $wpdb;
-		$this->shipment_table = $wpdb->prefix . 'trackship_shipment';		
+		$this->shipment_table = $wpdb->prefix . 'trackship_shipment';
 	}
 	
 	/**
