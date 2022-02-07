@@ -146,6 +146,16 @@ jQuery(document).ready(function() {
 		jQuery(document).ajax_loader("#active_shipments_table");
 		$table.ajax.reload();
 	});
+	jQuery("#search_bar").keyup(function(event) {
+		if ( jQuery(this).val() ) {
+			jQuery('.shipment_search_bar span').show();
+		} else {
+			jQuery('.shipment_search_bar span').hide();
+		}
+		if (event.keyCode === 13) {
+			jQuery(".serch_button").click();
+		}
+	});
 	jQuery(document).on("click", ".serch_button", function(){
 		jQuery(document).show_popup();
 		jQuery(document).ajax_loader("#active_shipments_table");
@@ -265,4 +275,9 @@ jQuery( document ).ready(function() {
 		var status = urlParams.get('status');
 		jQuery('#shipment_status').val(status).change();
 	}
+});
+
+jQuery(document).on("click", ".shipment_search_bar span", function(){
+	jQuery(this).prev().val('').focus();
+	jQuery(this).hide();
 });

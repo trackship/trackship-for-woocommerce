@@ -10,19 +10,7 @@ class WC_Trackship_Shipments {
 	*/
     public function __construct() {
 		global $wpdb;
-		if( is_multisite() ){			
-			if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
-				require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-			}
-			if ( is_plugin_active_for_network( 'trackship-for-woocommerce/trackship-for-woocommerce.php' ) ) {
-				$main_blog_prefix = $wpdb->get_blog_prefix(BLOG_ID_CURRENT_SITE);			
-				$this->shipment_table = $main_blog_prefix . 'trackship_shipment';	
-			} else{
-				$this->shipment_table = $wpdb->prefix . 'trackship_shipment';
-			}
-		} else{
-			$this->shipment_table = $wpdb->prefix . 'trackship_shipment';	
-		}			
+		$this->shipment_table = $wpdb->prefix . 'trackship_shipment';		
 	}
 	
 	/**
@@ -66,7 +54,7 @@ class WC_Trackship_Shipments {
 		
 		$page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
 				
-		if( 'trackship-for-woocommerce' != $page && 'trackship-shipments' != $page && 'trackship-dashboard' != $page ) {
+		if ( 'trackship-for-woocommerce' != $page && 'trackship-shipments' != $page && 'trackship-dashboard' != $page ) {
 			return;
 		}
 		
@@ -95,50 +83,44 @@ class WC_Trackship_Shipments {
 		
 		global $wpdb;
 		$woo_trackship_shipment = $this->shipment_table;
-		
 		$limit = 'limit ' . sanitize_text_field($_POST['start']).', '.sanitize_text_field($_POST['length']);
+		
+		$where = array();
 		$search_bar = isset( $_POST['search_bar'] ) ? sanitize_text_field($_POST['search_bar']) : false;
+		if ( $search_bar ) {
+			$where[] = "`order_id` = '{$search_bar}' OR `order_number` = '{$search_bar}' OR `shipping_provider` LIKE ( '%{$search_bar}%' ) OR `tracking_number` = '{$search_bar}' OR `shipping_country` LIKE ( '%{$search_bar}%' )";
+		}
 		
 		$late_ship_day = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_days', 7 );
 		$days = $late_ship_day - 1 ;
 		$acive_shipment_status = $_POST['active_shipment'] ;
 		
-		if ( $acive_shipment_status == 'active' ) {
-			$shipment_status = "shipment_status LIKE ( '%%' )";
-		} elseif ( $acive_shipment_status == 'delivered' ) {
-			$shipment_status = "shipment_status LIKE ( '%delivered%')";
+		if ( $acive_shipment_status == 'delivered' ) {
+			$where[] = "shipment_status = ( 'delivered')";
 		} elseif ( $acive_shipment_status == 'late_shipment' ) {
-			$shipment_status = "shipping_length > {$days}";
+			$where[] = "shipping_length > {$days}";
 		} elseif ( $acive_shipment_status == 'tracking_issues' ) {
-			$shipment_status = "shipment_status NOT LIKE ( 'delivered')";
-			$shipment_status .= "AND shipment_status NOT LIKE ( '%in_transit%' )";
-			$shipment_status .= "AND shipment_status NOT LIKE ( '%out_for_delivery%' )";
-			$shipment_status .= "AND shipment_status NOT LIKE ( '%pre_transit%' )";
-			$shipment_status .= "AND shipment_status NOT LIKE ( '%exception%' )";
-			$shipment_status .= "AND shipment_status NOT LIKE ( '%return_to_sender%' )";
-			$shipment_status .= "AND shipment_status NOT LIKE ( '%available_for_pickup%' )";
-		} else {
-			$shipment_status = "shipment_status LIKE ( '%{$acive_shipment_status}%' )";
+			$where[] = "shipment_status NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' )";
+		} elseif ( $acive_shipment_status != 'active' ) {
+			$where[] = "shipment_status = ( '{$acive_shipment_status}')";
 		}
-		
+
 		$shipping_provider = isset( $_POST['shipping_provider'] ) ? sanitize_text_field( $_POST['shipping_provider'] ) : false;
-		$shipping_provider = 'all' != $shipping_provider ? $shipping_provider : false;
+		if ( 'all' != $shipping_provider ) {
+			$where[] = "`shipping_provider` = '{$shipping_provider}'";
+		}		
 		
+		$where_condition = !empty( $where ) ? 'WHERE ' . implode(" AND ",$where) : '';
+
 		$sum = $wpdb->get_var("
 			SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row	
-				WHERE 
-					{$shipment_status}
-					AND ( order_id LIKE ( '%{$search_bar}%' ) OR order_number LIKE ( '%{$search_bar}%' ) OR shipping_provider LIKE ( '%{$search_bar}%' ) OR tracking_number LIKE ( '%{$search_bar}%' ) OR shipping_country LIKE ( '%{$search_bar}%' ) )
-					AND shipping_provider LIKE ( '%{$shipping_provider}%' )
+			$where_condition
 		");
-		
+
 		$order_query = $wpdb->get_results("
 			SELECT * 
 				FROM {$woo_trackship_shipment} 
-			WHERE 
-				{$shipment_status}
-				AND ( order_id LIKE ( '%{$search_bar}%' ) OR order_number LIKE ( '%{$search_bar}%' ) OR shipping_provider LIKE ( '%{$search_bar}%' ) OR tracking_number LIKE ( '%{$search_bar}%' ) OR shipping_country LIKE ( '%{$search_bar}%' ) )
-				AND shipping_provider LIKE ( '%{$shipping_provider}%' )
+			$where_condition
 			ORDER BY
 				order_id DESC
 			{$limit}
