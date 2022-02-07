@@ -9,10 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	$tab_type = isset( $_GET['tab'] ) ? sanitize_text_field($_GET['tab']) : '';	
 	
 	$ts_notifications = $this->trackship_shipment_status_notifications_data();
-	//echo '<pre>';print_r($ts_notifications);echo '</pre>';
-	
 	?>
-	
 	<div class="trackship_tab_name" style="margin-top: -10px;">
 		<input id="tab_email_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-tab="email-notification" data-type="email" <?php echo in_array( $tab_type, array( 'notifications', 'email-notification' ) ) ? 'checked' : ''; ?> >
 		<label for="tab_email_notifications" class="inner_tab_label ts_tabs_label inner_email_tab"><?php esc_html_e( 'Email Notifications', 'trackship-for-woocommerce' ); ?></label>				
