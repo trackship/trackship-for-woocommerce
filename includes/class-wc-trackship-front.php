@@ -88,6 +88,7 @@ class WC_TrackShip_Front {
 				'tracking_items' => trackship_for_woocommerce()->get_tracking_items( $order->get_id() ),
 				'shipment_status' => $shipment_status,
 				'order_id' => $order->get_id(),
+				'new_status' => 'shipped',
 			), 'woocommerce-advanced-shipment-tracking/', trackship_for_woocommerce()->get_plugin_path() . '/templates/' );
 		}
 	}
