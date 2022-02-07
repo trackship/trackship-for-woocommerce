@@ -167,8 +167,8 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 jQuery(document).ready(function() {
 	'use strict';
-	jQuery( '.tab_input:checked' ).trigger('click');
 	jQuery( '.inner_tab_input:checked' ).trigger('click');
+	jQuery( '.tab_input:checked' ).trigger('click');
 	jQuery( '.map-provider-table .select2' ).select2();
 });
 
