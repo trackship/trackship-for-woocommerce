@@ -9,7 +9,8 @@ class WC_Trackship_Admin {
 	 * Initialize the main plugin function
 	*/
 	public function __construct() {
-		
+		global $wpdb;
+		$this->log_table = $wpdb->prefix . 'zorem_email_sms_log';
 	}
 	
 	/**
@@ -40,9 +41,10 @@ class WC_Trackship_Admin {
 		
 		add_action( 'admin_menu', array( $this, 'register_woocommerce_menu' ), 110 );
 		
-		add_action( 'admin_footer', array( $this, 'footer_function'), 1 );	
+		add_action( 'admin_footer', array( $this, 'footer_function'), 1 );
 		add_action( 'wp_ajax_add_trackship_mapping_row', array( $this, 'add_trackship_mapping_row' ) );
 		add_action( 'wp_ajax_remove_tracking_event', array( $this, 'remove_tracking_event' ) );
+		add_action( 'wp_ajax_remove_trackship_logs', array( $this, 'remove_trackship_logs' ) );
 		add_action( 'wp_ajax_trackship_mapping_form_update', array( $this, 'trackship_custom_mapping_form_update') );
 		add_filter( 'convert_provider_name_to_slug', array( $this, 'detect_custom_mapping_provider') );	
 		add_action( 'wp_ajax_ts_late_shipments_email_form_update', array( $this, 'ts_late_shipments_email_form_update_callback' ) );
@@ -328,9 +330,8 @@ class WC_Trackship_Admin {
 	* WC sub menu
 	*/
 	public function register_woocommerce_menu() {
-		$icon = 'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHdpZHRoPSIyMHB4IiBoZWlnaHQ9IjIwcHgiIHZpZXdCb3g9Ii03NiA0NyAyMCAyMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAtNzYgNDcgMjAgMjA7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+DQoJLnN0MHtmaWxsOiNBN0FBQUQ7fQ0KCS5zdDF7ZmlsbDojNDk0OTQ5O30NCjwvc3R5bGU+DQo8cGF0aCBpZD0iWE1MSURfNjBfIiBjbGFzcz0ic3QwIiBkPSJNLTU4LDQ3aC0xMy42Yy0yLjQsMC00LjMsMS45LTQuMyw0LjFWNTNjMCwyLjMsMS45LDQuMSw0LjEsNC4xaDJ2NS42YzAsMi40LDEuOCw0LjMsNC4xLDQuMw0KCWgyLjN2LTMuOGgtMi43di01LjljMC0yLjEtMS44LTMuOS0zLjktMy45aC0yLjF2LTIuNkgtNThWNDd6Ii8+DQo8cGF0aCBpZD0iWE1MSURfNTlfIiBjbGFzcz0ic3QxIiBkPSJNLTYxLjYsNjUuMWMwLDEtMC45LDEuOS0xLjksMS45cy0xLjktMC45LTEuOS0xLjlzMC45LTEuOSwxLjktMS45DQoJQy02Mi40LDYzLjMtNjEuNiw2NC4xLTYxLjYsNjUuMSIvPg0KPHBhdGggaWQ9IlhNTElEXzU4XyIgY2xhc3M9InN0MSIgZD0iTS01Ni4xLDQ4LjljMCwxLTAuOSwxLjktMS45LDEuOXMtMS45LTAuOS0xLjktMS45Uy01OSw0Ny01OCw0N1MtNTYuMSw0Ny45LTU2LjEsNDguOSIvPg0KPC9zdmc+DQo=';
 		
-		add_menu_page( __( 'TrackShip', 'trackship-for-woocommerce' ), __( 'TrackShip', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), $icon, '55.4' );
+		add_menu_page( __( 'TrackShip', 'trackship-for-woocommerce' ), __( 'TrackShip', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/ts-20.svg', '55.4' );
 		
 		if ( trackship_for_woocommerce()->is_trackship_connected() ) {
 			add_submenu_page( 'trackship-dashboard', 'Dashboard', __( 'Dashboard', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), 1 );
@@ -1298,6 +1299,24 @@ class WC_Trackship_Admin {
 			</div>	
 			<div class="popupclose"></div>
 		</div>
+		<div class="popupwrapper trackship_logs_details" style="display:none;">
+			<div class="popuprow">
+				<div class="popup_header">
+					<h3 class="popup_title"><?php esc_html_e( 'Notifications detail', 'trackship-for-woocommerce'); ?></h3>						
+					<span class="dashicons dashicons-no-alt popup_close_icon"></span>
+				</div>
+				<div class="popup_body">
+					<div class="order_id"><strong><?php esc_html_e( 'Order Number', 'trackship-for-woocommerce' ); ?></strong><span></span></div>
+					<div class="shipment_status"><strong><?php esc_html_e( 'Shipment Status', 'trackship-for-woocommerce' ); ?></strong><span></span></div>
+					<div class="tracking_number"><strong><?php esc_html_e( 'Tracking Number', 'trackship-for-woocommerce' ); ?></strong><span></span></div>
+					<div class="time"><strong><?php esc_html_e( 'Time', 'trackship-for-woocommerce' ); ?></strong><span></span></div>
+					<div class="to"><strong><?php esc_html_e( 'To', 'trackship-for-woocommerce' ); ?></strong><span></span></div>
+					<div class="type"><strong><?php esc_html_e( 'Type', 'trackship-for-woocommerce' ); ?></strong><span></span></div>
+					<div class="status"><strong><?php esc_html_e( 'Status', 'trackship-for-woocommerce' ); ?></strong><span></span></div>
+				</div>
+			</div>
+			<div class="popupclose"></div>
+		</div>
 	<?php
 	}
 	
@@ -1390,6 +1409,21 @@ class WC_Trackship_Admin {
 		wp_send_json($json);
 	}
 	
+	public function remove_trackship_logs() {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			exit( 'You are not allowed' );
+		}
+		check_ajax_referer( 'wc_ast_tools', 'security' );
+		global $wpdb;
+		$log_table = $this->log_table;
+		$row_query = $wpdb->get_results("
+			DELETE
+				FROM {$log_table}
+			WHERE ( `type` = 'Email' OR `sms_type` = 'shipment_status' ) AND `date` < NOW() - INTERVAL 30 DAY;
+		");
+		wp_send_json( array( 'success' => 'true' ) );
+	}
+
 	/*
 	* Save Custom Mapping data
 	*/
