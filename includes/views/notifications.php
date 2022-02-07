@@ -6,20 +6,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="outer_form_table ts_notifications_outer_table">
 	<?php 
 	$wcast_enable_late_shipments_admin_email = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_enable_late_shipments_admin_email', '');
-	
-	$tab_type = isset( $_GET['type'] ) ? sanitize_text_field($_GET['type']) : 'email';
+	$tab_type = isset( $_GET['tab'] ) ? sanitize_text_field($_GET['tab']) : '';	
 	
 	$ts_notifications = $this->trackship_shipment_status_notifications_data();
 	//echo '<pre>';print_r($ts_notifications);echo '</pre>';
-	?>				
-	<div class="trackship_tab_name">
-		<input id="tab_email_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-type="email" <?php echo 'email' == $tab_type ? 'checked' : ''; ?> >
+	
+	?>
+	
+	<div class="trackship_tab_name" style="margin-top: -10px;">
+		<input id="tab_email_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-tab="email-notification" data-type="email" <?php echo in_array( $tab_type, array( 'notifications', 'email-notification' ) ) ? 'checked' : ''; ?> >
 		<label for="tab_email_notifications" class="inner_tab_label ts_tabs_label inner_email_tab"><?php esc_html_e( 'Email Notifications', 'trackship-for-woocommerce' ); ?></label>				
     
-		<input id="tab_sms_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-type="sms" <?php echo 'sms' == $tab_type ? 'checked' : ''; ?> >
+		<input id="tab_sms_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-tab="sms-notification" data-type="sms" <?php echo 'sms-notification' == $tab_type ? 'checked' : ''; ?> >
 		<label for="tab_sms_notifications" class="inner_tab_label ts_tabs_label inner_sms_tab"><?php esc_html_e( 'SMS Notifications', 'trackship-for-woocommerce' ); ?></label>
 		
-		<input id="tab_admin_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-type="late-email" <?php echo 'admin' == $tab_type ? 'checked' : ''; ?> >
+		<input id="tab_admin_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-tab="admin-notification" data-type="late-email" <?php echo 'admin-notification' == $tab_type ? 'checked' : ''; ?> >
 		<label for="tab_admin_notifications" class="inner_tab_label ts_tabs_label inner_admin_tab"><?php esc_html_e( 'Admin Notifications', 'trackship-for-woocommerce' ); ?></label>
 	</div>
 	<section class="inner_tab_section shipment-status-email-section">
