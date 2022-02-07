@@ -184,7 +184,7 @@ class WC_Trackship_Actions {
 		
 		$page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
 		
-		if ( !in_array( $page, array( 'trackship-for-woocommerce', 'trackship-shipments', 'trackship-dashboard', 'wcpv-vendor-order' ) ) ) {
+		if ( !in_array( $page, array( 'trackship-for-woocommerce', 'trackship-shipments', 'trackship-dashboard', 'trackship_customizer', 'wcpv-vendor-order' ) ) ) {
 			return;
 		}
 		// remove code in future, added by hitesh
@@ -710,6 +710,9 @@ class WC_Trackship_Actions {
 				break;
 			case 'unknown':
 				$status = __( 'Unknown', 'trackship-for-woocommerce' );
+				break;
+			case 'shipped':
+				$status = __( 'Shipped', 'trackship-for-woocommerce' );
 				break;
 			case 'pending_trackship':
 				$status = __( 'Pending TrackShip', 'trackship-for-woocommerce' );
@@ -1582,6 +1585,12 @@ class WC_Trackship_Actions {
 		
 	}
 	
+	public function update_notification_table ( $args ) {
+		global $wpdb;
+		$log_table = $wpdb->prefix . 'zorem_email_sms_log';
+		$wpdb->insert( $log_table, $args );
+	}
+
 	public function get_tracking_shipment_row ( $order_id , $tracking_number ) {
 		global $wpdb;
 		$result = $wpdb->get_row(
