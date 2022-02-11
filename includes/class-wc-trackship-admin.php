@@ -330,15 +330,15 @@ class WC_Trackship_Admin {
 	* WC sub menu
 	*/
 	public function register_woocommerce_menu() {
-		
-		add_menu_page( __( 'TrackShip', 'trackship-for-woocommerce' ), __( 'TrackShip', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/ts-20.svg', '55.4' );
+
+		add_menu_page( __( 'TrackShip', 'trackship-for-woocommerce' ), __( 'TrackShip', 'trackship-for-woocommerce' ), apply_filters( 'trackship_menu_capabilities', 'manage_woocommerce' ), 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/ts-20.svg', '55.4' );
 		
 		if ( trackship_for_woocommerce()->is_trackship_connected() ) {
-			add_submenu_page( 'trackship-dashboard', 'Dashboard', __( 'Dashboard', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), 1 );
+			add_submenu_page( 'trackship-dashboard', 'Dashboard', __( 'Dashboard', 'trackship-for-woocommerce' ), apply_filters( 'trackship_dashboard_menu_capabilities', 'manage_woocommerce' ), 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), 1 );
 			
-			add_submenu_page( 'trackship-dashboard', 'Shipments', __( 'Shipments', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-shipments', array( $this, 'shipments_page_callback' ), 1 );
+			add_submenu_page( 'trackship-dashboard', 'Shipments', __( 'Shipments', 'trackship-for-woocommerce' ), apply_filters( 'trackship_shipments_menu_capabilities', 'manage_woocommerce' ), 'trackship-shipments', array( $this, 'shipments_page_callback' ), 1 );
 			
-			add_submenu_page( 'trackship-dashboard', 'Settings', __( 'Settings', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
+			add_submenu_page( 'trackship-dashboard', 'Settings', __( 'Settings', 'trackship-for-woocommerce' ), apply_filters( 'trackship_settings_menu_capabilities', 'manage_woocommerce' ), 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
 		}
 		
 	}
