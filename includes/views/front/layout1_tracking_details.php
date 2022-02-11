@@ -32,7 +32,8 @@ if ( 1 == $hide_tracking_events ) {
 							<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 							<p>
 							<?php echo wp_kses_post( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
-							<span><?php echo ( null != $value->tracking_location->city ) ? ' - ' : ''; ?><?php echo esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ); ?></span>
+							<?php $tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ); ?>
+							<span><?php echo ( null != $tracking_location_city ) ? ' - ' : ''; ?><?php echo esc_html( $tracking_location_city ); ?></span>
 							</p>					
 						</li>						
 					<?php $a++; } ?>
@@ -52,7 +53,8 @@ if ( 1 == $hide_tracking_events ) {
 							<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 							<p>
 							<?php echo wp_kses_post( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
-							<span><?php echo ( null != $value->tracking_location->city ) ? ' - ' : ''; ?><?php echo esc_html( esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ) ); ?></span>
+							<?php $tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ); ?>
+							<span><?php echo ( null != $tracking_location_city ) ? ' - ' : ''; ?><?php echo esc_html( $tracking_location_city ); ?></span>
 							</p>					
 						</li>						
 					<?php $a++; } ?>
@@ -80,7 +82,8 @@ if ( 1 == $hide_tracking_events ) {
 							<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 							<p>
 								<?php echo wp_kses_post( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
-								<span><?php echo ( null != $value->tracking_location->city ) ? ' - ' : ''; ?><?php echo esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ); ?></span>
+								<?php $tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ); ?>
+								<span><?php echo ( null != $tracking_location_city ) ? ' - ' : ''; ?><?php echo esc_html( $tracking_location_city ); ?></span>
 							</p>					
 						</li>						
 					<?php $a++; } ?>
@@ -100,7 +103,8 @@ if ( 1 == $hide_tracking_events ) {
 							<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 							<p>
 								<?php echo wp_kses_post( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
-								<span><?php echo ( null != $value->tracking_location->city ) ? ' - ' : ''; ?><?php echo esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ); ?></span>
+								<?php $tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ); ?>
+							<span><?php echo ( null != $tracking_location_city ) ? ' - ' : ''; ?><?php echo esc_html( $tracking_location_city ); ?></span>
 							</p>					
 						</li>						
 					<?php $a++; } ?>
@@ -130,11 +134,12 @@ if ( 1 == $hide_tracking_events ) {
 								<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 								<p>
 									<?php echo wp_kses_post( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
-									<span><?php echo ( null != $value->tracking_location->city ) ? ' - ' : ''; ?><?php echo esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ); ?></span>
+									<?php $tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ); ?>
+									<span><?php echo ( null != $tracking_location_city ) ? ' - ' : ''; ?><?php echo esc_html( $tracking_location_city ); ?></span>
 								</p>
-							</li>					
-						<?php } ?>								
-					</ul>	
+							</li>
+						<?php } ?>
+					</ul>
 				</div>
 			<?php } ?>
 			<div class="tracking_details_by_date">
@@ -150,7 +155,8 @@ if ( 1 == $hide_tracking_events ) {
 							<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 							<p>
 							<?php echo wp_kses_post( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
-							<span><?php echo ( null != $value->tracking_location->city ) ? ' - ' : ''; ?><?php echo esc_html( apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ) ); ?></span>
+							<?php $tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ); ?>
+							<span><?php echo ( null != $tracking_location_city ) ? ' - ' : ''; ?><?php echo esc_html( $tracking_location_city ); ?></span>
 							</p>
 						</li>						
 					<?php } ?>

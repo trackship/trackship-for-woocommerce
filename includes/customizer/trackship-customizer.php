@@ -133,20 +133,22 @@ class TS4WC_Admin_Customizer {
 								<?php } ?>
 							</select>
 							<input type="hidden" name="customizer_type" id="customizer_type" value="<?php echo esc_html( $type ); ?>">
-							<span class="" style="float: right;">
-								<span class="tgl-btn-parent">
-									<?php $slug_status = str_replace( '_', '',$shipmentStatus ); ?>
-									<?php $slug_status = 'delivered' == $slug_status ? 'delivered_status' : $slug_status; ?>
-									<?php $id =  'wcast_enable_' . $slug_status . '_email'; ?>
-									<?php $enable_email = $this->get_value( 'wcast_' . $slug_status . '_email_settings', $id ); ?>
-									<input type="hidden" name="<?php esc_attr_e( $id ); ?>" value="0">
-									<input type="checkbox" id="<?php esc_attr_e( $id ); ?>" name="<?php esc_attr_e( $id ); ?>" class="tgl tgl-flat" <?php echo $enable_email ? 'checked' : ''; ?> value="1">
-									<label class="tgl-btn" for="<?php esc_attr_e( $id ); ?>"></label>
+							<?php if ( 'shipment_email' == $type ) { ?>
+								<span class="" style="float: right;">
+									<span class="tgl-btn-parent">
+										<?php $slug_status = str_replace( '_', '',$shipmentStatus ); ?>
+										<?php $slug_status = 'delivered' == $slug_status ? 'delivered_status' : $slug_status; ?>
+										<?php $id =  'wcast_enable_' . $slug_status . '_email'; ?>
+										<?php $enable_email = $this->get_value( 'wcast_' . $slug_status . '_email_settings', $id ); ?>
+										<input type="hidden" name="<?php esc_attr_e( $id ); ?>" value="0">
+										<input type="checkbox" id="<?php esc_attr_e( $id ); ?>" name="<?php esc_attr_e( $id ); ?>" class="tgl tgl-flat" <?php echo $enable_email ? 'checked' : ''; ?> value="1">
+										<label class="tgl-btn" for="<?php esc_attr_e( $id ); ?>"></label>
+									</span>
+									<button name="save" class="button-primary button-trackship btn_large woocommerce-save-button" type="submit" value="Saved" disabled><?php esc_html_e( 'Saved', 'trackship-for-woocommerce' ); ?></button>
+									<?php wp_nonce_field( 'trackship_customizer_options_actions', 'trackship_customizer_options_nonce_field' ); ?>
+									<input type="hidden" name="action" value="save_trackship_customizer">
 								</span>
-								<button name="save" class="button-primary button-trackship btn_large woocommerce-save-button" type="submit" value="Saved" disabled><?php esc_html_e( 'Saved', 'trackship-for-woocommerce' ); ?></button>
-								<?php wp_nonce_field( 'trackship_customizer_options_actions', 'trackship_customizer_options_nonce_field' ); ?>
-								<input type="hidden" name="action" value="save_trackship_customizer">
-							</span>
+							<?php } ?>
 						</div>
 					</div>
 					<div class="zoremmail-layout-content-container">
