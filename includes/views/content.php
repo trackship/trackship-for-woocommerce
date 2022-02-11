@@ -21,6 +21,11 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 					'show'	=> true,
 				),
 				array(
+					'label'	=> __( 'Logs', 'trackship-for-woocommerce' ),
+					'slug'	=> 'logs',
+					'show'	=> true,
+				),
+				array(
 					'label'	=> __( 'Tools', 'trackship-for-woocommerce' ),
 					'slug'	=> 'tools',
 					'show'	=> true,
@@ -29,7 +34,14 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 			?>
 			<div>
 				<?php foreach ( $array as $key => $val ) { ?>
-					<input id="tab_trackship_<?php esc_html_e( $val[ 'slug' ] ); ?>" type="radio" name="tabs" class="tab_input" data-label="<?php esc_html_e( $val[ 'label' ] ); ?>" data-tab="<?php esc_html_e( $val[ 'slug' ] ); ?>" <?php echo $val[ 'slug' ] == $menu_tab ? 'checked' : ''; ?> >
+					<?php 
+					if ( 'notifications' == $val[ 'slug' ] ) {
+						$checked = in_array( $menu_tab, array( $val[ 'slug' ], 'email-notification', 'sms-notification', 'admin-notification' ) ) ? 'checked' : '';
+					} else {
+						$checked = $val[ 'slug' ] == $menu_tab ? 'checked' : '';
+					}
+					?>
+					<input id="tab_trackship_<?php esc_html_e( $val[ 'slug' ] ); ?>" type="radio" name="tabs" class="tab_input" data-label="<?php esc_html_e( $val[ 'label' ] ); ?>" data-tab="<?php esc_html_e( $val[ 'slug' ] ); ?>" <?php echo $checked; ?> >
 					<label for="tab_trackship_<?php esc_html_e( $val[ 'slug' ] ); ?>" class="tab_label <?php echo 'settings' == $val[ 'slug' ] ? 'first_label' : ''; ?>">
 						<?php esc_html_e( $val[ 'label' ] ); ?>
 					</label>

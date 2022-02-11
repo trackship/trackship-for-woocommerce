@@ -20,7 +20,7 @@ $menu_items = array(
 	),
 	array(
 		'label' =>__( 'Documentation', 'trackship-for-woocommerce' ),
-		'link' => 'https://trackship.info/documentation/',
+		'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/',
 		'image' => 'documentation-icon.svg',
 	),
 );

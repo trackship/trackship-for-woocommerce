@@ -251,6 +251,21 @@ class tswc_smswoo_sms_notification {
 			'message'        => $message
 		);
 
+		$tracking_item = $this->tracking_item;
+		$arg = array(
+			'order_id'			=> $order_id,
+			'order_number'		=> wc_get_order( $order_id )->get_order_number(),
+			'user_id'			=> wc_get_order( $order_id )->get_user_id(),
+			'tracking_number'	=> $tracking_item['tracking_number'],
+			'date'				=> current_time( 'Y-m-d H:i:s' ),
+			'to'				=> $phone,
+			'shipment_status'	=> $this->new_status,
+			'status'			=> $status_message,
+			'type'				=> 'SMS',
+			'sms_type'			=> 'shipment_status',
+		);
+		trackship_for_woocommerce()->ts_actions->update_notification_table( $arg );
+
 		$sms_gateway->write_log( $log_args );
 
 		$smswoo_enable_order_note_log = get_option( 'smswoo_enable_order_note_log', 1 );

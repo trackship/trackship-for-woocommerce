@@ -133,11 +133,22 @@ class TS4WC_Admin_Customizer {
 								<?php } ?>
 							</select>
 							<input type="hidden" name="customizer_type" id="customizer_type" value="<?php echo esc_html( $type ); ?>">
-							<span class="" style="float: right;">
-								<button name="save" class="button-primary button-trackship btn_large woocommerce-save-button" type="submit" value="Saved" disabled><?php esc_html_e( 'Saved', 'trackship-for-woocommerce' ); ?></button>
-								<?php wp_nonce_field( 'trackship_customizer_options_actions', 'trackship_customizer_options_nonce_field' ); ?>
-								<input type="hidden" name="action" value="save_trackship_customizer">
-							</span>
+							<?php if ( 'shipment_email' == $type ) { ?>
+								<span class="" style="float: right;">
+									<span class="tgl-btn-parent">
+										<?php $slug_status = str_replace( '_', '',$shipmentStatus ); ?>
+										<?php $slug_status = 'delivered' == $slug_status ? 'delivered_status' : $slug_status; ?>
+										<?php $id =  'wcast_enable_' . $slug_status . '_email'; ?>
+										<?php $enable_email = $this->get_value( 'wcast_' . $slug_status . '_email_settings', $id ); ?>
+										<input type="hidden" name="<?php esc_attr_e( $id ); ?>" value="0">
+										<input type="checkbox" id="<?php esc_attr_e( $id ); ?>" name="<?php esc_attr_e( $id ); ?>" class="tgl tgl-flat" <?php echo $enable_email ? 'checked' : ''; ?> value="1">
+										<label class="tgl-btn" for="<?php esc_attr_e( $id ); ?>"></label>
+									</span>
+									<button name="save" class="button-primary button-trackship btn_large woocommerce-save-button" type="submit" value="Saved" disabled><?php esc_html_e( 'Saved', 'trackship-for-woocommerce' ); ?></button>
+									<?php wp_nonce_field( 'trackship_customizer_options_actions', 'trackship_customizer_options_nonce_field' ); ?>
+									<input type="hidden" name="action" value="save_trackship_customizer">
+								</span>
+							<?php } ?>
 						</div>
 					</div>
 					<div class="zoremmail-layout-content-container">
@@ -172,7 +183,6 @@ class TS4WC_Admin_Customizer {
 		}
 		
 		wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
-		//wp_enqueue_style( 'woocommerce_admin_styles' );
 		
 		// Add tiptip js and css file		
 		wp_enqueue_style( 'trackship-customizer', plugin_dir_url(__FILE__) . 'assets/Customizer.css', array(), trackship_for_woocommerce()->version );
@@ -255,7 +265,7 @@ class TS4WC_Admin_Customizer {
 				'class'		=> 'colorset',
 			),
 			'wc_ast_select_link_color' => array(
-				'title'    => esc_html__( 'Link Color', 'trackship-for-woocommerce' ),
+				'title'    => esc_html__( 'Links Color', 'trackship-for-woocommerce' ),
 				'type'     => 'color',
 				'default'  => $link_color,
 				'show'     => true,
@@ -316,9 +326,10 @@ class TS4WC_Admin_Customizer {
 				'show'     => true,
 			),
 			'wc_ast_hide_list_mile_tracking' => array(
-				'title'    => __( 'Hide last-mile Tracking number', 'trackship-for-woocommerce' ),
+				'title'    => __( 'Hide delivery tracking number', 'trackship-for-woocommerce' ),
 				'default'  => $hide_last_mile,
 				'type'     => 'checkbox',
+				'tip-tip'  => __( 'The delivery tracking number will display if the shipment is getting a different tracking number at the destination country from the local postal service (i.e 4PX -> USPS)', 'trackship-for-woocommerce' ),
 				'show'     => true,
 			),
 			'wc_ast_remove_trackship_branding' => array(
@@ -420,9 +431,8 @@ class TS4WC_Admin_Customizer {
 			'wcast_enable_' . $status . '_email' => array(
 				'type' => 'tgl-btn',
 				'option_name'=> 'wcast_' . $status . '_email_settings',
-				'show'     => true,
+				'show'     => false,
 				'default'  => $enable_email,
-				
 			),
 			'wcast_'.$status.'_email_to' => array(
 				'title'    => esc_html__( 'Recipients', 'trackship-for-woocommerce' ),
@@ -509,6 +519,18 @@ class TS4WC_Admin_Customizer {
 				'type'	=> 'section',
 				'show'	=> true,
 			),
+			'tracking_page_layout' => array(
+				'title'    => __( 'Tracker Type', 'trackship-for-woocommerce' ),
+				'type'     => 'select',
+				'option_name'=> 'shipment_email_settings',
+				'default'  => $tracking_page_layout,
+				'show'     => true,
+				'options'  => array(
+					't_layout_2' => __( 'Progress bar', 'trackship-for-woocommerce' ),
+					't_layout_1' => __( 'Icons', 'trackship-for-woocommerce' ),
+					't_layout_3' => __( 'Single icon', 'trackship-for-woocommerce' ),
+				)
+			),
 			'bg_color' => array(
 				'title'    => esc_html__( 'Widget background color', 'trackship-for-woocommerce' ),
 				'type'     => 'color',
@@ -534,7 +556,7 @@ class TS4WC_Admin_Customizer {
 				'class'		=> 'colorset',
 			),
 			'link_color' => array(
-				'title'    => esc_html__( 'Link color', 'trackship-for-woocommerce' ),
+				'title'    => esc_html__( 'Links Color', 'trackship-for-woocommerce' ),
 				'type'     => 'color',
 				'option_name'=> 'shipment_email_settings',
 				'default'  => $link_color,
@@ -549,18 +571,6 @@ class TS4WC_Admin_Customizer {
 				'show'     => true,
 				'min'		=> 10,
 				'max'		=> 30,
-			),
-			'tracking_page_layout' => array(
-				'title'    => __( 'Tracker Type', 'trackship-for-woocommerce' ),
-				'type'     => 'select',
-				'option_name'=> 'shipment_email_settings',
-				'default'  => $tracking_page_layout,
-				'show'     => true,
-				'options'  => array(
-					't_layout_2' => __( 'Progress bar', 'trackship-for-woocommerce' ),
-					't_layout_1' => __( 'Icons', 'trackship-for-woocommerce' ),
-					't_layout_3' => __( 'Single icon', 'trackship-for-woocommerce' ),
-				)
 			),
 			'heading4'	=> array(
 				'id'	=> 'tracking_button',
@@ -677,11 +687,15 @@ class TS4WC_Admin_Customizer {
 									<span class="menu-sub-tooltip"><?php isset($array['desc']) ? esc_html_e($array['desc']) : ''; ?></span>
 								</div>
 							<?php } else if ( isset($array['type']) && $array['type'] == 'checkbox' ) { ?>
+								<?php //echo '<pre>';print_r($array);echo '</pre>'; ?>
 								<div class="menu-sub-field">
 									<label class="menu-sub-title">
 										<input type="hidden" name="<?php esc_attr_e( $id ); ?>" value="0"/>
 										<input type="checkbox" id="<?php esc_attr_e( $id ); ?>" name="<?php esc_attr_e( $id ); ?>" class="zoremmail-checkbox <?php isset($array['class']) ? esc_attr_e($array['class']) : ''; ?>" value="1" <?php echo $array_default ? 'checked' : ''; ?>/>
 										<?php esc_html_e( $array['title'] ); ?>
+										<?php if ( isset($array['tip-tip'] ) ) { ?>
+											<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tip-tip'] ); ?>"></span>
+										<?php } ?>
 									</label>
 								</div>
 							<?php } else if ( isset($array['type']) && $array['type'] == 'radio_butoon' ) { ?>

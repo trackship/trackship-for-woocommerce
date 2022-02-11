@@ -40,23 +40,22 @@ if ( !empty($kt_woomail) && isset( $kt_woomail['font_size'] ) ) {
 			<tbody>
 				<?php 
 				if ( isset( $tracking_item['products_list'] ) ) {
-					foreach ( $tracking_item['products_list'] as $products_list ) {								
-						$product = wc_get_product( $products_list->product ); 
+					foreach ( $tracking_item['products_list'] as $products_list ) {
+						$product = wc_get_product( $products_list->product );
 						$sku           = '';
 						$purchase_note = '';
 						$image         = '';
 						$image_size = array( 64, 64 );
-					
 						if ( is_object( $product ) ) {
 							$sku           = $product->get_sku();
 							$purchase_note = $product->get_purchase_note();
 							$image         = $product->get_image( $image_size );
 						}
-						?>
+						?>	
 						<tr>
 							<td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;border-left:0;border:0;border-bottom:1px solid #e0e0e0;padding: 12px 5px;width: 70px;">
 								<?php echo wp_kses_post( $image ); ?>
-							</td>								
+							</td>
 							<td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;border-left:0;border:0;border-bottom:1px solid #e0e0e0;padding: 12px 5px;">
 								<?php
 								// Product name.
