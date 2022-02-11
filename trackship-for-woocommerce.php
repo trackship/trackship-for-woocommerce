@@ -2,14 +2,14 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 1.3
+ * Version: 1.3.2
  * Author: TrackShip
  * Author URI: https://trackship.info/
  * License: GPL-2.0+
  * License URI: 
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
- * WC tested up to: 6.1.0
+ * WC tested up to: 6.1.1
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,7 +23,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.3';
+	public $version = '1.3.2';
 	
 	/**
 	 * Initialize the main plugin function
@@ -62,6 +62,9 @@ class Trackship_For_Woocommerce {
 
 		//plugin shipments class init
 		$this->shipments->init();
+
+		//plugin Logs class init
+		$this->logs->init();
 	}
 	
 	/**
@@ -173,6 +176,9 @@ class Trackship_For_Woocommerce {
 		require_once $this->get_plugin_path() . '/includes/shipments/class-wc-trackship-shipments.php';
 		$this->shipments = WC_Trackship_Shipments::get_instance();
 		
+		require_once $this->get_plugin_path() . '/includes/logs/class-wc-trackship-logs.php';
+		$this->logs = WC_Trackship_Logs::get_instance();
+		
 		require_once $this->get_plugin_path() . '/includes/analytics/class-wc-trackship-analytics.php';
 		$this->analytics = WC_Trackship_Analytics::get_instance();
 		
@@ -260,7 +266,7 @@ class Trackship_For_Woocommerce {
 	public function tsw_plugin_action_links( $links ) {
 		$links = array_merge( array(
 			'<a href="' . esc_url( admin_url( '/admin.php?page=trackship-for-woocommerce' ) ) . '">' . esc_html( 'Settings' ) . '</a>',
-			'<a href="https://trackship.info/docs/trackship-for-woocommerce/">' . __( 'Docs' ) . '</a>',
+			'<a href="https://docs.trackship.info/docs/trackship-for-woocommerce/">' . __( 'Docs' ) . '</a>',
 			'<a href="https://wordpress.org/support/plugin/trackship-for-woocommerce/#new-topic-0">' . __( 'Support' ) . '</a>',
 			'<a href="https://wordpress.org/support/plugin/trackship-for-woocommerce/reviews/#new-post">' . __( 'Review' ) . '</a>'
 		), $links );

@@ -13,6 +13,7 @@ class WC_Trackship_Install {
 		$this->table = $wpdb->prefix . 'trackship_shipping_provider';
 		$this->shipment_table = $wpdb->prefix . 'trackship_shipment';
 		$this->shipment_table_meta = $wpdb->prefix . 'trackship_shipment_meta';
+		$this->log_table = $wpdb->prefix . 'zorem_email_sms_log';
 
 		$this->init();			
 	}
@@ -188,6 +189,38 @@ class WC_Trackship_Install {
 			update_option( 'wcast_delivered_status_email_settings', $delivered_settings );
 			delete_option( 'wcast_delivered_email_settings' );
 			update_option( 'trackship_db', '1.8' );
+		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.9', '<' ) ) {
+			global $wpdb;
+			$log_table = $this->log_table;
+			if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $log_table ) ) ) {
+				$charset_collate = $wpdb->get_charset_collate();			
+				$sql = "CREATE TABLE $log_table (
+					`id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+					`order_id` BIGINT(20) ,
+					`order_number` VARCHAR(20) ,
+					`user_id` BIGINT(20) ,
+					`tracking_number` VARCHAR(50) ,
+					`date` DATETIME NOT NULL,
+					`to` VARCHAR(50) ,
+					`shipment_status` VARCHAR(30) ,
+					`status` LONGTEXT ,
+					`type` VARCHAR(20) ,
+					`sms_type` VARCHAR(30) ,
+					PRIMARY KEY (`id`),
+					INDEX `order_id` (`order_id`),
+					INDEX `order_number` (`order_number`),
+					INDEX `date` (`date`),
+					INDEX `to` (`to`),
+					INDEX `shipment_status` (`shipment_status`),
+					INDEX `type` (`type`),
+					INDEX `sms_type` (`sms_type`)
+				) $charset_collate;";
+				require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+				dbDelta( $sql );
+			}
+			update_option( 'trackship_db', '1.9' );
 		}
 	}
 	

@@ -58,7 +58,7 @@ class WC_TrackShip_Front {
 			remove_action( 'woocommerce_view_order', array( ast_pro()->ast_pro_actions, 'show_tracking_info_order' ) );
 		}
 		
-		if ( function_exists( 'wc_shipment_tracking' ) ) {
+		if ( function_exists( 'wc_shipment_tracking' ) && !function_exists( 'ast_pro' ) ) {
 			// View Order Page.
 			remove_action( 'woocommerce_view_order', array( wc_shipment_tracking()->actions, 'display_tracking_info' ) );
 			remove_action( 'woocommerce_email_before_order_table', array( wc_shipment_tracking()->actions, 'email_display' ), 0, 4 );
@@ -88,6 +88,7 @@ class WC_TrackShip_Front {
 				'tracking_items' => trackship_for_woocommerce()->get_tracking_items( $order->get_id() ),
 				'shipment_status' => $shipment_status,
 				'order_id' => $order->get_id(),
+				'new_status' => 'shipped',
 			), 'woocommerce-advanced-shipment-tracking/', trackship_for_woocommerce()->get_plugin_path() . '/templates/' );
 		}
 	}

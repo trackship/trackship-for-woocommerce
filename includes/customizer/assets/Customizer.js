@@ -145,9 +145,25 @@ jQuery(document).on("click", "#zoremmail_email_options .button-trackship", funct
 				}
 			}
 		},
-		error: function(response) {
-            jQuery(document).zorem_snackbar_warning( "settings not saved." );
-			console.log(response);			
+		error: function(response, jqXHR, exception) {
+			console.log(response);
+			var warning_msg = '';
+			if (jqXHR.status === 0) {
+				warning_msg = 'Not connect.\n Verify Network.';
+			} else if (jqXHR.status === 404) {
+				warning_msg = 'Requested page not found. [404]';
+			} else if (jqXHR.status === 500) {
+				warning_msg = 'Internal Server Error [500].';
+			} else if (exception === 'parsererror') {
+				warning_msg = 'Requested JSON parse failed.';
+			} else if (exception === 'timeout') {
+				warning_msg = 'Time out error.';
+			} else if (exception === 'abort') {
+				warning_msg = 'Ajax request aborted.';
+			} else {
+				warning_msg = 'Uncaught Error.\n' + jqXHR.responseText;
+			}
+			jQuery(document).zorem_snackbar_warning( warning_msg );
 		}
 	});
 });

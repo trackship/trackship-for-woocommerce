@@ -278,27 +278,27 @@ class tswc_smswoo_admin {
 				'link' => array(
 					'smswoo_nexmo' => array(
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'Nexmo' ),
-						'link' => 'https://trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-vonage-formally-nexmo-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-vonage-formally-nexmo-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 					'smswoo_twilio' => array(
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'Twilio' ),
-						'link' => 'https://trackship.info/docs/trackship-for-woocommerce/how-to/sms-api-providers/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-twilio-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 					'smswoo_clicksend' => array(
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'ClickSend' ),
-						'link' => 'https://trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-clicksend-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-clicksend-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 					'smswoo_fast2sms' => array(
 						'title' => __( 'How to find your Fast2sms API Authorization Key', 'smswoo' ),
-						'link' => 'https://trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-fast2sms-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-fast2sms-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),	
 					'smswoo_msg91' => array(
 						'title' => __( 'How to find your MSG91 API Authentication Key', 'smswoo' ),
-						'link' => 'https://trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-msg91-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-msg91-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 					'smswoo_smsalert' => array(
 						'title' => __( 'How to find your SMS Alert API Authentication Key', 'smswoo' ),
-						'link' => 'https://trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-sms-alert-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-sms-alert-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 				),
 			),
@@ -511,12 +511,12 @@ class tswc_smswoo_admin {
 						</div>
                         <span class="smswoo-right smswoo-mr20 smswoo-shipment-sendto">
 							<span class="smswoo-shipment-sendto-customer btn_ts_transparent btn_outline"><?php echo __( 'Edit', 'trackship-for-woocommerce' )?></span>
+							<button name="save" class="button-primary woocommerce-save-button button-smswoo hide button-trackship" type="submit" value="Save changes"><?php echo __( 'Save', 'trackship-for-woocommerce' )?></button>
 							<span class="smswoo-inlineblock">
 								<input type="hidden" name="<?php echo $enabled_customer?>" value="0"/>
 								<input type="checkbox" id="<?php echo $enabled_customer?>" name="<?php echo $enabled_customer?>" class="tgl tgl-flat smswoo-shipment-checkbox" value="1" <?php echo $checked_customer ? 'checked' : ''?> data-row_class="enable_customer" />
 								<label class="tgl-btn" for="<?php echo $enabled_customer?>"></label>
 							</span>
-							<button name="save" class="button-primary woocommerce-save-button button-smswoo hide button-trackship" type="submit" value="Save changes"><?php echo __( 'Save & close', 'trackship-for-woocommerce' )?></button>
 						</span>
 					</div>
 					<div class="smswoo-bottom">

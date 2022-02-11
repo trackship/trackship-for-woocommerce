@@ -43,6 +43,8 @@ class WC_TrackShip_Email_Manager {
 				
 				$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_show_order_details', $default['wcast_' . $status . '_show_order_details'] );
 				
+				$wcast_show_product_image = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_show_product_image', $defaults['wcast_' . $status . '_show_product_image']);
+
 				$wcast_show_shipping_address = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array( 'wcast_' . $status . '_email_settings', 'wcast_' . $status . '_show_shipping_address', $default['wcast_' . $status . '_show_shipping_address']);
 				
 				$sent_to_admin = false;
@@ -108,6 +110,7 @@ class WC_TrackShip_Email_Manager {
 								'sent_to_admin' => $sent_to_admin,
 								'plain_text'    => $plain_text,
 								'email'         => '',
+								'wcast_show_product_image' => $wcast_show_product_image,
 							),
 							'woocommerce-advanced-shipment-tracking/', 
 							trackship_for_woocommerce()->get_plugin_path() . '/templates/'
@@ -140,6 +143,18 @@ class WC_TrackShip_Email_Manager {
 				$logger = wc_get_logger();
 				$context = array( 'source' => 'trackship_shipment_status_email_log' );
 				$logger->error( 'Order_Id: ' . $order_id . ' Shipment_Status: ' . $new_status . ' Email_Sent: ' . $email_send, $context );
+				$arg = array(
+					'order_id'			=> $order_id,
+					'order_number'		=> wc_get_order( $order_id )->get_order_number(),
+					'user_id'			=> wc_get_order( $order_id )->get_user_id(),
+					'tracking_number'	=> $tracking_item['tracking_number'],
+					'date'				=> current_time( 'Y-m-d H:i:s' ),
+					'to'				=> $recipient,
+					'shipment_status'	=> $new_status,
+					'status'			=> $email_send ? 'Sent' : 'Not Sent',
+					'type'				=> 'Email',
+				);
+				trackship_for_woocommerce()->ts_actions->update_notification_table( $arg );
 			}
 		}	
 	}
@@ -177,7 +192,9 @@ class WC_TrackShip_Email_Manager {
 				
 				$wcast_show_tracking_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_show_tracking_details', $default['wcast_delivered_status_show_tracking_details']);
 				
-				$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_show_order_details', $default['wcast_delivered_status_show_order_details']);				
+				$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_show_order_details', $default['wcast_delivered_status_show_order_details']);
+				
+				$wcast_show_product_image = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_show_product_image', $defaults['wcast_delivered_status_show_product_image']);
 				
 				$wcast_show_shipping_address = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_show_shipping_address', $default['wcast_delivered_status_show_shipping_address']);
 				
@@ -255,6 +272,7 @@ class WC_TrackShip_Email_Manager {
 								'sent_to_admin' => $sent_to_admin,
 								'plain_text'    => $plain_text,
 								'email'         => '',
+								'wcast_show_product_image' => $wcast_show_product_image,
 							),
 							'woocommerce-advanced-shipment-tracking/', 
 							trackship_for_woocommerce()->get_plugin_path() . '/templates/'
@@ -286,6 +304,18 @@ class WC_TrackShip_Email_Manager {
 				$logger = wc_get_logger();
 				$context = array( 'source' => 'trackship_shipment_status_email_log' );
 				$logger->error( 'Order_Id: ' . $order_id . ' Shipment_Status: ' . $new_status . ' Email_Sent: ' . $email_send, $context );
+				$arg = array(
+					'order_id'			=> $order_id,
+					'order_number'		=> wc_get_order( $order_id )->get_order_number(),
+					'user_id'			=> wc_get_order( $order_id )->get_user_id(),
+					'tracking_number'	=> $tracking_item['tracking_number'],
+					'date'				=> current_time( 'Y-m-d H:i:s' ),
+					'to'				=> $recipient,
+					'shipment_status'	=> $new_status,
+					'status'			=> $email_send ? 'Sent' : 'Not Sent',
+					'type'				=> 'Email',
+				);
+				trackship_for_woocommerce()->ts_actions->update_notification_table( $arg );
 			}			
 		}			
 	}
