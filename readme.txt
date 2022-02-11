@@ -4,7 +4,7 @@ Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 5.3
 Tested up to: 5.9
 Requires PHP: 7.0
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,7 +59,7 @@ Analyze shipping and delivery performance, with tracking data straight from your
 3. Setup TrackShip on your store, enable the tracking page and shipment status & Delivery updates.
 4. Seat back and relax, TrackShip will Auto-track your Fulfilled orders and proactively update your orders whenever there is an update in the shipment tracking status, until the shipments are delivered to your customers.  
 == Documentation ==
-For more information, check out our [Documentation](https://trackship.info/docs/trackship-for-woocommerce/)
+For more information, check out our [Documentation](https://docs.trackship.info/docs/trackship-for-woocommerce/)
 
 == Requirements ==
 
@@ -79,12 +79,12 @@ TrackShip will track orders when you add tracking numbers using one of the follo
 
 integration with other WooCommerce plugins:
 
-* [SMS for WooCommerce](https://trackship.info/docs/trackship-for-woocommerce/compatibility/sms-for-woocommerce/) - Send automatic SMS updates for shipment status & delivery via Twilio, Nexmo or ClickSend
-* [Checkout for WooCommerce](https://trackship.info/docs/trackship-for-woocommerce/compatibility/checkoutwc/) - Add Tracking Page widget to the Order received page when its set to be the view order page
-* [AutomateWoo](https://trackship.info/docs/trackship-for-woocommerce/compatibility/automatewoo/) - use the "Delivered" custom order status to trigger marketing automation based on the order delivery date.
+* [SMS for WooCommerce](https://docs.trackship.info/docs/trackship-for-woocommerce/compatibility/sms-for-woocommerce/) - Send automatic SMS updates for shipment status & delivery via Twilio, Nexmo or ClickSend
+* [Checkout for WooCommerce](https://docs.trackship.info/docs/trackship-for-woocommerce/compatibility/checkoutwc/) - Add Tracking Page widget to the Order received page when its set to be the view order page
+* [AutomateWoo](https://docs.trackship.info/docs/trackship-for-woocommerce/compatibility/automatewoo/) - use the "Delivered" custom order status to trigger marketing automation based on the order delivery date.
 
 == Documentation ==
-Check out TrackShip for WooCommerce [documentation](https://trackship.info/docs/trackship-for-woocommerce/) for more details on how to set up and work with TrackShip
+Check out TrackShip for WooCommerce [documentation](https://docs.trackship.info/docs/trackship-for-woocommerce/) for more details on how to set up and work with TrackShip
 
 == Frequently Asked Questions ==
 = What is a Shipment Tracker?
@@ -97,15 +97,15 @@ Not at all. When you fulfill an order, the shipping information is sent to Track
 Absolutely not! You can easily connect your store with TrackShip in a few simple steps and start enjoying a branded tracking experience in less than 10 minutes..
 = I connected my store but the shipment status is not showing for my orders
 The trigger to auto-track shipments by TrackShip is to add tracking to order and change the order status from Processing to Shipped (Completed). TrackShip will not automatically track orders that were Shipped before you connected your store.
-You can trigger these orders to TrackShip by using the [Get Shipment Status](https://trackship.info/docs/setup-trackship-on-woocommerce/woocommerce-orders-admin/#get-shipment-status) option on the WooCommerce orders admin in the bulk actions menu.
+You can trigger these orders to TrackShip by using the [Get Shipment Status](https://docs.trackship.info/docs/trackship-for-woocommerce/manage-orders/#get-shipment-status) option on the WooCommerce orders admin in the bulk actions menu.
 = My store is connected but many of my orders still show “Connection error” shipment status
 These messages are from before you connected your store, TrackShip auto-track shipments when you change the order status from Processing to Shipped (Completed). 
 TrackShip will not automatically track orders that were shipped when you had a connection issue.
-You can trigger these orders to TrackShip by using the [Get Shipment Status](https://trackship.info/docs/setup-trackship-on-woocommerce/woocommerce-orders-admin/#get-shipment-status) option on the WooCommerce orders admin in the bulk actions menu.
+You can trigger these orders to TrackShip by using the [Get Shipment Status](https://docs.trackship.info/docs/trackship-for-woocommerce/manage-orders/#get-shipment-status) option on the WooCommerce orders admin in the bulk actions menu.
 = How often do you check for tracking status updates?
 TrackShip checks the shipment status with the shipping providers APIs every 2-4 hours. We check for updates more often once the package is in the "unknown" status, until the first tracking event is received from the providers API and when the shipment is out for delivery.
 = Which shipping providers (carriers) do you support?
-TrackShip supports 300+ [shipping providers](https://trackship.info/shipping-providers/) around the globe ,if you can find your carrier on our supported shipping providers list, you can suggest a shipping provider [here](https://trackship.info/docs/trackship-resources/suggest-a-shipping-provider/)
+TrackShip supports 300+ [shipping providers](https://trackship.info/shipping-providers/) around the globe ,if you can find your carrier on our supported shipping providers list, you can suggest a shipping provider [here](https://feedback.zorem.com/trackship)
 = Do you show the shipment status for orders on WooCommerce admin?
 Yes, TrackShip adds a Shipment Status column on your orders admin and displays the shipment tracking status, last update date and the Est Delivery Date for every order that you shipped after connecting your store.
 
@@ -119,6 +119,10 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended).
 
 == Changelog ==
+= 1.3.2 - 2022-02-11 =
+* Dev - filter added for change the capability of TrackShip menu
+* Dev - Tested with WC 6.2.0
+
 = 1.3.1 - 2022-02-07 =
 * New - Shipment status SMS and email log added in table
 * Enhancement - New Placeholders added in Shipment statsus SMS
@@ -128,8 +132,6 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 * Enhancement - Shipment status SMS design updated
 * Fix - Shipped email when WC shipment tracking plugin installed
 * Improvement - Tracking page design.
-
-
 
 = 1.3 - 2022-01-19 =
 * Enhancement - New desgin of Tracking widget and shipment email Customizer
