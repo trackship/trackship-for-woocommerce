@@ -69,26 +69,6 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			'schema' => array( $this, 'get_public_item_schema' ),
 		) );
 		
-		//deprecated - check_wcast_installed
-		register_rest_route( $this->namespace, '/check_wcast_installed', array(			
-			array(
-				'methods'             => 'POST',
-				'callback'            => array( $this, 'check_wcast_installed' ),
-				'permission_callback' => array( $this, 'get_item_permissions_check' ),
-			),
-			'schema' => array( $this, 'get_public_item_schema' ),
-		) );
-		
-		//deprecated - tswc_status
-		register_rest_route( $this->namespace, '/tswc_status', array(			
-			array(
-				'methods'             => 'GET',
-				'callback'            => array( $this, 'tswc_status' ),
-				'permission_callback' => '__return_true',
-			),
-			'schema' => array( $this, 'get_public_item_schema' ),
-		) );
-		
 		//check_ts4wc_installed
 		register_rest_route( $this->namespace, '/check_ts4wc_installed', array(			
 			array(
@@ -122,65 +102,22 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		
 		//check which shipment tracking plugin active
 		$plugin = 'tswc';
-		if ( trackship_for_woocommerce()->is_ast_active() ) {
-			$plugin.= '-ast';
+		
+		if ( is_plugin_active( 'woo-advanced-shipment-tracking/woocommerce-advanced-shipment-tracking.php' ) ) {
+			$plugin.= '-ast-free';
 		}
-		
-		if ( trackship_for_woocommerce()->is_st_active() ) {
-			$plugin.= '-st';
-		}
-		
-		$data = array(
-			'status' => 'installed',
-			'plugin' => $plugin
-		);
-		return rest_ensure_response( $data );
-	}
-	
-	/*
-	* TSWC installed?
-	*/
-	public function tswc_status() {
-		$plugin = 'tswc';
-		
-		if ( trackship_for_woocommerce()->is_ast_active() ) {
-			$plugin.= '-ast';
-		}
-		
-		if ( trackship_for_woocommerce()->is_st_active() ) {
-			$plugin.= '-st';
-		}
-		
-		$data = array(
-			'status' => 'installed',
-			'plugin' => $plugin
-		);
-		return rest_ensure_response( $data );
-	}
 
-	/*
-	* check_wcast_installed
-	*/
-	public function check_wcast_installed( $request ) {
-		$wc_ast_api_key = get_option('wc_ast_api_key');
-		$wc_ast_api_enabled = get_option('wc_ast_api_enabled');		
-		if ( empty( $wc_ast_api_key ) ) {
-			update_option('wc_ast_api_key', $request['user_key']);
+		if ( is_plugin_active( 'ast-pro/ast-pro.php' ) ) {
+			$plugin.= '-ast-pro';
 		}
 		
-		if ( '' == $wc_ast_api_enabled ) {
-			update_option('wc_ast_api_enabled', 1);
+		if ( trackship_for_woocommerce()->is_st_active() ) {
+			$plugin.= '-st';
 		}
-		
-		if ( $request['trackers_balance'] ) {
-			update_option( 'trackers_balance', $request['trackers_balance'] );
-		}			
-		
-		$trackship = new WC_Trackship_Actions();
-		$trackship->create_tracking_page();
 		
 		$data = array(
-			'status' => 'installed'
+			'status' => 'installed',
+			'plugin' => $plugin
 		);
 		return rest_ensure_response( $data );
 	}
