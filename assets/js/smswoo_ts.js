@@ -87,6 +87,7 @@ jQuery(document).on( "click", ".shipment-status-sms-section .smswoo-top-click", 
 	var smswootop = jQuery(this).parents(".smswoo-top");
 	var smswoobottom = smswootop.siblings(".smswoo-bottom");
 	var smssavebtn = smswootop.find(".button-smswoo");
+	var smstgl = smswootop.find(".smswoo-inlineblock");
 	var smscustomizebtn = smswootop.find(".smswoo-shipment-sendto-customer");
 	
 	if ( smswootop.hasClass( 'smswoo-open' ) ) {
@@ -96,16 +97,19 @@ jQuery(document).on( "click", ".shipment-status-sms-section .smswoo-top-click", 
 	jQuery(".button-smswoo").hide();
 	jQuery(".smswoo-shipment-sendto-customer").show();
 	jQuery(".smswoo-top").removeClass('smswoo-open');
+	jQuery(".smswoo-inlineblock").show();
 	
 	smswoobottom.slideToggle( 400, "swing", function(){
 		if( smswoobottom.is(":visible") ){
 			smswootop.addClass('smswoo-open');
 			smssavebtn.show();
 			smscustomizebtn.hide();
+			smstgl.hide();
 		} else {
 			smswootop.removeClass('smswoo-open');
 			smssavebtn.hide();
 			smscustomizebtn.show();
+			smstgl.show();
 		}
 	});
 });

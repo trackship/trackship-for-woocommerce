@@ -510,13 +510,13 @@ class tswc_smswoo_admin {
 						<?php } ?>
 						</div>
                         <span class="smswoo-right smswoo-mr20 smswoo-shipment-sendto">
-							<span class="smswoo-shipment-sendto-customer btn_ts_transparent btn_outline"><?php echo __( 'Edit', 'trackship-for-woocommerce' )?></span>
 							<button name="save" class="button-primary woocommerce-save-button button-smswoo hide button-trackship" type="submit" value="Save changes"><?php echo __( 'Save', 'trackship-for-woocommerce' )?></button>
 							<span class="smswoo-inlineblock">
 								<input type="hidden" name="<?php echo $enabled_customer?>" value="0"/>
 								<input type="checkbox" id="<?php echo $enabled_customer?>" name="<?php echo $enabled_customer?>" class="tgl tgl-flat smswoo-shipment-checkbox" value="1" <?php echo $checked_customer ? 'checked' : ''?> data-row_class="enable_customer" />
 								<label class="tgl-btn" for="<?php echo $enabled_customer?>"></label>
 							</span>
+							<span class="smswoo-shipment-sendto-customer dashicons dashicons-admin-generic"></span>
 						</span>
 					</div>
 					<div class="smswoo-bottom">
