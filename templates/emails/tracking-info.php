@@ -64,6 +64,22 @@ if ( $tracking_items ) :
 								}
 								?>
 							</p>
+							<?php if ( 'shipped' != $ship_status ) { ?>
+								<?php if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3', 't_layout_2' ) ) ) { ?>
+									<?php $icon_layout = 't_layout_1' == $tracking_page_layout ? '-widget.png' : '-widget-v2.png'; ?>
+									<?php $icon_layout = 't_layout_2' == $tracking_page_layout ? '-widget-v4.png' : $icon_layout; ?>
+									<div class="widget_progress_bar mobile_version" style="width:100%;margin: 15px 0 10px;">
+										<?php $widget_icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ) . esc_html( $icon_layout ); ?>
+										<img style="width:100%;" src="<?php echo esc_url( $widget_icon_url ); ?>">
+									</div>
+								<?php } else { ?>
+									<div class="tracker-progress-bar mobile_version <?php echo esc_html( $tracking_page_layout ); ?>">
+										<div class="progress">
+											<div class="progress-bar <?php echo esc_html( $ship_status ); ?>" ></div>
+										</div>
+									</div>
+								<?php } ?>
+							<?php } ?>
 						</div>
 						<div class="display-table-cell" >
 							<?php if ( 'delivered' != $ship_status ) { ?>
@@ -73,14 +89,15 @@ if ( $tracking_items ) :
 					</div>
 					<div style="display:block;"></div>
 					<?php if ( 'shipped' != $ship_status ) { ?>
-						<?php if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ) { ?>
+						<?php if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3', 't_layout_2' ) ) ) { ?>
 							<?php $icon_layout = 't_layout_1' == $tracking_page_layout ? '-widget.png' : '-widget-v2.png'; ?>
-							<div class="widget_progress_bar" style="display:block;width:100%;margin: 15px 0 10px;">
+							<?php $icon_layout = 't_layout_2' == $tracking_page_layout ? '-widget-v4.png' : $icon_layout; ?>
+							<div class="widget_progress_bar desktop_version" style="width:100%;margin: 15px 0 10px;">
 								<?php $widget_icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ) . esc_html( $icon_layout ); ?>
 								<img style="width:100%;" src="<?php echo esc_url( $widget_icon_url ); ?>">
 							</div>
 						<?php } else { ?>
-							<div class="tracker-progress-bar">
+							<div class="tracker-progress-bar desktop_version <?php echo esc_html( $tracking_page_layout ); ?>">
 								<div class="progress">
 									<div class="progress-bar <?php echo esc_html( $ship_status ); ?>" ></div>
 								</div>
@@ -103,14 +120,14 @@ if ( $tracking_items ) :
 		border: 1px solid #eee;
 		overflow: hidden;
 	}
-	.progress-bar.out_for_delivery{background-color: #90ca5e;width:67%;height:40px;}
+	/*.progress-bar.out_for_delivery{background-color: #90ca5e;width:67%;height:40px;}
 	.progress-bar.in_transit{background-color: #53c3bd;width:33%;height:40px;}
 	.progress-bar.failure{background-color: #cd2128;width:33%;height:40px;}
 	.progress-bar.return_to_sender{background-color: #cd2128;width:67%;height:40px;}
-	.progress-bar.exception{background-color: #cd2128;width:33%;height:40px;}
+	.progress-bar.exception{background-color: #cd2128;width:66%;height:40px;}
 	.progress-bar.on_hold{background-color: #ffde00;width:33%;height:40px;}
 	.progress-bar.available_for_pickup{background-color: #f49d1d;width:67%;height:40px;}
-	.progress-bar.delivered{background-color: #0f8042;width:100%;height:40px;}
+	.progress-bar.delivered{background-color: #0f8042;width:100%;height:40px;}*/
 	ul.tracking_list{padding: 0;list-style: none;}
 	ul.tracking_list .tracking_list_li{margin-bottom: 5px;}
 	ul.tracking_list .tracking_list_li .product_list_ul{padding-left: 10px;}
@@ -137,15 +154,17 @@ if ( $tracking_items ) :
 	.v-align-top{vertical-align:top;}
 	span.est_delivery_date { margin-top: 5px; display: inline-block; }
 	@media screen and (max-width: 460px) {
-		.display-table{display:block;}
+		.desktop_version{display:none;}
+		.mobile_version,.display-table{display:block;}
 		.display-table-cell{display:block;margin-top: 10px;}
 		.track_your_order{display: block !important;text-align: center;}
-		.widget_progress_bar{display:none;}
 	}
 	@media screen and (min-width: 461px) {
 		.display-table{display:table !important;width:100%;box-sizing: border-box;}
 		.display-table-cell{display:table-cell;}
 		.track_your_order{float: right;display:inline-block;}
+		.mobile_version{display:none;}
+		.desktop_version{display:block;}
 	}
 </style>
 

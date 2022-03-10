@@ -1,10 +1,10 @@
 <style>	
 	html{
-		background-color:#fff;
+		background-color:#f7f7f7;
 		margin-top:0px !important;
 	}
 	.col.tracking-detail{
-		margin: 50px auto 100px;
+		margin: 30px auto 100px;
 	}
 	.est_delivery_date {
 		margin-bottom: 15px;
@@ -82,9 +82,24 @@
 			<div class="shipment_status_heading <?php echo esc_html($status); ?>"><?php esc_html_e( apply_filters( 'trackship_status_filter', $status ) ); ?></div>
 			<span class="est_delivery_date">Est. Delivery Date: <strong>Thursday, Oct 01</strong></span>	
 		</div>
-		<div class="tracker-progress-bar <?php echo in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking_icon_layout ' . esc_html( $tracking_page_layout ) : ''; ?>">
+		<?php
+		if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ) {
+			$width = '0';
+		} else {
+			if ( in_array( $status, array( 'in_transit', 'on_hold', 'failure' ) ) ) {
+				$width = '30%';
+			} elseif ( in_array( $status, array( 'out_for_delivery', 'available_for_pickup', 'return_to_sender', 'exception' ) ) ) {
+				$width = '60%';			
+			} elseif ( 'delivered' == $status ) {
+				$width = '100%';				
+			} else {
+				$width = '0';
+			}
+		}
+		?>
+		<div class="tracker-progress-bar <?php echo in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking_icon_layout ' : 'tracking_progress_layout'; ?> <?php echo esc_html( $tracking_page_layout ); ?>">
 			<div class="progress <?php echo esc_html($status); ?>">
-				<div class="progress-bar <?php echo esc_html($status); ?>" <?php echo in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'style="width: 0%;"' : 'style="width: 60%;"'; ?>></div>
+				<div class="progress-bar <?php echo esc_html($status); ?>" style="width: <?php esc_html_e( $width ); ?>;"></div>
 				<?php if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ) { ?>
 					<div class="progress-icon icon1"></div>
 					<div class="progress-icon icon2"></div>
