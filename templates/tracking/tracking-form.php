@@ -7,8 +7,25 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * This template can be overridden by copying it to yourtheme/woocommerce/tracking/tracking-form.php
  * 
- */
-?> 
+*/
+$tracking_page_defaults = trackship_admin_customizer();
+$border_color = get_option( 'wc_ast_select_border_color', $tracking_page_defaults->defaults['wc_ast_select_border_color'] );
+$link_color = get_option( 'wc_ast_select_link_color', $tracking_page_defaults->defaults['wc_ast_select_link_color'] );
+
+?>
+<style>
+.order_track_form input.ts_from_input:checked + label {
+    color: <?php echo esc_html( $link_color ); ?>;
+    border-bottom: 3px solid <?php echo esc_html( $link_color ); ?>;
+    margin-bottom: -3px;
+}
+.order_track_form {
+    max-width: 500px;
+    margin: 0 auto 20px;
+    border: 1px solid <?php echo esc_html( $border_color ); ?>;
+    min-height: 330px;
+}
+</style>
 <div class="track-order-section">
 	<form method="post" class="order_track_form">
 		<div class="search_order_form">
