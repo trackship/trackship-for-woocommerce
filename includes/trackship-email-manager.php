@@ -43,7 +43,7 @@ class WC_TrackShip_Email_Manager {
 				
 				$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_show_order_details', $default['wcast_' . $status . '_show_order_details'] );
 				
-				$wcast_show_product_image = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_show_product_image', $defaults['wcast_' . $status . '_show_product_image']);
+				$wcast_show_product_image = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_show_product_image', $default['wcast_' . $status . '_show_product_image']);
 
 				$wcast_show_shipping_address = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array( 'wcast_' . $status . '_email_settings', 'wcast_' . $status . '_show_shipping_address', $default['wcast_' . $status . '_show_shipping_address']);
 				
@@ -140,9 +140,6 @@ class WC_TrackShip_Email_Manager {
 				
 				$email_send = wp_mail( $recipient, $subject, $message, $email->get_headers() );
 				
-				$logger = wc_get_logger();
-				$context = array( 'source' => 'trackship_shipment_status_email_log' );
-				$logger->error( 'Order_Id: ' . $order_id . ' Shipment_Status: ' . $new_status . ' Email_Sent: ' . $email_send, $context );
 				$arg = array(
 					'order_id'			=> $order_id,
 					'order_number'		=> wc_get_order( $order_id )->get_order_number(),
@@ -194,7 +191,7 @@ class WC_TrackShip_Email_Manager {
 				
 				$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_show_order_details', $default['wcast_delivered_status_show_order_details']);
 				
-				$wcast_show_product_image = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_show_product_image', $defaults['wcast_delivered_status_show_product_image']);
+				$wcast_show_product_image = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_show_product_image', $default['wcast_delivered_status_show_product_image']);
 				
 				$wcast_show_shipping_address = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_show_shipping_address', $default['wcast_delivered_status_show_shipping_address']);
 				
@@ -301,9 +298,6 @@ class WC_TrackShip_Email_Manager {
 				
 				$email_send = wp_mail( $recipient, $subject, $message, $email->get_headers() );
 				
-				$logger = wc_get_logger();
-				$context = array( 'source' => 'trackship_shipment_status_email_log' );
-				$logger->error( 'Order_Id: ' . $order_id . ' Shipment_Status: ' . $new_status . ' Email_Sent: ' . $email_send, $context );
 				$arg = array(
 					'order_id'			=> $order_id,
 					'order_number'		=> wc_get_order( $order_id )->get_order_number(),
@@ -419,7 +413,7 @@ class WC_TrackShip_Email_Manager {
 			$email_content = str_replace( '{est_delivery_date}', $est_delivery_date, $email_content );		
 		}
 		
-		return '<p class="shipment_email_content">' . $email_content . '</p>';
+		return '<div class="shipment_email_content">' . $email_content . '</div>';
 	}
 	
 	/**
