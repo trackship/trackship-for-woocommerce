@@ -336,9 +336,13 @@ class WC_Trackship_Admin {
 		if ( trackship_for_woocommerce()->is_trackship_connected() ) {
 			add_submenu_page( 'trackship-dashboard', 'Dashboard', __( 'Dashboard', 'trackship-for-woocommerce' ), apply_filters( 'trackship_dashboard_menu_capabilities', 'manage_woocommerce' ), 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), 1 );
 			
-			add_submenu_page( 'trackship-dashboard', 'Shipments', __( 'Shipments', 'trackship-for-woocommerce' ), apply_filters( 'trackship_shipments_menu_capabilities', 'manage_woocommerce' ), 'trackship-shipments', array( $this, 'shipments_page_callback' ), 1 );
-			
+			add_submenu_page( 'trackship-dashboard', 'Shipments', __( 'Shipments', 'trackship-for-woocommerce' ), apply_filters( 'trackship_shipments_menu_capabilities', 'manage_woocommerce' ), 'trackship-shipments', array( $this, 'shipments_page_callback' ) );
+
+			add_submenu_page( 'trackship-dashboard', 'Logs', __( 'Logs', 'trackship-for-woocommerce' ), apply_filters( 'trackship_logs_menu_capabilities', 'manage_woocommerce' ), 'trackship-logs', array( $this, 'logs_page_callback' ) );
+
 			add_submenu_page( 'trackship-dashboard', 'Settings', __( 'Settings', 'trackship-for-woocommerce' ), apply_filters( 'trackship_settings_menu_capabilities', 'manage_woocommerce' ), 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
+
+			add_submenu_page( 'trackship-dashboard', 'Tools', __( 'Tools', 'trackship-for-woocommerce' ), apply_filters( 'trackship_tools_menu_capabilities', 'manage_woocommerce' ), 'trackship-tools', array( $this, 'tools_page_callback' )  );
 		}
 		
 	}
@@ -368,6 +372,44 @@ class WC_Trackship_Admin {
 				<section id="content_trackship_dashboard" style="display:block" class="inner_tab_section">
 					<div class="tab_inner_container">
 						<?php include 'views/shipments.php'; ?>
+					</div>
+				</section>
+			</div>
+		</div>
+		<?php
+	}
+
+	/*
+	* callback for Shipment
+	*/
+	public function logs_page_callback() {
+		?>
+		<div class="zorem-layout">
+			<?php include 'views/header2.php'; ?>
+			<?php do_action('ast_settings_admin_notice'); ?>
+			<div class="trackship_admin_content">
+				<section id="content_trackship_logs" style="display:block" class="inner_tab_section">
+					<div class="tab_inner_container">
+						<?php include 'views/logs.php'; ?>
+					</div>
+				</section>
+			</div>
+		</div>
+		<?php
+	}
+
+	/*
+	* callback for Shipment
+	*/
+	public function tools_page_callback() {
+		?>
+		<div class="zorem-layout">
+			<?php include 'views/header2.php'; ?>
+			<?php do_action('ast_settings_admin_notice'); ?>
+			<div class="trackship_admin_content">
+				<section id="content_trackship_tools" style="display:block" class="inner_tab_section">
+					<div class="tab_inner_container">
+						<?php include 'views/tools.php'; ?>
 					</div>
 				</section>
 			</div>
@@ -1196,12 +1238,10 @@ class WC_Trackship_Admin {
 				background: <?php echo esc_html( $bg_color ); ?>;
 				color: <?php echo esc_html( $color ); ?>;
 			}
-			#toplevel_page_trackship_customizer { display: none !important; }
 			</style>
-			<?php
-		}
-		echo '<div id=admin_tracking_widget class=popupwrapper style="display:none;"><div class=popuprow></div><div class=popupclose></div></div>';
-		?>
+		<?php } ?>
+		<style> #toplevel_page_trackship_customizer { display: none !important; } </style>
+		<?php echo '<div id=admin_tracking_widget class=popupwrapper style="display:none;"><div class=popuprow></div><div class=popupclose></div></div>'; ?>
 		<div id=admin_error_more_info_widget class=popupwrapper style="display:none;">
 			<div class="more_info_popup popuprow">
 				<?php

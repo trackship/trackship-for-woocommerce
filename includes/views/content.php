@@ -20,16 +20,6 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 					'slug'	=> 'notifications',
 					'show'	=> true,
 				),
-				array(
-					'label'	=> __( 'Logs', 'trackship-for-woocommerce' ),
-					'slug'	=> 'logs',
-					'show'	=> true,
-				),
-				array(
-					'label'	=> __( 'Tools', 'trackship-for-woocommerce' ),
-					'slug'	=> 'tools',
-					'show'	=> true,
-				),
 			);
 			?>
 			<div>
