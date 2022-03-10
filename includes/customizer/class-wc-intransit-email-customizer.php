@@ -23,7 +23,7 @@ class TSWC_Intransit_Customizer_Email {
 	}
 
 	public static function is_own_preview_request() {
-		return isset( $_REQUEST['wcast-intransit-email-customizer-preview'] ) && '1' === $_REQUEST['wcast-intransit-email-customizer-preview'];
+		return isset( $_REQUEST['shipment-email-customizer-preview'] ) && 'in_transit' === $_REQUEST['status'];
 	}
 
 	/**
@@ -59,7 +59,7 @@ class TSWC_Intransit_Customizer_Email {
 		$email_heading = str_replace( '{order_number}', $order->get_order_number(), $email_heading );
 		$email_heading = str_replace( '{shipment_status}', 'In Transit', $email_heading );
 		
-		$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_intransit_email_settings', 'wcast_intransit_email_content', $this->defaults['wcast_intransit_email_content']);				
+		$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_intransit_email_settings', 'wcast_intransit_email_content', $this->defaults['wcast_intransit_email_content']);		
 		
 		$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_intransit_email_settings', 'wcast_intransit_show_order_details', $this->defaults['wcast_intransit_show_order_details']);
 		

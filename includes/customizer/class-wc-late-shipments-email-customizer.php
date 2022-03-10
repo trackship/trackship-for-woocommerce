@@ -29,7 +29,7 @@ class TSWC_Late_Shipments_Customizer_Email {
 		$customizer_defaults = array(			
 			'wcast_late_shipments_email_subject' => 'Late shipment for order #{order_number}',
 			'wcast_late_shipments_email_heading' => __( 'Late Shipment', 'trackship-for-woocommerce' ),
-			'wcast_late_shipments_email_content' => 'This order was shipped {shipment_length} days ago, the shipment status is {shipment_status} and its est. delivery date is {est_delivery_date}.',				
+			'wcast_late_shipments_email_content' => 'This order was shipped {shipment_length} days ago, the shipment status is {shipment_status} and its est. delivery date is {est_delivery_date}.',
 			'wcast_enable_late_shipments_admin_email'  => '',
 			'wcast_late_shipments_days' => 7,
 			'wcast_late_shipments_email_to'  => '{admin_email}',

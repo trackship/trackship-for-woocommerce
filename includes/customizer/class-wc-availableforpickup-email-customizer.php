@@ -41,7 +41,7 @@ class TSWC_Availableforpickup_Customizer_Email {
 	 * @return bool
 	 */
 	public static function is_own_preview_request() {
-		return isset( $_REQUEST['wcast-availableforpickup-email-customizer-preview'] ) && '1' === $_REQUEST['wcast-availableforpickup-email-customizer-preview'];
+		return isset( $_REQUEST['shipment-email-customizer-preview'] ) && 'available_for_pickup' === $_REQUEST['status'];
 	}
 	
 	/**
