@@ -56,7 +56,7 @@ class WC_Trackship_Logs {
 		
 		$page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
 				
-		if ( 'trackship-for-woocommerce' != $page ) {
+		if ( 'trackship-for-woocommerce' != $page && 'trackship-logs' != $page ) {
 			return;
 		}
 		
@@ -117,7 +117,7 @@ class WC_Trackship_Logs {
             $result[$i]->date = $value->date;
             $result[$i]->to = $value->to;
             $result[$i]->type = $value->type == 'Email' ? 'Email' : 'SMS';
-            $result[$i]->status = $value->status;
+            $result[$i]->status = 'Sent' == $value->status ? $value->status : 'Failed';
 			$result[$i]->action_button = '<span class="get_log_detail dashicons dashicons-visibility" data-rowid="' . $value->id . '" data-orderid="' . $value->order_id . '"></span>';
 			
             $i++;

@@ -184,7 +184,7 @@ class WC_Trackship_Actions {
 		
 		$page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
 		
-		if ( !in_array( $page, array( 'trackship-for-woocommerce', 'trackship-shipments', 'trackship-dashboard', 'trackship_customizer', 'wcpv-vendor-order' ) ) ) {
+		if ( !in_array( $page, array( 'trackship-for-woocommerce', 'trackship-shipments', 'trackship-dashboard', 'trackship_customizer', 'wcpv-vendor-order', 'trackship-logs', 'trackship-tools' ) ) ) {
 			return;
 		}
 		// remove code in future, added by hitesh
@@ -747,13 +747,6 @@ class WC_Trackship_Actions {
 			case 'label_cancelled':
 				$status = __( 'Label Cancelled', 'trackship-for-woocommerce' );
 				break;
-			/* Added Version 1.2 - To be removed in future wrong_shipping_provider and INVALID_TRACKING_NUM */
-			case 'wrong_shipping_provider':
-				$status = __( 'Invalid Carrier', 'trackship-for-woocommerce' );
-				break;
-			case 'INVALID_TRACKING_NUM':
-				$status = __( 'Invalid Tracking', 'trackship-for-woocommerce' );
-				break;
 		}
 		return $status;
 	}
@@ -803,13 +796,6 @@ class WC_Trackship_Actions {
 				$html = '<span class="shipment-icon icon-' . $status . '">';
 				break;
 			case 'invalid_carrier':
-				$html = '<span class="shipment-icon icon-' . $status . '">';
-				break;
-			/* Added Version 1.2 - To be removed in future wrong_shipping_provider and INVALID_TRACKING_NUM */
-			case 'INVALID_TRACKING_NUM':
-				$html = '<span class="shipment-icon icon-' . $status . '">';
-				break;
-			case 'wrong_shipping_provider':
 				$html = '<span class="shipment-icon icon-' . $status . '">';
 				break;
 			default:
