@@ -222,6 +222,13 @@ class WC_Trackship_Install {
 			}
 			update_option( 'trackship_db', '1.9' );
 		}
+		if ( version_compare( get_option( 'trackship_db' ), '1.10', '<' ) ) {
+			global $wpdb;
+			$woo_trackship_shipment = $this->shipment_table;
+			$wpdb->query("ALTER TABLE $woo_trackship_shipment
+				ADD new_shipping_provider VARCHAR(50)");
+			update_option( 'trackship_db', '1.10' );
+		}
 	}
 	
 	public function update_analytics_table() {
