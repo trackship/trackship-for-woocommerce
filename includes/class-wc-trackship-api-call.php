@@ -132,10 +132,18 @@ class WC_TrackShip_Api_Call {
 						if ( is_string($shipment_status) ) {
 							$shipment_status = array();
 						}
-						$shipment_status[$key]['status'] = 'Error message : ' . $body['message'];
+						$shipment_status[$key]['pending_status'] = isset( $body['status_msg'] ) ? $body['status_msg'] : 'Error message : ' . $body['message'];
 						$shipment_status[$key]['status_date'] = gmdate('Y-m-d H:i:s');
 						$shipment_status[$key]['est_delivery_date'] = '';
 						update_post_meta( $order->get_id(), 'shipment_status', $shipment_status);
+						
+						$args = array(
+							'shipment_status'	=> $shipment_status[$key]['pending_status'],
+							'shipping_provider'	=> $tracking_provider,
+							'shipping_date'		=> date_i18n('Y-m-d', $val['date_shipped'] ),
+							'est_delivery_date' => null,
+						);
+						trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $val['tracking_number'], $args );
 						
 						$logger = wc_get_logger();
 						$context = array( 'source' => 'Trackship_apicall_error' );
