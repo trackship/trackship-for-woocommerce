@@ -68,6 +68,7 @@ if ( ! class_exists( 'smswoo_clicksend' ) ) {
 				'messages' => array(
 					array(
 						'to'		=> $to_phone,
+						'from'		=> $from,
 						'source'	=> "smswoo",
 						'body'		=> $message,
 					),
