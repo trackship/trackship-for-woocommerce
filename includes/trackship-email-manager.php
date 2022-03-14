@@ -34,8 +34,8 @@ class WC_TrackShip_Email_Manager {
 		$email_to = explode(',', $email_to);				
 		
 		$enable = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_enable_' . $status . '_email', '');
-		
-		if ( 1 == $enable ) {
+		$for_amazon_order = trackship_for_woocommerce()->ts_actions->is_notification_on_for_amazon( $order_id );
+		if ( 1 == $enable && $for_amazon_order ) {
 			foreach ( $email_to as $email ) {																
 				$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_email_heading', $default['wcast_' . $status . '_email_heading']);								
 									
@@ -177,10 +177,10 @@ class WC_TrackShip_Email_Manager {
 		$email_to = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_email_to', $default['wcast_delivered_status_email_to']);		
 		
 		$enable = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_enable_delivered_status_email', $default['wcast_enable_delivered_status_email']);	
-		
+		$for_amazon_order = trackship_for_woocommerce()->ts_actions->is_notification_on_for_amazon( $order_id );
 		$email_to = explode( ',', $email_to );
 		
-		if ( 1 == $enable ) {	
+		if ( 1 == $enable && $for_amazon_order ) {	
 			foreach ( $email_to as $email ) {													
 				
 				$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_email_heading', $default['wcast_delivered_status_email_heading']);				
@@ -316,7 +316,7 @@ class WC_TrackShip_Email_Manager {
 	
 	/**
 	 * Code for format email subject
-	 */
+	*/
 	public function email_subject( $string, $order_id, $order ) {
 		$customer_email = $order->get_billing_email();
 		$first_name = $order->get_billing_first_name();
