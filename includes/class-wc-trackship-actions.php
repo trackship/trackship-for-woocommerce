@@ -1489,7 +1489,7 @@ class WC_Trackship_Actions {
 			}	
 		}
 		
-		if ( is_plugin_active( 'wt-woocommerce-sequential-order-numbers/wt-advanced-order-number.php' ) ) {						
+		if ( is_plugin_active( 'wt-woocommerce-sequential-order-numbers/wt-advanced-order-number.php' ) ) {
 			$query_args = array(
 				'numberposts' => 1,
 				'meta_key'    => '_order_number',
@@ -1626,5 +1626,19 @@ class WC_Trackship_Actions {
 	public function get_trackship_key() {
 		$wc_ast_api_key = get_option( 'wc_ast_api_key', false );
 		return $wc_ast_api_key;
+	}
+
+	public function is_notification_on_for_amazon( $order_id ) {
+		if ( is_plugin_active( 'wp-lister-for-amazon/wp-lister-amazon.php' ) ) {
+			if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+				$bool = true;
+			} else {
+				$created_via = get_post_meta( $order_id, '_created_via', true );
+				$bool = !get_option( 'enable_notification_for_amazon_order' ) && 'amazon' == $created_via ? false : true;
+			}
+		} else {
+			$bool = true;
+		}
+		return $bool;
 	}
 }
