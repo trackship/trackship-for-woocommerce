@@ -38,7 +38,7 @@ class TSWC_Returntosender_Customizer_Email {
 	 * @return bool
 	 */
 	public static function is_own_preview_request() {
-		return isset( $_REQUEST['wcast-returntosender-email-customizer-preview'] ) && '1' === $_REQUEST['wcast-returntosender-email-customizer-preview'];
+		return isset( $_REQUEST['shipment-email-customizer-preview'] ) && 'return_to_sender' === $_REQUEST['status'];
 	}
 	
 	/**

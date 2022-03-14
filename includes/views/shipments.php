@@ -36,8 +36,8 @@ $ship_status = array(
 		<select class="select_option" name="shipping_provider" id="shipping_provider">
 			<option value="all"><?php esc_html_e( 'All shipping providers', 'trackship-for-woocommerce' ); ?></option>
 			<?php foreach ( $all_providers as $provider ) { ?>
-				<?php $formatted_provider = $wpdb->get_row( $wpdb->prepare( 'SELECT provider_name FROM ' . $wpdb->prefix . 'woo_shippment_provider WHERE ts_slug = %s', $provider->shipping_provider ) ); ?>
-				<?php $provider_name = isset($formatted_provider->provider_name) && $formatted_provider->provider_name ? $formatted_provider->provider_name : $provider->shipping_provider; ?>
+				<?php $formatted_provider = trackship_for_woocommerce()->actions->get_provider_name( $provider->shipping_provider ); ?>
+				<?php $provider_name = isset($formatted_provider) && $formatted_provider ? $formatted_provider : $provider->shipping_provider; ?>
 				<option value="<?php echo esc_html( $provider->shipping_provider ); ?>"><?php echo esc_html( $provider_name ); ?></option>
 		<?php } ?>
 		</select>

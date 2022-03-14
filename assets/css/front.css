@@ -7,12 +7,6 @@ form.order_track_form input {
 	width: 100%;
 	margin-bottom: 10px;
 }
-.order_track_form {
-	max-width: 500px;
-	margin: 0 auto 20px;
-	border: 1px solid #e0e0e0;
-	min-height: 340px;
-}
 .progress {
 	display: -ms-flexbox;
 	display: flex;
@@ -33,18 +27,28 @@ form.order_track_form input {
 	transition: width 0.6s ease
 }
 ul.tpi_product_tracking_ul {
-	margin: 0 0 10px 0;
+	margin: 10px 0;
+}
+.tracking_events_details {
+    margin-top: 10px;
 }
 .h4-heading.tpi_products_heading {
 	margin-bottom: 10px;
 }
+label.shipment_progress_label {
+	display: inline-block;
+    padding: 3px 8px;
+    cursor: pointer;
+    font-weight: 500;
+    margin-bottom: 0px;
+    font-size: 14px;
+}
+label.shipment_progress_label.checked {
+	color: #424242;
+	border-bottom: 3px solid #124fd6;
+}
 .order_track_form input.ts_from_input {
 	display: none;
-}
-.order_track_form input.ts_from_input:checked + label {
-	color: #09d3ac;
-	border-bottom: 3px solid #09d3ac;
-	margin-bottom: -3px;
 }
 .order_track_form label.ts_from_label {
 	width: 49%;
@@ -146,7 +150,7 @@ span.wc_order_id {
 .tracking-layout-2 .tracker-progress-bar {
 	margin: 20px 0;
 }
-/**** Layout 1 and 3 Progressbar CSS ***/
+/**** Layout 1 and 3 Progressbar CSS START ***/
 .tracker-progress-bar.tracking_icon_layout .progress {
 	height: 5px;
 	border-radius: 10px;
@@ -220,8 +224,9 @@ span.wc_order_id {
 	content: url(icons/delivered.png);
 	right: 0;
 }
-/**** Layout 2 CSS ***/
-.tracker-progress-bar .progress {
+/**** Layout 1 and 3 Progressbar CSS END ***/
+/**** Layout 2 CSS OLD START ***/
+/*.tracker-progress-bar .progress {
 	display: -ms-flexbox;
 	display: flex;
 	height: 40px;
@@ -243,8 +248,8 @@ span.wc_order_id {
 	background-color: #35609a;
 	transition: width 0.6s ease;
 	box-shadow: none;
-}
-.progress-bar.in_transit {
+}*/
+/*.progress-bar.in_transit {
 	background-color: #53c3bd;
 }
 .progress-bar.pending_trackship, .progress-bar.pending, .progress-bar.unknown, .progress-bar.carrier_unsupported, .progress-bar.balance_zero {
@@ -265,9 +270,89 @@ span.wc_order_id {
 .progress-bar.on_hold {
 	background-color: #ffde00;
 }
-.progress-bar.failure {
+.progress-bar.failure, .progress-bar.exception {
+	background-color: #cd2128;
+}*/
+/**** Layout 2 CSS OLD END ***/
+/**** Layout 4 CSS start***/
+.t_layout_2.tracker-progress-bar .progress {
+	border-radius: 10px;
+	height: 15px;
+	background-color: #e0e0e0;
+}
+.t_layout_2.tracker-progress-bar .progress-bar {
+	background: #0bd4ab;
+}
+.t_layout_2 .progress-bar:before {
+    content: ' ';
+    background: #124fd6;
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    display: inline-block;
+    border-radius: 10px;
+	left: 29%;
+}
+.t_layout_2 .progress-bar.out_for_delivery:before,
+.t_layout_2 .progress-bar.available_for_pickup:before,
+.t_layout_2 .progress-bar.exception:before,
+.t_layout_2 .progress-bar.return_to_sender:before {
+	left: 59%;
+}
+.t_layout_2 .progress-bar.pre_transit:before,
+.t_layout_2 .progress-bar.pending_trackship:before,
+.t_layout_2 .progress-bar.pending:before,
+.t_layout_2 .progress-bar.unknown:before,
+.t_layout_2 .progress-bar.carrier_unsupported:before,
+.t_layout_2 .progress-bar.insufficient_balance:before,
+.t_layout_2 .progress-bar.invalid_carrier:before {
+	left: 9%;
+}
+.t_layout_2 .progress-bar.delivered {
+	background-color: #4caf5080;
+}
+.t_layout_2 .progress-bar.delivered:before {
+	right: 0;
+	left: auto;
+	background-color: #4caf50;
+}
+.t_layout_2 .progress-bar.on_hold {
+	background-color: #ffde0080;
+}
+.t_layout_2 .progress-bar.on_hold:before {
+	background-color: #ffdd00;
+}
+.t_layout_2 .progress-bar.in_transit {
+	background-color: rgba(5, 169, 245, 0.5);
+}
+.t_layout_2 .progress-bar.in_transit:before {
+	background-color: #05a9f4;
+}
+.t_layout_2 .progress-bar.out_for_delivery {
+	background-color: rgba(143, 201, 92, 0.5);
+}
+.t_layout_2 .progress-bar.out_for_delivery:before {
+	background-color: rgba(143, 201, 92, 1);
+}
+.t_layout_2 .progress-bar.available_for_pickup {
+	background-color: rgba(255, 152, 0, 0.5);
+}
+.t_layout_2 .progress-bar.available_for_pickup:before {
+	background-color: #ff9800;
+}
+.t_layout_2 .progress-bar.pre_transit {
+	background-color: #673ab780;
+}
+.t_layout_2 .progress-bar.pre_transit:before {
+	background-color: #673ab7;
+}
+.t_layout_2 .progress-bar.failure, .t_layout_2 .progress-bar.return_to_sender, .t_layout_2 .progress-bar.exception {
+	background-color: #F3CAD8;
+}
+.t_layout_2 .progress-bar.failure:before, .t_layout_2 .progress-bar.return_to_sender:before, .t_layout_2 .progress-bar.exception:before {
 	background-color: #cd2128;
 }
+/**** Layout 4 CSS END***/
 .tracking_destination_details_by_date {
 	margin-bottom: 10px;
 }

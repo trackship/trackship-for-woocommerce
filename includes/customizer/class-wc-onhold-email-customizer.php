@@ -38,7 +38,7 @@ class TSWC_Onhold_Customizer_Email {
 	 * @return bool
 	 */
 	public static function is_own_preview_request() {
-		return isset( $_REQUEST['wcast-onhold-email-customizer-preview'] ) && '1' === $_REQUEST['wcast-onhold-email-customizer-preview'];
+		return isset( $_REQUEST['shipment-email-customizer-preview'] ) && 'on_hold' === $_REQUEST['status'];
 	}
 
 	/**

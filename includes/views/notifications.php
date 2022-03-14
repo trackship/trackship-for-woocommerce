@@ -44,12 +44,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php } ?>
 						</td>
 						<td class="forminp">
-							<a class="button-primary btn_ts_sidebar edit_customizer_a" href="<?php echo esc_html( $val['customizer_url'] ); ?>"><?php esc_html_e('Edit', 'trackship-for-woocommerce'); ?></a>
-								<span class="shipment_status_toggle">
+							<span class="shipment_status_toggle">
 								<input type="hidden" name="<?php echo esc_html( $val['enable_status_name'] ); ?>" value="0"/>
 								<input class="ast-tgl ast-tgl-flat" id="<?php echo esc_html( $val['enable_status_name'] ); ?>" name="<?php echo esc_html( $val['enable_status_name'] ); ?>" data-settings="<?php echo esc_html( $val['option_name'] ); ?>" type="checkbox" <?php echo 1 == $ast_enable_email ? 'checked' : ''; ?> value="yes"/>
 								<label class="ast-tgl-btn ast-tgl-btn-green" for="<?php echo esc_html( $val['enable_status_name'] ); ?>"></label>	
 							</span>
+							<a class="edit_customizer_a dashicons dashicons-admin-generic" href="<?php echo esc_html( $val['customizer_url'] ); ?>"></a>
 						</td>
 					</tr>
 				<?php } ?>										

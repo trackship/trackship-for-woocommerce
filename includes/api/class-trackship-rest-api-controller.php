@@ -79,8 +79,36 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			'schema' => array( $this, 'get_public_item_schema' ),
 		) );
 		
+		//update-carrier
+		register_rest_route( $this->namespace, '/ts-update-carrier', array(			
+			array(
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'ts_update_carrier' ),
+				'permission_callback' => array( $this, 'get_item_permissions_check' ),
+			),
+			'schema' => array( $this, 'get_public_item_schema' ),
+		) );
 	}
 	
+	public function ts_update_carrier ( $request ) {
+		$content = print_r($request, true);
+		$logger = wc_get_logger();
+		$context = array( 'source' => 'trackship_update_carrier' );
+		$logger->info( "trackship_update_carrier \n" . $content . "\n", $context );
+
+		$order_id = $request->get_param('order_id');
+		$tracking_number = $request->get_param('tracking_number');
+		$tracking_provider_new = $request->get_param('tracking_provider_new');
+
+		$args = array(
+			'new_shipping_provider'	=> $tracking_provider_new,
+		);
+		trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_number, $args );
+
+		//print_r($request->get_param('order_idaaaaa'));
+		wp_send_json( array('success' => 'true') );
+	}
+
 	public function check_ts4wc_installed( $request ) {
 		// check TS4WC installed 
 		$wc_ast_api_key = get_option('wc_ast_api_key');
