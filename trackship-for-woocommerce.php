@@ -264,8 +264,10 @@ class Trackship_For_Woocommerce {
 	* @return array         List of modified plugin action links.
 	*/
 	public function tsw_plugin_action_links( $links ) {
+		$admin_url = trackship_for_woocommerce()->is_trackship_connected() ? admin_url( '/admin.php?page=trackship-for-woocommerce' ) : admin_url( '/admin.php?page=trackship-dashboard' );
+		$name = trackship_for_woocommerce()->is_trackship_connected() ? __( 'Settings', 'trackship-for-woocommerce' ) : __( 'Connect a Store', 'trackship-for-woocommerce' );
 		$links = array_merge( array(
-			'<a href="' . esc_url( admin_url( '/admin.php?page=trackship-for-woocommerce' ) ) . '">' . esc_html( 'Settings' ) . '</a>',
+			'<a href="' . esc_url( $admin_url ) . '">' . esc_html__( $name ) . '</a>',
 			'<a href="https://docs.trackship.info/docs/trackship-for-woocommerce/">' . __( 'Docs' ) . '</a>',
 			'<a href="https://wordpress.org/support/plugin/trackship-for-woocommerce/#new-topic-0">' . __( 'Support' ) . '</a>',
 			'<a href="https://wordpress.org/support/plugin/trackship-for-woocommerce/reviews/#new-post">' . __( 'Review' ) . '</a>'
