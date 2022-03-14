@@ -24,19 +24,34 @@
 	}; 
 })( jQuery );
 
+function text_contain (state) {
+	var type = jQuery('#customizer_type').val();
+	if ( type == 'tracking_page' ) {
+		return 'Preview: ' + state.text;	
+	} else {
+		return 'Editing: ' + state.text;
+	}
+};
+
 jQuery(document).ready(function(){
     jQuery('.zoremmail-input.color').wpColorPicker();
-	
+	jQuery( '#shipmentStatus' ).select2({
+		templateSelection: text_contain,
+		minimumResultsForSearch: Infinity
+	});
+
 	jQuery( ".zoremmail-input.select, .zoremmail-checkbox" ).change( function( event ) {
 		jQuery('.zoremmail-layout-content-preview').addClass('customizer-unloading');
 		save_customizer_setting();
 	});
 	
     jQuery( ".zoremmail-layout-content-media .dashicons" ).on( "click", function() {
+		jQuery(this).parent().siblings().removeClass('last-checked');
 		var width = jQuery(this).parent().data('width');
 		var iframeWidth = jQuery(this).parent().data('iframe-width');
 		jQuery('#template_container, #template_body').css('width', width);
-		jQuery( ".zoremmail-layout-content-media .dashicons" ).css('color', '#bdbdbd');
+		jQuery( ".zoremmail-layout-content-media .dashicons" ).css('color', '#fff');
+		jQuery(this).parent().addClass('last-checked');
 		jQuery(this).css('color', '#09d3ac');
 		jQuery("#tracking_widget_privew").css('width', iframeWidth);
 		jQuery("#tracking_widget_privew").contents().find('#template_container, #template_body, #template_footer').css('width', width);
@@ -69,18 +84,37 @@ jQuery(document).ready(function(){
 		var res = res.replace("{customer_username}", trackship_customizer.customer_username);
 		var res = res.replace("{customer_email}", trackship_customizer.customer_email);
 		var res = res.replace("{est_delivery_date}", trackship_customizer.est_delivery_date);
+		var res = res.replace(/\n/g,"<br>");
 		
-		if( str ){				
-			jQuery("#tracking_widget_privew").contents().find( 'div#body_content_inner p.shipment_email_content' ).text(res);
+		if( str ){			
+			jQuery("#tracking_widget_privew").contents().find( 'div#body_content_inner div.shipment_email_content' ).empty();	
+			jQuery("#tracking_widget_privew").contents().find( 'div#body_content_inner div.shipment_email_content' ).html(res);
 		} else{
-			jQuery("#tracking_widget_privew").contents().find( 'div#body_content_inner p.shipment_email_content' ).text('');
+			jQuery("#tracking_widget_privew").contents().find( 'div#body_content_inner div.shipment_email_content' ).text('');
 		}
+	});
+
+	jQuery('#wc_ast_select_border_color').wpColorPicker({
+		change: function(e, ui) {
+			var color = ui.color.toString();
+			jQuery("#tracking_widget_privew").contents().find('.col.tracking-detail' ).css( 'border-color', color );
+			jQuery("#tracking_widget_privew").contents().find('body .col.tracking-detail .shipment-header' ).css( 'border-color', color );
+			jQuery("#tracking_widget_privew").contents().find('body .col.tracking-detail .trackship_branding' ).css( 'border-color', color );
+			jQuery("#tracking_widget_privew").contents().find('body .tracking-detail .h4-heading' ).css( 'border-color', color );
+			setting_change_trigger();
+		}, 	
 	});
 });
 
 function setting_change_trigger() {	
 	jQuery(".woocommerce-save-button").removeAttr("disabled").html('Save Changes');
 	jQuery('.zoremmail-back-wordpress-title').addClass('back_to_notice');
+}
+
+function change_submenu_item() {
+	var shipmentStatus = jQuery('#shipmentStatus').val();
+	jQuery( '.all_status_submenu' ).hide();
+	jQuery( '.all_status_submenu.' + shipmentStatus + '_sub_menu' ).show();
 }
 
 jQuery(document).on("click", ".back_to_notice", function(){
@@ -100,6 +134,7 @@ jQuery( ".zoremmail-input.text, .zoremmail-input.textarea" ).keyup( function( ev
 });
 
 jQuery(document).on("click", ".zoremmail-menu-submenu-title", function(){
+	change_submenu_item();
 	if (jQuery(this).next('.zoremmail-menu-contain').hasClass('active')) {
         jQuery(this).next('.zoremmail-menu-contain').removeClass('active');
 		jQuery(this).find('.dashicons').removeClass('dashicons-arrow-down-alt2').addClass('dashicons-arrow-right-alt2');
@@ -178,9 +213,6 @@ function save_customizer_setting(){
 		success: function(response) {
 			if( response.success === "true" ){
 				jQuery('iframe').attr('src', jQuery('iframe').attr('src'));
-				//jQuery('.zoremmail-layout-content-preview').removeClass('customizer-unloading');
-			} else {
-				//
 			}
 		},
 		error: function(response) {
@@ -189,31 +221,34 @@ function save_customizer_setting(){
 	});
 }
 
-jQuery(document).on("change", "#shipmentStatus, #customizer_type", function(){
+jQuery(document).on("change", "#shipmentStatus", function(){
 	"use strict";
 	jQuery('.zoremmail-layout-content-preview').addClass('customizer-unloading');
 	var shipmentStatus = jQuery('#shipmentStatus').val();
 	var type = jQuery('#customizer_type').val();
 	var sPageURL = window.location.href.split('&')[0];
-	//console.log(sPageURL);
 	window.history.pushState("object or string", sPageURL, sPageURL+'&type='+type+'&status='+shipmentStatus);
+	
+	var tracking_page_iframe_url = trackship_customizer.tracking_iframe_url+'&status='+shipmentStatus;
+	var shipment_iframe_url = trackship_customizer.email_iframe_url+'&status='+shipmentStatus;
+	jQuery('.tracking_page_panel').attr('data-iframe_url',tracking_page_iframe_url);
+	jQuery('.shipment_email_panel').attr('data-iframe_url',shipment_iframe_url);
+	
 	if ( type === 'tracking_page' ) {
-		var iframe_url = jQuery('iframe').attr('src');
-		iframe_url = iframe_url+'&type='+type+'&status='+shipmentStatus;
-		jQuery('iframe').attr('src', iframe_url);
+		jQuery('iframe').attr('src', tracking_page_iframe_url);
 	} else {
-		location.reload();
+		jQuery('iframe').attr('src', shipment_iframe_url);
 	}
+	change_submenu_item();
+	jQuery( ".tgl-btn-parent span" ).hide();
+	jQuery( ".tgl-btn-parent .tgl_"+shipmentStatus ).show();
 });
 
 jQuery('iframe').load(function(){
 	jQuery('.zoremmail-layout-content-preview').removeClass('customizer-unloading');
 	jQuery("#tracking_widget_privew").contents().find( 'div#query-monitor-main' ).css( 'display', 'none');
+	jQuery( '.zoremmail-layout-content-media .last-checked .dashicons' ).trigger('click');	
 })
-
-jQuery(document).on("change", "#customizer_type", function(){
-	location.reload();
-});
 
 jQuery(document).on("click", ".radio-button-label input", function(){
 	if( jQuery( this ).val() == 15 ) {
@@ -265,17 +300,6 @@ if ( jQuery.fn.wpColorPicker ) {
 		change: function(e, ui) {
 			var color = ui.color.toString();
 			jQuery("#tracking_widget_privew").contents().find('body .tracking-detail .shipment-content, body .tracking-detail .shipment-content h4' ).css( 'color', color );
-			setting_change_trigger();
-		}, 	
-	});
-
-	jQuery('#wc_ast_select_border_color').wpColorPicker({
-		change: function(e, ui) {
-			var color = ui.color.toString();
-			jQuery("#tracking_widget_privew").contents().find('.col.tracking-detail' ).css( 'border-color', color );
-			jQuery("#tracking_widget_privew").contents().find('body .col.tracking-detail .shipment-header' ).css( 'border-color', color );
-			jQuery("#tracking_widget_privew").contents().find('body .col.tracking-detail .trackship_branding' ).css( 'border-color', color );
-			jQuery("#tracking_widget_privew").contents().find('body .tracking-detail .h4-heading' ).css( 'border-color', color );
 			setting_change_trigger();
 		}, 	
 	});
@@ -336,3 +360,63 @@ if ( jQuery.fn.wpColorPicker ) {
 		}, 	
 	});
 }
+
+jQuery(document).on("click", ".zoremmail-panel-title", function(){
+	jQuery('.header_shipment_status').show();
+	jQuery('.zoremmail-layout-content-preview').addClass('customizer-unloading');
+	var string = jQuery(this).find('span').text();
+	jQuery( ".zoremmail-panel-title, .zoremmail-layout-sider-heading .trackship_logo" ).hide();
+	jQuery( ".customize-section-back" ).show();
+	var id = jQuery(this).attr('id');
+	//for chnage Breadcrumb
+	var lable = jQuery(this).data('label');
+	jQuery( '.customizer_Breadcrumb' ).html( lable );
+	var shipmentStatus = jQuery('#shipmentStatus').val();
+	//For open section of perticular panel
+	jQuery('.zoremmail-menu-submenu-title, .customize-section-title').each(function(index, element) {
+		if ( jQuery(this).data('id') ===  id ) {
+			jQuery(this).addClass('open');
+		} else {
+			jQuery(this).removeClass('open');
+		}
+	});
+	//For click on fies section 
+	jQuery( '.zoremmail-menu-submenu-title.'+id+'_first_section' ).trigger('click');
+	/*if ( 'email_content' == id ) {
+		jQuery( '.zoremmail-menu-submenu-title.email_content_first_section.'+shipmentStatus ).trigger('click');
+	} else {
+		jQuery( '.zoremmail-menu-submenu-title.'+id+'_first_section' ).trigger('click');
+	}*/
+	//For change url and ifram url
+	var sPageURL = window.location.href.split('&')[0];
+	if ( 'tracking_page' == id ) {
+		jQuery( "#customizer_type" ).val( 'tracking_page' );
+		window.history.pushState("object or string", sPageURL, sPageURL+'&type=tracking_page&status='+shipmentStatus);
+		var tracking_page_iframe_url = trackship_customizer.tracking_iframe_url+'&status='+shipmentStatus;
+		jQuery('iframe').attr('src', tracking_page_iframe_url);
+		jQuery( ".tgl-btn-parent" ).hide();
+	} else {
+		jQuery( "#customizer_type" ).val( 'shipment_email' );
+		window.history.pushState("object or string", sPageURL, sPageURL+'&type=shipment_email&status='+shipmentStatus);
+		var shipment_iframe_url = trackship_customizer.email_iframe_url+'&status='+shipmentStatus;
+		jQuery('iframe').attr('src', shipment_iframe_url);
+		jQuery( ".tgl-btn-parent" ).show();
+	}
+	jQuery( '#shipmentStatus' ).select2({
+		templateSelection: text_contain,
+		minimumResultsForSearch: Infinity
+	});
+});
+
+jQuery(document).on("click", ".customize-section-back", function(){
+	jQuery('.header_shipment_status').hide();
+	//jQuery(".customize-section-title").removeClass('open');
+	jQuery( '.customizer_Breadcrumb' ).html( 'Customizer' );
+	jQuery( ".customize-section-back" ).hide();
+	jQuery( ".zoremmail-panel-title, .zoremmail-layout-sider-heading .trackship_logo" ).show();
+	jQuery('.zoremmail-menu-contain').removeClass('active');
+	jQuery('.zoremmail-menu-submenu-title').removeClass('open');
+	jQuery('.zoremmail-menu-submenu-title').removeClass('active');
+	jQuery('.zoremmail-menu-submenu-title').find('.dashicons').removeClass('dashicons-arrow-right-alt2').addClass('dashicons-arrow-down-alt2');
+	jQuery( ".tgl-btn-parent" ).hide();
+});

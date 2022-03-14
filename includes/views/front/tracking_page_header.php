@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="tracking-header">
 	<?php
+	// to be removed after 2-3 version - action has been added in 1.3.4 -- action trackship_tracking_header_before
 	do_action( 'trackship_tracking_header_before', $order->get_id(), $tracker, $provider_name, $tracking_number );
 	$row = trackship_for_woocommerce()->actions->get_tracking_shipment_row( $order->get_id(), $tracking_number );
 	?>

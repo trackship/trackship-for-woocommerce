@@ -872,3 +872,13 @@ jQuery(document).click(function(){
 		jQuery( '.woocommerce-layout__activity-panel-wrapper' ).removeClass( 'is-open is-switching' );
 	}   
 });
+
+//If we will do change into below jQuery so we need to also change in front.js
+jQuery(document).on("click", ".shipment_progress_label", function(){
+	jQuery(this).siblings('.shipment_progress_label').removeClass('checked');
+	jQuery(this).addClass('checked');
+	var label = jQuery(this).data('label');
+	var sibli = jQuery(this).parent().siblings('.tracking_event_tab_view');
+	sibli.children('div').hide();
+	sibli.children( '.'+label).show();
+});

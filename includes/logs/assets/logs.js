@@ -72,7 +72,7 @@ jQuery(document).ready(function() {
 				'data': 'type',				
 			},
 			{
-				"width": "250px",
+				"width": "100px",
 				'orderable': false,
 				'data': 'status',
 			},

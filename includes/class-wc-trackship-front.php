@@ -290,12 +290,17 @@ class WC_TrackShip_Front {
 		$remove_trackship_branding =  get_option('wc_ast_remove_trackship_branding', $tracking_page_defaults->defaults['wc_ast_remove_trackship_branding'] );
 		$padding = get_option('wc_ast_select_widget_padding', $tracking_page_defaults->defaults['wc_ast_select_widget_padding'] );
 		?>
-		
 		<style>
 			<?php if ( $link_color ) { ?>
 				.col.tracking-detail .tracking_number_wrap a {
 					color: <?php echo esc_html( $link_color ); ?>;
-				}				
+				}
+				ul.tpi_product_tracking_ul a, .shipment_progress_heading_div label.shipment_progress_label {
+					color: <?php echo esc_html( $link_color ); ?>;
+				}
+				.shipment_progress_heading_div label.shipment_progress_label.checked {
+					border-bottom: 3px solid <?php echo esc_html( $link_color ); ?>;
+				}
 			<?php } ?>
 			<?php if ( $padding ) { ?>
 				body .col.tracking-detail{
@@ -313,6 +318,9 @@ class WC_TrackShip_Front {
 					border-top: 1px solid <?php echo esc_html( $border_color ); ?>;
 				}
 				body .tracking-detail .h4-heading {
+					border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
+				}
+				body .shipment_progress_heading_div {
 					border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
 				}
 			<?php } ?>
@@ -460,8 +468,7 @@ class WC_TrackShip_Front {
 	
 	public function tracking_progress_bar( $tracker ) {
 		
-		/* Added Version 1.2 - To be removed in future wrong_shipping_provider and INVALID_TRACKING_NUM */
-		if ( in_array( $tracker->ep_status, array( 'invalid_tracking', 'carrier_unsupported', 'invalid_user_key', 'invalid_carrier', 'deleted', 'pending', 'wrong_shipping_provider', 'INVALID_TRACKING_NUM' ) ) ) {
+		if ( in_array( $tracker->ep_status, array( 'invalid_tracking', 'carrier_unsupported', 'invalid_user_key', 'invalid_carrier', 'deleted' ) ) ) {
 			return;
 		}
 		
@@ -471,19 +478,24 @@ class WC_TrackShip_Front {
 			$width = '0';
 		} else {
 			if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'unknown', 'carrier_unsupported', 'insufficient_balance', 'invalid_carrier' ) ) ) {
-				$width = '0';
-			} elseif ( in_array( $tracker->ep_status, array( 'in_transit', 'on_hold' ) ) ) {
+				$width = '10%';
+			} elseif ( in_array( $tracker->ep_status, array( 'in_transit', 'on_hold', 'failure' ) ) ) {
 				$width = '30%';
-			} elseif ( in_array( $tracker->ep_status, array( 'out_for_delivery', 'available_for_pickup', 'return_to_sender' ) ) ) {
+			} elseif ( in_array( $tracker->ep_status, array( 'out_for_delivery', 'available_for_pickup', 'return_to_sender', 'exception' ) ) ) {
 				$width = '60%';			
 			} elseif ( 'delivered' == $tracker->ep_status ) {
-				$width = '100%';				
+				$width = '100%';
+			} elseif ( 'pre_transit' == $tracker->ep_status ) {
+				$width = '10%';				
 			} else {
 				$width = '0';
 			}
 		}
+		if ( 't_layout_4' == $tracking_page_layout && in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'unknown', 'carrier_unsupported', 'insufficient_balance', 'invalid_carrier' ) ) ) {
+			$width = '10%';
+		}
 		?>
-		<div class="tracker-progress-bar <?php echo in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking_icon_layout ' . esc_html( $tracking_page_layout ) : ''; ?>">
+		<div class="tracker-progress-bar <?php echo in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking_icon_layout ' : 'tracking_progress_layout'; ?> <?php echo esc_html( $tracking_page_layout ); ?>">
 			<div class="progress <?php esc_html_e( $tracker->ep_status ); ?>">
 				<div class="progress-bar <?php esc_html_e( $tracker->ep_status ); ?>" style="width: <?php esc_html_e( $width ); ?>;"></div>
 				<?php if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ) { ?>
