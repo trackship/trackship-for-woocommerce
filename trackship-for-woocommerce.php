@@ -124,6 +124,8 @@ class Trackship_For_Woocommerce {
 		add_action( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'tsw_plugin_action_links' ) );
 		
 		add_action( 'template_redirect', array( $this->front, 'preview_tracking_page' ) );
+
+		add_filter( 'woocommerce_email_classes', array( $this, 'custom_init_emails' ));
 	}				
 	
 	/**
@@ -240,12 +242,25 @@ class Trackship_For_Woocommerce {
 			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-returntosender-email-customizer.php';
 			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-delivered-email-customizer.php';
 		}
-		require_once $this->get_plugin_path() . '/includes/trackship-email-manager.php';
+		//require_once $this->get_plugin_path() . '/includes/trackship-email-manager.php';
 		
 		//load plugin textdomain
 		load_plugin_textdomain( 'trackship-for-woocommerce', false, dirname( plugin_basename(__FILE__) ) . '/language/' );
 	}
 	
+	/**
+	 * Code for include delivered email class
+	 */
+	public function custom_init_emails( $emails ) {
+				
+		// Include the email class file if it's not included already		
+		if ( ! isset( $emails[ 'WC_TrackShip_Email_Manager' ] ) ) {
+			$emails[ 'WC_TrackShip_Email_Manager' ] = include_once( 'includes/trackship-email-manager.php' );
+		}
+
+		return $emails;
+	}
+
 	/*
 	* return plugin directory URL
 	*/
@@ -264,6 +279,7 @@ class Trackship_For_Woocommerce {
 	* @return array         List of modified plugin action links.
 	*/
 	public function tsw_plugin_action_links( $links ) {
+		
 		$admin_url = trackship_for_woocommerce()->is_trackship_connected() ? admin_url( '/admin.php?page=trackship-for-woocommerce' ) : admin_url( '/admin.php?page=trackship-dashboard' );
 		$name = trackship_for_woocommerce()->is_trackship_connected() ? __( 'Settings', 'trackship-for-woocommerce' ) : __( 'Connect a Store', 'trackship-for-woocommerce' );
 		$links = array_merge( array(
