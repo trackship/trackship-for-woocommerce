@@ -268,9 +268,8 @@ class WC_Trackship_Actions {
 		");
 		foreach ( $total_order as $key => $value ) {
 			$order_id = $value->order_id;
-			$order = wc_get_order( $order_id );
 			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
-			$shipment_status = $order->get_meta( 'shipment_status' );
+			$shipment_status = get_post_meta( $order_id, 'shipment_status', true );
 
 			foreach ( (array) $tracking_items as $key1 => $item ) {
 				$shipment_length = trackship_for_woocommerce()->shipments->get_shipment_length( $shipment_status[$key1] );
@@ -1134,9 +1133,9 @@ class WC_Trackship_Actions {
 		
 		if ( $old_status != $new_status ) {
 			if ( 'delivered' == $new_status ) {
-				wc_trackship_email_manager()->delivered_shippment_status_email_trigger($order_id, $order, $old_status, $new_status, $tracking_item, $shipment_status );
+				WC()->mailer()->emails['WC_TrackShip_Email_Manager']->delivered_email_trigger( $order_id, $order, $old_status, $new_status, $tracking_item, $shipment_status );
 			} elseif ( in_array( $new_status, array( 'failure', 'in_transit', 'on_hold', 'out_for_delivery', 'available_for_pickup', 'return_to_sender', 'exception' ) ) ) {
-				wc_trackship_email_manager()->shippment_status_email_trigger( $order_id, $order, $old_status, $new_status, $tracking_item, $shipment_status );
+				WC()->mailer()->emails['WC_TrackShip_Email_Manager']->shippment_email_trigger( $order_id, $order, $old_status, $new_status, $tracking_item, $shipment_status );
 			}
 			
 			/* translators: %s: search for a tag */
@@ -1489,7 +1488,7 @@ class WC_Trackship_Actions {
 			}	
 		}
 		
-		if ( is_plugin_active( 'wt-woocommerce-sequential-order-numbers/wt-advanced-order-number.php' ) ) {						
+		if ( is_plugin_active( 'wt-woocommerce-sequential-order-numbers/wt-advanced-order-number.php' ) ) {
 			$query_args = array(
 				'numberposts' => 1,
 				'meta_key'    => '_order_number',
@@ -1626,5 +1625,19 @@ class WC_Trackship_Actions {
 	public function get_trackship_key() {
 		$wc_ast_api_key = get_option( 'wc_ast_api_key', false );
 		return $wc_ast_api_key;
+	}
+
+	public function is_notification_on_for_amazon( $order_id ) {
+		if ( is_plugin_active( 'wp-lister-for-amazon/wp-lister-amazon.php' ) ) {
+			if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+				$bool = true;
+			} else {
+				$created_via = get_post_meta( $order_id, '_created_via', true );
+				$bool = !get_option( 'enable_notification_for_amazon_order' ) && 'amazon' == $created_via ? false : true;
+			}
+		} else {
+			$bool = true;
+		}
+		return $bool;
 	}
 }

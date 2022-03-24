@@ -328,7 +328,10 @@ class tswc_smswoo_sms_notification {
 		if ( 'delivered' == $new_status && $toggle && !$all_delivered ) {
 			return;
 		}
-		
+		$for_amazon_order = trackship_for_woocommerce()->ts_actions->is_notification_on_for_amazon( $order_id );
+		if ( !$for_amazon_order ) {
+			return;
+		}
 		$logger = wc_get_logger();
 		$context = array( 'source' => 'smswoo' );
 		//$logger->log( 'debug', 'Order id: '.$this->order->get_id(), $context );

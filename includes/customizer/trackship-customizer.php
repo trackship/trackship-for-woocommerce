@@ -91,7 +91,7 @@ class TS4WC_Admin_Customizer {
 		?>
 		<style type="text/css">
 			#wpcontent, #wpbody-content, .wp-toolbar {margin: 0 !important;padding: 0 !important;}
-			#adminmenuback, #adminmenuwrap, #wpadminbar, #wpfooter, .notice, div.error, div.updated, div#query-monitor-main { display: none !important; }
+			#adminmenuback, #adminmenuwrap, #wpadminbar, #wpfooter, .notice, div.error, div.updated, div#query-monitor-main, .wpml-ls-statics-footer.wpml-ls.wpml-ls-legacy-list-horizontal { display: none !important; }
 		</style>
 		<script type="text/javascript" id="zoremmail-onload">
 			jQuery(document).ready( function() {
@@ -309,6 +309,8 @@ class TS4WC_Admin_Customizer {
 		$wc_ast_select_tracking_page_layout = get_option( 'wc_ast_select_tracking_page_layout', $this->defaults['wc_ast_select_tracking_page_layout'] );
 		$hide_shipping_from_to = get_option( 'wc_ast_hide_from_to', $this->defaults['wc_ast_hide_from_to'] );
 		$hide_last_mile = get_option( 'wc_ast_hide_list_mile_tracking', $this->defaults['wc_ast_hide_list_mile_tracking'] );
+		$shipped_product_label = get_option( 'shipped_product_label', __( 'Items in this shipment', 'trackship-for-woocommerce' ) );
+		$shipping_address_label = get_option( 'shipping_address_label', __( 'Shipping address', 'trackship-for-woocommerce' ) );
 
 		$settings = array(
 			//panels
@@ -422,6 +424,7 @@ class TS4WC_Admin_Customizer {
 				'option_name'=> 'shipment_email_settings',
 				'option_type'=> 'array',
 				'show'     => true,
+				'class' 	=> 'track_button_Text',
 			),
 			'track_button_color' => array(
 				'title'    => esc_html__( 'Button color', 'trackship-for-woocommerce' ),
@@ -712,6 +715,15 @@ class TS4WC_Admin_Customizer {
 				'show'     => true,
 				'class'		=> $value . '_sub_menu all_status_submenu',
 			);
+			$settings[ 'wcast_'.$key.'_shipped_product_label' ] = array(
+				'title'    => esc_html__( 'Shipped Products Header Text', 'trackship-for-woocommerce' ),
+				'default'  => $shipped_product_label,
+				'type'     => 'text',
+				'option_name'=> 'shipped_product_label',
+				'option_type'=> 'key',
+				'show'     => true,
+				'class'		=> $value . '_sub_menu all_status_submenu shipped_product_label',
+			);
 			$settings[ 'wcast_'.$key.'_show_product_image' ] = array(
 				'title'    => esc_html__( 'Display product image', 'trackship-for-woocommerce' ),
 				'default'  => $this->get_value( $email_settings, 'wcast_' . $key . '_show_product_image', $key ),
@@ -729,6 +741,15 @@ class TS4WC_Admin_Customizer {
 				'option_type'=> 'array',
 				'show'     => true,
 				'class'		=> $value . '_sub_menu all_status_submenu',
+			);
+			$settings[ 'wcast_'.$key.'_shipping_address_label' ] = array(
+				'title'    => esc_html__( 'Shipping Address Header Text', 'trackship-for-woocommerce' ),
+				'default'  => $shipping_address_label,
+				'type'     => 'text',
+				'option_name'=> 'shipping_address_label',
+				'option_type'=> 'key',
+				'show'     => true,
+				'class'		=> $value . '_sub_menu all_status_submenu shipping_address_label',
 			);
 		}
 		return $settings;
@@ -786,8 +807,10 @@ class TS4WC_Admin_Customizer {
 								<div class="menu-sub-title"><?php esc_html_e( $array['title'] ); ?></div>
 							<?php } ?>
 							<?php if ( isset($array['type']) && $array['type'] == 'text' ) { ?>
+								<?php //echo '<pre>';print_r($array);echo '</pre>'; ?>
+								<?php $field_name = isset( $array['option_type'] ) && 'key' == $array['option_type'] ? $array['option_name'] : $id; ?>
 								<div class="menu-sub-field">
-									<input type="text" id="<?php esc_attr_e( $id ); ?>" name="<?php esc_attr_e( $id ); ?>" placeholder="<?php isset($array['placeholder']) ? esc_attr_e($array['placeholder']) : ''; ?>" value="<?php echo esc_html( $array_default ); ?>" class="zoremmail-input <?php esc_html_e($array['type']); ?> <?php isset($array['class']) ? esc_attr_e($array['class']) : ''; ?>">
+									<input type="text" name="<?php esc_attr_e( $field_name ); ?>" placeholder="<?php isset($array['placeholder']) ? esc_attr_e($array['placeholder']) : ''; ?>" value="<?php echo esc_html( $array_default ); ?>" class="zoremmail-input <?php esc_html_e($array['type']); ?> <?php isset($array['class']) ? esc_attr_e($array['class']) : ''; ?>">
 									<br>
 									<span class="menu-sub-tooltip"><?php isset($array['desc']) ? esc_html_e($array['desc']) : ''; ?></span>
 								</div>
@@ -1010,15 +1033,13 @@ class TS4WC_Admin_Customizer {
 					$option_data[$key] = htmlentities( wp_unslash( $_POST[$key] ) );
 					update_option( $val['option_name'], $option_data );
 				} elseif ( isset( $val['option_type'] ) && 'key' == $val['option_type'] ) {
-					update_option( $key, wc_clean( $_POST[$key] ) );
+					update_option( $val['option_name'], wc_clean( $_POST[ $val['option_name'] ] ) );
 				} elseif ( isset( $val['option_type'] ) && 'array' == $val['option_type'] ) {
 					$option_data = get_option( $val['option_name'], array() );
 					$option_data[$key] = wc_clean( wp_unslash( $_POST[$key] ) );
 					update_option( $val['option_name'], $option_data );
 				}
 			}
-
-			//print_r($_POST); exit;
 			echo json_encode( array('success' => 'true' ) );
 			die();
 		}

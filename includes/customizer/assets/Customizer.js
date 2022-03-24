@@ -149,9 +149,21 @@ jQuery(document).on("click", ".zoremmail-menu-submenu-title", function(){
 	}	
 });
 
-jQuery( "#track_button_Text" ).keyup( function( event ) {
+jQuery( ".text.track_button_Text" ).keyup( function( event ) {
 	var str = event.target.value;
 	jQuery("#tracking_widget_privew").contents().find( 'div.tracking_index a.track_your_order' ).text(str);
+});
+
+jQuery( ".text.shipped_product_label" ).keyup( function( event ) {
+	var str = event.target.value;
+	jQuery( ".text.shipped_product_label" ).val(str);
+	jQuery("#tracking_widget_privew").contents().find( 'h2.shipment_email_shipped_product_label' ).text(str);
+});
+
+jQuery( ".text.shipping_address_label" ).keyup( function( event ) {
+	var str = event.target.value;
+	jQuery( ".text.shipping_address_label" ).val(str);
+	jQuery("#tracking_widget_privew").contents().find( 'h2.shipment_email_shipping_address_label' ).text(str);
 });
 
 jQuery(document).on("click", "#zoremmail_email_options .button-trackship", function(){

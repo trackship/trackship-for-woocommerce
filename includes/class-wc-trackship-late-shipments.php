@@ -199,8 +199,8 @@ class WC_TrackShip_Late_Shipments {
 		// wrap the content with the email template and then add styles
 		$email_content = apply_filters( 'woocommerce_mail_content', $email->style_inline( $mailer->wrap_message( $email_heading, $email_content ) ) );
 		
-		add_filter( 'wp_mail_from', array( wc_trackship_email_manager(), 'get_from_address' ) );
-		add_filter( 'wp_mail_from_name', array( wc_trackship_email_manager(), 'get_from_name' ) );
+		add_filter( 'wp_mail_from', array( WC()->mailer()->emails['WC_TrackShip_Email_Manager'], 'get_from_address' ) );
+		add_filter( 'wp_mail_from_name', array( WC()->mailer()->emails['WC_TrackShip_Email_Manager'], 'get_from_name' ) );
 		
 		$email_to = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'late_shipments_email_settings', 'wcast_late_shipments_email_to', '{admin_email}' );
 		$email_to = explode( ',', $email_to );
