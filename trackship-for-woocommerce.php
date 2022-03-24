@@ -2,14 +2,14 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 1.3.4
+ * Version: 1.3.5
  * Author: TrackShip
  * Author URI: https://trackship.info/
  * License: GPL-2.0+
  * License URI: 
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
- * WC tested up to: 6.3.0
+ * WC tested up to: 6.3.1
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,7 +23,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.3.4';
+	public $version = '1.3.5';
 	
 	/**
 	 * Initialize the main plugin function
@@ -124,6 +124,8 @@ class Trackship_For_Woocommerce {
 		add_action( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'tsw_plugin_action_links' ) );
 		
 		add_action( 'template_redirect', array( $this->front, 'preview_tracking_page' ) );
+
+		add_filter( 'woocommerce_email_classes', array( $this, 'custom_init_emails' ));
 	}				
 	
 	/**
@@ -240,12 +242,25 @@ class Trackship_For_Woocommerce {
 			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-returntosender-email-customizer.php';
 			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-delivered-email-customizer.php';
 		}
-		require_once $this->get_plugin_path() . '/includes/trackship-email-manager.php';
+		//require_once $this->get_plugin_path() . '/includes/trackship-email-manager.php';
 		
 		//load plugin textdomain
 		load_plugin_textdomain( 'trackship-for-woocommerce', false, dirname( plugin_basename(__FILE__) ) . '/language/' );
 	}
 	
+	/**
+	 * Code for include delivered email class
+	 */
+	public function custom_init_emails( $emails ) {
+				
+		// Include the email class file if it's not included already		
+		if ( ! isset( $emails[ 'WC_TrackShip_Email_Manager' ] ) ) {
+			$emails[ 'WC_TrackShip_Email_Manager' ] = include_once( 'includes/trackship-email-manager.php' );
+		}
+
+		return $emails;
+	}
+
 	/*
 	* return plugin directory URL
 	*/
@@ -264,8 +279,10 @@ class Trackship_For_Woocommerce {
 	* @return array         List of modified plugin action links.
 	*/
 	public function tsw_plugin_action_links( $links ) {
+		$admin_url = trackship_for_woocommerce()->is_trackship_connected() ? admin_url( '/admin.php?page=trackship-for-woocommerce' ) : admin_url( '/admin.php?page=trackship-dashboard' );
+		$name = trackship_for_woocommerce()->is_trackship_connected() ? __( 'Settings', 'trackship-for-woocommerce' ) : __( 'Connect a Store', 'trackship-for-woocommerce' );
 		$links = array_merge( array(
-			'<a href="' . esc_url( admin_url( '/admin.php?page=trackship-for-woocommerce' ) ) . '">' . esc_html( 'Settings' ) . '</a>',
+			'<a href="' . esc_url( $admin_url ) . '">' . esc_html__( $name ) . '</a>',
 			'<a href="https://docs.trackship.info/docs/trackship-for-woocommerce/">' . __( 'Docs' ) . '</a>',
 			'<a href="https://wordpress.org/support/plugin/trackship-for-woocommerce/#new-topic-0">' . __( 'Support' ) . '</a>',
 			'<a href="https://wordpress.org/support/plugin/trackship-for-woocommerce/reviews/#new-post">' . __( 'Review' ) . '</a>'

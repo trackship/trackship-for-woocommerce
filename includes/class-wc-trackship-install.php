@@ -229,6 +229,10 @@ class WC_Trackship_Install {
 				ADD new_shipping_provider VARCHAR(50)");
 			update_option( 'trackship_db', '1.10' );
 		}
+		if ( version_compare( get_option( 'trackship_db' ), '1.11', '<' ) ) {
+			update_option( 'enable_notification_for_amazon_order', 1 );
+			update_option( 'trackship_db', '1.11' );
+		}
 	}
 	
 	public function update_analytics_table() {
