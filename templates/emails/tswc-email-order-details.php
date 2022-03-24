@@ -32,9 +32,10 @@ $kt_woomail = get_option( 'kt_woomail' );
 if ( !empty($kt_woomail) && isset( $kt_woomail['font_size'] ) ) {
 	$table_font_size = 'font-size:' . $kt_woomail['font_size'] . 'px';
 }
+$shipped_product_label = get_option( 'shipped_product_label', __( 'Items in this shipment', 'trackship-for-woocommerce' ) );
 ?>
 <br>
-<h2><?php esc_html_e( 'Items in this shipment', 'trackship-for-woocommerce' ); ?></h2>
+<h2 class="shipment_email_shipped_product_label"><?php esc_html_e( $shipped_product_label ); ?></h2>
 <div style="margin-bottom: 20px;">
 		<table class="td" cellspacing="0" cellpadding="6" style="background-color: transparent;width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;border:0;<?php echo esc_html( $table_font_size ); ?>" border="0">
 			<tbody>
