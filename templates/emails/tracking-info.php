@@ -41,7 +41,7 @@ if ( $tracking_items ) :
 										echo '</span>';
 									} else {
 										?>
-										<p style="margin: 5px 0 0;"><span class="tracking_info"><?php echo esc_html( $tracking_item['formatted_tracking_provider'] ); ?> <a href="<?php echo esc_url( $tracking_link ); ?>" style="text-decoration:none"><?php echo esc_html( $tracking_item['tracking_number'] ); ?></a></span></p>
+										<p style="margin: 0;"><span class="tracking_info"><?php echo esc_html( $tracking_item['formatted_tracking_provider'] ); ?> <a href="<?php echo esc_url( $tracking_link ); ?>" style="text-decoration:none"><?php echo esc_html( $tracking_item['tracking_number'] ); ?></a></span></p>
 										<div class="shipment_status <?php echo esc_html( $ship_status ); ?>">
 											<?php
 											echo '<span class="' . esc_html( $ship_status ) . '">';
@@ -134,7 +134,7 @@ if ( $tracking_items ) :
 	ul.tracking_list .tracking_list_li .tracking_list_div{border-bottom:1px solid #e0e0e0;}
 	.tracking_index {
 		border: 1px solid #cccccc;
-		margin-bottom: 20px;
+		margin: 20px 0;
 		padding: <?php echo esc_html( trackship_admin_customizer()->get_value( 'shipment_email_settings', 'widget_padding' ) ); ?>px;
 		background: <?php echo esc_html( $background_color ); ?>;
 		display:block;

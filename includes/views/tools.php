@@ -22,6 +22,12 @@ if ( !function_exists( 'SMSWOO' ) ) {
 		var smswoo_active = 'no';
 	</script>
 	<?php 
+} else {
+	?>
+	<script>
+		var smswoo_active = 'yes';
+	</script>
+	<?php 
 }
 $completed_order_with_tracking = $this->completed_order_with_tracking();		
 $completed_order_with_zero_balance = $this->completed_order_with_zero_balance();							
