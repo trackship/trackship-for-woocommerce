@@ -67,7 +67,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<strong><?php esc_html_e('Late Shipments', 'trackship-for-woocommerce'); ?></strong>
 						</td>
 						<td class="forminp">
-							<a class="edit_customizer_a late_shipments_a button-primary btn_ts_transparent btn_ts_sidebar" href="javascript:void(0);"><?php esc_html_e('Edit', 'trackship-for-woocommerce'); ?></a>
+							<button name="save" class="button-primary woocommerce-save-button btn_green2 btn_large" type="submit" value="Save & close"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
+							<?php wp_nonce_field( 'ts_late_shipments_email_form', 'ts_late_shipments_email_form_nonce' ); ?>
+							<input type="hidden" name="action" value="ts_late_shipments_email_form_update">
+							<span class="shipment_status_toggle">
+								<input type="hidden" name="wcast_enable_late_shipments_admin_email" value="0"/>
+								<input class="ast-tgl ast-tgl-flat" id="wcast_enable_late_shipments_admin_email" name="wcast_enable_late_shipments_admin_email" data-settings="late_shipments_email_settings" type="checkbox" <?php echo 1 == $wcast_enable_late_shipments_admin_email ? 'checked' : ''; ?> value="1"/>
+								<label class="ast-tgl-btn ast-tgl-btn-green" for="wcast_enable_late_shipments_admin_email"></label>
+							</span>
+							<span class="edit_customizer_a dashicons dashicons-admin-generic"></span>
 						</td>
 					</tr>
 				</tbody>
@@ -79,17 +87,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			?>
 			<div class="late-shipments-email-content-table">
 				<div class="late_shipment_before_table">
-					<span class="shipment_status_toggle">
-							<input type="hidden" name="wcast_enable_late_shipments_admin_email" value="0"/>
-						<input class="ast-tgl ast-tgl-flat" id="wcast_enable_late_shipments_admin_email" name="wcast_enable_late_shipments_admin_email" data-settings="late_shipments_email_settings" type="checkbox" <?php echo 1 == $wcast_enable_late_shipments_admin_email ? 'checked' : ''; ?> value="1"/>
-						<label class="ast-tgl-btn ast-tgl-btn-green" for="wcast_enable_late_shipments_admin_email"></label>
-						<?php esc_html_e('Late Shipments Daily Digest', 'trackship-for-woocommerce'); ?>
-					</span>
+					
 					<span class="late_shipment_save_button">
-						<div class="spinner"></div>
-						<button name="save" class="button-primary woocommerce-save-button btn_green2 btn_large" type="submit" value="Save & close"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
-						<?php wp_nonce_field( 'ts_late_shipments_email_form', 'ts_late_shipments_email_form_nonce' ); ?>
-						<input type="hidden" name="action" value="ts_late_shipments_email_form_update">
+						
+						
 					</span>
 				</div>
 				<table class="form-table hide_table">

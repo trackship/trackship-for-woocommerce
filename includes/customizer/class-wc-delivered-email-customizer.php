@@ -68,6 +68,7 @@ class TSWC_Delivered_Customizer_Email {
 		$email_heading =  str_replace( '{order_number}', $order->get_order_number(), $email_heading );
 		
 		$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_email_content', $this->defaults['wcast_delivered_status_email_content']);
+		$email_content = html_entity_decode( $email_content );
 		
 		$wcast_show_tracking_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_delivered_status_show_tracking_details', $this->defaults['wcast_delivered_status_show_tracking_details']);
 		

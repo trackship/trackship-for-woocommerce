@@ -39,6 +39,7 @@ class WC_TrackShip_Front {
 	public function init() {
 		
 		add_shortcode( 'wcast-track-order', array( $this, 'woo_track_order_function') );
+		add_shortcode( 'trackship-track-order', array( $this, 'woo_track_order_function') );
 		add_action( 'wp_enqueue_scripts', array( $this, 'front_styles' ) );		
 		add_action( 'wp_ajax_nopriv_get_tracking_info', array( $this, 'get_tracking_info_fun') );
 		add_action( 'wp_ajax_get_tracking_info', array( $this, 'get_tracking_info_fun') );
@@ -140,6 +141,7 @@ class WC_TrackShip_Front {
 	
 	/**
 	 * Return tracking details or tracking form for shortcode - [wcast-track-order]
+	 * Return tracking details or tracking form for shortcode - [trackship-track-order]
 	*/
 	public function woo_track_order_function() {
 		
