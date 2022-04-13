@@ -25,12 +25,7 @@
 })( jQuery );
 
 function text_contain (state) {
-	var type = jQuery('#customizer_type').val();
-	if ( type == 'tracking_page' ) {
-		return 'Preview: ' + state.text;	
-	} else {
-		return 'Editing: ' + state.text;
-	}
+	return 'Preview: ' + state.text;
 };
 
 jQuery(document).ready(function(){
@@ -213,6 +208,7 @@ jQuery(document).on("click", "#zoremmail_email_options .button-trackship", funct
 			jQuery(document).zorem_snackbar_warning( warning_msg );
 		}
 	});
+	return false;
 });
 
 function save_customizer_setting(){
