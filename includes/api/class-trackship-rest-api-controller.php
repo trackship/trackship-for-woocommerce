@@ -88,8 +88,22 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			),
 			'schema' => array( $this, 'get_public_item_schema' ),
 		) );
+
+		//Dashboard query
+		/*register_rest_route( $this->namespace, '/ts-dashboard', array(			
+			array(
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'ts_dashboard' ),
+				'permission_callback' => array( $this, 'get_item_permissions_check' ),
+			),
+			'schema' => array( $this, 'get_public_item_schema' ),
+		) );*/
 	}
 	
+	/*public function ts_dashboard( $request ) {
+
+	}*/
+
 	public function ts_update_carrier ( $request ) {
 		$content = print_r($request, true);
 		$logger = wc_get_logger();
@@ -194,9 +208,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			$shipment_status[$key]['tracking_destination_events'] = json_decode($tracking_destination_events);
 			
 			$shipment_status[$key]['status_date'] = $tracking_event_date;
-			if ( $tracking_est_delivery_date ) {
-				$shipment_status[$key]['est_delivery_date'] = gmdate('Y-m-d', strtotime($tracking_est_delivery_date));
-			}
+			$shipment_status[$key]['est_delivery_date'] = $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : null;
 			
 			update_post_meta( $order_id, 'shipment_status', $shipment_status );
 			
@@ -219,9 +231,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 				'shipping_service'		=> $request['shipping_service'],
 				'tracking_events'		=> $request['tracking_events']
 			);
-			if ( $tracking_est_delivery_date ) {
-				$args['est_delivery_date'] = $shipment_status[$key]['est_delivery_date'];
-			}
+			$args['est_delivery_date'] = $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : null;
 			trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_item['tracking_number'], $args, $args2 );
 		}
 		
