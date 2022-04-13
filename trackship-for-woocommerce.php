@@ -193,7 +193,7 @@ class Trackship_For_Woocommerce {
 		
 		//$this->admin_customizer = TS4WC_Admin_Customizer::get_instance();
 		
-		if ( ! function_exists( 'SMSWOO' ) ) {
+		if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocommerce/zorem-sms-for-woocommerce.php' ) ) {
 			//SMSWOO
 			require_once $this->get_plugin_path() . '/includes/smswoo/class-smswoo-init.php';
 			$this->smswoo_init = TSWC_SMSWOO_Init::get_instance();
