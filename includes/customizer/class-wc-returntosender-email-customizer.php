@@ -63,7 +63,8 @@ class TSWC_Returntosender_Customizer_Email {
 		$email_heading = str_replace( '{site_title}', $this->get_blogname(), $email_heading );
 		$email_heading =  str_replace( '{order_number}', $order->get_order_number(), $email_heading );
 		
-		$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_returntosender_email_settings', 'wcast_returntosender_email_content', $this->defaults['wcast_returntosender_email_content']);				
+		$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_returntosender_email_settings', 'wcast_returntosender_email_content', $this->defaults['wcast_returntosender_email_content']);
+		$email_content = html_entity_decode( $email_content );
 		
 		$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_returntosender_email_settings', 'wcast_returntosender_show_order_details', $this->defaults['wcast_returntosender_show_order_details']);	
 		
