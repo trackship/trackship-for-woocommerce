@@ -167,7 +167,7 @@ class WC_Trackship_Actions {
 		
 		wp_localize_script( 'trackship_script', 'trackship_script', array(
 			'i18n' => array(				
-				'data_saved'	=> __( 'Your settings have been successfully saved.', 'trackship-for-woocommerce' ),				
+				'data_saved'	=> __( 'Your settings have been successfully saved.', 'trackship-for-woocommerce' ),			
 			),
 		) );
 		
@@ -1082,7 +1082,12 @@ class WC_Trackship_Actions {
 	*/
 	public function is_all_shipments_delivered( $order_id ) {
 		$shipment_status = get_post_meta( $order_id, 'shipment_status', true );
-		
+
+		$order = wc_get_order( $order_id );
+		if ( 'partial-shipped' == $order->get_status() ) {
+			return false;
+		}
+
 		foreach ( (array) $shipment_status as $shipment ) {
 			$status = isset( $shipment['status'] ) ? $shipment['status'] : '';
 			if ( 'delivered' != $status ) {
@@ -1155,7 +1160,7 @@ class WC_Trackship_Actions {
 		if ( version_compare( get_option( 'wc_advanced_shipment_tracking_ts_page' ), '1.0', '<' ) ) {
 			$new_page_title = 'Shipment Tracking';
 			$new_page_slug = 'ts-shipment-tracking';		
-			$new_page_content = '[wcast-track-order]';       
+			$new_page_content = '[trackship-track-order]';       
 			//don't change the code below, unless you know what you're doing
 			$page_check = get_page_by_title($new_page_title);		
 	
@@ -1628,7 +1633,7 @@ class WC_Trackship_Actions {
 	}
 
 	public function is_notification_on_for_amazon( $order_id ) {
-		if ( is_plugin_active( 'wp-lister-for-amazon/wp-lister-amazon.php' ) ) {
+		if ( is_plugin_active( 'wp-lister-for-amazon/wp-lister-amazon.php' ) || is_plugin_active( 'wp-lister-amazon/wp-lister-amazon.php' ) ) {
 			if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
 				$bool = true;
 			} else {
