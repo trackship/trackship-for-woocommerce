@@ -83,7 +83,7 @@ class TSWC_Failure_Customizer_Email {
 		$email_heading = __( $email_heading, 'trackship-for-woocommerce' );
 		//ob_start();
 		
-		$message = WC()->mailer()->emails['WC_TrackShip_Email_Manager']->email_content($email_content, $preview_id, $order);
+		$message = wc_trackship_email_manager()->email_content($email_content, $preview_id, $order);
 		
 		$wcast_failure_analytics_link = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_failure_email_settings', 'wcast_failure_analytics_link', '');	
 				
