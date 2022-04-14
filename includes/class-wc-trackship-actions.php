@@ -1138,9 +1138,9 @@ class WC_Trackship_Actions {
 		
 		if ( $old_status != $new_status ) {
 			if ( 'delivered' == $new_status ) {
-				WC()->mailer()->emails['WC_TrackShip_Email_Manager']->delivered_email_trigger( $order_id, $order, $old_status, $new_status, $tracking_item, $shipment_status );
+				WC_TrackShip_Email_Manager()->delivered_email_trigger( $order_id, $order, $old_status, $new_status, $tracking_item, $shipment_status );
 			} elseif ( in_array( $new_status, array( 'failure', 'in_transit', 'on_hold', 'out_for_delivery', 'available_for_pickup', 'return_to_sender', 'exception' ) ) ) {
-				WC()->mailer()->emails['WC_TrackShip_Email_Manager']->shippment_email_trigger( $order_id, $order, $old_status, $new_status, $tracking_item, $shipment_status );
+				WC_TrackShip_Email_Manager()->shippment_email_trigger( $order_id, $order, $old_status, $new_status, $tracking_item, $shipment_status );
 			}
 			
 			/* translators: %s: search for a tag */

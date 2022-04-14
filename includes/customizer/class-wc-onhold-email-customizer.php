@@ -83,7 +83,7 @@ class TSWC_Onhold_Customizer_Email {
 		$email_heading = __( $email_heading, 'trackship-for-woocommerce' );
 		//ob_start();
 		
-		$message = WC()->mailer()->emails['WC_TrackShip_Email_Manager']->email_content($email_content, $preview_id, $order);
+		$message = wc_trackship_email_manager()->email_content($email_content, $preview_id, $order);
 		
 		$wcast_onhold_analytics_link = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_onhold_email_settings', 'wcast_onhold_analytics_link', '');		
 				

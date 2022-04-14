@@ -2,16 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-/**
-	 * Customer Completed Order Email.
-	 *
-	 * Order Shipment emails are sent to the customer when the Shipent status is changed.
-	 *
-	 * @class       WC_TrackShip_Email_Manager
-	 * @package     WooCommerce/Classes/Emails
-	 * @extends     WC_Email
-	 */
-class WC_TrackShip_Email_Manager extends WC_Email {
+class WC_TrackShip_Email_Manager {
 
 	private static $instance;
 	
@@ -150,14 +141,14 @@ class WC_TrackShip_Email_Manager extends WC_Email {
 			}
 							
 			// create a new email
-			$email = new WC_Email();
+			$email_class = new WC_Email();
 		
 			// wrap the content with the email template and then add styles
-			$message = apply_filters( 'woocommerce_mail_content', $email->style_inline( $mailer->wrap_message( $email_heading, $message ) ) );
+			$message = apply_filters( 'woocommerce_mail_content', $email_class->style_inline( $mailer->wrap_message( $email_heading, $message ) ) );
 			add_filter( 'wp_mail_from', array( $this, 'get_from_address' ) );
 			add_filter( 'wp_mail_from_name', array( $this, 'get_from_name' ) );
 			
-			$email_send = wp_mail( $recipient, $subject, $message, $email->get_headers() );
+			$email_send = wp_mail( $recipient, $subject, $message, $email_class->get_headers() );
 			$arg = array(
 				'order_id'			=> $order_id,
 				'order_number'		=> wc_get_order( $order_id )->get_order_number(),
@@ -320,14 +311,14 @@ class WC_TrackShip_Email_Manager extends WC_Email {
 			}
 							
 			// create a new email
-			$email = new WC_Email();
+			$email_class = new WC_Email();
 	
 			// wrap the content with the email template and then add styles
-			$message = apply_filters( 'woocommerce_mail_content', $email->style_inline( $mailer->wrap_message( $email_heading, $message ) ) );
+			$message = apply_filters( 'woocommerce_mail_content', $email_class->style_inline( $mailer->wrap_message( $email_heading, $message ) ) );
 			add_filter( 'wp_mail_from', array( $this, 'get_from_address' ) );
 			add_filter( 'wp_mail_from_name', array( $this, 'get_from_name' ) );
 			
-			$email_send = wp_mail( $recipient, $subject, $message, $email->get_headers() );
+			$email_send = wp_mail( $recipient, $subject, $message, $email_class->get_headers() );
 			$arg = array(
 				'order_id'			=> $order_id,
 				'order_number'		=> wc_get_order( $order_id )->get_order_number(),
@@ -513,4 +504,13 @@ class WC_TrackShip_Email_Manager extends WC_Email {
 	
 }
 
+function WC_TrackShip_Email_Manager() {
+	static $instance;
+
+	if ( ! isset( $instance ) ) {
+		$instance = new WC_TrackShip_Email_Manager();
+	}
+
+	return $instance;
+}
 return new WC_TrackShip_Email_Manager();
