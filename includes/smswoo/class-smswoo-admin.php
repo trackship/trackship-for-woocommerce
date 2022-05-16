@@ -510,7 +510,7 @@ class tswc_smswoo_admin {
 						<?php } ?>
 						</div>
                         <span class="smswoo-right smswoo-mr20 smswoo-shipment-sendto">
-							<button name="save" class="button-primary woocommerce-save-button button-smswoo hide button-trackship" type="submit" value="Save changes"><?php echo __( 'Save', 'trackship-for-woocommerce' )?></button>
+							<button name="save" class="button-primary woocommerce-save-button button-smswoo hide button-trackship" type="submit" value="Save changes"><?php echo __( 'Save & Close', 'trackship-for-woocommerce' ); ?></button>
 							<span class="smswoo-inlineblock">
 								<input type="hidden" name="<?php echo $enabled_customer?>" value="0"/>
 								<input type="checkbox" id="<?php echo $enabled_customer?>" name="<?php echo $enabled_customer?>" class="tgl tgl-flat smswoo-shipment-checkbox" value="1" <?php echo $checked_customer ? 'checked' : ''?> data-row_class="enable_customer" />
@@ -525,7 +525,7 @@ class tswc_smswoo_admin {
 								<textarea class="smswoo-textarea" name="<?php echo $array['id']?>" id="<?php echo $array['id']?>" cols="30" rows="5"><?php echo get_option( $array['id'], $array['default'] )?></textarea>
 								<span class="mdl-list__item-secondary-action smswoo-inlineblock">
 								<label class="mdl-switch " for="<?php echo $enabled_admin?>" >
-									<?php echo __( 'Send to admin', 'trackship-for-woocommerce' )?>
+									<?php echo __( 'Send to admin', 'trackship-for-woocommerce' ); ?>
 									<input type="hidden" name="<?php echo $enabled_admin?>" value="0"/>
 									<input type="checkbox" id="<?php echo $enabled_admin?>" name="<?php echo $enabled_admin?>" class="mdl-switch__input smswoo-shipment-checkbox" value="1" <?php echo $checked_admin ? 'checked' : ''?> data-row_class="enable_admin" />
 								</label>
