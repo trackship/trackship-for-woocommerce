@@ -26,27 +26,26 @@
     top: 0;
     z-index: 7;
     border-bottom: 1px solid #e0e0e0;
-    background: #3c434a;
-    height: 55px;
+    background: #000;
+    height: 70px;
     display: block;
     user-select: none;
     color: #fff;
 }
 .zoremmail-layout-sider-heading {
     width: 100%;
-    height: 55px;
+    height: 70px;
     display: flex;
-    border-bottom: 1px solid #e0e0e0;
 }
 .zoremmail-layout-sider-heading img {
-    margin: 13px;
+    margin: 20px 15px;
 }
-ul.zoremmail-panels {
+ul.zoremmail-panels,ul.zoremmail-sub-panels {
     margin: 0;
 }
 .customize-section-back {
-    padding: 0 10px;
-    background: #09d3ac;
+    padding: 0 12px;
+    background: linear-gradient(to right, #05d6f2, #077ff1);
     border: none;
     color: #fff;
     cursor: pointer;
@@ -55,6 +54,10 @@ ul.zoremmail-panels {
 }
 input.zoremmail-range {
     width: calc(100% - 60px);
+    background: #e0e0e0;
+    -webkit-appearance: none;
+    height: 8px;
+    border-radius: 4px;
 }
 iframe#tracking_widget_privew {
     width: 100%;
@@ -63,29 +66,43 @@ iframe#tracking_widget_privew {
     margin: 0 auto;
 }
 .sider-heading {
-    margin: 0;
+    margin: auto 0;
+    font-size: 13px;
+    font-weight: 600;
+}
+.breadcrumb-sub-panel-title {
+    color: #3bc4e4;
     font-size: 14px;
-    word-break: break-all;
-    font-weight: normal;
-    line-height: 55px;
+}
+.zoremmail-back-wordpress {
+    position: fixed;
+    bottom: 0;
+    padding: 15px;
+    background: #fff;
+    max-width: 270px!important;
+    min-width: 270px!important;
+    border-top: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
 }
 a.zoremmail-back-wordpress-link {
     text-decoration: none;
     box-shadow: none;
 }
 .zoremmail-back-wordpress-title {
-    color: #fff;
-    font-size: 36px;
-    width: 41px;
-    padding: 10px 0px;
+    color: #077ff1;
+    font-size: 14px;
+    font-weight: 600;
 }
-.zoremmail-menu-submenu-title {
+.zoremmail-back-wordpress-title .dashicons-arrow-left-alt {
+    margin-right: 10px;
+}
+.zoremmail-menu-submenu-title, .zoremmail-sub-panel-title {
     display: none;
 }
 .zoremmail-menu-submenu-title.open {
     display: block !important;
 }
-.zoremmail-menu-submenu-title, .zoremmail-panel-title, .zoremmail-panel-title.back {
+.zoremmail-menu-submenu-title, .zoremmail-panel-title, .zoremmail-sub-panel-title, .zoremmail-panel-title.back {
     height: 55px!important;
     line-height: 55px!important;
     margin-bottom: 0;
@@ -97,7 +114,7 @@ a.zoremmail-back-wordpress-link {
     color: #124fd6;
     cursor: pointer;
 }
-.zoremmail-menu-submenu-title .dashicons, .zoremmail-panel-title .dashicons {
+.zoremmail-menu-submenu-title .dashicons, .zoremmail-panel-title .dashicons, .zoremmail-sub-panel-title .dashicons {
     position: absolute;
     top: 30%;
     right: 20px;
@@ -107,12 +124,10 @@ a.zoremmail-back-wordpress-link {
     margin: 0;
     padding-top: 1em;
 }
-.zoremmail-menu-contain .zoremmail-menu-inline:last-child {
-    border-bottom: 1px solid #e0e0e0;
-    padding-bottom: 1em;
-}
 .zoremmail-menu-item {
-    padding: 0 15px;
+    margin: 0 15px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 1.2em;
 }
 .menu-sub-title {
     font-size: 14px;
@@ -174,18 +189,17 @@ input[type=text] {
     height: 35px;
 }
 .wp-core-ui .button-trackship.btn_large.focus, .wp-core-ui .button-trackship.btn_large.hover, .wp-core-ui .button-trackship.btn_large:focus, .wp-core-ui .button-trackship.btn_large:hover {
-    background: #09d3ac;
-    border-color: #09d3ac;
+    background: linear-gradient(to right, #05d6f2, #077ff1);
     outline: none;
     box-shadow: none;
 }
 .wp-core-ui .button-trackship.btn_large {
-    background: #09d3ac;
-    border-color: #09d3ac;
+    background: linear-gradient(to right, #05d6f2, #077ff1);
     font-size: 14px;
-    line-height: 16px;
-    height: 35px;
-    margin: 10px 0;
+    margin: 17.5px 15px;
+}
+.wp-core-ui button.btn_large.button-primary[disabled] {
+    color: #077ff1 !important;
 }
 .zoremmail-layout-content-container {
     display: flex;
@@ -195,7 +209,7 @@ input[type=text] {
     min-height: 100vh;
     background: #f7f7f7;
     border-right: 1px solid #e0e0e0;
-    width: calc(100% - 46px);
+    width: 100%;
     display: inline-block;
 }
 .header_shipment_status {
@@ -203,9 +217,9 @@ input[type=text] {
 }
 .zoremmail-layout-content-preview.customizer-unloading #overlay {
 	position: fixed; /* Sit on top of the page content */	
-	top: 55px; 
+	top: 70px; 
 	left: 300px;
-	right: 45px;
+	right: 0;
 	bottom: 0;
 	background-color: rgba(7, 29, 87, 0.5); /* Black background with opacity */
 	z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
@@ -223,36 +237,32 @@ input[type=text] {
     user-select: text;
 }
 aside.zoremmail-layout-content-media {
-    max-width: 45px!important;
-    min-width: 45px!important;
-    background: #3c434a;
-    overflow: hidden;
-    float: right;
-    height: auto;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    max-width: 270px!important;
+    min-width: 270px!important;
     position: fixed;
-    right: 0;
-    top: 55px;
+    bottom: 50px;
+    border-top: 1px solid #e0e0e0;
+    background: #fff;
+    padding: 15px;
+    border-right: 1px solid #e0e0e0;
 }
 aside.zoremmail-layout-content-media a {
     text-decoration: none;
     box-shadow: none;
 }
 aside.zoremmail-layout-content-media .dashicons {
-    padding: 10px;
-    color: #fff;
-    width: 26px;
-    height: 26px;
-    font-size: 26px;
+    padding-right: 10px;
+    color: #bdbdbd;
+    width: 24px;
+    height: 24px;
+    font-size: 27px;
+    vertical-align: middle;
 }
 aside.zoremmail-layout-content-media .dashicons.dashicons-desktop {
-    color: #09d3ac;
+    color: #077ff1;
 }
 aside .dashicons:focus, aside .dashicons:hover {
-    color: #09d3ac;
+    color: #077ff195;
 }
 .menu-sub-title .radio-button-label {
     cursor: pointer;
@@ -278,82 +288,20 @@ aside .dashicons:focus, aside .dashicons:hover {
 }
 .zoremmail-layout-slider-content {
     position: absolute;
-    top: 56px;
-    bottom: 0;
+    top: 70px;
+    bottom: 104px;
     overflow-x: hidden;
     overflow-y: auto;
     width: 100%;
     background: #f0f0f1;
     border-right: 1px solid #dcdcde;
 }
-
-/*** Snackbar css START ***/
-/* Animations to bouncein the snackbar in and out */
-@-webkit-keyframes bouncein {
-    from {
-   right: 0;
-   opacity: 0;
-   }
-    to {
-   right: 20px;
-   opacity: 1;
-   }
-   }
-   @keyframes bouncein {
-    from {
-   right: 0;
-   opacity: 0;
-   }
-    to {
-   right: 20px;
-   opacity: 1;
-   }
-   }
-.snackbar-logs {
-    position: fixed;
-    z-index: 999999;
-    top: 95px;
-    right: 30px;
-    width: 300px;
-}
-.snackbar-log {
-    -webkit-animation: bouncein 0.5s;
-    animation: bouncein 0.5s;
-}
-.snackbar-log {
-    display: block;
-    margin-top: 10px;
-    position: relative;
-    right: -300px;
-    opacity: 0;
-}
-.snackbar-log-show {
-    right: 0;
-    opacity: 1;
-}
-.snackbar-log {
-    background: #1F1F1F;
-    background: rgba(0, 0, 0, 0.9);
-    padding: 15px;
-    border-radius: 4px;
-    color: #FFF;
-}
-.snackbar-log-success {
-    background: #09d3ac;
-}
-.snackbar-log-error {
-    background: #ed1c24;
-}
-.select2.select2-container {
-    margin: 13px 0;
+.toplevel_page_trackship_customizer .snackbar-log-success {
+    background: linear-gradient(to right, #05d6f2, #077ff1);
 }
 .select2-results__options {
     max-height: 300px !important;
 }
-.tgl-btn-parent {
-    margin: 0 10px;
-}
-/*** Snackbar css END ***/
 /* Toggle CSS */
 input[type=checkbox].tgl {
 	display: none;
@@ -415,9 +363,9 @@ input[type=checkbox].tgl {
 	background: #ffff;
 	vertical-align: middle;
 }
-.tgl-flat:checked + .tgl-btn:after {
+.zoremmail-layout .tgl-flat:checked + .tgl-btn:after {
 	left: 55%;
-	background: #09d3ac;
+	background: linear-gradient(to right, #05d6f2, #077ff1);
 }
 .rtl .tgl-flat:checked + .tgl-btn:after {
 	right: 55%;
@@ -432,5 +380,9 @@ input[type=checkbox].tgl {
 }
 .zoremmail-layout-content-preview.customizer-unloading #overlay {
 	left: 18%;
+}
+.zoremmail-back-wordpress, aside.zoremmail-layout-content-media {
+    max-width: calc(18% - 30px) !important;
+    min-width: calc(18% - 30px) !important;
 }
 }

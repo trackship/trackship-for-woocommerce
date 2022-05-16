@@ -341,7 +341,7 @@ class WC_TrackShip_Front {
 				body .tracking-detail .h4-heading {
 					border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
 				}
-				body .shipment_progress_heading_div {
+				body .shipment_progress_heading_div, .tracking-detail .tracking_number_wrap {
 					border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
 				}
 			<?php } ?>

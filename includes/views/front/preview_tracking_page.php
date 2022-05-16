@@ -31,7 +31,7 @@
 		body .col.tracking-detail .trackship_branding{
 			border-top: 1px solid <?php echo esc_html( $border_color ); ?>;
 		}
-		body .tracking-detail .h4-heading {
+		body .tracking-detail .h4-heading, .tracking-detail .tracking_number_wrap {
 			border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
 		}
 	<?php }	?>
