@@ -190,23 +190,28 @@ class WC_Trackship_Admin {
 		check_ajax_referer( 'tswc-' . $order_id, 'security' );
 		
 		if ( current_user_can( 'manage_product' ) || current_user_can( 'manage_woocommerce' ) ) {
-			$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id );
-			?>
-			<div class="ts4wc_tracking-widget-header">
-				<span style="line-height: 30px; font-size: 14px;"><?php echo 'Order #' . esc_html( $order->get_order_number() ); ?></span>
-				<?php if ( 'wcpv-vendor-order' != $page ) { ?>
-					<button class="button btn_outline copy_tracking_page trackship-tip" title="Copy the secure link to the Tracking page" style="border: 0;float:right;" data-tracking_page_link=<?php echo esc_url( $tracking_page_link ); ?> >
-						<span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
-						<span style="vertical-align: middle;line-height: 30px;" ><?php esc_html_e( 'Copy Tracking page', 'trackship-for-woocommerce' ); ?></span>
-					</button>
-					<button class="button btn_outline copy_view_order_page trackship-tip" title="Copy the secure link to the View Order details page" style="border: 0;float:right;" data-view_order_link=<?php echo esc_url( $order->get_view_order_url() ); ?> >
-						<span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
-						<span style="vertical-align: middle;line-height: 30px;" ><?php esc_html_e( 'Copy View order page', 'trackship-for-woocommerce' ); ?></span>
-					</button>
-				<?php } ?>
-			</div>
-			<?php
-			trackship_for_woocommerce()->front->admin_tracking_page_widget( $order_id, $tracking_id );
+			$wc_ast_api_key = get_option('wc_ast_api_key');
+			if ( $wc_ast_api_key ) {
+				$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id );
+				?>
+				<div class="ts4wc_tracking-widget-header">
+					<span style="line-height: 30px; font-size: 14px;"><?php echo 'Order #' . esc_html( $order->get_order_number() ); ?></span>
+					<?php if ( 'wcpv-vendor-order' != $page ) { ?>
+						<button class="button btn_outline copy_tracking_page trackship-tip" title="Copy the secure link to the Tracking page" style="border: 0;float:right;" data-tracking_page_link=<?php echo esc_url( $tracking_page_link ); ?> >
+							<span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
+							<span style="vertical-align: middle;line-height: 30px;" ><?php esc_html_e( 'Copy Tracking page', 'trackship-for-woocommerce' ); ?></span>
+						</button>
+						<button class="button btn_outline copy_view_order_page trackship-tip" title="Copy the secure link to the View Order details page" style="border: 0;float:right;" data-view_order_link=<?php echo esc_url( $order->get_view_order_url() ); ?> >
+							<span class="dashicons dashicons-media-default" style="vertical-align: middle;"></span>
+							<span style="vertical-align: middle;line-height: 30px;" ><?php esc_html_e( 'Copy View order page', 'trackship-for-woocommerce' ); ?></span>
+						</button>
+					<?php } ?>
+				</div>
+				<?php
+				trackship_for_woocommerce()->front->admin_tracking_page_widget( $order_id, $tracking_id );
+			} else {
+				echo '<strong>';esc_html_e( 'Please connect your store with trackship.info.', 'trackship-for-woocommerce' );echo '</strong>';
+			}
 		} else {
 			esc_html_e( 'Please refresh the page and try again.', 'trackship-for-woocommerce' );
 		}
@@ -336,6 +341,8 @@ class WC_Trackship_Admin {
 		if ( trackship_for_woocommerce()->is_trackship_connected() ) {
 			add_submenu_page( 'trackship-dashboard', 'Dashboard', __( 'Dashboard', 'trackship-for-woocommerce' ), apply_filters( 'trackship_dashboard_menu_capabilities', 'manage_woocommerce' ), 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), 1 );
 			
+			add_submenu_page( 'trackship-dashboard', 'Analytics', 'Analytics', 'manage_woocommerce', 'trackship-analytics', array( $this, 'analytics_page_callback' ) );
+
 			add_submenu_page( 'trackship-dashboard', 'Shipments', __( 'Shipments', 'trackship-for-woocommerce' ), apply_filters( 'trackship_shipments_menu_capabilities', 'manage_woocommerce' ), 'trackship-shipments', array( $this, 'shipments_page_callback' ) );
 
 			add_submenu_page( 'trackship-dashboard', 'Logs', __( 'Logs', 'trackship-for-woocommerce' ), apply_filters( 'trackship_logs_menu_capabilities', 'manage_woocommerce' ), 'trackship-logs', array( $this, 'logs_page_callback' ) );
@@ -445,6 +452,14 @@ class WC_Trackship_Admin {
 		<?php
 	}
 	
+	/*
+	* callback for Analytics
+	*/
+	public function analytics_page_callback () {
+		wp_redirect( admin_url('admin.php?page=wc-admin&path=/analytics/trackship-analytics'), 301 ); 
+		exit;
+	}
+
 	/*
 	* Query for Dashboard
 	*/
@@ -862,7 +877,7 @@ class WC_Trackship_Admin {
 							<fieldset style="<?php echo 'other' != get_option( $id ) ? 'display:none;' : 'padding-top: 10px;'; ?>" class="trackship_other_page_fieldset">
 								<input type="text" name="wc_ast_trackship_other_page" id="wc_ast_trackship_other_page" value="<?php echo esc_html( get_option('wc_ast_trackship_other_page') ); ?>">
 							</fieldset>
-							<p class="tracking_page_desc"><?php esc_html_e( 'Add the [wcast-track-order] shortcode in the selected page.', 'trackship-for-woocommerce' ); ?> <a href="https://www.zorem.com/docs/woocommerce-advanced-shipment-tracking/integration/" target="blank"><?php esc_html_e( 'More info', 'trackship-for-woocommerce' ); ?></a></p>
+							<p class="tracking_page_desc"><?php esc_html_e( 'Add the [trackship-track-order] shortcode in the selected page.', 'trackship-for-woocommerce' ); ?> <a href="https://www.zorem.com/docs/woocommerce-advanced-shipment-tracking/integration/" target="blank"><?php esc_html_e( 'More info', 'trackship-for-woocommerce' ); ?></a></p>
 						</span>	
 					</li>	
 				<?php } else if ( 'button' == $array['type'] ) { ?>
