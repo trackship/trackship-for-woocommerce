@@ -39,8 +39,8 @@ jQuery(document).ready(function() {
 		dom: "i<'table_scroll't><'datatable_footer'ilp>",
 		searching: false,
 		"processing": true,
+		"ordering": false,
 		"serverSide": true,
-		//"pagingType": "simple",
 		"sPaginationType": "input",
 		"order": [[ 5, "desc" ]],
 		"ajax": {
@@ -127,24 +127,27 @@ jQuery(document).ready(function() {
 	});	
 
 	jQuery(document).on("change", "#shipment_status", function(){
-		var active_shipment = jQuery(this).val();
+		var active_status = jQuery(this).val();
+		var active_provider = jQuery( "#shipping_provider" ).val();
 		jQuery(document).show_popup();
 		jQuery(document).ajax_loader("#active_shipments_table");
 		$table.ajax.reload();
-		
-		var url = window.location.protocol + "//" + window.location.host + window.location.pathname+"?page=trackship-shipments&status="+active_shipment;
+		var url = window.location.protocol + "//" + window.location.host + window.location.pathname+"?page=trackship-shipments&status="+active_status+"&provider=" + active_provider;
 		window.history.pushState({path:url},'',url);
-		
-		if ( active_shipment === 'delivered' ) {
+		if ( active_status === 'delivered' ) {
 			$table.columns(8).visible(false);			
 		} else {
 			$table.columns(8).visible(true);						
 		}		
 	});
 	jQuery(document).on("change", "#shipping_provider", function(){
+		var active_provider = jQuery(this).val();
+		var active_status = jQuery( "#shipment_status" ).val();
 		jQuery(document).show_popup();
 		jQuery(document).ajax_loader("#active_shipments_table");
 		$table.ajax.reload();
+		var url = window.location.protocol + "//" + window.location.host + window.location.pathname+"?page=trackship-shipments&status="+active_status+"&provider=" + active_provider;
+		window.history.pushState({path:url},'',url);
 	});
 	jQuery("#search_bar").keyup(function(event) {
 		if ( jQuery(this).val() ) {
@@ -274,6 +277,11 @@ jQuery( document ).ready(function() {
 	if ( has_status ) {
 		var status = urlParams.get('status');
 		jQuery('#shipment_status').val(status).change();
+	}
+	var has_provider = urlParams.has('provider'); // conditions
+	if ( has_provider ) {
+		var provider = urlParams.get('provider');
+		jQuery('#shipping_provider').val(provider).change();
 	}
 });
 
