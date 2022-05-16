@@ -49,7 +49,7 @@ class WC_Trackship_Analytics {
 	public function add_ts_analytics_menu( $report_pages ) {
 		$report_pages[] = array(
 			'id' => 'trackship-analytics',
-			'title' => __('TrackShip', 'trackship-for-woocommerce'),
+			'title' => __('Shipping & Delivery', 'trackship-for-woocommerce'),
 			'parent' => 'woocommerce-analytics',
 			'path' => '/analytics/trackship-analytics',
 		);
@@ -74,8 +74,14 @@ class WC_Trackship_Analytics {
 
 	public function analytics_script() {
 		
-		if ( ! class_exists( 'Automattic\WooCommerce\Admin\Loader' ) || ! \Automattic\WooCommerce\Admin\Loader::is_admin_or_embed_page() ) {
-			return;
+		if ( version_compare( WC_VERSION, 6.5, ">=" ) ) {
+			if ( ! class_exists( 'Automattic\WooCommerce\Admin\PageController' ) || ! \Automattic\WooCommerce\Admin\PageController::is_admin_or_embed_page() ) {
+				return;
+			}
+		} else {
+			if ( ! class_exists( 'Automattic\WooCommerce\Admin\Loader' ) || ! \Automattic\WooCommerce\Admin\Loader::is_admin_or_embed_page() ) {
+				return;
+			}
 		}
 		
 		$script_asset_path = trackship_for_woocommerce()->get_plugin_path() . '/includes/analytics/assets/index.asset.php';
