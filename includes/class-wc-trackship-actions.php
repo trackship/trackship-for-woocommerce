@@ -1395,7 +1395,7 @@ class WC_Trackship_Actions {
 			}			
 		}
 		
-		if ( is_plugin_active( 'woocommerce-jetpack/woocommerce-jetpack.php' ) ) {
+		if ( is_plugin_active( 'woocommerce-jetpack/woocommerce-jetpack.php' ) || is_plugin_active( 'booster-plus-for-woocommerce/booster-plus-for-woocommerce.php' ) ) {
 			
 			$wcj_order_numbers_enabled = get_option( 'wcj_order_numbers_enabled' );
 			// Get prefix and suffix options
@@ -1407,22 +1407,26 @@ class WC_Trackship_Actions {
 			// Ignore suffix and prefix from search input
 			$search_no_suffix            = preg_replace( "/\A{$prefix}/i", '', $order_id );
 			$search_no_suffix_and_prefix = preg_replace( "/{$suffix}\z/i", '', $search_no_suffix );
-			$final_search                = empty( $search_no_suffix_and_prefix ) ? $search : $search_no_suffix_and_prefix;	
+			$final_search                = empty( $search_no_suffix_and_prefix ) ? $order_id : $search_no_suffix_and_prefix;	
 			
 			if ( 'yes' == $wcj_order_numbers_enabled ) {
-				$query_args = array(
-					'numberposts' => 1,
-					'meta_key'    => '_wcj_order_number',
-					'meta_value'  => $final_search,
-					'post_type'   => 'shop_order',
-					'post_status' => 'any',
-					'fields'      => 'ids',
-				);
-				
-				$posts = get_posts( $query_args );
-				if ( !empty( $posts ) ) {	
-					list( $order_id ) = $posts;			
-				}			
+				if ( 'no' == get_option( 'wcj_order_number_sequential_enabled' ) ) {
+					$order_id = $final_search;
+				} else {
+					$query_args = array(
+						'numberposts' => 1,
+						'meta_key'    => '_wcj_order_number',
+						'meta_value'  => $final_search,
+						'post_type'   => 'shop_order',
+						'post_status' => 'any',
+						'fields'      => 'ids',
+					);
+					$posts = get_posts( $query_args );
+					//print_r( $posts );
+					if ( !empty( $posts ) ) {
+						list( $order_id ) = $posts;
+					}
+				}
 			}
 		}
 		
