@@ -107,7 +107,7 @@ class TS4WC_Admin_Customizer {
 							<button type="button" class="customize-section-back" tabindex="0">
 								<span class="dashicons dashicons-arrow-left-alt2"></span>
 							</button>
-							<h5 class="sider-heading"><?php esc_html_e( 'TrackShip', 'trackship-for-woocommerce' ); ?> > <span class="customizer_Breadcrumb"><?php esc_html_e( 'Customizer', 'trackship-for-woocommerce' ); ?></span></h5>
+							<h5 class="sider-heading"><?php esc_html_e( 'TrackShip', 'trackship-for-woocommerce' ); ?><span class="customizer_Breadcrumb"> > <?php esc_html_e( 'Customizer', 'trackship-for-woocommerce' ); ?></span></h5>
 						</div>
 					</div>
 					<div class="zoremmail-layout-slider-content">
@@ -115,20 +115,29 @@ class TS4WC_Admin_Customizer {
 							<?php $this->get_html( $this->shipment_statuses_settings( $shipmentStatus ) ); ?>
 						</div>
 					</div>
+					<aside class="zoremmail-layout-content-media">
+						<a data-width="600px" data-iframe-width="100%"><span class="dashicons dashicons-desktop"></span></a>
+						<a data-width="600px" data-iframe-width="610px"><span class="dashicons dashicons-tablet"></span></a>
+						<a data-width="400px" data-iframe-width="410px"><span class="dashicons dashicons-smartphone"></span></a>
+					</aside>
+					<div class="zoremmail-back-wordpress">
+						<?php $back_link = 'shipment_email' == $type ? admin_url( 'admin.php?page=trackship-for-woocommerce&tab=notifications' ) : admin_url( 'admin.php?page=trackship-for-woocommerce' ); ?>
+						<a class="zoremmail-back-wordpress-link" href="<?php echo esc_html( $back_link ); ?>"><span class="zoremmail-back-wordpress-title"><span class="dashicons dashicons-arrow-left-alt"></span><?php esc_html_e( "Back To TrackShip's Settings", 'trackship-for-woocommerce' ); ?></span></a>
+					</div>
 				</section>
 				<section class="zoremmail-layout zoremmail-layout-has-content">
 					<div class="zoremmail-layout-content-header">
 						<div class="header-panel options-content">
-							<span class="header_shipment_status">
+							<?php /*<span class="header_shipment_status">
 								<select name="shipmentStatus" id="shipmentStatus" class="select">
 									<?php foreach( $shipment_status as $slug => $status) { ?>
 										<option value="<?php echo esc_html($slug); ?>" <?php echo $shipmentStatus == $slug ? 'selected' : ''; ?>><?php echo esc_html($status); ?></option>
 									<?php } ?>
 								</select>
-							</span>
+							</span> */?>
 							<input type="hidden" name="customizer_type" id="customizer_type" value="<?php echo esc_html( $type ); ?>">
 							<span class="" style="float: right;">
-								<span class="tgl-btn-parent" style="display:none;">
+								<?php /*<span class="tgl-btn-parent" style="display:none;">
 									<?php foreach ( $shipment_status as $key => $value ) { ?>
 										<span class="tgl_<?php esc_attr_e( $key ); ?>" <?php echo $shipmentStatus == $key ? '' : 'style="display:none;"'; ?>>
 											<?php $slug_status = str_replace( '_', '',$key ); ?>
@@ -141,14 +150,10 @@ class TS4WC_Admin_Customizer {
 											<label for="<?php esc_attr_e( $id ); ?>"><?php esc_html_e( 'Enable email', 'trackship-for-woocommerce' ); ?></label>
 										</span>
 									<?php } ?>
-								</span>
-								<button name="save" class="button-primary button-trackship btn_large woocommerce-save-button" type="submit" value="Saved" disabled><?php esc_html_e( 'Saved', 'trackship-for-woocommerce' ); ?></button>
+								</span> */ ?>
+								<button name="save" class="button-primary button-trackship btn_large woocommerce-save-button" type="submit" value="Saved" disabled><?php esc_html_e( 'Save Changes', 'trackship-for-woocommerce' ); ?></button>
 								<?php wp_nonce_field( 'trackship_customizer_options_actions', 'trackship_customizer_options_nonce_field' ); ?>
 								<input type="hidden" name="action" value="save_trackship_customizer">
-								<span class="zoremmail-back-wordpress">
-									<?php $back_link = 'shipment_email' == $type ? admin_url( 'admin.php?page=trackship-for-woocommerce&tab=notifications' ) : admin_url( 'admin.php?page=trackship-for-woocommerce' ); ?>
-									<a class="zoremmail-back-wordpress-link" href="<?php echo esc_html( $back_link ); ?>"><span class="zoremmail-back-wordpress-title dashicons dashicons-no-alt"></span></span></a>
-								</span>
 							</span>
 						</div>
 					</div>
@@ -157,11 +162,6 @@ class TS4WC_Admin_Customizer {
 							<div id="overlay"></div>
 							<iframe id="tracking_widget_privew" src="<?php echo esc_url( $iframe_url ); ?>"></iframe>
 						</section>
-						<aside class="zoremmail-layout-content-media">
-							<a data-width="600px" data-iframe-width="100%"><span class="dashicons dashicons-desktop"></span></a>
-							<a data-width="600px" data-iframe-width="610px"><span class="dashicons dashicons-tablet"></span></a>
-							<a data-width="400px" data-iframe-width="410px"><span class="dashicons dashicons-smartphone"></span></a>
-						</aside>
 					</div>
 				</section>
 			</form>
@@ -314,11 +314,11 @@ class TS4WC_Admin_Customizer {
 
 		$settings = array(
 			//panels
-			'email_content'	=> array(
-				'id'	=> 'email_content',
+			'email_notifications'	=> array(
+				'id'	=> 'email_notifications',
 				'class' => 'shipment_email_panel',
 				'title'	=> esc_html__( 'Email Notifications', 'trackship-for-woocommerce' ),
-				'label' => esc_html__( 'Email settings', 'trackship-for-woocommerce' ),
+				'label' => esc_html__( 'Email Notifications', 'trackship-for-woocommerce' ),
 				'type'	=> 'panel',
 				'iframe_url' => $email_iframe_url,
 				'show'	=> true,
@@ -341,13 +341,74 @@ class TS4WC_Admin_Customizer {
 				'iframe_url' => $tracking_pageiframe_url,
 				'show'	=> true,
 			),
+			
+			//sub-panels
+			'email_content' => array(
+				'id'	=> 'email_content',
+				'title'	=> esc_html__( 'Email Content', 'ast-pro' ),
+				'type'	=> 'sub-panel',
+				'parent'=> 'email_notifications',
+				'show'	=> true,
+				'class' => 'sub_options_panel',
+			),
+			'tracking_widget' => array(
+				'id'	=> 'tracking_widget',
+				'title'	=> esc_html__( 'Tracking Widget', 'ast-pro' ),
+				'type'	=> 'sub-panel',
+				'parent'=> 'email_design',
+				'show'	=> true,
+				'class' => 'sub_options_panel',
+			),
+			'tracking_button' => array(
+				'id'	=> 'tracking_button',
+				'title'	=> esc_html__( 'Track Button', 'ast-pro' ),
+				'type'	=> 'sub-panel',
+				'parent'=> 'email_design',
+				'show'	=> true,
+				'class' => 'sub_options_panel',
+			),
+			'content_display' => array(
+				'id'	=> 'content_display',
+				'title'	=> esc_html__( 'Content Display', 'ast-pro' ),
+				'type'	=> 'sub-panel',
+				'parent'=> 'email_design',
+				'show'	=> true,
+				'class' => 'sub_options_panel',
+			),
+
+			'widget_style' => array(
+				'id'	=> 'widget_style',
+				'title'	=> esc_html__( 'Widget Style', 'ast-pro' ),
+				'type'	=> 'sub-panel',
+				'parent'=> 'tracking_page',
+				'show'	=> true,
+				'class' => 'sub_options_panel',
+			),
+			'widget_layout' => array(
+				'id'	=> 'widget_layout',
+				'title'	=> esc_html__( 'Widget Layout', 'ast-pro' ),
+				'type'	=> 'sub-panel',
+				'parent'=> 'tracking_page',
+				'show'	=> true,
+				'class' => 'sub_options_panel',
+			),
+			'tracking_link' => array(
+				'id'	=> 'tracking_link',
+				'title'	=> esc_html__( 'Tracking Link', 'ast-pro' ),
+				'type'	=> 'sub-panel',
+				'parent'=> 'tracking_page',
+				'show'	=> true,
+				'class' => 'sub_options_panel',
+			),
+
+
 			//section
 			'heading3'	=> array(
 				'id'	=> 'tracking_widget',
 				'class' => 'email_design_first_section',
 				'title'	=> esc_html__( 'Tracking Widget', 'trackship-for-woocommerce' ),
 				'type'	=> 'section',
-				'parent'=> 'email_design',
+				'parent'=> 'tracking_widget',
 				'show'	=> true,
 			),
 			'tracking_page_layout' => array(
@@ -413,7 +474,7 @@ class TS4WC_Admin_Customizer {
 				'id'	=> 'tracking_button',
 				'title'	=> esc_html__( 'Track Button', 'trackship-for-woocommerce' ),
 				'type'	=> 'section',
-				'parent'=> 'email_design',
+				'parent'=> 'tracking_button',
 				'show'	=> true,
 			),
 			'track_button_Text' => array(
@@ -472,7 +533,7 @@ class TS4WC_Admin_Customizer {
 				'class' => 'tracking_page_first_section',
 				'title'	=> esc_html__( 'Widget Style', 'trackship-for-woocommerce' ),
 				'type'	=> 'section',
-				'parent'=> 'tracking_page',
+				'parent'=> 'widget_style',
 				'show'	=> true,
 			),
 			'wc_ast_select_bg_color' => array(
@@ -525,7 +586,7 @@ class TS4WC_Admin_Customizer {
 				'id'		=> 'widget_layout',
 				'title'		=> esc_html__( 'Widget Layout', 'trackship-for-woocommerce' ),
 				'type'		=> 'section',
-				'parent'	=> 'tracking_page',
+				'parent'	=> 'widget_layout',
 				'show'		=> true,
 			),
 			'wc_ast_hide_tracking_events' => array(
@@ -591,11 +652,11 @@ class TS4WC_Admin_Customizer {
 				'id'		=> 'tracking_link',
 				'title'		=> esc_html__( 'Tracking Link', 'trackship-for-woocommerce' ),
 				'type'		=> 'section',
-				'parent'	=> 'tracking_page',
+				'parent'	=> 'tracking_link',
 				'show'		=> true,
 			),
 			'wc_ast_remove_trackship_branding' => array(
-				'title'    => __( 'Hide trackShip branding', 'trackship-for-woocommerce' ),
+				'title'    => __( 'Hide TrackShip branding', 'trackship-for-woocommerce' ),
 				'default'  => $remove_trackship_branding,
 				'type'     => 'checkbox',
 				'show'     => true,
@@ -618,10 +679,27 @@ class TS4WC_Admin_Customizer {
 		$settings[ 'heading1' ] = array(
 			'id'	=> 'email_settings',
 			'class' => 'email_content_first_section ',
-			'title'	=> esc_html__( 'Email Settings', 'trackship-for-woocommerce' ),
+			'title'	=> esc_html__( 'Email Content', 'trackship-for-woocommerce' ),
 			'type'	=> 'section',
 			'parent'=> 'email_content',
 			'show'	=> true,
+		);
+
+		$settings[ 'shipmentStatus' ] = array(
+			'title'    => __( 'Shipment status', 'trackship-for-woocommerce' ),
+			'type'     => 'select',
+			'default'  => isset( $_GET['status'] ) ? $_GET['status'] : 'in_transit',
+			'show'     => true,
+			'options'  => array(
+				'in_transit' => __( 'In Transit', 'trackship-for-woocommerce' ),
+				'available_for_pickup' => __( 'Available For Pickup', 'trackship-for-woocommerce' ),
+				'out_for_delivery' => __( 'Out For Delivery', 'trackship-for-woocommerce' ),
+				'failure' => __( 'Failed Attempt', 'trackship-for-woocommerce' ),
+				'on_hold' => __( 'On Hold', 'trackship-for-woocommerce' ),
+				'exception' => __( 'Exception', 'trackship-for-woocommerce' ),
+				'return_to_sender' => __( 'Return To Sender', 'trackship-for-woocommerce' ),
+				'delivered' => __( 'Delivered', 'trackship-for-woocommerce' ),
+			),
 		);
 
 		foreach ( $all_statuses as $key => $value ) {
@@ -631,7 +709,7 @@ class TS4WC_Admin_Customizer {
 				'type'		=> 'tgl-btn',
 				'option_name'=> $email_settings,
 				'option_type'=> 'array',
-				'show'		=> false,
+				'show'		=> true,
 				'default'	=> $this->get_value( $email_settings, 'wcast_enable_' . $key . '_email', $key ),
 				'class'		=> $value . '_sub_menu all_status_submenu',
 			);
@@ -699,7 +777,7 @@ class TS4WC_Admin_Customizer {
 			'class' => '',
 			'title'	=> esc_html__( 'Content Display', 'trackship-for-woocommerce' ),
 			'type'	=> 'section',
-			'parent'=> 'email_design',
+			'parent'=> 'content_display',
 			'show'	=> true,
 		);
 
@@ -778,6 +856,24 @@ class TS4WC_Admin_Customizer {
 		}
 		echo '</ul>';
 
+		echo '<ul class="zoremmail-sub-panels" style="display:none;">';
+		foreach ( (array) $arrays as $id => $array ) {
+			
+			if ( isset($array['show']) && true != $array['show'] ) {
+				continue; 
+			}
+			
+			if ( isset($array['type']) && 'sub-panel' == $array['type'] ) {
+				?>
+				<li id="<?php isset($array['id']) ? esc_attr_e($array['id']) : ''; ?>"  data-type="<?php isset($array['parent']) ? esc_html_e($array['parent']) : ''; ?>" data-label="<?php isset($array['title']) ? esc_html_e($array['title']) : ''; ?>" class="zoremmail-sub-panel-title <?php isset($array['class']) ? esc_attr_e($array['class']) : ''; ?> <?php isset($array['parent']) ? esc_attr_e($array['parent']) : ''; ?>">
+					<span><?php isset($array['title']) ? esc_html_e($array['title']) : ''; ?></span>
+					<span class="dashicons dashicons-arrow-right-alt2"></span>
+				</li>
+				<?php
+			}
+		}
+		echo '</ul>';
+
 		foreach ( (array) $arrays as $id => $array ) {
 
 			if ( isset($array['show']) && $array['show'] != true ) {
@@ -785,6 +881,10 @@ class TS4WC_Admin_Customizer {
 			}
 
 			if ( isset($array['type']) && $array['type'] == 'panel' ) {
+				continue; 
+			}
+
+			if ( isset($array['type']) && 'sub-panel' == $array['type'] ) {
 				continue; 
 			}
 			
