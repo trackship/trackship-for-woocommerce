@@ -2,14 +2,14 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 1.3.6.1
+ * Version: 1.4.0
  * Author: TrackShip
  * Author URI: https://trackship.info/
  * License: GPL-2.0+
  * License URI: 
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
- * WC tested up to: 6.4
+ * WC tested up to: 6.5.1
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,7 +23,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.3.6.1';
+	public $version = '1.4.0';
 	
 	/**
 	 * Initialize the main plugin function
@@ -122,8 +122,6 @@ class Trackship_For_Woocommerce {
 		add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ) );
 		
 		add_action( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'tsw_plugin_action_links' ) );
-		
-		add_action( 'template_redirect', array( $this->front, 'preview_tracking_page' ) );
 	}				
 	
 	/**
@@ -158,8 +156,12 @@ class Trackship_For_Woocommerce {
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-install.php';
 		$this->ts_install = WC_Trackship_Install::get_instance();
 	
-		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-front.php';
-		$this->front = WC_TrackShip_Front::get_instance();
+		$wc_ast_api_key = get_option('wc_ast_api_key');
+		if ( $wc_ast_api_key ) {
+			require_once $this->get_plugin_path() . '/includes/class-wc-trackship-front.php';
+			$this->front = WC_TrackShip_Front::get_instance();
+			add_action( 'template_redirect', array( $this->front, 'preview_tracking_page' ) );
+		}
 		
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-actions.php';
 		$this->ts_actions	= WC_Trackship_Actions::get_instance();

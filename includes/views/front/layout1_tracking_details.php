@@ -10,22 +10,26 @@ $tab_array = array(
 		'label'	=> __( 'Shipment Progress', 'trackship-for-woocommerce' ),
 		'class'	=> 'tracking_detail_label checked',
 	),
+	
+	'product_details' => array(
+		'label'	=> __( 'Products', 'trackship-for-woocommerce' ),
+	),
 );
-$tab_array = apply_filters( 'tracking_widget_tab_array', $tab_array, $order_id, $tracker, $tracking_provider, $tracking_number );
+// $tab_array = apply_filters( 'tracking_widget_tab_array', $tab_array, $order_id, $tracker, $tracking_provider, $tracking_number );
 ?>
 <div class="tracking-details" style="">	
 	<?php if ( 2 == $hide_tracking_events || is_wc_endpoint_url( 'order-received' ) ) { ?>
 		<?php if ( !empty( $tracking_details_by_date ) ) { ?>
-						
-			<div class="shipment_progress_heading_div">	  
+
+			<div class="shipment_progress_heading_div">
 				<?php
 				foreach ( $tab_array as $id => $tab) {
 					?>
-					<label data-label="<?php echo esc_html( $id ); ?>" class="shipment_progress_label <?php isset($tab['class']) ? esc_attr_e($tab['class']) : ''; ?>"><?php echo esc_html( $tab['label'] ); ?></label>	
+					<label data-label="<?php echo esc_html( $id ); ?>" class="shipment_progress_label <?php isset($tab['class']) ? esc_attr_e($tab['class']) : ''; ?>"><?php echo esc_html( $tab['label'] ); ?></label>
 					<?php
 				}
-				?>		
-			</div>	
+				?>
+			</div>
 			
 			<div class="tracking_event_tab_view">
 				<div class="tracking_events_details">
@@ -130,21 +134,18 @@ $tab_array = apply_filters( 'tracking_widget_tab_array', $tab_array, $order_id, 
 						<a class="hide_old_details" href="javaScript:void(0);" style="display: none;"><?php esc_html_e( 'view less', 'trackship-for-woocommerce' ); ?></a>	
 					</div>
 				</div>
-				<?php do_action( 'tracking_widget_tab_content', $order_id, $tracker, $tracking_provider, $tracking_number ); ?>
+				<?php $this->get_products_detail_in_shipment( $order_id, $tracker, $tracking_provider, $tracking_number ); ?>
+				<?php //do_action( 'tracking_widget_tab_content', $order_id, $tracker, $tracking_provider, $tracking_number ); ?>
 			</div>
 
 		<?php } ?>
 	<?php } else { ?>
 	
 		<?php if ( !empty( $tracking_details_by_date ) ) { ?>
-			<div class="shipment_progress_heading_div">	               				
-				<?php
-				foreach ( $tab_array as $id => $tab) {
-					?>
-					<label data-label="<?php echo esc_html( $id ); ?>" class="shipment_progress_label <?php isset($tab['class']) ? esc_attr_e($tab['class']) : ''; ?>"><?php echo esc_html( $tab['label'] ); ?></label>	
-					<?php
-				}
-				?>				
+			<div class="shipment_progress_heading_div">
+				<?php foreach ( $tab_array as $id => $tab) { ?>
+					<label data-label="<?php echo esc_html( $id ); ?>" class="shipment_progress_label <?php isset($tab['class']) ? esc_attr_e($tab['class']) : ''; ?>"><?php echo esc_html( $tab['label'] ); ?></label>
+				<?php } ?>				
 			</div>
 
 			<div class="tracking_event_tab_view">
@@ -190,7 +191,8 @@ $tab_array = apply_filters( 'tracking_widget_tab_array', $tab_array, $order_id, 
 						</ul>	
 					</div>
 				</div>
-				<?php do_action( 'tracking_widget_tab_content', $order_id, $tracker, $tracking_provider, $tracking_number ); ?>
+				<?php $this->get_products_detail_in_shipment( $order_id, $tracker, $tracking_provider, $tracking_number ); ?>
+				<?php //do_action( 'tracking_widget_tab_content', $order_id, $tracker, $tracking_provider, $tracking_number ); ?>
 			</div>
 		<?php } ?>
 	<?php } ?>

@@ -120,14 +120,6 @@ if ( $tracking_items ) :
 		border: 1px solid #eee;
 		overflow: hidden;
 	}
-	/*.progress-bar.out_for_delivery{background-color: #90ca5e;width:67%;height:40px;}
-	.progress-bar.in_transit{background-color: #53c3bd;width:33%;height:40px;}
-	.progress-bar.failure{background-color: #cd2128;width:33%;height:40px;}
-	.progress-bar.return_to_sender{background-color: #cd2128;width:67%;height:40px;}
-	.progress-bar.exception{background-color: #cd2128;width:66%;height:40px;}
-	.progress-bar.on_hold{background-color: #ffde00;width:33%;height:40px;}
-	.progress-bar.available_for_pickup{background-color: #f49d1d;width:67%;height:40px;}
-	.progress-bar.delivered{background-color: #0f8042;width:100%;height:40px;}*/
 	ul.tracking_list{padding: 0;list-style: none;}
 	ul.tracking_list .tracking_list_li{margin-bottom: 5px;}
 	ul.tracking_list .tracking_list_li .product_list_ul{padding-left: 10px;}
