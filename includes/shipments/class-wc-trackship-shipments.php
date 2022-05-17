@@ -59,10 +59,9 @@ class WC_Trackship_Shipments {
 		}
 		
 		$user_plan = get_option( 'user_plan' );
-		
-		// Rubik font
-		wp_enqueue_script( 'ts_rubik_fonts', 'https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap', array(), false);
-		//<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
+		?>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap">
+		<?php
 		
 		//dataTables library
 		wp_enqueue_script( 'DataTable', trackship_for_woocommerce()->plugin_dir_url() . '/includes/shipments/assets/js/jquery.dataTables.min.js',  array ( 'jquery' ), '1.10.18', true);

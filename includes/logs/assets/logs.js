@@ -19,6 +19,7 @@ jQuery(document).ready(function() {
 	var $table = jQuery("#trackship_notifications_logs").DataTable({
 		dom: "i<'table_scroll't><'datatable_footer'ilp>",
 		searching: false,
+		"ordering": false,
 		"processing": true,
 		"serverSide": true,
 		"sPaginationType": "input",

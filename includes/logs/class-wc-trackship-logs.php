@@ -108,13 +108,26 @@ class WC_Trackship_Logs {
 					
 		$result = array();
 		$i = 0;
+		$current_time = strtotime(current_time( 'Y-m-d H:i:s' ));
 		
 		foreach( $order_query as $key => $value ){
+
+			$notification_time = strtotime( $value->date );
+			$time_diff = $current_time - $notification_time;
+			if ( 60 > $time_diff ) {
+				$condi_time = '<time title="' . date( 'd/m/Y h:i a', $notification_time ) . '">' . $time_diff . ' seconds ago</time>';
+			} elseif ( 3600 > $time_diff ) {
+				$condi_time = '<time title="' . date( 'd/m/Y h:i a', $notification_time ) . '">' . floor( $time_diff/60 ) . ' mins ago</time>';
+			} elseif ( 60*60*24 > $time_diff ) {
+				$condi_time = '<time title="' . date( 'd/m/Y h:i a', $notification_time ) . '">' . floor( $time_diff/(60*60) ) . ' hours ago</time>';
+			} else {
+				$condi_time = '<time title="' . date( 'd/m/Y h:i a', $notification_time ) . '">' . date( 'M d, Y', $notification_time ) . '</time>';
+			}
 
 			$result[$i] = new \stdClass();
 			$result[$i]->order_id = '<a href="' . admin_url( 'post.php?post=' . $value->order_id . '&action=edit' ) . '" target="_blank">' . $value->order_number . '</a>';
 			$result[$i]->shipment_status = apply_filters("trackship_status_filter", $value->shipment_status );
-            $result[$i]->date = $value->date;
+            $result[$i]->date = $condi_time;
             $result[$i]->to = $value->to;
             $result[$i]->type = $value->type == 'Email' ? 'Email' : 'SMS';
             $result[$i]->status = 'Sent' == $value->status ? $value->status : 'Failed';
@@ -124,6 +137,7 @@ class WC_Trackship_Logs {
 		}
 
 		$obj_result = new \stdclass();
+		$obj_result->extra = $time_diff;
 		$obj_result->draw = intval( $_POST['draw'] );
 		$obj_result->recordsTotal = intval( $sum );
 		$obj_result->recordsFiltered = intval( $sum );
