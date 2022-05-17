@@ -52,7 +52,7 @@ jQuery(document).on("submit", ".order_track_form", function(){
 		},
 		error: function(jqXHR, exception) {
 			console.log(jqXHR.status);
-			if ( jqXHR.status == 302 ) {				
+			if(jqXHR.status == 302){				
 				jQuery(".track_fail_msg ").show();
 				jQuery(".track_fail_msg ").text('Tracking details not found.');
 				jQuery(".order_track_form ").unblock();	

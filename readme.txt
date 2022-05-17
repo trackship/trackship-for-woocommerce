@@ -4,7 +4,7 @@ Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 5.3
 Tested up to: 5.9.3
 Requires PHP: 7.0
-Stable tag: 1.3.6.1
+Stable tag: 1.4.0
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,18 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended).
 
 == Changelog ==
+= 1.4.0 - 2022-05-17 =
+* Enhancement - Analytics menu name changed under WooCommerce Analytics "Shipping & Delivery"
+* Enhancement - Settings design improved
+* Enhancement - Notifications tab desgin improved
+* Enhancement - TrackShip Customizer design improved
+* Dev - compatibility added with Booster for WooCommerce Pro plugin
+* Dev - Shipment status emails logs and SMS logs improved
+* Dev - Analytics menu added under TrackShip
+* Dev - Tracking form improved
+* Dev - filter added for remove to search by order id and email id in Tracking page form
+* Dev - Tested with WC 6.5.1
+
 = 1.3.6.1 - 2022-04-14 =
 * Enhancement - Design improved
 * Dev - compatibility im for Wp-lister-amazon plugin

@@ -183,7 +183,7 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 		$woo_trackship_shipment = $this->shipment_table;
 		
 		$shipmen_provider_query = '';
-		if ( '' != $shipment_provider ) {
+		if ( '' != $shipment_provider && 'all' != $shipment_provider ) {
 			$shipmen_provider_query = "AND shipping_provider LIKE ( '%" . $shipment_provider . "%')";
 		}				
 		
@@ -221,7 +221,7 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 		}
 		
 		$shipmen_provider_query = '';
-		if ( '' != $shipment_provider ) {
+		if ( '' != $shipment_provider && 'all' != $shipment_provider ) {
 			$shipmen_provider_query = "AND shipping_provider LIKE ( '%" . $shipment_provider . "%')";
 		}
 		
@@ -261,7 +261,7 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 		}
 		
 		$shipmen_provider_query = '';
-		if ( '' != $shipment_provider ) {
+		if ( '' != $shipment_provider && 'all' != $shipment_provider ) {
 			$shipmen_provider_query = "AND shipping_provider LIKE ( '%" . $shipment_provider . "%')";
 		}
 		
@@ -311,7 +311,7 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 		}
 
 		$shipmen_provider_query = '';
-		if ( '' != $shipment_provider ) {
+		if ( '' != $shipment_provider && 'all' != $shipment_provider ) {
 			$shipmen_provider_query = "AND shipping_provider LIKE ( '%" . $shipment_provider . "%')";
 		}
 		
