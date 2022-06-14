@@ -5,33 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 $completed_order_with_tracking = $this->completed_order_with_tracking();		
 $completed_order_with_zero_balance = $this->completed_order_with_zero_balance();							
 $completed_order_with_do_connection = $this->completed_order_with_do_connection();
-$url = 'https://my.trackship.info/wp-json/tracking/get_user_plan';								
-$args[ 'body' ] = array(
-	'user_key' => trackship_for_woocommerce()->actions->get_trackship_key(),				
-);
-$response = wp_remote_post( $url, $args );
-if ( is_wp_error( $response ) ) {
-	$plan_data = array();
-} else {
-	$plan_data = json_decode( $response[ 'body' ] );					
-}
-update_option( 'user_plan', $plan_data->subscription_plan );
-if ( !function_exists( 'SMSWOO' ) ) {
-	?>
-	<script>
-		var smswoo_active = 'no';
-	</script>
-	<?php 
-} else {
-	?>
-	<script>
-		var smswoo_active = 'yes';
-	</script>
-	<?php 
-}
-$completed_order_with_tracking = $this->completed_order_with_tracking();		
-$completed_order_with_zero_balance = $this->completed_order_with_zero_balance();							
-$completed_order_with_do_connection = $this->completed_order_with_do_connection();
 $total_orders = $completed_order_with_tracking + $completed_order_with_zero_balance + $completed_order_with_do_connection;
 ?>
 <table class="tools_tab p15">

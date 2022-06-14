@@ -13,8 +13,8 @@ if ( $orders ) :
 	?>
 	<table class="late_shipment" ellspacing="0" cellpadding="6" width="100%" style="border: 1px solid #e0e0e0;border-collapse: collapse;">
 		<tr>
-			<th><?php esc_html_e( 'Order number', 'trackship-for-woocommerce' ); ?></th>
-			<th><?php esc_html_e( 'Shipment Status', 'trackship-for-woocommerce' ); ?></th>
+			<th><?php esc_html_e( 'Order Number', 'trackship-for-woocommerce' ); ?></th>
+			<th><?php esc_html_e( 'Shipment status', 'trackship-for-woocommerce' ); ?></th>
 			<th><?php esc_html_e( 'Shipping provider', 'trackship-for-woocommerce' ); ?></th>
 			<th><?php esc_html_e( 'Tracking Number', 'trackship-for-woocommerce' ); ?></th>
 			<th><?php esc_html_e( 'Shipping days', 'trackship-for-woocommerce' ); ?></th>

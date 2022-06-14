@@ -137,7 +137,6 @@ class WC_Trackship_Logs {
 		}
 
 		$obj_result = new \stdclass();
-		$obj_result->extra = $time_diff;
 		$obj_result->draw = intval( $_POST['draw'] );
 		$obj_result->recordsTotal = intval( $sum );
 		$obj_result->recordsFiltered = intval( $sum );
