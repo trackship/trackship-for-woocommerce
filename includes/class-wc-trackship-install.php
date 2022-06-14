@@ -233,6 +233,11 @@ class WC_Trackship_Install {
 			update_option( 'enable_notification_for_amazon_order', 1 );
 			update_option( 'trackship_db', '1.11' );
 		}
+		if ( wp_next_scheduled( 'ast_late_shipments_cron_hook' ) ) {
+			$Late_Shipments = new WC_TrackShip_Late_Shipments();
+			$Late_Shipments->remove_cron();
+			$Late_Shipments->setup_cron();
+		}
 	}
 	
 	public function update_analytics_table() {
