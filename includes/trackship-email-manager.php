@@ -22,12 +22,9 @@ class WC_TrackShip_Email_Manager {
 
 		$enable = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_enable_' . $status . '_email', '');
 		$for_amazon_order = trackship_for_woocommerce()->ts_actions->is_notification_on_for_amazon( $order_id );
+		$receive_email = get_post_meta( $order_id, '_receive_shipment_emails' , true );
 
-		if ( ! $enable ) {
-			return;
-		}
-		
-		if ( ! $for_amazon_order ) {
+		if ( ! $enable || ! $for_amazon_order || 0 == $receive_email ) {
 			return;
 		}
 
@@ -143,6 +140,12 @@ class WC_TrackShip_Email_Manager {
 			// create a new email
 			$email_class = new WC_Email();
 		
+			if ( get_option( 'enable_email_widget' ) ) {
+				$track_link = isset( $tracking_item[ 'ast_tracking_link' ] ) && get_option( 'wc_ast_use_tracking_page', 1 ) ? $tracking_item[ 'ast_tracking_link' ] : $order->get_view_order_url();
+				$track_link = add_query_arg( array( 'unsubscribe' => 'true' ), $track_link );
+				$message .= '<div style="text-align:center;"><a href="' . $track_link . '">' . esc_html__( 'Unsubscribe Shipment emails', 'trackship-for-woocommerce' ) . '</a></div>';
+			}
+
 			// wrap the content with the email template and then add styles
 			$message = apply_filters( 'woocommerce_mail_content', $email_class->style_inline( $mailer->wrap_message( $email_heading, $message ) ) );
 			add_filter( 'wp_mail_from', array( $this, 'get_from_address' ) );
@@ -180,12 +183,9 @@ class WC_TrackShip_Email_Manager {
 		
 		$enable = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_delivered_status_email_settings', 'wcast_enable_delivered_status_email', '');
 		$for_amazon_order = trackship_for_woocommerce()->ts_actions->is_notification_on_for_amazon( $order_id );
+		$receive_email = get_post_meta( $order->get_id(), '_receive_shipment_emails' , true );
 
-		if ( ! $enable ) {
-			return;
-		}
-		
-		if ( ! $for_amazon_order ) {
+		if ( ! $enable || ! $for_amazon_order || 0 == $receive_email ) {
 			return;
 		}
 
@@ -312,7 +312,13 @@ class WC_TrackShip_Email_Manager {
 							
 			// create a new email
 			$email_class = new WC_Email();
-	
+
+			if ( get_option( 'enable_email_widget' ) ) {
+				$track_link = isset( $tracking_item[ 'ast_tracking_link' ] ) && get_option( 'wc_ast_use_tracking_page', 1 ) ? $tracking_item[ 'ast_tracking_link' ] : $order->get_view_order_url();
+				$track_link = add_query_arg( array( 'unsubscribe' => 'true' ), $track_link );
+				$message .= '<div style="text-align:center;"><a href="' . $track_link . '">' . esc_html__( 'Unsubscribe Shipment emails', 'trackship-for-woocommerce' ) . '</a></div>';
+			}
+
 			// wrap the content with the email template and then add styles
 			$message = apply_filters( 'woocommerce_mail_content', $email_class->style_inline( $mailer->wrap_message( $email_heading, $message ) ) );
 			add_filter( 'wp_mail_from', array( $this, 'get_from_address' ) );

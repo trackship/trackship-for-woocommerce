@@ -67,7 +67,7 @@ class WC_TrackShip_Admin_notice {
 				<p>Great news! We added <a href="<?php echo esc_url( $sms_tab_url ); ?>">SMS notifications</a> option which is available to all TrackShip’s paid plans, now you can send shipping & delivery updates to your customers via SMS Notifications.</p>
 			<?php } ?>
 		</div>
-	<?php 		
+		<?php
 	}	
 	
 	/*

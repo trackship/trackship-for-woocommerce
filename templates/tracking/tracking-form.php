@@ -57,6 +57,7 @@ $remove_section = apply_filters( 'remove_order_id_section', false )
 		</div>
 		<div class="clear"></div>
 		<input type="hidden" name="action" value="get_tracking_info">
+		<input type="hidden" name="fronted" value="yes">
 		<div class="track_fail_msg" style="display:none;color: red;padding: 0 20px 15px;"></div>
 		<?php wp_nonce_field( 'tracking_form' ); ?>
 	</form>

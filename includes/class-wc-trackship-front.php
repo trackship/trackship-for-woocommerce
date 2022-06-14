@@ -47,6 +47,12 @@ class WC_TrackShip_Front {
 		add_action( 'plugins_loaded', array( $this, 'on_plugin_loaded' ) );
 		
 		add_action( 'woocommerce_view_order', array( $this, 'show_tracking_page_widget' ), 5, 1 );
+
+		//save optin optout butoon 
+		add_action( 'wp_ajax_save_unsunscribe_email_notifications_data', array( $this, 'unsubscribe_emails_save_callback') );
+		add_action( 'wp_ajax_nopriv_save_unsunscribe_email_notifications_data', array( $this, 'unsubscribe_emails_save_callback') );
+		add_action( 'wp_ajax_resubscribe_emails_save', array( $this, 'resubscribe_emails_save_callback') );
+		add_action( 'wp_ajax_nopriv_resubscribe_emails_save', array( $this, 'resubscribe_emails_save_callback') );
 	}
 	
 	public function on_plugin_loaded() {
@@ -93,7 +99,20 @@ class WC_TrackShip_Front {
 			), 'woocommerce-advanced-shipment-tracking/', trackship_for_woocommerce()->get_plugin_path() . '/templates/' );
 		}
 	}
-	
+
+	/*
+	* Save data
+	*/
+	public function unsubscribe_emails_save_callback() {
+		$order_id = isset( $_POST['order_id'] ) ? sanitize_text_field( $_POST['order_id'] ) : '';
+		check_ajax_referer( 'unsubscribe_emails' . $order_id, 'security' );
+		$checkbox = isset( $_POST['checkbox'] ) ? sanitize_text_field( $_POST['checkbox'] ) : '';
+		update_post_meta( $order_id, '_receive_shipment_emails', $checkbox );
+				
+		echo json_encode( array('success' => 'true') );
+		die();
+	}
+
 	/**
 	 * Show tracking page widget
 	**/
@@ -133,7 +152,7 @@ class WC_TrackShip_Front {
 		
 		$action = isset( $_REQUEST['action'] ) ? sanitize_text_field( $_REQUEST['action'] ) : '';
 
-		if ( 'preview_tracking_page' == $action ) {
+		if ( 'preview_tracking_page' == $action || is_wc_endpoint_url( 'order-received' ) || is_wc_endpoint_url( 'view-order' ) ) {
 			wp_enqueue_style( 'front_style' );
 			wp_enqueue_script( 'front-js' );
 		}
@@ -293,13 +312,20 @@ class WC_TrackShip_Front {
 	* retuern Tracking page HTML
 	*/
 	public function display_tracking_page( $order_id, $tracking_items, $shipment_status ) {
-		
 		wp_enqueue_style( 'front_style' );
 		wp_enqueue_script( 'jquery-blockui' );
 		wp_enqueue_script( 'front-js' );	
 		
 		global $wpdb;
-		
+
+		$unsubscribe = isset( $_GET["unsubscribe"] ) ? $_GET["unsubscribe"] : "" ;
+		if ( 'true' == $unsubscribe ) {
+			update_post_meta( $order_id, '_receive_shipment_emails', 0 );
+			?>
+			<div class="unsubscribe_message"><?php esc_html_e( 'You have been unsubscribed from shipment status emails.', 'trackship-for-woocommerce' ); ?></div>
+			<?php
+		}
+
 		$tracking_page_defaults = trackship_admin_customizer();
 		
 		$border_color = get_option('wc_ast_select_border_color', $tracking_page_defaults->defaults['wc_ast_select_border_color'] );
@@ -428,19 +454,19 @@ class WC_TrackShip_Front {
 			
 			if ( isset( $tracker->ep_status ) ) {
 				?>
-					<div class="shipment-header">
-						<?php if ( $total_trackings > 1 ) { ?>
-							<p class="shipment_heading">
-							<?php /* translators: %s: search for a num and todal tracking */ ?>
-							<?php printf( esc_html__( 'Shipment %1$s out of %2$s', 'trackship-for-woocommerce' ), esc_html($num), esc_html($total_trackings) ); ?>
-							</p>
-						<?php } ?>
-					</div>
-					<div class="tracking-detail col <?php echo !in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking-layout-2' : ''; ?> ">
-						<div class="shipment-content">
+				<div class="shipment-header">
+					<?php if ( $total_trackings > 1 ) { ?>
+						<p class="shipment_heading">
+						<?php /* translators: %s: search for a num and todal tracking */ ?>
+						<?php printf( esc_html__( 'Shipment %1$s out of %2$s', 'trackship-for-woocommerce' ), esc_html($num), esc_html($total_trackings) ); ?>
+						</p>
+					<?php } ?>
+				</div>
+				<div class="tracking-detail col <?php echo !in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking-layout-2' : ''; ?> ">
+					<div class="shipment-content">
 						<?php
 						
-						esc_html_e( $this->tracking_page_header( $order, $tracking_provider, $tracking_number, $tracker, $item ) );
+						esc_html_e( $this->tracking_page_header( $order, $tracking_provider, $tracking_number, $tracker, $item, $trackind_detail_by_status_rev ) );
 						
 						esc_html_e( $this->tracking_progress_bar( $tracker ) );
 						
@@ -467,13 +493,13 @@ class WC_TrackShip_Front {
 				<?php
 			}
 			$num++;
-		}	
+		}
 	}
 	
 	/*
 	* Tracking Page Header
 	*/
-	public function tracking_page_header( $order, $tracking_provider, $tracking_number, $tracker, $item ) {
+	public function tracking_page_header( $order, $tracking_provider, $tracking_number, $tracker, $item, $trackind_detail_by_status_rev ) {
 		$hide_tracking_provider_image = get_option('wc_ast_hide_tracking_provider_image');
 		$hide_from_to = get_option('wc_ast_hide_from_to', trackship_admin_customizer()->defaults['wc_ast_hide_from_to'] );
 		$hide_last_mile = get_option( 'wc_ast_hide_list_mile_tracking', trackship_admin_customizer()->defaults['wc_ast_hide_list_mile_tracking'] );
@@ -595,6 +621,28 @@ class WC_TrackShip_Front {
 		}
 		</style>
 		<?php
+	}
+
+	public function get_notifications_option ( $order_id ) {
+		if ( get_option( 'enable_email_widget' ) ) {
+			$receive_email = get_post_meta( $order_id, '_receive_shipment_emails' , true );
+			$receive_email = '' != $receive_email ? $receive_email : 1;
+			?>
+			<div class="shipment_status_notifications" style="display:none;">
+				<label>
+					<input type="checkbox" class="unsubscribe_emails_checkbox" name="unsubscribe_emails" value="1" <?php echo $receive_email ? 'checked' : ''; ?>>
+					<span style="font-weight: normal;"><?php esc_html_e( 'Email notifications', 'trackship-for-woocommerce' ); ?></span>
+				</label>
+				
+				<?php $ajax_nonce = wp_create_nonce( 'unsubscribe_emails' . $order_id ); ?>
+				<input type="hidden" class="order_id_field" value="<?php echo $order_id; ?>">
+				<input type="hidden" name="action" value="unsubscribe_emails_save">
+				<input type="hidden" name="unsubscribe_emails_nonce" class="unsubscribe_emails_nonce" value="<?php echo esc_html( $ajax_nonce ); ?>"/>
+
+				<?php do_action( 'tracking_page_notifications_tab', $order_id ) ?>
+			</div>
+			<?php
+		}
 	}
 
 	/*

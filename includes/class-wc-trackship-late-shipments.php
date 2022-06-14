@@ -12,7 +12,7 @@ class WC_TrackShip_Late_Shipments {
 	*/
 	private static $instance;	
 
-	const CRON_HOOK = 'ast_late_shipments_cron_hook';	
+	const CRON_HOOK = 'trackship_late_shipments_hook';
 	
 	/**
 	 * Get the class instance
@@ -55,14 +55,11 @@ class WC_TrackShip_Late_Shipments {
 		}
 		
 		//cron schedule added
-		add_action( 'wp_ajax_send_late_shipments_email', array( $this, 'send_late_shipments_email') );
+		// add_action( 'wp_ajax_send_late_shipments_email', array( $this, 'send_late_shipments_email') );
 		
 		//Send Late Shipments Email
-		add_action( self::CRON_HOOK, array( $this, 'send_late_shipments_email' ) );				
-		
-		if (!wp_next_scheduled( self::CRON_HOOK ) ) {
-			wp_schedule_event( time() , 'ast_late_shipments_cron_events', self::CRON_HOOK );			
-		}
+		add_action( self::CRON_HOOK, array( $this, 'send_late_shipments_email' ) );
+
 	}
 	
 	/**
@@ -71,7 +68,8 @@ class WC_TrackShip_Late_Shipments {
 	 * @since  1.0.0
 	 */
 	public function remove_cron() {
-		wp_clear_scheduled_hook( self::CRON_HOOK );
+		wp_clear_scheduled_hook( 'ast_late_shipments_cron_hook' );
+		wp_clear_scheduled_hook( 'trackship_late_shipments_hook' );
 	}
 
 	/**
@@ -82,7 +80,11 @@ class WC_TrackShip_Late_Shipments {
 	public function setup_cron() {
 
 		$late_shipments_email_settings = get_option('late_shipments_email_settings');
-		
+
+		if ( !isset( $late_shipments_email_settings['wcast_enable_late_shipments_admin_email'] ) || wp_next_scheduled( self::CRON_HOOK ) ) {
+			return;
+		}
+
 		if ( isset( $late_shipments_email_settings['wcast_late_shipments_daily_digest_time'] ) ) {
 			
 			$wcast_late_shipments_daily_digest_time = $late_shipments_email_settings['wcast_late_shipments_daily_digest_time'];
@@ -212,9 +214,20 @@ class WC_TrackShip_Late_Shipments {
 			//string replace for '{admin_email}'
 			$recipient = str_replace( '{admin_email}', get_option('admin_email'), $email_addr );
 			//Send Email
-			$email_send[] = wp_mail( $recipient, $subject, $email_content, $email->get_headers() );
-			$context = array( 'source' => 'trackship_late_shipments_email' );
-			$logger->info( 'Late Shipments email sent' . print_r($orders), $context );
+			$response = wp_mail( $recipient, $subject, $email_content, $email->get_headers() );
+			$email_send[] = $response;
+			$arg = array(
+				'order_id'			=> '',
+				'order_number'		=> '',
+				'user_id'			=> '',
+				'tracking_number'	=> '',
+				'date'				=> current_time( 'Y-m-d H:i:s' ),
+				'to'				=> $recipient,
+				'shipment_status'	=> 'Late shipment',
+				'status'			=> $response ? 'Sent' : 'Not Sent',
+				'type'				=> 'Email',
+			);
+			trackship_for_woocommerce()->ts_actions->update_notification_table( $arg );
 		}
 		return $email_send;
 	}

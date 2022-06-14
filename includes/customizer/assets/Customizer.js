@@ -104,6 +104,11 @@ jQuery(document).ready(function(){
 			setting_change_trigger();
 		}, 	
 	});
+
+	jQuery( '#email_preview' ).select2({		
+		minimumResultsForSearch: Infinity,
+		width: '250px'
+	});	
 });
 
 function setting_change_trigger() {	
@@ -402,13 +407,13 @@ jQuery(document).on("click", ".zoremmail-panel-title", function(){
 		window.history.pushState("object or string", sPageURL, sPageURL+'&type=tracking_page&status='+shipmentStatus);
 		var tracking_page_iframe_url = trackship_customizer.tracking_iframe_url+'&status='+shipmentStatus;
 		jQuery('iframe').attr('src', tracking_page_iframe_url);
-		jQuery( ".tgl-btn-parent" ).hide();
+		jQuery( ".header_mockup_order" ).hide();
 	} else {
 		jQuery( "#customizer_type" ).val( 'shipment_email' );
 		window.history.pushState("object or string", sPageURL, sPageURL+'&type=shipment_email&status='+shipmentStatus);
 		var shipment_iframe_url = trackship_customizer.email_iframe_url+'&status='+shipmentStatus;
 		jQuery('iframe').attr('src', shipment_iframe_url);
-		jQuery( ".tgl-btn-parent" ).show();
+		jQuery( ".header_mockup_order" ).show();
 	}
 	jQuery( '#shipmentStatus' ).select2({
 		templateSelection: text_contain,
@@ -440,11 +445,11 @@ jQuery(document).on("click", ".zoremmail-sub-panel-title", function(){
 
 jQuery(document).on("click", ".customize-section-back", function(){
 	if ( jQuery(this).hasClass('panels') ) {
+		jQuery( '.header_mockup_order' ).hide();
 		jQuery('.sub_options_panel').hide();
 		jQuery( '.customizer_Breadcrumb' ).html(' > Customizer');
 		jQuery( ".customize-section-back" ).hide();
 		jQuery( ".zoremmail-panel-title, .zoremmail-layout-sider-heading .trackship_logo" ).show();
-		
 		jQuery( ".zoremmail-panels" ).show();
 	}
 	if ( jQuery(this).hasClass('sub-panels') ) {
@@ -457,4 +462,9 @@ jQuery(document).on("click", ".customize-section-back", function(){
 	}
 	jQuery('.zoremmail-menu-contain').removeClass('active');
 	jQuery('.zoremmail-menu-submenu-title').removeClass('open');
+});
+
+jQuery('#email_preview').on("change", function(){
+	jQuery('.zoremmail-layout-content-preview').addClass('customizer-unloading');
+	save_customizer_setting();
 });

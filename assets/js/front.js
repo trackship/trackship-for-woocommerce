@@ -44,6 +44,7 @@ jQuery(document).on("submit", ".order_track_form", function(){
 		success: function(response) {
 			if(response.success == 'true'){
 				jQuery('.track-order-section').replaceWith(response.html);
+				jQuery('.shipment_progress_label.checked').trigger('click');
 			} else{				
 				jQuery(".track_fail_msg").text(response.message);
 				jQuery(".track_fail_msg").show();				
@@ -66,6 +67,7 @@ jQuery(document).on("submit", ".order_track_form", function(){
 	});
 	return false;
 });
+
 jQuery(document).on("click", ".back_to_tracking_form", function(){
 	jQuery('.tracking-detail').hide();
 	jQuery('.track-order-section').show();
@@ -163,12 +165,84 @@ jQuery(document).on("click", ".order_track_form .search_order_form .ts_from_inpu
 	}
 });
 
-//If we will do change into below jQuery so we need to also change in trackship.js
+//If we will do change into below jQuery so we need to also change in trackship.js and customizer.js and front.js
 jQuery(document).on("click", ".shipment_progress_label", function(){
 	jQuery(this).siblings('.shipment_progress_label').removeClass('checked');
 	jQuery(this).addClass('checked');
-	var label = jQuery(this).data('label');
+	var label = jQuery(this).data('label');//product_details
 	var sibli = jQuery(this).parent().siblings('.tracking_event_tab_view');
 	sibli.children('div').hide();
 	sibli.children( '.'+label).show();
+});
+
+jQuery(document).on("change", ".unsubscribe_emails_checkbox", function () {
+	jQuery(".shipment_status_notifications label").start_loader();
+
+	if (jQuery(this).prop("checked") == true) {
+		var checkbox = 1;
+	} else {
+		var checkbox = 0;
+	}
+
+	var ajax_data = {
+		action: 'save_unsunscribe_email_notifications_data',
+		order_id: jQuery('.order_id_field').val(),
+		security: jQuery('.unsubscribe_emails_nonce').val(),
+		checkbox: checkbox
+	};
+	jQuery.ajax({
+		url: woocommerce_params.ajax_url,
+		data: ajax_data,
+		type: 'POST',
+		success: function (response) {
+			jQuery(".shipment_status_notifications label").stop_loader();
+			if ( checkbox == 1 ) {
+				jQuery('.unsubscribe_emails_checkbox').prop('checked', true);
+			} else {
+				jQuery('.unsubscribe_emails_checkbox').prop('checked', false);
+			}
+		},
+		error: function (response, jqXHR, exception) {
+			console.log(response);
+			var warning_msg = '';
+			if (jqXHR.status === 0) {
+				warning_msg = 'Not connect.\n Verify Network.';
+			} else if (jqXHR.status === 404) {
+				warning_msg = 'Requested page not found. [404]';
+			} else if (jqXHR.status === 500) {
+				warning_msg = 'Internal Server Error [500].';
+			} else if (exception === 'parsererror') {
+				warning_msg = 'Requested JSON parse failed.';
+			} else if (exception === 'timeout') {
+				warning_msg = 'Time out error.';
+			} else if (exception === 'abort') {
+				warning_msg = 'Ajax request aborted.';
+			} else {
+				warning_msg = 'Uncaught Error.\n' + jqXHR.responseText;
+			}
+			jQuery(".shipment_status_notifications label").stop_loader();
+		}
+	});
+	return false;
+});
+
+(function( $ ){
+	'use strict';
+	$.fn.start_loader = function() {
+		if( this.find(".zorem_loader").length === 0 ){this.append("<span class=zorem_loader></span>");}
+		return this;
+	}; 
+})( jQuery );
+
+(function( $ ){
+	'use strict';
+	$.fn.stop_loader = function() {
+		this.find(".zorem_loader").remove();
+		return this;
+	}; 
+})( jQuery );
+
+jQuery(document).ready(function () {
+	'use strict';
+	jQuery('.shipment_progress_label.checked').trigger('click');
 });

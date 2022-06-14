@@ -161,7 +161,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		$tracking_number = $request['tracking_number'];
 		$tracking_provider = $request['tracking_provider'];
 		$tracking_event_status = $request['tracking_event_status'];
-		$tracking_event_date = $request['tracking_event_date'];
+		$last_event_time = $request['last_event_time'];
 		$tracking_est_delivery_date = $request['tracking_est_delivery_date'];
 		$tracking_events = $request['tracking_events'];
 		$tracking_destination_events = $request['tracking_destination_events'];
@@ -192,7 +192,8 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			$shipment_status[$key]['tracking_events'] = json_decode($tracking_events);
 			$shipment_status[$key]['tracking_destination_events'] = json_decode($tracking_destination_events);
 			
-			$shipment_status[$key]['status_date'] = $tracking_event_date;
+			$shipment_status[$key]['status_date'] = gmdate( 'Y-m-d H:i:s' );
+			$shipment_status[$key]['last_event_time'] = $last_event_time;
 			$shipment_status[$key]['est_delivery_date'] = $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : null;
 			
 			update_post_meta( $order_id, 'shipment_status', $shipment_status );
