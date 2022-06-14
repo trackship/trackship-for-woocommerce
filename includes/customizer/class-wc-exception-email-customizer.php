@@ -56,8 +56,8 @@ class TSWC_Exception_Customizer_Email {
 	 * Code for preview of exception email
 	*/
 	public function preview_exception_email() {
-		$preview_id     = 1;
-		$order = trackship_admin_customizer()->get_wc_order_for_preview( 'mockup' );
+		$preview_id = get_option( 'email_preview', 'mockup' );
+		$order = trackship_admin_customizer()->get_wc_order_for_preview( $preview_id );
 		
 		$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_exception_email_settings', 'wcast_exception_email_heading', $this->defaults['wcast_exception_email_heading']);
 				
@@ -92,8 +92,8 @@ class TSWC_Exception_Customizer_Email {
 			$message = preg_replace_callback($regex, array( $this, '_appendCampaignToString'), $message);	
 		}
 		
-		$shipment_status = trackship_admin_customizer()->get_wc_shipment_status_for_preview( 'exception' );
-		$tracking_items = trackship_admin_customizer()->get_tracking_items_for_preview();
+		$shipment_status = trackship_admin_customizer()->get_wc_shipment_status_for_preview( 'exception', $preview_id );
+		$tracking_items = trackship_admin_customizer()->get_tracking_items_for_preview( $preview_id );
 		
 		$local_template	= get_stylesheet_directory() . '/woocommerce/emails/tracking-info.php';			
 		if ( file_exists( $local_template ) && is_writable( $local_template ) ) {				
