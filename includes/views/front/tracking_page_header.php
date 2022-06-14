@@ -53,7 +53,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown', 'insufficient_balance' ) ) ) {
 			esc_html_e( 'Shipped', 'trackship-for-woocommerce' );
 		} else {
-			esc_html_e( apply_filters( 'trackship_status_filter', $tracker->ep_status ) );
+			$message = isset( $trackind_detail_by_status_rev[0]->message ) ? $trackind_detail_by_status_rev[0]->message : '';
+			$tracker_status = str_contains( $message, 'Delivered, Parcel Locker') ? 'Delivered, Parcel Locker' : $tracker->ep_status;
+			esc_html_e( apply_filters( 'trackship_status_filter', $tracker_status ) );
 		}
 		?>
 	</div>
