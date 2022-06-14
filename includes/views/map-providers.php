@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<thead>
 						<p><?php esc_html_e( 'If you get different names from your shipping service, you can map the Shipping Providers names to the ones on TrackShip.', 'trackship-for-woocommerce' ); ?></p>
 						<tr class="ptw_provider_border">
-							<th><?php esc_html_e( 'Shipping Provider', 'trackship-for-woocommerce' ); ?></th>
+							<th><?php esc_html_e( 'Shipping provider', 'trackship-for-woocommerce' ); ?></th>
 							<th><?php esc_html_e( 'TrackShip Provider', 'trackship-for-woocommerce' ); ?></th>
 						</tr>
 					</thead>
