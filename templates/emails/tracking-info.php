@@ -25,7 +25,7 @@ if ( $tracking_items ) :
 			<?php foreach ( $tracking_items as $key => $tracking_item ) { ?>
 				<?php
 				$ship_status = $new_status;
-				$tracking_link = isset( $shipment_status[ $key ][ 'tracking_page' ] ) && get_option( 'wc_ast_use_tracking_page', 1 ) ? $shipment_status[ $key ][ 'tracking_page' ] : $tracking_item[ 'formatted_tracking_link' ];
+				$tracking_link = isset( $tracking_item[ 'ast_tracking_link' ] ) && get_option( 'wc_ast_use_tracking_page', 1 ) ? $tracking_item[ 'ast_tracking_link' ] : $tracking_item[ 'formatted_tracking_link' ];
 
 				do_action( 'before_tracking_widget_email', $tracking_item, $order_id );
 				?>
@@ -33,7 +33,7 @@ if ( $tracking_items ) :
 					<div style="display: table;width: 100%;">
 						<div class="display-table-cell v-align-top" >
 							<p style="margin-bottom:0;">
-								<?php 
+								<?php
 								if ( $ship_status ) {
 									if ( in_array( $ship_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown' ) ) ) {
 										echo '<span class="shipment_status shipped" >';
@@ -65,20 +65,12 @@ if ( $tracking_items ) :
 								?>
 							</p>
 							<?php if ( 'shipped' != $ship_status ) { ?>
-								<?php if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3', 't_layout_2' ) ) ) { ?>
-									<?php $icon_layout = 't_layout_1' == $tracking_page_layout ? '-widget.png' : '-widget-v2.png'; ?>
-									<?php $icon_layout = 't_layout_2' == $tracking_page_layout ? '-widget-v4.png' : $icon_layout; ?>
-									<div class="widget_progress_bar mobile_version" style="width:100%;margin: 15px 0 10px;">
-										<?php $widget_icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ) . esc_html( $icon_layout ); ?>
-										<img style="width:100%;" src="<?php echo esc_url( $widget_icon_url ); ?>">
-									</div>
-								<?php } else { ?>
-									<div class="tracker-progress-bar mobile_version <?php echo esc_html( $tracking_page_layout ); ?>">
-										<div class="progress">
-											<div class="progress-bar <?php echo esc_html( $ship_status ); ?>" ></div>
-										</div>
-									</div>
-								<?php } ?>
+								<?php $icon_layout = 't_layout_1' == $tracking_page_layout ? '-widget.png' : '-widget-v2.png'; ?>
+								<?php $icon_layout = 't_layout_2' == $tracking_page_layout ? '-widget-v4.png' : $icon_layout; ?>
+								<div class="widget_progress_bar mobile_version" style="width:100%;margin: 15px 0 10px;">
+									<?php $widget_icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ) . esc_html( $icon_layout ); ?>
+									<img style="width:100%;" src="<?php echo esc_url( $widget_icon_url ); ?>">
+								</div>
 							<?php } ?>
 						</div>
 						<div class="display-table-cell" >
@@ -89,20 +81,12 @@ if ( $tracking_items ) :
 					</div>
 					<div style="display:block;"></div>
 					<?php if ( 'shipped' != $ship_status ) { ?>
-						<?php if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3', 't_layout_2' ) ) ) { ?>
-							<?php $icon_layout = 't_layout_1' == $tracking_page_layout ? '-widget.png' : '-widget-v2.png'; ?>
-							<?php $icon_layout = 't_layout_2' == $tracking_page_layout ? '-widget-v4.png' : $icon_layout; ?>
-							<div class="widget_progress_bar desktop_version" style="width:100%;margin: 15px 0 10px;">
-								<?php $widget_icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ) . esc_html( $icon_layout ); ?>
-								<img style="width:100%;" src="<?php echo esc_url( $widget_icon_url ); ?>">
-							</div>
-						<?php } else { ?>
-							<div class="tracker-progress-bar desktop_version <?php echo esc_html( $tracking_page_layout ); ?>">
-								<div class="progress">
-									<div class="progress-bar <?php echo esc_html( $ship_status ); ?>" ></div>
-								</div>
-							</div>
-						<?php } ?>
+						<?php $icon_layout = 't_layout_1' == $tracking_page_layout ? '-widget.png' : '-widget-v4.png'; ?>
+						<?php $icon_layout = 't_layout_3' == $tracking_page_layout ? '-widget-v2.png' : $icon_layout; ?>
+						<div class="widget_progress_bar desktop_version" style="width:100%;margin: 15px 0 10px;">
+							<?php $widget_icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ) . esc_html( $icon_layout ); ?>
+							<img style="width:100%;" src="<?php echo esc_url( $widget_icon_url ); ?>">
+						</div>
 					<?php } ?>
 				</div>
 			<?php } ?>
@@ -156,7 +140,7 @@ if ( $tracking_items ) :
 		.display-table-cell{display:table-cell;}
 		.track_your_order{float: right;display:inline-block;}
 		.mobile_version{display:none;}
-		.desktop_version{display:block;}
+		.widget_progress_bar.desktop_version{display:block !important;}
 	}
 </style>
 
