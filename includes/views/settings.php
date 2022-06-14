@@ -2,6 +2,30 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+$url = 'https://my.trackship.info/wp-json/tracking/get_user_plan';								
+$args[ 'body' ] = array(
+	'user_key' => trackship_for_woocommerce()->actions->get_trackship_key(),				
+);
+$response = wp_remote_post( $url, $args );
+if ( is_wp_error( $response ) ) {
+	$plan_data = array();
+} else {
+	$plan_data = json_decode( $response[ 'body' ] );					
+}
+update_option( 'user_plan', $plan_data->subscription_plan );
+if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocommerce/zorem-sms-for-woocommerce.php' ) ) {
+	?>
+	<script>
+		var smswoo_active = 'no';
+	</script>
+	<?php 
+} else {
+	?>
+	<script>
+		var smswoo_active = 'yes';
+	</script>
+	<?php 
+}
 $completed_order_with_tracking = $this->completed_order_with_tracking();		
 $completed_order_with_zero_balance = $this->completed_order_with_zero_balance();							
 $completed_order_with_do_connection = $this->completed_order_with_do_connection();
@@ -66,6 +90,15 @@ if ( 'delete' != $cookie && $total_orders > 0 ) { ?>
 				<div class="late_shipment_days_settings">
 					<label><?php esc_html_e('Number of days for late shipments', 'trackship-for-woocommerce'); ?></label>	
 					<input class="input-text" type="number" name="wcast_late_shipments_days" id="wcast_late_shipments_days" min="1" value="<?php echo esc_html( $late_shipments_days ); ?>">
+				</div>
+				<div class="settings_toogle">
+					<input type="hidden" name="enable_email_widget" value="0"/>
+					<input class="ast-tgl ast-tgl-flat " id="enable_email_widget" name="enable_email_widget" data-settings="enable_email_widget" type="checkbox" 
+					<?php echo get_option( 'enable_email_widget' ) ? 'checked' : ''; ?> value="1"/>
+					<label class="ast-tgl-btn ast-tgl-btn-green" for="enable_email_widget"></label>
+					<label class="setting_ul_tgl_checkbox_label" for="enable_email_widget">
+						<span><?php esc_html_e( 'Enable unsubscribe (opt-out) from email notifications', 'trackship-for-woocommerce' ); ?></span>
+					</label>
 				</div>
 			</div>
 		</div>

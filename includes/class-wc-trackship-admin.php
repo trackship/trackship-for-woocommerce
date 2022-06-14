@@ -341,7 +341,7 @@ class WC_Trackship_Admin {
 		if ( trackship_for_woocommerce()->is_trackship_connected() ) {
 			add_submenu_page( 'trackship-dashboard', 'Dashboard', __( 'Dashboard', 'trackship-for-woocommerce' ), apply_filters( 'trackship_dashboard_menu_capabilities', 'manage_woocommerce' ), 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), 1 );
 			
-			add_submenu_page( 'trackship-dashboard', 'Analytics', 'Analytics', 'manage_woocommerce', 'trackship-analytics', array( $this, 'analytics_page_callback' ) );
+			add_submenu_page( 'trackship-dashboard', 'Analytics', __( 'Analytics', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-analytics', array( $this, 'analytics_page_callback' ) );
 
 			add_submenu_page( 'trackship-dashboard', 'Shipments', __( 'Shipments', 'trackship-for-woocommerce' ), apply_filters( 'trackship_shipments_menu_capabilities', 'manage_woocommerce' ), 'trackship-shipments', array( $this, 'shipments_page_callback' ) );
 
@@ -360,7 +360,6 @@ class WC_Trackship_Admin {
 		?>
 		<div class="zorem-layout">
 			<?php include 'views/header2.php'; ?>
-			<?php do_action('ast_settings_admin_notice'); ?>
 			<?php include 'views/content.php'; ?>
 		</div>
 		<?php
@@ -373,7 +372,6 @@ class WC_Trackship_Admin {
 		?>
 		<div class="zorem-layout">
 			<?php include 'views/header2.php'; ?>
-			<?php do_action('ast_settings_admin_notice'); ?>
 			<div class="trackship_admin_content">
 				<section id="content_trackship_dashboard" style="display:block" class="inner_tab_section">
 					<div class="tab_inner_container">
@@ -392,7 +390,6 @@ class WC_Trackship_Admin {
 		?>
 		<div class="zorem-layout">
 			<?php include 'views/header2.php'; ?>
-			<?php do_action('ast_settings_admin_notice'); ?>
 			<div class="trackship_admin_content">
 				<section id="content_trackship_logs" style="display:block" class="inner_tab_section">
 					<div class="tab_inner_container">
@@ -411,7 +408,6 @@ class WC_Trackship_Admin {
 		?>
 		<div class="zorem-layout">
 			<?php include 'views/header2.php'; ?>
-			<?php do_action('ast_settings_admin_notice'); ?>
 			<div class="trackship_admin_content">
 				<section id="content_trackship_tools" style="display:block" class="inner_tab_section">
 					<div class="tab_inner_container">
@@ -430,7 +426,6 @@ class WC_Trackship_Admin {
 		?>
 		<div class="zorem-layout">
 			<?php include 'views/header2.php'; ?>
-			<?php do_action('ast_settings_admin_notice'); ?>
 			<div class="trackship_admin_content">
 				<section id="content_trackship_fullfill_dashboard" class="">
 					<div class="tab_inner_container">
@@ -877,8 +872,8 @@ class WC_Trackship_Admin {
 							<fieldset style="<?php echo 'other' != get_option( $id ) ? 'display:none;' : 'padding-top: 10px;'; ?>" class="trackship_other_page_fieldset">
 								<input type="text" name="wc_ast_trackship_other_page" id="wc_ast_trackship_other_page" value="<?php echo esc_html( get_option('wc_ast_trackship_other_page') ); ?>">
 							</fieldset>
-							<p class="tracking_page_desc"><?php esc_html_e( 'Add the [trackship-track-order] shortcode in the selected page.', 'trackship-for-woocommerce' ); ?> <a href="https://www.zorem.com/docs/woocommerce-advanced-shipment-tracking/integration/" target="blank"><?php esc_html_e( 'More info', 'trackship-for-woocommerce' ); ?></a></p>
-						</span>	
+							<p class="tracking_page_desc"><?php esc_html_e( 'Add the [trackship-track-order] shortcode in the selected page.', 'trackship-for-woocommerce' ); ?> <a href="https://www.zorem.com/docs/woocommerce-advanced-shipment-tracking/integration/" target="blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a></p>
+						</span>
 					</li>	
 				<?php } else if ( 'button' == $array['type'] ) { ?>
 					<li>
@@ -1371,7 +1366,7 @@ class WC_Trackship_Admin {
 				</div>
 				<div class="popup_body">
 					<div class="order_id"><strong><?php esc_html_e( 'Order Number', 'trackship-for-woocommerce' ); ?></strong><span></span></div>
-					<div class="shipment_status"><strong><?php esc_html_e( 'Shipment Status', 'trackship-for-woocommerce' ); ?></strong><span></span></div>
+					<div class="shipment_status"><strong><?php esc_html_e( 'Shipment status', 'trackship-for-woocommerce' ); ?></strong><span></span></div>
 					<div class="tracking_number"><strong><?php esc_html_e( 'Tracking Number', 'trackship-for-woocommerce' ); ?></strong><span></span></div>
 					<div class="time"><strong><?php esc_html_e( 'Time', 'trackship-for-woocommerce' ); ?></strong><span></span></div>
 					<div class="to"><strong><?php esc_html_e( 'To', 'trackship-for-woocommerce' ); ?></strong><span></span></div>

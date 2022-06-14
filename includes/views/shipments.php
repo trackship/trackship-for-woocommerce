@@ -9,12 +9,12 @@ $nonce = wp_create_nonce( 'wc_ast_tools');
 $ship_status = array(
 	'active'				=> __( 'All Shipments', 'trackship-for-woocommerce' ),
 	'in_transit'			=> __( 'In Transit', 'trackship-for-woocommerce' ),
-	'out_for_delivery'		=> __( 'Out for Delivery', 'trackship-for-woocommerce' ),
+	'out_for_delivery'		=> __( 'Out For Delivery', 'trackship-for-woocommerce' ),
 	'pre_transit'			=> __( 'Pre Transit', 'trackship-for-woocommerce' ),
 	'exception'				=> __( 'Exception', 'trackship-for-woocommerce' ),
 	'delivered'				=> __( 'Delivered', 'trackship-for-woocommerce' ),
-	'return_to_sender'		=> __( 'Return to Sender', 'trackship-for-woocommerce' ),
-	'available_for_pickup'	=> __( 'Available for Pickup', 'trackship-for-woocommerce' ),
+	'return_to_sender'		=> __( 'Return To Sender', 'trackship-for-woocommerce' ),
+	'available_for_pickup'	=> __( 'Available For Pickup', 'trackship-for-woocommerce' ),
 	'late_shipment'			=> __( 'Late Shipments', 'trackship-for-woocommerce' ),
 	'tracking_issues'		=> __( 'Tracking Issues', 'trackship-for-woocommerce' ),
 );

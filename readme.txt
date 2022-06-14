@@ -2,9 +2,9 @@
 Contributors: TrackShip
 Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 5.3
-Tested up to: 5.9.3
+Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,15 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended).
 
 == Changelog ==
+= 1.4.1 - 2022-06-14 =
+* Dev - Last event update time added in order admin list
+* Dev - tab added in Tracking Page Shipment progress, Items in this shipment, Notifications.
+* Dev - Unsubscribe shipment status email option added in Shipment status email and on Tracking Page
+* Dev - compatibility added for yith woocommerce badge management plugin
+* Enhancement - for USPS if shipment Delivered, Parcel Locker in this case we will show Delivered, Parcel Locker.
+* Enhancement - Mockup order preview option added in TrackShip Shipment status email Customizer.
+* Enhancement - Late Shipement email logs added in TrackShip logs.
+
 = 1.4.0 - 2022-05-17 =
 * Enhancement - Analytics menu name changed under WooCommerce Analytics "Shipping & Delivery"
 * Enhancement - Settings design improved

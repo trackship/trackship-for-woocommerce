@@ -25,13 +25,10 @@
 		.col.tracking-detail{
 			border: 1px solid <?php echo esc_html( $border_color ); ?>;
 		}
-		body .col.tracking-detail .shipment-header{
-			border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
-		}
 		body .col.tracking-detail .trackship_branding{
 			border-top: 1px solid <?php echo esc_html( $border_color ); ?>;
 		}
-		body .tracking-detail .h4-heading, .tracking-detail .tracking_number_wrap {
+		body .col.tracking-detail .shipment-header, body .shipment_progress_heading_div, body .tracking-detail .h4-heading, .tracking-detail .tracking_number_wrap {
 			border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
 		}
 	<?php }	?>
@@ -108,66 +105,93 @@
 				<?php } ?>
 			</div>
 		</div>
-		<div class="tracking-details" style="<?php echo 1 == $hide_tracking_events ? 'display:none' : ''; ?>">
-			<div class="shipment_progress_heading_div">
-				<h4 class="h4-heading text-uppercase">Tracking Details</h4>
+		<div class="shipment_progress_heading_div">
+			<label data-label="tracking_events_details" class="shipment_progress_label tracking_detail_label <?php echo 1 != $hide_tracking_events ? 'checked' : ''; ?>" style="<?php echo 1 == $hide_tracking_events ? 'display:none' : ''; ?>">Shipment Progress</label>
+			<label data-label="product_details" class="shipment_progress_label <?php echo 1 == $hide_tracking_events ? 'checked' : ''; ?>">Items in this shipment</label>
+			<label data-label="shipment_status_notifications" class="shipment_progress_label ">Notifications</label>
+		</div>
+		<div class="tracking_event_tab_view">
+			<div class="tracking-details tracking_events_details" style=" style="display:none;"">
+				<?php if ( 0 == $hide_tracking_events ) { ?>
+					<div class="tracking_details_by_date">			
+						<ul class="timeline">
+							<li>
+								<strong>October 1, 2020 07:59</strong>
+								<p>Out for Delivery, Expected Delivery by 8:00pm - EAST HARTFORD, CT - <span>EAST HARTFORD</span></p>
+							</li>
+							<li>
+								<strong>October 1, 2020 07:48</strong>
+								<p>Arrived at Post Office - HARTFORD, CT - <span>HARTFORD</span></p>
+							</li> 
+							<li>
+								<strong>October 1, 2020 00:10</strong>
+								<p>Arrived at USPS Regional Destination Facility - SPRINGFIELD MA NETWORK DISTRIBUTION CENTER,  - <span>SPRINGFIELD MA NETWORK DISTRIBUTION CENTER</span></p>
+							</li>
+							<li>
+								<strong>September 30, 2020 00:00</strong>
+								<p>In Transit to Next Facility<span></span></p>
+							</li>   
+							<li>
+								<strong>September 29, 2020 13:12</strong>
+								<p>USPS in possession of item - SHELDON, WI - <span>SHELDON</span></p>
+							</li>
+						</ul>							
+					</div>
+				<?php } elseif ( 2 == $hide_tracking_events ) { ?>
+					<div class="tracking_details_by_date">						
+						<ul class="timeline new-details">
+							<li>
+								<strong>October 1, 2020 07:59</strong>
+								<p>Out for Delivery, Expected Delivery by 8:00pm - EAST HARTFORD, CT - <span>EAST HARTFORD</span></p>
+							</li>
+							<li>
+								<strong>October 1, 2020 07:48</strong>
+								<p>Arrived at Post Office - HARTFORD, CT - <span>HARTFORD</span></p>
+							</li> 				
+						</ul>			
+						<ul class="timeline old-details" style="display:none;">
+							<li>
+								<strong>October 1, 2020 00:10</strong>
+								<p>Arrived at USPS Regional Destination Facility - SPRINGFIELD MA NETWORK DISTRIBUTION CENTER,  - <span>SPRINGFIELD MA NETWORK DISTRIBUTION CENTER</span></p>
+							</li>
+							<li>
+								<strong>September 30, 2020 00:00</strong>
+								<p>In Transit to Next Facility<span></span></p>
+							</li>   
+							<li>
+								<strong>September 29, 2020 13:12</strong>
+								<p>USPS in possession of item - SHELDON, WI - <span>SHELDON</span></p>
+							</li>
+						</ul>							
+					</div>
+					<a class="view_old_details" href="javaScript:void(0);" style="display: inline;"><?php esc_html_e( 'view more', 'trackship-for-woocommerce' ); ?></a>
+					<a class="hide_old_details" href="javaScript:void(0);" style="display: none;"><?php esc_html_e( 'view less', 'trackship-for-woocommerce' ); ?></a>		
+				<?php } ?>
 			</div>
-			<?php if ( 0 == $hide_tracking_events ) { ?>
-				<div class="tracking_details_by_date">			
-					<ul class="timeline">
-						<li>
-							<strong>October 1, 2020 07:59</strong>
-							<p>Out for Delivery, Expected Delivery by 8:00pm - EAST HARTFORD, CT - <span>EAST HARTFORD</span></p>
-						</li>
-						<li>
-							<strong>October 1, 2020 07:48</strong>
-							<p>Arrived at Post Office - HARTFORD, CT - <span>HARTFORD</span></p>
-						</li> 
-						<li>
-							<strong>October 1, 2020 00:10</strong>
-							<p>Arrived at USPS Regional Destination Facility - SPRINGFIELD MA NETWORK DISTRIBUTION CENTER,  - <span>SPRINGFIELD MA NETWORK DISTRIBUTION CENTER</span></p>
-						</li>
-						<li>
-							<strong>September 30, 2020 00:00</strong>
-							<p>In Transit to Next Facility<span></span></p>
-						</li>   
-						<li>
-							<strong>September 29, 2020 13:12</strong>
-							<p>USPS in possession of item - SHELDON, WI - <span>SHELDON</span></p>
-						</li>
-					</ul>							
-				</div>
-			<?php } elseif ( 2 == $hide_tracking_events ) { ?>
-				<div class="tracking_details_by_date">						
-					<ul class="timeline new-details">
-						<li>
-							<strong>October 1, 2020 07:59</strong>
-							<p>Out for Delivery, Expected Delivery by 8:00pm - EAST HARTFORD, CT - <span>EAST HARTFORD</span></p>
-						</li>
-						<li>
-							<strong>October 1, 2020 07:48</strong>
-							<p>Arrived at Post Office - HARTFORD, CT - <span>HARTFORD</span></p>
-						</li> 				
-					</ul>			
-					<ul class="timeline old-details" style="display:none;">
-						<li>
-							<strong>October 1, 2020 00:10</strong>
-							<p>Arrived at USPS Regional Destination Facility - SPRINGFIELD MA NETWORK DISTRIBUTION CENTER,  - <span>SPRINGFIELD MA NETWORK DISTRIBUTION CENTER</span></p>
-						</li>
-						<li>
-							<strong>September 30, 2020 00:00</strong>
-							<p>In Transit to Next Facility<span></span></p>
-						</li>   
-						<li>
-							<strong>September 29, 2020 13:12</strong>
-							<p>USPS in possession of item - SHELDON, WI - <span>SHELDON</span></p>
-						</li>
-					</ul>							
-				</div>
-				<a class="view_old_details" href="javaScript:void(0);" style="display: inline;"><?php esc_html_e( 'view more', 'trackship-for-woocommerce' ); ?></a>
-				<a class="hide_old_details" href="javaScript:void(0);" style="display: none;"><?php esc_html_e( 'view less', 'trackship-for-woocommerce' ); ?></a>		
-			<?php } ?>
-
+			<div class="product_details" style="display:none;">
+				<ul class="tpi_product_tracking_ul">
+					<li>
+						<img width="50" height="50" src="<?php echo esc_html( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/dummy-product-image.jpg" loading="lazy">	
+						<span>
+							<a target="_blank" href="#">A Study in Scarlet</a>
+							 x 1
+						</span>
+					</li>
+					<li>
+						<img width="50" height="50" src="<?php echo esc_html( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/dummy-product-image.jpg" loading="lazy">	
+						<span>
+							<a target="_blank" href="#">A Study in Scarlet</a>
+							 x 1
+						</span>
+					</li>
+				</ul>
+			</div>
+			<div class="shipment_status_notifications" style="display:none;">
+				<label>
+					<input type="checkbox" class="unsubscribe_emails_checkbox" name="unsubscribe_emails" value="1" checked>
+					<span style="font-weight: normal;"><?php esc_html_e( 'Email Notifications', 'trackship-for-woocommerce' ); ?></span>
+				</label>
+			</div>
 		</div>
 	</div>
 	<div class="trackship_branding" >

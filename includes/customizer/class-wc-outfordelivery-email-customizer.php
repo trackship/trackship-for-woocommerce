@@ -56,8 +56,8 @@ class TSWC_Outfordelivery_Customizer_Email {
 	*/	
 	public function preview_outfordelivery_email() {
 		// Load WooCommerce emails.
-		$preview_id     = 1;
-		$order = trackship_admin_customizer()->get_wc_order_for_preview( 'mockup' );
+		$preview_id = get_option( 'email_preview', 'mockup' );
+		$order = trackship_admin_customizer()->get_wc_order_for_preview( $preview_id );	
 		
 		$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_outfordelivery_email_settings', 'wcast_outfordelivery_email_heading', $this->defaults['wcast_outfordelivery_email_heading']);
 		$email_heading = str_replace( '{site_title}', $this->get_blogname(), $email_heading );
@@ -92,8 +92,8 @@ class TSWC_Outfordelivery_Customizer_Email {
 			$message = preg_replace_callback($regex, array( $this, '_appendCampaignToString'), $message);	
 		}
 		
-		$shipment_status = trackship_admin_customizer()->get_wc_shipment_status_for_preview( 'out_for_delivery' );
-		$tracking_items = trackship_admin_customizer()->get_tracking_items_for_preview();
+		$shipment_status = trackship_admin_customizer()->get_wc_shipment_status_for_preview( 'out_for_delivery', $preview_id );
+		$tracking_items = trackship_admin_customizer()->get_tracking_items_for_preview( $preview_id );
 
 		$local_template	= get_stylesheet_directory() . '/woocommerce/emails/tracking-info.php';			
 		if ( file_exists( $local_template ) && is_writable( $local_template ) ) {				

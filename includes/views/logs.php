@@ -9,7 +9,7 @@ $all_shipment_status = $wpdb->get_results( "SELECT shipment_status FROM {$log_ta
 <div class="trackship_logs_option">
     <span class="log_shipment_status">
 		<select class="select_option" name="log_shipment_status" id="log_shipment_status">
-            <option value=""><?php esc_html_e('All Shipment status', 'woocommerce'); ?></option>
+            <option value=""><?php esc_html_e('All Notifications', 'trackship-for-woocommerce'); ?></option>
 			<?php foreach ( $all_shipment_status as $status ) { ?>
                 <option value="<?php echo esc_html( $status->shipment_status ); ?>"><?php echo esc_html( apply_filters("trackship_status_filter", $status->shipment_status ) ); ?></option>
 			<?php } ?>
@@ -17,9 +17,9 @@ $all_shipment_status = $wpdb->get_results( "SELECT shipment_status FROM {$log_ta
 	</span>
     <span class="log_type">
         <select class="select_option" name="log_type" id="log_type">
-            <option value=""><?php esc_html_e('All Types', 'woocommerce'); ?></option>
-            <option value="Email"><?php esc_html_e('Emails', 'woocommerce'); ?></option>
-            <option value="SMS"><?php esc_html_e('SMS', 'woocommerce'); ?></option>
+            <option value=""><?php esc_html_e('All Types', 'trackship-for-woocommerce'); ?></option>
+            <option value="Email"><?php esc_html_e('Emails', 'trackship-for-woocommerce'); ?></option>
+            <option value="SMS"><?php esc_html_e('SMS', 'trackship-for-woocommerce'); ?></option>
         </select>
 	</span>
     <button class="serch_button" type="button" style="float:right;"><?php esc_html_e( 'Search', 'trackship-for-woocommerce' ); ?></button>
