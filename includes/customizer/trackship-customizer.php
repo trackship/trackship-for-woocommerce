@@ -135,6 +135,14 @@ class TS4WC_Admin_Customizer {
 									<?php } ?>
 								</select>
 							</span> */?>
+							<?php $preview_id = get_option( 'email_preview', 'mockup' ); ?>
+							<span class="header_mockup_order" style="padding: 0 17px;">
+								<select name="email_preview" id="email_preview" class="select">
+									<?php foreach( $this->get_order_ids() as $key => $label ) { ?>
+										<option value="<?php echo esc_html( $key ); ?>" <?php echo $preview_id == $key ? 'selected' : ''; ?>><?php echo esc_html( $label ); ?></option>
+									<?php } ?>
+								</select>
+							</span>
 							<input type="hidden" name="customizer_type" id="customizer_type" value="<?php echo esc_html( $type ); ?>">
 							<span class="" style="float: right;">
 								<?php /*<span class="tgl-btn-parent" style="display:none;">
@@ -313,6 +321,17 @@ class TS4WC_Admin_Customizer {
 		$shipping_address_label = get_option( 'shipping_address_label', __( 'Shipping address', 'trackship-for-woocommerce' ) );
 
 		$settings = array(
+			'email_preview'	=> array(
+				'id'	=> 'email_preview',
+				'class' => '',
+				'label' => '',
+				'title'	=> '',
+				'type'	=> 'text',
+				'option_name'=> 'email_preview',
+				'option_type'=> 'key',
+				'show'	=> false,
+			),
+
 			//panels
 			'email_notifications'	=> array(
 				'id'	=> 'email_notifications',
@@ -327,7 +346,7 @@ class TS4WC_Admin_Customizer {
 				'id'	=> 'email_design',
 				'class' => 'shipment_email_panel',
 				'title'	=> esc_html__( 'Email Design', 'trackship-for-woocommerce' ),
-				'label' => esc_html__( 'Email design', 'trackship-for-woocommerce' ),
+				'label' => esc_html__( 'Email Design', 'trackship-for-woocommerce' ),
 				'type'	=> 'panel',
 				'iframe_url' => $email_iframe_url,
 				'show'	=> true,
@@ -336,7 +355,7 @@ class TS4WC_Admin_Customizer {
 				'id'	=> 'tracking_page',
 				'class' => 'tracking_page_panel',
 				'title'	=> esc_html__( 'Tracking Page Widget', 'trackship-for-woocommerce' ),
-				'label'	=> esc_html__( 'Tracking page widget', 'trackship-for-woocommerce' ),
+				'label'	=> esc_html__( 'Tracking Page Widget', 'trackship-for-woocommerce' ),
 				'type'	=> 'panel',
 				'iframe_url' => $tracking_pageiframe_url,
 				'show'	=> true,
@@ -345,7 +364,7 @@ class TS4WC_Admin_Customizer {
 			//sub-panels
 			'email_content' => array(
 				'id'	=> 'email_content',
-				'title'	=> esc_html__( 'Email Content', 'ast-pro' ),
+				'title'	=> esc_html__( 'Email Content', 'trackship-for-woocommerce' ),
 				'type'	=> 'sub-panel',
 				'parent'=> 'email_notifications',
 				'show'	=> true,
@@ -353,7 +372,7 @@ class TS4WC_Admin_Customizer {
 			),
 			'tracking_widget' => array(
 				'id'	=> 'tracking_widget',
-				'title'	=> esc_html__( 'Tracking Widget', 'ast-pro' ),
+				'title'	=> esc_html__( 'Tracking Widget', 'trackship-for-woocommerce' ),
 				'type'	=> 'sub-panel',
 				'parent'=> 'email_design',
 				'show'	=> true,
@@ -361,7 +380,7 @@ class TS4WC_Admin_Customizer {
 			),
 			'tracking_button' => array(
 				'id'	=> 'tracking_button',
-				'title'	=> esc_html__( 'Track Button', 'ast-pro' ),
+				'title'	=> esc_html__( 'Track Button', 'trackship-for-woocommerce' ),
 				'type'	=> 'sub-panel',
 				'parent'=> 'email_design',
 				'show'	=> true,
@@ -369,7 +388,7 @@ class TS4WC_Admin_Customizer {
 			),
 			'content_display' => array(
 				'id'	=> 'content_display',
-				'title'	=> esc_html__( 'Content Display', 'ast-pro' ),
+				'title'	=> esc_html__( 'Content Display', 'trackship-for-woocommerce' ),
 				'type'	=> 'sub-panel',
 				'parent'=> 'email_design',
 				'show'	=> true,
@@ -378,7 +397,7 @@ class TS4WC_Admin_Customizer {
 
 			'widget_style' => array(
 				'id'	=> 'widget_style',
-				'title'	=> esc_html__( 'Widget Style', 'ast-pro' ),
+				'title'	=> esc_html__( 'Widget Style', 'trackship-for-woocommerce' ),
 				'type'	=> 'sub-panel',
 				'parent'=> 'tracking_page',
 				'show'	=> true,
@@ -386,7 +405,7 @@ class TS4WC_Admin_Customizer {
 			),
 			'widget_layout' => array(
 				'id'	=> 'widget_layout',
-				'title'	=> esc_html__( 'Widget Layout', 'ast-pro' ),
+				'title'	=> esc_html__( 'Widget Layout', 'trackship-for-woocommerce' ),
 				'type'	=> 'sub-panel',
 				'parent'=> 'tracking_page',
 				'show'	=> true,
@@ -394,7 +413,7 @@ class TS4WC_Admin_Customizer {
 			),
 			'tracking_link' => array(
 				'id'	=> 'tracking_link',
-				'title'	=> esc_html__( 'Tracking Link', 'ast-pro' ),
+				'title'	=> esc_html__( 'Tracking Link', 'trackship-for-woocommerce' ),
 				'type'	=> 'sub-panel',
 				'parent'=> 'tracking_page',
 				'show'	=> true,
@@ -744,7 +763,7 @@ class TS4WC_Admin_Customizer {
 				'class'	=> 'heading ' . $value . '_sub_menu all_status_submenu',
 			);
 			$settings[ 'wcast_'.$key.'_email_content' ] = array(
-				'title'		=> esc_html__( 'Email content', 'trackship-for-woocommerce' ),
+				'title'		=> esc_html__( 'Email Content', 'trackship-for-woocommerce' ),
 				'desc'		=> '',
 				'default'	=> $this->get_value( $email_settings, 'wcast_' . $key . '_email_content', $key ),
 				'type'		=> 'textarea',
@@ -972,7 +991,7 @@ class TS4WC_Admin_Customizer {
 											<input type="checkbox" id="<?php esc_attr_e( $id ); ?>" name="<?php esc_attr_e( $id ); ?>" class="tgl tgl-flat" <?php echo $array_default ? 'checked' : ''; ?> value="1">
 											<label class="tgl-btn" for="<?php esc_attr_e( $id ); ?>"></label>
 										</span>
-										<label for="<?php esc_attr_e( $id ); ?>"><?php esc_html_e( 'Enable email', 'trackship-for-woocommerce' ); ?></label>
+										<label for="<?php esc_attr_e( $id ); ?>" class="shipment_email_label"><?php esc_html_e( 'Enable email', 'trackship-for-woocommerce' ); ?></label>
 									</label>
 								</div>
 							<?php } else if ( isset($array['type']) && $array['type'] == 'range' ) { ?>
@@ -989,6 +1008,29 @@ class TS4WC_Admin_Customizer {
 				<?php
 			}
 		}
+	}
+
+	/**
+	 * Get Order Ids
+	 *
+	 * @return array
+	 */
+	public static function get_order_ids() {		
+		$order_array = array();
+		$order_array['mockup'] = __( 'Mockup Order', 'trackship-for-woocommerce' );
+		
+		$orders = wc_get_orders( array(
+			'limit'        => 20,
+			'orderby'      => 'date',
+			'order'        => 'DESC',
+			'meta_key'     => '_wc_shipment_tracking_items', // The postmeta key field
+			'meta_compare' => 'EXISTS', // The comparison argument
+		));	
+			
+		foreach ( $orders as $order ) {				
+			$order_array[ $order->get_id() ] = $order->get_id() . ' - ' . $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+		}
+		return $order_array;
 	}
 
 	/**
@@ -1038,18 +1080,17 @@ class TS4WC_Admin_Customizer {
 	 * @param string $order_status
 	 * @return object
 	 */
-	public function get_wc_order_for_preview( $order_status = null, $order_id = null ) {
+	public function get_wc_order_for_preview( $order_id ) {
 		if ( ! empty( $order_id ) && 'mockup' != $order_id ) {
 			return wc_get_order( $order_id );
 		} else {			
-
 			// Instantiate order object
 			$order = new WC_Order();			
 			
 			// Other order properties
 			$order->set_props( array(
 				'id'                 => 1,
-				'status'             => ( null === $order_status ? 'processing' : $order_status ),
+				'status'             => ( 'processing' ),
 				'shipping_first_name' => 'Sherlock',
 				'shipping_last_name'  => 'Holmes',
 				'shipping_company'    => 'Detectives Ltd.',
@@ -1093,25 +1134,36 @@ class TS4WC_Admin_Customizer {
 		}
 	}
 	
-	public function get_wc_shipment_status_for_preview( $status = 'in_transit' ) {
-		$array = array();
-		$array[] = array(
-			'status_date' => '2021-07-27 15:28:02',
-			'est_delivery_date' => '2021-07-30 15:28:02',
-			'status' => $status,
-			'tracking_events' => array(),
-			'tracking_page' => '',
-		);
-		return $array;
+	public function get_wc_shipment_status_for_preview( $status = 'in_transit', $order_id = null ) {
+		$shipment_status = array();
+		if ( ! empty( $order_id ) && 'mockup' != $order_id ) {
+			$array = get_post_meta( $order_id, 'shipment_status', true );
+			$shipment_status[] = $array[0];
+		} else {
+			$shipment_status[] = array(
+				'status_date' => '2021-07-27 15:28:02',
+				'est_delivery_date' => '2021-07-30 15:28:02',
+				'status' => $status,
+				'tracking_events' => array(),
+				'tracking_page' => '',
+			);
+		}
+		return $shipment_status;
 	}
 	
-	public function get_tracking_items_for_preview() {
+	public function get_tracking_items_for_preview( $order_id = null ) {
 		$tracking_items = array();
-		$tracking_items[] = array(
-			'tracking_provider' => 'usps',
-			'tracking_number' => '4208001392612927',
-			'formatted_tracking_provider' => 'USPS',			
-		);
+		if ( ! empty( $order_id ) && 'mockup' != $order_id ) {
+			$array = trackship_for_woocommerce()->get_tracking_items( $order_id );
+			$tracking_items[] = $array[0];
+		} else {
+			$tracking_items[] = array(
+				'tracking_provider' => 'usps',
+				'tracking_number' => '4208001392612927',
+				'formatted_tracking_provider' => 'USPS',
+				'formatted_tracking_link' => 'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=4208001392612927'
+			);
+		}
 		return $tracking_items;
 	}
 	
