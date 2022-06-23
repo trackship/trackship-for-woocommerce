@@ -24,7 +24,7 @@ class WC_TrackShip_Email_Manager {
 		$for_amazon_order = trackship_for_woocommerce()->ts_actions->is_notification_on_for_amazon( $order_id );
 		$receive_email = get_post_meta( $order_id, '_receive_shipment_emails' , true );
 
-		if ( ! $enable || ! $for_amazon_order || 0 == $receive_email ) {
+		if ( ! $enable || ! $for_amazon_order || '0' == $receive_email ) {
 			return;
 		}
 
@@ -185,7 +185,7 @@ class WC_TrackShip_Email_Manager {
 		$for_amazon_order = trackship_for_woocommerce()->ts_actions->is_notification_on_for_amazon( $order_id );
 		$receive_email = get_post_meta( $order->get_id(), '_receive_shipment_emails' , true );
 
-		if ( ! $enable || ! $for_amazon_order || 0 == $receive_email ) {
+		if ( ! $enable || ! $for_amazon_order || '0' == $receive_email ) {
 			return;
 		}
 
