@@ -70,7 +70,7 @@ class WC_TrackShip_Api_Call {
 					if ( is_string( $shipment_status ) ) {
 						$shipment_status = array();
 					}
-					$shipment_status[$key]['status'] = "Something went wrong: {$error_message}";
+					$shipment_status[$key]['status'] = "Something went wrong";
 					$shipment_status[$key]['status_date'] = gmdate('Y-m-d H:i:s');
 					update_post_meta( $order->get_id(), 'shipment_status', $shipment_status);
 
@@ -93,7 +93,7 @@ class WC_TrackShip_Api_Call {
 						
 						$shipment_status[$key]['pending_status'] = $body['status_msg'];
 						
-						$shipment_status[$key]['status_date'] = gmdate('Y-m-d H:i:s');
+						$shipment_status[$key]['status_date'] = current_time('Y-m-d H:i:s');
 						$shipment_status[$key]['est_delivery_date'] = '';														
 						
 						update_post_meta( $order->get_id(), 'shipment_status', $shipment_status);

@@ -43,12 +43,14 @@ class tswc_smswoo_admin {
 		
 		//ajax save admin api settings
 		add_action( 'wp_ajax_smswoo_settings_tab_save', array( $this, 'smswoo_settings_tab_save_callback' ) );
-		
-		//hook into AST for shipment SMS notification
-		add_action( 'shipment_status_sms_section', array( $this, 'shipment_status_notification_tab'), 10, 1 );
-		
-		//Ajax save delivered email
-		add_action( 'wp_ajax_update_all_shipment_status_sms_delivered', array( $this, 'update_all_shipment_status_sms_delivered') );		
+
+		if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocommerce/zorem-sms-for-woocommerce.php' ) ) {
+			//hook into AST for shipment SMS notification
+			add_action( 'shipment_status_sms_section', array( $this, 'shipment_status_notification_tab'), 10, 1 );
+			
+			//Ajax save delivered email
+			add_action( 'wp_ajax_update_all_shipment_status_sms_delivered', array( $this, 'update_all_shipment_status_sms_delivered') );
+		}
 	}
 	
 	public function build_html($template,$data = NULL) {
@@ -56,7 +58,7 @@ class tswc_smswoo_admin {
 		$t = new \stdclass();
 		$t->data = $data;
 		ob_start();
-		include(dirname(__FILE__)."/admin-html/".$template.".phtml");
+		include(dirname(__FILE__)."/admin-html/".$template.".php");
 		$s = ob_get_contents();
 		ob_end_clean();
 		return $s;
@@ -259,7 +261,7 @@ class tswc_smswoo_admin {
 				'id'			=> 'title1',
 			),*/
 			'smswoo_sms_provider' => array(
-				'title'		=> __( 'Choose SMS Provider', 'trackship-for-woocommerce' ),
+				'title'		=> __( 'Select SMS Integration', 'trackship-for-woocommerce' ),
 				'desc'		=> __( "Please choose SMS provider from Dropown.", 'trackship-for-woocommerce' ),
 				'type'		=> 'dropdown_button',
 				'show'		=> true,
@@ -278,27 +280,27 @@ class tswc_smswoo_admin {
 				'link' => array(
 					'smswoo_nexmo' => array(
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'Nexmo' ),
-						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-vonage-formally-nexmo-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/setup/sms-notifications/vonage/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 					'smswoo_twilio' => array(
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'Twilio' ),
-						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-twilio-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/setup/sms-notifications/twilio/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 					'smswoo_clicksend' => array(
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'ClickSend' ),
-						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-clicksend-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/setup/sms-notifications/clicksend/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 					'smswoo_fast2sms' => array(
-						'title' => __( 'How to find your Fast2sms API Authorization Key', 'smswoo' ),
-						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-fast2sms-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'Fast2sms' ),
+						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/setup/sms-notifications/fast2sms/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),	
 					'smswoo_msg91' => array(
-						'title' => __( 'How to find your MSG91 API Authentication Key', 'smswoo' ),
-						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-msg91-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'MSG91' ),
+						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/setup/sms-notifications/msg91/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 					'smswoo_smsalert' => array(
-						'title' => __( 'How to find your SMS Alert API Authentication Key', 'smswoo' ),
-						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/how-to/how-to-find-the-sms-alert-api-keys/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'SMS Alert' ),
+						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/setup/sms-notifications/sms-alert/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 				),
 			),

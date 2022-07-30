@@ -16,6 +16,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 	<div class="panel_content section_sms_content">
+		<?php if ( function_exists( 'SMSWOO' ) || is_plugin_active( 'zorem-sms-for-woocommerce/zorem-sms-for-woocommerce.php' ) ) { ?>
+			<span class="plugin_setting_note">
+				<strong><?php esc_html_e( 'Please note: ', 'trackship-for-woocommerce' ); ?></strong>
+				<?php printf( esc_html__( 'You can edit the SMS provider from the SMS for WooCommerce %1$ssettings%2$s', 'trackship-for-woocommerce' ), '<a href="' . esc_url( admin_url( 'admin.php?page=sms-for-woocommerce&tab=settings' ) ) . '">', '</a>' ); ?>
+			</span>
+		<?php } ?>
 		<div class="outer_form_table">
 			<?php $this->get_html( $this->get_sms_provider_data() ); ?>													
 		</div>
