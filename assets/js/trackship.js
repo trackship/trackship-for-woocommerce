@@ -835,6 +835,14 @@ jQuery(document).on("click", ".open_more_info_popup", function () {
 	return false;
 });
 
+jQuery(document).on('click', '.inner_tab_section .heading_panel.section_sms_heading', function() {
+	if ( smswoo_active == 'yes' ) {
+		jQuery('.heading_panel.section_sms_heading').find( 'button' ).attr('disabled', true);
+		jQuery('.panel_content.section_sms_content').find( 'select, input' ).attr('disabled', true);
+		jQuery('.panel_content.section_sms_content .outer_form_table').addClass('smswoo_active');
+	}
+});
+
 jQuery(document).on("click", ".inner_tab_section .heading_panel", function () {
 	if (jQuery(this).next('.panel_content').hasClass('active')) {
 		jQuery(this).removeClass('active');

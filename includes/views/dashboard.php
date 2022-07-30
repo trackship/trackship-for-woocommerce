@@ -78,21 +78,6 @@ $array = array(
 		'class' => 'not_show',
 	),
 );
-$plan_array = array(
-	'Free Trial'	=> 50,
-	'Mini'			=> 100,
-	'Small'			=> 300,
-	'MEDIUM'		=> 500,
-	'Large'			=> 1000,
-	'X-LARGE'		=> 2000,
-	'XX-LARGE'		=> 3000,
-	'XXX-LARGE'		=> 5000,
-	'HUGE'			=> 10000,
-	'Giant 30K'		=> 30000,
-	'Giant 50K'		=> 50000,
-	'Giant 60k'		=> 60000,
-	'Giant 100k'	=> 100000,
-);
 $url = 'https://my.trackship.info/wp-json/tracking/get_user_plan';								
 $args[ 'body' ] = array(
 	'user_key' => trackship_for_woocommerce()->actions->get_trackship_key(),				
@@ -166,7 +151,7 @@ $store_text = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No activ
 				<?php } ?>
 			</div>
 			<div class="ts_tracker_balance">
-				<span><?php esc_html_e( 'Usage Balance ', 'trackship-for-woocommerce' ); ?></span>: <strong> <?php echo esc_html( get_option('trackers_balance') ); ?><?php echo isset( $plan_array[ $current_plan ] ) ? ' / ' . esc_html( $plan_array[$current_plan] ) : ''; ?></strong>
+				<span><?php esc_html_e( 'Usage Balance ', 'trackship-for-woocommerce' ); ?></span>: <strong> <?php echo esc_html( get_option('trackers_balance') ); ?></strong>
 			</div>
 			<div class="ts_connected_status">
 				<span><?php esc_html_e( 'Connection Status', 'trackship-for-woocommerce' ); ?></span>: <strong><span class="dashicons dashicons-yes"></span><?php esc_html_e( 'Connected', 'trackship-for-woocommerce' ); ?></strong>
