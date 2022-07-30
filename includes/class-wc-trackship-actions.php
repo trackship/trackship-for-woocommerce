@@ -460,7 +460,7 @@ class WC_Trackship_Actions {
 							$status_date = $shipment_status[$key]['status_date'];
 							$last_event_time = isset( $shipment_status[$key]['last_event_time'] ) ? $shipment_status[$key]['last_event_time'] : $status_date;
 
-							$est_delivery_date = $shipment_status[$key]['est_delivery_date'] ? $shipment_status[$key]['est_delivery_date'] : '';
+							$est_delivery_date = isset( $shipment_status[$key]['est_delivery_date'] ) ? $shipment_status[$key]['est_delivery_date'] : '';
 							$est_delivery_date1 = !empty($est_delivery_date) ? $this->get_est_delivery( $est_delivery_date ) : '';
 							
 							if ( 'delivered' != $status && 'return_to_sender' != $status && !empty($est_delivery_date) ) {

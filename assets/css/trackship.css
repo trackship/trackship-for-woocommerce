@@ -264,16 +264,6 @@ table.form-table.tracking_page_heading td:last-child {
 	display: inline-block;
 	visibility: visible;
 }
-.api_connected {
-	color: #09d3ac;
-	text-decoration: none;
-	font-weight: 800;
-	font-size: 15px;
-}
-.api_connected .dashicons {
-	height: 18px;
-	width: 18px;
-}
 span.select_t_layout_section {
 	display: inline-block;
 	width: 150px;
@@ -511,8 +501,8 @@ tr:nth-child(even) .ast-shipment-status .shipment-icon {
 	color: #005B9A;
 }
 .woocommerce.trackship_admin_layout input.tab_input:checked + label, .trackship_tab_name input.tab_input:checked + label {
-	color: #09d3ac;
-	border-bottom: 3px solid #09d3ac;
+	color: #124fd6;
+	border-bottom: 3px solid #124fd6;
 	margin-top: 3px;
 }
 .dashboard_input_tab input.tab_input:checked + label {
@@ -529,7 +519,7 @@ tr:nth-child(even) .ast-shipment-status .shipment-icon {
 	width: 32%;
 }
 .woocommerce.trackship_admin_layout input.inner_tab_input:checked + label {
-	color: #09d3ac;
+	color: #124fd6;
 }
 label.tab_label.first_label {
 	margin: 0 0 0 20px;
@@ -712,7 +702,7 @@ tr.late-shipment-tr.open td {
 	margin: 0px 10px 0;
 }
 .trackship_admin_layout table.form-table.map-provider-table {
-	max-width: 600px;
+	max-width: 700px;
 }
 .trackship_admin_layout table.form-table.map-provider-table th {
 	padding: 6px 15px 6px 0;
@@ -773,6 +763,11 @@ tr.late-shipment-tr.open td {
 }
 .heading_panel div.heading_panel_save .spinner {
 	float: none;
+}
+.plugin_setting_note {
+	display: block;
+	padding-top: 15px;
+	font-size: 14px;
 }
 .rtl .dataTables_wrapper .dataTables_info {
 	float: right;
@@ -838,10 +833,7 @@ tr.late-shipment-tr.open td {
 	width: 24px;
 	height: 24px;
 	font-size: 24px;
-	color: #09d3ac;
-}
-.woocommerce-layout__activity-panel-tabs .dashicons.dashicons-menu {
-	color: #3858e9;
+	color: #124fd6;
 }
 .woocommerce-layout__activity-panel-tabs label {
 	color: #005b9a;
@@ -1497,8 +1489,15 @@ div#trackship-tracking-items .ts-tracking-item {
 	background-color: #fafafa;
 	width: 250px;
 }
+.trackship_sms_settings .form-table {
+	width: 1000px;
+}
 .trackship_sms_settings tr th {
 	padding: 20px 10px 20px 0 !important;
+	width: 30%;
+}
+.outer_form_table.smswoo_active {
+	opacity: 0.7;
 }
 .wp-core-ui .connect-your-store {
 	line-height: 38px;
@@ -1720,7 +1719,8 @@ section#content_trackship_settings.inner_tab_section, section#content_trackship_
 	cursor: pointer;
 }
 .inner_tab_section .heading_panel.active {
-	border-radius: 5px 5px 0 0;
+	border-radius: 3px 3px 0 0;
+	color: #124fd6;
 }
 .inner_tab_section .panel_content {
 	padding: 0 15px 15px;

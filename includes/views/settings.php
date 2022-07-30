@@ -103,6 +103,7 @@ if ( 'delete' != $cookie && $total_orders > 0 ) { ?>
 			</div>
 		</div>
 	</form>
+	<?php do_action( 'after_trackship_settings' ); ?>
 	<form method="post" id="trackship_tracking_page_form" action="" enctype="multipart/form-data">
 		<div class="heading_panel section_tracking_page_heading">
 			<strong><?php esc_html_e( 'Tracking Page', 'trackship-for-woocommerce' ); ?></strong>
@@ -122,10 +123,5 @@ if ( 'delete' != $cookie && $total_orders > 0 ) { ?>
 			</div>
 		</div>
 	</form>
-	<?php
-	do_action( 'after_trackship_settings' );
-	if ( !is_plugin_active( 'ast-pro/ast-pro.php' ) ) {
-		include __DIR__ . '/map-providers.php';
-	}
-	?>
+	<?php include __DIR__ . '/map-providers.php'; ?>
 </div>
