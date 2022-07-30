@@ -193,14 +193,9 @@ class Trackship_For_Woocommerce {
 		require_once $this->get_plugin_path() . '/includes/class-wc-admin-notices.php';
 		$this->wc_admin_notice = WC_TS4WC_Admin_Notices_Under_WC_Admin::get_instance();
 
-		
-		//$this->admin_customizer = TS4WC_Admin_Customizer::get_instance();
-		
-		if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocommerce/zorem-sms-for-woocommerce.php' ) ) {
-			//SMSWOO
-			require_once $this->get_plugin_path() . '/includes/smswoo/class-smswoo-init.php';
-			$this->smswoo_init = TSWC_SMSWOO_Init::get_instance();
-		}
+		//SMSWOO
+		require_once $this->get_plugin_path() . '/includes/smswoo/class-smswoo-init.php';
+		$this->smswoo_init = TSWC_SMSWOO_Init::get_instance();
 	}
 	
 	/**
