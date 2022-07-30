@@ -30,28 +30,17 @@ if ( $tracking_items ) :
 				do_action( 'before_tracking_widget_email', $tracking_item, $order_id );
 				?>
 				<div class="tracking_index display-table">
-					<div style="display: table;width: 100%;">
-						<div class="display-table-cell v-align-top" >
-							<p style="margin-bottom:0;">
+					<div class="tracking_widget_email">
+						<div style="display: table;width: 100%;">
+							<div class="display-table-cell v-align-top" >
+								<div class="shipment_status <?php echo esc_html( $ship_status ); ?>">
+									<?php
+									echo '<span class="' . esc_html( $ship_status ) . '">';
+									esc_html_e( apply_filters( 'trackship_status_filter', $ship_status ) );
+									echo '</span>';
+									?>
+								</div>
 								<?php
-								if ( $ship_status ) {
-									if ( in_array( $ship_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown' ) ) ) {
-										echo '<span class="shipment_status shipped" >';
-										esc_html_e( 'Shipped', 'trackship-for-woocommerce' );
-										echo '</span>';
-									} else {
-										?>
-										<p style="margin: 0;"><span class="tracking_info"><?php echo esc_html( $tracking_item['formatted_tracking_provider'] ); ?> <a href="<?php echo esc_url( $tracking_link ); ?>" style="text-decoration:none"><?php echo esc_html( $tracking_item['tracking_number'] ); ?></a></span></p>
-										<div class="shipment_status <?php echo esc_html( $ship_status ); ?>">
-											<?php
-											echo '<span class="' . esc_html( $ship_status ) . '">';
-											esc_html_e( apply_filters( 'trackship_status_filter', $ship_status ) );
-											echo '</span>';
-											?>
-										</div>
-										<?php
-									}
-								}
 								$show_est_delivery_date = apply_filters( 'show_est_delivery_date', true, $tracking_item['formatted_tracking_provider'] );
 								$est_delivery_date = isset( $shipment_status[$key]['est_delivery_date'] ) ? $shipment_status[$key]['est_delivery_date'] : false;
 								if ( $est_delivery_date && $show_est_delivery_date ) {
@@ -63,31 +52,42 @@ if ( $tracking_items ) :
 									echo '</span></p>';
 								}
 								?>
-							</p>
-							<?php if ( 'shipped' != $ship_status ) { ?>
-								<?php $icon_layout = 't_layout_1' == $tracking_page_layout ? '-widget.png' : '-widget-v2.png'; ?>
-								<?php $icon_layout = 't_layout_2' == $tracking_page_layout ? '-widget-v4.png' : $icon_layout; ?>
-								<div class="widget_progress_bar mobile_version" style="width:100%;margin: 15px 0 10px;">
-									<?php $widget_icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ) . esc_html( $icon_layout ); ?>
-									<img style="width:100%;" src="<?php echo esc_url( $widget_icon_url ); ?>">
-								</div>
-							<?php } ?>
+								<?php if ( 'shipped' != $ship_status ) { ?>
+									<?php $icon_layout = 't_layout_1' == $tracking_page_layout ? '-widget.png' : '-widget-v2.png'; ?>
+									<?php $icon_layout = 't_layout_2' == $tracking_page_layout ? '-widget-v4.png' : $icon_layout; ?>
+								<?php } ?>
+							</div>
+							
 						</div>
-						<div class="display-table-cell" >
-							<?php if ( 'delivered' != $ship_status ) { ?>
-								<a href="<?php echo esc_url( $tracking_link ); ?>" class="track_your_order"><?php esc_html_e( $track_button_Text ); ?></a>
-							<?php } ?>
-						</div>
+						<div style="display:block;"></div>
+						<?php if ( 'shipped' != $ship_status ) { ?>
+							<?php $icon_layout = 't_layout_1' == $tracking_page_layout ? '-widget.png' : '-widget-v4.png'; ?>
+							<?php $icon_layout = 't_layout_3' == $tracking_page_layout ? '-widget-v2.png' : $icon_layout; ?>
+							<div class="widget_progress_bar" style="width:100%;margin: 15px 0 10px;">
+								<?php $widget_icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ) . esc_html( $icon_layout ); ?>
+								<img style="width:100%;" src="<?php echo esc_url( $widget_icon_url ); ?>">
+							</div>
+						<?php } ?>
 					</div>
-					<div style="display:block;"></div>
-					<?php if ( 'shipped' != $ship_status ) { ?>
-						<?php $icon_layout = 't_layout_1' == $tracking_page_layout ? '-widget.png' : '-widget-v4.png'; ?>
-						<?php $icon_layout = 't_layout_3' == $tracking_page_layout ? '-widget-v2.png' : $icon_layout; ?>
-						<div class="widget_progress_bar desktop_version" style="width:100%;margin: 15px 0 10px;">
-							<?php $widget_icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ) . esc_html( $icon_layout ); ?>
-							<img style="width:100%;" src="<?php echo esc_url( $widget_icon_url ); ?>">
-						</div>
-					<?php } ?>
+					<div class="tracking_widget_email tracking_widget_bottom">
+						<?php
+						if ( $ship_status ) {
+							if ( in_array( $ship_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown' ) ) ) {
+								echo '<div class="shipment_status shipped" >';
+								esc_html_e( 'Shipped', 'trackship-for-woocommerce' );
+								echo '</div>';
+							} else {
+								?>
+								<div class="tracking_info" style="margin:10px 0;"><?php echo esc_html( $tracking_item['formatted_tracking_provider'] ); ?> <a href="<?php echo esc_url( $tracking_link ); ?>" style="text-decoration:none"><?php echo esc_html( $tracking_item['tracking_number'] ); ?></a></div>
+								<?php
+							}
+						}
+						if ( 'delivered' != $ship_status ) {
+							?>
+							<div class="tracking_widget_track_button" style="float:right;"><a href="<?php echo esc_url( $tracking_link ); ?>" class="track_your_order"><?php esc_html_e( $track_button_Text ); ?></a></div>
+							<div style="clear: both;display: block;"></div>
+						<?php } ?>
+					</div>
 				</div>
 			<?php } ?>
 		</div>
@@ -111,36 +111,39 @@ if ( $tracking_items ) :
 	.tracking_index {
 		border: 1px solid #cccccc;
 		margin: 20px 0;
-		padding: <?php echo esc_html( trackship_admin_customizer()->get_value( 'shipment_email_settings', 'widget_padding' ) ); ?>px;
 		background: <?php echo esc_html( $background_color ); ?>;
 		display:block;
 		color: <?php echo esc_html( $font_color ); ?>;
 		border-color: <?php echo esc_html( $border_color ); ?>;
+	}
+	.tracking_widget_bottom {
+		border-top: 1px solid <?php echo esc_html( $border_color ); ?>;
+	}
+	.tracking_widget_bottom div {
+		display:inline-block;
 	}
 	a.track_your_order {
 		border-radius: <?php echo esc_html( trackship_admin_customizer()->get_value( 'shipment_email_settings', 'track_button_border_radius' ) ); ?>px;
 		text-decoration: none;
 		color: <?php echo esc_html( trackship_admin_customizer()->get_value( 'shipment_email_settings', 'track_button_text_color' ) ); ?>;
 		background: <?php echo esc_html( trackship_admin_customizer()->get_value( 'shipment_email_settings', 'track_button_color' ) ); ?>;
-		display: block;text-align: center;
-		<?php echo 20 == trackship_admin_customizer()->get_value( 'shipment_email_settings', 'track_button_font_size' ) ? 'padding: 12px 20px;' : 'padding: 10px 15px;'; ?>
+		text-align: center;
+		padding: 10px 15px;
+		float: right;
+		display:inline-block;
+	}
+	.tracking_widget_email {
+		padding:15px;
 	}
 	.shipment_status {font-size: 24px;margin: 10px 0;display: inline-block;color: #333;vertical-align: middle;font-weight:500;}
 	.mb-0{margin:0;}
 	.v-align-top{vertical-align:top;}
-	span.est_delivery_date { margin-top: 5px; display: inline-block; }
 	@media screen and (max-width: 460px) {
-		.desktop_version{display:none;}
-		.mobile_version,.display-table{display:block;}
-		.display-table-cell{display:block;margin-top: 10px;}
-		.track_your_order{display: block !important;text-align: center;}
+		.tracking_widget_track_button {width:100%;}
+		.tracking_widget_track_button a.track_your_order{width: calc(100% - 30px);}
 	}
 	@media screen and (min-width: 461px) {
 		.display-table{display:table !important;width:100%;box-sizing: border-box;}
-		.display-table-cell{display:table-cell;}
-		.track_your_order{float: right;display:inline-block;}
-		.mobile_version{display:none;}
-		.widget_progress_bar.desktop_version{display:block !important;}
 	}
 </style>
 
