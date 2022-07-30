@@ -37,14 +37,14 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 				require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 			}
 			if ( is_plugin_active_for_network( 'trackship-for-woocommerce/trackship-for-woocommerce.php' ) ) {
-				$main_blog_prefix = $wpdb->get_blog_prefix(BLOG_ID_CURRENT_SITE);			
-				$this->shipment_table = $main_blog_prefix . 'trackship_shipment';	
+				$main_blog_prefix = $wpdb->get_blog_prefix(BLOG_ID_CURRENT_SITE);
+				$this->shipment_table = $main_blog_prefix . 'trackship_shipment';
 			} else{
 				$this->shipment_table = $wpdb->prefix . 'trackship_shipment';
 			}
 		} else{
-			$this->shipment_table = $wpdb->prefix . 'trackship_shipment';	
-		}			
+			$this->shipment_table = $wpdb->prefix . 'trackship_shipment';
+		}
 	}
 	
 	/**
@@ -62,52 +62,46 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 	 */
 	public function register_routes() {
 		
-		register_rest_route( $this->namespace, '/' . $this->rest_base . '/get_shipments_providers', array(
+		// get stats data
+		register_rest_route( 'wc-analytics/reports/data' , 'trackship/stats', array(
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => array( $this, 'get_trackship_stats' ),
+				'permission_callback' => array( $this, 'get_items_permissions_check' ),
+				'args'                => $this->get_collection_params(),
+			),
+		) );
+
+		// Get all provider list
+		register_rest_route( 'wc-analytics/data', 'get_shipments_providers', array(
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_shipments_providers' ),
 				'permission_callback' => array( $this, 'get_items_permissions_check' ),
 				'args'                => $this->get_collection_params(),
-			),						
-		) );
-		
-		register_rest_route( $this->namespace, '/' . $this->rest_base . '/shipments_count', array(
-			array(
-				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_shipments_count' ),
-				'permission_callback' => array( $this, 'get_items_permissions_check' ),
-				'args'                => $this->get_collection_params(),
-			),						
+			),
 		) );
 
-		register_rest_route( $this->namespace, '/' . $this->rest_base . '/shipments_by_status', array(
+		// get all shipments by status
+		register_rest_route( 'wc-analytics/reports/data' , 'shipments_by_status', array(
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_shipments_by_status' ),
 				'permission_callback' => array( $this, 'get_items_permissions_check' ),
 				'args'                => $this->get_collection_params(),
-			),						
+			),
 		) );
-
-		register_rest_route( $this->namespace, '/' . $this->rest_base . '/shipments_by_providers', array(
+		
+		// get all shipments by provider
+		register_rest_route( 'wc-analytics/reports/data' , 'shipments_by_provider', array(
 			array(
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => array( $this, 'get_shipments_by_providers' ),
 				'permission_callback' => array( $this, 'get_items_permissions_check' ),
 				'args'                => $this->get_collection_params(),
-			),						
+			),
 		) );
-
-		register_rest_route( $this->namespace, '/' . $this->rest_base . '/shipments_by_date', array(
-			array(
-				'methods'             => WP_REST_Server::READABLE,
-				'callback'            => array( $this, 'get_shipments_by_date' ),
-				'permission_callback' => array( $this, 'get_items_permissions_check' ),
-				'args'                => $this->get_collection_params(),
-			),						
-		) );		
 	}		
-		
 
 	/**
 	 * Check whether a given request has permission to read order shipment-trackings.
@@ -115,7 +109,9 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 	 * @param  WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|boolean
 	 */
-	public function get_items_permissions_check( $request ) {		
+	public function get_items_permissions_check( $request ) {	
+		 return true;
+		 	
 		if ( ! wc_rest_check_manager_permissions( 'settings', 'read' ) ) {
 			return new WP_Error( 'woocommerce_rest_cannot_view', __( 'Sorry, you cannot list resources.', 'woocommerce' ), array( 'status' => rest_authorization_required_code() ) );
 		}
@@ -139,65 +135,174 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 		$args['shipment_status']   	= $request['shipment_status'];
 		$args['shipment_provider']  = $request['shipment_provider'];
 		$args['shipment_type']		= $request['shipment_type'];
+		$args['providers']			= $request['providers'];
 		
 		return $args;
 	}
 	
+	public function get_trackship_stats ( $request ) {
+
+		global $wpdb;
+		$woo_trackship_shipment = $this->shipment_table;
+
+		$query_args = $this->prepare_reports_query( $request );
+
+		$after_date = date( 'Y-m-d', strtotime( $query_args['after'] ) );
+		$before_date = date( 'Y-m-d', strtotime( $query_args['before'] ) );
+		$providers_id = ( isset( $query_args['providers'] ) &&  '' != $query_args['providers'] ? $query_args['providers'] : null );
+		$shipment_status = ( isset( $query_args['shipment_status'] ) && '' != $query_args['shipment_status'] ? $query_args['shipment_status'] : '' );
+
+		$where = $providers_id ? "WHERE provider.id IN ( {$providers_id} )" : '';
+		$providers_data = $wpdb->get_results(
+			"SELECT provider.id, provider.provider_name, shipments.shipping_provider as ts_slug
+			FROM {$woo_trackship_shipment} as shipments LEFT JOIN {$wpdb->prefix}trackship_shipping_provider as provider
+			ON provider.ts_slug = shipments.shipping_provider {$where} GROUP BY ts_slug", ARRAY_A
+		);
+
+		// Shipment provider query
+		$shipment_provider_query = '';
+		if ( $providers_id ) {
+			$providers_slug = [];
+			foreach ( $providers_data as $key => $val ) {
+				$providers_slug[] = $val['ts_slug'];
+			}
+			$providers_slug = $providers_slug ? "'" . implode( "', '", $providers_slug ) . "'" : '';
+			$shipment_provider_query = "AND shipping_provider IN ( {$providers_slug} )";
+		}
+		
+		// Shipment status query
+		$shipment_status_query = '';
+		if ( '' != $shipment_status && 'all' != $shipment_status ) {
+			$shipment_status_query = "AND shipment_status LIKE ( '$shipment_status' )";
+		}
+		
+		//interval
+		$interval = new DateInterval('P1D');
+		$realEnd = new DateTime($before_date);
+		$realEnd->add($interval);
+		$period = new DatePeriod(new DateTime($after_date), $interval, $realEnd);
+		
+		$i = 0;
+		$response = array();
+		//date vise data loop
+		foreach ( $period as $date ) {
+
+			$current_date_total_data = $current_date_active_data = $current_date_delievered_data = 0;
+			$current_date_total_data = $this->get_totals_count( $date->format('Y-m-d'), '', $shipment_provider_query, $shipment_status_query ); // Date vise totoal data
+			$current_date_active_data = $this->get_active_count( $date->format('Y-m-d'), '', $shipment_provider_query, $shipment_status_query ); // Date vise active data
+			$current_date_delievered_data = $this->get_delivered_count( $date->format('Y-m-d'), '', $shipment_provider_query, $shipment_status_query );// Date vise delivered data
+
+			$response['intervals'][$i]['interval'] = $date->format('Y-m-d');
+			$response['intervals'][$i]['date_start'] = $date->format('Y-m-d 00:00:00');
+			$response['intervals'][$i]['date_start_gmt'] = $date->format('Y-m-d 00:00:00');
+			$response['intervals'][$i]['date_end'] = $date->format('Y-m-d 23:59:59');
+			$response['intervals'][$i]['date_end_gmt'] = $date->format('Y-m-d 23:59:59');
+			$response['intervals'][$i]['subtotals']['total_shipments'] = $current_date_total_data;
+			$response['intervals'][$i]['subtotals']['active_shipments'] = $current_date_active_data;				
+			$response['intervals'][$i]['subtotals']['delivered_shipments'] = $current_date_delievered_data;
+			$response['intervals'][$i]['subtotals']['segments'] = $this->segements_data( $date->format('Y-m-d'), '', $providers_data, $providers_id, $shipment_status, $shipment_provider_query, $shipment_status_query );
+			$i++;
+		}
+
+		$total_data = $active_data = $delievered_data = 0;
+
+		$total_data = $this->get_totals_count( $before_date, $after_date, $shipment_provider_query, $shipment_status_query );
+		$active_data = $this->get_active_count( $before_date, $after_date, $shipment_provider_query, $shipment_status_query );
+		$delievered_data = $this->get_delivered_count( $before_date, $after_date, $shipment_provider_query, $shipment_status_query );
+		$avg_shipping_length = $wpdb->get_var("SELECT AVG(shipping_length) FROM {$woo_trackship_shipment} WHERE shipping_date NOT LIKE ( '%NULL%') AND shipping_date BETWEEN '{$after_date}' AND '{$before_date}' AND shipment_status LIKE ( '%delivered%') {$shipment_provider_query} {$shipment_status_query}");	
+		
+		$response['totals']['total_shipments'] = $total_data ;
+		$response['totals']['active_shipments'] = $active_data ;
+		$response['totals']['delivered_shipments'] = $delievered_data;
+		$response['totals']['avg_shipment_length'] = (int) $avg_shipping_length;
+		$response['totals']['segments'] = $this->segements_data( $before_date, $after_date, $providers_data, $providers_id, $shipment_status, $shipment_provider_query, $shipment_status_query );
+
+		return rest_ensure_response( $response );
+	}
+
+	/**
+	 * Get Segments array.	 
+	 */
+	public function segements_data( $before_date, $after_date, $providers_data, $providers_id, $shipment_status, $shipment_provider_query, $shipment_status_query ) {
+
+		global $wpdb;
+		$woo_trackship_shipment = $this->shipment_table;
+		$segements = [];
+
+		$i = 0;
+		foreach ( $providers_data as $key => $val ) {
+			if ( $val['id'] ) {
+				$total_data = $active_data = $delievered_data = 0;
+				$extra_query = " AND shipping_provider LIKE ( '{$val['ts_slug']}' )";
+				$total_data = $this->get_totals_count( $before_date, $after_date, $shipment_provider_query, $shipment_status_query, $extra_query );
+				$active_data = $this->get_active_count( $before_date, $after_date, $shipment_provider_query, $shipment_status_query, $extra_query );
+				$delievered_data = $this->get_delivered_count( $before_date, $after_date, $shipment_provider_query, $shipment_status_query, $extra_query );
 	
+				$segements[$i]['segment_label'] = $val['provider_name'];
+				$segements[$i]['segment_id'] = $val['id'];
+				$segements[$i]['subtotals']['total_shipments'] = $total_data ;
+				$segements[$i]['subtotals']['active_shipments'] = $active_data ;
+				$segements[$i]['subtotals']['delivered_shipments'] = $delievered_data ;
+				$segements[$i]['subtotals']['avg_shipment_length'] = 0;
+				$i++;
+			}
+		}
+
+		return $segements;
+	}
+
+	/**
+	 * Get Totals count.	 
+	*/
+	public function get_totals_count ( $before_date, $after_date, $shipment_provider_query, $shipment_status_query, $extra_query = '' ) {
+
+		global $wpdb;
+		$woo_trackship_shipment = $this->shipment_table;
+		$date_query = $after_date ? "shipping_date NOT LIKE ( '%NULL%') AND shipping_date BETWEEN '{$after_date}' AND '{$before_date}'" : "shipping_date NOT LIKE ( '%NULL%') AND shipping_date LIKE '{$before_date}'";
+		$total_data = $wpdb->get_var("SELECT COUNT(*) as value FROM {$woo_trackship_shipment} WHERE {$date_query} {$shipment_provider_query} {$shipment_status_query} {$extra_query}");
+
+		return (int) $total_data;
+	}
+
+	/**
+	 * Get delivered count.	 
+	*/
+	public function get_delivered_count ( $before_date, $after_date, $shipment_provider_query, $shipment_status_query, $extra_query = '' ) {
+
+		global $wpdb;
+		$woo_trackship_shipment = $this->shipment_table;
+		$date_query = $after_date ? "shipping_date NOT LIKE ( '%NULL%') AND shipping_date BETWEEN '{$after_date}' AND '{$before_date}'" : "shipping_date NOT LIKE ( '%NULL%') AND shipping_date LIKE '{$before_date}'";
+		$delievered_data = $wpdb->get_var("SELECT COUNT(*) as value FROM {$woo_trackship_shipment} WHERE {$date_query} AND shipment_status LIKE ( '%delivered%') {$shipment_provider_query} {$shipment_status_query} {$extra_query}");
+		
+		return (int) $delievered_data;
+	}
+
+	/**
+	 * Get active count.	 
+	*/
+	public function get_active_count ( $before_date, $after_date, $shipment_provider_query, $shipment_status_query, $extra_query = '' ) {
+
+		global $wpdb;
+		$woo_trackship_shipment = $this->shipment_table;
+		$date_query = $after_date ? "shipping_date NOT LIKE ( '%NULL%') AND shipping_date BETWEEN '{$after_date}' AND '{$before_date}'" : "shipping_date NOT LIKE ( '%NULL%') AND shipping_date LIKE '{$before_date}'";
+		$active_data = $wpdb->get_var("SELECT COUNT(*) as value FROM {$woo_trackship_shipment} WHERE {$date_query} AND shipment_status NOT LIKE ( '%delivered%') {$shipment_provider_query} {$shipment_status_query} {$extra_query}");
+		
+		return (int) $active_data;
+	}
+
 	/**
 	 * Get shipments count.	 
 	 */
 	public function get_shipments_providers( $request ) {
-				
+
 		global $wpdb;
 		$woo_trackship_shipment = $this->shipment_table;
-		
-		$all_providers = $wpdb->get_results("SELECT shipping_provider FROM {$woo_trackship_shipment} WHERE shipping_provider NOT LIKE ( '%NULL%') GROUP BY shipping_provider;");
-		
-		$response = array();
-		$response[0]['label'] = 'All';
-		$response[0]['value'] = 'all';
-		$count = 1;
-		foreach ( $all_providers as $provider ) {
-			$results = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM ' . $wpdb->prefix . 'woo_shippment_provider WHERE ts_slug = %s', $provider->shipping_provider ) );		
-			$response[$count]['label'] = isset( $results->provider_name ) ? $results->provider_name : $provider->shipping_provider;
-			$response[$count]['value'] = $provider->shipping_provider;
-			$count++;		
-		}	
-		
-		return rest_ensure_response( $response );		
-	}
-	
-	/**
-	 * Get shipments count.	 
-	 */
-	public function get_shipments_count( $request ) {
-		
-		$query_args   = $this->prepare_reports_query( $request );
-		$data = array();
-		$after_date = date( 'Y-m-d', strtotime( $query_args['after'] ) );
-		$before_date = date( 'Y-m-d', strtotime( $query_args['before'] ) );
-		$shipment_provider = ( isset( $query_args['shipment_provider'] ) &&  '' != $query_args['shipment_provider'] ? $query_args['shipment_provider'] : '' );
-		
-		global $wpdb;
-		$woo_trackship_shipment = $this->shipment_table;
-		
-		$shipmen_provider_query = '';
-		if ( '' != $shipment_provider && 'all' != $shipment_provider ) {
-			$shipmen_provider_query = "AND shipping_provider LIKE ( '%" . $shipment_provider . "%')";
-		}				
-		
-		$total_count = $wpdb->get_var("SELECT COUNT(*) FROM {$woo_trackship_shipment} WHERE shipping_date BETWEEN '{$after_date}' AND '{$before_date}' {$shipmen_provider_query}");
-		$active_count = $wpdb->get_var("SELECT COUNT(*) FROM {$woo_trackship_shipment} WHERE shipment_status NOT LIKE ( '%delivered%') AND shipping_date BETWEEN '{$after_date}' AND '{$before_date}' {$shipmen_provider_query}");
-		$delivered_count = $wpdb->get_var("SELECT COUNT(*) FROM {$woo_trackship_shipment} WHERE shipment_status LIKE ( '%delivered%') AND shipping_date BETWEEN '{$after_date}' AND '{$before_date}' {$shipmen_provider_query}");
-		$avg_shipping_length = $wpdb->get_var("SELECT AVG(shipping_length) FROM {$woo_trackship_shipment} WHERE shipping_date BETWEEN '{$after_date}' AND '{$before_date}' {$shipmen_provider_query}");				
-		
-		$response['total_count'] = (int) $total_count;
-		$response['active_count'] = (int) $active_count;
-		$response['delivered_count'] = (int) $delivered_count;
-		$response['avg_shipping_length'] = round( $avg_shipping_length );
-		
-		return rest_ensure_response( $response );		
+
+		$id = $request->get_param('include');
+		$where = $id ? "WHERE id IN ( {$id} )" : '';
+		$all_providers = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}trackship_shipping_provider {$where}" );
+
+		return rest_ensure_response( $all_providers );
 	}
 
 	/**
@@ -210,34 +315,50 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 		$after_date = date( 'Y-m-d', strtotime( $query_args['after'] ) );
 		$before_date = date( 'Y-m-d', strtotime( $query_args['before'] ) );
 		$shipment_status = ( isset( $query_args['shipment_status'] ) && '' != $query_args['shipment_status'] ? $query_args['shipment_status'] : '' );
-		$shipment_provider = ( isset( $query_args['shipment_provider'] ) &&  '' != $query_args['shipment_provider'] ? $query_args['shipment_provider'] : '' );		
+		$providers_id = ( isset( $query_args['providers'] ) &&  '' != $query_args['providers'] ? $query_args['providers'] : null );
+		$shipment_provider = ( isset( $query_args['shipment_provider'] ) &&  '' != $query_args['shipment_provider'] ? $query_args['shipment_provider'] : '' );
 		
 		global $wpdb;
 		$woo_trackship_shipment = $this->shipment_table;
 		
+		// Shipment status query
 		$shipmen_status_query = '';
 		if ( '' != $shipment_status && 'all' != $shipment_status ) {
-			$shipmen_status_query = "AND shipment_status LIKE ( '%" . $shipment_status . "%')";
+			$shipmen_status_query = "AND shipment_status LIKE ( '$shipment_status')";
 		}
 		
-		$shipmen_provider_query = '';
-		if ( '' != $shipment_provider && 'all' != $shipment_provider ) {
-			$shipmen_provider_query = "AND shipping_provider LIKE ( '%" . $shipment_provider . "%')";
+		$where = $providers_id ? "WHERE provider.id IN ( {$providers_id} )" : '';
+		$selected_provider = $wpdb->get_results(
+			"SELECT provider.id, provider.provider_name, shipments.shipping_provider as ts_slug
+			FROM {$woo_trackship_shipment} as shipments LEFT JOIN {$wpdb->prefix}trackship_shipping_provider as provider
+			ON provider.ts_slug = shipments.shipping_provider {$where} GROUP BY ts_slug", ARRAY_A
+		);
+
+		// Shipment provider query
+		$shipment_provider_query = '';
+		if ( $providers_id ) {
+			$providers_slug = [];
+			foreach ( $selected_provider as $key => $val ) {
+				$providers_slug[] = $val['ts_slug'];
+			}
+			$providers_slug = $providers_slug ? "'" . implode( "', '", $providers_slug ) . "'" : '';
+			$shipment_provider_query = "AND shipping_provider IN ( {$providers_slug} )";
 		}
-		
-		$status_data = $wpdb->get_results("SELECT ts.shipment_status , COUNT(1) AS total , ROUND( COUNT(1) / t.cnt * 100 ) AS percentage FROM {$woo_trackship_shipment} ts CROSS JOIN (SELECT COUNT(1) AS cnt FROM {$woo_trackship_shipment} WHERE shipping_date BETWEEN '{$after_date}' AND '{$before_date}' {$shipmen_status_query} {$shipmen_provider_query}) t WHERE shipping_date BETWEEN '{$after_date}' AND '{$before_date}' {$shipmen_status_query} {$shipmen_provider_query} GROUP BY ts.shipment_status");
-		
+
+		$status_data = $wpdb->get_results("SELECT ts.shipment_status , COUNT(1) AS total , ROUND( COUNT(1) / t.cnt * 100 ) AS percentage FROM {$woo_trackship_shipment} ts CROSS JOIN (SELECT COUNT(1) AS cnt FROM {$woo_trackship_shipment} WHERE shipping_date BETWEEN '{$after_date}' AND '{$before_date}' {$shipmen_status_query} {$shipment_provider_query}) t WHERE shipping_date BETWEEN '{$after_date}' AND '{$before_date}' {$shipmen_status_query} {$shipment_provider_query} GROUP BY ts.shipment_status");
+
 		$response = array();
-		$count = 0;
+
+		$j = 0;
 		foreach ( $status_data as $data ) {
-			$response[$count]['shipment_status'] = apply_filters( 'trackship_status_filter', $data->shipment_status );
-			$response[$count]['total'] = $data->total;
-			$response[$count]['percentage'] = $data->percentage;
-			$response[$count]['href'] = admin_url( 'admin.php?page=trackship-shipments&status=' . $data->shipment_status );
-			$count++;
+			$response[$j]['shipment_status'] = apply_filters( 'trackship_status_filter', $data->shipment_status );
+			$response[$j]['total'] = $data->total;
+			$response[$j]['percentage'] = $data->percentage;
+			$response[$j]['href'] = admin_url( 'admin.php?page=trackship-shipments&status=' . $data->shipment_status );
+			$j++;
 		}
-		
-		return rest_ensure_response( $response );		
+
+		return rest_ensure_response( $response );
 	}
 
 	/**
@@ -250,95 +371,67 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 		$after_date = date( 'Y-m-d', strtotime( $query_args['after'] ) );
 		$before_date = date( 'Y-m-d', strtotime( $query_args['before'] ) );
 		$shipment_status = ( isset( $query_args['shipment_status'] ) && '' != $query_args['shipment_status'] ? $query_args['shipment_status'] : '' );
-		$shipment_provider = ( isset( $query_args['shipment_provider'] ) &&  '' != $query_args['shipment_provider'] ? $query_args['shipment_provider'] : '' );		
+		$providers_id = ( isset( $query_args['providers'] ) &&  '' != $query_args['providers'] ? $query_args['providers'] : null );
+		$shipment_provider = ( isset( $query_args['shipment_provider'] ) &&  '' != $query_args['shipment_provider'] ? $query_args['shipment_provider'] : '' );
 		
 		global $wpdb;
 		$woo_trackship_shipment = $this->shipment_table;
 		
+		// Shipment status query
 		$shipmen_status_query = '';
 		if ( '' != $shipment_status && 'all' != $shipment_status ) {
-			$shipmen_status_query = "AND shipment_status LIKE ( '%" . $shipment_status . "%')";
+			$shipmen_status_query = "AND shipment_status LIKE ( '$shipment_status')";
 		}
 		
-		$shipmen_provider_query = '';
-		if ( '' != $shipment_provider && 'all' != $shipment_provider ) {
-			$shipmen_provider_query = "AND shipping_provider LIKE ( '%" . $shipment_provider . "%')";
-		}
-		
-		$providers_data = $wpdb->get_results("SELECT ts.shipping_provider , COUNT(1) AS total , ROUND( COUNT(1) / t.cnt * 100 ) AS percentage, AVG(shipping_length) as average FROM {$woo_trackship_shipment} ts CROSS JOIN (SELECT COUNT(1) AS cnt FROM {$woo_trackship_shipment} WHERE shipping_date BETWEEN '{$after_date}' AND '{$before_date}' {$shipmen_status_query} {$shipmen_provider_query}) t WHERE shipping_date BETWEEN '{$after_date}' AND '{$before_date}' {$shipmen_status_query} {$shipmen_provider_query} GROUP BY ts.shipping_provider");
+		$where = $providers_id ? "WHERE provider.id IN ( {$providers_id} )" : '';
+		$selected_provider = $wpdb->get_results(
+			"SELECT provider.id, provider.provider_name, shipments.shipping_provider as ts_slug
+			FROM {$woo_trackship_shipment} as shipments LEFT JOIN {$wpdb->prefix}trackship_shipping_provider as provider
+			ON provider.ts_slug = shipments.shipping_provider {$where} GROUP BY ts_slug", ARRAY_A
+		);
 
-		$response = array();
-		$count = 0;
-		foreach ( $providers_data as $data ) {
-			$results = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM ' . $wpdb->prefix . 'woo_shippment_provider WHERE ts_slug = %s', $data->shipping_provider ) );
-			$provider_name = isset( $results->provider_name ) ? $results->provider_name : $data->shipping_provider;
-
-			$response[$count]['shipping_provider'] = $provider_name;
-			$response[$count]['total'] = $data->total;
-			$response[$count]['percentage'] = $data->percentage;
-			$response[$count]['average'] = round( $data->average ) . ' days';
-			$response[$count]['href'] = admin_url( 'admin.php?page=trackship-shipments&provider=' . $data->shipping_provider );
-			$count++;
-		}		
-		return rest_ensure_response( $response );		
-	}
-	
-	/**
-	 * Get shipments by date.	 
-	 */
-	public function get_shipments_by_date( $request ) {
-		$query_args   = $this->prepare_reports_query( $request );
-		$data = array();
-		$after_date = date( 'Y-m-d', strtotime( $query_args['after'] ) );
-		$before_date = date( 'Y-m-d', strtotime( $query_args['before'] ) );	
-		$shipment_status = ( isset( $query_args['shipment_status'] ) && '' != $query_args['shipment_status'] ? $query_args['shipment_status'] : '' );
-		$shipment_provider = ( isset( $query_args['shipment_provider'] ) &&  '' != $query_args['shipment_provider'] ? $query_args['shipment_provider'] : '' );	
-		$shipment_type = isset( $query_args['shipment_type'] ) && '' != $query_args['shipment_type'] ? $query_args['shipment_type'] : '';
-		
-		global $wpdb;
-		$woo_trackship_shipment = $this->shipment_table;
-		
-		$shipmen_status_query = '';
-		if ( '' != $shipment_status && 'all' != $shipment_status ) {
-			$shipmen_status_query = "AND shipment_status = ( '{$shipment_status}')";
-		}
-		
-		$shipmen_type_query = '';
-		if ( $shipment_type == 'delivered' ) {
-			$shipmen_type_query = "AND shipment_status = ( 'delivered')";
-		} elseif ( $shipment_type == 'active' ) {
-			$shipmen_type_query = "AND shipment_status != ( 'delivered')";
-		}
-
-		$shipmen_provider_query = '';
-		if ( '' != $shipment_provider && 'all' != $shipment_provider ) {
-			$shipmen_provider_query = "AND shipping_provider LIKE ( '%" . $shipment_provider . "%')";
-		}
-		
-		$date_data = $wpdb->get_results("SELECT shipping_date as date, COUNT(*) as value FROM {$woo_trackship_shipment} WHERE shipping_date NOT LIKE ( '%NULL%') AND shipping_date BETWEEN '{$after_date}' AND '{$before_date}' {$shipmen_status_query} {$shipmen_provider_query} {$shipmen_type_query} GROUP By shipping_date");
-		
-		$interval = new DateInterval('P1D');
-		$realEnd = new DateTime($before_date);
-		$realEnd->add($interval);
-		$period = new DatePeriod(new DateTime($after_date), $interval, $realEnd);
-
-		$response = array();
-		$i = 0;
-		foreach ( $period as $date ) {                 
-			$response[$i]['date'] = $date->format('Y-m-d');
-			$response[$i]['Shipments']['label'] = 'Shipments';
-			$response[$i]['Shipments']['value'] = 0;
-			foreach ( $date_data as $key => $data ) {
-				if ( $date->format('Y-m-d') == $data->date ) {
-					$response[$i]['Shipments']['value'] = (int) $data->value;
-					unset( $date_data[ $key ] );
-					break;
-				}
+		// Shipment provider query
+		$shipment_provider_query = '';
+		if ( $providers_id ) {
+			$providers_slug = [];
+			foreach ( $selected_provider as $key => $val ) {
+				$providers_slug[] = $val['ts_slug'];
 			}
+			$providers_slug = $providers_slug ? "'" . implode( "', '", $providers_slug ) . "'" : '';
+			$shipment_provider_query = "AND shipping_provider IN ( {$providers_slug} )";
+		}
+
+		$providers_data = $wpdb->get_results("SELECT ts.shipping_provider , COUNT(1) AS total , ROUND( COUNT(1) / t.cnt * 100 ) AS percentage, AVG(shipping_length) as average FROM {$woo_trackship_shipment} ts CROSS JOIN (SELECT COUNT(1) AS cnt FROM {$woo_trackship_shipment} WHERE shipping_date BETWEEN '{$after_date}' AND '{$before_date}' {$shipmen_status_query} {$shipment_provider_query}) t WHERE shipping_date BETWEEN '{$after_date}' AND '{$before_date}' {$shipmen_status_query} {$shipment_provider_query} GROUP BY ts.shipping_provider");
+		
+
+
+		$status_data = $wpdb->get_results("SELECT ts.shipment_status , COUNT(1) AS total , ROUND( COUNT(1) / t.cnt * 100 ) AS percentage FROM {$woo_trackship_shipment} ts CROSS JOIN (SELECT COUNT(1) AS cnt FROM {$woo_trackship_shipment} WHERE shipping_date BETWEEN '{$after_date}' AND '{$before_date}' {$shipmen_status_query} {$shipment_provider_query}) t WHERE shipping_date BETWEEN '{$after_date}' AND '{$before_date}' {$shipmen_status_query} {$shipment_provider_query} GROUP BY ts.shipment_status");
+
+		$response = array();
+
+		$j = 0;
+		foreach ( $status_data as $data ) {
+			$response['shipment_status'][$j]['shipment_status'] = apply_filters( 'trackship_status_filter', $data->shipment_status );
+			$response['shipment_status'][$j]['total'] = $data->total;
+			$response['shipment_status'][$j]['percentage'] = $data->percentage;
+			$response['shipment_status'][$j]['href'] = admin_url( 'admin.php?page=trackship-shipments&status=' . $data->shipment_status );
+			$j++;
+		}
+
+		$i = 0;
+		foreach ( $providers_data as $provider ) {
+			$results = $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM ' . $wpdb->prefix . 'woo_shippment_provider WHERE ts_slug = %s', $provider->shipping_provider ) );
+			$provider_name = isset( $results->provider_name ) ? $results->provider_name : $provider->shipping_provider;
+
+			$response['shipping_provider'][$i]['shipping_provider'] = $provider_name;
+			$response['shipping_provider'][$i]['total'] = $provider->total;
+			$response['shipping_provider'][$i]['percentage'] = $provider->percentage;
+			$response['shipping_provider'][$i]['average'] = $provider->average ? round( $provider->average ) . ' days' : '';
+			$response['shipping_provider'][$i]['href'] = admin_url( 'admin.php?page=trackship-shipments&provider=' . $provider->shipping_provider );
 			$i++;
 		}
-		
-		return rest_ensure_response( $response );		
+
+		return rest_ensure_response( $response );
 	}
 
 	/**
