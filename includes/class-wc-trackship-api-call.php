@@ -177,21 +177,22 @@ class WC_TrackShip_Api_Call {
 			$shipping_postal_code = $order->get_billing_postcode();
 		}
 		
-		$url = 'https://trackship.info/wp-json/create-tracker/ts4wc-pro';
+		$url = 'https://my.trackship.co/api/create-tracker/ts4wc';
 		
 		$args['body'] = array(
-			'user_key' => $user_key,
-			'order_id' => $order_id,
-			'custom_order_id' => $custom_order_number,
-			'domain' => $domain,
-			'tracking_number' => $tracking_number,
-			'tracking_provider' => $tracking_provider,
-			'postal_code' => $shipping_postal_code,
-			'destination_country' => $shipping_country,
+			'user_key'				=> $user_key, // Deprecated since 19-Aug-2022
+			'domain'				=> $domain, // Deprecated since 19-Aug-2022
+			'order_id'				=> $order_id,
+			'custom_order_id'		=> $custom_order_number,
+			'tracking_number'		=> $tracking_number,
+			'tracking_provider'		=> $tracking_provider,
+			'postal_code'			=> $shipping_postal_code,
+			'destination_country'	=> $shipping_country,
 		);
 
 		$args['headers'] = array(
-			'user_key' => $user_key
+			'trackship-api-key'	=> $user_key,
+			'store'	=> $domain,
 		);	
 		$args['timeout'] = 10;
 		$response = wp_remote_post( $url, $args );
@@ -205,18 +206,19 @@ class WC_TrackShip_Api_Call {
 		$user_key = get_option('wc_ast_api_key');
 		$domain = get_site_url();		
 		
-		$url = 'https://trackship.info/wp-json/tracking/delete';
+		$url = 'https://my.trackship.co/api/tracking/delete';
 		
 		$args['body'] = array(
-			'user_key' => $user_key,
-			'order_id' => $order_id,
-			'domain' => $domain,
-			'tracking_number' => $tracking_number,
-			'tracking_provider' => $tracking_provider,
+			'user_key'			=> $user_key, // Deprecated since 19-Aug-2022
+			'domain'			=> $domain, // Deprecated since 19-Aug-2022
+			'order_id'			=> $order_id,
+			'tracking_number'	=> $tracking_number,
+			'tracking_provider'	=> $tracking_provider,
 		);
 
 		$args['headers'] = array(
-			'user_key' => $user_key
+			'trackship-api-key'	=> $user_key,
+			'store'	=> $domain,
 		);	
 		$args['timeout'] = 10;
 		$response = wp_remote_post( $url, $args );		

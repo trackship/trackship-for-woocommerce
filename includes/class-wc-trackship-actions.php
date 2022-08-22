@@ -486,7 +486,7 @@ class WC_Trackship_Actions {
 													<a href="javascript:;" class="trackship-tip  <?php echo esc_html( $class ); ?>" title="<?php esc_html_e( 'Pending TrackShip is a temporary status that will display for a few minutes until we update the order with the first tracking event from the shipping provider. Please refresh the orders admin in 2-3 minutes.', 'trackship-for-woocommerce' ); ?>" ><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a>
 												<?php } ?>
 												<?php if ( !in_array( $status, array( 'in_transit', 'on_hold', 'pre_transit', 'delivered', 'out_for_delivery', 'available_for_pickup', 'return_to_sender', 'exception', 'failure', 'pending_trackship', 'unknown' ) ) ) { ?>
-													<a class="<?php echo esc_html( $class ); ?>" href="https://docs.trackship.info/docs/resources/shipment-status-reference/#trackship-status-messages" target="_blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a>
+													<a class="<?php echo esc_html( $class ); ?>" href="https://docs.trackship.co/docs/resources/shipment-status-reference/#trackship-status-messages" target="_blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a>
 												<?php } ?>
 											</span>
 										<?php } ?>
@@ -567,12 +567,12 @@ class WC_Trackship_Actions {
 					}
 					
 					//bulk shipment status action for "TrackShip balance is 0" status
-					if ( isset( $shipment_status[$key]['pending_status'] ) && 'TrackShip balance is 0' == $shipment_status[$key]['pending_status'] ) {
+					if ( isset( $shipment_status[$key]['pending_status']) && 'insufficient_balance' == $shipment_status[$key]['pending_status'] ) {
 						$this->schedule_trackship_trigger( $order_id );
 					}
 					
-					//bulk shipment status action for "TrackShip balance is 0" status
-					if ( isset( $shipment_status[$key]['pending_status'] ) && 'TrackShip connection issue' == $shipment_status[$key]['pending_status'] ) {
+					//bulk shipment status action for "connection issue" status
+					if ( isset( $shipment_status[$key]['pending_status'] ) && in_array( $shipment_status[$key]['pending_status'], array( 'connection_issue', 'unauthorized' ) ) ) {
 						$this->schedule_trackship_trigger( $order_id );
 					}
 				}									
@@ -830,108 +830,7 @@ class WC_Trackship_Actions {
 		update_option( 'all-shipment-status-delivered', $all_status );
 		exit;
 	}
-	
-	/*
-	* get completed order with tracking that not sent to TrackShip
-	* return number
-	*/
-	public function completed_order_with_tracking() {
-		// Get orders completed.
-		$args = array(
-			'status' => 'wc-completed',
-			'limit'	 => 100,	
-			'date_created' => '>' . ( time() - 2592000 ),
-		);
-		
-		$orders = wc_get_orders( $args );
-		
-		$completed_order_with_tracking = 0;
-		
-		foreach ( $orders as $order) {
-			$order_id = $order->get_id();
-			
-			$ast = new WC_Advanced_Shipment_Tracking_Actions();
-			$tracking_items = $ast->get_tracking_items( $order_id, true );
-			if ( $tracking_items ) {
-				$shipment_status = get_post_meta( $order_id, 'shipment_status', true);
-				foreach ( $tracking_items as $key => $tracking_item ) { 				
-					if ( !isset( $shipment_status[$key] ) ) {						
-						$completed_order_with_tracking++;		
-					}
-				}									
-			}			
-		}
-		return $completed_order_with_tracking;
-	}
-	
-	/*
-	* get completed order with Trackship Balance 0 status
-	* return number
-	*/
-	public function completed_order_with_zero_balance() {
-		
-		// Get orders completed.
-		$args = array(
-			'status' => 'wc-completed',
-			'limit'	 => 100,	
-			'date_created' => '>' . ( time() - 2592000 ),
-		);		
-		
-		$orders = wc_get_orders( $args );
-		
-		$completed_order_with_zero_balance = 0;
-		
-		foreach ( $orders as $order ) {
-			$order_id = $order->get_id();
-			
-			$ast = new WC_Advanced_Shipment_Tracking_Actions();
-			$tracking_items = $ast->get_tracking_items( $order_id, true );
-			if ( $tracking_items ) {				
-				$shipment_status = get_post_meta( $order_id, 'shipment_status', true);				
-				foreach ( $tracking_items as $key => $tracking_item ) { 					
-					if ( isset( $shipment_status[$key]['pending_status'] ) && 'TrackShip balance is 0' == $shipment_status[$key]['pending_status'] ) {
-						$completed_order_with_zero_balance++;		
-					}
-				}									
-			}			
-		}				
-		return $completed_order_with_zero_balance;
-	}
-	
-	/*
-	* get completed order with Trackship connection issue status
-	* return number
-	*/
-	public function completed_order_with_do_connection() {
-		
-		// Get orders completed.
-		$args = array(
-			'status' => 'wc-completed',
-			'limit'	 => 100,	
-			'date_created' => '>' . ( time() - 2592000 ),
-		);		
-		
-		$orders = wc_get_orders( $args );
-		
-		$completed_order_with_do_connection = 0;
-		
-		foreach ( $orders as $order ) {
-			$order_id = $order->get_id();
-			
-			$ast = new WC_Advanced_Shipment_Tracking_Actions();
-			$tracking_items = $ast->get_tracking_items( $order_id, true );
-			if ( $tracking_items ) {				
-				$shipment_status = get_post_meta( $order_id, 'shipment_status', true);				
-				foreach ( $tracking_items as $key => $tracking_item ) { 					
-					if ( isset( $shipment_status[$key]['pending_status'] ) && 'TrackShip connection issue' == $shipment_status[$key]['pending_status'] ) {
-						$completed_order_with_do_connection++;		
-					}
-				}									
-			}			
-		}				
-		return $completed_order_with_do_connection;
-	}
-	
+
 	public function get_date_format() {
 		$wp_date_format = get_option( 'date_format' );
 		
@@ -1025,7 +924,7 @@ class WC_Trackship_Actions {
 										<?php } ?>
 										
 										<?php if ( !in_array( $status, array( 'in_transit', 'on_hold', 'pre_transit', 'delivered', 'out_for_delivery', 'available_for_pickup', 'return_to_sender', 'exception', 'failure', 'pending_trackship', 'unknown' ) ) ) { ?>
-											<a class="<?php echo esc_html( $class ); ?>" data-page="<?php esc_html_e( $page ); ?>" href="https://docs.trackship.info/docs/resources/shipment-status-reference/#trackship-status-messages" target="_blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a>
+											<a class="<?php echo esc_html( $class ); ?>" data-page="<?php esc_html_e( $page ); ?>" href="https://docs.trackship.co/docs/resources/shipment-status-reference/#trackship-status-messages" target="_blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a>
 										<?php } ?>
 									</span>
 								<?php } ?>
@@ -1655,4 +1554,11 @@ class WC_Trackship_Actions {
 		}
 		return $bool;
 	}
+}
+
+// if str_contains function not exists or for lower version of php
+if (!function_exists('str_contains')) {
+    function str_contains($haystack, $needle) {
+        return $needle !== '' && mb_strpos($haystack, $needle) !== false;
+    }
 }

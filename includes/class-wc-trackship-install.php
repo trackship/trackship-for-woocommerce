@@ -368,7 +368,7 @@ class WC_Trackship_Install {
 	*/
 	public function update_shipping_providers() {
 		global $wpdb;
-		$url = 'https://trackship.info/wp-json/WCAST/v1/Provider';
+		$url = 'https://my.trackship.co/api/WCAST/v1/Provider';
 		$resp = wp_remote_get( $url );
 		
 		if ( is_array( $resp ) && ! is_wp_error( $resp ) ) {
