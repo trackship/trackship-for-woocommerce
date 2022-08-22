@@ -78,9 +78,12 @@ $array = array(
 		'class' => 'not_show',
 	),
 );
-$url = 'https://my.trackship.info/wp-json/tracking/get_user_plan';								
+$url = 'https://my.trackship.co/api/user-plan/get/';
 $args[ 'body' ] = array(
-	'user_key' => trackship_for_woocommerce()->actions->get_trackship_key(),				
+	'user_key' => trackship_for_woocommerce()->actions->get_trackship_key(), // Deprecated since 19-Aug-2022
+);
+$args['headers'] = array(
+	'trackship-api-key' => trackship_for_woocommerce()->actions->get_trackship_key()
 );
 $response = wp_remote_post( $url, $args );
 if ( is_wp_error( $response ) ) {
@@ -156,7 +159,7 @@ $store_text = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No activ
 			<div class="ts_connected_status">
 				<span><?php esc_html_e( 'Connection Status', 'trackship-for-woocommerce' ); ?></span>: <strong><span class="dashicons dashicons-yes"></span><?php esc_html_e( 'Connected', 'trackship-for-woocommerce' ); ?></strong>
 			</div>
-			<a href="https://trackship.info/my-account/?utm_source=wpadmin&utm_medium=sidebar&utm_campaign=upgrade" class="button-primary button-trackship btn_large" target="_blank">
+			<a href="https://my.trackship.co/?utm_source=wpadmin&utm_medium=sidebar&utm_campaign=upgrade" class="button-primary button-trackship btn_large" target="_blank">
 				<span><?php esc_html_e( $store_text ); ?></span>
 				<span class="dashicons dashicons-arrow-right-alt2"></span>
 			</a>

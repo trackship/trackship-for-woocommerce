@@ -15,7 +15,7 @@ wp_enqueue_script( 'trackship_script' );
 			<h3>Start for Free!</h3>	
 		</div>
 	</div>
-	<a href="https://trackship.info/my-account/?utm_source=wpadmin&utm_campaign=tspage" class="button-primary btn_green2 btn_large connect-your-store"><span><?php esc_html_e( 'Connect your store', 'trackship-for-woocommerce' ); ?></span><span class="dashicons dashicons-arrow-right-alt2"></span></a>
+	<a href="https://my.trackship.co/?utm_source=wpadmin&utm_campaign=tspage" class="button-primary btn_green2 btn_large connect-your-store"><span><?php esc_html_e( 'Connect your store', 'trackship-for-woocommerce' ); ?></span><span class="dashicons dashicons-arrow-right-alt2"></span></a>
 	<div class="">
 		<div class="ts_col_inner ts_landing_banner">
 			<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/ts-header-banner.png">

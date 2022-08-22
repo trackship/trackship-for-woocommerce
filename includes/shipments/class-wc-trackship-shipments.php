@@ -160,7 +160,7 @@ class WC_Trackship_Shipments {
 			$result[$i] = new \stdClass();
 			$result[$i]->et_shipped_at = date_i18n( $date_format, strtotime( $value->shipping_date ) );
 			$result[$i]->order_id = $value->order_id;
-			$result[$i]->order_number = apply_filters( 'woocommerce_order_number', $value->order_id, wc_get_order( $value->order_id ) );
+			$result[$i]->order_number = wc_get_order( $value->order_id ) ? wc_get_order( $value->order_id )->get_order_number() : $value->order_id;
 			$result[$i]->shipment_status = apply_filters("trackship_status_filter", $value->shipment_status );
 			$result[$i]->shipment_status_id = $value->shipment_status;
 			$result[$i]->shipment_length = '<span class="shipment_length">' . $shipping_length . $late_shipment . '</span>';

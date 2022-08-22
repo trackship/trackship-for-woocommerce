@@ -870,7 +870,7 @@ jQuery(document).on("click", "#activity-panel-tab-help", function () {
 	jQuery('.woocommerce-layout__activity-panel-wrapper').addClass('is-open is-switching');
 });
 
-jQuery(document).click(function ( event ) {
+jQuery(document).on("click", function ( event ) {
 	var $trigger = jQuery(".woocommerce-layout__activity-panel");
 	if ($trigger !== event.target && !$trigger.has(event.target).length) {
 		jQuery('#activity-panel-tab-help').removeClass('is-active');

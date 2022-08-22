@@ -280,27 +280,27 @@ class tswc_smswoo_admin {
 				'link' => array(
 					'smswoo_nexmo' => array(
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'Nexmo' ),
-						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/setup/sms-notifications/vonage/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'link' => 'https://docs.trackship.co/docs/trackship-for-woocommerce/setup/sms-notifications/vonage/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 					'smswoo_twilio' => array(
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'Twilio' ),
-						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/setup/sms-notifications/twilio/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'link' => 'https://docs.trackship.co/docs/trackship-for-woocommerce/setup/sms-notifications/twilio/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 					'smswoo_clicksend' => array(
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'ClickSend' ),
-						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/setup/sms-notifications/clicksend/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'link' => 'https://docs.trackship.co/docs/trackship-for-woocommerce/setup/sms-notifications/clicksend/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 					'smswoo_fast2sms' => array(
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'Fast2sms' ),
-						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/setup/sms-notifications/fast2sms/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'link' => 'https://docs.trackship.co/docs/trackship-for-woocommerce/setup/sms-notifications/fast2sms/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),	
 					'smswoo_msg91' => array(
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'MSG91' ),
-						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/setup/sms-notifications/msg91/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'link' => 'https://docs.trackship.co/docs/trackship-for-woocommerce/setup/sms-notifications/msg91/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 					'smswoo_smsalert' => array(
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'SMS Alert' ),
-						'link' => 'https://docs.trackship.info/docs/trackship-for-woocommerce/setup/sms-notifications/sms-alert/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+						'link' => 'https://docs.trackship.co/docs/trackship-for-woocommerce/setup/sms-notifications/sms-alert/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 				),
 			),
