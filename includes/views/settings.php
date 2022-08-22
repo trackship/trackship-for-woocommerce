@@ -2,9 +2,12 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-$url = 'https://my.trackship.info/wp-json/tracking/get_user_plan';								
+$url = 'https://my.trackship.co/api/user-plan/get/';
 $args[ 'body' ] = array(
-	'user_key' => trackship_for_woocommerce()->actions->get_trackship_key(),				
+	'user_key' => trackship_for_woocommerce()->actions->get_trackship_key(), // Deprecated since 19-Aug-2022
+);
+$args['headers'] = array(
+	'trackship-api-key' => trackship_for_woocommerce()->actions->get_trackship_key()
 );
 $response = wp_remote_post( $url, $args );
 if ( is_wp_error( $response ) ) {
@@ -26,8 +29,8 @@ if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocomme
 	</script>
 	<?php 
 }
-$completed_order_with_tracking = $this->completed_order_with_tracking();		
-$completed_order_with_zero_balance = $this->completed_order_with_zero_balance();							
+$completed_order_with_tracking = $this->completed_order_with_tracking();
+$completed_order_with_zero_balance = $this->completed_order_with_zero_balance();
 $completed_order_with_do_connection = $this->completed_order_with_do_connection();
 $total_orders = $completed_order_with_tracking + $completed_order_with_zero_balance + $completed_order_with_do_connection;
 $cookie = isset( $_COOKIE['Notice'] ) ? sanitize_text_field( $_COOKIE['Notice'] ) : '';
@@ -70,7 +73,7 @@ if ( 'delete' != $cookie && $total_orders > 0 ) { ?>
 					<div class="order-label wc-delivered">
 						<?php 
 						if ( get_option('wc_ast_status_delivered') ) {
-							esc_html_e( wc_get_order_status_name( 'delivered' ), 'trackship-for-woocommerce' );	
+							esc_html_e( wc_get_order_status_name( 'delivered' ), 'trackship-for-woocommerce' );
 						} else {
 							esc_html_e( 'Delivered', 'trackship-for-woocommerce' );
 						}
@@ -82,7 +85,7 @@ if ( 'delete' != $cookie && $total_orders > 0 ) { ?>
 					</option>
 						<option value="#000" <?php echo '#000' == get_option('wc_ast_status_label_font_color', '#fff') ? 'selected' : ''; ?>><?php esc_html_e( 'Dark Font', 'trackship-for-woocommerce' ); ?>
 						</option>
-					</select>							
+					</select>
 				</div>
 				<?php
 				$late_shipments_days = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_days', 7 );
@@ -119,7 +122,7 @@ if ( 'delete' != $cookie && $total_orders > 0 ) { ?>
 		</div>
 		<div class="panel_content section_tracking_page_content">
 			<div class="outer_form_table">
-				<?php $this->get_html_ul( $this->get_tracking_page_data() ); ?>													
+				<?php $this->get_html_ul( $this->get_tracking_page_data() ); ?>
 			</div>
 		</div>
 	</form>
