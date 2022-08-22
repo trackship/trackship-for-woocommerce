@@ -210,7 +210,7 @@ class WC_Trackship_Admin {
 				<?php
 				trackship_for_woocommerce()->front->admin_tracking_page_widget( $order_id, $tracking_id );
 			} else {
-				echo '<strong>';esc_html_e( 'Please connect your store with trackship.info.', 'trackship-for-woocommerce' );echo '</strong>';
+				echo '<strong>';esc_html_e( 'Please connect your store with trackship.co.', 'trackship-for-woocommerce' );echo '</strong>';
 			}
 		} else {
 			esc_html_e( 'Please refresh the page and try again.', 'trackship-for-woocommerce' );
@@ -603,13 +603,6 @@ class WC_Trackship_Admin {
 										<?php } ?>								
 									</fieldset>
 								<?php } elseif ( 'key_field' == $array['type'] ) { ?>
-									<fieldset>                                
-										<?php if ( true == $array['connected'] ) { ?>
-											<a href="https://my.trackship.info/" target="_blank">
-												<span class="api_connected"><label><?php esc_html_e( 'Connected', 'trackship-for-woocommerce' ); ?></label><span class="dashicons dashicons-yes"></span></span>
-											</a>
-										<?php } ?>								
-									</fieldset>
 								<?php } elseif ( 'label' == $array['type'] ) { ?>
 									<fieldset>
 										<label><?php echo esc_html( $array['value'] ); ?></label>
@@ -1045,8 +1038,8 @@ class WC_Trackship_Admin {
 			
 			if ( $tracking_items ) {				
 				$shipment_status = get_post_meta( $order_id, 'shipment_status', true);				
-				foreach ( $tracking_items as $key => $tracking_item ) { 					
-					if ( isset( $shipment_status[$key]['status']) && 'TrackShip balance is 0' == $shipment_status[$key]['status'] ) {
+				foreach ( $tracking_items as $key => $tracking_item ) {
+					if ( isset( $shipment_status[$key]['pending_status']) && 'insufficient_balance' == $shipment_status[$key]['pending_status'] ) {
 						$completed_order_with_zero_balance++;		
 					}
 				}									
@@ -1084,7 +1077,7 @@ class WC_Trackship_Admin {
 			if ( $tracking_items ) {				
 				$shipment_status = get_post_meta( $order_id, 'shipment_status', true);				
 				foreach ( $tracking_items as $key => $tracking_item ) { 					
-					if ( isset( $shipment_status[$key]['pending_status'] ) && 'TrackShip connection issue' == $shipment_status[$key]['pending_status'] ) {
+					if ( isset( $shipment_status[$key]['pending_status'] ) && in_array( $shipment_status[$key]['pending_status'], array( 'connection_issue', 'unauthorized' ) ) ) {
 						$completed_order_with_do_connection++;		
 					}
 				}									
@@ -1264,7 +1257,7 @@ class WC_Trackship_Admin {
 		<div id=admin_error_more_info_widget class=popupwrapper style="display:none;">
 			<div class="more_info_popup popuprow">
 				<?php
-				$ssl = '<a href="http://help.trackship.info/en/articles/5626635-requirements">SSL Requirements</a>';
+				$ssl = '<a href="https://docs.trackship.co/docs/trackship-for-woocommerce/getting-started/requirements/#ssl-certificate">SSL Requirements</a>';
 				$array_more_info = array(
 					'pending_trackShip' => array(
 						'heading'	=> 'Pending TrackShip',
@@ -1327,7 +1320,7 @@ class WC_Trackship_Admin {
 							<p style="font-size: 16px;"><?php esc_html_e( 'Starting from $9 a month', 'trackship-for-woocommerce' ); ?></p>
 						</ul>
 						<div>
-							<a href="https://trackship.info/my-account/?utm_source=wpadmin&utm_medium=TS4WC&utm_campaign=shipment"><button class="button-primary button-trackship btn_large" style="font-size: 17px; padding: 8px 30px; background-color: #09d3ac;border-color:#09d3ac;"><?php esc_html_e( 'UPGRADE TO PRO', 'trackship-for-woocommerce' ); ?><span style="line-height: 18px;" class="dashicons dashicons-arrow-right-alt2"></span></button></a>
+							<a href="https://my.trackship.co/?utm_source=wpadmin&utm_medium=TS4WC&utm_campaign=shipment"><button class="button-primary button-trackship btn_large" style="font-size: 17px; padding: 8px 30px; background-color: #09d3ac;border-color:#09d3ac;"><?php esc_html_e( 'UPGRADE TO PRO', 'trackship-for-woocommerce' ); ?><span style="line-height: 18px;" class="dashicons dashicons-arrow-right-alt2"></span></button></a>
 						</div>
 					</div>
 					<div style="position: relative; width: 100%;">
