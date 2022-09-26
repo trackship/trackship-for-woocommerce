@@ -196,6 +196,10 @@ class Trackship_For_Woocommerce {
 		//SMSWOO
 		require_once $this->get_plugin_path() . '/includes/smswoo/class-smswoo-init.php';
 		$this->smswoo_init = TSWC_SMSWOO_Init::get_instance();
+
+		if ( is_plugin_active( 'automatewoo/automatewoo.php' ) ) {
+			require_once plugin_dir_path( __FILE__ ) . '/includes/class-wc-automatewoo-integration.php';
+		}
 	}
 	
 	/**
