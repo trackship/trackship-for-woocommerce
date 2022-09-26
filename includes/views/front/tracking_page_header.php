@@ -50,7 +50,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php } ?>
 	<div class="shipment_status_heading <?php esc_html_e( $tracker->ep_status ); ?>">
 		<?php
-		if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown', 'insufficient_balance' ) ) ) {
+		if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown', 'insufficient_balance', '' ) ) ) {
 			esc_html_e( 'Shipped', 'trackship-for-woocommerce' );
 		} else {
 			$message = isset( $trackind_detail_by_status_rev[0]->message ) ? $trackind_detail_by_status_rev[0]->message : '';
