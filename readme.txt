@@ -2,9 +2,9 @@
 Contributors: TrackShip
 Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 5.3
-Tested up to: 6.0.1
-Requires PHP: 7.0
-Stable tag: 1.4.4
+Tested up to: 6.0.2
+Requires PHP: 7.2
+Stable tag: 1.4.5
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,14 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended).
 
 == Changelog ==
+= 1.4.5 - 2022-09-26 =
+* Fix - Fix the variation product image issue in Tracking Page
+* Dev - Get shipment status notice on all pages of TrackShip
+* Enhancement - Integration with Integrately added
+* Dev - Filter( exclude_to_send_data_for_provider ) added for do not send Trcking data to TrackShip for specific provider
+* Dev - Compatibility added with AutomateWoo plugin
+* Dev - Tested with WC 6.9.3
+
 = 1.4.4 - 2022-08-22 =
 * Fix - Fix the fatal error of str_contains function
 * Fix - Fix Bulk send Shipments from Tools
