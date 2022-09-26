@@ -38,6 +38,7 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 				<?php } ?>					
 			</div>
 			<div class="menu_devider"></div>
+			<?php $this->get_trackship_notice_msg(); ?>
 			<?php foreach ( $array as $key => $val ) { ?>
 				<?php if ( $val[ 'show' ] ) { ?>
 					<section id="content_trackship_<?php esc_html_e( $val[ 'slug' ] ); ?>" class="inner_tab_section">

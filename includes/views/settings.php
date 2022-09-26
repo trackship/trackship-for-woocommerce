@@ -29,20 +29,7 @@ if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocomme
 	</script>
 	<?php 
 }
-$completed_order_with_tracking = $this->completed_order_with_tracking();
-$completed_order_with_zero_balance = $this->completed_order_with_zero_balance();
-$completed_order_with_do_connection = $this->completed_order_with_do_connection();
-$total_orders = $completed_order_with_tracking + $completed_order_with_zero_balance + $completed_order_with_do_connection;
-$cookie = isset( $_COOKIE['Notice'] ) ? sanitize_text_field( $_COOKIE['Notice'] ) : '';
-if ( 'delete' != $cookie && $total_orders > 0 ) { ?>
-	<div class="tools_tab_ts4wc">
-		<div class="trackship-notice" style="border: 0;">
-			<?php /* translators: %s: search for a total_orders */ ?>
-			<p><?php printf( esc_html__( 'We detected %s Shipped orders from the last 30 days that were not sent to TrackShip, you can bulk send them to TrackShip', 'trackship-for-woocommerce' ), esc_html( $total_orders ) ); ?><span class="dashicons remove-icon dashicons-no-alt"></span></p>
-			<button class="button-primary button-trackship bulk_shipment_status_button" <?php echo 0 == $total_orders ? 'disabled' : ''; ?>><?php esc_html_e( 'Get Shipment Status', 'trackship-for-woocommerce' ); ?></button>
-		</div>
-	</div>
-<?php } ?>
+?>
 <div class="accordion_container">
 	<form method="post" id="wc_ast_trackship_form" action="" enctype="multipart/form-data">
 		<div class="outer_form_table">

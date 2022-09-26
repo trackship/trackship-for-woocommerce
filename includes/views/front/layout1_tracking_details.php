@@ -28,13 +28,9 @@ if ( ( !is_admin() && get_option( 'enable_email_widget' ) ) || ( 'yes' == $front
 }
 ?>
 <div class="shipment_progress_heading_div">
-	<?php
-	foreach ( $tab_array as $id => $tab) {
-		?>
+	<?php foreach ( $tab_array as $id => $tab) { ?>
 		<label data-label="<?php echo esc_html( $id ); ?>" class="shipment_progress_label <?php isset($tab['class']) ? esc_attr_e($tab['class']) : ''; ?>"><?php echo esc_html( $tab['label'] ); ?></label>
-		<?php
-	}
-	?>
+	<?php } ?>
 </div>
 <div class="tracking_event_tab_view">
 	<div class="tracking-details tracking_events_details" <?php echo 1 == $hide_tracking_events ? 'style="display:none"' : ''; ?>>	

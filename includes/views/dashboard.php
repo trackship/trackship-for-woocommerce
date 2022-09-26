@@ -92,7 +92,9 @@ if ( is_wp_error( $response ) ) {
 	$plan_data = json_decode( $response[ 'body' ] );					
 }
 $current_plan = $plan_data->subscription_plan;
+$current_balance = $plan_data->tracker_balance;
 update_option( 'user_plan', $current_plan );
+update_option( 'trackers_balance', $current_balance );
 $nonce = wp_create_nonce( 'wc_ast_tools');
 $store_text = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? __( 'Upgrade to Pro', 'trackship-for-woocommerce' ) : __( 'Account Dashboard', 'trackship-for-woocommerce' );
 ?>
