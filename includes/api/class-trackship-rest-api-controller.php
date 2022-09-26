@@ -219,6 +219,10 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			);
 			$args['est_delivery_date'] = $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : null;
 			trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_item['tracking_number'], $args, $args2 );
+			
+			if ( $previous_status != $tracking_event_status ) {
+				do_action( 'trackship_shipment_status_trigger', $order_id, $previous_status, $tracking_event_status, $tracking_number );
+			}
 		}
 		
 		$trackship->check_tracking_delivered( $order_id );
