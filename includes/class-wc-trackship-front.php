@@ -522,7 +522,7 @@ class WC_TrackShip_Front {
 		if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ) {
 			$width = '0';
 		} else {
-			if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'unknown', 'carrier_unsupported', 'insufficient_balance', 'invalid_carrier' ) ) ) {
+			if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'unknown', 'carrier_unsupported', 'insufficient_balance', 'invalid_carrier', '' ) ) ) {
 				$width = '10%';
 			} elseif ( in_array( $tracker->ep_status, array( 'in_transit', 'on_hold', 'failure' ) ) ) {
 				$width = '30%';
@@ -569,26 +569,38 @@ class WC_TrackShip_Front {
 		$order = wc_get_order( $order_id );		
 		$items = $order->get_items();
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
-		// echo '<pre>';print_r($tracking_items);echo '</pre>';
+		 
 		$products = array();
 		foreach ( $items as $item_id => $item ) {
-			$products[$item->get_product_id()] = array(
+			
+			$variation_id = $item->get_variation_id();
+			$product_id = $item->get_product_id();					
+			
+			if ( 0 != $variation_id ) {
+				$product_id = $variation_id;
+			}
+			
+			$products[$product_id] = array(
 				'item_id' => $item_id,
+				'product_id' => $product_id,
 				'product_name' => $item->get_name(),
 				'product_qty' => $item->get_quantity(),
 			);
 		}
 		$products = apply_filters( 'tracking_widget_product_array', $products, $order_id, $tracker, $tracking_provider, $tracking_number );
+
+		//echo '<pre>';print_r($products);echo '</pre>';
 		?>
 		<div class="product_details" style="display:none;">
 			<ul class="tpi_product_tracking_ul">
 				<?php
-				foreach ( $products as $product_id => $product ) {
-					$_product = wc_get_product( $product_id );
+				foreach ( $products as $item_id => $product ) {
+					$_product = wc_get_product( $product['product_id'] );
 					if ( $_product ) {
 						$image_size = array( 50, 50 );
 						$image = $_product->get_image( $image_size );
-						echo '<li>' . wp_kses_post( $image ) . '<span><a target="_blank" href=' . esc_url( get_permalink( $product_id ) ) . '>' . esc_html( $product['product_name'] ) . '</a> x ' . esc_html( $product['product_qty'] ) . '</span></li>';
+						// echo esc_html($image);
+						echo '<li>' . wp_kses_post( $image ) . '<span><a target="_blank" href=' . esc_url( get_permalink( $product['product_id'] ) ) . '>' . esc_html( $product['product_name'] ) . '</a> x ' . esc_html( $product['product_qty'] ) . '</span></li>';
 					}
 				}
 				?>
