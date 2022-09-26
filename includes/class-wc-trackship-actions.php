@@ -877,7 +877,6 @@ class WC_Trackship_Actions {
 		$tracking_id = $item['tracking_id'];
 		
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
-		
 		$date_format = $this->get_date_format();
 		$date_time_format = get_option( 'date_format' ) . ' ' . $this->get_time_format();
 		
@@ -934,6 +933,20 @@ class WC_Trackship_Actions {
 							</span>
 						</div>	
 					<?php } else { ?>
+						<?php
+						// echo '<pre>';print_r($tracking_item);echo '</pre>';
+						if ( isset( $tracking_item['tracking_provider'] ) && '' != $tracking_item['tracking_provider'] ) {
+							$tracking_provider = $tracking_item['tracking_provider'];
+						} else {
+							$tracking_provider = $tracking_item['custom_tracking_provider'];
+						}
+						$tracking_provider = apply_filters( 'convert_provider_name_to_slug', $tracking_provider );
+						
+						$bool = apply_filters( 'exclude_to_send_data_for_provider', true, $tracking_provider );
+						if ( !$bool ) {
+							continue;
+						}
+						?>
 						<button type="button" class="button metabox_get_shipment_status"><?php esc_html_e( 'Get Shipment Status', 'trackship-for-woocommerce' ); ?></span></button>
 						<div class="ast-shipment-status-div temp-pending_trackship" style="display:none;">	
 							<span class="open_tracking_details ast-shipment-status shipment-pending_trackship" data-orderid="<?php esc_html_e( $order_id ); ?>" data-tracking_id="<?php esc_html_e( $tracking_id ); ?>" >
@@ -1198,6 +1211,18 @@ class WC_Trackship_Actions {
 		foreach ( $tracking_items as $key => $tracking_item ) {
 			
 			if ( isset( $shipment_statuses[$key]['status'] ) && 'delivered' == $shipment_statuses[$key]['status'] ) {
+				continue;
+			}
+
+			if ( isset( $tracking_item['tracking_provider'] ) && '' != $tracking_item['tracking_provider'] ) {
+				$tracking_provider = $tracking_item['tracking_provider'];
+			} else {
+				$tracking_provider = $tracking_item['custom_tracking_provider'];
+			}
+			$tracking_provider = apply_filters( 'convert_provider_name_to_slug', $tracking_provider );
+			
+			$bool = apply_filters( 'exclude_to_send_data_for_provider', true, $tracking_provider );
+			if ( !$bool ) {
 				continue;
 			}
 			
@@ -1475,16 +1500,20 @@ class WC_Trackship_Actions {
 			$wpdb->insert( $shipment_table, $args );
 			$id = $wpdb->insert_id;
 
-			//meta table
-			$data2 = [
-				'meta_id'	=> $id
-			];
-			$wpdb->insert( $shipment_meta, $data2 );
+			if ( $id ) {
+				//meta table
+				$data2 = [
+					'meta_id'	=> $id
+				];
+				$wpdb->insert( $shipment_meta, $data2 );
+			}
 		}
 		
 	}
 	
 	public function update_notification_table ( $args ) {
+		$install = WC_Trackship_Install::get_instance();
+		$install->create_email_log_table();
 		global $wpdb;
 		$log_table = $wpdb->prefix . 'zorem_email_sms_log';
 		$wpdb->insert( $log_table, $args );
