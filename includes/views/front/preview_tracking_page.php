@@ -16,16 +16,11 @@
 			color: <?php echo esc_html( $link_color ); ?>;
 		}				
 	<?php } ?>
-	<?php if ( $padding ) { ?>
-		body .col.tracking-detail{
-			padding: <?php echo esc_html( $padding ); ?>px;
-		}
-	<?php } ?>
 	<?php if ( $border_color ) { ?>
 		.col.tracking-detail{
 			border: 1px solid <?php echo esc_html( $border_color ); ?>;
 		}
-		body .col.tracking-detail .trackship_branding{
+		body .col.tracking-detail .trackship_branding, .tracking-detail .heading_panel {
 			border-top: 1px solid <?php echo esc_html( $border_color ); ?>;
 		}
 		body .col.tracking-detail .shipment-header, body .shipment_progress_heading_div, body .tracking-detail .h4-heading, .tracking-detail .tracking_number_wrap {
@@ -105,13 +100,12 @@
 				<?php } ?>
 			</div>
 		</div>
-		<div class="shipment_progress_heading_div">
-			<label data-label="tracking_events_details" class="shipment_progress_label tracking_detail_label <?php echo 1 != $hide_tracking_events ? 'checked' : ''; ?>" style="<?php echo 1 == $hide_tracking_events ? 'display:none' : ''; ?>">Shipment Progress</label>
-			<label data-label="product_details" class="shipment_progress_label <?php echo 1 == $hide_tracking_events ? 'checked' : ''; ?>">Items in this shipment</label>
-			<label data-label="shipment_status_notifications" class="shipment_progress_label ">Notifications</label>
-		</div>
 		<div class="tracking_event_tab_view">
-			<div class="tracking-details tracking_events_details" style=" style="display:none;"">
+			<div data-label="tracking_events_details" class="heading_panel tracking_detail_label checked">
+				Shipment Progress
+				<span class="accordian-arrow right"></span>
+			</div>
+			<div class="content_panel tracking-details tracking_events_details">
 				<?php if ( 0 == $hide_tracking_events ) { ?>
 					<div class="tracking_details_by_date">			
 						<ul class="timeline">
@@ -168,7 +162,11 @@
 					<a class="hide_old_details" href="javaScript:void(0);" style="display: none;"><?php esc_html_e( 'view less', 'trackship-for-woocommerce' ); ?></a>		
 				<?php } ?>
 			</div>
-			<div class="product_details" style="display:none;">
+			<div data-label="product_details" class="heading_panel">
+				Items in this shipment
+				<span class="accordian-arrow right"></span>
+			</div>
+			<div class="content_panel product_details">
 				<ul class="tpi_product_tracking_ul">
 					<li>
 						<img width="50" height="50" src="<?php echo esc_html( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/dummy-product-image.jpg" loading="lazy">	
@@ -186,10 +184,18 @@
 					</li>
 				</ul>
 			</div>
-			<div class="shipment_status_notifications" style="display:none;">
+			<div data-label="shipment_status_notifications" class="heading_panel">
+				Notifications
+				<span class="accordian-arrow right"></span>
+			</div>
+			<div class="content_panel shipment_status_notifications">
 				<label>
 					<input type="checkbox" class="unsubscribe_emails_checkbox" name="unsubscribe_emails" value="1" checked>
 					<span style="font-weight: normal;"><?php esc_html_e( 'Email Notifications', 'trackship-for-woocommerce' ); ?></span>
+				</label>
+				<label>
+					<input type="checkbox" class="unsubscribe_sms_checkbox" name="unsubscribe_sms" data-lable="sms" value="1" checked="">
+					<span style="font-weight: normal;">SMS notifications</span>
 				</label>
 			</div>
 		</div>
