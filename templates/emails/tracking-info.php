@@ -26,7 +26,6 @@ if ( $tracking_items ) :
 				<?php
 				$ship_status = $new_status;
 				$tracking_link = isset( $tracking_item[ 'ast_tracking_link' ] ) && get_option( 'wc_ast_use_tracking_page', 1 ) ? $tracking_item[ 'ast_tracking_link' ] : $tracking_item[ 'formatted_tracking_link' ];
-
 				do_action( 'before_tracking_widget_email', $tracking_item, $order_id );
 				?>
 				<div class="tracking_index display-table">
