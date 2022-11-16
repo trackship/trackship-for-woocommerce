@@ -399,10 +399,6 @@ jQuery(document).on("click", ".zoremmail-panel-title", function(){
 		jQuery('iframe').attr('src', shipment_iframe_url);
 	}
 	jQuery('#customizer_type').trigger('change');
-	jQuery( '#shipmentStatus' ).select2({
-		// templateSelection: text_contain,
-		minimumResultsForSearch: Infinity
-	});
 	jQuery( '#email_preview' ).select2({
 		templateSelection: text_contain,
 		minimumResultsForSearch: Infinity,
@@ -431,9 +427,8 @@ jQuery(document).on("click", ".zoremmail-sub-panel-title", function(){
 	jQuery( ".customize-section-back" ).removeClass('panels').addClass('sub-panels').show();
 
 	var parent_label = jQuery('.zoremmail-panels #'+type).data('label');
-	jQuery( '.zoremmail-sub-panel-heading.'+ type +' .customize-action-changed' ).html( 'Customizing <span class="dashicons dashicons-arrow-right-alt2"></span> '+parent_label );
+	jQuery( '.zoremmail-sub-panel-heading.'+ type +' .customize-action-changed' ).html( 'TrackShip <span class="dashicons dashicons-arrow-right-alt2"></span> '+parent_label );
 	jQuery( '.zoremmail-sub-panel-heading.'+ type +' .sub_heading' ).html( label );
-
 
 	jQuery('.zoremmail-menu-submenu-title').each(function(index, element) {
 		if ( jQuery(this).data('id') ===  id ) {
@@ -444,7 +439,10 @@ jQuery(document).on("click", ".zoremmail-sub-panel-title", function(){
 			jQuery(this).next('.zoremmail-menu-contain').removeClass('active');
 		}
 	});		
-	
+	jQuery( '#shipmentStatus' ).select2({
+		// templateSelection: text_contain,
+		minimumResultsForSearch: Infinity
+	});
 	change_submenu_item();
 });
 
@@ -463,16 +461,16 @@ jQuery(document).on("click", ".customize-section-back", function(){
 
 		var parent = jQuery(this).parents('.zoremmail-sub-panel-heading'); 
 		
-		if ( parent.hasClass( 'email_notifications' ) ) {
-			jQuery(this).trigger('click');
-		} else {
+		// if ( parent.hasClass( 'email_notifications' ) ) {
+		// 	jQuery(this).trigger('click');
+		// } else {
 			var id = parent.data('id');
 			jQuery('.customize-action-changed').hide();
 			jQuery('.customize-action-default').show();
 			var parent_label = jQuery('.zoremmail-panels #'+id).data('label');
 			jQuery( '.zoremmail-sub-panel-heading .sub_heading' ).html( parent_label );
 			jQuery('.zoremmail-sub-panel-title.'+id).show();
-		}
+		// }
 	}
 	jQuery('.zoremmail-menu-contain').removeClass('active');
 	jQuery('.zoremmail-menu-submenu-title').removeClass('open');

@@ -107,8 +107,17 @@ class WC_TrackShip_Front {
 		$order_id = isset( $_POST['order_id'] ) ? sanitize_text_field( $_POST['order_id'] ) : '';
 		check_ajax_referer( 'unsubscribe_emails' . $order_id, 'security' );
 		$checkbox = isset( $_POST['checkbox'] ) ? sanitize_text_field( $_POST['checkbox'] ) : '';
-		update_post_meta( $order_id, '_receive_shipment_emails', $checkbox );
-				
+		$order = wc_get_order( $order_id );
+		$lable = isset( $_POST['lable'] ) ? sanitize_text_field( $_POST['lable'] ) : '';
+		if ( 'email' == $lable ) {
+			$order->update_meta_data( '_receive_shipment_emails', $checkbox );
+		} else {
+			$receive_sms = $checkbox ? 'yes' : 'no';
+			$order->update_meta_data( '_smswoo_receive_sms', $receive_sms );
+		}
+		$order->save();
+
+		// print_r($order->get_meta_data());
 		echo json_encode( array('success' => 'true') );
 		die();
 	}
@@ -119,7 +128,7 @@ class WC_TrackShip_Front {
 	public function show_tracking_page_widget( $order_id ) {
 		$order = wc_get_order( $order_id );
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
-		$shipment_status = get_post_meta( $order->get_id(), 'shipment_status', true );
+		$shipment_status = $order->get_meta( 'shipment_status', true );
 		$this->display_tracking_page( $order_id, $tracking_items, $shipment_status );
 	}
 	
@@ -131,7 +140,7 @@ class WC_TrackShip_Front {
 				unset($tracking_items[$key]);
 			}
 		}
-		$shipment_status = get_post_meta( $order->get_id(), 'shipment_status', true );
+		$shipment_status = $order->get_meta( 'shipment_status', true );
 		$this->display_tracking_page( $order_id, $tracking_items, $shipment_status );	
 	}
 			
@@ -179,32 +188,53 @@ class WC_TrackShip_Front {
 		if ( isset( $_GET['order_id'] ) &&  isset( $_GET['order_key'] ) ) {
 			
 			$order_id = wc_clean($_GET['order_id']);
-			
 			$order = wc_get_order( $order_id );
 			
 			if ( empty( $order ) ) {
-				return;
-			}
+				$error = new WP_Error( 'ts4wc', __( 'Invalid order', 'my_textdomain' ) );
+			} else {
+				
+				$order_key = $order->get_order_key();
 			
-			$order_key = $order->get_order_key();
-		
-			if ( $order_key != $_GET['order_key'] ) {
-				return;
+				if ( $order_key != $_GET['order_key'] ) {
+					$error = new WP_Error( 'ts4wc', __( 'Invalid order key', 'my_textdomain' ) );
+				}
+				
 			}
-			
-			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
-			$shipment_status = get_post_meta( $order_id, 'shipment_status', true );
-			if ( !$tracking_items ) {
-				unset( $order_id );
+		}
+
+		if ( isset( $_GET['tracking'] ) ) {
+
+			global $wpdb;
+			$shipment_table = $wpdb->prefix . 'trackship_shipment';
+
+			$tracking_number = wc_clean( $_GET[ 'tracking' ] );
+			$order_id = $wpdb->get_var( $wpdb->prepare( "SELECT order_id FROM $shipment_table WHERE tracking_number = %s", $tracking_number ) );
+			$order = wc_get_order( $order_id );
+			if ( empty( $order ) ) {
+				$error = new WP_Error( 'ts4wc', __( 'Invalid Tracking number', 'my_textdomain' ) );
 			}
 		}
 	
-		if ( ! isset( $order_id ) ) {
+		if ( ! isset( $order_id ) || empty( $order ) || isset( $error ) ) {
+
+			if ( isset( $error ) && is_wp_error( $error ) ){
+				echo $error->get_error_message();
+			}
+
 			ob_start();		
 			$this->track_form_template();
 			$form = ob_get_clean();	
 			return $form;
+
 		} else {
+
+			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
+			$shipment_status = $order->get_meta( 'shipment_status', true );
+			if ( !$tracking_items ) {
+				unset( $order_id );
+			}
+
 			ob_start();												
 			echo esc_html( $this->display_tracking_page( $order_id, $tracking_items, $shipment_status ) );
 			$form = ob_get_clean();	
@@ -261,7 +291,7 @@ class WC_TrackShip_Front {
 		}
 		
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
-		$shipment_status = get_post_meta( $order_id, 'shipment_status', true );
+		$shipment_status = $order->get_meta( 'shipment_status', true );
 		
 		if ( !$tracking_items ) {
 			ob_start();		
@@ -314,13 +344,15 @@ class WC_TrackShip_Front {
 	public function display_tracking_page( $order_id, $tracking_items, $shipment_status ) {
 		wp_enqueue_style( 'front_style' );
 		wp_enqueue_script( 'jquery-blockui' );
-		wp_enqueue_script( 'front-js' );	
+		wp_enqueue_script( 'front-js' );
 		
 		global $wpdb;
 
 		$unsubscribe = isset( $_GET["unsubscribe"] ) ? $_GET["unsubscribe"] : "" ;
 		if ( 'true' == $unsubscribe ) {
-			update_post_meta( $order_id, '_receive_shipment_emails', 0 );
+			$order = wc_get_order( $order_id );
+			$order->update_meta_data( '_receive_shipment_emails', 0 );
+			$order->save();
 			?>
 			<div class="unsubscribe_message"><?php esc_html_e( 'You have been unsubscribed from shipment status emails.', 'trackship-for-woocommerce' ); ?></div>
 			<?php
@@ -335,45 +367,33 @@ class WC_TrackShip_Front {
 		$hide_tracking_events = get_option('wc_ast_hide_tracking_events', $tracking_page_defaults->defaults['wc_ast_hide_tracking_events'] );
 		$tracking_page_layout = get_option('wc_ast_select_tracking_page_layout', $tracking_page_defaults->defaults['wc_ast_select_tracking_page_layout'] );
 		$remove_trackship_branding =  get_option('wc_ast_remove_trackship_branding', $tracking_page_defaults->defaults['wc_ast_remove_trackship_branding'] );
-		$padding = get_option('wc_ast_select_widget_padding', $tracking_page_defaults->defaults['wc_ast_select_widget_padding'] );
 		?>
 		<style>
 			<?php if ( $link_color ) { ?>
 				.col.tracking-detail .tracking_number_wrap a {
 					color: <?php echo esc_html( $link_color ); ?>;
 				}
-				ul.tpi_product_tracking_ul a, .shipment_progress_heading_div label.shipment_progress_label {
-					color: <?php echo esc_html( $link_color ); ?>;
-				}
-				.shipment_progress_heading_div label.shipment_progress_label.checked {
-					border-bottom: 3px solid <?php echo esc_html( $link_color ); ?>;
-				}
-			<?php } ?>
-			<?php if ( $padding ) { ?>
-				body .col.tracking-detail{
-					padding: <?php echo esc_html( $padding ); ?>px;
-				}				
-			<?php } ?>			
+			<?php } ?>		
 			<?php if ( $border_color ) { ?>
-				body .col.tracking-detail{
+				body .col.tracking-detail, .shipment_heading{
 					border: 1px solid <?php echo esc_html( $border_color ); ?>;
 				}
-				body .col.tracking-detail .shipment-header{
+				body .col.tracking-detail .shipment_heading{
 					border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
-				}
-				body .col.tracking-detail .trackship_branding{
-					border-top: 1px solid <?php echo esc_html( $border_color ); ?>;
 				}
 				body .tracking-detail .h4-heading {
-					border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
+					border-bottom: 1px solid <?php echo esc_html( $border_color ); ?> !important;
 				}
-				body .shipment_progress_heading_div, .tracking-detail .tracking_number_wrap {
-					border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
+				.tracking-detail .tracking_number_wrap {
+					border-bottom: 1px solid <?php echo esc_html( $border_color ); ?> !important;
+				}
+				.trackship_branding, .tracking-detail .heading_panel {
+					border-top: 1px solid <?php echo esc_html( $border_color ); ?> !important;
 				}
 			<?php } ?>
 			<?php if ( $background_color ) { ?>
-				body .col.tracking-detail{
-					background: <?php echo esc_html( $background_color ); ?>;
+				body .col.tracking-detail, .shipment-header, .tracking-detail .heading_panel, .tracking-detail .content_panel {
+					background: <?php echo esc_html( $background_color ); ?> !important;
 				}
 			<?php } ?>
 			<?php if ( $font_color ) { ?>
@@ -458,7 +478,7 @@ class WC_TrackShip_Front {
 					<?php if ( $total_trackings > 1 ) { ?>
 						<p class="shipment_heading">
 						<?php /* translators: %s: search for a num and todal tracking */ ?>
-						<?php printf( esc_html__( 'Shipment %1$s out of %2$s', 'trackship-for-woocommerce' ), esc_html($num), esc_html($total_trackings) ); ?>
+						<?php printf( esc_html__( 'Shipment %1$s / %2$s', 'trackship-for-woocommerce' ), esc_html($num), esc_html($total_trackings) ); ?>
 						</p>
 					<?php } ?>
 				</div>
@@ -591,7 +611,7 @@ class WC_TrackShip_Front {
 
 		//echo '<pre>';print_r($products);echo '</pre>';
 		?>
-		<div class="product_details" style="display:none;">
+		
 			<ul class="tpi_product_tracking_ul">
 				<?php
 				foreach ( $products as $item_id => $product ) {
@@ -605,7 +625,7 @@ class WC_TrackShip_Front {
 				}
 				?>
 			</ul>
-		</div>
+		
 		<style>
 		ul.tpi_product_tracking_ul {
 			list-style: none;
@@ -637,22 +657,30 @@ class WC_TrackShip_Front {
 
 	public function get_notifications_option ( $order_id ) {
 		if ( get_option( 'enable_email_widget' ) ) {
-			$receive_email = get_post_meta( $order_id, '_receive_shipment_emails' , true );
+			$order = wc_get_order( $order_id );
+			$receive_email = $order->get_meta( '_receive_shipment_emails', true );
 			$receive_email = '' != $receive_email ? $receive_email : 1;
-			?>
-			<div class="shipment_status_notifications" style="display:none;">
-				<label>
-					<input type="checkbox" class="unsubscribe_emails_checkbox" name="unsubscribe_emails" value="1" <?php echo $receive_email ? 'checked' : ''; ?>>
-					<span style="font-weight: normal;"><?php esc_html_e( 'Email notifications', 'trackship-for-woocommerce' ); ?></span>
-				</label>
-				
-				<?php $ajax_nonce = wp_create_nonce( 'unsubscribe_emails' . $order_id ); ?>
-				<input type="hidden" class="order_id_field" value="<?php echo $order_id; ?>">
-				<input type="hidden" name="action" value="unsubscribe_emails_save">
-				<input type="hidden" name="unsubscribe_emails_nonce" class="unsubscribe_emails_nonce" value="<?php echo esc_html( $ajax_nonce ); ?>"/>
 
-				<?php do_action( 'tracking_page_notifications_tab', $order_id ) ?>
-			</div>
+			$receive_sms = $order->get_meta( '_smswoo_receive_sms', true );
+			$receive_sms = '' != $receive_sms ? $receive_sms : 1;
+			$receive_sms = 'no' == $receive_sms ? 0 : 1;
+			?>
+			<label>
+				<input type="checkbox" class="unsubscribe_emails_checkbox" name="unsubscribe_emails" data-lable="email" value="1" <?php echo $receive_email ? 'checked' : ''; ?>>
+				<span style="font-weight: normal;"><?php esc_html_e( 'Email notifications', 'trackship-for-woocommerce' ); ?></span>
+			</label>
+			<?php if ( class_exists( 'SMS_for_WooCommerce' ) ) { ?>
+				<label>
+					<input type="checkbox" class="unsubscribe_sms_checkbox" name="unsubscribe_sms" data-lable="sms" value="1" <?php echo $receive_sms ? 'checked' : ''; ?>>
+					<span style="font-weight: normal;"><?php esc_html_e( 'SMS notifications', 'trackship-for-woocommerce' ); ?></span>
+				</label>
+			<?php } ?>
+			<?php $ajax_nonce = wp_create_nonce( 'unsubscribe_emails' . $order_id ); ?>
+			<input type="hidden" class="order_id_field" value="<?php echo $order_id; ?>">
+			<input type="hidden" name="action" value="unsubscribe_emails_save">
+			<input type="hidden" name="unsubscribe_emails_nonce" class="unsubscribe_emails_nonce" value="<?php echo esc_html( $ajax_nonce ); ?>"/>
+
+			<?php do_action( 'tracking_page_notifications_tab', $order_id ); ?>
 			<?php
 		}
 	}
