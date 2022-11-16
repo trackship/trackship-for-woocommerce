@@ -81,90 +81,8 @@ class WC_Trackship_Admin {
 			//add actions in column
 			add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_delivered_order_status_actions_button'), 100, 2 );
 		}
-		
-		//add_action( 'vi_woo_orders_tracking_single_edit_tracking_change', array( $this, 'woo_order_tracking_tracking_info' ), 10, 5 );
 
 	}
-	
-	/*public function woo_order_tracking_tracking_info( $tracking_change, $tracking_data, $item_id, $order_id, $response ) {
-		
-		/*$content = print_r($response, true);
-		$logger = wc_get_logger();
-		$context = array( 'source' => 'AAA_tracking_update' );
-		$logger->info( "response \n" . $content . "\n", $context );*/
-		
-		/*$tracking_item = array();
-		$tracking_url = str_replace( '{tracking_number}', $tracking_data['tracking_number'], $tracking_data['carrier_url'] );
-		
-		$tracking_item['tracking_provider']				= $tracking_data['carrier_slug'];
-		$tracking_item['formatted_tracking_provider']	= $tracking_data['carrier_name'];
-		$tracking_item['formatted_tracking_link']		= $tracking_url;
-		$tracking_item['tracking_number']				= $tracking_data['tracking_number'];
-		$tracking_item['item_id']						= $response['item_id'];
-		$tracking_item['status_shipped']				= '';
-		$tracking_item['date_shipped']					= date( 'Y-m-d H:i:s', $tracking_change ? $tracking_data['last_update'] : $tracking_data['time'] );
-		$tracking_item['tracking_id']					= md5( "{$tracking_item['tracking_provider']}-{$tracking_item['tracking_number']}" . microtime() );
-		
-		$tracking_items = array();				
-		if ( $response['item_id'] ) {
-			$tracking_items = $this->get_tracking_items( $order_id );
-			foreach( $tracking_items as $key => $value ) {
-				if ( $value['item_id'] == $item_id ) {
-					unset( $tracking_items[$key] );
-				}
-			}
-		}
-		$tracking_items[] = $tracking_item;													
-		
-		$this->save_tracking_items( $order_id, $tracking_items );
-	}*/
-	
-	/*
-	 * Gets all tracking item from the post meta array for an order
-	 *
-	 * @param int  $order_id  Order ID
-	 * @param bool $formatted Wether or not to reslove the final tracking link
-	 *                        and provider in the returned tracking item.
-	 *                        Default to false.
-	 *
-	 * @return array List of tracking items
-	 */
-	/*public function get_tracking_items( $order_id ) {
-		global $wpdb;
-		$order = wc_get_order( $order_id );			
-		if ( $order ) {	
-			if ( version_compare( WC_VERSION, '3.0', '<' ) ) {			
-				$tracking_items = get_post_meta( $order_id, '_wc_shipment_tracking_items', true );
-			} else {
-				$order          = new WC_Order( $order_id );		
-				$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );			
-			}
-			
-			if ( is_array( $tracking_items ) ) {
-				return $tracking_items;
-			} else {
-				return array();
-			}
-		} else {
-			return array();
-		}
-	}*/
-	
-	/**
-	 * Saves the tracking items array to post_meta.
-	 *
-	 * @param int   $order_id       Order ID
-	 * @param array $tracking_items List of tracking item
-	 */
-	/*public function save_tracking_items( $order_id, $tracking_items ) {
-		if ( version_compare( WC_VERSION, '3.0', '<' ) ) {
-			update_post_meta( $order_id, '_wc_shipment_tracking_items', $tracking_items );
-		} else {			
-			$order = new WC_Order( $order_id );			
-			$order->update_meta_data( '_wc_shipment_tracking_items', $tracking_items );
-			$order->save_meta_data();
-		}
-	}*/
 	
 	public function add_onhold_status_to_download_permission( $data, $order ) {
 		if ( $order->has_status( 'delivered' ) ) {
@@ -224,7 +142,9 @@ class WC_Trackship_Admin {
 		}
 		$o_id = isset( $_POST['order_id'] ) ? sanitize_text_field( $_POST['order_id'] ) : '' ;
 		$order_id    = wc_clean( $o_id );
+
 		if ( isset( $_REQUEST['security'] ) && wp_verify_nonce( sanitize_text_field( $_REQUEST['security'] ), 'update-post_' . $order_id ) ) {
+			print_r($_REQUEST);
 			$bool = trackship_for_woocommerce()->actions->schedule_trackship_trigger( $order_id );
 			if ( $bool ) {
 				$data = array(
@@ -235,6 +155,7 @@ class WC_Trackship_Admin {
 				$data = array(
 					'msg' => 'Tracking information was not sent to TrackShip.'
 				);
+
 				wp_send_json_error( $data );
 			}
 		} else {
@@ -254,8 +175,9 @@ class WC_Trackship_Admin {
 		$o_id = isset( $_POST['order_id'] ) ? sanitize_text_field( $_POST['order_id'] ) : '' ;
 		$order_id    = wc_clean( $o_id );
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
+		$order = wc_get_order( $order_id );
 		
-		$shipment_statuses = get_post_meta( $order_id, 'shipment_status', true );
+		$shipment_statuses = $order->get_meta( 'shipment_status', true );
 		if ( ! is_array( $shipment_statuses ) ) {
 			$shipment_statuses = array();
 		}
@@ -266,10 +188,9 @@ class WC_Trackship_Admin {
 			}
 		}
 		
-		update_post_meta( $order_id, 'shipment_status', $shipment_statuses );
-		
+		$order->update_meta_data( 'shipment_status', $shipment_statuses );
+		$order->save();
 		return;
-		
 	}
 	
 	public function register_metabox() {
@@ -1017,15 +938,11 @@ class WC_Trackship_Admin {
 		
 		foreach ( $orders as $order ) {
 			$order_id = $order->get_id();
-			
-			if ( version_compare( WC_VERSION, '3.0', '<' ) ) {
-				$tracking_items = get_post_meta( $order_id, '_wc_shipment_tracking_items', true );			
-			} else {				
-				$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );			
-			}
+			$order = wc_get_order( $order_id );
+			$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );			
 			
 			if ( $tracking_items ) {
-				$shipment_status = get_post_meta( $order_id, 'shipment_status', true);
+				$shipment_status = $order->get_meta( 'shipment_status', true );
 				foreach ( $tracking_items as $key => $tracking_item ) { 				
 					if ( !isset($shipment_status[$key]) ) {
 						$completed_order_with_tracking++;		
@@ -1055,15 +972,11 @@ class WC_Trackship_Admin {
 		
 		foreach ( $orders as $order ) {
 			$order_id = $order->get_id();
+			$order = wc_get_order( $order_id );
+			$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );			
 			
-			if ( version_compare( WC_VERSION, '3.0', '<' ) ) {
-				$tracking_items = get_post_meta( $order_id, '_wc_shipment_tracking_items', true );			
-			} else {				
-				$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );			
-			}
-			
-			if ( $tracking_items ) {				
-				$shipment_status = get_post_meta( $order_id, 'shipment_status', true);				
+			if ( $tracking_items ) {
+				$shipment_status = $order->get_meta( 'shipment_status', true );
 				foreach ( $tracking_items as $key => $tracking_item ) {
 					if ( isset( $shipment_status[$key]['pending_status']) && 'insufficient_balance' == $shipment_status[$key]['pending_status'] ) {
 						$completed_order_with_zero_balance++;		
@@ -1093,15 +1006,11 @@ class WC_Trackship_Admin {
 		
 		foreach ( $orders as $order ) {
 			$order_id = $order->get_id();
+			$order = wc_get_order( $order_id );
+			$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );			
 			
-			if ( version_compare( WC_VERSION, '3.0', '<' ) ) {
-				$tracking_items = get_post_meta( $order_id, '_wc_shipment_tracking_items', true );			
-			} else {				
-				$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );			
-			}
-			
-			if ( $tracking_items ) {				
-				$shipment_status = get_post_meta( $order_id, 'shipment_status', true);				
+			if ( $tracking_items ) {	
+				$shipment_status = $order->get_meta( 'shipment_status', true );
 				foreach ( $tracking_items as $key => $tracking_item ) { 					
 					if ( isset( $shipment_status[$key]['pending_status'] ) && in_array( $shipment_status[$key]['pending_status'], array( 'connection_issue', 'unauthorized' ) ) ) {
 						$completed_order_with_do_connection++;		
@@ -1470,15 +1379,18 @@ class WC_Trackship_Admin {
 		$query = new WP_Query( $args );
 		while ( $query->have_posts() ) {
 			$query->the_post();
-			
 			$order_id = get_the_id();
-			$shipment_status = get_post_meta( $order_id, 'shipment_status', true );
+			$order = wc_get_order( $order_id );
+			$shipment_status = $order->get_meta( 'shipment_status', true );
 			foreach ( $shipment_status as $key => $val ) {
 				$shipment_status[$key]['tracking_events'] = array();
 				$shipment_status[$key]['tracking_destination_events'] = array();
 			}
-			update_post_meta( $order_id, 'shipment_status', $shipment_status );
-			update_post_meta( $order_id, 'shipment_events_deleted', 1 );
+			$order = wc_get_order( $order_id );
+
+			$order->update_meta_data( 'shipment_status', $shipment_status );
+			$order->update_meta_data( 'shipment_events_deleted', 1 );
+			$order->save();
 		}
 		$json = array(
 			'order_count' => $query->post_count,

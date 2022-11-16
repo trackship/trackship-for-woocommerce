@@ -26,9 +26,8 @@ class WC_TrackShip_Api_Call {
 		$array = array();
 		$order = wc_get_order( $order_id );
 		$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );
+		$shipment_status = $order->get_meta( 'shipment_status', true );
 		
-		$shipment_status = get_post_meta( $order_id, 'shipment_status', true);
-
 		if ( $tracking_items ) {
 			
 			foreach ( ( array ) $tracking_items as $key => $val ) {				
@@ -70,13 +69,14 @@ class WC_TrackShip_Api_Call {
 					$hook = 'wcast_retry_trackship_apicall';
 					wp_schedule_single_event( $timestamp, $hook, $args );
 					
-					$shipment_status = get_post_meta( $order->get_id(), 'shipment_status', true);
+					$shipment_status = $order->get_meta( 'shipment_status', true );
 					if ( is_string( $shipment_status ) ) {
 						$shipment_status = array();
 					}
 					$shipment_status[$key]['status'] = "Something went wrong";
 					$shipment_status[$key]['status_date'] = gmdate('Y-m-d H:i:s');
-					update_post_meta( $order->get_id(), 'shipment_status', $shipment_status);
+					$order->update_meta_data( 'shipment_status', $shipment_status );
+					$order->save();
 
 				} else {
 					
@@ -89,7 +89,7 @@ class WC_TrackShip_Api_Call {
 						}
 						$body = json_decode($response['body'], true);
 						
-						$shipment_status = get_post_meta( $order->get_id(), 'shipment_status', true);
+						$shipment_status = $order->get_meta( 'shipment_status', true );
 						
 						if ( is_string($shipment_status) ) {
 							$shipment_status = array();
@@ -100,7 +100,7 @@ class WC_TrackShip_Api_Call {
 						$shipment_status[$key]['status_date'] = current_time('Y-m-d H:i:s');
 						$shipment_status[$key]['est_delivery_date'] = '';														
 						
-						update_post_meta( $order->get_id(), 'shipment_status', $shipment_status);
+						$order->update_meta_data( 'shipment_status', $shipment_status );
 						
 						if ( isset( $body['trackers_balance'] ) ) {
 							update_option( 'trackers_balance', $body['trackers_balance'] );
@@ -113,34 +113,34 @@ class WC_TrackShip_Api_Call {
 						// Add the note
 						$order->add_order_note( $note );
 						
-						$ts_shipment_status = get_post_meta( $order->get_id(), 'ts_shipment_status', true);
+						$ts_shipment_status = $order->get_meta( 'ts_shipment_status', true );
 						if ( is_string( $ts_shipment_status ) ) {
 							$ts_shipment_status = array();
 						}
 						$ts_shipment_status[$key]['status'] = $shipment_status[$key]['pending_status'];
-						update_post_meta( $order->get_id(), 'ts_shipment_status', $ts_shipment_status );
-						
+						$order->update_meta_data( 'ts_shipment_status', $ts_shipment_status );
 						$args = array(
 							'shipment_status'	=> $shipment_status[$key]['pending_status'],
 							'shipping_provider'	=> $tracking_provider,
 							'shipping_date'		=> date_i18n('Y-m-d', $val['date_shipped'] ),
-							'shipping_country'	=> WC()->countries->countries[ $order->get_shipping_country() ],
+							'shipping_country'	=> $order->get_shipping_country() ? WC()->countries->countries[ $order->get_shipping_country() ] : '',
 							'est_delivery_date' => null,
 						);
+						$order->save();
 						trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $val['tracking_number'], $args );
 						
 					} else {
 						//error like 400
-						$body = json_decode($response['body'], true);															
-						$shipment_status = get_post_meta( $order->get_id(), 'shipment_status', true);
+						$body = json_decode($response['body'], true);
+						$shipment_status = $order->get_meta( 'shipment_status', true );
 						if ( is_string($shipment_status) ) {
 							$shipment_status = array();
 						}
 						$shipment_status[$key]['pending_status'] = isset( $body['status_msg'] ) ? $body['status_msg'] : 'Error message : ' . $body['message'];
 						$shipment_status[$key]['status_date'] = gmdate('Y-m-d H:i:s');
 						$shipment_status[$key]['est_delivery_date'] = '';
-						update_post_meta( $order->get_id(), 'shipment_status', $shipment_status);
-						
+						$order->update_meta_data( 'shipment_status', $shipment_status );
+						$order->save();
 						$args = array(
 							'shipment_status'	=> $shipment_status[$key]['pending_status'],
 							'shipping_provider'	=> $tracking_provider,

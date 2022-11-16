@@ -109,6 +109,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	}
 
 	public function check_ts4wc_installed( $request ) {
+
 		// check TS4WC installed 
 		$wc_ast_api_key = get_option('wc_ast_api_key');
 		$wc_ast_api_enabled = get_option('wc_ast_api_enabled');		
@@ -170,13 +171,14 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		$trackship = WC_Trackship_Actions::get_instance();
 		
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
+		$order = wc_get_order( $order_id );
 		
 		foreach ( ( array ) $tracking_items as $key => $tracking_item ) {
 			if ( trim( $tracking_item['tracking_number'] ) != trim($tracking_number) ) {
 				continue;
 			}
 			
-			$shipment_status = get_post_meta( $order_id, 'shipment_status', true);
+			$shipment_status = $order->get_meta( 'shipment_status', true );
 			
 			if ( is_string($shipment_status) ) {
 				$shipment_status = array();			
@@ -196,7 +198,8 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			$shipment_status[$key]['last_event_time'] = $last_event_time;
 			$shipment_status[$key]['est_delivery_date'] = $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : null;
 			
-			update_post_meta( $order_id, 'shipment_status', $shipment_status );
+			$order = wc_get_order( $order_id );
+			$order->update_meta_data( 'shipment_status', $shipment_status );
 			
 			//tracking page link in $shipment_status
 			$shipment_status = trackship_for_woocommerce()->actions->get_shipment_status( $order_id );
@@ -204,10 +207,9 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			$trackship->trigger_tracking_email( $order_id, $previous_status, $tracking_event_status, $tracking_item, $shipment_status[$key] );
 			
 			$ts_shipment_status[$key]['status'] = $tracking_event_status;
-			update_post_meta( $order_id, 'ts_shipment_status', $ts_shipment_status);
 			
 			$args = array(
-				'shipment_status'	=> $shipment_status[$key]['status'],
+				'shipment_status'	=> $tracking_event_status,
 			);
 			$args2 = array(
 				'origin_country'		=> $request['origin_country'],
@@ -223,6 +225,9 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			if ( $previous_status != $tracking_event_status ) {
 				do_action( 'trackship_shipment_status_trigger', $order_id, $previous_status, $tracking_event_status, $tracking_number );
 			}
+
+			$order->update_meta_data( 'ts_shipment_status', $ts_shipment_status );
+			$order->save();
 		}
 		
 		$trackship->check_tracking_delivered( $order_id );

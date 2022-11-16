@@ -97,6 +97,7 @@ update_option( 'user_plan', $current_plan );
 update_option( 'trackers_balance', $current_balance );
 $nonce = wp_create_nonce( 'wc_ast_tools');
 $store_text = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? __( 'Upgrade to Pro', 'trackship-for-woocommerce' ) : __( 'Account Dashboard', 'trackship-for-woocommerce' );
+$store_url = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? 'https://my.trackship.co/settings/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=upgrade#billing' : 'https://my.trackship.co/settings/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=dashboard#billing';
 ?>
 <input type="hidden" id="wc_ast_dashboard_tab" name="wc_ast_dashboard_tab" value="<?php echo esc_attr( $nonce ); ?>" />
 <input class="dashboard_hidden_field" type="hidden" value="<?php echo esc_html($current_plan); ?>">
@@ -161,7 +162,7 @@ $store_text = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No activ
 			<div class="ts_connected_status">
 				<span><?php esc_html_e( 'Connection Status', 'trackship-for-woocommerce' ); ?></span>: <strong><span class="dashicons dashicons-yes"></span><?php esc_html_e( 'Connected', 'trackship-for-woocommerce' ); ?></strong>
 			</div>
-			<a href="https://my.trackship.co/?utm_source=wpadmin&utm_medium=sidebar&utm_campaign=upgrade" class="button-primary button-trackship btn_large" target="_blank">
+			<a href="<?php echo esc_url($store_url); ?>" class="button-primary button-trackship btn_large" target="_blank">
 				<span><?php esc_html_e( $store_text ); ?></span>
 				<span class="dashicons dashicons-arrow-right-alt2"></span>
 			</a>
