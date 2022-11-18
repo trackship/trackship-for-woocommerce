@@ -87,7 +87,7 @@ if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocomme
 					<?php echo get_option( 'enable_email_widget' ) ? 'checked' : ''; ?> value="1"/>
 					<label class="ast-tgl-btn ast-tgl-btn-green" for="enable_email_widget"></label>
 					<label class="setting_ul_tgl_checkbox_label" for="enable_email_widget">
-						<span><?php esc_html_e( 'Enable unsubscribe (opt-out) from email notifications', 'trackship-for-woocommerce' ); ?></span>
+						<span><?php esc_html_e( 'Enable unsubscribe (opt-out) from Shipment status notifications', 'trackship-for-woocommerce' ); ?></span>
 					</label>
 				</div>
 			</div>

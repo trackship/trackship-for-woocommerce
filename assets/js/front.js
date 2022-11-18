@@ -44,7 +44,7 @@ jQuery(document).on("submit", ".order_track_form", function(){
 		success: function(response) {
 			if(response.success == 'true'){
 				jQuery('.track-order-section').replaceWith(response.html);
-				jQuery('.shipment_progress_label.checked').trigger('click');
+				jQuery('.heading_panel.checked').trigger('click');
 			} else{				
 				jQuery(".track_fail_msg").text(response.message);
 				jQuery(".track_fail_msg").show();				
@@ -165,30 +165,43 @@ jQuery(document).on("click", ".order_track_form .search_order_form .ts_from_inpu
 	}
 });
 
-//If we will do change into below jQuery so we need to also change in trackship.js and customizer.js and front.js
-jQuery(document).on("click", ".shipment_progress_label", function(){
-	jQuery(this).siblings('.shipment_progress_label').removeClass('checked');
-	jQuery(this).addClass('checked');
-	var label = jQuery(this).data('label');//product_details
-	var sibli = jQuery(this).parent().siblings('.tracking_event_tab_view');
-	sibli.children('div').hide();
-	sibli.children( '.'+label).show();
+//If we will do change into below jQuery so we need to also change in trackship.js and front.js
+jQuery(document).on("click", ".tracking-detail .heading_panel", function () {
+	if (jQuery(this).hasClass('active')) {
+		jQuery(this).removeClass('active');
+		jQuery(this).children('.accordian-arrow').removeClass('down').addClass('right');
+		jQuery(this).siblings('.content_panel').slideUp('slow');
+	} else {
+		var parent = jQuery(this).parent('.tracking_event_tab_view');
+		parent.find(".heading_panel").removeClass('active');
+		parent.find(".content_panel").removeClass('active').slideUp('slow');
+		jQuery(this).addClass('active');
+		parent.find('.accordian-arrow').removeClass('down').addClass('right');
+		jQuery(this).children('.accordian-arrow').removeClass('right').addClass('down');
+		jQuery(this).next('.content_panel').slideDown('slow');
+	}
 });
 
-jQuery(document).on("change", ".unsubscribe_emails_checkbox", function () {
-	jQuery(".shipment_status_notifications label").start_loader();
+jQuery(document).ready(function () {
+	'use strict';
+	jQuery('.heading_panel.checked').trigger('click');
+});
+
+jQuery(document).on("change", ".unsubscribe_emails_checkbox, .unsubscribe_sms_checkbox", function () {
+	jQuery(this).parent('.shipment_status_notifications label').start_loader();
 
 	if (jQuery(this).prop("checked") == true) {
 		var checkbox = 1;
 	} else {
-		var checkbox = 0;
+		var checkbox = '';
 	}
 
 	var ajax_data = {
 		action: 'save_unsunscribe_email_notifications_data',
 		order_id: jQuery('.order_id_field').val(),
 		security: jQuery('.unsubscribe_emails_nonce').val(),
-		checkbox: checkbox
+		checkbox: checkbox,
+		lable:jQuery(this).data('lable')
 	};
 	jQuery.ajax({
 		url: woocommerce_params.ajax_url,
@@ -197,9 +210,9 @@ jQuery(document).on("change", ".unsubscribe_emails_checkbox", function () {
 		success: function (response) {
 			jQuery(".shipment_status_notifications label").stop_loader();
 			if ( checkbox == 1 ) {
-				jQuery('.unsubscribe_emails_checkbox').prop('checked', true);
+				jQuery(this).prop('checked', true);
 			} else {
-				jQuery('.unsubscribe_emails_checkbox').prop('checked', false);
+				jQuery(this).prop('checked', false);
 			}
 		},
 		error: function (response, jqXHR, exception) {
@@ -241,8 +254,3 @@ jQuery(document).on("change", ".unsubscribe_emails_checkbox", function () {
 		return this;
 	}; 
 })( jQuery );
-
-jQuery(document).ready(function () {
-	'use strict';
-	jQuery('.shipment_progress_label.checked').trigger('click');
-});

@@ -93,7 +93,10 @@
 jQuery(document).ready(function () {
 
 	jQuery(".trackship-tip").tipTip();
-
+	jQuery(".ts-custom-tool-tip").tipTip({
+		defaultPosition: "left",
+	});
+	
 	if (jQuery.fn.wpColorPicker) {
 
 		jQuery('#wc_ast_select_border_color').wpColorPicker({
@@ -878,12 +881,19 @@ jQuery(document).on("click", function ( event ) {
 	}
 });
 
-//If we will do change into below jQuery so we need to also change in front.js
-jQuery(document).on("click", ".shipment_progress_label", function () {
-	jQuery(this).siblings('.shipment_progress_label').removeClass('checked');
-	jQuery(this).addClass('checked');
-	var label = jQuery(this).data('label');
-	var sibli = jQuery(this).parent().siblings('.tracking_event_tab_view');
-	sibli.children('div').hide();
-	sibli.children('.' + label).show();
+//If we will do change into below jQuery so we need to also change in trackship.js and front.js
+jQuery(document).on("click", ".tracking-detail .heading_panel", function () {
+	if (jQuery(this).hasClass('active')) {
+		jQuery(this).removeClass('active');
+		jQuery(this).children('.accordian-arrow').removeClass('down').addClass('right');
+		jQuery(this).siblings('.content_panel').slideUp('slow');
+	} else {
+		var parent = jQuery(this).parent('.tracking_event_tab_view');
+		parent.find(".heading_panel").removeClass('active');
+		parent.find(".content_panel").removeClass('active').slideUp('slow');
+		jQuery(this).addClass('active');
+		parent.find('.accordian-arrow').removeClass('down').addClass('right');
+		jQuery(this).children('.accordian-arrow').removeClass('right').addClass('down');
+		jQuery(this).next('.content_panel').slideDown('slow');
+	}
 });
