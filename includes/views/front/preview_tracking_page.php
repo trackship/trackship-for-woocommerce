@@ -101,7 +101,7 @@
 			</div>
 		</div>
 		<div class="tracking_event_tab_view">
-			<div data-label="tracking_events_details" class="heading_panel tracking_detail_label checked">
+			<div data-label="tracking_events_details" class="heading_panel tracking_detail_label <?php echo 1 != $hide_tracking_events ? 'checked' : ''; ?>" style="<?php echo 1 == $hide_tracking_events ? 'display:none' : ''; ?>">
 				Shipment Progress
 				<span class="accordian-arrow right"></span>
 			</div>
