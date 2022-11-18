@@ -123,6 +123,7 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 * Enhancement - TrackShip customizer design improved
 * Enhancement - TrackShip Tracking page design improved
 * Enhancement - SMS opt/out option added in the notifications in the Tracking Page
+* Improvement - Store connect to TrackShip process improved
 * Dev - Item  in this Shipment tab removed if Order is not Tracking per Item
 * Fix - Fix the Invalid shipment status issue in Tracking Page
 * Enhancement - New Tracking link added
