@@ -143,7 +143,6 @@ class WC_Trackship_Admin {
 		$o_id = isset( $_POST['order_id'] ) ? sanitize_text_field( $_POST['order_id'] ) : '' ;
 		$order_id    = wc_clean( $o_id );
 		if ( isset( $_REQUEST['security'] ) && wp_verify_nonce( sanitize_text_field( $_REQUEST['security'] ), 'update-post_' . $order_id ) ) {
-			print_r($_REQUEST);
 			$bool = trackship_for_woocommerce()->actions->schedule_trackship_trigger( $order_id );
 			if ( $bool ) {
 				$data = array(
