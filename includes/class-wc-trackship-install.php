@@ -295,7 +295,9 @@ class WC_Trackship_Install {
 				);
 				$wpdb->insert( $woo_trackship_shipment, $data );
 			}
-			update_post_meta( $order_id, 'shipment_table_updated', 1 );
+			$order = wc_get_order( $order_id );
+			$order->update_meta_data( 'shipment_table_updated', 1 );
+			$order->save();
 		}
 	}
 	
@@ -319,11 +321,14 @@ class WC_Trackship_Install {
 		$orders = wc_get_orders( $args );
 		
 		foreach ( $orders as $order_id ) {
-			$shipment_status = get_post_meta( $order_id, 'shipment_status', true );
+			$order = wc_get_order( $order_id );
+			$shipment_status = $order->get_meta( 'shipment_status', true );
 			if ( !empty( $shipment_status ) ) {
 				foreach ( $shipment_status as $key => $shipment ) {
-					$ts_shipment_status[ $key ][ 'status' ] = $shipment[ 'status' ];			
-					update_post_meta( $order_id, 'ts_shipment_status', $ts_shipment_status );						
+					$ts_shipment_status[ $key ][ 'status' ] = $shipment[ 'status' ];
+					$order = wc_get_order( $order_id );
+					$order->update_meta_data( 'ts_shipment_status', $ts_shipment_status );
+					$order->save();
 				}
 			}			
 		}		

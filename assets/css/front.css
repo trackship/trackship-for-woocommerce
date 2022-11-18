@@ -27,26 +27,11 @@ form.order_track_form input {
 	transition: width 0.6s ease
 }
 ul.tpi_product_tracking_ul {
-	margin: 10px 0;
-	list-style-type: none;
-}
-.tracking_events_details {
-    margin-top: 10px;
+    list-style-type: none;
+    margin: 0;
 }
 .h4-heading.tpi_products_heading {
 	margin-bottom: 10px;
-}
-label.shipment_progress_label {
-	display: inline-block;
-    padding: 3px 8px;
-    cursor: pointer;
-    font-weight: 500;
-    margin-bottom: 0px;
-    font-size: 14px;
-}
-label.shipment_progress_label.checked {
-	color: #424242;
-	border-bottom: 3px solid #124fd6;
 }
 .order_track_form input.ts_from_input {
 	display: none;
@@ -74,19 +59,17 @@ label.shipment_progress_label.checked {
 	text-align: right;
 }
 .col.tracking-detail {
-	margin: 5px auto 20px;
+	margin: 0 auto 20px;
 	border: 1px solid #ccc;
 	max-width: 600px;
 	position: relative;
-	padding: 10px 20px;
+	padding: 15px 20px;
 }
 .trackship_branding {
 	text-align: center;
-	border-top: 1px solid #e0e0e0;
-	padding-top: 10px;
-}
-.shipment-content {
-	margin-bottom: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #ccc;
+    margin: -1px -20px;
 }
 span.wc_order_id {
 	float: right;
@@ -109,6 +92,9 @@ span.wc_order_id {
 .track-order-section {
 	text-align: left;
 }
+.track-order-section p.form-row {
+	float: none	;
+}
 .order_id_email:after {
 	content: '';
 	display: table;
@@ -118,14 +104,13 @@ span.wc_order_id {
 	margin-bottom: 0;
 }
 .shipment-header {
-	font-weight: 600;
-	display: flex;
-	margin: 0 auto;
+	margin: 10px auto 0;
 	max-width: 600px;
 }
 .shipment_heading {
-	margin-bottom: 0;
-	flex: 1;
+	margin: 0;
+    padding: 5px 20px;
+	border-bottom: 0 !important;
 }
 .shipment_status_heading {
 	font-weight: 600;
@@ -388,10 +373,7 @@ ul.timeline > li > p {
 	font-size: 13px;
 	margin: 0 3px;
 }
-.shipment_status_notifications {
-	margin: 7px 0;
-}
-.shipment_status_notifications .unsubscribe_emails_checkbox {
+.shipment_status_notifications .unsubscribe_emails_checkbox, .shipment_status_notifications .unsubscribe_sms_checkbox {
 	margin: 0;
 	vertical-align: middle;
 }
@@ -411,6 +393,43 @@ ul.timeline > li > p {
 	vertical-align: middle;
 	background-size: 100%;
 }
+.tracking-detail .heading_panel {
+	padding: 15px;
+    margin: 0 -20px;
+    cursor: pointer;
+    border-top: 1px solid #ccc;
+	font-size: 14px;
+    font-weight: 600;
+}
+.tracking-detail .content_panel {
+	padding: 0;
+    display: none;
+    border-top: 0;
+    padding-bottom: 15px;
+}
+.tracking-detail .heading_panel.active {
+    border-radius: 3px 3px 0 0;
+	color: #124ed6;
+}
+.accordian-arrow {
+	border: solid black;
+    border-width: 0px 3px 3px 0;
+    display: inline-block;
+    padding: 4px;
+    float: right;
+    margin: 4px;
+}
+.down {
+	transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	border-color:#124ed6;
+	
+}
+.right {
+	transform: rotate(-45deg);
+	-webkit-transform: rotate(-45deg);
+}
+
 /*** RTL CSS ***/
 
 .rtl .track-order-section {
@@ -454,9 +473,9 @@ ul.timeline > li > p {
 	margin-bottom: 10px;
 }
 .tracking-detail .tracking_number_wrap {
-    padding-bottom: 15px;
+    padding: 0 20px 15px;
     border-bottom: 1px solid #ccc;
-    margin-bottom: 15px;
+    margin: 0 -20px 15px;
 }
 .not-shipped-widget .shipment_heading {
 	font-weight: 600;

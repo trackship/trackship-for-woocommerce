@@ -17,23 +17,31 @@ if ( 1 != $hide_tracking_events ) {
 		'class'	=> 'tracking_detail_label checked',
 	);
 }
-$tab_array[ 'product_details' ] = array(
-	'label'	=> $labels_name['items_label'],
-	'class'	=> $class,
-);
+if ( function_exists( 'ast_pro' ) ) {
+	$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
+	$tpi_order = ast_pro()->ast_tpi->check_if_tpi_order( $tracking_items, wc_get_order( $order_id ) );
+	if ( $tpi_order ){
+		$tab_array[ 'product_details' ] = array(
+			'label'	=> $labels_name['items_label'],
+			'class'	=> $class,
+		);
+	}
+}
 if ( ( !is_admin() && get_option( 'enable_email_widget' ) ) || ( 'yes' == $fronted && get_option( 'enable_email_widget' ) ) ) {
 	$tab_array['shipment_status_notifications'] = array(
 		'label'	=> $labels_name['notifications_label'],
 	);
 }
 ?>
-<div class="shipment_progress_heading_div">
-	<?php foreach ( $tab_array as $id => $tab) { ?>
-		<label data-label="<?php echo esc_html( $id ); ?>" class="shipment_progress_label <?php isset($tab['class']) ? esc_attr_e($tab['class']) : ''; ?>"><?php echo esc_html( $tab['label'] ); ?></label>
-	<?php } ?>
-</div>
+
 <div class="tracking_event_tab_view">
-	<div class="tracking-details tracking_events_details" <?php echo 1 == $hide_tracking_events ? 'style="display:none"' : ''; ?>>	
+	<?php if ( isset( $tab_array['tracking_events_details'] ) ) { ?>
+		<div data-label="tracking_events_details" class="heading_panel tracking_detail_label <?php isset($tab_array['tracking_events_details']['class']) ? esc_attr_e($tab_array['tracking_events_details']['class']) : ''; ?>">
+			<?php echo esc_html( $tab_array['tracking_events_details']['label'] ); ?>
+			<span class="accordian-arrow right"></span>
+		</div>
+	<?php } ?>
+	<div class="content_panel tracking-details tracking_events_details">
 		<?php if ( 2 == $hide_tracking_events || is_wc_endpoint_url( 'order-received' ) ) { ?>
 			<?php if ( !empty( $tracking_details_by_date ) ) { ?>
 				<?php if ( !empty( $trackind_destination_detail_by_status_rev ) ) { ?>
@@ -177,6 +185,18 @@ if ( ( !is_admin() && get_option( 'enable_email_widget' ) ) || ( 'yes' == $front
 			</div>
 		<?php } ?>
 	</div>
-	<?php $this->get_products_detail_in_shipment( $order_id, $tracker, $tracking_provider, $tracking_number ); ?>
-	<?php $this->get_notifications_option( $order_id ); ?>
+	<?php if ( isset( $tab_array['product_details'] ) ) { ?>
+		<div data-label="product_details" class="heading_panel <?php isset($tab_array['product_details']['class']) ? esc_attr_e($tab_array['product_details']['class']) : ''; ?>">
+			<?php echo esc_html( $tab_array['product_details']['label'] ); ?>
+			<span class="accordian-arrow right"></span>
+		</div>
+	<?php } ?>
+	<div class="content_panel product_details"><?php $this->get_products_detail_in_shipment( $order_id, $tracker, $tracking_provider, $tracking_number ); ?></div>
+	<?php if ( isset( $tab_array['shipment_status_notifications'] ) ) { ?>
+		<div data-label="shipment_status_notifications" class="heading_panel <?php isset($tab_array['shipment_status_notifications']['class']) ? esc_attr_e($tab_array['shipment_status_notifications']['class']) : ''; ?>">
+			<?php echo esc_html( $tab_array['shipment_status_notifications']['label'] ); ?>
+			<span class="accordian-arrow right"></span>
+		</div>
+	<?php } ?>
+	<div class="content_panel shipment_status_notifications"><?php $this->get_notifications_option( $order_id ); ?></div>
 </div>

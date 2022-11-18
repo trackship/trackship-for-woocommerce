@@ -31,9 +31,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<strong><?php esc_html_e( $tracking_number ); ?></strong>	
 					<?php } ?>
 				</li>
-				<?php if ( !$hide_last_mile && isset( $row->delivery_provider ) && $row->delivery_provider && $row->delivery_number ) { ?>
+				<?php if ( !$hide_last_mile && $row->delivery_number ) { ?>
 					<li class="last_mile_tracking_number">
-						<?php //$delivery_provider = trackship_for_woocommerce()->actions->get_provider_name( $row->delivery_provider ); ?>
 						<span><?php esc_html_e( 'Delivery tracking Number', 'trackship-for-woocommerce' ); ?></span>
 						<strong> <?php echo esc_html( $row->delivery_number ) ?></strong>
 					</li>
@@ -50,7 +49,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php } ?>
 	<div class="shipment_status_heading <?php esc_html_e( $tracker->ep_status ); ?>">
 		<?php
-		if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown', 'insufficient_balance', '' ) ) ) {
+		if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'invalid_tracking', '' ) ) ) {
 			esc_html_e( 'Shipped', 'trackship-for-woocommerce' );
 		} else {
 			$message = isset( $trackind_detail_by_status_rev[0]->message ) ? $trackind_detail_by_status_rev[0]->message : '';
