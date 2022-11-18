@@ -104,7 +104,7 @@ jQuery(document).ready(function(){
 			var color = ui.color.toString();
 			jQuery("#tracking_widget_privew").contents().find('.col.tracking-detail' ).css( 'border-color', color );
 			jQuery("#tracking_widget_privew").contents().find('body .col.tracking-detail .shipment-header' ).css( 'border-color', color );
-			jQuery("#tracking_widget_privew").contents().find('body .col.tracking-detail .trackship_branding' ).css( 'border-color', color );
+			jQuery("#tracking_widget_privew").contents().find('body .col.tracking-detail .trackship_branding, .tracking-detail .heading_panel' ).css( 'border-color', color );
 			jQuery("#tracking_widget_privew").contents().find('body .tracking-detail .h4-heading, .tracking-detail .tracking_number_wrap' ).css( 'border-color', color );
 			setting_change_trigger();
 		}, 	
