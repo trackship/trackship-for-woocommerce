@@ -717,7 +717,6 @@ class WC_TrackShip_Front {
 		$background_color = get_option( 'wc_ast_select_bg_color' );
 		$hide_from_to = get_option('wc_ast_hide_from_to', $tracking_page_defaults->defaults['wc_ast_hide_from_to'] );
 		$hide_last_mile = get_option( 'wc_ast_hide_list_mile_tracking', $tracking_page_defaults->defaults['wc_ast_hide_list_mile_tracking'] );
-		$padding = get_option('wc_ast_select_widget_padding', $tracking_page_defaults->defaults['wc_ast_select_widget_padding'] );
 		
 		include 'views/front/preview_tracking_page.php';
 		wp_footer();
