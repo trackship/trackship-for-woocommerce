@@ -1037,7 +1037,9 @@ class TS4WC_Admin_Customizer {
 		foreach ( $ids as $value ) {				
 			$order_id = $value['order_id'];
 			$order = wc_get_order($order_id);
-			$order_array[ $order_id ] = $order_id . ' - ' . $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+			if ( $order ) {
+				$order_array[ $order_id ] = $order_id . ' - ' . $order->get_billing_first_name() . ' ' . $order->get_billing_last_name();
+			}
 		}
 		return $order_array;
 	}
