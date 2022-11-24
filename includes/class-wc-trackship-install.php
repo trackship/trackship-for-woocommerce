@@ -211,6 +211,29 @@ class WC_Trackship_Install {
 			$Late_Shipments->remove_cron();
 			$Late_Shipments->setup_cron();
 		}
+		if ( version_compare( get_option( 'trackship_db' ), '1.12', '<' ) ) {
+			global $wpdb;
+			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '%1s' AND COLUMN_NAME = 'status_msg' ", $this->log_table ), ARRAY_A );
+			if ( ! $columns ) {
+				$log_table = $this->log_table;
+				$wpdb->query( $wpdb->prepare( "ALTER TABLE %1s ADD status_msg varchar(500) AFTER status", $log_table ) );
+				$rows = $wpdb->get_results( "SELECT * FROM {$log_table}" );
+				$all_lang = array( 'Sent', 'נשלח', 'Verzonden', 'Enviado', 'مرسل', 'Изпратено', 'Sendt', 'Geschickt', 'Envoyé', 'મોકલેલો', 'भेज दिया', 'Inviato', 'Nosūtīts', 'Wysłane', 'Enviei', 'Отправил', 'Skickat', 'gönderildi', 'أرسلت', 'મોકલેલ', 'Spedito', 'Verstuurd', 'Wysłano', 'Gönderilmiş' );
+				foreach ( $rows as $row ) {
+					$status_msg = $row->status;
+					$status = in_array( $status_msg, $all_lang ) ? true : false;
+					$args = array(
+						'status' => $status,
+						'status_msg' => $status_msg
+					);
+					$where = array(
+						'id' => $row->id
+					);
+					$wpdb->update( $log_table, $args, $where );
+				}
+			}
+			update_option( 'trackship_db', '1.12' );
+		}
 	}
 	
 	public function update_analytics_table() {
@@ -346,7 +369,7 @@ class WC_Trackship_Install {
 	*/
 	public function update_shipping_providers() {
 		global $wpdb;
-		$url = 'https://my.trackship.co/api/WCAST/v1/Provider';
+		$url = 'https://my.trackship.com/api/WCAST/v1/Provider';
 		$resp = wp_remote_get( $url );
 		
 		if ( is_array( $resp ) && ! is_wp_error( $resp ) ) {

@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-$url = 'https://my.trackship.co/api/user-plan/get/';
+$url = 'https://my.trackship.com/api/user-plan/get/';
 $args[ 'body' ] = array(
 	'user_key' => trackship_for_woocommerce()->actions->get_trackship_key(), // Deprecated since 19-Aug-2022
 );

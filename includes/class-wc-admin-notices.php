@@ -60,7 +60,7 @@ class WC_TS4WC_Admin_Notices_Under_WC_Admin {
 		// This example has two actions. A note can have 0 or 1 as well.
 		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
 			$note->add_action( 
-				'settings', 'TrackShip Pricing', 'https://trackship.co/pricing/?utm_source=wpadmin&utm_medium=TS4WC&utm_campaign=wcadmin'
+				'settings', 'TrackShip Pricing', 'https://trackship.com/pricing/?utm_source=wpadmin&utm_medium=TS4WC&utm_campaign=wcadmin'
 			);
 		} else {
 			$note->add_action(

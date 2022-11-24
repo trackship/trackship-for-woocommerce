@@ -128,7 +128,7 @@ class WC_Trackship_Admin {
 				<?php
 				trackship_for_woocommerce()->front->admin_tracking_page_widget( $order_id, $tracking_id );
 			} else {
-				echo '<strong>';esc_html_e( 'Please connect your store with trackship.co.', 'trackship-for-woocommerce' );echo '</strong>';
+				echo '<strong>';esc_html_e( 'Please connect your store with trackship.com.', 'trackship-for-woocommerce' );echo '</strong>';
 			}
 		} else {
 			esc_html_e( 'Please refresh the page and try again.', 'trackship-for-woocommerce' );
@@ -193,7 +193,12 @@ class WC_Trackship_Admin {
 	
 	public function register_metabox() {
 		if ( ! trackship_for_woocommerce()->is_ast_active() && trackship_for_woocommerce()->is_st_active() ) {
-			add_meta_box( 'trackship', 'TrackShip', array( $this, 'trackship_metabox_cb'), 'shop_order', 'side', 'high' );
+			if ( class_exists( 'Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController' ) ) {
+				$screen = wc_get_container()->get( CustomOrdersTableController::class )->custom_orders_table_usage_is_enabled() ? wc_get_page_screen_id( 'shop-order' ) : 'shop_order';
+			} else {
+				$screen = 'shop_order';
+			}
+			add_meta_box( 'trackship', 'TrackShip', array( $this, 'trackship_metabox_cb'), $screen, 'side', 'high' );
 		}
 	}
 	
@@ -1190,7 +1195,7 @@ class WC_Trackship_Admin {
 		<div id=admin_error_more_info_widget class=popupwrapper style="display:none;">
 			<div class="more_info_popup popuprow">
 				<?php
-				$ssl = '<a href="https://docs.trackship.co/docs/trackship-for-woocommerce/getting-started/requirements/#ssl-certificate">SSL Requirements</a>';
+				$ssl = '<a href="https://docs.trackship.com/docs/trackship-for-woocommerce/getting-started/requirements/#ssl-certificate">SSL Requirements</a>';
 				$array_more_info = array(
 					'pending_trackShip' => array(
 						'heading'	=> 'Pending TrackShip',
@@ -1253,7 +1258,7 @@ class WC_Trackship_Admin {
 							<p style="font-size: 16px;"><?php esc_html_e( 'Starting from $9 a month', 'trackship-for-woocommerce' ); ?></p>
 						</ul>
 						<div>
-							<a href="https://my.trackship.co/?utm_source=wpadmin&utm_medium=TS4WC&utm_campaign=shipment"><button class="button-primary button-trackship btn_large" style="font-size: 17px; padding: 8px 30px; background-color: #09d3ac;border-color:#09d3ac;"><?php esc_html_e( 'UPGRADE TO PRO', 'trackship-for-woocommerce' ); ?><span style="line-height: 18px;" class="dashicons dashicons-arrow-right-alt2"></span></button></a>
+							<a href="https://my.trackship.com/?utm_source=wpadmin&utm_medium=TS4WC&utm_campaign=shipment"><button class="button-primary button-trackship btn_large" style="font-size: 17px; padding: 8px 30px; background-color: #09d3ac;border-color:#09d3ac;"><?php esc_html_e( 'UPGRADE TO PRO', 'trackship-for-woocommerce' ); ?><span style="line-height: 18px;" class="dashicons dashicons-arrow-right-alt2"></span></button></a>
 						</div>
 					</div>
 					<div style="position: relative; width: 100%;">

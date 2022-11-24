@@ -17,12 +17,12 @@ $version = trackship_for_woocommerce()->version;
 $menu_items = array(
 	array(
 		'label' => __( 'Get Support', 'trackship-for-woocommerce' ),
-		'link' => 'https://trackship.co/support/?support=1',
+		'link' => 'https://trackship.com/support/?support=1',
 		'image' => 'get-support-icon.svg',
 	),
 	array(
 		'label' =>__( 'Documentation', 'trackship-for-woocommerce' ),
-		'link' => 'https://docs.trackship.co/docs/trackship-for-woocommerce/',
+		'link' => 'https://docs.trackship.com/docs/trackship-for-woocommerce/',
 		'image' => 'documentation-icon.svg',
 	),
 );

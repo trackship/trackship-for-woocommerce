@@ -4,7 +4,7 @@
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
  * Version: 1.4.6.1
  * Author: TrackShip
- * Author URI: https://trackship.co/
+ * Author URI: https://trackship.com/
  * License: GPL-2.0+
  * License URI: 
  * Text Domain: trackship-for-woocommerce
@@ -272,7 +272,7 @@ class Trackship_For_Woocommerce {
 		$name = trackship_for_woocommerce()->is_trackship_connected() ? __( 'Settings', 'trackship-for-woocommerce' ) : __( 'Connect a Store', 'trackship-for-woocommerce' );
 		$links = array_merge( array(
 			'<a href="' . esc_url( $admin_url ) . '">' . esc_html__( $name ) . '</a>',
-			'<a href="https://docs.trackship.co/docs/trackship-for-woocommerce/">' . __( 'Docs' ) . '</a>',
+			'<a href="https://docs.trackship.com/docs/trackship-for-woocommerce/">' . __( 'Docs' ) . '</a>',
 			'<a href="https://wordpress.org/support/plugin/trackship-for-woocommerce/#new-topic-0">' . __( 'Support' ) . '</a>',
 			'<a href="https://wordpress.org/support/plugin/trackship-for-woocommerce/reviews/#new-post">' . __( 'Review' ) . '</a>'
 		), $links );
