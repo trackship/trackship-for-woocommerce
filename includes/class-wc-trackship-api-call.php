@@ -181,7 +181,7 @@ class WC_TrackShip_Api_Call {
 			$shipping_postal_code = $order->get_billing_postcode();
 		}
 		
-		$url = 'https://my.trackship.co/api/create-tracker/ts4wc';
+		$url = 'https://my.trackship.com/api/create-tracker/ts4wc';
 		
 		$args['body'] = array(
 			'user_key'				=> $user_key, // Deprecated since 19-Aug-2022
@@ -210,7 +210,7 @@ class WC_TrackShip_Api_Call {
 		$user_key = get_option('wc_ast_api_key');
 		$domain = get_site_url();		
 		
-		$url = 'https://my.trackship.co/api/tracking/delete';
+		$url = 'https://my.trackship.com/api/tracking/delete';
 		
 		$args['body'] = array(
 			'user_key'			=> $user_key, // Deprecated since 19-Aug-2022

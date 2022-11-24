@@ -130,7 +130,7 @@ class WC_Trackship_Logs {
             $result[$i]->date = $condi_time;
             $result[$i]->to = $value->to;
             $result[$i]->type = $value->type == 'Email' ? 'Email' : 'SMS';
-            $result[$i]->status = 'Sent' == $value->status ? $value->status : 'Failed';
+            $result[$i]->status = $value->status ? 'Sent' : 'Failed';
 			$result[$i]->action_button = '<span class="get_log_detail dashicons dashicons-visibility" data-rowid="' . $value->id . '" data-orderid="' . $value->order_id . '"></span>';
 			
             $i++;

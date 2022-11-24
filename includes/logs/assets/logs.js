@@ -134,7 +134,7 @@ jQuery(document).on("click", ".trackship_logs .get_log_detail", function(){
 			jQuery('.trackship_logs_details .time span').html(response.date);
 			jQuery('.trackship_logs_details .to span').html(response.to);
 			jQuery('.trackship_logs_details .type span').html(response.type);
-			jQuery('.trackship_logs_details .status span').html(response.status);
+			jQuery('.trackship_logs_details .status span').html(response.status_msg);
 			jQuery('.trackship_logs_details').show();
 		},
 	});

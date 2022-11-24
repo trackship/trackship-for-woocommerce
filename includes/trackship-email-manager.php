@@ -159,7 +159,8 @@ class WC_TrackShip_Email_Manager {
 			'date'				=> current_time( 'Y-m-d H:i:s' ),
 			'to'				=> $recipient,
 			'shipment_status'	=> $new_status,
-			'status'			=> $email_send ? 'Sent' : 'Not Sent',
+			'status'			=> $email_send,
+			'status_msg'		=> $email_send ? 'Sent' : 'Not Sent',
 			'type'				=> 'Email',
 		);
 		trackship_for_woocommerce()->ts_actions->update_notification_table( $arg );
@@ -331,7 +332,8 @@ class WC_TrackShip_Email_Manager {
 			'date'				=> current_time( 'Y-m-d H:i:s' ),
 			'to'				=> $recipient,
 			'shipment_status'	=> $new_status,
-			'status'			=> $email_send ? 'Sent' : 'Not Sent',
+			'status'			=> $email_send,
+			'status_msg'		=> $email_send ? 'Sent' : 'Not Sent',
 			'type'				=> 'Email',
 		);
 		trackship_for_woocommerce()->ts_actions->update_notification_table( $arg );
