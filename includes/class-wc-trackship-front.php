@@ -180,7 +180,7 @@ class WC_TrackShip_Front {
 		$wc_ast_api_key = get_option('wc_ast_api_key');	
 		
 		if ( !$wc_ast_api_key ) { ?>
-			<p><a href="https://trackship.co/" target="blank">TrackShip</a> is not active.</p>
+			<p><a href="https://trackship.com/" target="blank">TrackShip</a> is not active.</p>
 			<?php
 			return;
 		}
@@ -504,7 +504,7 @@ class WC_TrackShip_Front {
 						?>
 					</div>
 					<div class="trackship_branding">
-						<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://track.trackship.co/track/<?php esc_html_e( $tracking_number ); ?>" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
+						<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://track.trackship.com/track/<?php esc_html_e( $tracking_number ); ?>" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
 					</div>
 					<?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
 						<style> .trackship_branding{display:block !important;} </style>

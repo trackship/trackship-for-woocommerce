@@ -224,7 +224,8 @@ class WC_TrackShip_Late_Shipments {
 				'date'				=> current_time( 'Y-m-d H:i:s' ),
 				'to'				=> $recipient,
 				'shipment_status'	=> 'Late shipment',
-				'status'			=> $response ? 'Sent' : 'Not Sent',
+				'status'			=> $response,
+				'status_msg'		=> $response ? 'Sent' : 'Not Sent',
 				'type'				=> 'Email',
 			);
 			trackship_for_woocommerce()->ts_actions->update_notification_table( $arg );

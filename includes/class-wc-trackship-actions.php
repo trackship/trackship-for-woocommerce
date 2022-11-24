@@ -273,16 +273,18 @@ class WC_Trackship_Actions {
 		foreach ( $total_order as $key => $value ) {
 			$order_id = $value->order_id;
 			$order = wc_get_order( $order_id );
-			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
-			$shipment_status = $order->get_meta( 'shipment_status', true );
-
-			foreach ( (array) $tracking_items as $key1 => $item ) {
-				$shipment_length = trackship_for_woocommerce()->shipments->get_shipment_length( $shipment_status[$key1] );
-				$where = array(
-					'order_id'			=> $order_id,
-					'tracking_number'	=> $value->tracking_number,
-				);
-				$wpdb->update( $woo_trackship_shipment, array( 'shipping_length' => $shipment_length, 'updated_date' => $today ), $where );
+			if ( $order ) {
+				$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
+				$shipment_status = $order->get_meta( 'shipment_status', true );
+	
+				foreach ( (array) $tracking_items as $key1 => $item ) {
+					$shipment_length = trackship_for_woocommerce()->shipments->get_shipment_length( $shipment_status[$key1] );
+					$where = array(
+						'order_id'			=> $order_id,
+						'tracking_number'	=> $value->tracking_number,
+					);
+					$wpdb->update( $woo_trackship_shipment, array( 'shipping_length' => $shipment_length, 'updated_date' => $today ), $where );
+				}
 			}
 		}
 	}
@@ -511,7 +513,7 @@ class WC_Trackship_Actions {
 												<a href="javascript:;" class="trackship-tip  <?php echo esc_html( $class ); ?>" title="<?php esc_html_e( 'Pending TrackShip is a temporary status that will display for a few minutes until we update the order with the first tracking event from the shipping provider. Please refresh the orders admin in 2-3 minutes.', 'trackship-for-woocommerce' ); ?>" ><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a>
 											<?php } ?>
 											<?php if ( !in_array( $status, array( 'in_transit', 'on_hold', 'pre_transit', 'delivered', 'out_for_delivery', 'available_for_pickup', 'return_to_sender', 'exception', 'failure', 'pending_trackship', 'unknown' ) ) ) { ?>
-												<a class="<?php echo esc_html( $class ); ?>" href="https://docs.trackship.co/docs/resources/shipment-status-reference/#trackship-status-messages" target="_blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a>
+												<a class="<?php echo esc_html( $class ); ?>" href="https://docs.trackship.com/docs/resources/shipment-status-reference/#trackship-status-messages" target="_blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a>
 											<?php } ?>
 										</span>
 									<?php } ?>
@@ -960,7 +962,7 @@ class WC_Trackship_Actions {
 										<?php } ?>
 										
 										<?php if ( !in_array( $status, array( 'in_transit', 'on_hold', 'pre_transit', 'delivered', 'out_for_delivery', 'available_for_pickup', 'return_to_sender', 'exception', 'failure', 'pending_trackship', 'unknown' ) ) ) { ?>
-											<a class="<?php echo esc_html( $class ); ?>" data-page="<?php esc_html_e( $page ); ?>" href="https://docs.trackship.co/docs/resources/shipment-status-reference/#trackship-status-messages" target="_blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a>
+											<a class="<?php echo esc_html( $class ); ?>" data-page="<?php esc_html_e( $page ); ?>" href="https://docs.trackship.com/docs/resources/shipment-status-reference/#trackship-status-messages" target="_blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a>
 										<?php } ?>
 									</span>
 								<?php } ?>
