@@ -203,7 +203,7 @@
 	<div class="trackship_branding" >
 		<p>
 			<span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span>
-			<a href="https://trackship.co" title="TrackShip" target="blank"><img src="<?php echo esc_html( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a>
+			<a href="https://trackship.com" title="TrackShip" target="blank"><img src="<?php echo esc_html( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a>
 		</p>
 	</div>
 </div>

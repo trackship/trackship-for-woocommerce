@@ -260,7 +260,8 @@ class tswc_smswoo_sms_notification {
 			'date'				=> current_time( 'Y-m-d H:i:s' ),
 			'to'				=> $phone,
 			'shipment_status'	=> $this->new_status,
-			'status'			=> $status_message,
+			'status'			=> $success,
+			'status_msg'		=> $status_message,
 			'type'				=> 'SMS',
 			'sms_type'			=> 'shipment_status',
 		);

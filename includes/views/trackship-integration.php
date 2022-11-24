@@ -14,7 +14,7 @@ $url = add_query_arg( array(
 	'store_url'		=> $store_url,
 	'type'			=> 'wc',
 	'token'			=> md5( $store_url ),
-), 'https://my.trackship.co' );
+), 'https://my.trackship.com' );
 ?>
 <div class="section-content trackship_section">
 	<div class="">

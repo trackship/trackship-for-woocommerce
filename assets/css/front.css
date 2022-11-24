@@ -408,10 +408,9 @@ ul.timeline > li > p {
     padding-bottom: 15px;
 }
 .tracking-detail .heading_panel.active {
-    border-radius: 3px 3px 0 0;
 	color: #124ed6;
 }
-.accordian-arrow {
+.heading_panel .accordian-arrow {
 	border: solid black;
     border-width: 0px 3px 3px 0;
     display: inline-block;
@@ -419,13 +418,12 @@ ul.timeline > li > p {
     float: right;
     margin: 4px;
 }
-.down {
+.heading_panel .accordian-arrow.down {
 	transform: rotate(45deg);
 	-webkit-transform: rotate(45deg);
 	border-color:#124ed6;
-	
 }
-.right {
+.heading_panel .accordian-arrow.right {
 	transform: rotate(-45deg);
 	-webkit-transform: rotate(-45deg);
 }

@@ -78,7 +78,7 @@ $array = array(
 		'class' => 'not_show',
 	),
 );
-$url = 'https://my.trackship.co/api/user-plan/get/';
+$url = 'https://my.trackship.com/api/user-plan/get/';
 $args[ 'body' ] = array(
 	'user_key' => trackship_for_woocommerce()->actions->get_trackship_key(), // Deprecated since 19-Aug-2022
 );
@@ -97,7 +97,7 @@ update_option( 'user_plan', $current_plan );
 update_option( 'trackers_balance', $current_balance );
 $nonce = wp_create_nonce( 'wc_ast_tools');
 $store_text = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? __( 'Upgrade to Pro', 'trackship-for-woocommerce' ) : __( 'Account Dashboard', 'trackship-for-woocommerce' );
-$store_url = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? 'https://my.trackship.co/settings/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=upgrade#billing' : 'https://my.trackship.co/settings/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=dashboard#billing';
+$store_url = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? 'https://my.trackship.com/settings/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=upgrade#billing' : 'https://my.trackship.com/settings/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=dashboard#billing';
 ?>
 <input type="hidden" id="wc_ast_dashboard_tab" name="wc_ast_dashboard_tab" value="<?php echo esc_attr( $nonce ); ?>" />
 <input class="dashboard_hidden_field" type="hidden" value="<?php echo esc_html($current_plan); ?>">
