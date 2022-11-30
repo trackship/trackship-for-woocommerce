@@ -494,7 +494,7 @@ class WC_TrackShip_Email_Manager {
 	 * @return string
 	 */
 	public function get_from_name( $from_name = '' ) {
-		$from_name = apply_filters( 'woocommerce_email_from_name', get_option( 'woocommerce_email_from_name' ), $this );
+		$from_name = apply_filters( 'woocommerce_email_from_name', get_option( 'woocommerce_email_from_name' ), $this, $from_name );
 		return wp_specialchars_decode( esc_html( $from_name ), ENT_QUOTES );
 	}
 
@@ -504,7 +504,7 @@ class WC_TrackShip_Email_Manager {
 	 * @return string
 	 */
 	public function get_from_address( $from_email = '' ) {
-		$from_address = apply_filters( 'woocommerce_email_from_address', get_option( 'woocommerce_email_from_address' ), $this );
+		$from_address = apply_filters( 'woocommerce_email_from_address', get_option( 'woocommerce_email_from_address' ), $this, $from_email );
 		return sanitize_email( $from_address );
 	}		
 	
