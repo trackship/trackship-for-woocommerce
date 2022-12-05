@@ -4,7 +4,7 @@ Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 5.3
 Tested up to: 6.1.1
 Requires PHP: 7.2
-Stable tag: 1.4.7.1
+Stable tag: 1.4.8
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -119,6 +119,11 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended).
 
 == Changelog ==
+= 1.4.8 - 2022-12-05 =
+* Dev - Design improved for the Tracking page.
+* Fix - Fix the issue of the delievred Shipment status email
+* Fix - Fix the issue of the est delivery date in the shipment status SMS 
+
 = 1.4.7.1 - 2022-11-29 =
 * Fix - Fatal error: Uncaught ArgumentCountError: Too few arguments to function for filter woocommerce_email_from_name and woocommerce_email_from_address
 * Fix - Fatal error: HPOS compatibility code twick
