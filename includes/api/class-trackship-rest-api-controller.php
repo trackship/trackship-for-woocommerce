@@ -200,6 +200,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			
 			$order = wc_get_order( $order_id );
 			$order->update_meta_data( 'shipment_status', $shipment_status );
+			$order->save();
 			
 			//tracking page link in $shipment_status
 			$shipment_status = trackship_for_woocommerce()->actions->get_shipment_status( $order_id );
