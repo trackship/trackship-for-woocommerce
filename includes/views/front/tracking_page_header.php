@@ -11,9 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	?>
 
 	<div class="tracking_number_wrap">
-		<span class="wc_order_id">
-			<a href="<?php echo esc_url( $order->get_view_order_url() ); ?>" target="_blank"><?php echo esc_html( '#' . $order->get_order_number() ); ?></a>
-		</span>
 
 		<?php if ( ! $hide_tracking_provider_image && $provider_image ) { ?>
 			<div class="provider_image_div" >
@@ -22,13 +19,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php } ?>
 
 		<div class="tracking_number_div">
-			<ul>			
+			<ul>
 				<li>
 					<span class="tracking_page_provider_name"><?php echo esc_html( apply_filters( 'ast_provider_title', $provider_name ) ); ?></span>
 					<?php if ( ( $wc_ast_link_to_shipping_provider || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) && $formatted_tracking_link ) { ?>
 						<a href="<?php echo esc_url( $formatted_tracking_link ); ?>" target="blank"><strong><?php esc_html_e( $tracking_number ); ?></strong></a>	
 					<?php } else { ?>
-						<strong><?php esc_html_e( $tracking_number ); ?></strong>	
+						<strong><?php esc_html_e( $tracking_number ); ?></strong>
 					<?php } ?>
 				</li>
 				<?php if ( !$hide_last_mile && $row->delivery_number ) { ?>
@@ -38,15 +35,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</li>
 				<?php } ?>
 			</ul>
-		</div>	
-	</div>
-	<?php if ( !$hide_from_to && isset( $row->origin_country ) && $row->origin_country && $row->destination_country && $row->destination_country != $row->origin_country ) { ?>
-		<div class="shipping_from_to">
-			<span class="shipping_from"><?php echo esc_html( WC()->countries->countries[ $row->origin_country ] ) ?></span>
-			<img class="shipping_to_img" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/arrow.png">
-			<span class="shipping_to"><?php echo esc_html( WC()->countries->countries[ $row->destination_country ] ) ?></span>
 		</div>
-	<?php } ?>
+
+		<span class="wc_order_id">
+			<a href="<?php echo esc_url( $order->get_view_order_url() ); ?>" target="_blank"><?php echo esc_html( '#' . $order->get_order_number() ); ?></a>
+		</span>
+	</div>
+	
 	<div class="shipment_status_heading <?php esc_html_e( $tracker->ep_status ); ?>">
 		<?php
 		if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'invalid_tracking', '' ) ) ) {
@@ -58,6 +53,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 		?>
 	</div>
+	<?php if ( !$hide_from_to && isset( $row->origin_country ) && $row->origin_country && $row->destination_country && $row->destination_country != $row->origin_country ) { ?>
+		<div class="shipping_from_to">
+			<span class="shipping_from"><?php echo esc_html( WC()->countries->countries[ $row->origin_country ] ) ?></span>
+			<img class="shipping_to_img" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/arrow.png">
+			<span class="shipping_to"><?php echo esc_html( WC()->countries->countries[ $row->destination_country ] ) ?></span>
+		</div>
+	<?php } ?>
 	<?php $show_est_delivery_date = apply_filters( 'show_est_delivery_date', true, $provider_name ); ?>
 	<?php if ( $tracker->est_delivery_date && $show_est_delivery_date ) { ?>
 		<span class="est-delivery-date tracking-number">
