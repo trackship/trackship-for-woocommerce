@@ -27,8 +27,8 @@ form.order_track_form input {
 	transition: width 0.6s ease
 }
 ul.tpi_product_tracking_ul {
-    list-style-type: none;
-    margin: 0;
+	list-style-type: none;
+	margin: 0;
 }
 .h4-heading.tpi_products_heading {
 	margin-bottom: 10px;
@@ -61,18 +61,18 @@ ul.tpi_product_tracking_ul {
 .col.tracking-detail {
 	margin: 0 auto 20px;
 	border: 1px solid #ccc;
-	max-width: 600px;
+	max-width: 800px;
 	position: relative;
-	padding: 15px 20px;
+	padding: 0;
 }
 .trackship_branding {
 	text-align: center;
-    padding-top: 10px;
-    border-top: 1px solid #ccc;
-    margin: -1px -20px;
+	padding: 10px 0 15px;
+	border-top: 1px solid #ccc;
 }
 span.wc_order_id {
-	float: right;
+	align-self: center;
+	margin-left: auto;
 }
 .trackship_branding p {
 	margin: 0;
@@ -82,6 +82,7 @@ span.wc_order_id {
 	width: 85px;
 	display: inline-block;
 	vertical-align: middle;
+	margin: 0 5px;
 }
 .tracking-detail .h4-heading {
 	border-bottom: 1px solid #eee;
@@ -105,18 +106,18 @@ span.wc_order_id {
 }
 .shipment-header {
 	margin: 10px auto 0;
-	max-width: 600px;
+	max-width: 800px;
 }
 .shipment_heading {
 	margin: 0;
-    padding: 5px 20px;
+	padding: 5px 20px;
 	border-bottom: 0 !important;
 }
 .shipment_status_heading {
 	font-weight: 600;
 	color: #424242;
 	font-size: 24px;
-	margin-bottom: 0;
+	margin: 15px 15px 10px;
 }
 .shipment_status_heading.delivered {
 	color: #218748;
@@ -124,27 +125,28 @@ span.wc_order_id {
 .shipment_status_heading.delivered:before {
 	content: url(icons/delivered-2.png);
 	display: inline-block;
-    height: 30px;
-    vertical-align: text-bottom;
+	height: 30px;
+	vertical-align: text-bottom;
 	margin-right: 5px;
 }
 .shipping_from_to {
 	font-size: 14px;
-	margin-bottom: 5px;
+	margin: 5px 15px;
 }
 .shipping_from_to span {
-	vertical-align: middle;
+	vertical-align: baseline;
 }
 .shipping_from_to .shipping_to_img {
-    margin: 0 8px;
-	height: 17px;
+	margin: 0 4px;
+    vertical-align: middle;
+    height: 15px;
 }
 .tracker-progress-bar {
-	margin: 30px 0;
+	margin: 35px 15px 45px;
 	position: relative;
 }
-.tracking-layout-2 .tracker-progress-bar {
-	margin: 20px 0;
+.t_layout_2.tracker-progress-bar {
+	margin: 25px 15px;
 }
 /**** Layout 1 and 3 Progressbar CSS START ***/
 .tracker-progress-bar.tracking_icon_layout .progress {
@@ -231,13 +233,13 @@ span.wc_order_id {
 	background: #0bd4ab;
 }
 .t_layout_2 .progress-bar:before {
-    content: ' ';
-    background: #124fd6;
-    width: 17px;
-    height: 17px;
-    position: absolute;
-    display: inline-block;
-    border-radius: 10px;
+	content: ' ';
+	background: #124fd6;
+	width: 17px;
+	height: 17px;
+	position: absolute;
+	display: inline-block;
+	border-radius: 10px;
 	left: 9%;
 }
 .t_layout_2 .progress-bar.in_transit:before,
@@ -352,14 +354,13 @@ ul.timeline > li > p {
 }
 .provider_image_div {
 	display: inline-block;
-    vertical-align: middle;
+	vertical-align: middle;
 	margin-right: 10px;
 }
 .tracking_number_div {
-	display: inline-block;
-    vertical-align: middle;
-    margin: 10px 0;
-    font-size: 14px;
+	margin: 0;
+	font-size: 14px;
+	align-self: center;
 }
 .tracking_number_div ul {
 	list-style: none !important;
@@ -383,7 +384,7 @@ ul.timeline > li > p {
 }
 .unsubscribe_message {
 	margin: 5px auto;
-    max-width: 600px;
+	max-width: 600px;
 }
 .zorem_loader {
 	background: url(../images/loading.gif);
@@ -395,28 +396,26 @@ ul.timeline > li > p {
 }
 .tracking-detail .heading_panel {
 	padding: 15px;
-    margin: 0 -20px;
-    cursor: pointer;
-    border-top: 1px solid #ccc;
+	margin: 0;
+	cursor: pointer;
+	border-top: 1px solid #ccc;
 	font-size: 14px;
-    font-weight: 600;
+	font-weight: 600;
 }
 .tracking-detail .content_panel {
 	padding: 0;
-    display: none;
-    border-top: 0;
-    padding-bottom: 15px;
-}
-.tracking-detail .heading_panel.active {
-	color: #124ed6;
+	display: none;
+	border-top: 0;
+	padding-bottom: 15px;
+	margin: 0 15px;
 }
 .heading_panel .accordian-arrow {
 	border: solid black;
-    border-width: 0px 3px 3px 0;
-    display: inline-block;
-    padding: 4px;
-    float: right;
-    margin: 4px;
+	border-width: 0px 3px 3px 0;
+	display: inline-block;
+	padding: 4px;
+	float: right;
+	margin: 4px;
 }
 .heading_panel .accordian-arrow.down {
 	transform: rotate(45deg);
@@ -461,7 +460,7 @@ ul.timeline > li > p {
 	font-weight: 400;
 	color: #757575;
 	font-size: 14px;
-	margin: 8px 0;
+	margin: 0 15px;
 	display: block;
 }
 .shipment-content p.pending_message {
@@ -471,13 +470,15 @@ ul.timeline > li > p {
 	margin-bottom: 10px;
 }
 .tracking-detail .tracking_number_wrap {
-    padding: 0 20px 15px;
-    border-bottom: 1px solid #ccc;
-    margin: 0 -20px 15px;
+	padding: 15px 20px;
+	border-bottom: 1px solid #ccc;
+	margin: 0 0 15px;
+	font-size: 14px;
+	display: flex;
 }
 .not-shipped-widget .shipment_heading {
 	font-weight: 600;
-    color: #212121;
+	color: #212121;
 }
 /**** Tracking Lightbox CSS ***/
 .popupwrapper {
@@ -520,9 +521,9 @@ ul.timeline > li > p {
 }
 .tracking_number_div ul li strong{
 	white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 200px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 200px;
 	display: inline-block;
 	vertical-align: middle;
 }

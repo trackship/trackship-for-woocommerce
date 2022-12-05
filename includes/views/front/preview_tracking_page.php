@@ -7,12 +7,11 @@
 		margin: 30px auto 100px;
 	}
 	.est_delivery_date {
-		margin-bottom: 15px;
-		display: block;
+		margin: 0 15px;
 	}
 	.customize-partial-edit-shortcut-button {display: none;}
 	<?php if ( $link_color ) { ?>
-		.col.tracking-detail .tracking_number_wrap a {
+		.col.tracking-detail .tracking_number_wrap a, .tracking_event_tab_view .view_more_class {
 			color: <?php echo esc_html( $link_color ); ?>;
 		}				
 	<?php } ?>
@@ -43,12 +42,7 @@
 	<div class="shipment-content">
 		<div class="tracking-header">
 			<div class="tracking_number_wrap">
-				<span class="wc_order_id">
-					<a href="#" target="_blank">
-						<?php /* translators: %s: search 14696 */ ?>
-						<?php printf( esc_html( '#%d' ), 14696 ); ?>
-					</a>
-				</span>
+				
 				<div class="provider_image_div" style="">
 					<img class="provider_image" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/4px.png?v=3.1.1">
 				</div>
@@ -65,13 +59,20 @@
 						</li>
 					</ul>
 				</div>
+				<span class="wc_order_id">
+					<a href="#" target="_blank">
+						<?php /* translators: %s: search 14696 */ ?>
+						<?php printf( esc_html( '#%d' ), 14696 ); ?>
+					</a>
+				</span>
 			</div>
+			
+			<div class="shipment_status_heading <?php echo esc_html($status); ?>"><?php esc_html_e( apply_filters( 'trackship_status_filter', $status ) ); ?></div>
 			<div class="shipping_from_to">
 				<span class="shipping_from">India</span>
 				<img class="shipping_to_img" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/arrow.png">
 				<span class="shipping_to">United states</span>
 			</div>
-			<div class="shipment_status_heading <?php echo esc_html($status); ?>"><?php esc_html_e( apply_filters( 'trackship_status_filter', $status ) ); ?></div>
 			<span class="est_delivery_date">Est. Delivery Date: <strong>Thursday, Oct 01</strong></span>	
 		</div>
 		<?php
@@ -158,8 +159,8 @@
 							</li>
 						</ul>							
 					</div>
-					<a class="view_old_details" href="javaScript:void(0);" style="display: inline;"><?php esc_html_e( 'view more', 'trackship-for-woocommerce' ); ?></a>
-					<a class="hide_old_details" href="javaScript:void(0);" style="display: none;"><?php esc_html_e( 'view less', 'trackship-for-woocommerce' ); ?></a>		
+					<a class="view_old_details view_more_class" href="javaScript:void(0);" style="display: inline;"><?php esc_html_e( 'view more', 'trackship-for-woocommerce' ); ?></a>
+					<a class="hide_old_details view_more_class" href="javaScript:void(0);" style="display: none;"><?php esc_html_e( 'view less', 'trackship-for-woocommerce' ); ?></a>		
 				<?php } ?>
 			</div>
 			<div data-label="product_details" class="heading_panel">
