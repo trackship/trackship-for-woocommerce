@@ -138,8 +138,8 @@ if ( ( !is_admin() && get_option( 'enable_email_widget' ) ) || ( 'yes' == $front
 					
 				</div>
 				<div class="view_hide_old_details_div">
-					<a class="view_old_details" href="javaScript:void(0);" style="display: inline;"><?php esc_html_e( 'view more', 'trackship-for-woocommerce' ); ?></a>
-					<a class="hide_old_details" href="javaScript:void(0);" style="display: none;"><?php esc_html_e( 'view less', 'trackship-for-woocommerce' ); ?></a>	
+					<a class="view_old_details view_more_class" href="javaScript:void(0);" style="display: inline;"><?php esc_html_e( 'view more', 'trackship-for-woocommerce' ); ?></a>
+					<a class="hide_old_details view_more_class" href="javaScript:void(0);" style="display: none;"><?php esc_html_e( 'view less', 'trackship-for-woocommerce' ); ?></a>	
 				</div>
 			<?php } ?>
 		<?php } else { ?>

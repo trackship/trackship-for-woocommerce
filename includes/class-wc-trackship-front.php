@@ -370,7 +370,7 @@ class WC_TrackShip_Front {
 		?>
 		<style>
 			<?php if ( $link_color ) { ?>
-				.col.tracking-detail .tracking_number_wrap a {
+				.col.tracking-detail .tracking_number_wrap a, .tracking_event_tab_view .view_more_class {
 					color: <?php echo esc_html( $link_color ); ?>;
 				}
 			<?php } ?>		
