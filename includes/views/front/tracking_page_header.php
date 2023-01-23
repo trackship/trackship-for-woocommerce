@@ -8,38 +8,52 @@ if ( ! defined( 'ABSPATH' ) ) {
 	// to be removed after 2-3 version - action has been added in 1.3.4 -- action trackship_tracking_header_before
 	do_action( 'trackship_tracking_header_before', $order->get_id(), $tracker, $provider_name, $tracking_number );
 	$row = trackship_for_woocommerce()->actions->get_tracking_shipment_row( $order->get_id(), $tracking_number );
+	$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order->get_id(), $tracking_number );
 	?>
 
 	<div class="tracking_number_wrap">
 
-		<?php if ( ! $hide_tracking_provider_image && $provider_image ) { ?>
-			<div class="provider_image_div" >
-				<img class="provider_image" src="<?php echo esc_url( $provider_image ); ?>">
-			</div>
-		<?php } ?>
+		<div style="display: flex;">
+			<?php if ( ! $hide_tracking_provider_image && $provider_image ) { ?>
+				<div class="provider_image_div" >
+					<img class="provider_image" src="<?php echo esc_url( $provider_image ); ?>">
+				</div>
+			<?php } ?>
 
-		<div class="tracking_number_div">
-			<ul>
-				<li>
-					<span class="tracking_page_provider_name"><?php echo esc_html( apply_filters( 'ast_provider_title', $provider_name ) ); ?></span>
-					<?php if ( ( $wc_ast_link_to_shipping_provider || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) && $formatted_tracking_link ) { ?>
-						<a href="<?php echo esc_url( $formatted_tracking_link ); ?>" target="blank"><strong><?php esc_html_e( $tracking_number ); ?></strong></a>	
-					<?php } else { ?>
-						<strong><?php esc_html_e( $tracking_number ); ?></strong>
-					<?php } ?>
-				</li>
-				<?php if ( !$hide_last_mile && $row->delivery_number ) { ?>
-					<li class="last_mile_tracking_number">
-						<span><?php esc_html_e( 'Delivery tracking Number', 'trackship-for-woocommerce' ); ?></span>
-						<strong> <?php echo esc_html( $row->delivery_number ) ?></strong>
+			<div class="tracking_number_div">
+				<ul>
+					<li>
+						<span class="tracking_page_provider_name"><?php echo esc_html( apply_filters( 'ast_provider_title', $provider_name ) ); ?></span>
+						<?php if ( ( $wc_ast_link_to_shipping_provider || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) && $tracking_link ) { ?>
+							<a href="<?php echo esc_url( $tracking_link ); ?>" target="blank"><strong><?php esc_html_e( $tracking_number ); ?></strong></a>	
+						<?php } else { ?>
+							<strong><?php esc_html_e( $tracking_number ); ?></strong>
+						<?php } ?>
 					</li>
-				<?php } ?>
-			</ul>
+					<?php if ( !$hide_last_mile && $row->delivery_number ) { ?>
+						<li class="last_mile_tracking_number">
+							<span><?php esc_html_e( 'Delivery tracking Number', 'trackship-for-woocommerce' ); ?></span>
+							<strong> <?php echo esc_html( $row->delivery_number ) ?></strong>
+						</li>
+					<?php } ?>
+				</ul>
+			</div>
 		</div>
 
-		<span class="wc_order_id">
-			<a href="<?php echo esc_url( $order->get_view_order_url() ); ?>" target="_blank"><?php echo esc_html( '#' . $order->get_order_number() ); ?></a>
-		</span>
+		<div style="display: flex;flex-direction: column;">
+			<span class="wc_order_id">
+				<?php esc_html_e( 'Order', 'trackship-for-woocommerce' ); ?> 
+				<a href="<?php echo esc_url( $order->get_view_order_url() ); ?>" target="_blank"><?php echo esc_html( '#' . $order->get_order_number() ); ?></a>
+			</span>
+			<?php if ( $tracking_page_link && is_admin() && !isset( $_POST['order_tracking_number'] ) ) { ?>
+				<span style="margin-top: 5px;">
+					<span style="vertical-align: middle;" ><?php esc_html_e( 'Copy Tracking page link', 'trackship-for-woocommerce' ); ?></span>
+					<span class="copy_tracking_page trackship-tip" title="Copy the secure link to the Tracking page" data-tracking_page_link=<?php echo esc_url( $tracking_page_link ); ?> >
+						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 20 20" style="enable-background:new 0 0 20 20;" xml:space="preserve"><path d="M19.6,2.8l-2.4-2.4C17,0.1,16.7,0,16.4,0H10C8.6,0,7.5,1.1,7.5,2.5l0,10c0,1.4,1.2,2.5,2.5,2.5h7.5c1.4,0,2.5-1.1,2.5-2.5  V3.6C20,3.3,19.9,3,19.6,2.8z M18.1,12.5c0,0.3-0.3,0.6-0.6,0.6H10c-0.3,0-0.6-0.3-0.6-0.6v-10c0-0.3,0.3-0.6,0.6-0.6h5l0,1.9  C15,4.4,15.6,5,16.3,5h1.8L18.1,12.5L18.1,12.5z M10.6,17.5c0,0.3-0.3,0.6-0.6,0.6H2.5c-0.3,0-0.6-0.3-0.6-0.6l0-10  c0-0.3,0.3-0.6,0.6-0.6h3.8V5H2.5C1.1,5,0,6.1,0,7.5l0,10C0,18.9,1.1,20,2.5,20H10c1.4,0,2.5-1.1,2.5-2.5v-1.2h-1.8L10.6,17.5z"/></svg>
+					</span>
+				</span>
+			<?php } ?>
+		</div>
 	</div>
 	
 	<div class="shipment_status_heading <?php esc_html_e( $tracker->ep_status ); ?>">
@@ -63,7 +77,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php $show_est_delivery_date = apply_filters( 'show_est_delivery_date', true, $provider_name ); ?>
 	<?php if ( $tracker->est_delivery_date && $show_est_delivery_date ) { ?>
 		<span class="est-delivery-date tracking-number">
-			<?php esc_html_e( 'Est. Delivery Date', 'trackship-for-woocommerce' ); ?> : 
+			<?php echo 'delivered' != $tracker->ep_status ? esc_html_e( 'Est. Delivery Date', 'trackship-for-woocommerce' ) : esc_html_e( 'Delivery Date', 'trackship-for-woocommerce' ); ?> : 
 			<strong><?php esc_html_e( date_i18n( 'l, M d', strtotime( $tracker->est_delivery_date ) ) ); ?></strong>
 		</span>
 	<?php } ?>

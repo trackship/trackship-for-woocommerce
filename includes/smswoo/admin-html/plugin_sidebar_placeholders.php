@@ -10,7 +10,7 @@ if( trackship_for_woocommerce()->is_ast_active() ){
 	$placeholders[] = '{tracking_link}';
 }
 
-if( trackship_for_woocommerce()->is_trackship_connected() ){
+if( is_trackship_connected() ){
 	$placeholders[] = '{shipment_status}';
 	$placeholders[] = '{est_delivery_date}';
 }

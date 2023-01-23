@@ -53,7 +53,7 @@ class tswc_smswoo_sms_notification {
 	public function init() {
 		
 		//TrackShip support 
-		add_action( 'ast_trigger_ts_status_change', array( $this, 'trigger_sms_on_shipment_status_change' ), 20, 5 );
+		add_action( 'ts_status_change_trigger', array( $this, 'trigger_sms_on_shipment_status_change' ), 20, 5 );
 		
 		//AST support for order status sms
 		add_filter( 'smswoo_sms_message_replacements', array( $this, 'ast_order_variable_support' ), 10, 2 );
@@ -121,7 +121,7 @@ class tswc_smswoo_sms_notification {
 			return $replacements;
 		}
 		
-		if ( function_exists( 'ast_get_tracking_items' ) ) {
+		if ( function_exists( 'ast_get_tracking_items' ) || trackship_for_woocommerce()->is_active_yith_order_tracking() || trackship_for_woocommerce()->is_active_woo_order_tracking() ) {
 			$tracking_item = $this->tracking_item;
 			
 			$tracking_number = $tracking_item['tracking_number'];
@@ -161,16 +161,7 @@ class tswc_smswoo_sms_notification {
 			$replacements[ '{tracking_link}' ] = implode( ', ', $tracking_link );
 		}
 		
-		/*if ( is_plugin_active( 'woo-orders-tracking/woo-orders-tracking.php' ) ) {
-			$tracking_items = $this->tracking_item;
-			$replacements[ '{tracking_number}' ] = $tracking_items['tracking_number'];
-			
-			$replacements[ '{tracking_provider}' ] = $tracking_items['formatted_tracking_provider'];
-			
-			$replacements[ '{tracking_link}' ] = $tracking_items['formatted_tracking_link'];
-		}*/
-		
-		if ( trackship_for_woocommerce()->is_trackship_connected() ) {
+		if ( is_trackship_connected() ) {
 			$status = apply_filters( 'trackship_status_filter', $this->new_status );
 			$replacements[ '%shipment_status%' ] = $status;
 			$replacements[ '{shipment_status}' ] = $status;
@@ -318,10 +309,24 @@ class tswc_smswoo_sms_notification {
 	 *
 	 *
 	 */
-	public function trigger_sms_on_shipment_status_change( $order_id, $old_status, $new_status, $tracking_item, $shipment_status ) {
+	public function trigger_sms_on_shipment_status_change( $order_id, $old_status, $new_status, $tracking_number ) {
+
+		$order = wc_get_order( $order_id );
+		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
+
+		foreach ( ( array ) $tracking_items as $key => $tracking_item ) {
+			if ( trim( $tracking_item['tracking_number'] ) != trim($tracking_number) ) {
+				continue;
+			}
+			$shipment_status = $order->get_meta( 'shipment_status', true );
+			if ( is_string($shipment_status) ) {
+				$shipment_status = array();
+			}
+			$this->tracking_item = $tracking_item;
+			$this->shipment_status = $shipment_status[$key];
+		}
+
 		$this->new_status = $new_status;
-		$this->tracking_item = $tracking_item;
-		$this->shipment_status = $shipment_status;
 		$this->order = wc_get_order( $order_id );
 		
 		$toggle = get_option( 'all-shipment-status-sms-delivered' );

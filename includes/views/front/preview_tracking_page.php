@@ -1,7 +1,7 @@
 <style>	
-	html{
-		background-color:#f7f7f7;
-		margin-top:0px !important;
+	html, body {
+		background-color: #f7f7f7 !important;
+		margin-top: 0px !important;
 	}
 	.col.tracking-detail{
 		margin: 30px auto 100px;
@@ -13,7 +13,12 @@
 	<?php if ( $link_color ) { ?>
 		.col.tracking-detail .tracking_number_wrap a, .tracking_event_tab_view .view_more_class {
 			color: <?php echo esc_html( $link_color ); ?>;
-		}				
+		}
+	<?php } ?>
+	<?php if ( $border_radius ) { ?>
+		.col.tracking-detail {
+			border-radius: <?php echo esc_html( $border_radius ); ?>px;
+		}
 	<?php } ?>
 	<?php if ( $border_color ) { ?>
 		.col.tracking-detail{

@@ -49,8 +49,7 @@ class WC_TrackShip_Late_Shipments {
 		
 		$wcast_enable_late_shipments_email = $ts_actions->get_option_value_from_array( 'late_shipments_email_settings', 'wcast_enable_late_shipments_admin_email', '');
 		
-		$wc_ast_api_key = get_option('wc_ast_api_key');
-		if ( !$wcast_enable_late_shipments_email || !$wc_ast_api_key ) {
+		if ( !$wcast_enable_late_shipments_email || ! is_trackship_connected() ) {
 			return;
 		}
 		

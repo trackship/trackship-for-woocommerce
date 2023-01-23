@@ -25,7 +25,8 @@ if ( $tracking_items ) :
 			<?php foreach ( $tracking_items as $key => $tracking_item ) { ?>
 				<?php
 				$ship_status = $new_status;
-				$tracking_link = isset( $tracking_item[ 'ast_tracking_link' ] ) && get_option( 'wc_ast_use_tracking_page', 1 ) ? $tracking_item[ 'ast_tracking_link' ] : $tracking_item[ 'formatted_tracking_link' ];
+				$formatted_tracking_link = isset( $tracking_item[ 'formatted_tracking_link' ] ) ? $tracking_item[ 'formatted_tracking_link' ] : '';
+				$tracking_link = isset( $tracking_item[ 'ast_tracking_link' ] ) ? $tracking_item[ 'ast_tracking_link' ] : $formatted_tracking_link;
 				do_action( 'before_tracking_widget_email', $tracking_item, $order_id );
 				?>
 				<div class="tracking_index display-table">
@@ -77,7 +78,7 @@ if ( $tracking_items ) :
 								echo '</div>';
 							} else {
 								?>
-								<div class="tracking_info" style="margin:10px 0;"><?php echo esc_html( $tracking_item['formatted_tracking_provider'] ); ?> <a href="<?php echo esc_url( $tracking_link ); ?>" style="text-decoration:none"><?php echo esc_html( $tracking_item['tracking_number'] ); ?></a></div>
+								<div class="tracking_info" style="margin:10px 0;"><?php echo esc_html( $tracking_item['formatted_tracking_provider'] ); ?> <a href="<?php echo esc_url( $formatted_tracking_link ); ?>" style="text-decoration:none"><?php echo esc_html( $tracking_item['tracking_number'] ); ?></a></div>
 								<?php
 							}
 						}
