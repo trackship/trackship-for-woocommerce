@@ -25,7 +25,7 @@ class WC_TrackShip_Api_Call {
 		$context = array( 'source' => 'wc_ast_trackship' );
 		$array = array();
 		$order = wc_get_order( $order_id );
-		$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );
+		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 		$shipment_status = $order->get_meta( 'shipment_status', true );
 		
 		if ( $tracking_items ) {
@@ -164,7 +164,7 @@ class WC_TrackShip_Api_Call {
 	* Get trackship shipment data
 	*/
 	public function get_trackship_data( $order, $tracking_number, $tracking_provider ) {
-		$user_key = get_option('wc_ast_api_key');
+		$user_key = get_trackship_key();
 		$domain = get_home_url();
 		$order_id = $order->get_id();
 		$custom_order_number = $order->get_order_number();
@@ -207,14 +207,12 @@ class WC_TrackShip_Api_Call {
 	* delete tracking number from trackship
 	*/
 	public function delete_tracking_number_from_trackship( $order_id, $tracking_number, $tracking_provider ) {
-		$user_key = get_option('wc_ast_api_key');
-		$domain = get_site_url();		
+		$user_key = get_trackship_key();
+		$domain = get_site_url();
 		
-		$url = 'https://my.trackship.com/api/tracking/delete';
+		$url = 'https://my.trackship.com/api/shipment/delete';
 		
 		$args['body'] = array(
-			'user_key'			=> $user_key, // Deprecated since 19-Aug-2022
-			'domain'			=> $domain, // Deprecated since 19-Aug-2022
 			'order_id'			=> $order_id,
 			'tracking_number'	=> $tracking_number,
 			'tracking_provider'	=> $tracking_provider,
@@ -222,7 +220,7 @@ class WC_TrackShip_Api_Call {
 
 		$args['headers'] = array(
 			'trackship-api-key'	=> $user_key,
-			'store'	=> $domain,
+			'app-name'	=> $domain,
 		);	
 		$args['timeout'] = 10;
 		$response = wp_remote_post( $url, $args );		

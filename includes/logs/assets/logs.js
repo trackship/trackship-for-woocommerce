@@ -143,4 +143,5 @@ jQuery(document).on("click", ".trackship_logs .get_log_detail", function(){
 jQuery(document).on("click", ".log_search_bar span", function(){
 	jQuery(this).prev().val('').focus();
 	jQuery(this).hide();
+	jQuery(".serch_button").click();
 });

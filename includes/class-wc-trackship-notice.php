@@ -37,8 +37,11 @@ class WC_TrackShip_Admin_notice {
 	* init from parent mail class
 	*/
 	public function init() {						
-		add_action( 'admin_notices', array( $this, 'trackship_admin_notice' ) );	
-		add_action( 'admin_init', array( $this, 'trackship_admin_notice_ignore' ) );	
+		add_action( 'admin_notices', array( $this, 'trackship_admin_notice' ) );
+		add_action( 'admin_init', array( $this, 'trackship_admin_notice_ignore' ) );
+
+		// review notice
+		add_action( 'admin_notices', array( $this, 'trackship_review_notice' ) );
 	}
 
 	/*
@@ -77,5 +80,40 @@ class WC_TrackShip_Admin_notice {
 		if ( isset( $_GET['trackship-ignore-notice'] ) ) {
 			update_option( 'trackship_admin_notice_ignore', 'true' );
 		}
-	}	
+		if ( isset( $_GET['trackship-review-ignore'] ) ) {
+			update_option( 'trackship_review_notice_ignore', 'true' );
+		}
+	}
+	
+	/*
+	* Display admin notice on plugin install or update
+	*/
+	public function trackship_review_notice() { 		
+		if ( get_option('trackship_review_notice_ignore') ) {
+			return;
+		}
+		
+		$dismissable_url = esc_url(  add_query_arg( 'trackship-review-ignore', 'true' ) );
+		$url = 'https://wordpress.org/support/plugin/trackship-for-woocommerce/reviews/#new-post';
+		?>		
+		<style>		
+		.wp-core-ui .notice.trackship-dismissable-notice {
+			padding: 12px;
+			text-decoration: none;
+		}
+		.wp-core-ui .notice.trackship-dismissable-notice a.notice-dismiss{
+			padding: 9px;
+			text-decoration: none;
+		}
+		</style>	
+		<div class="notice notice-success is-dismissible trackship-dismissable-notice">
+			<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
+			<p>Hi, we're thrilled that you're using TrackShip for WooCommerce! We're constantly working to improve our plugin and the platform and to make it even more valuable to you. We would greatly appreciate it if you could take a moment to leave us a review on the plugin repository. Your feedback and suggestions will help us make TrackShip even better and more useful for you and other e-commerce merchants. Thank you for your support!</p>
+			<p>	Eran Shor, founder & CEO</p>
+
+			<a class="button button-primary" href="<?php echo esc_url($url); ?>" >Yes, let's add a review</a>
+			<a class="button" style="margin: 0 10px;" href="<?php echo esc_url($dismissable_url); ?>" >No thanks</a>
+		</div>
+		<?php
+	}
 }

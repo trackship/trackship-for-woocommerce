@@ -45,8 +45,13 @@ class WC_TrackShip_Front {
 		add_action( 'wp_ajax_get_tracking_info', array( $this, 'get_tracking_info_fun') );
 		
 		add_action( 'plugins_loaded', array( $this, 'on_plugin_loaded' ) );
+		add_action( 'plugins_loaded', array( $this, 'on_plugin_loaded2' ), 12 );
 		
 		add_action( 'woocommerce_view_order', array( $this, 'show_tracking_page_widget' ), 5, 1 );
+
+		if ( !class_exists('Ast_Pro') ) {
+			add_filter( 'tracking_widget_product_array', array( $this, 'tracking_widget_product_array_callback' ), 10, 5 );
+		}
 
 		//save optin optout butoon 
 		add_action( 'wp_ajax_save_unsunscribe_email_notifications_data', array( $this, 'unsubscribe_emails_save_callback') );
@@ -72,6 +77,25 @@ class WC_TrackShip_Front {
 			
 			// View Order Page.
 			add_action( 'woocommerce_email_before_order_table', array( $this, 'wc_shipment_tracking_email_display' ), 0, 4 );
+		}
+
+	}
+	
+	public function on_plugin_loaded2() {
+		if ( trackship_for_woocommerce()->is_active_yith_order_tracking() && !function_exists( 'ast_pro' ) ) {
+			global $YWOT_Instance;
+			// View Order Page.
+			remove_action( 'woocommerce_order_items_table', array( $YWOT_Instance, 'add_order_shipping_details' ) );
+			remove_action( 'woocommerce_order_details_after_order_table_items', array( $YWOT_Instance, 'add_order_shipping_details' ) );
+			remove_action( 'woocommerce_order_details_after_order_table', array( $YWOT_Instance, 'add_order_shipping_details' ) );
+	
+			// email hook for Yith order tracking.
+			if ( class_exists('YITH_WooCommerce_Order_Tracking_Premium') ) {
+				remove_action( 'woocommerce_email_before_order_table', array( $YWOT_Instance, 'add_email_shipping_details' ), 10, 4 );
+				remove_action( 'woocommerce_email_after_order_table', array( $YWOT_Instance, 'add_email_shipping_details' ), 10, 4 );
+			}
+			// View Order Page.
+			add_action( 'woocommerce_email_before_order_table', array( $this, 'wc_shipment_tracking_email_display' ), 10, 4 );
 		}
 	}
 	
@@ -160,8 +184,8 @@ class WC_TrackShip_Front {
 		wp_register_style( 'front_style', trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/front.css', array(), trackship_for_woocommerce()->version );		
 		
 		$action = isset( $_REQUEST['action'] ) ? sanitize_text_field( $_REQUEST['action'] ) : '';
-
-		if ( 'preview_tracking_page' == $action || is_wc_endpoint_url( 'order-received' ) || is_wc_endpoint_url( 'view-order' ) ) {
+		// echo '<pre>';print_r($_REQUEST);echo '</pre>';
+		if ( in_array( $action, array( 'preview_tracking_page', 'tracking-form-preview' ) ) || is_wc_endpoint_url( 'order-received' ) || is_wc_endpoint_url( 'view-order' ) ) {
 			wp_enqueue_style( 'front_style' );
 			wp_enqueue_script( 'front-js' );
 		}
@@ -177,9 +201,7 @@ class WC_TrackShip_Front {
 		wp_enqueue_script( 'jquery-blockui' );
 		wp_enqueue_script( 'front-js' );	
 		
-		$wc_ast_api_key = get_option('wc_ast_api_key');	
-		
-		if ( !$wc_ast_api_key ) { ?>
+		if ( ! is_trackship_connected() ) { ?>
 			<p><a href="https://trackship.com/" target="blank">TrackShip</a> is not active.</p>
 			<?php
 			return;
@@ -191,20 +213,20 @@ class WC_TrackShip_Front {
 			$order = wc_get_order( $order_id );
 			
 			if ( empty( $order ) ) {
-				$error = new WP_Error( 'ts4wc', __( 'Invalid order', 'my_textdomain' ) );
+				$error = new WP_Error( 'ts4wc', __( 'Unable to locate the order.', 'trackship-for-woocommerce' ) );
 			} else {
 				
 				$order_key = $order->get_order_key();
 			
 				if ( $order_key != $_GET['order_key'] ) {
-					$error = new WP_Error( 'ts4wc', __( 'Invalid order key', 'my_textdomain' ) );
+					$error = new WP_Error( 'ts4wc', __( 'Unable to locate the order. or Invalid order key', 'trackship-for-woocommerce' ) );
 				}
 				
 			}
 		}
 
 		if ( isset( $_GET['tracking'] ) ) {
-
+			$_GET['tracking'];
 			global $wpdb;
 			$shipment_table = $wpdb->prefix . 'trackship_shipment';
 
@@ -212,7 +234,7 @@ class WC_TrackShip_Front {
 			$order_id = $wpdb->get_var( $wpdb->prepare( "SELECT order_id FROM $shipment_table WHERE tracking_number = %s", $tracking_number ) );
 			$order = wc_get_order( $order_id );
 			if ( empty( $order ) ) {
-				$error = new WP_Error( 'ts4wc', __( 'Invalid Tracking number', 'my_textdomain' ) );
+				$error = new WP_Error( 'ts4wc', __( 'Unable to locate the order.', 'trackship-for-woocommerce' ) );
 			}
 		}
 	
@@ -252,8 +274,7 @@ class WC_TrackShip_Front {
 			wp_send_json( array('success' => 'false', 'message' => __( 'Security verification failed, please refresh page and try again.', 'trackship-for-woocommerce' ) ) );
 		}
 
-		$wc_ast_api_key = get_option('wc_ast_api_key');	
-		if ( !$wc_ast_api_key ) {
+		if ( ! is_trackship_connected() ) {
 			return;
 		}
 		
@@ -275,7 +296,7 @@ class WC_TrackShip_Front {
 			ob_start();		
 			$this->track_form_template();
 			$form = ob_get_clean();
-			echo json_encode( array('success' => 'false', 'message' => __( 'Order not found.', 'trackship-for-woocommerce' ), 'html' => $form ));
+			echo json_encode( array('success' => 'false', 'message' => __( 'Unable to locate the order.', 'trackship-for-woocommerce' ), 'html' => $form ));
 			die();	
 		}
 		
@@ -285,7 +306,7 @@ class WC_TrackShip_Front {
 				ob_start();		
 				$this->track_form_template();
 				$form = ob_get_clean();	
-				echo json_encode( array('success' => 'false', 'message' => __( 'Order not found.', 'trackship-for-woocommerce' ), 'html' => $form ));
+				echo json_encode( array('success' => 'false', 'message' => __( 'Unable to locate the order.', 'trackship-for-woocommerce' ), 'html' => $form ));
 				die();	
 			}
 		}
@@ -308,6 +329,32 @@ class WC_TrackShip_Front {
 	}
 	
 	/*
+	* retuern Tracking form preview
+	*/
+	public function track_form_preview() {
+		$action = isset( $_REQUEST[ 'action' ] ) ? sanitize_text_field( $_REQUEST[ 'action'] ) : '';
+		
+		if ( 'tracking-form-preview' != $action ) {
+			return;
+		}
+		wp_head();
+		
+		show_admin_bar( false );
+		?>
+		<style>
+		html {
+			background: #f7f7f7;
+			margin-top: 30px !important;
+		}
+		body { background: #f7f7f7; }
+		</style>
+		<?php
+		$this->track_form_template();
+		wp_footer();
+		die();
+	}
+
+	/*
 	* retuern Tracking form HTML
 	*/
 	public function track_form_template() {
@@ -328,10 +375,10 @@ class WC_TrackShip_Front {
 						<span class="wc_order_id">
 							<a href="<?php echo esc_url( $order->get_view_order_url() ); ?>" target="_blank">#<?php echo $order_id; ?></a>
 						</span>
-						<div class="shipment_heading">Order Processing</div>	
+						<div class="shipment_heading"><?php esc_html_e( 'Order Processing', 'trackship-for-woocommerce' ); ?></div>	
 					</div>
-					<span>Your order is being processed, the tracking details will be available once it's Shipped.</span>
-					<span>Please try again after you receive the shipping confirmation email.</span>
+					<span><?php esc_html_e( "Your order is being processed, the tracking details will be available once it's Shipped.", 'trackship-for-woocommerce' ); ?></span>
+					<span><?php esc_html_e( 'Please try again after you receive the shipping confirmation email.', 'trackship-for-woocommerce' ); ?></span>
 				</div>
 			</div>
 		</div>
@@ -366,6 +413,7 @@ class WC_TrackShip_Front {
 		$font_color = get_option('wc_ast_select_font_color', $tracking_page_defaults->defaults['wc_ast_select_font_color'] );
 		$hide_tracking_events = get_option('wc_ast_hide_tracking_events', $tracking_page_defaults->defaults['wc_ast_hide_tracking_events'] );
 		$tracking_page_layout = get_option('wc_ast_select_tracking_page_layout', $tracking_page_defaults->defaults['wc_ast_select_tracking_page_layout'] );
+		$border_radius = get_option('wc_ast_select_border_radius', $tracking_page_defaults->defaults['wc_ast_select_border_radius'] );
 		$remove_trackship_branding =  get_option('wc_ast_remove_trackship_branding', $tracking_page_defaults->defaults['wc_ast_remove_trackship_branding'] );
 		?>
 		<style>
@@ -373,10 +421,22 @@ class WC_TrackShip_Front {
 				.col.tracking-detail .tracking_number_wrap a, .tracking_event_tab_view .view_more_class {
 					color: <?php echo esc_html( $link_color ); ?>;
 				}
-			<?php } ?>		
+				span.copy_tracking_page.trackship-tip svg {
+					fill: <?php echo esc_html( $link_color ); ?>;
+				}
+				div.shipment-header .ts_from_input:checked + label {
+					color: <?php echo esc_html( $link_color ); ?> !important;
+					border-bottom: 3px solid <?php echo esc_html( $link_color ); ?>;
+				}
+			<?php } ?>
+			<?php if ( $border_radius ) { ?>
+				.col.tracking-detail {
+					border-radius: <?php echo esc_html( $border_radius ); ?>px;
+				}
+			<?php } ?>
 			<?php if ( $border_color ) { ?>
-				body .col.tracking-detail, .shipment_heading{
-					border: 1px solid <?php echo esc_html( $border_color ); ?>;
+				body .col.tracking-detail, .shipment_heading, .shipment-header {
+					border: 1px solid <?php echo esc_html( $border_color ); ?> !important;
 				}
 				body .col.tracking-detail .shipment_heading{
 					border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
@@ -397,7 +457,7 @@ class WC_TrackShip_Front {
 				}
 			<?php } ?>
 			<?php if ( $font_color ) { ?>
-				body .tracking-detail .shipment-content, body .tracking-detail .shipment-content h4 {
+				body .tracking-detail .shipment-content, body .tracking-detail .shipment-content h4, .shipment-header label.ts_from_label {
 					color: <?php echo esc_html( $font_color ); ?>;
 				}				
 			<?php } ?>
@@ -407,10 +467,26 @@ class WC_TrackShip_Front {
 			<?php } ?>
 		</style>
 		<?php
-		
 		$num = 1;
 		$total_trackings = count( $tracking_items );
-		
+			if ( $total_trackings > 1 ) {
+				$i = 1;
+				$post_tracking = isset( $_POST['tnumber'] ) ? $_POST['tnumber'] : '' ;
+				$post_tracking = isset( $_POST['order_tracking_number'] ) ? $_POST['order_tracking_number'] : $post_tracking;
+				$url_tracking = isset( $_GET['tracking'] ) ? $_GET['tracking'] : $post_tracking;
+				$url_tracking = str_replace( ' ', '', $url_tracking );
+				echo '<div class="shipment-header">';
+					foreach ( $tracking_items as $key => $item ) {
+						$tracking_number = $item['tracking_number'];
+						$class = str_replace( ' ', '', $tracking_number );
+						?>
+						<input id="<?php echo 'shipment_' . $i ?>" type="radio" name="ts_shipments" class="ts_from_input" <?php echo $class == $url_tracking ? 'checked' : ''; ?> >
+						<label for="<?php echo 'shipment_' . $i ?>" class="ts_from_label"><?php printf( esc_html__( 'Shipment %1$s', 'trackship-for-woocommerce' ), esc_html($i) ); ?></label>
+						<?php
+						$i++;
+					}
+				echo '</div>';
+			}
 		foreach ( $tracking_items as $key => $item ) {
 			$tracking_number = $item['tracking_number'];
 			$tracking_provider = $item['tracking_provider'];
@@ -471,18 +547,9 @@ class WC_TrackShip_Front {
 			}	
 			
 			$order = wc_get_order( $order_id );
-			
 			if ( isset( $tracker->ep_status ) ) {
 				?>
-				<div class="shipment-header">
-					<?php if ( $total_trackings > 1 ) { ?>
-						<p class="shipment_heading">
-						<?php /* translators: %s: search for a num and todal tracking */ ?>
-						<?php printf( esc_html__( 'Shipment %1$s / %2$s', 'trackship-for-woocommerce' ), esc_html($num), esc_html($total_trackings) ); ?>
-						</p>
-					<?php } ?>
-				</div>
-				<div class="tracking-detail col <?php echo !in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking-layout-2' : ''; ?> ">
+				<div class="tracking-detail col <?php echo !in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking-layout-2' : ''; ?><?php echo ' shipment_' . $num; ?>" <?php echo 1 == $total_trackings ? 'style="display:block;"' : ''; ?>>
 					<div class="shipment-content">
 						<?php
 						
@@ -490,17 +557,8 @@ class WC_TrackShip_Front {
 						
 						esc_html_e( $this->tracking_progress_bar( $tracker ) );
 						
-						if ( empty( $trackind_detail_by_status_rev ) ) {
-							
-							$pending_message = __( 'Tracking information is not available, please try again later.', 'trackship-for-woocommerce' );
-							?>
-							<p class="pending_message"><?php esc_html_e( apply_filters( 'trackship_pending_status_message', $pending_message, $tracker->ep_status ) ); ?></p>
-							<?php
-						}
+						esc_html_e( $this->layout1_tracking_details( $trackind_detail_by_status_rev, $tracking_details_by_date, $trackind_destination_detail_by_status_rev, $tracking_destination_details_by_date, $tracker , $order_id, $tracking_provider, $tracking_number ) );
 						
-						if ( !empty( $trackind_detail_by_status_rev ) ) {
-							esc_html_e( $this->layout1_tracking_details( $trackind_detail_by_status_rev, $tracking_details_by_date, $trackind_destination_detail_by_status_rev, $tracking_destination_details_by_date, $tracker , $order_id, $tracking_provider, $tracking_number ) );
-						} 
 						?>
 					</div>
 					<div class="trackship_branding">
@@ -510,7 +568,7 @@ class WC_TrackShip_Front {
 						<style> .trackship_branding{display:block !important;} </style>
 					<?php } ?>
 				</div>
-				<?php
+				<?php 
 			}
 			$num++;
 		}
@@ -525,7 +583,7 @@ class WC_TrackShip_Front {
 		$hide_last_mile = get_option( 'wc_ast_hide_list_mile_tracking', trackship_admin_customizer()->defaults['wc_ast_hide_list_mile_tracking'] );
 		$provider_name = isset( $item[ 'formatted_tracking_provider' ] ) && !empty( $item[ 'formatted_tracking_provider' ] ) ? $item[ 'formatted_tracking_provider' ] : $item[ 'tracking_provider' ] ;
 		$provider_image = isset( $item[ 'tracking_provider_image' ] ) ? $item[ 'tracking_provider_image' ] : false ;
-		$formatted_tracking_link = isset( $item[ 'formatted_tracking_link' ] ) ? $item[ 'formatted_tracking_link' ] : false ;
+		$tracking_link = isset( $item[ 'formatted_tracking_link' ] )? $item[ 'formatted_tracking_link' ] : false;
 		$wc_ast_link_to_shipping_provider = get_option( 'wc_ast_link_to_shipping_provider' );
 		
 		include 'views/front/tracking_page_header.php';	
@@ -655,6 +713,102 @@ class WC_TrackShip_Front {
 		<?php
 	}
 
+	public function tracking_widget_product_array_callback ( $products, $order_id, $tracker, $tracking_provider, $tracking_number ) {
+		
+		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
+		$order = wc_get_order( $order_id );		
+		$items = $order->get_items();
+		$items_count = count($items);
+
+		foreach ( $items as $item ) {																
+			
+			$qty = $item->get_quantity();
+			
+			if ( 1 == $items_count && 1 == $qty ) {
+				return $products;
+			}
+		}	
+		
+		$show = $this->check_if_tpi_order( $tracking_items, $order );
+		
+		if ( !$show ) {
+			return $products;
+		}
+		
+		$tpi_products = array();
+
+		foreach ( $tracking_items as $tracking_item ) {
+			if ( $tracking_item['tracking_number'] == $tracking_number ) {
+				
+				if ( !isset( $tracking_item['products_list'] ) ) {
+					return $products;
+				}
+				
+				if ( empty( $tracking_item['products_list'] ) ) {
+					return $products; 
+				}
+
+				foreach ( (array) $tracking_item[ 'products_list' ] as $product_list ) {						
+					if ( $product_list->product ) {							
+						$product = wc_get_product( $product_list->product );							
+						if ( $product ) {
+							$tpi_products[$product_list->product] = array(
+								'product_id' => $product_list->product,
+								'product_name' => $product->get_name(),
+								'product_qty' => $product_list->qty,									
+							);
+						}			
+					}
+				}
+			}
+		}
+		return $tpi_products;
+	}
+
+	/**	 
+	 * Function for check if order is Tracking Per Item
+	 */
+	public function check_if_tpi_order( $tracking_items, $order ) {
+		
+		$show_products = array();
+		$product_list = array();
+		$show = false;
+		$items = $order->get_items();		
+		
+		foreach ( $items as $item_id => $item ) {	
+			
+			$product_id = $item->get_variation_id() ? $item->get_variation_id() : $item->get_product_id();			
+			
+			$products[] = (object) array (
+				'product' => $product_id,
+				'item_id' => $item_id,	
+				'qty' => $item->get_quantity(),
+			);					
+		}				
+
+		foreach ( $tracking_items as $t_item ) {			
+			if ( isset( $t_item[ 'products_list' ] ) && !empty( $t_item[ 'products_list' ] ) ) {
+				$product_list[ $t_item[ 'tracking_id' ] ] = $t_item[ 'products_list' ];								
+
+				$array_check = ( $product_list[ $t_item[ 'tracking_id' ] ] == $products );
+				
+				if ( empty( $t_item[ 'products_list' ] ) || 1 == $array_check ) {
+					$show_products[$t_item['tracking_id']] = 0;
+				} else {
+					$show_products[$t_item['tracking_id']] = 1;
+				} 
+			}
+		}			
+		
+		foreach ( $show_products as $key => $value ) {
+			if ( 1 == $value ) {
+				$show = true;
+				break;
+			}
+		}
+		return $show;
+	}
+
 	public function get_notifications_option ( $order_id ) {
 		if ( get_option( 'enable_email_widget' ) ) {
 			$order = wc_get_order( $order_id );
@@ -714,6 +868,7 @@ class WC_TrackShip_Front {
 		$hide_tracking_provider_image = get_option( 'wc_ast_hide_tracking_provider_image' );
 		$remove_trackship_branding =  get_option( 'wc_ast_remove_trackship_branding' );
 		$font_color = get_option( 'wc_ast_select_font_color', $tracking_page_defaults->defaults['wc_ast_select_font_color'] );
+		$border_radius = get_option('wc_ast_select_border_radius', $tracking_page_defaults->defaults['wc_ast_select_border_radius'] );
 		$background_color = get_option( 'wc_ast_select_bg_color' );
 		$hide_from_to = get_option('wc_ast_hide_from_to', $tracking_page_defaults->defaults['wc_ast_hide_from_to'] );
 		$hide_last_mile = get_option( 'wc_ast_hide_list_mile_tracking', $tracking_page_defaults->defaults['wc_ast_hide_list_mile_tracking'] );

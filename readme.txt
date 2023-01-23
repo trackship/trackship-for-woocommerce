@@ -4,60 +4,50 @@ Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 5.3
 Tested up to: 6.1.1
 Requires PHP: 7.2
-Stable tag: 1.4.8
+Stable tag: 1.5.0
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-TrackShip seamlessly integrates with WooCommerce and into your fulfillment workflow, auto-tracks your orders with 300+ shipping providers and brings a branded tracking experience to your WooCommerce store, integrates into your fulfillment workflow, automates the post-shipping workflow and takes care of all the touchpoints with your customers after shipping.
+TrackShip is a shipment tracking and post-purchase experience platform that helps eCommerce businesses take control of their post-shipping workflow and to provide an exceptional shipping journey experience to their customers, helping WooCommerce businesses to fulfill their promise and gain loyalty and trust.
 
-* Automate your Post-Shipping workflow
-* Reduce time spent on customer service
-* Further engage customers after shipping
-* Provide a superior post-purchase customer experience
-* Increase customer satisfaction and repeat purchases
+TrackShip auto-tracks shipments with 700+ shipping carriers, it's easy to set up and it seamlessly integrates into the WooCommerce workflows and most of its features are managed inside the WordPress admin. 
 
-[Start for Free, 50 free shipment trackers / month >](https://trackship.com/) 
+TrackShip is a great solution for e-commerce merchants looking to improve their shipping process and customer experience, which is crucial for any eCommerce business to grow and succeed in the long run.
+
+[Start for Free, 50 free shipment trackers / month](https://trackship.com/) 
 
 https://www.youtube.com/watch?v=PhnqDorKN_c
 
+= Why use TrackShip? = 
+TrackShip is a shipment tracking and post-purchase experience platform that helps e-commerce businesses take control of their post-shipping workflow.
 = Automatic Shipment Tracking = 
-TrackShip auto-tracks your orders  from shipping to delivery with 300+ shipping providers and carriers around the world. After you fulfill an order, TrackShip auto-tracks the shipments with the shipping providers APIs and updates your store whenever there is an update to the shipment status.
-= Quick and Easy Setup =
-Set up TrackShip on your WooCommerce store in just a few minutes, no developer needed. Install the trackShip for WooCommerce plugin, connect your store, set up your preferences and TrackShip will automatically track your fulfilled orders. 
-= Built For Woocommerce =
-TrackShip seamlessly integrates with WooCommrce and works behind the scenes with zero performance impact on your site. Once you fulfill an order, TrackShip auto-tracks the shipments with the shipping providers APIs and updates your store whenever there is an update to the shipment status.
-= Give faster, better customer service =
-Don’t waste time jumping between different dashboards anc carrier websites to keep track of your orders. Monitor your shipments inside the WooCommerce admin. The shipments dashboard displays the most updated shipment status for each order, so you and your staff can quickly resolve any shipping inquiries.
-= Proactive Customer Service =
-Increase customer satisfaction with proactive customer service. Get notified by email whenever one of your active shipments is late and take action to avoid frustrated customers, you can set the email notification to trigger as it happens or as a daily digest. 
-= Post-Shipping Automation =
-TrackShip updates your orders with any shipment status event and changes the order status to Delivered once the shipments are delivered to your customers. This also signals to you and your staff that the order is delivered and allows you to set up automated marketing campaigns based on the delivery date. 
-= A Branded Tracking Page on Your Store =
-Keep your customers close; instead of sending them to the carrier’s tracking page, TrackShip directs your customers to a branded tracking page on your store. Customize the tracking widget to fit your branding and add shipping information, upsell and more and engage your customers after shipping.
-= Keep Your Customers Happy and Informed =
-Your customers are binge watching their tracking status. Give them the constant, detailed updates they’re looking for! Send automatic Email and SMS updates based on the shipment status, e.g. in transit, out for delivery, delivered or has an exception...
-= Analyze Shipping & Delivery Performance =
-Analyze shipping and delivery performance, with tracking data straight from your store's dashboard. Use the shipping and delivery statistics generated from your tracking data, to report on progress and to identify any areas for improvement.
+TrackShip auto-tracks your orders from shipping to delivery with 700+ shipping providers and carriers around the world. After you fulfill an order, TrackShip auto-tracks the shipments with the shipping providers APIs and updates your store whenever there is an update to the shipment status.
+= Take control of the post-purchase workflow = 
+TrackShip allows merchants to take control of their post-shipping operations, further engage customers after shipping and not rely on 3rd parties to control the customer experience post-purchase.
+= Improves customer experience =
+TrackShip provides an easy way for customers to track their orders and receive real-time updates on their shipment status.
+= Increases customer loyalty =
+By providing customers with a seamless tracking experience, TrackShip helps to increase customer loyalty and repeat business.
+= Reduce time spent on customer service =
+TrackShip automates the tracking process, allowing merchants to spend less time on manual tracking and more time on other important aspects of their business.
+= Provides valuable insights =
+TrackShip provides merchants with valuable shipping & delivery insights such as delivery times and carrier performance data that can help them optimize their shipping strategy and improve their bottom line.
+= Cost-effective =
+TrackShip is a cost-effective solution for merchants looking to improve their shipping process and customer experience without a large investment in time or money.
 
 == What's included? ==
-* Shipments Dashboard
-* Filter orders by shipment status
-* Tracking Page on your store
-* Shipment Status & Delivery Notifications
-* Tracking widget on emails 
-* Fully Customizable Email Templates
-* Custom Order Status “Delivered”
-* Post-Shipping order status automation
-* Shipment status and Est. delivery displays on the orders admins
-* White Label Tracking Page widget
-* View order page display (tracking page widget)
-* Tracking Analytics widget
+* Shipments dashboard
+* Tracking page on your store
+* Shipment status & delivery notifications (email/SMS)
+* Delivery confirmation (custom order status “Delivered”)
+* Shipping & delivery analytics 
 
 == How does it work? ==
 1. Signup for a [TrackShip](https://trackship.com/) account 
-2. Connect your WooCommerce stores with TrackShip API
-3. Setup TrackShip on your store, enable the tracking page and shipment status & Delivery updates.
-4. Seat back and relax, TrackShip will Auto-track your Fulfilled orders and proactively update your orders whenever there is an update in the shipment tracking status, until the shipments are delivered to your customers.  
+2. Connect your WooCommerce store with TrackShip
+3. Setup TrackShip on your store, enable a tracking page and shipment status & Delivery notifications by email and SMS.
+4. TrackShip will auto-track your shipped orders and proactively update your orders whenever there is an update in the shipment status until the shipments are delivered to your customers.
+
 == Documentation ==
 For more information, check out our [Documentation](https://docs.trackship.com/docs/trackship-for-woocommerce/)
 
@@ -65,7 +55,7 @@ For more information, check out our [Documentation](https://docs.trackship.com/d
 
 * [TrackShip](https://trackship.com/) account
 * WooCommerce REST API enabled
-* SSL Certificate - you must have secured site (HTTPS) to connect TrackShip to your store
+* SSL Certificate - you must have a secured site (HTTPS) to connect TrackShip to your store
 * Pretty permalinks - navigate to Settings > Permalinks and make sure that the permalink structure is based on Post Name (TrackShip can’t work with the Plain option)
 * Shipment Tracking Pugin (see compatibility)
 
@@ -76,11 +66,13 @@ TrackShip will track orders when you add tracking numbers using one of the follo
 * [Advanced Shipment Tracking (AST)](https://wordpress.org/plugins/woo-advanced-shipment-tracking/)
 * [Advanced Shipment Tracking Pro (AST PRO)](https://www.zorem.com/products/woocommerce-advanced-shipment-tracking/)
 * [WooCommerce Shipment Tracking](https://woocommerce.com/products/shipment-tracking/?aff=4780)
+* [Orders Tracking for WooCommerce by VillaTheme](https://docs.trackship.com/docs/trackship-for-woocommerce/compatibility/orders-tracking-for-woocommerce/)
+* [YITH WooCommerce Order & Shipment Tracking by Yith](https://docs.trackship.com/docs/trackship-for-woocommerce/compatibility/yith-woocommerce-order-shipment-tracking/)
 
-integration with other WooCommerce plugins:
+= Compatibility with other WooCommerce plugins: =
 
 * [SMS for WooCommerce](https://docs.trackship.com/docs/trackship-for-woocommerce/compatibility/sms-for-woocommerce/) - Send automatic SMS updates for shipment status & delivery via Twilio, Nexmo or ClickSend
-* [Checkout for WooCommerce](https://docs.trackship.com/docs/trackship-for-woocommerce/compatibility/checkoutwc/) - Add Tracking Page widget to the Order received page when its set to be the view order page
+* [Checkout for WooCommerce (CheckoutWC)](https://docs.trackship.com/docs/trackship-for-woocommerce/compatibility/checkoutwc/) - Add Tracking Page widget to the Order received page when its set to be the view order page
 * [AutomateWoo](https://docs.trackship.com/docs/trackship-for-woocommerce/compatibility/automatewoo/) - use the "Delivered" custom order status to trigger marketing automation based on the order delivery date.
 
 == Documentation ==
@@ -92,22 +84,22 @@ A shipment tracks one tracking number from the time it's shipped until it has be
 = What if I have multiple stores?
 You can add each one to TrackShip and you'll pay one price based on the combined monthly order volume of all your stores. One subscription for all your WooCommerce and Shopify stores.
 = Will TrackShip affect my site’s performance?
-Not at all. When you fulfill an order, the shipping information is sent to TrackShip and it does all the heavy-lifting for you, we check the status of the shipment with the shipping provider every few hours and we update your store whenever there is an update in the status, and it does not impacts your load time in any way.
+Not at all. When you fulfill an order, the shipping information is sent to TrackShip and it does all the heavy-lifting for you, we check the status of the shipment with the shipping provider every few hours and we update your store whenever there is an update in the status, and it does not impact your load time in any way.
 = Do I need a developer to connect TrackShip to my store?
 Absolutely not! You can easily connect your store with TrackShip in a few simple steps and start enjoying a branded tracking experience in less than 10 minutes..
 = I connected my store but the shipment status is not showing for my orders
-The trigger to auto-track shipments by TrackShip is to add tracking to order and change the order status from Processing to Shipped (Completed). TrackShip will not automatically track orders that were Shipped before you connected your store.
+The trigger to auto-track shipments by TrackShip is to add tracking to the order and change the order status from Processing to Shipped (Completed). TrackShip will not automatically track orders that were Shipped before you connected your store.
 You can trigger these orders to TrackShip by using the [Get Shipment Status](https://docs.trackship.com/docs/trackship-for-woocommerce/manage-orders/#get-shipment-status) option on the WooCommerce orders admin in the bulk actions menu.
-= My store is connected but many of my orders still show “Connection error” shipment status
+= My store is connected but many of my orders still show a “Connection error” shipment status
 These messages are from before you connected your store, TrackShip auto-track shipments when you change the order status from Processing to Shipped (Completed). 
 TrackShip will not automatically track orders that were shipped when you had a connection issue.
 You can trigger these orders to TrackShip by using the [Get Shipment Status](https://docs.trackship.com/docs/trackship-for-woocommerce/manage-orders/#get-shipment-status) option on the WooCommerce orders admin in the bulk actions menu.
 = How often do you check for tracking status updates?
 TrackShip checks the shipment status with the shipping providers APIs every 2-4 hours. We check for updates more often once the package is in the "unknown" status, until the first tracking event is received from the providers API and when the shipment is out for delivery.
 = Which shipping providers (carriers) do you support?
-TrackShip supports 300+ [shipping providers](https://trackship.com/shipping-providers/) around the globe ,if you can find your carrier on our supported shipping providers list, you can suggest a shipping provider [here](https://feedback.zorem.com/trackship)
+TrackShip supports 700+ [shipping providers](https://trackship.com/shipping-providers/) around the globe ,if you can find your carrier on our supported shipping providers list, you can suggest a shipping provider [here](https://feedback.zorem.com/trackship)
 = Do you show the shipment status for orders on WooCommerce admin?
-Yes, TrackShip adds a Shipment Status column on your orders admin and displays the shipment tracking status, last update date and the Est Delivery Date for every order that you shipped after connecting your store.
+Yes, TrackShip adds a Shipment Status column on your orders admin and displays the shipment tracking status, last update date, and the Est Delivery Date for every order that you shipped after connecting your store.
 
 = If a shipment Tracker returns no result, does it count?
 It doesn’t. When a shipment tracker is not supported by TrackShip or returned Unknown the Shipment tracker isn’t counted in your trackers balance.
@@ -119,14 +111,25 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended).
 
 == Changelog ==
+= 1.5.0 - 2022-01-23 =
+* Dev - Compatibility added with Yith order tracking plugin
+* Dev - Compatibility added with WooCommerce Order Tracking plugin
+* Enhancement - Tracking form customizer added in TrackShip customizer
+* Dev - Shipment table improved order is permanently deleted.
+* Dev - TrackShip's menu position changed
+* Dev - Shipment length cron improved
+* Enhancement - Debug log settings added for shipment status change
+* Dev - filter removed "remove_order_id_section", option added for hide order detail tab in the Tracking Form Customizer
+* Dev - Tested with WC 7.3.0
+
 = 1.4.8 - 2022-12-05 =
 * Dev - Design improved for the Tracking page.
-* Fix - Fix the issue of the delievred Shipment status email
+* Fix - Fix the issue of the delivered Shipment status email
 * Fix - Fix the issue of the est delivery date in the shipment status SMS 
 
 = 1.4.7.1 - 2022-11-29 =
 * Fix - Fatal error: Uncaught ArgumentCountError: Too few arguments to function for filter woocommerce_email_from_name and woocommerce_email_from_address
-* Fix - Fatal error: HPOS compatibility code twick
+* Fix - Fatal error: HPOS compatibility code tweak
 
 = 1.4.7 - 2022-11-24 =
 * Fix - Fix the issue in the TrackShip Customizer for deleted order
@@ -150,12 +153,12 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 * Fix - Fix the variation product image issue in Tracking Page
 * Dev - Get shipment status notice on all pages of TrackShip
 * Enhancement - Integration with Integrately added
-* Dev - Filter( exclude_to_send_data_for_provider ) added for do not send Trcking data to TrackShip for specific provider
+* Dev - Filter( exclude_to_send_data_for_provider ) added for do not send Trcking data to TrackShip for a specific provider
 * Dev - Compatibility added with AutomateWoo plugin
 * Dev - Tested with WC 6.9.3
 
 = 1.4.4 - 2022-08-22 =
-* Fix - Fix the fatal error of str_contains function
+* Fix - Fix the fatal error of the str_contains function
 * Fix - Fix Bulk send Shipments from Tools
 * Dev - Documentation URL updated
 * Dev - Tested with WC 6.8.1
@@ -179,14 +182,14 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 * Dev - tab added in Tracking Page Shipment progress, Items in this shipment, Notifications.
 * Dev - Unsubscribe shipment status email option added in Shipment status email and on Tracking Page
 * Dev - compatibility added for yith woocommerce badge management plugin
-* Enhancement - for USPS if shipment Delivered, Parcel Locker in this case we will show Delivered, Parcel Locker.
+* Enhancement - for USPS if the shipment is Delivered, Parcel Locker in this case we will show Delivered, Parcel Locker.
 * Enhancement - Mockup order preview option added in TrackShip Shipment status email Customizer.
-* Enhancement - Late Shipement email logs added in TrackShip logs.
+* Enhancement - Late Shipment email logs added in TrackShip logs.
 
 = 1.4.0 - 2022-05-17 =
 * Enhancement - Analytics menu name changed under WooCommerce Analytics "Shipping & Delivery"
 * Enhancement - Settings design improved
-* Enhancement - Notifications tab desgin improved
+* Enhancement - Notifications tab design improved
 * Enhancement - TrackShip Customizer design improved
 * Dev - compatibility added with Booster for WooCommerce Pro plugin
 * Dev - Shipment status emails logs and SMS logs improved
@@ -197,9 +200,9 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 
 = 1.3.6.1 - 2022-04-14 =
 * Enhancement - Design improved
-* Dev - compatibility im for Wp-lister-amazon plugin
+* Dev - compatibility added for Wp-lister-amazon plugin
 * Fix - fixed issue of HTML content in Shipment status email content
-* Fix - fixed issue of save customizer data in Firefox browser
+* Fix - fixed issue of saving customizer data in the Firefox browser
 * Fix - fixed issue error of tracking per item Shipment status email when product is deleted
 * Fix - fixed issue of WC_mail class.
 * Fix - repeating settings option of SMS for WooCommerce.
@@ -208,9 +211,9 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 * Dev - Tested with WP 5.9.3
 
 = 1.3.5 - 2022-03-24 =
-* Dev - Improved compatibility with WPML for translations of Shipment status email.
+* Dev - Improved compatibility with WPML for translations of Shipment status emails.
 * Dev - Settings added for enable/disable shipment status notification for that order is created by amazon
-* Fix - issue fix when store is not connected
+* Fix - issue fix when the store is not connected
 * Dev - In shipment statuses email shipped product label option and Shipping address option added in Trackship Customizer
 * Dev - Tested with WC 6.3.1
 * Dev - Tested with WP 5.9.2
@@ -219,12 +222,12 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 * Enhancement - Progress bar design updated.
 * Enhancement - TrackShip customizer design updated.
 * Dev - in Tracking Page link color added to Label Which color use in TrackShip customizer
-* Dev - Support added for alphnumeric sender id for ClickSend
-* Dev - discontinue to create log in WooCommerce log for Shipment status email
+* Dev - Support added for alphanumeric sender id for ClickSend
+* Dev - discontinue to create a log in WooCommerce log for Shipment status email
 * Dev - Logs and tools menu added under TrackShip menu
 * Enhancement - Email tab and SMS tab design updated
 * Enhancement - Tracking form design updated for TPI order
-* Enhancement - in Shipments if TrackShip chnge shipping provider for that tool-tip added
+* Enhancement - in Shipments if TrackShip change shipping provider for that tool-tip added
 * Fix - TrackShip customizer issues fixed
 * Dev - Tested with WC 6.3.0
 * Dev - Tested with WP 5.9.1
@@ -233,13 +236,13 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 * Fix - TrackShip customizer issues fixed
 
 = 1.3.2 - 2022-02-11 =
-* Dev - filter added for change the capability of TrackShip menu
+* Dev - filter added to change the capability of TrackShip menu
 * Dev - Tested with WC 6.2.0
 
 = 1.3.1 - 2022-02-07 =
-* New - Shipment status SMS and email log added in table
-* Enhancement - New Placeholders added in Shipment statsus SMS
-* Dev - TrackShip Shipment design improved and search bar desgin updated
+* New - Shipment status SMS and email log added in the table
+* Enhancement - New Placeholders added in Shipment status SMS
+* Dev - TrackShip Shipment design improved and search bar design updated
 * Enhancement - TrackShip customizer design updated
 * Enhancement - TrackShip icon updated in WordPress menu
 * Enhancement - Shipment status SMS design updated
@@ -247,12 +250,12 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 * Improvement - Tracking page design.
 
 = 1.3 - 2022-01-19 =
-* Enhancement - New desgin of Tracking widget and shipment email Customizer
+* Enhancement - New design of Tracking widget and shipment email Customizer
 * Enhancement - link color option added in Tracking Widget and Shipment email customizer
 * Enhancement - origin and destination country of shipment for option added in Tracking Widget customizer
 * Enhancement - Last mile tracking number option added in Tracking Widget customizer
-* Dev - show_est_delivery_date filter added for remove est delivery date from tracking widget and shipment status emails
-* Design - Improved the design of the shipment statsus column in Shipments.
+* Dev - show_est_delivery_date filter added to remove est delivery date from the tracking widget and shipment status emails
+* Design - Improved the design of the shipment status column in Shipments.
 * Improvement - in Late shipment email link updated of view all late shipment button
 * Dev - TrackShip menu moved before WooCommerce
 * Enhancement - Support, Docs, Review link added in plugin's page
@@ -265,17 +268,17 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 = 1.2.3 - 2021-12-16 =
 * Dev - sync Trackship provider button added in Map Shipping provider
 * Dev - Shipment status SMS code improved for Tracking per item
-* Dev - code improved for Shipment statsus email in email content for variable {est_delivery_date}
-* Fix - Fixed issue in delete tracking events
+* Dev - code improved for Shipment status email in email content for variable {est_delivery_date}
+* Fix - Fixed issue in deleting tracking events
 * Dev - Tested with WC 6.0
 
 = 1.2.2 - 2021-11-22 =
 * Dev - Tracking page footer branding link changed
-* Dev - Add `show_est_delivery_date` filter for remove Est delivery date from email.
-* Dev - Remove h1 tag from tracking page's shipment status.
-* Dev - Access given to show TrackShip Dashboard for free user
-* Dev - If Est delivery date is not available in that case in SMS {est_delivery_date} variable replace as N/A
-* Dev - Design update for store is disconnected
+* Dev - Add `show_est_delivery_date` filter to remove the Est delivery date from the email.
+* Dev - Remove the h1 tag from the tracking page's shipment status.
+* Dev - Access is given to show TrackShip Dashboard for a free user
+* Dev - If the Est delivery date is not available in that case in the SMS {est_delivery_date} variable replace as N/A
+* Dev - Design update for a store is disconnected
 * Fix - Fixed email widget customizer warning
 
 = 1.2.1 - 2021-11-09 =
@@ -291,16 +294,16 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 * Enhancement - TrackShip dashboard added in TrackShip menu
 * Enhancement - FullFillment Shipment moved into TrackShip menu
 * Enhancement - TrackShip Settings moved into TrackShip menu
-* Dev - option added in delivered SMS/email notifications when all shipment are delievred then send SMS/email notification
+* Dev - option added in delivered SMS/email notifications when all shipments are delivered then send SMS/email notification
 * Enhancement - Design updated for Tracking form
 * Enhancement - Design updated for Settings
 * Enhancement - More info popup improved
 * Enhancement - design improved with RTL
 * Enhancement - Filter by Shipping provider added in TrackShip Shipment
-* Fix - Fixed issue when SMS provider not selected and SMS notification is on for shipment status
+* Fix - Fixed issue when SMS provider is not selected and SMS notification is on for shipment status
 * Fix - Fixed design issue in delivered email in simple progress bar
-* Fix - Fixed html issue in tracking detail in tracking page
-* Dev - Order note updated when shipment status change
+* Fix - Fixed HTML issue in tracking detail on the tracking page
+* Dev - Order note updated when shipment status changes
 * Dev - Tested with WC 5.8.0
 * Dev - Tested with WP 5.8.1
 
@@ -335,12 +338,12 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 * Fix - Fixed issue for trackship pro user in TrackShip shipment and sms notifications
 
 = 1.1 - 2021-08-10 =
-* Enhancement - Trackship analytics added into the WordPres Analytics
+* Enhancement - Trackship analytics added to the WordPress Analytics
 * Enhancement - Design updated
-* Dev - Trackship settings added into the WooCommerce menu
+* Dev - Trackship settings added to the WooCommerce menu
 * Dev - {shipping_first} and {shipping_last} variable added in SMS notifications
 * Fix - fixed issue in delivered shipment status email content
-* Fix - improvement in late shipment email
+* Fix - improvement in the late shipment email
 
 = 1.0.8.1 - 2021-07-26 =
 * Fix - Fixed issue in shipment status SMS send
@@ -356,10 +359,10 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 * Dev - Tested with WP 5.8
 
 = 1.0.7 - 2021-07-02 =
-* Dev - remove analytics widget from dashboard
-* Enhancement - Design updated in Shop order page
+* Dev - remove the analytics widget from the dashboard
+* Enhancement - Design updated on the Shop order page
 * Dev - add popup for more info shipment status in shop order
-* Dev - add compatibility with Custom order number plugins in shipment email subject
+* Dev - add compatibility with Custom order number plugins in the shipment email subject
 * Dev - Translation updated
 
 = 1.0.6 - 2021-06-26 =
@@ -368,7 +371,7 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 = 1.0.5 - 2021-06-25 =
 * Enhancement - Design updated
 * Dev - Tracking widget email moved into tracking widget customizer
-* Dev - progress bar added in shipment email
+* Dev - progress bar added in the shipment email
 * Dev - option added for delete old tracking event
 * Dev - Analytics widget by dates (30 days, 7 days, Today)
 * Dev - Active shipment dashboard added.
@@ -379,23 +382,23 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 * Dev - hook added in shipment status email.
 * Dev - Improvement in Tracking page preview
 * Dev - Dashboard menu added in WP
-* Dev - Improvement in dashboard tab
-* Fix - Fixed issue in look when dark background in tracking widget
-* Enhancement - Design updated in shipment email
+* Dev - Improvement in the dashboard tab
+* Fix - Fixed issue in look when the dark background in tracking widget
+* Enhancement - Design updated in the shipment email
 * Dev - Improvement in shop order page and edit order page
 * Dev - Translations updated.
 * New - Map shipping provider functionality added.
 * Dev - Tested with WC 5.4.1
 
 = 1.0.3 =
-* Dev - Order note added for TrackShip, when tracking information sent to TrackShip and shipment status change 
+* Dev - Order note added for TrackShip, when tracking information is sent to TrackShip and shipment status change 
 * Improved UI/UX - Shipment Tracking Column on orders admin list
 * Improvement - TrackShip dashboard improved
 * Dev - add track link to Shipment Tracking Column on orders admin list
 * Dev - Improvement in tracking page popup.
 * Fix - Tracking Widget Customizer – Show Only Last Event (was showing 2 last events)
 * Fix - Shipment status filter issue solved and fixed when in settings close for shipment status filter
-* Fix - in AST when click on tab link changed
+* Fix - in AST when click on the tab link changed
 * Twick - Tracking Page Widget on thank you Page – Always show “last event” view.
 
 = 1.0.2 =
@@ -403,7 +406,8 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 
 = 1.0.1 =
 * Dev - translations updated.
-* Improvement - tracking-form css updates.
+* Improvement - tracking-form CSS updates.
 
 = 1.0 =
 * Initial version.
+

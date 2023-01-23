@@ -111,14 +111,10 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	public function check_ts4wc_installed( $request ) {
 
 		// check TS4WC installed 
-		$wc_ast_api_key = get_option('wc_ast_api_key');
-		$wc_ast_api_enabled = get_option('wc_ast_api_enabled');		
-		if ( empty( $wc_ast_api_key ) ) {
-			update_option('wc_ast_api_key', $request['user_key']);
-		}
-		
-		if ( '' == $wc_ast_api_enabled ) {
-			update_option('wc_ast_api_enabled', 1);
+		$trackship_apikey = get_trackship_key();
+		if ( empty( $trackship_apikey ) ) {
+			update_option('wc_ast_api_key', $request['user_key']); // Will be deprecated, added new key in version 1.5.0
+			update_option('trackship_apikey', $request['user_key']);
 		}
 		
 		if ( $request['trackers_balance'] ) {
@@ -142,6 +138,22 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		if ( trackship_for_woocommerce()->is_st_active() ) {
 			$plugin.= '-st';
 		}
+
+		if ( is_plugin_active( 'yith-woocommerce-order-tracking/init.php' ) ) {
+			$plugin.= '-yith-free';
+		}
+
+		if ( is_plugin_active( 'yith-woocommerce-order-tracking-premium/init.php' ) ) {
+			$plugin.= '-yith-pro';
+		}
+
+		if ( is_plugin_active( 'woo-orders-tracking/woo-orders-tracking.php' ) ) {
+			$plugin.= '-wot-free';
+		}
+
+		if ( is_plugin_active( 'woocommerce-orders-tracking/woocommerce-orders-tracking.php' ) ) {
+			$plugin.= '-wot-pro';
+		}
 		
 		$data = array(
 			'status' => 'installed',
@@ -164,14 +176,20 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		$tracking_event_status = $request['tracking_event_status'];
 		$last_event_time = $request['last_event_time'];
 		$tracking_est_delivery_date = $request['tracking_est_delivery_date'];
-		$tracking_events = $request['tracking_events'];
-		$tracking_destination_events = $request['tracking_destination_events'];
+		$tracking_events = $request['events'];
+		$tracking_destination_events = $request['destination_events'];
 		$previous_status = '';
 		
 		$trackship = WC_Trackship_Actions::get_instance();
 		
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 		$order = wc_get_order( $order_id );
+		if ( !$order ) {
+			$data = array(
+				'status' => 'success'
+			);
+			return rest_ensure_response( $data );
+		}
 		
 		foreach ( ( array ) $tracking_items as $key => $tracking_item ) {
 			if ( trim( $tracking_item['tracking_number'] ) != trim($tracking_number) ) {
@@ -191,8 +209,8 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			unset($shipment_status[$key]['pending_status']);
 			
 			$shipment_status[$key]['status'] = $tracking_event_status;
-			$shipment_status[$key]['tracking_events'] = json_decode($tracking_events);
-			$shipment_status[$key]['tracking_destination_events'] = json_decode($tracking_destination_events);
+			$shipment_status[$key]['tracking_events'] = $tracking_events;
+			$shipment_status[$key]['tracking_destination_events'] = $tracking_destination_events;
 			
 			$shipment_status[$key]['status_date'] = gmdate( 'Y-m-d H:i:s' );
 			$shipment_status[$key]['last_event_time'] = $last_event_time;
@@ -204,8 +222,6 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			
 			//tracking page link in $shipment_status
 			$shipment_status = trackship_for_woocommerce()->actions->get_shipment_status( $order_id );
-			
-			$trackship->trigger_tracking_email( $order_id, $previous_status, $tracking_event_status, $tracking_item, $shipment_status[$key] );
 			
 			$ts_shipment_status[$key]['status'] = $tracking_event_status;
 			
@@ -223,12 +239,27 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			$args['est_delivery_date'] = $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : null;
 			trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_item['tracking_number'], $args, $args2 );
 			
+			$order->update_meta_data( 'ts_shipment_status', $ts_shipment_status );
+			$order->save();
+
 			if ( $previous_status != $tracking_event_status ) {
+				// Schedule action for send Shipment status notifiations
+				as_schedule_single_action( time(), 'ts_status_change_trigger', array( $order_id, $previous_status, $tracking_event_status, $tracking_number ), 'TrackShip' );
+
+				// Add the note
+				if ( get_option( 'enable_debug_log' ) ) {
+					/* translators: %s: search for a tag */
+					$note = sprintf( __( 'Tracking Status (%s - %s) was updated to %s. (TrackShip)' ), $tracking_item['tracking_provider'], $tracking_item['tracking_number'], apply_filters('trackship_status_filter', $tracking_event_status) );
+					$order->add_order_note( $note );
+				}
+				
+				// hook for send SMS
+				// depricated after version 1.4.8
+				do_action( 'ast_trigger_ts_status_change', $order_id, $previous_status, $tracking_event_status, $tracking_item, $shipment_status[$key] );
+
 				do_action( 'trackship_shipment_status_trigger', $order_id, $previous_status, $tracking_event_status, $tracking_number );
 			}
 
-			$order->update_meta_data( 'ts_shipment_status', $ts_shipment_status );
-			$order->save();
 		}
 		
 		$trackship->check_tracking_delivered( $order_id );
@@ -244,8 +275,8 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	* disconnect store from TS
 	*/
 	public function disconnect_from_trackship_fun( $request ) {
-		update_option( 'wc_ast_api_key', '' );
-		delete_option( 'wc_ast_api_enabled' );
+		update_option( 'wc_ast_api_key', '' ); // Will be deprecated, added new key in version 1.5.0
+		update_option( 'trackship_apikey', '' );
 		delete_option( 'trackers_balance' );
 	}
 	
