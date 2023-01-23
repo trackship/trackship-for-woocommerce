@@ -44,6 +44,7 @@ jQuery(document).on("submit", ".order_track_form", function(){
 		success: function(response) {
 			if(response.success == 'true'){
 				jQuery('.track-order-section').replaceWith(response.html);
+				jQuery('.shipment-header .ts_from_input:checked').trigger('change');
 				jQuery('.heading_panel.checked').trigger('click');
 			} else{				
 				jQuery(".track_fail_msg").text(response.message);
@@ -181,10 +182,27 @@ jQuery(document).on("click", ".tracking-detail .heading_panel", function () {
 		jQuery(this).next('.content_panel').slideDown('slow');
 	}
 });
+//If we will do change into below jQuery so we need to also change in trackship.js and front.js
+jQuery(document).on("change", ".shipment-header .ts_from_input", function(){
+	var id = jQuery(this).attr('id');
+	var count = jQuery('.tracking-detail.col.active').length > 0;
+	if ( count > 0 ) {
+		jQuery( '.tracking-detail.col.active' ).removeClass('active').slideUp("slow", function(){
+			jQuery( '.tracking-detail.col.' + id ).addClass('active').slideDown("slow");
+		} );
+	} else {
+		jQuery( '.tracking-detail.col.' + id ).addClass('active').slideDown("slow");
+	}
+});
 
 jQuery(document).ready(function () {
 	'use strict';
 	jQuery('.heading_panel.checked').trigger('click');
+	jQuery('.shipment-header .ts_from_input:checked').trigger('change');
+	var length = jQuery('.shipment-header .ts_from_input:checked').length;
+	if ( length == 0 ) {
+		jQuery('.shipment-header .ts_from_input#shipment_1').trigger('click');
+	}
 });
 
 jQuery(document).on("change", ".unsubscribe_emails_checkbox, .unsubscribe_sms_checkbox", function () {

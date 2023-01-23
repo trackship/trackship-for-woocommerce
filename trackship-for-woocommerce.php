@@ -2,14 +2,14 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 1.4.8
+ * Version: 1.5.0
  * Author: TrackShip
  * Author URI: https://trackship.com/
  * License: GPL-2.0+
  * License URI: 
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
- * WC tested up to: 7.1.0
+ * WC tested up to: 7.3.0
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,24 +23,23 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.4.8';
-	
+	public $version = '1.5.0';
+
 	/**
 	 * Initialize the main plugin function
 	*/
 	public function __construct() {
 		
+		// WC & AST/ST are active
 		if ( ! $this->is_wc_active() ) {
 			add_action( 'admin_notices', array( $this, 'notice_activate_wc' ) );
 			return;
 		}
 		
-		if ( !$this->is_ast_active() && !$this->is_st_active() /*&& !$this->is_active_woo_order_tracking()*/ ) {
+		if ( !$this->is_ast_active() && !$this->is_st_active() && !$this->is_active_woo_order_tracking() && !$this->is_active_yith_order_tracking() ) {
 			add_action( 'admin_notices', array( $this, 'notice_activate_ast' ) );
 			return;
 		}
-		
-		// WC & AST/ST are active
 			
 		// Include required files.
 		$this->includes();
@@ -159,11 +158,12 @@ class Trackship_For_Woocommerce {
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-install.php';
 		$this->ts_install = WC_Trackship_Install::get_instance();
 	
-		$wc_ast_api_key = get_option('wc_ast_api_key');
-		if ( $wc_ast_api_key ) {
+		$trackship_apikey = get_option( 'trackship_apikey' );
+		if ( $trackship_apikey ) {
 			require_once $this->get_plugin_path() . '/includes/class-wc-trackship-front.php';
 			$this->front = WC_TrackShip_Front::get_instance();
 			add_action( 'template_redirect', array( $this->front, 'preview_tracking_page' ) );
+			add_action( 'template_redirect', array( $this->front, 'track_form_preview' ) );
 		}
 		
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-actions.php';
@@ -200,12 +200,16 @@ class Trackship_For_Woocommerce {
 		if ( is_plugin_active( 'automatewoo/automatewoo.php' ) ) {
 			require_once plugin_dir_path( __FILE__ ) . '/includes/class-wc-automatewoo-integration.php';
 		}
+
+		if ( $this->is_active_woo_order_tracking() ) {
+			require_once plugin_dir_path( __FILE__ ) . '/includes/class-woo-order-tracking-integration.php';
+			$this->wot_ts = WOO_Order_Tracking_TS4WC::get_instance();
+		}
 	}
 	
 	/**
 	 * Register shipment tracking routes.
 	 *
-	 * @since 1.5.0
 	 */
 	public function rest_api_register_routes() {		
 		if ( ! is_a( WC()->api, 'WC_API' ) ) {
@@ -230,10 +234,10 @@ class Trackship_For_Woocommerce {
 	* include file on plugin load
 	*/
 	public function on_plugins_loaded() {
-		$wc_ast_api_key = get_option('wc_ast_api_key');
+		$trackship_apikey = is_trackship_connected();
 
 		//load customizer
-		if ( $wc_ast_api_key ) {
+		if ( $trackship_apikey ) {
 			require_once $this->get_plugin_path() . '/includes/customizer/trackship-customizer.php';
 			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-intransit-email-customizer.php';
 			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-outfordelivery-email-customizer.php';
@@ -268,8 +272,8 @@ class Trackship_For_Woocommerce {
 	* @return array         List of modified plugin action links.
 	*/
 	public function tsw_plugin_action_links( $links ) {
-		$admin_url = trackship_for_woocommerce()->is_trackship_connected() ? admin_url( '/admin.php?page=trackship-for-woocommerce' ) : admin_url( '/admin.php?page=trackship-dashboard' );
-		$name = trackship_for_woocommerce()->is_trackship_connected() ? __( 'Settings', 'trackship-for-woocommerce' ) : __( 'Connect a Store', 'trackship-for-woocommerce' );
+		$admin_url = is_trackship_connected() ? admin_url( '/admin.php?page=trackship-for-woocommerce' ) : admin_url( '/admin.php?page=trackship-dashboard' );
+		$name = is_trackship_connected() ? __( 'Settings', 'trackship-for-woocommerce' ) : __( 'Connect a Store', 'trackship-for-woocommerce' );
 		$links = array_merge( array(
 			'<a href="' . esc_url( $admin_url ) . '">' . esc_html__( $name ) . '</a>',
 			'<a href="https://docs.trackship.com/docs/trackship-for-woocommerce/">' . __( 'Docs' ) . '</a>',
@@ -324,7 +328,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Check if Woo order Tracking is active
 	 *
-	 * @since  1.2.2
+	 * @since  1.5.0
 	 * @return bool
 	*/
 	public function is_active_woo_order_tracking() {
@@ -333,7 +337,7 @@ class Trackship_For_Woocommerce {
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		}
 		
-		if ( is_plugin_active( 'woo-orders-tracking/woo-orders-tracking.php' ) ) {
+		if ( is_plugin_active( 'woo-orders-tracking/woo-orders-tracking.php' ) || is_plugin_active( 'woocommerce-orders-tracking/woocommerce-orders-tracking.php' ) ) {
 			$is_active = true;
 		} else {
 			$is_active = false;
@@ -341,31 +345,51 @@ class Trackship_For_Woocommerce {
 	
 		return $is_active;
 	}
-		
-	/*
-	 * check trackship is connected
+
+	/**
+	 * Check if Yith order Tracking is active
 	 *
-	 * @since   1.0.0
-	 *
-	 * Return @void
-	 *
-	 */
-	public function is_trackship_connected() {
+	 * @since  1.5.0
+	 * @return bool
+	*/
+	public function is_active_yith_order_tracking() {
 		
-		$wc_ast_api_key = get_option( 'wc_ast_api_key' );
-		
-		if ( ! $wc_ast_api_key ) {
-			return false;
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		}
 		
-		return true;
-	}
+		if ( is_plugin_active( 'yith-woocommerce-order-tracking/init.php' ) || is_plugin_active( 'yith-woocommerce-order-tracking-premium/init.php' ) ) {
+			$is_active = true;
+		} else {
+			$is_active = false;
+		}		
 	
+		return $is_active;
+	}
+
 	public function get_tracking_items( $order_id ) {
 		if ( function_exists( 'ast_get_tracking_items' ) ) {
 			return ast_get_tracking_items( $order_id );	
 		} elseif ( class_exists( 'WC_Shipment_Tracking' ) ) {
 			return WC_Shipment_Tracking()->actions->get_tracking_items( $order_id, true );
+		} elseif ( class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
+			$order = wc_get_order( $order_id );
+			if ( !$order || !$order->get_meta( 'ywot_tracking_code', true ) ) {
+				return array();
+			}
+			$tracking_provider = $order->get_meta( 'ywot_carrier_name', true ) ? $order->get_meta( 'ywot_carrier_name', true ) : $order->get_meta( 'ywot_carrier_id', true );
+			$tracking_items[0] = array(
+				'formatted_tracking_provider'	=> trackship_for_woocommerce()->actions->get_provider_name( $tracking_provider ),
+				'tracking_provider'				=> $tracking_provider,
+				'formatted_tracking_link'		=> $order->get_meta( 'ywot_carrier_url', true ),
+				'tracking_number'				=> $order->get_meta( 'ywot_tracking_code', true ),
+				'tracking_id'					=> md5( "{$tracking_provider}-{$order->get_meta( 'ywot_tracking_code', true )}" . microtime() ),
+				'ast_tracking_link'				=> trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $order->get_meta( 'ywot_tracking_code', true ) ),
+				'date_shipped'					=> $order->get_meta( 'ywot_pick_up_date', true ),
+			);
+			return $tracking_items ? $tracking_items : array();
+		} elseif ( $this->is_active_woo_order_tracking() ) {
+			return $this->wot_ts->woo_orders_tracking_items( $order_id );
 		} else {
 			$order = wc_get_order( $order_id );
 			$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );
@@ -409,3 +433,35 @@ add_action( 'before_woocommerce_init', function() {
 		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
 	}
 } );
+
+/*
+* check trackship is connected
+*
+* @since   1.0.0
+*
+* Return @void
+*
+*/
+function is_trackship_connected() {
+	
+	$trackship_apikey = get_option( 'trackship_apikey' );
+	
+	if ( ! $trackship_apikey ) {
+		return false;
+	}
+	
+	return true;
+}
+	
+/*
+* get trackship key
+*
+* @since   1.0
+*
+* Return @void
+*
+*/
+function get_trackship_key() {
+	$trackship_apikey = get_option( 'trackship_apikey' );
+	return $trackship_apikey;
+}

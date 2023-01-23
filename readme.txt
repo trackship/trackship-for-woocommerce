@@ -111,7 +111,7 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended).
 
 == Changelog ==
-= 1.5.0 - 2022-01-12 =
+= 1.5.0 - 2022-01-23 =
 * Dev - Compatibility added with Yith order tracking plugin
 * Dev - Compatibility added with WooCommerce Order Tracking plugin
 * Enhancement - Tracking form customizer added in TrackShip customizer

@@ -80,10 +80,10 @@ $array = array(
 );
 $url = 'https://my.trackship.com/api/user-plan/get/';
 $args[ 'body' ] = array(
-	'user_key' => trackship_for_woocommerce()->actions->get_trackship_key(), // Deprecated since 19-Aug-2022
+	'user_key' => get_trackship_key(), // Deprecated since 19-Aug-2022
 );
 $args['headers'] = array(
-	'trackship-api-key' => trackship_for_woocommerce()->actions->get_trackship_key()
+	'trackship-api-key' => get_trackship_key()
 );
 $response = wp_remote_post( $url, $args );
 if ( is_wp_error( $response ) ) {

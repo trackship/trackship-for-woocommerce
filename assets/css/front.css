@@ -6,6 +6,7 @@ form.order_track_form label {
 form.order_track_form input {
 	width: 100%;
 	margin-bottom: 10px;
+	max-width: 50%;
 }
 .progress {
 	display: -ms-flexbox;
@@ -37,7 +38,7 @@ ul.tpi_product_tracking_ul {
 	display: none;
 }
 .order_track_form label.ts_from_label {
-	width: 49%;
+	width: 130px;
 	padding: 15px 0;
 	display: inline-block;
 	line-height: 1;
@@ -45,6 +46,10 @@ ul.tpi_product_tracking_ul {
 	text-align: center;
 	cursor: pointer;
 	margin: 0;
+}
+.tracking_form_tabs {
+	margin: 5px 20px 0;
+	border-bottom: 1px solid #e0e0e0;
 }
 .search_order_form .tracking_form {
 	padding: 15px 20px;
@@ -61,9 +66,10 @@ ul.tpi_product_tracking_ul {
 .col.tracking-detail {
 	margin: 0 auto 20px;
 	border: 1px solid #ccc;
-	max-width: 800px;
+	max-width: 800px !important;
 	position: relative;
 	padding: 0;
+	display: none;
 }
 .trackship_branding {
 	text-align: center;
@@ -105,8 +111,25 @@ span.wc_order_id {
 	margin-bottom: 0;
 }
 .shipment-header {
-	margin: 10px auto 0;
+	margin: 10px auto -1px;
 	max-width: 800px;
+	border: 1px solid #e0e0e0;
+}
+.shipment-header .ts_from_input {
+	display: none;
+}
+.shipment-header label.ts_from_label {
+	padding: 15px;
+	display: inline-block;
+	font-weight: 500;
+	text-align: center;
+	cursor: pointer;
+	margin: 0;
+}
+.shipment-header .ts_from_input:checked + label {
+	color: #1163c6 !important;
+	border-bottom: 3px solid #1163c6;
+	margin-top: 3px;
 }
 .shipment_heading {
 	margin: 0;
@@ -138,8 +161,8 @@ span.wc_order_id {
 }
 .shipping_from_to .shipping_to_img {
 	margin: 0 4px;
-    vertical-align: middle;
-    height: 15px;
+	vertical-align: middle;
+	height: 15px;
 }
 .tracker-progress-bar {
 	margin: 35px 15px 45px;
@@ -464,7 +487,7 @@ ul.timeline > li > p {
 	display: block;
 }
 .shipment-content p.pending_message {
-	margin-bottom: 15px;
+	margin: 0;
 }
 .tracking-header {
 	margin-bottom: 10px;
@@ -475,6 +498,16 @@ ul.timeline > li > p {
 	margin: 0 0 15px;
 	font-size: 14px;
 	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+span.copy_tracking_page.trackship-tip {
+	fill: #3858e9;
+	margin-left: 5px;
+}
+span.copy_tracking_page.trackship-tip svg {
+	width: 18px;
+	vertical-align: middle;
 }
 .not-shipped-widget .shipment_heading {
 	font-weight: 600;
@@ -527,4 +560,10 @@ ul.timeline > li > p {
 	display: inline-block;
 	vertical-align: middle;
 }
+}
+
+@media screen and (max-width: 500px) {
+	form.order_track_form input {
+		max-width: 100%;
+	}	
 }

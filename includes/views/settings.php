@@ -4,10 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 $url = 'https://my.trackship.com/api/user-plan/get/';
 $args[ 'body' ] = array(
-	'user_key' => trackship_for_woocommerce()->actions->get_trackship_key(), // Deprecated since 19-Aug-2022
+	'user_key' => get_trackship_key(), // Deprecated since 19-Aug-2022
 );
 $args['headers'] = array(
-	'trackship-api-key' => trackship_for_woocommerce()->actions->get_trackship_key()
+	'trackship-api-key' => get_trackship_key()
 );
 $response = wp_remote_post( $url, $args );
 if ( is_wp_error( $response ) ) {
@@ -88,6 +88,16 @@ if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocomme
 					<label class="ast-tgl-btn ast-tgl-btn-green" for="enable_email_widget"></label>
 					<label class="setting_ul_tgl_checkbox_label" for="enable_email_widget">
 						<span><?php esc_html_e( 'Enable unsubscribe (opt-out) from Shipment status notifications', 'trackship-for-woocommerce' ); ?></span>
+					</label>
+				</div>
+				<div class="settings_toogle">
+					<input type="hidden" name="enable_debug_log" value="0"/>
+					<input class="ast-tgl ast-tgl-flat " id="enable_debug_log" name="enable_debug_log" data-settings="enable_debug_log" type="checkbox" 
+					<?php echo get_option( 'enable_debug_log' ) ? 'checked' : ''; ?> value="1"/>
+					<label class="ast-tgl-btn ast-tgl-btn-green" for="enable_debug_log"></label>
+					<label class="setting_ul_tgl_checkbox_label" for="enable_debug_log">
+						<span><?php esc_html_e( 'Debug Mode for shipment status change', 'trackship-for-woocommerce' ); ?></span>
+						<span class="woocommerce-help-tip tipTip" title="<?php esc_html_e( 'Enable this option to add a note to your orders for every shipment status update by TrackShip.', 'trackship-for-woocommerce' ); ?>"></span>
 					</label>
 				</div>
 			</div>
