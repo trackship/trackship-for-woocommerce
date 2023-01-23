@@ -80,7 +80,7 @@ jQuery(document).ready(function() {
 				'data': 'et_shipped_at',
 			},			
 			{
-				"width": "100px",
+				"width": "150px",
 				'orderable': false,	
 				"mRender":function(data,type,full) {
 					return '<a href="'+shipments_script.admin_url+'post.php?post='+full.order_id+'&action=edit">' + full.order_number + '</a>';
@@ -288,4 +288,5 @@ jQuery( document ).ready(function() {
 jQuery(document).on("click", ".shipment_search_bar span", function(){
 	jQuery(this).prev().val('').focus();
 	jQuery(this).hide();
+	jQuery(".serch_button").click();
 });

@@ -132,20 +132,21 @@ class WC_Trackship_Shipments {
 		$total_data = 1;
 		
 		foreach( $order_query as $key => $value ){
-			
 			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $value->order_id );
-		
+			if ( !$tracking_items ) {
+				continue;
+			}
 			foreach ( $tracking_items as $key1 => $val1 ) {
 				if ( $val1['tracking_number'] == $value->tracking_number ) {
 					$formatted_tracking_link = isset( $val1['formatted_tracking_link'] ) ? $val1['formatted_tracking_link'] : '';
 					$tracking_url = isset( $val1['ast_tracking_link'] ) && $val1['ast_tracking_link'] ? $val1['ast_tracking_link'] : $formatted_tracking_link;
-
-					$provider_name = $value->new_shipping_provider ? $value->new_shipping_provider : $value->shipping_provider;
+					$provider_name = isset($value->new_shipping_provider) ? $value->new_shipping_provider : $value->shipping_provider;
+					// print_r($provider_name);
 					$formatted_provider = trackship_for_woocommerce()->actions->get_provider_name( $provider_name );
 					$tracking_provider = isset($formatted_provider) && $formatted_provider ? $formatted_provider : $provider_name;
 					$provider_tip_tip = $value->new_shipping_provider ? '<span class="dashicons dashicons-info trackship-tip" title="TrackShip updated ' . $value->shipping_provider . ' to ' . $tracking_provider .'"></span>' : '';
 					
-					$tracking_number_colom = '<span class="copied_tracking_numnber dashicons dashicons-admin-page" data-number="' . $value->tracking_number . '"></span><a class="open_tracking_details shipment_tracking_number" data-tracking_id="' . $val1['tracking_id'] . '" data-orderid="' . $value->order_id . '" data-nonce="' . wp_create_nonce( 'tswc-' . $value->order_id ) . '">' . $value->tracking_number . '</a>';
+					$tracking_number_colom = '<span class="copied_tracking_numnber dashicons dashicons-admin-page" data-number="' . $value->tracking_number . '"></span><a class="open_tracking_details shipment_tracking_number" data-tracking_id="' . $val1['tracking_id'] . '" data-orderid="' . $value->order_id . '" data-tnumber="' . $value->tracking_number . '" data-nonce="' . wp_create_nonce( 'tswc-' . $value->order_id ) . '">' . $value->tracking_number . '</a>';
 				}
 			}
 			
@@ -155,7 +156,7 @@ class WC_Trackship_Shipments {
 			$late_class = 'delivered' == $value->shipment_status ? '' : 'not_delivered' ;
 			$late_shipment = $late_ship_day <= $value->shipping_length ? '<span class="dashicons dashicons-info trackship-tip ' . $late_class . '" title="late shipment"></span>' : '';
 			
-			$active_shipment = '<a href="javascript:void(0);" class="shipments_get_shipment_status" data-orderid="' . $value->order_id . '"><span class="dashicons dashicons-update"></span></a>';
+			$active_shipment = '<a href="javascript:void(0);" class="shipments_get_shipment_status" data-orderid="' . $value->order_id . '" data-tnumber="' . $value->tracking_number . '"><span class="dashicons dashicons-update"></span></a>';
 			
 			$result[$i] = new \stdClass();
 			$result[$i]->et_shipped_at = date_i18n( $date_format, strtotime( $value->shipping_date ) );
@@ -170,7 +171,6 @@ class WC_Trackship_Shipments {
 			$result[$i]->est_delivery_date = $value->est_delivery_date ? date_i18n( $date_format, strtotime( $value->est_delivery_date ) ) : '';
 			$result[$i]->ship_to = $value->shipping_country;
 			$result[$i]->refresh_button = 'delivered' == $value->shipment_status ? '' : $active_shipment;
-			
 			$i++;
 		}
 
@@ -191,12 +191,10 @@ class WC_Trackship_Shipments {
 	public function get_shipment_length($ep_tracker){
 		if( empty($ep_tracker['tracking_events'] ))return 0;
 		if( count( $ep_tracker['tracking_events'] ) == 0 )return 0;		
-		
 		$first = reset($ep_tracker['tracking_events']);
-		$first_date = $first->datetime;
+		$first_date = $first['datetime'];
 		
-		$last = ( isset( $ep_tracker['tracking_destination_events'] ) && count( $ep_tracker['tracking_destination_events'] ) > 0  ) ? end($ep_tracker['tracking_destination_events']) : end($ep_tracker['tracking_events']);
-		$last_date = $last->datetime;
+		$last_date = $ep_tracker['last_event_time'];
 		
 		$status = $ep_tracker['status'];
 		if( $status != 'delivered' ){

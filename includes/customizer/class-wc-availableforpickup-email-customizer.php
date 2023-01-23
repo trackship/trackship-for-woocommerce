@@ -18,10 +18,6 @@ class TSWC_Availableforpickup_Customizer_Email {
 		}
 		// Get our Customizer defaults
 		$this->defaults = trackship_admin_customizer()->wcast_shipment_settings_defaults( 'availableforpickup' );
-		$wc_ast_api_key = get_option('wc_ast_api_key');
-		if ( !$wc_ast_api_key ) {
-			return;
-		}
 
 		add_action( 'parse_request', array( $this, 'set_up_preview' ) );	
 	}

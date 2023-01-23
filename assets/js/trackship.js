@@ -532,7 +532,7 @@ jQuery(document).on("click", ".metabox_get_shipment_status", function () {
 	var data = {
 		action: 'metabox_get_shipment_status',
 		order_id: woocommerce_admin_meta_boxes.post_id,
-		security: jQuery('#_wpnonce').val()
+		security: jQuery('#get_shipment_nonce').val()
 	}
 	jQuery.ajax({
 		url: ajaxurl,
@@ -579,6 +579,7 @@ jQuery(document).on("click", ".open_tracking_details", function () {
 		security: jQuery(this).data('nonce'),
 		page: jQuery(this).data('page'),
 		tracking_id: jQuery(this).data('tracking_id'),
+		tnumber: jQuery(this).data('tnumber'),
 	}
 	jQuery.ajax({
 		url: ajaxurl,
@@ -587,6 +588,8 @@ jQuery(document).on("click", ".open_tracking_details", function () {
 		success: function (response) {
 			jQuery("#admin_tracking_widget .popuprow").html(response);
 			jQuery("#admin_tracking_widget").show();
+			jQuery('.shipment-header .ts_from_input:checked').trigger('change');
+			jQuery('.heading_panel.checked').trigger('click');
 			jQuery(".trackship-tip").tipTip();
 		},
 		error: function (jqXHR, exception) {
@@ -821,12 +824,12 @@ jQuery(document).on("click", ".tracking_notification_log_delete .delete_notifica
 	return false;
 });
 
-jQuery(document).on("click", ".tools_tab_ts4wc .remove-icon.dashicons-no-alt", function () {
+jQuery(document).on("click", ".trackship-notice p span.dashicons", function () {
 	var date = new Date();
 	date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000));
 	expires = "; expires=" + date.toUTCString();
 	var cookies = document.cookie = "Notice=delete " + expires;
-	jQuery('#content_trackship_settings .tools_tab_ts4wc').hide();
+	jQuery('.trackship_notice_msg').hide();
 	console.log(cookies);
 });
 
@@ -895,5 +898,17 @@ jQuery(document).on("click", ".tracking-detail .heading_panel", function () {
 		parent.find('.accordian-arrow').removeClass('down').addClass('right');
 		jQuery(this).children('.accordian-arrow').removeClass('right').addClass('down');
 		jQuery(this).next('.content_panel').slideDown('slow');
+	}
+});
+//If we will do change into below jQuery so we need to also change in trackship.js and front.js
+jQuery(document).on("change", ".shipment-header .ts_from_input", function(){
+	var id = jQuery(this).attr('id');
+	var count = jQuery('.tracking-detail.col.active').length > 0;
+	if ( count > 0 ) {
+		jQuery( '.tracking-detail.col.active' ).removeClass('active').slideUp("slow", function(){
+			jQuery( '.tracking-detail.col.' + id ).addClass('active').slideDown("slow");
+		} );
+	} else {
+		jQuery( '.tracking-detail.col.' + id ).addClass('active').slideDown("slow");
 	}
 });

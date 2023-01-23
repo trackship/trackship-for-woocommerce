@@ -102,6 +102,7 @@ jQuery(document).ready(function(){
 	jQuery('#wc_ast_select_border_color').wpColorPicker({
 		change: function(e, ui) {
 			var color = ui.color.toString();
+			jQuery('#widget_form_border_color').val( color );
 			jQuery("#tracking_widget_privew").contents().find('.col.tracking-detail' ).css( 'border-color', color );
 			jQuery("#tracking_widget_privew").contents().find('body .col.tracking-detail .shipment-header' ).css( 'border-color', color );
 			jQuery("#tracking_widget_privew").contents().find('body .col.tracking-detail .trackship_branding, .tracking-detail .heading_panel' ).css( 'border-color', color );
@@ -109,6 +110,7 @@ jQuery(document).ready(function(){
 			setting_change_trigger();
 		}, 	
 	});
+
 });
 
 function setting_change_trigger() {	
@@ -152,6 +154,11 @@ jQuery(document).on("click", ".zoremmail-menu-submenu-title", function(){
 jQuery( ".text.track_button_Text" ).keyup( function( event ) {
 	var str = event.target.value;
 	jQuery("#tracking_widget_privew").contents().find( 'div.tracking_index a.track_your_order' ).text(str);
+});
+
+jQuery( ".text.form_button_Text" ).keyup( function( event ) {
+	var str = event.target.value;
+	jQuery("#tracking_widget_privew").contents().find( '.order_track_form div.search_order_form button' ).text(str);
 });
 
 jQuery( ".text.shipped_product_label" ).keyup( function( event ) {
@@ -260,7 +267,9 @@ jQuery(document).on("change", "#shipmentStatus", function(){
 jQuery('iframe').load(function(){
 	jQuery('.zoremmail-layout-content-preview').removeClass('customizer-unloading');
 	jQuery("#tracking_widget_privew").contents().find( 'div#query-monitor-main' ).css( 'display', 'none');
-	jQuery( '.zoremmail-layout-content-media .last-checked .dashicons' ).trigger('click');	
+	jQuery("#tracking_widget_privew").contents().find( 'div.col.tracking-detail' ).css( 'display', 'block');
+	jQuery( '.zoremmail-layout-content-media .last-checked .dashicons' ).trigger('click');
+	
 })
 
 jQuery(document).on("change", "#track_button_border_radius", function(){
@@ -271,6 +280,25 @@ jQuery(document).on("change", ".track_button_border_radius .slider__value", func
 	var radius = jQuery( this ).val();
 	jQuery( "#track_button_border_radius" ).val(radius).trigger('change');
 });
+
+jQuery(document).on("change", "#form_button_border_radius", function(){
+	var radius = jQuery( this ).val();
+	jQuery("#tracking_widget_privew").contents().find('.order_track_form div.search_order_form button' ).css( 'border-radius', radius+'px' );
+});
+jQuery(document).on("change", ".form_button_border_radius .slider__value", function(){
+	var radius = jQuery( this ).val();
+	jQuery( "#form_button_border_radius" ).val(radius).trigger('change');
+});
+
+jQuery(document).on("change", "#wc_ast_select_border_radius", function(){
+	var radius = jQuery( this ).val();
+	jQuery("#tracking_widget_privew").contents().find('.col.tracking-detail' ).css( 'border-radius', radius+'px' );
+});
+jQuery(document).on("change", ".wc_ast_select_border_radius .slider__value", function(){
+	var radius = jQuery( this ).val();
+	jQuery( "#wc_ast_select_border_radius" ).val(radius).trigger('change');
+});
+
 jQuery(document).on("change", "#wc_ast_select_widget_padding", function(){
 	var padding = jQuery( this ).val();
 	jQuery("#tracking_widget_privew").contents().find('body .col.tracking-detail' ).css( 'padding', padding );
@@ -285,14 +313,16 @@ if ( jQuery.fn.wpColorPicker ) {
 	jQuery('#wc_ast_select_bg_color').wpColorPicker({
 		change: function(e, ui) {
 			var color = ui.color.toString();
+			jQuery('#widget_form_bg_color').val( color );
 			jQuery("#tracking_widget_privew").contents().find('body .col.tracking-detail' ).css( 'background', color );
 			setting_change_trigger();
-		}, 	
+		},
 	});
 
 	jQuery('#wc_ast_select_font_color').wpColorPicker({
 		change: function(e, ui) {
 			var color = ui.color.toString();
+			jQuery('#widget_form_font_color').val( color );
 			jQuery("#tracking_widget_privew").contents().find('body .tracking-detail .shipment-content, body .tracking-detail .shipment-content h4' ).css( 'color', color );
 			setting_change_trigger();
 		}, 	
@@ -342,6 +372,22 @@ if ( jQuery.fn.wpColorPicker ) {
 		change: function(e, ui) {
 			var color = ui.color.toString();
 			jQuery("#tracking_widget_privew").contents().find('div.tracking_index a.track_your_order' ).css( 'background', color );
+			setting_change_trigger();
+		}, 	
+	});
+
+	jQuery('#form_button_color').wpColorPicker({
+		change: function(e, ui) {
+			var color = ui.color.toString();
+			jQuery("#tracking_widget_privew").contents().find('.order_track_form div.search_order_form button' ).css( 'background', color );
+			setting_change_trigger();
+		}, 	
+	});
+
+	jQuery('#form_button_text_color').wpColorPicker({
+		change: function(e, ui) {
+			var color = ui.color.toString();
+			jQuery("#tracking_widget_privew").contents().find('.order_track_form div.search_order_form button' ).css( 'color', color );
 			setting_change_trigger();
 		}, 	
 	});
@@ -420,6 +466,7 @@ jQuery(document).on("click", ".zoremmail-sub-panel-title", function(){
 	var type = jQuery(this).data('type');
 	var label = jQuery(this).data('label');
 	var id = jQuery(this).attr('id');
+	var shipmentStatus = jQuery('#shipmentStatus').val();
 	jQuery('.zoremmail-sub-panel-title').hide();
 	jQuery('.customize-action-default').hide(); // hide default back heading
 	jQuery('.customize-action-changed').show(); // Show back chanegd heading
@@ -438,7 +485,16 @@ jQuery(document).on("click", ".zoremmail-sub-panel-title", function(){
 			jQuery(this).removeClass('open');
 			jQuery(this).next('.zoremmail-menu-contain').removeClass('active');
 		}
-	});		
+	});
+	if ( 'tracking_page' == type ) {
+		jQuery('.zoremmail-layout-content-preview').addClass('customizer-unloading');
+		if ( 'form_content' == id ) {
+			jQuery('iframe').attr('src', trackship_customizer.form_iframe_url);
+		} else {
+			var tracking_page_iframe_url = trackship_customizer.tracking_iframe_url+'&status='+shipmentStatus;
+			jQuery('iframe').attr('src', tracking_page_iframe_url);
+		}
+	}
 	jQuery( '#shipmentStatus' ).select2({
 		// templateSelection: text_contain,
 		minimumResultsForSearch: Infinity

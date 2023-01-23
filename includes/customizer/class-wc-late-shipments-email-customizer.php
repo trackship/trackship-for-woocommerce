@@ -16,10 +16,10 @@ class TSWC_Late_Shipments_Customizer_Email {
 		// Get our Customizer defaults
 		$this->defaults = $this->wcast_generate_defaults();
 		
-		$wc_ast_api_key = get_option('wc_ast_api_key');
-		if (!$wc_ast_api_key) {
+		// if trackship is connected
+		if ( ! is_trackship_connected() ) {
 			return;
-		}	
+		}
 	}		
 	
 	/**
