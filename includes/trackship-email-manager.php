@@ -47,6 +47,15 @@ class WC_TrackShip_Email_Manager {
 			return;
 		}
 
+		if ( 'delivered_status' == $status ) {
+			$toggle = get_option( 'all-shipment-status-delivered' );
+			$all_delivered = trackship_for_woocommerce()->ts_actions->is_all_shipments_delivered( $order_id );
+			
+			if ( $toggle && !$all_delivered ) {
+				return;
+			}
+		}
+
 		global $sitepress;
 		if ( $sitepress ) {
 			$old_lan = $sitepress->get_current_language();
