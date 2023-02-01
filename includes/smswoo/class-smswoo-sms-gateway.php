@@ -85,19 +85,6 @@ if ( ! class_exists( 'smswoo_sms_gateway' ) ) {
 		}
 
 		/**
-		 * Print send log
-		 *
-		 * @since   1.0.0
-		 * @return  void
-		 */
-		public function print_log() {
-
-			error_log( print_r( $this->_log, true ) );
-			//update_option( 'smswoo_debug_log', print_r( $this->_log, true ) );
-
-		}
-
-		/**
 		 * Add log send log
 		 *
 		 * @since   1.0.0
@@ -107,22 +94,22 @@ if ( ! class_exists( 'smswoo_sms_gateway' ) ) {
 		 * @return  void
 		 */
 		public function write_log( $args ) {
-			
-			$smswoo_enable_log = get_option( 'smswoo_enable_log', 1 );
-			
-			if ( $smswoo_enable_log ) {
-				$context = array( 'source' => 'smswoo' );
-	
-				$log = strtoupper( ( 'test' != $args['type'] ? 'Order #' . $args['order'] . ' - ' : '' ) . $args['type'] . ' MESSAGE' ) . "\r\n";
-				$log .= 'Status: ' . ( $args['success'] ? 'SUCCESS' : 'FAILED - ' . $args['status_message'] ) . "\r\n";
-				$log .= 'Phone: ' . $args['phone'] . "\r\n";
-				$log .= 'Message: ' . $args['message'] . "\r\n";
-	
-				if ( $args['success'] ) {
-					$this->_logger->info( $log, $context );
-				} else {
-					$this->_logger->error( $log, $context );
-				}
+
+			if ( ! apply_filters( 'ts_sms_wc_log', true ) ) {
+				return;
+			}
+
+			$context = array( 'source' => 'ts4wc-sms' );
+
+			$log = strtoupper( ( 'test' != $args['type'] ? 'Order #' . $args['order'] . ' - ' : '' ) . $args['type'] . ' MESSAGE' ) . "\r\n";
+			$log .= 'Status: ' . ( $args['success'] ? 'SUCCESS' : 'FAILED - ' . $args['status_message'] ) . "\r\n";
+			$log .= 'Phone: ' . $args['phone'] . "\r\n";
+			$log .= 'Message: ' . $args['message'] . "\r\n";
+
+			if ( $args['success'] ) {
+				$this->_logger->info( $log, $context );
+			} else {
+				$this->_logger->error( $log, $context );
 			}
 		}
 	}

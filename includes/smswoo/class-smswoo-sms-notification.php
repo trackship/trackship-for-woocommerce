@@ -260,24 +260,6 @@ class tswc_smswoo_sms_notification {
 
 		$sms_gateway->write_log( $log_args );
 
-		$smswoo_enable_order_note_log = get_option( 'smswoo_enable_order_note_log', 1 );
-		if ( $this->_customer_sms && $smswoo_enable_order_note_log ) {
-
-			$order = $this->order;
-
-			ob_start();
-			?>
-			TrackShip SMS
-			<?php esc_html_e( 'Status', 'trackship-for-woocommerce' ); ?>: <?php echo esc_html( $status_message ); ?>
-			<br />
-			<?php esc_html_e( 'Content', 'trackship-for-woocommerce' ); ?>: <?php echo esc_html( $message ); ?>
-			<?php
-
-			$this->order_note['text'] = ob_get_clean();
-			$this->order_note['id']   = $order->add_order_note( $this->order_note['text'] );
-
-		}
-
 		return $success;
 
 	}
