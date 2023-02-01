@@ -351,7 +351,6 @@ class WC_Trackship_Actions {
 				}
 			}
 			update_option( 'enable_email_widget', wc_clean( $_POST[ 'enable_email_widget' ] ) );
-			update_option( 'enable_debug_log', wc_clean( $_POST[ 'enable_debug_log' ] ) );
 			echo json_encode( array('success' => 'true') );
 			die();
 
