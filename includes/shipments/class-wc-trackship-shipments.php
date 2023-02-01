@@ -192,8 +192,9 @@ class WC_Trackship_Shipments {
 		if( empty($ep_tracker['tracking_events'] ))return 0;
 		if( count( $ep_tracker['tracking_events'] ) == 0 )return 0;		
 		$first = reset($ep_tracker['tracking_events']);
+		$first = (array) $first;
+
 		$first_date = $first['datetime'];
-		
 		$last_date = $ep_tracker['last_event_time'];
 		
 		$status = $ep_tracker['status'];
