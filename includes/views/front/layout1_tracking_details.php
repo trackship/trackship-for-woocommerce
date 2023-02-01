@@ -18,8 +18,7 @@ if ( 1 != $hide_tracking_events ) {
 	);
 }
 $tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
-$tpi_order = $this->check_if_tpi_order( $tracking_items, wc_get_order( $order_id ) );
-if ( $tpi_order ){
+if ( $this->check_if_tpi_order( $tracking_items, wc_get_order( $order_id ) ) || $this->shipped_order_has_one_shipment( $tracking_items, wc_get_order( $order_id ) ) ){
 	$tab_array[ 'product_details' ] = array(
 		'label'	=> $labels_name['items_label'],
 		'class'	=> $class,
@@ -63,9 +62,14 @@ if ( ( !is_admin() && get_option( 'enable_email_widget' ) ) || ( 'yes' == $front
 									<li>
 										<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 										<p>
-										<?php echo wp_kses_post( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
-										<?php $tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ); ?>
-										<span><?php echo ( null != $tracking_location_city ) ? ' - ' : ''; ?><?php echo esc_html( $tracking_location_city ); ?></span>
+											<?php
+											$tracking_description = apply_filters( 'trackship_tracking_event_description', $value->message );
+											$tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city );
+											$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
+											
+											$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
+											echo esc_html( $single_event );
+											?>
 										</p>
 									</li>
 								<?php $a++; } ?>
@@ -84,9 +88,14 @@ if ( ( !is_admin() && get_option( 'enable_email_widget' ) ) || ( 'yes' == $front
 									<li>
 										<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 										<p>
-										<?php echo wp_kses_post( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
-										<?php $tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ); ?>
-										<span><?php echo ( null != $tracking_location_city ) ? ' - ' : ''; ?><?php echo esc_html( $tracking_location_city ); ?></span>
+											<?php
+											$tracking_description = apply_filters( 'trackship_tracking_event_description', $value->message );
+											$tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city );
+											$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
+											
+											$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
+											echo esc_html( $single_event );
+											?>
 										</p>
 									</li>
 								<?php $a++; } ?>
@@ -111,9 +120,14 @@ if ( ( !is_admin() && get_option( 'enable_email_widget' ) ) || ( 'yes' == $front
 								<li>
 									<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 									<p>
-										<?php echo wp_kses_post( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
-										<?php $tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ); ?>
-										<span><?php echo ( null != $tracking_location_city ) ? ' - ' : ''; ?><?php echo esc_html( $tracking_location_city ); ?></span>
+										<?php
+										$tracking_description = apply_filters( 'trackship_tracking_event_description', $value->message );
+										$tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city );
+										$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
+										
+										$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
+										echo esc_html( $single_event );
+										?>
 									</p>
 								</li>
 							<?php $a++; } ?>
@@ -132,9 +146,14 @@ if ( ( !is_admin() && get_option( 'enable_email_widget' ) ) || ( 'yes' == $front
 								<li>
 									<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 									<p>
-										<?php echo wp_kses_post( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
-										<?php $tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ); ?>
-									<span><?php echo ( null != $tracking_location_city ) ? ' - ' : ''; ?><?php echo esc_html( $tracking_location_city ); ?></span>
+										<?php
+										$tracking_description = apply_filters( 'trackship_tracking_event_description', $value->message );
+										$tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city );
+										$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
+										
+										$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
+										echo esc_html( $single_event );
+										?>
 									</p>
 								</li>
 							<?php $a++; } ?>
@@ -158,9 +177,14 @@ if ( ( !is_admin() && get_option( 'enable_email_widget' ) ) || ( 'yes' == $front
 								<li>
 									<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 									<p>
-										<?php echo wp_kses_post( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
-										<?php $tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ); ?>
-										<span><?php echo ( null != $tracking_location_city ) ? ' - ' : ''; ?><?php echo esc_html( $tracking_location_city ); ?></span>
+										<?php
+										$tracking_description = apply_filters( 'trackship_tracking_event_description', $value->message );
+										$tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city );
+										$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
+										
+										$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
+										echo esc_html( $single_event );
+										?>
 									</p>
 								</li>
 							<?php } ?>
@@ -179,9 +203,14 @@ if ( ( !is_admin() && get_option( 'enable_email_widget' ) ) || ( 'yes' == $front
 							<li>
 								<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
 								<p>
-								<?php echo wp_kses_post( apply_filters( 'trackship_tracking_event_description', $value->message ) ); ?>
-								<?php $tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city ); ?>
-								<span><?php echo ( null != $tracking_location_city ) ? ' - ' : ''; ?><?php echo esc_html( $tracking_location_city ); ?></span>
+									<?php
+									$tracking_description = apply_filters( 'trackship_tracking_event_description', $value->message );
+									$tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city );
+									$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
+									
+									$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
+									echo esc_html( $single_event );
+									?>
 								</p>
 							</li>
 						<?php } ?>
