@@ -108,10 +108,6 @@ class WC_TrackShip_Api_Call {
 						if ( isset( $body['user_plan'] ) ) {
 							update_option( 'user_plan', $body['user_plan'] );
 						}
-						// The text for the note
-						$note = sprintf( __( 'Shipping information (%s - %s) was sent to TrackShip.', 'trackship-for-woocommerce' ), $tracking_provider, $tracking_number );
-						// Add the note
-						$order->add_order_note( $note );
 						
 						$ts_shipment_status = $order->get_meta( 'ts_shipment_status', true );
 						if ( is_string( $ts_shipment_status ) ) {

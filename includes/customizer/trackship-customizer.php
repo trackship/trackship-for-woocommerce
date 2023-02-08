@@ -194,6 +194,7 @@ class TS4WC_Admin_Customizer {
 			'est_delivery_date'		=> '2021-07-30 15:28:02',
 			'email_iframe_url'		=> add_query_arg( array( 'shipment-email-customizer-preview' => '1' ), home_url( '' ) ),
 			'tracking_iframe_url'	=> add_query_arg( array( 'action' => 'preview_tracking_page' ), home_url( '' ) ),
+			'form_iframe_url'		=> $this->get_tracking_form_preview_url()
 		));
 	}
 
