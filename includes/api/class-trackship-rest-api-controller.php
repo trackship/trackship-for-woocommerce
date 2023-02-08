@@ -246,13 +246,6 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 				// Schedule action for send Shipment status notifiations
 				as_schedule_single_action( time(), 'ts_status_change_trigger', array( $order_id, $previous_status, $tracking_event_status, $tracking_number ), 'TrackShip' );
 
-				// Add the note
-				if ( get_option( 'enable_debug_log' ) ) {
-					/* translators: %s: search for a tag */
-					$note = sprintf( __( 'Tracking Status (%s - %s) was updated to %s. (TrackShip)' ), $tracking_item['tracking_provider'], $tracking_item['tracking_number'], apply_filters('trackship_status_filter', $tracking_event_status) );
-					$order->add_order_note( $note );
-				}
-				
 				// hook for send SMS
 				// depricated after version 1.4.8
 				do_action( 'ast_trigger_ts_status_change', $order_id, $previous_status, $tracking_event_status, $tracking_item, $shipment_status[$key] );
