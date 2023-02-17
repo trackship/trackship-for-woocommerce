@@ -979,6 +979,8 @@ class WC_Trackship_Actions {
 								<?php if ( $has_est_delivery ) { ?>
 									<span class="wcast-shipment-est-delivery ft12" style="display: block; margin-top: 8px;">Est. delivery <?php esc_html_e( $est_delivery_date1 ); ?> <a class="ts4wc_track_button ft12 <?php esc_html_e( $class ); ?>"  data-orderid="<?php esc_html_e( $order_id ); ?>" data-tnumber="<?php echo esc_html( $tracking_item['tracking_number'] ); ?>" data-tracking_id="<?php echo esc_html( $tracking_id ); ?>" data-nonce="<?php esc_html_e( wp_create_nonce( 'tswc-' . $order_id ) ); ?>"> <?php esc_html_e( 'Track', 'trackship-for-woocommerce' ); ?></a></span>
 								<?php } ?>
+								<?php $log_url = add_query_arg( array( 'page' => 'trackship-logs', 's' => $tracking_item['tracking_number'] ), admin_url('admin.php') ); ?>
+								<span><a href="<?php echo esc_url($log_url); ?>"><?php esc_html_e( 'View Shipment log', 'trackship-for-woocommerce' ); ?></a></span>
 							</span>
 						</div>	
 					<?php } else { ?>

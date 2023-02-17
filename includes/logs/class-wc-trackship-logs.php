@@ -79,7 +79,7 @@ class WC_Trackship_Logs {
 
 		$where = array();
 		if ( $search_bar ) {
-			$where[] = "( `order_id` = '{$search_bar}' OR `order_number` = '{$search_bar}' OR `to` LIKE '%{$search_bar}%' )";
+			$where[] = "( `order_id` = '{$search_bar}' OR `order_number` = '{$search_bar}' OR `to` LIKE '%{$search_bar}%' OR `tracking_number` = '{$search_bar}' )";
 		}
 		$where[] = "( `type` LIKE 'Email' OR `sms_type` LIKE 'shipment_status' )";
 		if ( $shipment_status ) {
@@ -105,7 +105,7 @@ class WC_Trackship_Logs {
 				`date` DESC
 			{$limit}
 		");
-					
+		
 		$result = array();
 		$i = 0;
 		$current_time = strtotime(current_time( 'Y-m-d H:i:s' ));
