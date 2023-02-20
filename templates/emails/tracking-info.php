@@ -77,8 +77,18 @@ if ( $tracking_items ) :
 								esc_html_e( 'Shipped', 'trackship-for-woocommerce' );
 								echo '</div>';
 							} else {
-								?>
-								<div class="tracking_info" style="margin:10px 0;"><?php echo esc_html( $tracking_item['formatted_tracking_provider'] ); ?> <a href="<?php echo esc_url( $formatted_tracking_link ); ?>" style="text-decoration:none"><?php echo esc_html( $tracking_item['tracking_number'] ); ?></a></div>
+								if ( isset( $tracking_item['tracking_provider_image'] ) ) {
+									?>
+									<img style="height:45px;vertical-align:middle;margin-right: 10px;" src="<?php echo esc_url( $tracking_item['tracking_provider_image'] ); ?>">
+								<?php } ?>
+								<div class="tracking_info" style="margin:10px 0;">
+									<?php echo esc_html( $tracking_item['formatted_tracking_provider'] ); ?>
+									<?php if ( 'delivered' == $ship_status ) { ?>
+										<?php echo esc_html( $tracking_item['tracking_number'] ); ?>
+									<?php } else { ?>
+										<a href="<?php echo esc_url( $tracking_link ); ?>" style="text-decoration:none"><?php echo esc_html( $tracking_item['tracking_number'] ); ?></a>
+									<?php } ?>
+								</div>
 								<?php
 							}
 						}

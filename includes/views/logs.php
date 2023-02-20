@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $wpdb;
 $log_table = $wpdb->prefix . 'zorem_email_sms_log';
 $all_shipment_status = $wpdb->get_results( "SELECT shipment_status FROM {$log_table} WHERE `type` = 'Email' OR `sms_type` = 'shipment_status' GROUP BY shipment_status" );
+$search = isset( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
 ?>
 <div class="trackship_logs_option">
     <span class="log_shipment_status">
@@ -24,7 +25,7 @@ $all_shipment_status = $wpdb->get_results( "SELECT shipment_status FROM {$log_ta
 	</span>
     <button class="serch_button" type="button" style="float:right;"><?php esc_html_e( 'Search', 'trackship-for-woocommerce' ); ?></button>
     <span class="log_search_bar">
-		<input type="text" id="search_bar" name="search_bar" placeholder="Order id, Email, Phone number">
+		<input type="text" id="search_bar" name="search_bar" placeholder="Order id, Email, Phone number" value="<?php echo esc_html($search); ?>">
         <span class="dashicons dashicons-no"></span>
 	</span>
 </div>

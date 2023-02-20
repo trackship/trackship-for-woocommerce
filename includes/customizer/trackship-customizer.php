@@ -267,6 +267,7 @@ class TS4WC_Admin_Customizer {
 			'track_button_color'			=> '#3c4858',
 			'track_button_text_color'		=> '#fff',
 			'track_button_border_radius'	=> 0,
+			'email_trackship_branding'		=> 1,
 			// Tracking form's defauls
 			'form_tab_view' 				=> 'both',
 			'form_button_Text'				=> __( 'Track Order', 'trackship-for-woocommerce' ),
@@ -306,6 +307,7 @@ class TS4WC_Admin_Customizer {
 		$track_button_color = $this->get_value( 'shipment_email_settings', 'track_button_color', $status );
 		$track_button_text_color = $this->get_value( 'shipment_email_settings', 'track_button_text_color', $status );
 		$track_button_border_radius = $this->get_value( 'shipment_email_settings', 'track_button_border_radius', $status );
+		$email_trackship_branding = $this->get_value( 'shipment_email_settings', 'email_trackship_branding', $status );
 
 		//Tracking page saved/default vaule
 		$wc_ast_select_bg_color = get_option( 'wc_ast_select_bg_color', $this->defaults['wc_ast_select_bg_color'] );
@@ -903,6 +905,17 @@ class TS4WC_Admin_Customizer {
 				'class'		=> $value . '_sub_menu all_status_submenu shipping_address_label',
 			);
 		}
+		$settings[ 'email_trackship_branding' ] = array(
+			'title'		=> esc_html__( 'Display TrackShip branding', 'trackship-for-woocommerce' ),
+			'default'	=> $email_trackship_branding,
+			'type'		=> 'checkbox',
+			'option_name'=> 'shipment_email_settings',
+			'option_type'=> 'array',
+			'show'		=> true,
+			'class'		=> '',
+			'required' 	=> 'pro',
+			'plan'		=> in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ),
+		);
 		return $settings;
 	}
 
@@ -1267,7 +1280,8 @@ class TS4WC_Admin_Customizer {
 				'tracking_provider' => 'usps',
 				'tracking_number' => '4208001392612927',
 				'formatted_tracking_provider' => 'USPS',
-				'formatted_tracking_link' => 'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=4208001392612927'
+				'formatted_tracking_link' => 'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=4208001392612927',
+				'tracking_provider_image' => trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/usps.png',
 			);
 		}
 		return $tracking_items;
