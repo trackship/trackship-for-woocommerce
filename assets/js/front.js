@@ -44,8 +44,13 @@ jQuery(document).on("submit", ".order_track_form", function(){
 		success: function(response) {
 			if(response.success == 'true'){
 				jQuery('.track-order-section').replaceWith(response.html);
-				jQuery('.shipment-header .ts_from_input:checked').trigger('change');
-				jQuery('.heading_panel.checked').trigger('click');
+				jQuery('.shipment-header .ts_from_input:checked').trigger('change'); // click on the heading
+				jQuery('.heading_panel.checked').trigger('click'); //clicked on the heading panel in the tracking widget
+				jQuery(".not-shipped-widget").show(); // not shipped widget show
+				var length = jQuery('.shipment-header .ts_from_input:checked').length;
+				if ( length == 0 ) {
+					jQuery('.shipment-header .ts_from_input#shipment_1').trigger('click');
+				}
 			} else{				
 				jQuery(".track_fail_msg").text(response.message);
 				jQuery(".track_fail_msg").show();				
