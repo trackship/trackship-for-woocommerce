@@ -377,8 +377,10 @@ class WC_TrackShip_Front {
 						</span>
 						<div class="shipment_heading"><?php esc_html_e( 'Order Processing', 'trackship-for-woocommerce' ); ?></div>	
 					</div>
-					<span><?php esc_html_e( "Your order is being processed, the tracking details will be available once it's Shipped.", 'trackship-for-woocommerce' ); ?></span>
-					<span><?php esc_html_e( 'Please try again after you receive the shipping confirmation email.', 'trackship-for-woocommerce' ); ?></span>
+					<div class="not_shipped_content">
+						<span><?php esc_html_e( "Your order is being processed, the tracking details will be available once it's Shipped.", 'trackship-for-woocommerce' ); ?></span>
+						<span><?php esc_html_e( 'Please try again after you receive the shipping confirmation email.', 'trackship-for-woocommerce' ); ?></span>
+					</div>
 				</div>
 			</div>
 		</div>
