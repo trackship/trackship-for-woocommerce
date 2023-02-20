@@ -36,6 +36,8 @@ class WC_TrackShip_Email_Manager {
 	public function shippment_email_trigger( $order_id, $old_status, $new_status, $tracking_item, $shipment_status ) {
 		$order = wc_get_order( $order_id );
 		$this->shipment_status = $shipment_status;
+		$this->tracking_item = $tracking_item;
+		$this->tracking_number = $tracking_item['tracking_number'];
 		$status = str_replace('_', '', $new_status);
 		$status = 'delivered' == $status ? 'delivered_status' : $status;
 
@@ -166,11 +168,7 @@ class WC_TrackShip_Email_Manager {
 		// create a new email
 		$email_class = new WC_Email();
 	
-		if ( get_option( 'enable_email_widget' ) ) {
-			$track_link = isset( $tracking_item[ 'ast_tracking_link' ] ) && get_option( 'wc_ast_use_tracking_page', 1 ) ? $tracking_item[ 'ast_tracking_link' ] : $order->get_view_order_url();
-			$track_link = add_query_arg( array( 'unsubscribe' => 'true' ), $track_link );
-			$message .= '<div style="text-align:center;"><a href="' . $track_link . '">' . esc_html__( 'Unsubscribe Shipment emails', 'trackship-for-woocommerce' ) . '</a></div>';
-		}
+		add_filter( 'woocommerce_email_footer_text', array( $this, 'email_footer_text' ) );
 
 		// wrap the content with the email template and then add styles
 		$message = apply_filters( 'woocommerce_mail_content', $email_class->style_inline( $mailer->wrap_message( $email_heading, $message ) ) );
@@ -197,6 +195,33 @@ class WC_TrackShip_Email_Manager {
 		if ( $sitepress ) {
 			$sitepress->switch_lang($old_lan);
 		}
+	}
+
+	/**
+	 * Code for format email subject
+	*/
+	public function email_footer_text( $footer_text ) {
+
+		$email_trackship_branding = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'email_trackship_branding', 1);
+
+		$trackship_branding_text = '';
+		if ( $email_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+			$tracking_number = isset( $this->tracking_number ) && $this->tracking_number ? $this->tracking_number : '';
+			$track_url = 'https://track.trackship.com/track/' . $tracking_number;
+			
+			$trackship_branding_text = '<div class="trackship_branding"><p><span style="vertical-align:middle;font-size: 14px;">Powered by <a href="' . $track_url . '" title="TrackShip" target="blank">TrackShip</a></span></p></div>';
+		}
+
+		$unsubscribe = '';
+		if ( get_option( 'enable_email_widget' ) ) {
+			$tracking_item = isset( $this->tracking_item ) && $this->tracking_item ? $this->tracking_item : [];
+			$track_link = isset( $tracking_item[ 'ast_tracking_link' ] ) && get_option( 'wc_ast_use_tracking_page', 1 ) ? $tracking_item[ 'ast_tracking_link' ] : $order->get_view_order_url();
+			$track_link = add_query_arg( array( 'unsubscribe' => 'true' ), $track_link );
+			$unsubscribe = '<div style="text-align:center;padding-bottom: 10px;"><a href="' . $track_link . '">' . esc_html__( 'Unsubscribe', 'trackship-for-woocommerce' ) . '</a></div>';
+		}
+
+		$footer_text = ( $trackship_branding_text || $unsubscribe ) ? $trackship_branding_text . $unsubscribe : $footer_text;
+		return $footer_text;
 	}
 
 	/**
