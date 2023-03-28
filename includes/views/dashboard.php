@@ -11,13 +11,14 @@ $days = $late_shipments_days - 1 ;
 $late_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipping_length > %d", $days ) );
 $tracking_issues = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row	
 	WHERE 
-		shipment_status NOT LIKE ( %s )
+		(shipment_status NOT LIKE ( %s )
 		AND shipment_status NOT LIKE ( %s )
 		AND shipment_status NOT LIKE ( %s )
 		AND shipment_status NOT LIKE ( %s )
 		AND shipment_status NOT LIKE ( %s )
 		AND shipment_status NOT LIKE ( %s )
-		AND shipment_status NOT LIKE ( %s )
+		AND shipment_status NOT LIKE ( %s )) 
+		OR pending_status IS NOT NULL
 ", '%delivered%', '%pre_transit%', '%in_transit%', '%out_for_delivery%', '%return_to_sender%', '%available_for_pickup%', '%exception%' ) );
 $return_to_sender_shipment = $wpdb->get_var( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipment_status LIKE ( '%return_to_sender%')" );
 
@@ -89,7 +90,7 @@ $response = wp_remote_post( $url, $args );
 if ( is_wp_error( $response ) ) {
 	$plan_data = array();
 } else {
-	$plan_data = json_decode( $response[ 'body' ] );					
+	$plan_data = json_decode( $response[ 'body' ] );
 }
 $current_plan = $plan_data->subscription_plan;
 $current_balance = $plan_data->tracker_balance;
