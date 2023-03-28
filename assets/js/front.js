@@ -265,7 +265,7 @@ jQuery(document).on("change", ".unsubscribe_emails_checkbox, .unsubscribe_sms_ch
 (function( $ ){
 	'use strict';
 	$.fn.start_loader = function() {
-		if( this.find(".zorem_loader").length === 0 ){this.append("<span class=zorem_loader></span>");}
+		if( this.find(".trackship_loader").length === 0 ){this.append("<span class=trackship_loader></span>");}
 		return this;
 	}; 
 })( jQuery );
@@ -273,7 +273,7 @@ jQuery(document).on("change", ".unsubscribe_emails_checkbox, .unsubscribe_sms_ch
 (function( $ ){
 	'use strict';
 	$.fn.stop_loader = function() {
-		this.find(".zorem_loader").remove();
+		this.find(".trackship_loader").remove();
 		return this;
 	}; 
 })( jQuery );

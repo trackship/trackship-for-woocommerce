@@ -200,7 +200,7 @@ class WC_Trackship_Admin {
 				<?php
 				$tracking_provider = ! empty( $tracking_item['formatted_tracking_provider'] ) ? $tracking_item['formatted_tracking_provider'] : ( !empty( $tracking_item['tracking_provider'] ) ? $tracking_item['tracking_provider'] : $tracking_item['custom_tracking_provider'] ) ;
 				$tracking_number = $tracking_item['tracking_number'];
-				$tracking_link = isset( $tracking_item['ast_tracking_link'] ) && $tracking_item['ast_tracking_link'] ?  $tracking_item['ast_tracking_link'] : $tracking_item['formatted_tracking_link'];
+				$tracking_link = $tracking_item['tracking_page_link'] ?  $tracking_item['tracking_page_link'] : $tracking_item['formatted_tracking_link'];
 				?>
 				<div class="ts-tracking-item">
 					<div class="tracking-content">
@@ -386,17 +386,18 @@ class WC_Trackship_Admin {
 		global $wpdb;
 		$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
 		$total_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipping_date BETWEEN %s AND %s", $start_date, $end_date ) );
-		$active_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipment_status NOT LIKE ( %s ) AND shipping_date BETWEEN %s AND %s", '%delivered%', $start_date, $end_date ) );
+		$active_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE (shipment_status NOT LIKE ( %s ) OR pending_status IS NOT NULL) AND shipping_date BETWEEN %s AND %s", '%delivered%', $start_date, $end_date ) );
 		$delivered_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipment_status LIKE ( %s ) AND shipping_date BETWEEN %s AND %s", '%delivered%', $start_date, $end_date ) );
 		$tracking_issues = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row	
-			WHERE 
-				shipment_status NOT LIKE ( %s )
+			WHERE
+				((shipment_status NOT LIKE ( %s )
 				AND shipment_status NOT LIKE ( %s )
 				AND shipment_status NOT LIKE ( %s )
 				AND shipment_status NOT LIKE ( %s )
 				AND shipment_status NOT LIKE ( %s )
 				AND shipment_status NOT LIKE ( %s )
-				AND shipment_status NOT LIKE ( %s )
+				AND shipment_status NOT LIKE ( %s ))
+				OR pending_status IS NOT NULL)
 				AND shipping_date BETWEEN %s AND %s
 		", '%delivered%', '%pre_transit%', '%in_transit%','%out_for_delivery%', '%return_to_sender%', '%available_for_pickup%', '%exception%', $start_date, $end_date ) );
 		
@@ -1151,7 +1152,7 @@ class WC_Trackship_Admin {
 			</style>
 		<?php } ?>
 		<style> #toplevel_page_trackship_customizer { display: none !important; } </style>
-		<?php echo '<div id=admin_tracking_widget class=popupwrapper style="display:none;"><span class="admin_tracking_page_close popupclose"><span class="dashicons dashicons-no-alt"></span></span><div class=popuprow></div></div>'; ?>
+		<?php echo '<div id=admin_tracking_widget class=popupwrapper style="display:none;"><span class="admin_tracking_page_close popupclose"><span class="dashicons dashicons-no-alt"></span></span><div class=popuprow></div><div class=popupclose></div></div>'; ?>
 		<div id=admin_error_more_info_widget class=popupwrapper style="display:none;">
 			<div class="more_info_popup popuprow">
 				<?php
@@ -1403,15 +1404,18 @@ class WC_Trackship_Admin {
 	public function detect_custom_mapping_provider( $tracking_provider ) {
 		$map_provider_array = get_option( 'trackship_map_provider', [] );
 
-		// $map_provider_array key replace space to '-' and lower case for WooCommerce Shipment tracking plugin
-		if ( trackship_for_woocommerce()->is_st_active() || trackship_for_woocommerce()->is_active_yith_order_tracking() || trackship_for_woocommerce()->is_active_woo_order_tracking() ) {
-			$map_provider_array = array_change_key_case( $map_provider_array, CASE_LOWER );
-			$keys = str_replace( ' ', '-', array_keys( $map_provider_array ) );
-			$map_provider_array = array_combine( $keys, array_values( $map_provider_array ) );
-		}
-
 		if ( isset( $map_provider_array[ $tracking_provider ] ) ) {
 			return $map_provider_array[ $tracking_provider ];
+		}
+		
+		// $map_provider_array key replace space to '-' and lower case
+		$map_provider_array = array_change_key_case( $map_provider_array, CASE_LOWER );
+		$keys = str_replace( ' ', '-', array_keys( $map_provider_array ) );
+		$map_provider_array = array_combine( $keys, array_values( $map_provider_array ) );
+		
+		$provider_slug = str_replace(  ' ', '-', strtolower($tracking_provider) );
+		if ( isset( $map_provider_array[ $provider_slug ] ) ) {
+			return $map_provider_array[ $provider_slug ];
 		}
 		return $tracking_provider;
 	}

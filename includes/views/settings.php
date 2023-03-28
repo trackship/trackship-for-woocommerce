@@ -13,7 +13,7 @@ $response = wp_remote_post( $url, $args );
 if ( is_wp_error( $response ) ) {
 	$plan_data = array();
 } else {
-	$plan_data = json_decode( $response[ 'body' ] );					
+	$plan_data = json_decode( $response[ 'body' ] );
 }
 update_option( 'user_plan', $plan_data->subscription_plan );
 if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocommerce/zorem-sms-for-woocommerce.php' ) ) {

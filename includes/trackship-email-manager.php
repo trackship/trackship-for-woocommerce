@@ -9,8 +9,9 @@ class WC_TrackShip_Email_Manager {
 	/**
 	 * Constructor sets up actions
 	 */
-	public function __construct() {		
+	public function __construct() {
 		add_action( 'ts_status_change_trigger', array( $this, 'ts_status_change_trigger' ), 10, 4 );
+		// add_filter( 'trackship_mail_content', [ $this, 'trackship_mail_content' ], 99, 2 );
 	}
 
 	public function ts_status_change_trigger ( $order_id, $old_status, $new_status, $tracking_number ) {
@@ -35,6 +36,7 @@ class WC_TrackShip_Email_Manager {
 	 */
 	public function shippment_email_trigger( $order_id, $old_status, $new_status, $tracking_item, $shipment_status ) {
 		$order = wc_get_order( $order_id );
+		$this->order = $order;
 		$this->shipment_status = $shipment_status;
 		$this->tracking_item = $tracking_item;
 		$this->tracking_number = $tracking_item['tracking_number'];
@@ -95,11 +97,10 @@ class WC_TrackShip_Email_Manager {
 		$mailer = WC()->mailer();
 		
 		$email_heading = $this->email_heading($email_heading, $order_id, $order);
-							
-		$message = $this->append_analytics_link($email_content, $status);								
+		$message = $this->append_analytics_link($email_content, $status);
 				
-		$local_template	= get_stylesheet_directory() . '/woocommerce/emails/tracking-info.php';			
-		if ( file_exists( $local_template ) && is_writable( $local_template ) ) {				
+		$local_template	= get_stylesheet_directory() . '/woocommerce/emails/tracking-info.php';
+		if ( file_exists( $local_template ) && is_writable( $local_template ) ) {
 			$message .= wc_get_template_html( 'emails/tracking-info.php', array( 
 				'tracking_items' => array($tracking_item),
 				'shipment_status' => array($shipment_status),
@@ -164,7 +165,7 @@ class WC_TrackShip_Email_Manager {
 				trackship_for_woocommerce()->get_plugin_path() . '/templates/'
 			);	
 		}
-						
+
 		// create a new email
 		$email_class = new WC_Email();
 	
@@ -172,6 +173,8 @@ class WC_TrackShip_Email_Manager {
 
 		// wrap the content with the email template and then add styles
 		$message = apply_filters( 'woocommerce_mail_content', $email_class->style_inline( $mailer->wrap_message( $email_heading, $message ) ) );
+		$message = apply_filters( 'trackship_mail_content', $message, $email_heading );
+
 		add_filter( 'wp_mail_from', array( $this, 'get_from_address' ) );
 		add_filter( 'wp_mail_from_name', array( $this, 'get_from_name' ) );
 		
@@ -198,6 +201,27 @@ class WC_TrackShip_Email_Manager {
 	}
 
 	/**
+	 * compatibility with Villa theme woocommerce email customizer
+	*/
+	public function trackship_mail_content( $message, $trackship_heading ) {
+		if ( is_plugin_active( 'woocommerce-email-template-customizer/woocommerce-email-template-customizer.php' ) ) {
+			$default_temp_id = VIWEC\INCLUDES\Email_Trigger::init()->get_default_template();
+			$email_render    = VIWEC\INCLUDES\Email_Render::init();
+	
+			$email_render->recover_heading       = $trackship_heading;
+			$email_render->other_message_content = $message;
+			$email_render->use_default_template  = true;
+			$data                                = get_post_meta( $default_temp_id, 'viwec_email_structure', true );
+			$data                                = json_decode( html_entity_decode( $data ), true );
+	
+			ob_start();
+			$email_render->render( $data );
+			$message = ob_get_clean();
+		}
+		return $message;
+	}
+
+	/**
 	 * Code for format email subject
 	*/
 	public function email_footer_text( $footer_text ) {
@@ -215,7 +239,7 @@ class WC_TrackShip_Email_Manager {
 		$unsubscribe = '';
 		if ( get_option( 'enable_email_widget' ) ) {
 			$tracking_item = isset( $this->tracking_item ) && $this->tracking_item ? $this->tracking_item : [];
-			$track_link = isset( $tracking_item[ 'ast_tracking_link' ] ) && get_option( 'wc_ast_use_tracking_page', 1 ) ? $tracking_item[ 'ast_tracking_link' ] : $order->get_view_order_url();
+			$track_link = $tracking_item['tracking_page_link'] ?  $tracking_item['tracking_page_link'] : $this->order->get_view_order_url();
 			$track_link = add_query_arg( array( 'unsubscribe' => 'true' ), $track_link );
 			$unsubscribe = '<div style="text-align:center;padding-bottom: 10px;"><a href="' . $track_link . '">' . esc_html__( 'Unsubscribe', 'trackship-for-woocommerce' ) . '</a></div>';
 		}
@@ -286,7 +310,7 @@ class WC_TrackShip_Email_Manager {
 	/**
 	 * Code for format email content 
 	 */
-	public function email_content( $email_content, $order_id, $order ) {						
+	public function email_content( $email_content, $order_id, $order ) {
 		$customer_email = $order->get_billing_email();
 		$first_name = $order->get_billing_first_name();
 		$last_name = $order->get_billing_last_name();
@@ -307,7 +331,7 @@ class WC_TrackShip_Email_Manager {
 		$email_content = str_replace( '{customer_last_name}', $last_name, $email_content );
 		
 		if ( isset( $company_name ) ) {
-			$email_content = str_replace( '{customer_company_name}', $company_name, $email_content );	
+			$email_content = str_replace( '{customer_company_name}', $company_name, $email_content );
 		} else {
 			$email_content = str_replace( '{customer_company_name}', '', $email_content );	
 		}	 
@@ -330,12 +354,12 @@ class WC_TrackShip_Email_Manager {
 	 */
 	public function append_analytics_link( $message, $status ) {
 		if ( 'delivered_status' == $status ) {
-			$analytics_link = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'wcast_delivered_status_email_settings', 'wcast_delivered_status_analytics_link', '' );	
+			$analytics_link = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'wcast_delivered_status_email_settings', 'wcast_delivered_status_analytics_link', '' );
 		} else {
 			$analytics_link = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'wcast_' . $status . '_email_settings', 'wcast_' . $status . '_analytics_link', '' );
-		}		
+		}
 	
-		if ( $analytics_link ) {	
+		if ( $analytics_link ) {
 			$regex = '#(<a href=")([^"]*)("[^>]*?>)#i';
 			$message = preg_replace_callback( $regex, function ( $match ) use ( $status ) {
 				$url = $match[2];
@@ -344,9 +368,9 @@ class WC_TrackShip_Email_Manager {
 				}
 				$url .= $analytics_link;
 				return $match[1] . $url . $match[3];
-			}, $message);	
+			}, $message);
 		}
-		return $message;	
+		return $message;
 	}	
 
 	/**
@@ -399,4 +423,4 @@ function WC_TrackShip_Email_Manager() {
 
 	return $instance;
 }
-return new WC_TrackShip_Email_Manager();
+WC_TrackShip_Email_Manager();

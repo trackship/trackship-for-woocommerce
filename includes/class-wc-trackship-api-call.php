@@ -116,7 +116,7 @@ class WC_TrackShip_Api_Call {
 						$ts_shipment_status[$key]['status'] = $shipment_status[$key]['pending_status'];
 						$order->update_meta_data( 'ts_shipment_status', $ts_shipment_status );
 						$args = array(
-							'shipment_status'	=> $shipment_status[$key]['pending_status'],
+							'pending_status'	=> $body['status_msg'],
 							'shipping_provider'	=> $tracking_provider,
 							'shipping_date'		=> date_i18n('Y-m-d', $val['date_shipped'] ),
 							'shipping_country'	=> $order->get_shipping_country() ? WC()->countries->countries[ $order->get_shipping_country() ] : '',
@@ -138,7 +138,7 @@ class WC_TrackShip_Api_Call {
 						$order->update_meta_data( 'shipment_status', $shipment_status );
 						$order->save();
 						$args = array(
-							'shipment_status'	=> $shipment_status[$key]['pending_status'],
+							'pending_status'	=> $body['status_msg'],
 							'shipping_provider'	=> $tracking_provider,
 							'shipping_date'		=> date_i18n('Y-m-d', $val['date_shipped'] ),
 							'est_delivery_date' => null,

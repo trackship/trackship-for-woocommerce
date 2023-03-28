@@ -49,9 +49,7 @@ class WC_TrackShip_Front {
 		
 		add_action( 'woocommerce_view_order', array( $this, 'show_tracking_page_widget' ), 5, 1 );
 
-		if ( !class_exists('Ast_Pro') ) {
-			add_filter( 'tracking_widget_product_array', array( $this, 'tracking_widget_product_array_callback' ), 10, 5 );
-		}
+		add_filter( 'tracking_widget_product_array', array( $this, 'tracking_widget_product_array_callback' ), 10, 5 );
 
 		//save optin optout butoon 
 		add_action( 'wp_ajax_save_unsunscribe_email_notifications_data', array( $this, 'unsubscribe_emails_save_callback') );
@@ -277,8 +275,7 @@ class WC_TrackShip_Front {
 		if ( ! is_trackship_connected() ) {
 			return;
 		}
-		
-		$order_id = isset( $_POST['order_id'] ) ? wc_clean( $_POST['order_id'] ) : '';
+		$order_id = isset( $_POST['order_id'] ) ? ltrim( wc_clean( wp_unslash( $_POST['order_id'] ) ), '#' ) : '';
 		$email = isset( $_POST['order_email'] ) ? sanitize_email( $_POST['order_email'] ) : '';
 		$tracking_number = isset( $_POST['order_tracking_number'] ) ? wc_clean( $_POST['order_tracking_number'] ) : '';
 		
@@ -660,16 +657,16 @@ class WC_TrackShip_Front {
 				$product_id = $variation_id;
 			}
 			
-			$products[$product_id] = array(
+			$products[$item_id] = array(
 				'item_id' => $item_id,
 				'product_id' => $product_id,
 				'product_name' => $item->get_name(),
 				'product_qty' => $item->get_quantity(),
 			);
 		}
+
 		$products = apply_filters( 'tracking_widget_product_array', $products, $order_id, $tracker, $tracking_provider, $tracking_number );
 
-		//echo '<pre>';print_r($products);echo '</pre>';
 		?>
 		
 			<ul class="tpi_product_tracking_ul">
@@ -754,10 +751,10 @@ class WC_TrackShip_Front {
 					if ( $product_list->product ) {							
 						$product = wc_get_product( $product_list->product );							
 						if ( $product ) {
-							$tpi_products[$product_list->product] = array(
+							$tpi_products[$product_list->item_id] = array(
 								'product_id' => $product_list->product,
 								'product_name' => $product->get_name(),
-								'product_qty' => $product_list->qty,									
+								'product_qty' => $product_list->qty,
 							);
 						}			
 					}

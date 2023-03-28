@@ -2,9 +2,9 @@
 Contributors: TrackShip
 Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 5.3
-Tested up to: 6.1.1
+Tested up to: 6.2.0
 Requires PHP: 7.2
-Stable tag: 1.5.2
+Stable tag: 1.6.0
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,6 +111,24 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended).
 
 == Changelog ==
+= 1.6.0 - 2023-03-28 =
+* Fix - Fix warning of 'delivery_number' for not shipped order tracking widget.
+* Fix - same products with different prices issue on Tracking page
+* Enhancement - TrackShip Shipment design improved and new column added
+* Dev - Search with the pound sign (#) in the Tracking form
+* Dev - remove the case-sensitive for the carrier mapping
+* Dev - Remove tracking link from delivered shipment status email
+* Dev - Tracking Page Widget click outside and close popup in admin area 
+* Dev - admin phone number field added in SMS settings
+* Dev - show/hide shipping provider image option added to the email customizer
+* Dev - do not send Shipment status notifications when the order status is delivered
+* Dev - Shipment status filter added in the admin WooCommerce order table
+* Dev - Datatable library updated
+* Dev - Translation added for Deutsch (Sie) language
+* Dev - Translations updated
+* Dev - Tested with WP 6.2.0
+* Dev - Tested with WC 7.5.1
+
 = 1.5.2 - 2023-02-20 =
 * Enhancement - View Shipment log added in the order admin for shipment
 * Dev - TrackShip branding added in the Shipment statuses email

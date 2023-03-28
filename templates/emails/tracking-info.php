@@ -19,14 +19,14 @@ if ( $tracking_items ) :
 	$link_color = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'link_color', '');
 	$background_color = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'bg_color', '#fff');
 	$font_color = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'font_color', '#333');
+	$shipping_provider_logo = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'shipping_provider_logo', 1);
 	?>
 	<div class="tracking_info">
 		<div class="tracking_list">
 			<?php foreach ( $tracking_items as $key => $tracking_item ) { ?>
 				<?php
 				$ship_status = $new_status;
-				$formatted_tracking_link = isset( $tracking_item[ 'formatted_tracking_link' ] ) ? $tracking_item[ 'formatted_tracking_link' ] : '';
-				$tracking_link = isset( $tracking_item[ 'ast_tracking_link' ] ) ? $tracking_item[ 'ast_tracking_link' ] : $formatted_tracking_link;
+				$tracking_link = $tracking_item['tracking_page_link'] ?  $tracking_item['tracking_page_link'] : $tracking_item['formatted_tracking_link'];
 				do_action( 'before_tracking_widget_email', $tracking_item, $order_id );
 				?>
 				<div class="tracking_index display-table">
@@ -77,9 +77,9 @@ if ( $tracking_items ) :
 								esc_html_e( 'Shipped', 'trackship-for-woocommerce' );
 								echo '</div>';
 							} else {
-								if ( isset( $tracking_item['tracking_provider_image'] ) ) {
+								if ( isset( $tracking_item['tracking_provider_image'] ) && $shipping_provider_logo ) {
 									?>
-									<img style="height:45px;vertical-align:middle;margin-right: 10px;" src="<?php echo esc_url( $tracking_item['tracking_provider_image'] ); ?>">
+									<img style="height:45px;width:45px;vertical-align:middle;margin-right: 10px;" src="<?php echo esc_url( $tracking_item['tracking_provider_image'] ); ?>">
 								<?php } ?>
 								<div class="tracking_info" style="margin:10px 0;">
 									<?php echo esc_html( $tracking_item['formatted_tracking_provider'] ); ?>
