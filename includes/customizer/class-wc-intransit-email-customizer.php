@@ -19,7 +19,7 @@ class TSWC_Intransit_Customizer_Email {
 		// Get our Customizer defaults
 		$this->defaults = trackship_admin_customizer()->wcast_shipment_settings_defaults( 'intransit' );
 		
-		add_action( 'parse_request', array( $this, 'set_up_preview' ) );	
+		add_action( 'parse_request', array( $this, 'set_up_preview' ) );
 	}
 
 	public static function is_own_preview_request() {
@@ -145,9 +145,9 @@ class TSWC_Intransit_Customizer_Email {
 		
 		// wrap the content with the email template and then add styles
 		$email_html = apply_filters( 'woocommerce_mail_content', $email->style_inline( $mailer->wrap_message( $email_heading, $message ) ) );
-		echo wp_kses_post( $email_html );
+		echo $email_html = apply_filters( 'trackship_mail_content', $email_html, $email_heading );
 	}
-	
+
 	/**
 	 * Code for format email subject
 	*/

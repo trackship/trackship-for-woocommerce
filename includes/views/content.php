@@ -7,7 +7,7 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 <div class="woocommerce trackship_admin_layout">
 	<span class="woocommerce-layout__activity-panel"><?php include 'header-sidebar.php'; ?></span>
 	<div class="trackship_admin_content" >
-		<div class="trackship_nav_div">	
+		<div class="trackship_nav_div">
 			<?php
 			$array = array(
 				array(
@@ -35,7 +35,7 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 					<label for="tab_trackship_<?php esc_html_e( $val[ 'slug' ] ); ?>" class="tab_label <?php echo 'settings' == $val[ 'slug' ] ? 'first_label' : ''; ?>">
 						<?php esc_html_e( $val[ 'label' ] ); ?>
 					</label>
-				<?php } ?>					
+				<?php } ?>
 			</div>
 			<div class="menu_devider"></div>
 			<?php $this->get_trackship_notice_msg(); ?>
@@ -48,6 +48,6 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 					</section>
 				<?php } ?>
 			<?php } ?>
-		</div>                   					
-   </div>				
+		</div>
+	</div>
 </div>

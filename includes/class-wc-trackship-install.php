@@ -188,6 +188,16 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.13' );
 		}
 
+		if ( version_compare( get_option( 'trackship_db' ), '1.14', '<' ) ) {
+			global $wpdb;
+			$shipment_table = $this->shipment_table;
+			$sql = "ALTER TABLE {$shipment_table} CHANGE shipping_date shipping_date DATE NULL DEFAULT CURRENT_TIMESTAMP";
+			$wpdb->query($sql);
+			$this->check_column_exists();
+			$wpdb->query( "ALTER TABLE $shipment_table ADD INDEX last_event (last_event);" );
+			update_option( 'trackship_db', '1.14' );
+		}
+
 	}
 	
 	public function update_analytics_table() {
@@ -258,8 +268,10 @@ class WC_Trackship_Install {
 				if ( !empty( $item['date_shipped'] ) ) {
 					$shipping_date = gmdate('Y-m-d', $item['date_shipped'] );
 				}
-				$shipment_length = trackship_for_woocommerce()->shipments->get_shipment_length( $shipment_status[$key] );
-				
+
+				$row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id , $item['tracking_number'] );
+				$shipment_length = trackship_for_woocommerce()->shipments->get_shipment_length( $row );
+
 				$data = array(
 					'order_id'			=> $order_id,
 					'order_number'		=> $order->get_order_number(),
@@ -398,13 +410,16 @@ class WC_Trackship_Install {
 				`tracking_number` VARCHAR(80) ,
 				`shipping_provider` VARCHAR(50) ,
 				`shipment_status` VARCHAR(30) ,
-				`shipping_date` DATE ,
+				`pending_status` VARCHAR(30) ,
+				`shipping_date` DATE NOT NULL CURRENT_TIMESTAMP ,
 				`shipping_country` TEXT ,
 				`shipping_length` VARCHAR(10) ,
 				`updated_date` DATE ,
 				`late_shipment_email` TINYINT DEFAULT 0,
 				`est_delivery_date` DATE,
 				`new_shipping_provider` VARCHAR(50),
+				`last_event` LONGTEXT ,
+				`last_event_time` DATETIME ,
 				PRIMARY KEY (`id`),
 				INDEX `shipping_date` (`shipping_date`),
 				INDEX `status` (`shipment_status`),
@@ -415,7 +430,8 @@ class WC_Trackship_Install {
 				INDEX `updated_date` (`updated_date`),
 				INDEX `late_shipment_email` (`late_shipment_email`),
 				INDEX `est_delivery_date` (`est_delivery_date`),
-				INDEX `new_shipping_provider` (`new_shipping_provider`)
+				INDEX `new_shipping_provider` (`new_shipping_provider`),
+				INDEX `last_event` (`last_event`)
 			) $charset_collate;";
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 			dbDelta( $sql );
@@ -438,6 +454,7 @@ class WC_Trackship_Install {
 				`delivery_provider` VARCHAR(30) ,
 				`shipping_service` VARCHAR(30) ,
 				`tracking_events` LONGTEXT ,
+				`destination_events` LONGTEXT ,
 				PRIMARY KEY (`meta_id`),
 				INDEX `meta_id` (`meta_id`)
 			) $charset_collate;";
@@ -459,13 +476,16 @@ class WC_Trackship_Install {
 			'tracking_number'		=> ' VARCHAR(80)',
 			'shipping_provider'		=> ' VARCHAR(50)',
 			'shipment_status'		=> ' VARCHAR(30)',
-			'shipping_date'			=> ' DATE',
+			'pending_status'		=> ' VARCHAR(30)',
+			'shipping_date'			=> ' DATE NOT NULL CURRENT_TIMESTAMP',
 			'shipping_country'		=> ' TEXT',
 			'shipping_length'		=> ' VARCHAR(10)',
 			'updated_date'			=> ' DATE',
 			'late_shipment_email'	=> ' TINYINT DEFAULT 0',
 			'est_delivery_date'		=> ' DATE',
 			'new_shipping_provider'	=> ' VARCHAR(50)',
+			'last_event'			=> ' LONGTEXT',
+			'last_event_time'		=> ' DATETIME',
 		);
 		foreach( $shipment_table as $column_name => $type ) {
 			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '%1s' AND COLUMN_NAME = '%2s' ", $this->shipment_table, $column_name ), ARRAY_A );
@@ -482,6 +502,7 @@ class WC_Trackship_Install {
 			'delivery_provider'		=> ' VARCHAR(30)',
 			'shipping_service'		=> ' VARCHAR(30)',
 			'tracking_events'		=> ' LONGTEXT',
+			'destination_events'	=> ' LONGTEXT',
 		);
 		foreach( $shipment_table_meta as $column_name => $type ) {
 			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '%1s' AND COLUMN_NAME = '%2s' ", $this->shipment_table_meta, $column_name ), ARRAY_A );

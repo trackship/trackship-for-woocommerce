@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	?>
 	<div class="trackship_tab_name" style="margin-top: -10px;">
 		<input id="tab_email_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-tab="email-notification" data-type="email" <?php echo 'checked'; ?> >
-		<label for="tab_email_notifications" class="inner_tab_label ts_tabs_label inner_email_tab"><?php esc_html_e( 'Email Notifications', 'trackship-for-woocommerce' ); ?></label>				
+		<label for="tab_email_notifications" class="inner_tab_label ts_tabs_label inner_email_tab"><?php esc_html_e( 'Email Notifications', 'trackship-for-woocommerce' ); ?></label>
     
 		<input id="tab_sms_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-tab="sms-notification" data-type="sms" <?php echo 'sms-notification' == $tab_type ? 'checked' : ''; ?> >
 		<label for="tab_sms_notifications" class="inner_tab_label ts_tabs_label inner_sms_tab"><?php esc_html_e( 'SMS Notifications', 'trackship-for-woocommerce' ); ?></label>
@@ -52,13 +52,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<a class="edit_customizer_a dashicons dashicons-admin-generic" href="<?php echo esc_html( $val['customizer_url'] ); ?>"></a>
 						</td>
 					</tr>
-				<?php } ?>										
+				<?php } ?>
 			</tbody>
 		</table>
 		<?php do_action( 'after_shipment_status_email_notifications' ); ?>
 	</section>
 	<section class="inner_tab_section shipment-status-late-email-section">
-		<form method="post" id="trackship_late_shipments_form" action="" enctype="multipart/form-data">					
+		<form method="post" id="trackship_late_shipments_form" action="" enctype="multipart/form-data">
 			<table class="form-table heading-table shipment-status-email-table">
 				<tbody>
 					<tr class="late-shipment-tr <?php echo 1 == $wcast_enable_late_shipments_admin_email ? 'enable' : 'disable'; ?> ">
@@ -82,21 +82,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</table>
 			<?php 
 			$late_shipments_email_settings = get_option('late_shipments_email_settings');
-			$wcast_late_shipments_email_to = isset( $late_shipments_email_settings['wcast_late_shipments_email_to'] ) ? $late_shipments_email_settings['wcast_late_shipments_email_to'] : '';			
+			$wcast_late_shipments_email_to = isset( $late_shipments_email_settings['wcast_late_shipments_email_to'] ) ? $late_shipments_email_settings['wcast_late_shipments_email_to'] : '';
 			$wcast_late_shipments_daily_digest_time = isset( $late_shipments_email_settings['wcast_late_shipments_daily_digest_time'] ) ? $late_shipments_email_settings['wcast_late_shipments_daily_digest_time'] : '' ;
 			?>
 			<div class="late-shipments-email-content-table">
-				<div class="late_shipment_before_table">
-					
-					<span class="late_shipment_save_button">
-						
-						
-					</span>
-				</div>
 				<table class="form-table hide_table">
 					<tr class="">
 						<th scope="row" class="titledesc">
-							<label for=""><?php esc_html_e('Recipient(s)', 'trackship-for-woocommerce'); ?></label>	
+							<label for=""><?php esc_html_e('Recipient(s)', 'trackship-for-woocommerce'); ?></label>
 						</th>	
 						<td class="forminp">
 							<fieldset>
@@ -105,17 +98,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</td>
 					</tr>
 					<?php 
-					$send_time_array = array();										
+					$send_time_array = array();
 					for ( $hour = 0; $hour < 24; $hour++ ) {
 						for ( $min = 0; $min < 60; $min = $min + 30 ) {
 							$this_time = gmdate( 'H:i', strtotime( "$hour:$min" ) );
 							$send_time_array[ $this_time ] = $this_time;
-						}	
+						}
 					}
 					?>
 					<tr class="">
 						<th scope="row" class="titledesc" style="width:30%">
-							<label for=""><?php esc_html_e('Send email at', 'trackship-for-woocommerce'); ?></label>	
+							<label for=""><?php esc_html_e('Send email at', 'trackship-for-woocommerce'); ?></label>
 						</th>
 						<td class="forminp" style="width:70%">
 							<select class="select daily_digest_time" name="wcast_late_shipments_daily_digest_time">
@@ -135,4 +128,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php } ?>
 		<?php do_action( 'shipment_status_sms_section' ); ?>
 	</section>
-</div>				
+</div>

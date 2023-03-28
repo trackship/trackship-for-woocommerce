@@ -377,6 +377,15 @@ class tswc_smswoo_admin {
 				'id'		=> 'smswoo_sender_phone_number',
 				'class'		=> 'smswoo_sms_provider smswoo_nexmo_sms_provider smswoo_twilio_sms_provider smswoo_clicksend_sms_provider smswoo_smsalert_sms_provider smswoo_msg91_sms_provider', //add provider class if need this field in another provider
 			),
+			'smswoo_admin_phone_number' => array(
+				'title'		=> __( 'Admin Phone Number', 'sms-for-woocommerce' ),
+				'tooltip'		=> __( 'Enter admin phone number with country code.', 'sms-for-woocommerce'),
+				'desc_tip'	=> __( 'Enter admin phone number with country code.', 'sms-for-woocommerce' ),
+				'type'		=> 'text',
+				'show'		=> true,
+				'id'		=> 'smswoo_admin_phone_number',
+				'class'		=> 'halfwidth',
+			),
         );
 		$settings = apply_filters( "smswoo_sms_provider_array", $settings );
         return $settings;

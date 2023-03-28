@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php
 	// to be removed after 2-3 version - action has been added in 1.3.4 -- action trackship_tracking_header_before
 	do_action( 'trackship_tracking_header_before', $order->get_id(), $tracker, $provider_name, $tracking_number );
-	$row = trackship_for_woocommerce()->actions->get_tracking_shipment_row( $order->get_id(), $tracking_number );
+	$row = trackship_for_woocommerce()->actions->get_shipment_row( $order->get_id(), $tracking_number );
 	$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order->get_id(), $tracking_number );
 	?>
 
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<strong><?php esc_html_e( $tracking_number ); ?></strong>
 						<?php } ?>
 					</li>
-					<?php if ( !$hide_last_mile && $row->delivery_number ) { ?>
+					<?php if ( !$hide_last_mile && isset($row->delivery_number) && $row->delivery_number ) { ?>
 						<li class="last_mile_tracking_number">
 							<span><?php esc_html_e( 'Delivery tracking Number', 'trackship-for-woocommerce' ); ?></span>
 							<strong> <?php echo esc_html( $row->delivery_number ) ?></strong>
