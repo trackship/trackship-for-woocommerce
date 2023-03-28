@@ -2,14 +2,14 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 1.5.2
+ * Version: 1.6.0
  * Author: TrackShip
  * Author URI: https://trackship.com/
  * License: GPL-2.0+
  * License URI: 
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
- * WC tested up to: 7.4.0
+ * WC tested up to: 7.5.1
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,7 +23,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.5.2';
+	public $version = '1.6.0';
 
 	/**
 	 * Initialize the main plugin function
@@ -369,13 +369,13 @@ class Trackship_For_Woocommerce {
 
 	public function get_tracking_items( $order_id ) {
 		if ( function_exists( 'ast_get_tracking_items' ) ) {
-			return ast_get_tracking_items( $order_id );	
+			$tracking_items = ast_get_tracking_items( $order_id );	
 		} elseif ( class_exists( 'WC_Shipment_Tracking' ) ) {
-			return WC_Shipment_Tracking()->actions->get_tracking_items( $order_id, true );
+			$tracking_items = WC_Shipment_Tracking()->actions->get_tracking_items( $order_id, true );
 		} elseif ( class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 			$order = wc_get_order( $order_id );
 			if ( !$order || !$order->get_meta( 'ywot_tracking_code', true ) ) {
-				return array();
+				$tracking_items = array();
 			}
 			$tracking_provider = $order->get_meta( 'ywot_carrier_name', true ) ? $order->get_meta( 'ywot_carrier_name', true ) : $order->get_meta( 'ywot_carrier_id', true );
 			$tracking_items[0] = array(
@@ -384,17 +384,23 @@ class Trackship_For_Woocommerce {
 				'formatted_tracking_link'		=> $order->get_meta( 'ywot_carrier_url', true ),
 				'tracking_number'				=> $order->get_meta( 'ywot_tracking_code', true ),
 				'tracking_id'					=> md5( "{$tracking_provider}-{$order->get_meta( 'ywot_tracking_code', true )}" . microtime() ),
-				'ast_tracking_link'				=> trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $order->get_meta( 'ywot_tracking_code', true ) ),
+				'tracking_page_link'			=> trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $order->get_meta( 'ywot_tracking_code', true ) ),
 				'date_shipped'					=> $order->get_meta( 'ywot_pick_up_date', true ),
 			);
-			return $tracking_items ? $tracking_items : array();
+			$tracking_items = $tracking_items ? $tracking_items : array();
 		} elseif ( $this->is_active_woo_order_tracking() ) {
-			return $this->wot_ts->woo_orders_tracking_items( $order_id );
+			$tracking_items = $this->wot_ts->woo_orders_tracking_items( $order_id );
 		} else {
 			$order = wc_get_order( $order_id );
 			$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );
-			return $tracking_items ? $tracking_items : array();
+			$tracking_items = $tracking_items ? $tracking_items : array();
 		}
+
+		foreach ( $tracking_items as $key => $tracking_item ) {
+			$tracking_items[$key]['tracking_page_link'] = trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $tracking_item['tracking_number'] );
+		}
+
+		return $tracking_items;
 	}
 	
 }

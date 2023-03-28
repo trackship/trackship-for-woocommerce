@@ -11,12 +11,16 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <table class="widefat dataTable fixed fullfilments_table hover" cellspacing="0" id="active_shipments_table" style="width: 100%;">
                     <thead>
                         <tr class="tabel_heading_th">
-                            <th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Shipping date', 'trackship-for-woocommerce'); ?></th>
+                            <th id="columnname" class="manage-column column-columnname" scope="col"><input type="checkbox" class="all_checkboxes"></th>
                             <th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Order', 'woocommerce'); ?></th>
-                            <th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Shipment status', 'trackship-for-woocommerce'); ?></th>
-                            <th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Shipping provider', 'trackship-for-woocommerce'); ?></th>
+                            <th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Shipped date', 'trackship-for-woocommerce'); ?></th>
                             <th id="columnname" class="manage-column column-destination" scope="col"><?php esc_html_e('Tracking Number', 'trackship-for-woocommerce'); ?></th>
+                            <th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Shipping carrier', 'trackship-for-woocommerce'); ?></th>
+                            <th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Shipment status', 'trackship-for-woocommerce'); ?></th>
+							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Ship from', 'trackship-for-woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Ship to', 'trackship-for-woocommerce'); ?></th>
+                            <th id="columnname" class="manage-column column-destination" scope="col"><?php esc_html_e('Latest Event', 'trackship-for-woocommerce'); ?></th>
+                            <th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Customer', 'trackship-for-woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Shipping time', 'trackship-for-woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-destination" scope="col"><?php esc_html_e('Delivery date', 'trackship-for-woocommerce'); ?></th>
                             <th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Actions', 'trackship-for-woocommerce'); ?></th>

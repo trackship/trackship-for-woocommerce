@@ -42,7 +42,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	/**
 	 * Register the routes for trackings.
 	 */
-	public function register_routes() {						
+	public function register_routes() {
 		
 		//disconnect_from_trackship
 		register_rest_route( $this->namespace, '/disconnect_from_trackship', array(
@@ -70,7 +70,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		) );
 		
 		//check_ts4wc_installed
-		register_rest_route( $this->namespace, '/check_ts4wc_installed', array(			
+		register_rest_route( $this->namespace, '/check_ts4wc_installed', array(
 			array(
 				'methods'             => 'POST',
 				'callback'            => array( $this, 'check_ts4wc_installed' ),
@@ -80,7 +80,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		) );
 		
 		//update-carrier
-		register_rest_route( $this->namespace, '/ts-update-carrier', array(			
+		register_rest_route( $this->namespace, '/ts-update-carrier', array(
 			array(
 				'methods'             => 'POST',
 				'callback'            => array( $this, 'ts_update_carrier' ),
@@ -204,7 +204,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			
 			if ( isset( $shipment_status[$key]['status'] ) ) {
 				$previous_status = $shipment_status[$key]['status'];	
-			}			
+			}
 			
 			unset($shipment_status[$key]['pending_status']);
 			
@@ -225,8 +225,14 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			
 			$ts_shipment_status[$key]['status'] = $tracking_event_status;
 			
+			$last_event = '';
+			$last_event = $this->get_last_event( $tracking_events, $tracking_destination_events );
+
 			$args = array(
-				'shipment_status'	=> $tracking_event_status,
+				'pending_status'		=> null,
+				'shipment_status'		=> $tracking_event_status,
+				'last_event'			=> $last_event,
+				'last_event_time'		=> $last_event_time ? $last_event_time : gmdate( 'Y-m-d H:i:s' ),
 			);
 			$args2 = array(
 				'origin_country'		=> $request['origin_country'],
@@ -234,7 +240,8 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 				'delivery_number'		=> $request['delivery_number'],
 				'delivery_provider'		=> $request['delivery_provider'],
 				'shipping_service'		=> $request['shipping_service'],
-				'tracking_events'		=> $request['tracking_events']
+				'tracking_events'		=> json_encode($tracking_events),
+				'destination_events'	=> json_encode($tracking_destination_events),
 			);
 			$args['est_delivery_date'] = $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : null;
 			trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_item['tracking_number'], $args, $args2 );
@@ -242,7 +249,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			$order->update_meta_data( 'ts_shipment_status', $ts_shipment_status );
 			$order->save();
 
-			if ( $previous_status != $tracking_event_status ) {
+			if ( $previous_status != $tracking_event_status && 'delivered' != $order->get_status() ) {
 				// Schedule action for send Shipment status notifiations
 				as_schedule_single_action( time(), 'ts_status_change_trigger', array( $order_id, $previous_status, $tracking_event_status, $tracking_number ), 'TrackShip' );
 
@@ -262,6 +269,19 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		);
 		
 		return rest_ensure_response( $data );
+	}
+
+	public function get_last_event( $events, $destination_events ) {
+		$last_event = '';
+		$tracking_events = $destination_events ? $destination_events : $events;
+
+		if ( $tracking_events ) {
+			$tracking_events = array_reverse($tracking_events);
+			$tracking_event = $tracking_events[0];
+			// print_r($tracking_event);
+			$last_event = $tracking_event['message'];
+		}
+		return $last_event;
 	}
 
 	/*

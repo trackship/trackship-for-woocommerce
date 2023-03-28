@@ -135,7 +135,7 @@ class tswc_smswoo_sms_notification {
 			$replacements[ '%shipping_provider%' ] = $tracking_provider;
 			$replacements[ '{shipping_provider}' ] = $tracking_provider;
 			
-			$tracking_link = $tracking_item['ast_tracking_link'];
+			$tracking_link = $tracking_item['tracking_page_link'] ?  $tracking_item['tracking_page_link'] : $tracking_item['formatted_tracking_link'];
 			$replacements[ '%tracking_link%' ] = $tracking_link;
 			$replacements[ '{tracking_link}' ] = $tracking_link;
 		}

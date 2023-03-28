@@ -2,13 +2,13 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-$completed_order_with_tracking = $this->completed_order_with_tracking();		
-$completed_order_with_zero_balance = $this->completed_order_with_zero_balance();							
+$completed_order_with_tracking = $this->completed_order_with_tracking();
+$completed_order_with_zero_balance = $this->completed_order_with_zero_balance();
 $completed_order_with_do_connection = $this->completed_order_with_do_connection();
 $total_orders = $completed_order_with_tracking + $completed_order_with_zero_balance + $completed_order_with_do_connection;
 ?>
 <table class="tools_tab p15">
-	<tbody>				
+	<tbody>
 		<tr>
 			<td>
 				<h3><?php esc_html_e( 'Tools', 'trackship-for-woocommerce' ); ?></h3>

@@ -268,6 +268,7 @@ class TS4WC_Admin_Customizer {
 			'track_button_text_color'		=> '#fff',
 			'track_button_border_radius'	=> 0,
 			'email_trackship_branding'		=> 1,
+			'shipping_provider_logo'		=> 1,
 			// Tracking form's defauls
 			'form_tab_view' 				=> 'both',
 			'form_button_Text'				=> __( 'Track Order', 'trackship-for-woocommerce' ),
@@ -308,6 +309,7 @@ class TS4WC_Admin_Customizer {
 		$track_button_text_color = $this->get_value( 'shipment_email_settings', 'track_button_text_color', $status );
 		$track_button_border_radius = $this->get_value( 'shipment_email_settings', 'track_button_border_radius', $status );
 		$email_trackship_branding = $this->get_value( 'shipment_email_settings', 'email_trackship_branding', $status );
+		$shipping_provider_logo = $this->get_value( 'shipment_email_settings', 'shipping_provider_logo', $status );
 
 		//Tracking page saved/default vaule
 		$wc_ast_select_bg_color = get_option( 'wc_ast_select_bg_color', $this->defaults['wc_ast_select_bg_color'] );
@@ -915,6 +917,15 @@ class TS4WC_Admin_Customizer {
 			'class'		=> '',
 			'required' 	=> 'pro',
 			'plan'		=> in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ),
+		);
+		$settings[ 'shipping_provider_logo' ] = array(
+			'title'		=> esc_html__( 'Display Shipping provider logo', 'trackship-for-woocommerce' ),
+			'default'	=> $shipping_provider_logo,
+			'type'		=> 'checkbox',
+			'option_name'=> 'shipment_email_settings',
+			'option_type'=> 'array',
+			'show'		=> true,
+			'class'		=> '',
 		);
 		return $settings;
 	}
