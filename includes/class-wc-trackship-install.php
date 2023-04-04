@@ -198,6 +198,13 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.14' );
 		}
 
+		if ( version_compare( get_option( 'trackship_db' ), '1.16', '<' ) ) {
+			$this->create_shipment_table();
+			$this->create_shipment_meta_table();
+			$this->check_column_exists();
+			update_option( 'trackship_db', '1.16' );
+		}
+
 	}
 	
 	public function update_analytics_table() {
@@ -411,7 +418,7 @@ class WC_Trackship_Install {
 				`shipping_provider` VARCHAR(50) ,
 				`shipment_status` VARCHAR(30) ,
 				`pending_status` VARCHAR(30) ,
-				`shipping_date` DATE NOT NULL CURRENT_TIMESTAMP ,
+				`shipping_date` date ,
 				`shipping_country` TEXT ,
 				`shipping_length` VARCHAR(10) ,
 				`updated_date` DATE ,
@@ -430,8 +437,7 @@ class WC_Trackship_Install {
 				INDEX `updated_date` (`updated_date`),
 				INDEX `late_shipment_email` (`late_shipment_email`),
 				INDEX `est_delivery_date` (`est_delivery_date`),
-				INDEX `new_shipping_provider` (`new_shipping_provider`),
-				INDEX `last_event` (`last_event`)
+				INDEX `new_shipping_provider` (`new_shipping_provider`)
 			) $charset_collate;";
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 			dbDelta( $sql );

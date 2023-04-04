@@ -1617,6 +1617,7 @@ class WC_Trackship_Actions {
 			$args['order_id'] = $order_id;
 			$args['order_number'] =  wc_get_order( $order_id )->get_order_number();
 			$args['tracking_number'] = $tracking_number;
+			$args['shipping_date'] = date('Y-m-d');
 			$wpdb->insert( $shipment_table, $args );
 			$id = $wpdb->insert_id;
 
