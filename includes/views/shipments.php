@@ -45,13 +45,13 @@ $status_count = array_column($res, "status_count");
 $shipment_count = array_combine($statuses, $status_count); // combine the two arrays using shipment_status as keys
 $late_ship_day = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_days', 7 );
 $days = $late_ship_day - 1 ;
-$issues_count = $wpdb->get_results( "SELECT
+$issues_count = $wpdb->get_row( "SELECT
 	COUNT(*) AS active,
 	SUM( IF(shipment_status NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' ) OR pending_status IS NOT NULL, 1, 0) ) as tracking_issues,
 	SUM( IF(shipping_length > ".$days.", 1, 0) ) as late_shipment
 FROM {$woo_trackship_shipment}", ARRAY_A);
 
-$shipment_count = array_merge($shipment_count, $issues_count[0]);
+$shipment_count = array_merge($shipment_count, $issues_count);
 
 $res = $wpdb->get_results( "SELECT shipping_provider, COUNT(*) AS provider_count FROM $woo_trackship_shipment GROUP BY shipping_provider", ARRAY_A );
 $provider_array = array_column($res, "shipping_provider");

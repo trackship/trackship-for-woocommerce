@@ -111,7 +111,7 @@ class WC_Trackship_Shipments {
 		$where = array();
 		$search_bar = isset( $_POST['search_bar'] ) ? sanitize_text_field($_POST['search_bar']) : false;
 		if ( $search_bar ) {
-			$where[] = "( `order_id` = '{$search_bar}' OR `order_number` = '{$search_bar}' OR `shipping_provider` LIKE ( '%{$search_bar}%' ) OR `tracking_number` = '{$search_bar}' OR `shipping_country` LIKE ( '%{$search_bar}%' ) OR `last_event` LIKE ( '%{$search_bar}%' ) )";
+			$where[] = "( `order_id` = '{$search_bar}' OR `order_number` = '{$search_bar}' OR `shipping_provider` LIKE ( '%{$search_bar}%' ) OR `tracking_number` = '{$search_bar}' OR `shipping_country` LIKE ( '%{$search_bar}%' ) )";
 		}
 		
 		$late_ship_day = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_days', 7 );
@@ -136,7 +136,7 @@ class WC_Trackship_Shipments {
 		$where_condition = !empty( $where ) ? 'WHERE ' . implode(" AND ",$where) : '';
 
 		$sum = $wpdb->get_var("
-			SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row	
+			SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row1
 			$where_condition
 		");
 
@@ -192,7 +192,7 @@ class WC_Trackship_Shipments {
 			$shipping_length = $value->shipping_length ? $shipping_length : '';
 			
 			$late_class = 'delivered' == $status ? '' : 'not_delivered' ;
-			$late_shipment = $late_ship_day <= $value->shipping_length ? '<span class="dashicons dashicons-info trackship-tip ' . $late_class . '" title="late shipment"></span>' : '';
+			$late_shipment = $late_ship_day <= $value->shipping_length ? '<span class="dashicons dashicons-info trackship-tip ' . $late_class . ' late_shipment" title="late shipment"></span>' : '';
 			
 			$active_shipment = '<a href="javascript:void(0);" class="shipments_get_shipment_status" data-orderid="' . $value->order_id . '" data-tnumber="' . $value->tracking_number . '"><span class="dashicons dashicons-update"></span></a>';
 
