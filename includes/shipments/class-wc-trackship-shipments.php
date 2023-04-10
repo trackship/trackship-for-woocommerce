@@ -131,7 +131,7 @@ class WC_Trackship_Shipments {
 		$shipping_provider = isset( $_POST['shipping_provider'] ) ? sanitize_text_field( $_POST['shipping_provider'] ) : false;
 		if ( 'all' != $shipping_provider ) {
 			$where[] = "`shipping_provider` = '{$shipping_provider}'";
-		}		
+		}
 		
 		$where_condition = !empty( $where ) ? 'WHERE ' . implode(" AND ",$where) : '';
 
@@ -250,7 +250,7 @@ class WC_Trackship_Shipments {
 	public function get_shipment_length($row){
 
 		$tracking_events = $row->tracking_events ? json_decode($row->tracking_events) : $row->tracking_events;
-
+		
 		if( empty($tracking_events ))return 0;
 		if( count( $tracking_events ) == 0 )return 0;		
 		$first = reset($tracking_events);
@@ -262,9 +262,8 @@ class WC_Trackship_Shipments {
 		$status = $row->shipment_status;
 		if( $status != 'delivered' ){
 			$last_date = date("Y-m-d H:i:s");
-		}		
-		
-		$days = $this->get_num_of_days( $first_date, $last_date );		
+		}
+		$days = $this->get_num_of_days( $first_date, $last_date );
 		return (int)$days;
 	}
 	
@@ -285,9 +284,9 @@ class WC_Trackship_Shipments {
 		check_ajax_referer( '_trackship_shipments', 'security' );
 		$order_id = wc_clean($_POST['order_id']);
 		$trackship = new WC_Trackship_Actions;
-		$trackship->schedule_trackship_trigger( $order_id );		
+		$trackship->schedule_trackship_trigger( $order_id );
 		wp_send_json(true);
-	}	
+	}
 	
 	/*
 	* get shiment status from bulk
@@ -295,9 +294,9 @@ class WC_Trackship_Shipments {
 	public function bulk_shipment_status_from_shipments(){
 		check_ajax_referer( '_trackship_shipments', 'security' );
 		foreach ( (array)$_POST['orderids'] as $order_id ) {
-			trackship_for_woocommerce()->actions->set_temp_pending( $order_id );					
-			wp_schedule_single_event( time() + 1, 'wcast_retry_trackship_apicall', array( $order_id ) );								
-		}				
+			trackship_for_woocommerce()->actions->set_temp_pending( $order_id );
+			wp_schedule_single_event( time() + 1, 'wcast_retry_trackship_apicall', array( $order_id ) );
+		}
 		wp_send_json(true);
-	}		
+	}
 }
