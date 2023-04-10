@@ -920,7 +920,7 @@ class WC_Trackship_Admin {
 		// Get orders completed.
 		$args = array(
 			'status' => 'wc-completed',
-			'limit'	 => 100,	
+			'limit'	 => 100,
 			'date_created' => '>' . ( time() - 2592000 ),
 		);
 		
