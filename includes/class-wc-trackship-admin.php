@@ -385,10 +385,10 @@ class WC_Trackship_Admin {
 		
 		global $wpdb;
 		$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
-		$total_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipping_date BETWEEN %s AND %s", $start_date, $end_date ) );
-		$active_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE (shipment_status NOT LIKE ( %s ) OR pending_status IS NOT NULL) AND shipping_date BETWEEN %s AND %s", '%delivered%', $start_date, $end_date ) );
-		$delivered_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipment_status LIKE ( %s ) AND shipping_date BETWEEN %s AND %s", '%delivered%', $start_date, $end_date ) );
-		$tracking_issues = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row	
+		$total_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row1 WHERE shipping_date BETWEEN %s AND %s", $start_date, $end_date ) );
+		$active_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row1 WHERE (shipment_status NOT LIKE ( %s ) OR pending_status IS NOT NULL) AND shipping_date BETWEEN %s AND %s", '%delivered%', $start_date, $end_date ) );
+		$delivered_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row1 WHERE shipment_status LIKE ( %s ) AND shipping_date BETWEEN %s AND %s", '%delivered%', $start_date, $end_date ) );
+		$tracking_issues = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row1	
 			WHERE
 				((shipment_status NOT LIKE ( %s )
 				AND shipment_status NOT LIKE ( %s )

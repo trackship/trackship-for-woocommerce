@@ -6,10 +6,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $wpdb;
 $woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
 
+if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipment ) ) ) {
+	trackship_for_woocommerce()->ts_install->create_shipment_table();
+}
+
+if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $wpdb->prefix . 'trackship_shipment_meta' ) ) ) {
+	trackship_for_woocommerce()->ts_install->create_shipment_meta_table();
+}
+
+if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipment ) ) ) {
+	esc_html_e( 'TrackShip Shipments table does not exist, Please try after few minutes', 'trackship-for-woocommerce' );
+	return;
+}
+
 $late_shipments_days = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_days', 7 );
 $days = $late_shipments_days - 1 ;
-$late_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipping_length > %d", $days ) );
-$tracking_issues = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row	
+$late_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row1 WHERE shipping_length > %d", $days ) );
+$tracking_issues = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row1	
 	WHERE 
 		(shipment_status NOT LIKE ( %s )
 		AND shipment_status NOT LIKE ( %s )
@@ -20,7 +33,7 @@ $tracking_issues = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_t
 		AND shipment_status NOT LIKE ( %s )) 
 		OR pending_status IS NOT NULL
 ", '%delivered%', '%pre_transit%', '%in_transit%', '%out_for_delivery%', '%return_to_sender%', '%available_for_pickup%', '%exception%' ) );
-$return_to_sender_shipment = $wpdb->get_var( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row WHERE shipment_status LIKE ( '%return_to_sender%')" );
+$return_to_sender_shipment = $wpdb->get_var( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row1 WHERE shipment_status LIKE ( '%return_to_sender%')" );
 
 $this_month = gmdate('Y-m-01 00:00:00' );
 $last_30 = gmdate('Y-m-d 00:00:00', strtotime( 'today - 29 days' ) );

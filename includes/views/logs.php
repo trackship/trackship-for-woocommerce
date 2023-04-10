@@ -4,6 +4,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 global $wpdb;
 $log_table = $wpdb->prefix . 'zorem_email_sms_log';
+
+if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $log_table ) ) ) {
+	trackship_for_woocommerce()->ts_install->create_email_log_table();
+}
+
+if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $log_table ) ) ) {
+	esc_html_e( 'TrackShip logs table does not exist, Please try after few minutes', 'trackship-for-woocommerce' );
+	return;
+}
+
 $all_shipment_status = $wpdb->get_results( "SELECT shipment_status FROM {$log_table} WHERE `type` = 'Email' OR `sms_type` = 'shipment_status' GROUP BY shipment_status" );
 $search = isset( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
 ?>
