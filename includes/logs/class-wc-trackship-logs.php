@@ -93,7 +93,7 @@ class WC_Trackship_Logs {
 		$where_condition = !empty( $where ) ? 'WHERE ' . implode(" AND ",$where) : '';
 
 		$sum = $wpdb->get_var("
-			SELECT COUNT(*) FROM {$log_table} AS row
+			SELECT COUNT(*) FROM {$log_table} AS row1
 			$where_condition
 		");
 		//echo '<pre>';print_r($wpdb->last_query);echo '</pre>';
