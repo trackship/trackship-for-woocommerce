@@ -20,6 +20,7 @@ if ( $tracking_items ) :
 	$background_color = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'bg_color', '#fff');
 	$font_color = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'font_color', '#333');
 	$shipping_provider_logo = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'shipping_provider_logo', 1);
+	$class = $ts4wc_preview ? 'hide' : '';
 	?>
 	<div class="tracking_info">
 		<div class="tracking_list">
@@ -60,12 +61,19 @@ if ( $tracking_items ) :
 							
 						</div>
 						<div style="display:block;"></div>
-						<?php if ( 'shipped' != $ship_status ) { ?>
+						<?php if ( 'shipped' != $ship_status && !$ts4wc_preview ) { ?>
 							<?php $icon_layout = 't_layout_1' == $tracking_page_layout ? '-widget.png' : '-widget-v4.png'; ?>
 							<?php $icon_layout = 't_layout_3' == $tracking_page_layout ? '-widget-v2.png' : $icon_layout; ?>
 							<div class="widget_progress_bar" style="width:100%;margin: 15px 0 10px;">
 								<?php $widget_icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ) . esc_html( $icon_layout ); ?>
 								<img style="width:100%;" src="<?php echo esc_url( $widget_icon_url ); ?>">
+							</div>
+						<?php } elseif ( 'shipped' != $ship_status && $ts4wc_preview ) { ?>
+							<div class="widget_progress_bar" style="width:100%;margin: 15px 0 10px;">
+								<?php $url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ); ?>
+								<div><img class="t_layout_2 <?php echo $tracking_page_layout != 't_layout_2' ? 'hide' : ''; ?>" style="width:100%;" src="<?php echo esc_url( $url . '-widget-v4.png' ); ?>"></div>
+								<div><img class="t_layout_3 <?php echo $tracking_page_layout != 't_layout_3' ? 'hide' : ''; ?>" style="width:100%;" src="<?php echo esc_url( $url . '-widget-v2.png' ); ?>"></div>
+								<div><img class="t_layout_1 <?php echo $tracking_page_layout != 't_layout_1' ? 'hide' : ''; ?>" style="width:100%;" src="<?php echo esc_url( $url . '-widget.png' ); ?>"></div>
 							</div>
 						<?php } ?>
 					</div>
@@ -77,9 +85,9 @@ if ( $tracking_items ) :
 								esc_html_e( 'Shipped', 'trackship-for-woocommerce' );
 								echo '</div>';
 							} else {
-								if ( isset( $tracking_item['tracking_provider_image'] ) && $shipping_provider_logo ) {
+								if ( isset( $tracking_item['tracking_provider_image'] ) ) {
 									?>
-									<img style="height:45px;width:45px;vertical-align:middle;margin-right: 10px;" src="<?php echo esc_url( $tracking_item['tracking_provider_image'] ); ?>">
+									<img class="ts4wc_provider_logo <?php echo !$shipping_provider_logo ? $class : '' ?>" style="height:45px;width:45px;vertical-align:middle;margin-right: 10px;" src="<?php echo esc_url( $tracking_item['tracking_provider_image'] ); ?>">
 								<?php } ?>
 								<div class="tracking_info" style="margin:10px 0;">
 									<?php echo esc_html( $tracking_item['formatted_tracking_provider'] ); ?>
@@ -105,6 +113,11 @@ if ( $tracking_items ) :
 	<style>
 	<?php if ( $link_color ) { ?>
 		div.tracking_index.display-table .tracking_info a { color: <?php echo esc_html( $link_color ); ?>!important; }
+	<?php } ?>
+	<?php if ( !$ts4wc_preview  ) { ?>
+		.ts4wc_provider_logo  {
+			display: <?php echo $shipping_provider_logo ? 'inline-block' : 'none'; ?>;
+		}
 	<?php } ?>
 	#ts-email-widget-wrapper{max-width: 500px;margin: 50px auto;font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;font-size: 14px;line-height: 150%;}
 	.tracker-progress-bar .progress {

@@ -271,10 +271,10 @@ class WC_Trackship_Shipments {
 	*
 	*/
 	public function get_num_of_days( $first_date, $last_date ){
-		$date1 = strtotime($first_date);
-		$date2 = strtotime($last_date);
-		$diff = abs($date2 - $date1);
-		return date( "d", $diff );
+		$date2 = new DateTime( gmdate( "Y-m-d", strtotime($first_date) ) );
+		$date1 = new DateTime( gmdate( "Y-m-d", strtotime($last_date) ) );
+		$interval = $date1->diff($date2);
+		return $interval->format('%a');
 	}
 
 	/*

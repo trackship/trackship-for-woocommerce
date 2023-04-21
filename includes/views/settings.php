@@ -29,11 +29,12 @@ if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocomme
 	</script>
 	<?php 
 }
+$section = isset( $_GET['section'] ) ? sanitize_text_field( $_GET['section'] ) : '';
 ?>
 <div class="accordion_container">
 	<form method="post" id="wc_ast_trackship_form" action="" enctype="multipart/form-data">
 		<div class="outer_form_table">
-			<div class="heading_panel section_settings_heading">
+			<div class="heading_panel section_settings_heading <?php echo 'general' == $section ? 'checked' : ''; ?>">
 				<strong><?php esc_html_e( 'General Settings', 'trackship-for-woocommerce' ); ?></strong>
 				<div class="heading_panel_save">
 					<span class="dashicons dashicons-arrow-right-alt2"></span>
@@ -95,7 +96,7 @@ if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocomme
 	</form>
 	<?php do_action( 'after_trackship_settings' ); ?>
 	<form method="post" id="trackship_tracking_page_form" action="" enctype="multipart/form-data">
-		<div class="heading_panel section_tracking_page_heading">
+		<div class="heading_panel section_tracking_page_heading <?php echo 'tracking' == $section ? 'checked' : ''; ?>">
 			<strong><?php esc_html_e( 'Tracking Page', 'trackship-for-woocommerce' ); ?></strong>
 			<div class="heading_panel_save">
 				<span class="dashicons dashicons-arrow-right-alt2"></span>
