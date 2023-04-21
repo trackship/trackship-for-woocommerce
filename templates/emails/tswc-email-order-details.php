@@ -33,10 +33,12 @@ if ( !empty($kt_woomail) && isset( $kt_woomail['font_size'] ) ) {
 	$table_font_size = 'font-size:' . $kt_woomail['font_size'] . 'px';
 }
 $shipped_product_label = get_option( 'shipped_product_label', __( 'Items in this shipment', 'trackship-for-woocommerce' ) );
+$class = $ts4wc_preview ? 'hide' : '';
 ?>
 <br>
-<h2 class="shipment_email_shipped_product_label"><?php esc_html_e( $shipped_product_label ); ?></h2>
-<div style="margin-bottom: 20px;">
+<div class="ts4wc_shipped_products <?php echo !$wcast_show_order_details ? $class : '' ?>">
+	<h2 class="shipment_email_shipped_product_label"><?php esc_html_e( $shipped_product_label ); ?></h2>
+	<div style="margin-bottom: 20px;">
 		<table class="td" cellspacing="0" cellpadding="6" style="background-color: transparent;width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;border:0;<?php echo esc_html( $table_font_size ); ?>" border="0">
 			<tbody>
 				<?php
@@ -57,11 +59,9 @@ $shipped_product_label = get_option( 'shipped_product_label', __( 'Items in this
 					//echo $image = $wcast_show_product_image ? $image : '';
 					?>
 					<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_order_item_class', 'order_item', $item, $order ) ); ?>">
-						<?php if ( $wcast_show_product_image ) { ?>
-							<td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;border-left:0;border:0;border-bottom:1px solid #e0e0e0;padding: 12px 5px;width: 70px;">
-								<?php echo wp_kses_post( apply_filters( 'woocommerce_order_item_thumbnail', $image, $item ) ); ?>
-							</td>
-						<?php } ?>
+						<td class="td ts4wc_shipped_product_image <?php echo !$wcast_show_product_image ? $class : '' ?>" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;border-left:0;border:0;border-bottom:1px solid #e0e0e0;padding: 12px 5px;width: 70px;">
+							<?php echo wp_kses_post( apply_filters( 'woocommerce_order_item_thumbnail', $image, $item ) ); ?>
+						</td>
 						<td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;border-left:0;border:0;border-bottom:1px solid #e0e0e0;padding: 12px 5px;">
 							<?php 
 							$qty = $item->get_quantity();
@@ -87,4 +87,15 @@ $shipped_product_label = get_option( 'shipped_product_label', __( 'Items in this
 			</tbody>			
 		</table>
 	</div>
+</div>
+<?php if ( !$ts4wc_preview ) { ?>
+	<style>
+		.ts4wc_shipped_products {
+			display: <?php echo $wcast_show_order_details ? 'block' : 'none'; ?>;
+		}
+		.ts4wc_shipped_product_image {
+			display: <?php echo $wcast_show_product_image ? 'table-cell' : 'none'; ?>;
+		}
+	</style>
+<?php } ?>
 <?php do_action( 'wcast_email_after_order_table', $order, $sent_to_admin, $plain_text, $email ); ?>

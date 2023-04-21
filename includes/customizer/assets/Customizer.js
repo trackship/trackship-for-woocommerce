@@ -47,10 +47,10 @@ jQuery(document).ready(function(){
 		jQuery( '.zoremmail-panel-title.tracking_page_panel' ).trigger('click');
 	}
 
-	jQuery( ".zoremmail-input.select, .zoremmail-checkbox" ).change( function( event ) {
-		jQuery('.zoremmail-layout-content-preview').addClass('customizer-unloading');
-		save_customizer_setting();
-	});
+	// jQuery( ".zoremmail-input.select" ).change( function( event ) {
+	// 	jQuery('.zoremmail-layout-content-preview').addClass('customizer-unloading');
+	// 	save_customizer_setting();
+	// });
 	
     jQuery( ".zoremmail-layout-content-media .dashicons" ).on( "click", function() {
 		jQuery(this).parent().siblings().removeClass('last-checked');
@@ -173,6 +173,170 @@ jQuery( ".text.shipping_address_label" ).keyup( function( event ) {
 	jQuery("#tracking_widget_privew").contents().find( 'h2.shipment_email_shipping_address_label' ).text(str);
 });
 
+jQuery(document).on("change", ".zoremmail-checkbox.ts4wc_shipped_products", function () {
+	if (jQuery(this).prop("checked") == true) {
+		jQuery("#tracking_widget_privew").contents().find( 'div.ts4wc_shipped_products' ).show();
+	} else {
+		jQuery("#tracking_widget_privew").contents().find( 'div.ts4wc_shipped_products' ).hide();
+	}
+});
+
+jQuery(document).on("change", ".zoremmail-checkbox.ts4wc_shipped_product_image", function () {
+	if (jQuery(this).prop("checked") == true) {
+		jQuery("#tracking_widget_privew").contents().find( '.ts4wc_shipped_product_image' ).css('display','table-cell');
+	} else {
+		jQuery("#tracking_widget_privew").contents().find( '.ts4wc_shipped_product_image' ).hide();
+	}
+});
+
+jQuery(document).on("change", ".zoremmail-checkbox.ts4wc_shipping_address", function () {
+	if (jQuery(this).prop("checked") == true) {
+		jQuery("#tracking_widget_privew").contents().find( '.ts4wc_shipping_address' ).show();
+	} else {
+		jQuery("#tracking_widget_privew").contents().find( '.ts4wc_shipping_address' ).hide();
+	}
+});
+
+jQuery(document).on("change", ".zoremmail-checkbox.ts4wc_provider_logo", function () {
+	if (jQuery(this).prop("checked") == true) {
+		jQuery("#tracking_widget_privew").contents().find( '.ts4wc_provider_logo' ).show();
+	} else {
+		jQuery("#tracking_widget_privew").contents().find( '.ts4wc_provider_logo' ).hide();
+	}
+});
+
+jQuery(document).on("change", "#email_trackship_branding", function () {
+	if (jQuery(this).prop("checked") == true) {
+		jQuery("#tracking_widget_privew").contents().find( '.trackship_branding' ).show();
+	} else {
+		if ( jQuery.inArray( trackship_customizer.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+			jQuery("#tracking_widget_privew").contents().find( '.trackship_branding' ).show();
+		} else {
+			jQuery("#tracking_widget_privew").contents().find( '.trackship_branding' ).hide();
+		}
+	}
+	if ( jQuery.inArray( trackship_customizer.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 || trackship_customizer.unsubscribe == 1 || jQuery(this).prop("checked") == true ) {
+		jQuery("#tracking_widget_privew").contents().find( '.default_footer' ).hide();
+	} else {
+		jQuery("#tracking_widget_privew").contents().find( '.default_footer' ).show();
+	}
+});
+
+/*
+* Tracking Page checkbox Start
+*/
+//Tracking link
+jQuery(document).on("change", "#wc_ast_link_to_shipping_provider", function () {
+	if (jQuery(this).prop("checked") == true) {
+		jQuery("#tracking_widget_privew").contents().find( '.tracking_number_div ul li > a' ).show();
+		jQuery("#tracking_widget_privew").contents().find( '.tracking_number_div ul li > strong' ).hide();
+	} else {
+		jQuery("#tracking_widget_privew").contents().find( '.tracking_number_div ul li > a' ).hide();
+		jQuery("#tracking_widget_privew").contents().find( '.tracking_number_div ul li > strong' ).show();
+	}
+});
+// Tracking provider image
+jQuery(document).on("change", "#wc_ast_hide_tracking_provider_image", function () {
+	if (jQuery(this).prop("checked") == true) {
+		jQuery("#tracking_widget_privew").contents().find( '.provider_image_div' ).hide();
+	} else {
+		jQuery("#tracking_widget_privew").contents().find( '.provider_image_div' ).show();
+	}
+});
+// Shipping From -> To
+jQuery(document).on("change", "#wc_ast_hide_from_to", function () {
+	if (jQuery(this).prop("checked") == true) {
+		jQuery("#tracking_widget_privew").contents().find( '.shipping_from_to' ).hide();
+	} else {
+		jQuery("#tracking_widget_privew").contents().find( '.shipping_from_to' ).show();
+	}
+});
+// Last mile tracking number
+jQuery(document).on("change", "#wc_ast_hide_list_mile_tracking", function () {
+	if (jQuery(this).prop("checked") == true) {
+		jQuery("#tracking_widget_privew").contents().find( '.last_mile_tracking_number' ).hide();
+	} else {
+		jQuery("#tracking_widget_privew").contents().find( '.last_mile_tracking_number' ).show();
+	}
+});
+// TrackShip branding
+jQuery(document).on("change", "#wc_ast_remove_trackship_branding", function () {
+	if (jQuery(this).prop("checked") == true) {
+		jQuery("#tracking_widget_privew").contents().find( '.trackship_branding' ).hide();
+	} else {
+		jQuery("#tracking_widget_privew").contents().find( '.trackship_branding' ).show();
+	}
+	if ( jQuery.inArray( trackship_customizer.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+		jQuery("#tracking_widget_privew").contents().find( '.trackship_branding' ).show();
+	}
+});
+/*
+* Tracking Page checkbox End
+*/
+
+/*
+* Customizer Select Start
+*/
+// TrackShip Tracking event
+jQuery(document).on("change", "#wc_ast_hide_tracking_events", function () {
+	var value = jQuery(this).val();
+	if ( 1 == value ) {
+		jQuery("#tracking_widget_privew").contents().find( '.preview_tracking_events, .tracking_detail_label' ).hide();
+	} else {
+		jQuery("#tracking_widget_privew").contents().find( '.preview_tracking_events' ).hide();
+		jQuery("#tracking_widget_privew").contents().find( '.tracking_detail_label, .tracking_events_' + value ).show();
+	}
+});
+
+// TrackShip Progress bar
+jQuery(document).on("change", "#wc_ast_select_tracking_page_layout", function () {
+	var value = jQuery(this).val();	
+	var progress_bar = jQuery("#tracking_widget_privew").contents().find( '.tracker-progress-bar' );
+	progress_bar.removeClass('tracking_icon_layout tracking_progress_layout t_layout_1 t_layout_2 t_layout_3');
+	if ( 't_layout_2' == value ) {
+		progress_bar.addClass('tracking_progress_layout '+value);
+		progress_bar.find('.progress-icon').hide();
+		var shipmentStatus = jQuery('#shipmentStatus').val();
+
+		var width = 0;
+		if ( jQuery.inArray( shipmentStatus, ['in_transit', 'on_hold', 'failure'] ) !== -1 ) {
+			var width = '30%';
+		} else if ( jQuery.inArray( shipmentStatus, ['out_for_delivery', 'available_for_pickup', 'return_to_sender', 'exception'] ) !== -1 ) {
+			var width = '60%';
+		} else if ( jQuery.inArray( shipmentStatus, ['delivered'] ) !== -1 ) {
+			var width = '100%';
+		}
+		progress_bar.find('.progress-bar').css('width', width);
+	} else {
+		progress_bar.addClass('tracking_icon_layout '+value);
+		progress_bar.find('.progress-icon').show();
+		progress_bar.find('.progress-bar').css('width', '0');
+	}
+});
+
+jQuery(document).on("change", "#tracking_page_layout", function () {
+	jQuery("#tracking_widget_privew").contents().find( '.widget_progress_bar img' ).hide();
+	var value = jQuery(this).val();
+	jQuery("#tracking_widget_privew").contents().find( '.tracking_detail_label, img.' + value ).show();
+});
+
+jQuery(document).on("change", "#form_tab_view", function () {
+	var value = jQuery(this).val();
+	if ( 'both' == value ) {
+		jQuery("#tracking_widget_privew").contents().find( '.tracking_form_tabs' ).show();
+	} else if ( 'order_details' == value ) {
+		jQuery("#tracking_widget_privew").contents().find( '.tracking_form_tabs' ).hide();
+		jQuery("#tracking_widget_privew").contents().find( '.for_order_number' ).trigger('click');
+	} else if ( 'tracking_details' == value ) {
+		jQuery("#tracking_widget_privew").contents().find( '.tracking_form_tabs' ).hide();
+		jQuery("#tracking_widget_privew").contents().find( '.for_tracking_number' ).trigger('click');
+	}
+});
+
+/*
+* Customizer Page Select End
+*/
+
 jQuery(document).on("click", "#zoremmail_email_options .button-trackship", function(){
     "use strict";
 	var form = jQuery('#zoremmail_email_options');
@@ -270,6 +434,7 @@ jQuery('iframe').load(function(){
 	jQuery("#tracking_widget_privew").contents().find( 'div.col.tracking-detail' ).css( 'display', 'block');
 	jQuery( '.zoremmail-layout-content-media .last-checked .dashicons' ).trigger('click');
 	
+	jQuery("#tracking_widget_privew").contents().find( '.hide' ).hide();
 })
 
 jQuery(document).on("change", "#track_button_border_radius", function(){
@@ -307,7 +472,6 @@ jQuery(document).on("change", ".wc_ast_select_widget_padding .slider__value", fu
 	var padding = jQuery( this ).val();
 	jQuery( "#wc_ast_select_widget_padding" ).val(padding).trigger('change');
 });
-
 
 if ( jQuery.fn.wpColorPicker ) {
 	jQuery('#wc_ast_select_bg_color').wpColorPicker({

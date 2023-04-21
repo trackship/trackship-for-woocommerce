@@ -25,10 +25,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 $text_align = is_rtl() ? 'right' : 'left';
 $address    = $order->get_formatted_billing_address();
 $shipping   = $order->get_formatted_shipping_address();
-
-if ( !empty($shipping) ) { 
-	$shipping_address_label = get_option( 'shipping_address_label', __( 'Shipping address', 'trackship-for-woocommerce' ) );
-	?>
-	<h2 class="shipment_email_shipping_address_label" style="text-align:<?php echo esc_html( $text_align ); ?>"><?php esc_html_e( $shipping_address_label ); ?></h2>
-	<address class="address" style="border:0;padding:0;" ><?php echo wp_kses_post( $shipping ); ?></address>
+$class = $ts4wc_preview ? 'hide' : '';
+?>
+<div class="ts4wc_shipping_address <?php echo !$wcast_show_shipping_address ? $class : '' ?>">
+	<?php
+	if ( !empty($shipping) ) { 
+		$shipping_address_label = get_option( 'shipping_address_label', __( 'Shipping address', 'trackship-for-woocommerce' ) );
+		?>
+		<h2 class="shipment_email_shipping_address_label" style="text-align:<?php echo esc_html( $text_align ); ?>"><?php esc_html_e( $shipping_address_label ); ?></h2>
+		<address class="address" style="border:0;padding:0;" ><?php echo wp_kses_post( $shipping ); ?></address>
+	<?php } ?>
+</div>
+<?php if ( !$ts4wc_preview ) { ?>
+	<style>
+		.ts4wc_shipping_address {
+			display: <?php echo $wcast_show_shipping_address ? 'block' : 'none'; ?>;
+		}
+	</style>
 <?php } ?>

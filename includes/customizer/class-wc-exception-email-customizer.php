@@ -94,51 +94,55 @@ class TSWC_Exception_Customizer_Email {
 		
 		$shipment_status = trackship_admin_customizer()->get_wc_shipment_status_for_preview( 'exception', $preview_id );
 		$tracking_items = trackship_admin_customizer()->get_tracking_items_for_preview( $preview_id );
-		
+
 		$local_template	= get_stylesheet_directory() . '/woocommerce/emails/tracking-info.php';			
-		if ( file_exists( $local_template ) && is_writable( $local_template ) ) {				
-			$message .= wc_get_template_html( 'emails/tracking-info.php', array( 
-				'tracking_items' => $tracking_items,
-				'shipment_status' => $shipment_status,
-				'order_id' => $preview_id,
+		if ( file_exists( $local_template ) && is_writable( $local_template ) ) {
+			$message .= wc_get_template_html( 'emails/tracking-info.php', array(
+				'tracking_items'	=> $tracking_items,
+				'shipment_status'	=> $shipment_status,
+				'order_id'			=> $preview_id,
 				'show_shipment_status' => true,
-				'new_status' => 'exception',
+				'new_status'		=> 'exception',
+				'ts4wc_preview'		=> true,
 			), 'woocommerce-advanced-shipment-tracking/', get_stylesheet_directory() . '/woocommerce/' );
 		} else {
-			$message .= wc_get_template_html( 'emails/tracking-info.php', array( 
-				'tracking_items' => $tracking_items,
-				'shipment_status' => $shipment_status,
-				'order_id' => $preview_id,
+			$message .= wc_get_template_html( 'emails/tracking-info.php', array(
+				'tracking_items'	=> $tracking_items,
+				'shipment_status'	=> $shipment_status,
+				'order_id'			=> $preview_id,
 				'show_shipment_status' => true,
-				'new_status' => 'exception',
+				'new_status'		=> 'exception',
+				'ts4wc_preview'		=> true,
 			), 'woocommerce-advanced-shipment-tracking/', trackship_for_woocommerce()->get_plugin_path() . '/templates/' );
 		}
 		
-		if ( $wcast_show_order_details ) {
-			$message .= wc_get_template_html(
-				'emails/tswc-email-order-details.php',
-				array(
-					'order'         => $order,
-					'sent_to_admin' => $sent_to_admin,
-					'plain_text'    => $plain_text,
-					'email'         => $email,
-					'wcast_show_product_image' => $wcast_show_product_image,
-				),
-				'woocommerce-advanced-shipment-tracking/', 
-				trackship_for_woocommerce()->get_plugin_path() . '/templates/'
-			);	
-		}				
+		// Order detail template
+		$message .= wc_get_template_html(
+			'emails/tswc-email-order-details.php',
+			array(
+				'order'         => $order,
+				'sent_to_admin' => $sent_to_admin,
+				'plain_text'    => $plain_text,
+				'email'         => $email,
+				'wcast_show_product_image' => $wcast_show_product_image,
+				'wcast_show_order_details' => $wcast_show_order_details,
+				'ts4wc_preview' => true,
+			),
+			'woocommerce-advanced-shipment-tracking/', 
+			trackship_for_woocommerce()->get_plugin_path() . '/templates/'
+		);
 		
-		if ( $wcast_show_shipping_address ) {
-			$message .= wc_get_template_html(
-				'emails/shipping-email-addresses.php', array(
-					'order'         => $order,
-					'sent_to_admin' => $sent_to_admin,
-				),
-				'woocommerce-advanced-shipment-tracking/', 
-				trackship_for_woocommerce()->get_plugin_path() . '/templates/'
-			);
-		}
+		// Shipping Address template
+		$message .= wc_get_template_html(
+			'emails/shipping-email-addresses.php', array(
+				'order'         => $order,
+				'sent_to_admin' => $sent_to_admin,
+				'ts4wc_preview' => true,
+				'wcast_show_shipping_address' => $wcast_show_shipping_address,
+			),
+			'woocommerce-advanced-shipment-tracking/', 
+			trackship_for_woocommerce()->get_plugin_path() . '/templates/'
+		);
 		
 		// create a new email
 		$email = new WC_Email();
@@ -158,23 +162,19 @@ class TSWC_Exception_Customizer_Email {
 	 * Code for format email subject
 	*/
 	public function email_footer_text( $footer_text ) {
-
 		$email_trackship_branding = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'email_trackship_branding', 1);
+		$class = !( $email_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) ? 'hide' : '';
 
-		$trackship_branding_text = '';
-		if ( $email_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
-			$tracking_number = isset( $this->tracking_number ) && $this->tracking_number ? $this->tracking_number : '';
-			$track_url = 'https://track.trackship.com/track/' . $tracking_number;
-			$trackship_branding_text = '<div class="trackship_branding"><p><span style="vertical-align:middle;font-size: 14px;">Powered by <a href="' . $track_url . '" title="TrackShip" target="blank">TrackShip</a></span></p></div>';
-		}
+		$tracking_number = isset( $this->tracking_number ) && $this->tracking_number ? $this->tracking_number : '';
+		$track_url = 'https://track.trackship.com/track/' . $tracking_number;
+		$trackship_branding_text = '<div class="trackship_branding ' . $class . '"><p><span style="vertical-align:middle;font-size: 14px;">Powered by <a href="' . $track_url . '" title="TrackShip" target="blank">TrackShip</a></span></p></div>';
 
-		$unsubscribe = '';
-		if ( get_option( 'enable_email_widget' ) ) {
-			$unsubscribe = '<div style="text-align:center;"><a href="#">' . esc_html__( 'Unsubscribe', 'trackship-for-woocommerce' ) . '</a></div>';
-		}
+		$unsubscribe = get_option( 'enable_email_widget' ) ? '<div style="text-align:center;"><a href="#">' . esc_html__( 'Unsubscribe', 'trackship-for-woocommerce' ) . '</a></div>' : '';
 
-		$footer_text = ( $trackship_branding_text || $unsubscribe ) ? $trackship_branding_text . $unsubscribe : $footer_text;
-		return $footer_text;
+		$class1 = $email_trackship_branding || $unsubscribe || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? 'hide' : '';
+		$default_footer = '<div class="default_footer ' . $class1 . '">' . $footer_text . '</div>';
+
+		return $trackship_branding_text . $unsubscribe . $default_footer;
 	}
 
 	/**

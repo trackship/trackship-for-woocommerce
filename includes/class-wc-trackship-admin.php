@@ -931,16 +931,16 @@ class WC_Trackship_Admin {
 		foreach ( $orders as $order ) {
 			$order_id = $order->get_id();
 			$order = wc_get_order( $order_id );
-			$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );			
+			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 			
 			if ( $tracking_items ) {
 				$shipment_status = $order->get_meta( 'shipment_status', true );
-				foreach ( $tracking_items as $key => $tracking_item ) { 				
+				foreach ( $tracking_items as $key => $tracking_item ) {
 					if ( !isset($shipment_status[$key]) ) {
-						$completed_order_with_tracking++;		
+						$completed_order_with_tracking++;
 					}
-				}									
-			}			
+				}
+			}
 		}
 		return $completed_order_with_tracking;
 	}
@@ -965,7 +965,7 @@ class WC_Trackship_Admin {
 		foreach ( $orders as $order ) {
 			$order_id = $order->get_id();
 			$order = wc_get_order( $order_id );
-			$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );			
+			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 			
 			if ( $tracking_items ) {
 				$shipment_status = $order->get_meta( 'shipment_status', true );
@@ -999,7 +999,7 @@ class WC_Trackship_Admin {
 		foreach ( $orders as $order ) {
 			$order_id = $order->get_id();
 			$order = wc_get_order( $order_id );
-			$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );			
+			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );		
 			
 			if ( $tracking_items ) {	
 				$shipment_status = $order->get_meta( 'shipment_status', true );
