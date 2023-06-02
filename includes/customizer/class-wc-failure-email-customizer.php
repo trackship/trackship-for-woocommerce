@@ -92,14 +92,14 @@ class TSWC_Failure_Customizer_Email {
 			$message = preg_replace_callback($regex, array( $this, '_appendCampaignToString'), $message);	
 		}
 		
-		$shipment_status = trackship_admin_customizer()->get_wc_shipment_status_for_preview( 'failure', $preview_id );
+		$shipment_row = trackship_admin_customizer()->get_wc_shipment_row_for_preview( 'failure', $preview_id );
 		$tracking_items = trackship_admin_customizer()->get_tracking_items_for_preview( $preview_id );
 
 		$local_template	= get_stylesheet_directory() . '/woocommerce/emails/tracking-info.php';			
 		if ( file_exists( $local_template ) && is_writable( $local_template ) ) {
 			$message .= wc_get_template_html( 'emails/tracking-info.php', array(
 				'tracking_items'	=> $tracking_items,
-				'shipment_status'	=> $shipment_status,
+				'shipment_row'		=> $shipment_row,
 				'order_id'			=> $preview_id,
 				'show_shipment_status' => true,
 				'new_status'		=> 'failure',
@@ -108,7 +108,7 @@ class TSWC_Failure_Customizer_Email {
 		} else {
 			$message .= wc_get_template_html( 'emails/tracking-info.php', array(
 				'tracking_items'	=> $tracking_items,
-				'shipment_status'	=> $shipment_status,
+				'shipment_row'		=> $shipment_row,
 				'order_id'			=> $preview_id,
 				'show_shipment_status' => true,
 				'new_status'		=> 'failure',

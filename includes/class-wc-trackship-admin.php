@@ -54,8 +54,6 @@ class WC_Trackship_Admin {
 		
 		add_action( 'add_meta_boxes', array( $this, 'register_metabox') );
 		
-		add_action( 'wp_ajax_wc_shipment_tracking_delete_item', array( $this, 'meta_box_delete_tracking' ), 20 );
-
 		add_action( 'wp_ajax_metabox_get_shipment_status', array( $this, 'metabox_get_shipment_status_cb' ) );
 		
 		add_action( 'wp_ajax_get_admin_tracking_widget', array( $this, 'get_admin_tracking_widget_cb' ) );
@@ -152,33 +150,7 @@ class WC_Trackship_Admin {
 		}
 		die();
 	}
-	
-	public function meta_box_delete_tracking() {
-		if ( ! current_user_can( 'manage_woocommerce' ) ) {
-			exit( 'You are not allowed' );
-		}
-		check_ajax_referer( 'delete-tracking-item', 'security' );
-		$o_id = isset( $_POST['order_id'] ) ? sanitize_text_field( $_POST['order_id'] ) : '' ;
-		$order_id    = wc_clean( $o_id );
-		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
-		$order = wc_get_order( $order_id );
-		
-		$shipment_statuses = $order->get_meta( 'shipment_status', true );
-		if ( ! is_array( $shipment_statuses ) ) {
-			$shipment_statuses = array();
-		}
-		
-		foreach ( $shipment_statuses as $key => $shipment_status ) {
-			if ( ! isset( $tracking_items[$key] ) ) {
-				unset( $shipment_statuses[$key] );
-			}
-		}
-		
-		$order->update_meta_data( 'shipment_status', $shipment_statuses );
-		$order->save();
-		return;
-	}
-	
+
 	public function register_metabox() {
 		if ( ! trackship_for_woocommerce()->is_ast_active() && ( trackship_for_woocommerce()->is_st_active() || trackship_for_woocommerce()->is_active_yith_order_tracking() || trackship_for_woocommerce()->is_active_woo_order_tracking() ) ) {
 			if ( class_exists( 'Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController' ) ) {
@@ -190,10 +162,10 @@ class WC_Trackship_Admin {
 		}
 	}
 	
-	public function trackship_metabox_cb( $post ) {
-		$order_id = $post->ID;
+	public function trackship_metabox_cb( $post_or_order_object ) {
+		$order = ( $post_or_order_object instanceof WP_Post ) ? wc_get_order( $post_or_order_object->ID ) : $post_or_order_object;
+		$order_id = $order->get_id();
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
-		$shipment_status = trackship_for_woocommerce()->actions->get_shipment_status( $order_id );
 		?>
 		<div id="trackship-tracking-items">
 			<?php foreach ( $tracking_items as $key => $tracking_item ) { ?>
@@ -222,7 +194,6 @@ class WC_Trackship_Admin {
 		</div>
 		<?php
 		//echo '<pre>';print_r($tracking_items);echo '</pre>';
-		//echo '<pre>';print_r($shipment_status);echo '</pre>';
 		wp_enqueue_style( 'trackshipcss' );
 		wp_enqueue_script( 'trackship_script' );
 		
@@ -904,7 +875,7 @@ class WC_Trackship_Admin {
 			<div class="trackship_notice_msg tools_tab_ts4wc">
 				<div class="trackship-notice" style="border: 0;">
 					<?php /* translators: %s: search for a total_orders */ ?>
-					<p><?php printf( esc_html__( 'We detected %s Shipped orders from the last 30 days that were not sent to TrackShip, you can bulk send them to TrackShip', 'trackship-for-woocommerce' ), esc_html( $total_orders ) ); ?><span class="dashicons remove-icon dashicons-no-alt"></span></p>
+					<p><?php printf( esc_html__( 'We detected %s Shipments from the last 30 days that were not sent to TrackShip, you can bulk send them to TrackShip', 'trackship-for-woocommerce' ), esc_html( $total_orders ) ); ?><span class="dashicons remove-icon dashicons-no-alt"></span></p>
 					<button class="button-primary button-trackship bulk_shipment_status_button" <?php echo 0 == $total_orders ? 'disabled' : ''; ?>><?php esc_html_e( 'Get Shipment Status', 'trackship-for-woocommerce' ); ?></button>
 				</div>
 			</div>
@@ -934,9 +905,9 @@ class WC_Trackship_Admin {
 			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 			
 			if ( $tracking_items ) {
-				$shipment_status = $order->get_meta( 'shipment_status', true );
 				foreach ( $tracking_items as $key => $tracking_item ) {
-					if ( !isset($shipment_status[$key]) ) {
+					$row = trackship_for_woocommerce()->actions->get_shipment_row($order_id, $tracking_item['tracking_number']);
+					if ( !$row ) {
 						$completed_order_with_tracking++;
 					}
 				}
@@ -968,9 +939,9 @@ class WC_Trackship_Admin {
 			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 			
 			if ( $tracking_items ) {
-				$shipment_status = $order->get_meta( 'shipment_status', true );
 				foreach ( $tracking_items as $key => $tracking_item ) {
-					if ( isset( $shipment_status[$key]['pending_status']) && 'insufficient_balance' == $shipment_status[$key]['pending_status'] ) {
+					$row = trackship_for_woocommerce()->actions->get_shipment_row($order_id, $tracking_item['tracking_number']);
+					if ( isset( $row->pending_status ) && 'insufficient_balance' == $row->pending_status ) {
 						$completed_order_with_zero_balance++;		
 					}
 				}									
@@ -999,24 +970,24 @@ class WC_Trackship_Admin {
 		foreach ( $orders as $order ) {
 			$order_id = $order->get_id();
 			$order = wc_get_order( $order_id );
-			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );		
+			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 			
-			if ( $tracking_items ) {	
-				$shipment_status = $order->get_meta( 'shipment_status', true );
-				foreach ( $tracking_items as $key => $tracking_item ) { 					
-					if ( isset( $shipment_status[$key]['pending_status'] ) && in_array( $shipment_status[$key]['pending_status'], array( 'connection_issue', 'unauthorized' ) ) ) {
-						$completed_order_with_do_connection++;		
+			if ( $tracking_items ) {
+				foreach ( $tracking_items as $key => $tracking_item ) {
+					$row = trackship_for_woocommerce()->actions->get_shipment_row($order_id, $tracking_item['tracking_number']);
+					if ( isset( $row->pending_status ) && in_array( $row->pending_status, array( 'connection_issue', 'unauthorized' ) ) ) {
+						$completed_order_with_do_connection++;
 					}
-				}									
-			}			
-		}				
+				}
+			}
+		}
 		return $completed_order_with_do_connection;
-	}	
+	}
 	
 	/** 
 	* Register new status : Delivered
 	**/
-	public function register_order_status() {						
+	public function register_order_status() {
 		register_post_status( 'wc-delivered', array(
 			'label'                     => __( 'Delivered', 'trackship-for-woocommerce' ),
 			'public'                    => true,
@@ -1031,12 +1002,12 @@ class WC_Trackship_Admin {
 	/*
 	* add status after completed
 	*/
-	public function add_delivered_to_order_statuses( $order_statuses ) {							
+	public function add_delivered_to_order_statuses( $order_statuses ) {
 		$new_order_statuses = array();
 		foreach ( $order_statuses as $key => $status ) {
 			$new_order_statuses[ $key ] = $status;
 			if ( 'wc-completed' === $key ) {
-				$new_order_statuses['wc-delivered'] = __( 'Delivered', 'trackship-for-woocommerce' );				
+				$new_order_statuses['wc-delivered'] = __( 'Delivered', 'trackship-for-woocommerce' );
 			}
 		}
 		
