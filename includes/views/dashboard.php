@@ -2,7 +2,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
 global $wpdb;
 $woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
 
@@ -111,12 +110,47 @@ update_option( 'user_plan', $current_plan );
 update_option( 'trackers_balance', $current_balance );
 $nonce = wp_create_nonce( 'wc_ast_tools');
 $store_text = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? __( 'Upgrade to Pro', 'trackship-for-woocommerce' ) : __( 'Account Dashboard', 'trackship-for-woocommerce' );
-$store_url = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? 'https://my.trackship.com/settings/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=upgrade#billing' : 'https://my.trackship.com/settings/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=dashboard#billing';
+$store_url = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? 'https://my.trackship.com/settings/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=upgrade#billing' : 'https://my.trackship.com/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=dashboard';
 ?>
 <input type="hidden" id="wc_ast_dashboard_tab" name="wc_ast_dashboard_tab" value="<?php echo esc_attr( $nonce ); ?>" />
 <input class="dashboard_hidden_field" type="hidden" value="<?php echo esc_html($current_plan); ?>">
+<?php if ( in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
+	<div class="ts_upgrade_notice">
+		<span class="ts_upgrade_msg"><?php esc_html_e( "Unlock TrackShip's PRO advantages: track more shipments, SMS Notifications, Priority Support, Shipments Dashboard, and more...", 'trackship-for-woocommerce' ); ?></span>
+		<button class="button-primary button-trackship btn_large">
+			<a href="<?php echo esc_url($store_url); ?>" class="" target="_blank">
+				<span><?php esc_html_e( $store_text ); ?></span>
+				<span class="dashicons dashicons-arrow-right-alt2"></span>
+			</a>
+		</button>
+	</div>
+<?php } ?>
 <div class="fullfillment_dashboard">
 	<div class="fullfillment_dashboard_section">
+		<div class="fullfillment_dashboard_status">
+			<div class="ts_billing_plan_status">
+				<div class="ts_tracker_balance">
+					<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/ts-balance.png">
+					<div class="ts_plan_details"><strong><?php echo esc_html( get_option('trackers_balance') ); ?></strong></div>
+					<span class="ts_plan_details_bottom"><?php esc_html_e( 'Available Balance', 'trackship-for-woocommerce' ); ?></span>
+				</div>
+				<div class="ts_subscription">
+					<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/ts-plan.png">
+					<?php if ( isset( $plan_data->subscription_plan ) ) { ?>
+						<div class="ts_plan_details"><strong><?php echo esc_html( $plan_data->subscription_plan ); ?></strong></div>
+					<?php } ?>
+					<a href="<?php echo esc_url($store_url); ?>" class="" target="_blank">
+						<span><?php esc_html_e( $store_text ); ?></span>
+						<span class="dashicons dashicons-arrow-right-alt2"></span>
+					</a>
+				</div>
+				<div class="ts_connected_status">
+					<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/ts-status.png">
+					<div class="ts_plan_details"><strong><span class="dashicons dashicons-yes"></span><?php esc_html_e( 'Connected', 'trackship-for-woocommerce' ); ?></strong></div>
+					<span class="ts_plan_details_bottom"><?php esc_html_e( 'Connection Status', 'trackship-for-woocommerce' ); ?></span>
+				</div>
+			</div>
+		</div>
 		<h3><?php esc_html_e( 'Action Needed', 'trackship-for-woocommerce' ); ?></h3>
 		<table class="fullfillment_table">
 			<tbody>
@@ -162,24 +196,6 @@ $store_url = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active
 			<?php } ?>
 		</div>
 		<div class="detailed_stats"><a target="_blank" href="<?php echo esc_url( admin_url( 'admin.php?page=trackship-shipments' ) ); ?>"><?php esc_html_e( 'View detailed stats', 'trackship-for-woocommerce' ); ?></a></div>
-		<div class="fullfillment_dashboard_status">
-			<h4><?php esc_html_e( 'Status', 'trackship-for-woocommerce' ); ?></h4>
-			<div class="ts_subscription">
-				<?php esc_html_e( 'Billing Plan ', 'trackship-for-woocommerce' ); ?>:
-				<?php if ( isset( $plan_data->subscription_plan ) ) { ?>
-					<strong><?php echo esc_html( $plan_data->subscription_plan ); ?></strong>
-				<?php } ?>
-			</div>
-			<div class="ts_tracker_balance">
-				<span><?php esc_html_e( 'Usage Balance ', 'trackship-for-woocommerce' ); ?></span>: <strong> <?php echo esc_html( get_option('trackers_balance') ); ?></strong>
-			</div>
-			<div class="ts_connected_status">
-				<span><?php esc_html_e( 'Connection Status', 'trackship-for-woocommerce' ); ?></span>: <strong><span class="dashicons dashicons-yes"></span><?php esc_html_e( 'Connected', 'trackship-for-woocommerce' ); ?></strong>
-			</div>
-			<a href="<?php echo esc_url($store_url); ?>" class="button-primary button-trackship btn_large" target="_blank">
-				<span><?php esc_html_e( $store_text ); ?></span>
-				<span class="dashicons dashicons-arrow-right-alt2"></span>
-			</a>
-		</div>
+		
 	</div>
 </div>

@@ -1264,23 +1264,19 @@ class TS4WC_Admin_Customizer {
 		}
 	}
 	
-	public function get_wc_shipment_status_for_preview( $status = 'in_transit', $order_id = null ) {
+	public function get_wc_shipment_row_for_preview( $status = 'in_transit', $order_id = null ) {
 		$order = wc_get_order( $order_id );
-		$shipment_status = array();
+		$row = (object) [];
 		if ( ! empty( $order_id ) && 'mockup' != $order_id ) {
-			$array = $order->get_meta( 'shipment_status', true );
-			$shipment_status[] = $array[0];
-			// echo '<pre>';print_r($array);echo '</pre>';
+			$rows = trackship_for_woocommerce()->actions->get_shipment_rows( $order_id );
+			$row = $rows[0];
 		} else {
-			$shipment_status[] = array(
-				'status_date'			=> '2021-07-27 15:28:02',
+			$row = (object) array(
 				'est_delivery_date'		=> '2021-07-30 15:28:02',
-				'status'				=> $status,
-				'tracking_events'		=> array(),
-				'tracking_page'			=> '',
+				'shipment_status'		=> $status,
 			);
 		}
-		return $shipment_status;
+		return $row;
 	}
 	
 	public function get_tracking_items_for_preview( $order_id = null ) {

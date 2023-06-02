@@ -43,7 +43,7 @@ if ( $tracking_items ) :
 								</div>
 								<?php
 								$show_est_delivery_date = apply_filters( 'show_est_delivery_date', true, $tracking_item['formatted_tracking_provider'] );
-								$est_delivery_date = isset( $shipment_status[$key]['est_delivery_date'] ) ? $shipment_status[$key]['est_delivery_date'] : false;
+								$est_delivery_date = isset($shipment_row->est_delivery_date) ? $shipment_row->est_delivery_date : '';
 								if ( $est_delivery_date && $show_est_delivery_date ) {
 									echo '<p style="margin: 0;"><span class="est_delivery_date">';
 									esc_html_e( 'Est. Delivery Date', 'trackship-for-woocommerce' );
@@ -58,7 +58,6 @@ if ( $tracking_items ) :
 									<?php $icon_layout = 't_layout_2' == $tracking_page_layout ? '-widget-v4.png' : $icon_layout; ?>
 								<?php } ?>
 							</div>
-							
 						</div>
 						<div style="display:block;"></div>
 						<?php if ( 'shipped' != $ship_status && !$ts4wc_preview ) { ?>
