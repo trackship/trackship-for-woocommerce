@@ -11,7 +11,6 @@ class WC_TrackShip_Email_Manager {
 	 */
 	public function __construct() {
 		add_action( 'ts_status_change_trigger', array( $this, 'ts_status_change_trigger' ), 10, 4 );
-		// add_filter( 'trackship_mail_content', [ $this, 'trackship_mail_content' ], 99, 2 );
 	}
 
 	public function ts_status_change_trigger ( $order_id, $old_status, $new_status, $tracking_number ) {
@@ -22,22 +21,19 @@ class WC_TrackShip_Email_Manager {
 			if ( trim( $tracking_item['tracking_number'] ) != trim($tracking_number) ) {
 				continue;
 			}
-			$shipment_status = $order->get_meta( 'shipment_status', true );
-			if ( is_string($shipment_status) ) {
-				$shipment_status = array();
-			}
-
-			$this->shippment_email_trigger( $order_id, $old_status, $new_status, $tracking_item, $shipment_status[$key] );
+			$row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id , $tracking_item['tracking_number'] );
+			$this->shippment_email_trigger( $order_id, $old_status, $new_status, $tracking_item, $row );
+			break;
 		}
 	}
 	
 	/**
 	 * Code for send shipment status email
 	 */
-	public function shippment_email_trigger( $order_id, $old_status, $new_status, $tracking_item, $shipment_status ) {
+	public function shippment_email_trigger( $order_id, $old_status, $new_status, $tracking_item, $shipment_row ) {
 		$order = wc_get_order( $order_id );
 		$this->order = $order;
-		$this->shipment_status = $shipment_status;
+		$this->shipment_row = $shipment_row;
 		$this->tracking_item = $tracking_item;
 		$this->tracking_number = $tracking_item['tracking_number'];
 		$status = str_replace('_', '', $new_status);
@@ -47,7 +43,19 @@ class WC_TrackShip_Email_Manager {
 		$for_amazon_order = trackship_for_woocommerce()->ts_actions->is_notification_on_for_amazon( $order_id );
 		$receive_email = $order->get_meta( '_receive_shipment_emails', true );
 
+		$arg = array(
+			'order_id'			=> $order_id,
+			'order_number'		=> wc_get_order( $order_id )->get_order_number(),
+			'user_id'			=> wc_get_order( $order_id )->get_user_id(),
+			'tracking_number'	=> $tracking_item['tracking_number'],
+			'date'				=> current_time( 'Y-m-d H:i:s' ),
+			'shipment_status'	=> $new_status,
+			'status_msg'		=> 'Settings disabled',
+			'type'				=> 'Email',
+		);
+		
 		if ( ! $enable || ! $for_amazon_order || '0' == $receive_email ) {
+			trackship_for_woocommerce()->ts_actions->update_notification_table( $arg );
 			return;
 		}
 
@@ -56,6 +64,7 @@ class WC_TrackShip_Email_Manager {
 			$all_delivered = trackship_for_woocommerce()->ts_actions->is_all_shipments_delivered( $order_id );
 			
 			if ( $toggle && !$all_delivered ) {
+				trackship_for_woocommerce()->ts_actions->update_notification_table( $arg );
 				return;
 			}
 		}
@@ -98,73 +107,75 @@ class WC_TrackShip_Email_Manager {
 		
 		$email_heading = $this->email_heading($email_heading, $order_id, $order);
 		$message = $this->append_analytics_link($email_content, $status);
-				
+
 		$local_template	= get_stylesheet_directory() . '/woocommerce/emails/tracking-info.php';
 		if ( file_exists( $local_template ) && is_writable( $local_template ) ) {
 			$message .= wc_get_template_html( 'emails/tracking-info.php', array( 
 				'tracking_items' => array($tracking_item),
-				'shipment_status' => array($shipment_status),
+				'shipment_row' => $shipment_row,
 				'order_id' => $order_id,
 				'show_shipment_status' => false,
 				'new_status' => $new_status,
+				'ts4wc_preview' => false,
 			), 'woocommerce-advanced-shipment-tracking/', get_stylesheet_directory() . '/woocommerce/' );
 		} else {
 			$message .= wc_get_template_html( 'emails/tracking-info.php', array( 
 				'tracking_items' => array($tracking_item),
-				'shipment_status' => array($shipment_status),
+				'shipment_row' => $shipment_row,
 				'order_id' => $order_id,
 				'show_shipment_status' => false,
-				'new_status' => $new_status,	
+				'new_status' => $new_status,
+				'ts4wc_preview' => false,
 			), 'woocommerce-advanced-shipment-tracking/', trackship_for_woocommerce()->get_plugin_path() . '/templates/' );
 		}
-		
-		if ( $wcast_show_order_details ) {
-			$tpi_order = false;
-			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
-			$tpi_order = trackship_for_woocommerce()->front->check_if_tpi_order( $tracking_items, $order );
-			
-			if ( $tpi_order ) {
-				
-				$message.= wc_get_template_html(
-					'emails/tswc-tpi-email-order-details.php',
-					array(
-						'order'         => $order,
-						'sent_to_admin' => $sent_to_admin,
-						'plain_text'    => $plain_text,
-						'tracking_items'=> array($tracking_item),
-						'email'         => '',
-						'wcast_show_product_image' => $wcast_show_product_image,
-					),
-					'woocommerce-advanced-shipment-tracking/', 
-					trackship_for_woocommerce()->get_plugin_path() . '/templates/'
-				);
-			} else {
-				$message.= wc_get_template_html(
-					'emails/tswc-email-order-details.php',
-					array(
-						'order'         => $order,
-						'sent_to_admin' => $sent_to_admin,
-						'plain_text'    => $plain_text,
-						'email'         => '',
-						'wcast_show_product_image' => $wcast_show_product_image,
-					),
-					'woocommerce-advanced-shipment-tracking/', 
-					trackship_for_woocommerce()->get_plugin_path() . '/templates/'
-				);
-			}
 
-		}
+		$tpi_order = false;
+		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
+		$tpi_order = trackship_for_woocommerce()->front->check_if_tpi_order( $tracking_items, $order );
 		
-		if ( $wcast_show_shipping_address ) {
+		if ( $tpi_order ) {
 			$message.= wc_get_template_html(
-				'emails/shipping-email-addresses.php', array(
+				'emails/tswc-tpi-email-order-details.php',
+				array(
 					'order'         => $order,
 					'sent_to_admin' => $sent_to_admin,
+					'plain_text'    => $plain_text,
+					'tracking_items'=> array($tracking_item),
+					'email'         => '',
+					'wcast_show_product_image' => $wcast_show_product_image,
+					'wcast_show_order_details' => $wcast_show_order_details,
+					'ts4wc_preview' => false,
 				),
 				'woocommerce-advanced-shipment-tracking/', 
 				trackship_for_woocommerce()->get_plugin_path() . '/templates/'
-			);	
+			);
+		} else {
+			$message.= wc_get_template_html(
+				'emails/tswc-email-order-details.php',
+				array(
+					'order'         => $order,
+					'sent_to_admin' => $sent_to_admin,
+					'plain_text'    => $plain_text,
+					'email'         => '',
+					'wcast_show_product_image' => $wcast_show_product_image,
+					'wcast_show_order_details' => $wcast_show_order_details,
+					'ts4wc_preview' => false,
+				),
+				'woocommerce-advanced-shipment-tracking/', 
+				trackship_for_woocommerce()->get_plugin_path() . '/templates/'
+			);
 		}
+
+		$message.= wc_get_template_html(
+			'emails/shipping-email-addresses.php', array(
+				'order'         => $order,
+				'sent_to_admin' => $sent_to_admin,
+				'ts4wc_preview' => false,
+				'wcast_show_shipping_address' => $wcast_show_shipping_address,
+			),
+			'woocommerce-advanced-shipment-tracking/', 
+			trackship_for_woocommerce()->get_plugin_path() . '/templates/'
+		);
 
 		// create a new email
 		$email_class = new WC_Email();
@@ -177,7 +188,7 @@ class WC_TrackShip_Email_Manager {
 
 		add_filter( 'wp_mail_from', array( $this, 'get_from_address' ) );
 		add_filter( 'wp_mail_from_name', array( $this, 'get_from_name' ) );
-		
+
 		foreach ( $recipients as $recipient ) {
 			$email_send = wp_mail( $recipient, $subject, $message, $email_class->get_headers() );
 			$arg = array(
@@ -198,27 +209,6 @@ class WC_TrackShip_Email_Manager {
 		if ( $sitepress ) {
 			$sitepress->switch_lang($old_lan);
 		}
-	}
-
-	/**
-	 * compatibility with Villa theme woocommerce email customizer
-	*/
-	public function trackship_mail_content( $message, $trackship_heading ) {
-		if ( is_plugin_active( 'woocommerce-email-template-customizer/woocommerce-email-template-customizer.php' ) ) {
-			$default_temp_id = VIWEC\INCLUDES\Email_Trigger::init()->get_default_template();
-			$email_render    = VIWEC\INCLUDES\Email_Render::init();
-	
-			$email_render->recover_heading       = $trackship_heading;
-			$email_render->other_message_content = $message;
-			$email_render->use_default_template  = true;
-			$data                                = get_post_meta( $default_temp_id, 'viwec_email_structure', true );
-			$data                                = json_decode( html_entity_decode( $data ), true );
-	
-			ob_start();
-			$email_render->render( $data );
-			$message = ob_get_clean();
-		}
-		return $message;
 	}
 
 	/**
@@ -378,8 +368,9 @@ class WC_TrackShip_Email_Manager {
 	 */
 	public function get_est_delivery_date( $order_id, $order ) {
 		
-		$shipment_status = isset( $this->shipment_status ) && $this->shipment_status ? $this->shipment_status : array();
-		$est_delivery_date = isset( $shipment_status['est_delivery_date'] ) && $shipment_status['est_delivery_date'] ? $shipment_status['est_delivery_date'] : '';
+		$row = isset( $this->shipment_row ) && $this->shipment_row ? $this->shipment_row : (object) [];
+		$est_delivery_date = isset( $row->est_delivery_date ) ? $row->est_delivery_date : '';
+
 		return $est_delivery_date ? date_i18n( 'l, M d', strtotime( $est_delivery_date ) ) : 'Not Available';
 	}
 	

@@ -36,12 +36,33 @@ class WC_TrackShip_Admin_notice {
 	/*
 	* init from parent mail class
 	*/
-	public function init() {						
-		add_action( 'admin_notices', array( $this, 'trackship_admin_notice' ) );
+	public function init() {
+		// Ignore notice
 		add_action( 'admin_init', array( $this, 'trackship_admin_notice_ignore' ) );
+
+		// SMS notifications notice/ Yearly plan
+		add_action( 'admin_notices', array( $this, 'trackship_admin_notice' ) );
 
 		// review notice
 		add_action( 'admin_notices', array( $this, 'trackship_review_notice' ) );
+
+		// review notice
+		add_action( 'admin_notices', array( $this, 'trackship_upgrade_notice' ) );
+	}
+	
+	/*
+	* Dismiss admin notice for trackship
+	*/
+	public function trackship_admin_notice_ignore() {
+		if ( isset( $_GET['trackship-ignore-notice'] ) ) {
+			update_option( 'trackship_admin_notice_ignore', 'true' );
+		}
+		if ( isset( $_GET['trackship-review-ignore'] ) ) {
+			update_option( 'trackship_review_notice_ignore', 'true' );
+		}
+		if ( isset( $_GET['trackship-upgrade-ignore'] ) ) {
+			update_option( 'trackship_upgrade_notice_ignore', 'true' );
+		}
 	}
 
 	/*
@@ -74,18 +95,6 @@ class WC_TrackShip_Admin_notice {
 	}	
 	
 	/*
-	* Dismiss admin notice for trackship
-	*/
-	public function trackship_admin_notice_ignore() {
-		if ( isset( $_GET['trackship-ignore-notice'] ) ) {
-			update_option( 'trackship_admin_notice_ignore', 'true' );
-		}
-		if ( isset( $_GET['trackship-review-ignore'] ) ) {
-			update_option( 'trackship_review_notice_ignore', 'true' );
-		}
-	}
-	
-	/*
 	* Display admin notice on plugin install or update
 	*/
 	public function trackship_review_notice() { 		
@@ -112,6 +121,44 @@ class WC_TrackShip_Admin_notice {
 			<p>	Eran Shor, founder & CEO</p>
 
 			<a class="button button-primary" href="<?php echo esc_url($url); ?>" >Yes, let's add a review</a>
+			<a class="button" style="margin: 0 10px;" href="<?php echo esc_url($dismissable_url); ?>" >No thanks</a>
+		</div>
+		<?php
+	}
+
+	/*
+	* Display admin notice on Upgrade TrackShip plan
+	*/
+	public function trackship_upgrade_notice () {
+		
+		if ( get_option('trackship_upgrade_notice_ignore') || !in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+			return;
+		}
+
+		$currentDate = date('Y-m-d');  // Get the current date in the format 'YYYY-MM-DD'
+		$targetDate = '2023-06-06';
+
+		if ( $currentDate > $targetDate ) {
+			return;
+		}
+
+		$dismissable_url = esc_url(  add_query_arg( 'trackship-upgrade-ignore', 'true' ) );
+		$url = 'https://my.trackship.com/settings/#billing';
+		?>		
+		<style>		
+		.wp-core-ui .notice.trackship-dismissable-notice {
+			padding: 12px;
+			text-decoration: none;
+		}
+		.wp-core-ui .notice.trackship-dismissable-notice a.notice-dismiss{
+			padding: 9px;
+			text-decoration: none;
+		}
+		</style>
+		<div class="notice notice-success is-dismissible trackship-dismissable-notice">
+			<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
+			<p>Unlock TrackShip's PRO advantages: track more shipments, SMS Notifications, Priority Support, Shipments Dashboard, and more... Upgrade now and use discount code YEARLY10 to avail special extra 10% off on yearly plans. (Valid by June 5th)</p>
+			<a class="button button-primary" target="_blank" href="<?php echo esc_url($url); ?>" >Upgrade to PRO</a>
 			<a class="button" style="margin: 0 10px;" href="<?php echo esc_url($dismissable_url); ?>" >No thanks</a>
 		</div>
 		<?php
