@@ -194,7 +194,9 @@ class TS4WC_Admin_Customizer {
 			'est_delivery_date'		=> '2021-07-30 15:28:02',
 			'email_iframe_url'		=> add_query_arg( array( 'shipment-email-customizer-preview' => '1' ), home_url( '' ) ),
 			'tracking_iframe_url'	=> add_query_arg( array( 'action' => 'preview_tracking_page' ), home_url( '' ) ),
-			'form_iframe_url'		=> $this->get_tracking_form_preview_url()
+			'form_iframe_url'		=> $this->get_tracking_form_preview_url(),
+			'user_plan'				=> get_option( 'user_plan' ),
+			'unsubscribe'			=> get_option( 'enable_email_widget' ),
 		));
 	}
 
@@ -868,7 +870,7 @@ class TS4WC_Admin_Customizer {
 				'option_name'=> $email_settings,
 				'option_type'=> 'array',
 				'show'     => true,
-				'class'		=> $value . '_sub_menu all_status_submenu',
+				'class'		=> $value . '_sub_menu all_status_submenu ts4wc_shipped_products',
 			);
 			$settings[ 'wcast_'.$key.'_shipped_product_label' ] = array(
 				'title'    => esc_html__( 'Shipped products header text', 'trackship-for-woocommerce' ),
@@ -886,7 +888,7 @@ class TS4WC_Admin_Customizer {
 				'option_name'=> $email_settings,
 				'option_type'=> 'array',
 				'show'     => true,
-				'class'		=> $value . '_sub_menu all_status_submenu',
+				'class'		=> $value . '_sub_menu all_status_submenu ts4wc_shipped_product_image',
 			);
 			$settings[ 'wcast_'.$key.'_show_shipping_address' ] = array(
 				'title'    => esc_html__( 'Display shipping address', 'trackship-for-woocommerce' ),
@@ -895,7 +897,7 @@ class TS4WC_Admin_Customizer {
 				'option_name'=> $email_settings,
 				'option_type'=> 'array',
 				'show'     => true,
-				'class'		=> $value . '_sub_menu all_status_submenu',
+				'class'		=> $value . '_sub_menu all_status_submenu ts4wc_shipping_address',
 			);
 			$settings[ 'wcast_'.$key.'_shipping_address_label' ] = array(
 				'title'    => esc_html__( 'Shipping address header text', 'trackship-for-woocommerce' ),
@@ -925,7 +927,7 @@ class TS4WC_Admin_Customizer {
 			'option_name'=> 'shipment_email_settings',
 			'option_type'=> 'array',
 			'show'		=> true,
-			'class'		=> '',
+			'class'		=> 'ts4wc_provider_logo',
 		);
 		return $settings;
 	}
@@ -1262,23 +1264,19 @@ class TS4WC_Admin_Customizer {
 		}
 	}
 	
-	public function get_wc_shipment_status_for_preview( $status = 'in_transit', $order_id = null ) {
+	public function get_wc_shipment_row_for_preview( $status = 'in_transit', $order_id = null ) {
 		$order = wc_get_order( $order_id );
-		$shipment_status = array();
+		$row = (object) [];
 		if ( ! empty( $order_id ) && 'mockup' != $order_id ) {
-			$array = $order->get_meta( 'shipment_status', true );
-			$shipment_status[] = $array[0];
-			// echo '<pre>';print_r($array);echo '</pre>';
+			$rows = trackship_for_woocommerce()->actions->get_shipment_rows( $order_id );
+			$row = $rows[0];
 		} else {
-			$shipment_status[] = array(
-				'status_date' => '2021-07-27 15:28:02',
-				'est_delivery_date' => '2021-07-30 15:28:02',
-				'status' => $status,
-				'tracking_events' => array(),
-				'tracking_page' => '',
+			$row = (object) array(
+				'est_delivery_date'		=> '2021-07-30 15:28:02',
+				'shipment_status'		=> $status,
 			);
 		}
-		return $shipment_status;
+		return $row;
 	}
 	
 	public function get_tracking_items_for_preview( $order_id = null ) {
@@ -1288,11 +1286,12 @@ class TS4WC_Admin_Customizer {
 			$tracking_items[] = $array[0];
 		} else {
 			$tracking_items[] = array(
-				'tracking_provider' => 'usps',
-				'tracking_number' => '4208001392612927',
-				'formatted_tracking_provider' => 'USPS',
-				'formatted_tracking_link' => 'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=4208001392612927',
-				'tracking_provider_image' => trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/usps.png',
+				'tracking_provider'				=> 'usps',
+				'tracking_number'				=> '4208001392612927',
+				'formatted_tracking_provider'	=> 'USPS',
+				'formatted_tracking_link'		=> 'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=4208001392612927',
+				'tracking_provider_image'		=> trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/usps.png',
+				'tracking_page_link'			=> '',
 			);
 		}
 		return $tracking_items;

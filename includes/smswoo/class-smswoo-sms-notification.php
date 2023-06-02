@@ -53,7 +53,7 @@ class tswc_smswoo_sms_notification {
 	public function init() {
 		
 		//TrackShip support 
-		add_action( 'ts_status_change_trigger', array( $this, 'trigger_sms_on_shipment_status_change' ), 20, 5 );
+		add_action( 'ts_status_change_trigger', array( $this, 'trigger_sms_on_shipment_status_change' ), 20, 4 );
 		
 		//AST support for order status sms
 		add_filter( 'smswoo_sms_message_replacements', array( $this, 'ast_order_variable_support' ), 10, 2 );
@@ -166,10 +166,8 @@ class tswc_smswoo_sms_notification {
 			$replacements[ '%shipment_status%' ] = $status;
 			$replacements[ '{shipment_status}' ] = $status;
 			
-			$shipment_status = $this->shipment_status;
-			
-			$est_delivery_date = $shipment_status['est_delivery_date'];
-			$est_delivery_date = $est_delivery_date ? $est_delivery_date : 'N/A';
+			$shipment_row = $this->shipment_row;
+			$est_delivery_date = isset( $shipment_row->est_delivery_date ) ? $shipment_row->est_delivery_date : 'N/A';
 			$replacements[ '%est_delivery_date%' ] = $est_delivery_date;
 			$replacements[ '{est_delivery_date}' ] = $est_delivery_date;
 		}
@@ -300,12 +298,8 @@ class tswc_smswoo_sms_notification {
 			if ( trim( $tracking_item['tracking_number'] ) != trim($tracking_number) ) {
 				continue;
 			}
-			$shipment_status = $order->get_meta( 'shipment_status', true );
-			if ( is_string($shipment_status) ) {
-				$shipment_status = array();
-			}
 			$this->tracking_item = $tracking_item;
-			$this->shipment_status = $shipment_status[$key];
+			$this->shipment_row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id , $tracking_item['tracking_number'] );
 		}
 
 		$this->new_status = $new_status;

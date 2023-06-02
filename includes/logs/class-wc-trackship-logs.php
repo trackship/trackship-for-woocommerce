@@ -93,7 +93,7 @@ class WC_Trackship_Logs {
 		$where_condition = !empty( $where ) ? 'WHERE ' . implode(" AND ",$where) : '';
 
 		$sum = $wpdb->get_var("
-			SELECT COUNT(*) FROM {$log_table} AS row
+			SELECT COUNT(*) FROM {$log_table} AS row1
 			$where_condition
 		");
 		//echo '<pre>';print_r($wpdb->last_query);echo '</pre>';
@@ -123,6 +123,14 @@ class WC_Trackship_Logs {
 			} else {
 				$condi_time = '<time title="' . date( 'd/m/Y h:i a', $notification_time ) . '">' . date( 'M d, Y', $notification_time ) . '</time>';
 			}
+			
+			if ( in_array( $value->status_msg, array( 'Settings disabled' ) ) ) {
+				$msg = 'Settings disabled';
+			} elseif ( $value->status ) {
+				$msg = 'Sent';
+			} else {
+				$msg = 'Failed';
+			}
 
 			$result[$i] = new \stdClass();
 			$result[$i]->order_id = '<a href="' . admin_url( 'post.php?post=' . $value->order_id . '&action=edit' ) . '" target="_blank">' . $value->order_number . '</a>';
@@ -130,7 +138,7 @@ class WC_Trackship_Logs {
             $result[$i]->date = $condi_time;
             $result[$i]->to = $value->to;
             $result[$i]->type = $value->type == 'Email' ? 'Email' : 'SMS';
-            $result[$i]->status = $value->status ? 'Sent' : 'Failed';
+            $result[$i]->status = $msg;
 			$result[$i]->action_button = '<span class="get_log_detail dashicons dashicons-visibility" data-rowid="' . $value->id . '" data-orderid="' . $value->order_id . '"></span>';
 			
             $i++;

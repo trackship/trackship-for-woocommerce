@@ -176,6 +176,7 @@ jQuery(document).ready(function () {
 	jQuery('.inner_tab_input:checked').trigger('click');
 	jQuery('.tab_input:checked').trigger('click');
 	jQuery('.map-provider-table .select2').select2();
+	jQuery('.accordion_container .heading_panel.checked').trigger('click');
 });
 
 jQuery(document).on("click", ".trackship_admin_content .trackship_nav_div .tab_input", function () {

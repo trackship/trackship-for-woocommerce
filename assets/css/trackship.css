@@ -335,6 +335,10 @@ div#trackship-tracking-items .ts-tracking-item:not(:first-child) {
 	display: block;
 	margin-top: 5px;
 }
+span.view_shipment_log {
+	display: block;
+	margin: 10px 0;
+}
 .ast-shipment-status .shipment-icon:before {
 	content: ' ';
 	width: 10px;
@@ -1865,9 +1869,47 @@ span.fullfillment_status {
 .fullfillment_dashboard .fullfillment_dashboard_status {
 	background: #fff;
 	border: 1px solid #e0e0e0;
-	margin: 15px 0;
+	margin-bottom: 15px;
 	font-size: 14px;
 	color: #3c4758;
+}
+.ts_billing_plan_status {
+	display: grid;
+	grid-template-columns: auto auto auto;
+	margin: 25px;
+}
+.ts_billing_plan_status {
+	display: grid;
+	grid-template-columns: auto auto auto;
+	margin: 25px;
+	column-gap: 20px;
+}
+.ts_tracker_balance, .ts_subscription {
+	border-right: 1px solid #e0e0e0;
+}
+.ts_plan_details {
+	font-size: 20px;
+	margin: 15px 0;
+}
+.ts_upgrade_notice {
+	background: #fff;
+	padding: 20px;
+	border: 1px solid #e0e0e0;
+	margin-bottom: 15px;
+}
+.ts_upgrade_notice a {
+	text-decoration: none;
+	color: #fff;
+}
+.ts_upgrade_notice button{
+	float: right;
+}
+.ts_upgrade_notice .ts_upgrade_msg{
+	line-height: 35px;
+	font-size: 15px;
+}
+span.ts_plan_details_bottom {
+	font-size: 16px;
 }
 .fullfillment_dashboard_status h4 {
 	margin: 0;
@@ -1881,9 +1923,9 @@ span.fullfillment_status {
 .ts_connected_status strong .dashicons {
 	margin: 0;
 }
-.fullfillment_dashboard_status .ts_connected_status, .fullfillment_dashboard_status .ts_subscription, .fullfillment_dashboard_status .ts_tracker_balance {
+/* .fullfillment_dashboard_status .ts_connected_status, .fullfillment_dashboard_status .ts_subscription, .fullfillment_dashboard_status .ts_tracker_balance {
 	margin: 0 20px 10px;
-}
+} */
 .fullfillment_dashboard_status .btn_large {
 	margin: 0 20px 20px;
 	line-height: 36px;
@@ -2009,6 +2051,12 @@ label.inner_tab_label {
 .shipment-status-email-section .form-table.shipment-status-email-table {
 	table-layout: auto;
 }
+}
+
+@media screen and (max-width: 1280px) {
+	.ts_upgrade_notice button{
+		float: none;
+	}
 }
 
 @media screen and (min-width: 600px) {

@@ -98,21 +98,19 @@
 		<div class="tracker-progress-bar <?php echo in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking_icon_layout ' : 'tracking_progress_layout'; ?> <?php echo esc_html( $tracking_page_layout ); ?>">
 			<div class="progress <?php echo esc_html($status); ?>">
 				<div class="progress-bar <?php echo esc_html($status); ?>" style="width: <?php esc_html_e( $width ); ?>;"></div>
-				<?php if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ) { ?>
-					<div class="progress-icon icon1"></div>
-					<div class="progress-icon icon2"></div>
-					<div class="progress-icon icon3"></div>
-					<div class="progress-icon icon4"></div>
-				<?php } ?>
+				<div class="progress-icon icon1"></div>
+				<div class="progress-icon icon2"></div>
+				<div class="progress-icon icon3"></div>
+				<div class="progress-icon icon4"></div>
 			</div>
 		</div>
 		<div class="tracking_event_tab_view">
-			<div data-label="tracking_events_details" class="heading_panel tracking_detail_label <?php echo 1 != $hide_tracking_events ? 'checked' : ''; ?>" style="<?php echo 1 == $hide_tracking_events ? 'display:none' : ''; ?>">
+			<div data-label="tracking_events_details" class="heading_panel tracking_detail_label <?php echo 1 != $hide_tracking_events ? 'checked' : 'hide'; ?>" style="<?php echo 1 == $hide_tracking_events ? 'display:none' : ''; ?>">
 				Shipment Progress
 				<span class="accordian-arrow right"></span>
 			</div>
 			<div class="content_panel tracking-details tracking_events_details">
-				<?php if ( 0 == $hide_tracking_events ) { ?>
+				<div class="preview_tracking_events <?php echo 0 != $hide_tracking_events ? 'hide' : ''; ?> tracking_events_0">
 					<div class="tracking_details_by_date">			
 						<ul class="timeline">
 							<li>
@@ -137,8 +135,9 @@
 							</li>
 						</ul>							
 					</div>
-				<?php } elseif ( 2 == $hide_tracking_events ) { ?>
-					<div class="tracking_details_by_date">						
+				</div>
+				<div class="preview_tracking_events <?php echo 2 != $hide_tracking_events ? 'hide' : ''; ?> tracking_events_2">
+					<div class="tracking_details_by_date">
 						<ul class="timeline new-details">
 							<li>
 								<strong>October 1, 2020 07:59</strong>
@@ -165,8 +164,8 @@
 						</ul>							
 					</div>
 					<a class="view_old_details view_more_class" href="javaScript:void(0);" style="display: inline;"><?php esc_html_e( 'view more', 'trackship-for-woocommerce' ); ?></a>
-					<a class="hide_old_details view_more_class" href="javaScript:void(0);" style="display: none;"><?php esc_html_e( 'view less', 'trackship-for-woocommerce' ); ?></a>		
-				<?php } ?>
+					<a class="hide_old_details view_more_class" href="javaScript:void(0);" style="display: none;"><?php esc_html_e( 'view less', 'trackship-for-woocommerce' ); ?></a>
+				</div>
 			</div>
 			<div data-label="product_details" class="heading_panel">
 				Items in this shipment
@@ -214,6 +213,9 @@
 	</div>
 </div>
 <style>
+<?php if ( !in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ) { ?>
+	.progress-icon{display:none;}
+<?php } ?>
 <?php if ( $hide_from_to ) { ?>
 	.shipping_from_to{display:none;}
 <?php } ?>

@@ -97,9 +97,9 @@ $form_tab_view = $tracking_page_defaults->get_value( 'tracking_form_settings', '
 			<?php } ?>
 			<div class="tracking_form_tabs">
 				<input id="for_order_number" type="radio" name="ts_tracking_form" class="ts_from_input" data-name="order_id_email" checked>
-				<label for="for_order_number" class="ts_from_label"><?php esc_html_e( 'Order Details', 'trackship-for-woocommerce' ); ?></label>
+				<label for="for_order_number" class="ts_from_label for_order_number"><?php esc_html_e( 'Order Details', 'trackship-for-woocommerce' ); ?></label>
 				<input id="for_tracking_number" type="radio" name="ts_tracking_form" class="ts_from_input" data-name="by_tracking_number">
-				<label for="for_tracking_number" class="ts_from_label"><?php esc_html_e( 'Tracking Number', 'trackship-for-woocommerce' ); ?></label>
+				<label for="for_tracking_number" class="ts_from_label for_tracking_number"><?php esc_html_e( 'Tracking Number', 'trackship-for-woocommerce' ); ?></label>
 			</div>
 			<div class="order_id_email tracking_form">
 				<p><?php echo esc_html( apply_filters( 'ast_tracking_page_front_text', __( 'To track your order, enter your order number and email address:', 'trackship-for-woocommerce' ) ) ); ?></p>

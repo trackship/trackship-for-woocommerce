@@ -22,7 +22,6 @@ $total_orders = $completed_order_with_tracking + $completed_order_with_zero_bala
 		<p><?php printf( esc_html__( 'We detected %1$s Shipped orders from the last 30 days that were not sent to TrackShip, you can bulk send them to TrackShip', 'trackship-for-woocommerce'), esc_html( $total_orders ) ) ; ?><button class="button-primary button-trackship bulk_shipment_status_button" <?php echo 0 == $total_orders ? 'disabled' : ''; ?>><?php esc_html_e( 'Get Shipment Status', 'trackship-for-woocommerce' ); ?></button></p>
 	</div>
 	<div class="tracking-event-delete-notice p15">
-		<?php //%s used for replacement ?>
 		<p style="line-height:35px;"><?php esc_html_e( 'Delete tracking events for orders delivered more then ', 'trackship-for-woocommerce' ); ?>
 			<select name="delete_time" id="delete_time" style="height: 35px;"> 
 				<option value="30" selected>30</option>
@@ -37,7 +36,6 @@ $total_orders = $completed_order_with_tracking + $completed_order_with_zero_bala
 		</p>
 	</div>
 	<div class="tracking_notification_log_delete p15">
-		<?php //%s used for replacement ?>
 		<p><?php esc_html_e( 'Delete notifications logs more than 30 days', 'trackship-for-woocommerce' ); ?></p>
 		<button class="button-primary button-trackship-red delete_notification" style="line-height:35px;"><?php esc_html_e( 'Delete notifications logs', 'trackship-for-woocommerce' ); ?></button>
 		<?php $nonce = wp_create_nonce( 'wc_ast_tools'); ?>

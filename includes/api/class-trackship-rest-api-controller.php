@@ -157,7 +157,8 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		
 		$data = array(
 			'status' => 'installed',
-			'plugin' => $plugin
+			'plugin' => $plugin,
+			'version'=> trackship_for_woocommerce()->version
 		);
 		return rest_ensure_response( $data );
 	}
@@ -178,7 +179,6 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		$tracking_est_delivery_date = $request['tracking_est_delivery_date'];
 		$tracking_events = $request['events'];
 		$tracking_destination_events = $request['destination_events'];
-		$previous_status = '';
 		
 		$trackship = WC_Trackship_Actions::get_instance();
 		
@@ -195,33 +195,27 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			if ( trim( $tracking_item['tracking_number'] ) != trim($tracking_number) ) {
 				continue;
 			}
+			$row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id , $tracking_item['tracking_number'] );
+			if ( isset( $row->shipment_status ) && 'delivered' == $row->shipment_status ) {
+				continue;
+			}
 			
+			$previous_status = isset( $row->shipment_status ) ? $row->shipment_status : '';	
+			
+			/* START -- to be removed in the future */
 			$shipment_status = $order->get_meta( 'shipment_status', true );
-			
 			if ( is_string($shipment_status) ) {
 				$shipment_status = array();			
 			}
-			
-			if ( isset( $shipment_status[$key]['status'] ) ) {
-				$previous_status = $shipment_status[$key]['status'];	
-			}
-			
 			unset($shipment_status[$key]['pending_status']);
-			
 			$shipment_status[$key]['status'] = $tracking_event_status;
-			$shipment_status[$key]['tracking_events'] = $tracking_events;
-			$shipment_status[$key]['tracking_destination_events'] = $tracking_destination_events;
-			
 			$shipment_status[$key]['status_date'] = gmdate( 'Y-m-d H:i:s' );
 			$shipment_status[$key]['last_event_time'] = $last_event_time;
 			$shipment_status[$key]['est_delivery_date'] = $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : null;
+			/* END -- to be removed in the future */
 			
 			$order = wc_get_order( $order_id );
-			$order->update_meta_data( 'shipment_status', $shipment_status );
 			$order->save();
-			
-			//tracking page link in $shipment_status
-			$shipment_status = trackship_for_woocommerce()->actions->get_shipment_status( $order_id );
 			
 			$ts_shipment_status[$key]['status'] = $tracking_event_status;
 			
@@ -251,7 +245,9 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 
 			if ( $previous_status != $tracking_event_status && 'delivered' != $order->get_status() ) {
 				// Schedule action for send Shipment status notifiations
-				as_schedule_single_action( time(), 'ts_status_change_trigger', array( $order_id, $previous_status, $tracking_event_status, $tracking_number ), 'TrackShip' );
+				if ( in_array( $tracking_event_status, array( 'in_transit', 'available_for_pickup', 'out_for_delivery', 'failure', 'on_hold', 'exception', 'return_to_sender', 'delivered' ) ) ) {
+					as_schedule_single_action( time(), 'ts_status_change_trigger', array( $order_id, $previous_status, $tracking_event_status, $tracking_number ), 'TrackShip' );
+				}
 
 				// hook for send SMS
 				// depricated after version 1.4.8

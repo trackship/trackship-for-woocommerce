@@ -76,7 +76,7 @@ class WC_Trackship_Shipments {
 		wp_register_script( 'TS-pdfMake', 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js', array(), '0.1.53', true );
 	
 		// Register pdfmake vfs_fonts
-		wp_register_script( 'TS-pdfMake-vfsFonts', 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js', array('pdfMake'), '0.1.53', true );
+		wp_register_script( 'TS-pdfMake-vfsFonts', 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js', array(), '0.1.53', true );
 	
 		// Register DataTables buttons HTML5
 		wp_register_script( 'TS-buttons-html5', 'https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js', array( 'jquery' ), '2.3.6', true );
@@ -131,7 +131,7 @@ class WC_Trackship_Shipments {
 		$shipping_provider = isset( $_POST['shipping_provider'] ) ? sanitize_text_field( $_POST['shipping_provider'] ) : false;
 		if ( 'all' != $shipping_provider ) {
 			$where[] = "`shipping_provider` = '{$shipping_provider}'";
-		}		
+		}
 		
 		$where_condition = !empty( $where ) ? 'WHERE ' . implode(" AND ",$where) : '';
 
@@ -250,7 +250,7 @@ class WC_Trackship_Shipments {
 	public function get_shipment_length($row){
 
 		$tracking_events = $row->tracking_events ? json_decode($row->tracking_events) : $row->tracking_events;
-
+		
 		if( empty($tracking_events ))return 0;
 		if( count( $tracking_events ) == 0 )return 0;		
 		$first = reset($tracking_events);
@@ -262,9 +262,8 @@ class WC_Trackship_Shipments {
 		$status = $row->shipment_status;
 		if( $status != 'delivered' ){
 			$last_date = date("Y-m-d H:i:s");
-		}		
-		
-		$days = $this->get_num_of_days( $first_date, $last_date );		
+		}
+		$days = $this->get_num_of_days( $first_date, $last_date );
 		return (int)$days;
 	}
 	
@@ -272,10 +271,10 @@ class WC_Trackship_Shipments {
 	*
 	*/
 	public function get_num_of_days( $first_date, $last_date ){
-		$date1 = strtotime($first_date);
-		$date2 = strtotime($last_date);
-		$diff = abs($date2 - $date1);
-		return date( "d", $diff );
+		$date2 = new DateTime( gmdate( "Y-m-d", strtotime($first_date) ) );
+		$date1 = new DateTime( gmdate( "Y-m-d", strtotime($last_date) ) );
+		$interval = $date1->diff($date2);
+		return $interval->format('%a');
 	}
 
 	/*
@@ -285,9 +284,9 @@ class WC_Trackship_Shipments {
 		check_ajax_referer( '_trackship_shipments', 'security' );
 		$order_id = wc_clean($_POST['order_id']);
 		$trackship = new WC_Trackship_Actions;
-		$trackship->schedule_trackship_trigger( $order_id );		
+		$trackship->schedule_trackship_trigger( $order_id );
 		wp_send_json(true);
-	}	
+	}
 	
 	/*
 	* get shiment status from bulk
@@ -295,9 +294,9 @@ class WC_Trackship_Shipments {
 	public function bulk_shipment_status_from_shipments(){
 		check_ajax_referer( '_trackship_shipments', 'security' );
 		foreach ( (array)$_POST['orderids'] as $order_id ) {
-			trackship_for_woocommerce()->actions->set_temp_pending( $order_id );					
-			wp_schedule_single_event( time() + 1, 'wcast_retry_trackship_apicall', array( $order_id ) );								
-		}				
+			trackship_for_woocommerce()->actions->set_temp_pending( $order_id );
+			wp_schedule_single_event( time() + 1, 'wcast_retry_trackship_apicall', array( $order_id ) );
+		}
 		wp_send_json(true);
-	}		
+	}
 }

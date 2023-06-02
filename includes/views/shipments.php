@@ -2,6 +2,23 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+global $wpdb;
+$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
+
+if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipment ) ) ) {
+	trackship_for_woocommerce()->ts_install->create_shipment_table();
+}
+
+if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $wpdb->prefix . 'trackship_shipment_meta' ) ) ) {
+	trackship_for_woocommerce()->ts_install->create_shipment_meta_table();
+}
+
+if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipment ) ) ) {
+	esc_html_e( 'TrackShip Shipments table does not exist, Please try after few minutes', 'trackship-for-woocommerce' );
+	return;
+}
+
 $nonce = wp_create_nonce( 'wc_ast_tools');
 ?>
 <input type="hidden" id="wc_ast_dashboard_tab" name="wc_ast_dashboard_tab" value="<?php echo esc_attr( $nonce ); ?>" />
@@ -34,10 +51,6 @@ $columns = array(
 );
 $status = isset( $_GET['status'] ) ? sanitize_text_field( $_GET['status'] ) : '';
 $url_provider = isset( $_GET['provider'] ) ? sanitize_text_field( $_GET['provider'] ) : '';
-
-
-global $wpdb;
-$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
 
 $res = $wpdb->get_results( "SELECT shipment_status, COUNT(*) AS status_count FROM $woo_trackship_shipment GROUP BY shipment_status", ARRAY_A );
 $statuses = array_column($res, "shipment_status");
