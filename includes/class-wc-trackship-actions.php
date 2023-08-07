@@ -454,7 +454,7 @@ class WC_Trackship_Actions {
 	public function wc_add_order_shipment_status_column_content( $column ) {
 		global $post;
 		if ( 'shipment_status' === $column ) {
-			echo wp_kses_post( $this->shipment_status_column_content( $post->ID ) );
+			$this->shipment_status_column_content( $post->ID );
 		}
 	}
 	
@@ -465,7 +465,7 @@ class WC_Trackship_Actions {
 	 */
 	public function render_wc_add_order_shipment_status_column_content( $column_name, $order ) {
 		if ( 'shipment_status' === $column_name ) {
-			echo wp_kses_post( $this->shipment_status_column_content( $order->get_id() ) );
+			$this->shipment_status_column_content( $order->get_id() );
 		}
 	}
 
@@ -805,7 +805,10 @@ class WC_Trackship_Actions {
 				$status = __( 'Invalid Carrier', 'woocommerce' );
 				break;
 			case 'pending_trackship':
-				$status = __( 'Pending TrackShip', 'trackship-for-woocommerce' );
+				$status = __( 'Shipped', 'trackship-for-woocommerce' );
+				break;
+			case 'pending':
+				$status = __( 'Shipped', 'trackship-for-woocommerce' );
 				break;
 			case 'carrier_unsupported':
 				$status = __( 'Carrier Unsupported', 'trackship-for-woocommerce' );
@@ -1374,8 +1377,8 @@ class WC_Trackship_Actions {
 					'meta_query'        => array(
 						'relation' => 'AND', 
 						array(
-						'key'       => '_alg_wc_custom_order_number',
-						'value'     => $new_order_id,
+						'key'		=> '_alg_wc_custom_order_number',
+						'value'		=> $new_order_id,
 						),
 					),
 					'post_status' => array_keys( wc_get_order_statuses() ) , 	
