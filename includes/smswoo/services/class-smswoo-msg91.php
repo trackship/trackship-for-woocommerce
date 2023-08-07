@@ -21,7 +21,7 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 	 */
 	class SMSWOO_Msg91 extends SMSWOO_Sms_Gateway {
 
-		private $_fast2sms_api_key;
+		public $new_status;
 
 		/**
 		 * Constructor
@@ -73,32 +73,67 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 				$country_dial_code = '0';
 			}
 			
-			$body = array(
-				'sender'	=> $from,
-				'route'		=> '4',
-				'country'	=> $country_dial_code,
-				'sms' => array(
-					array (
-						'message' => $message,
-						'to' => array (
-							$to_phone,
+			if ( get_option('smswoo_msg91_dlt') ) {
+				$template_id = get_option('smswoo_trackship_status_' . $this->new_status . '_sms_template_templete_id');
+				$template_var = get_option('smswoo_trackship_status_' . $this->new_status . '_sms_template_template_var' );
+				$template_var = $template_var ? explode( ',',$template_var) : [];
+
+				$var = [];
+				$i = 1;
+				foreach ( (array) $template_var as $key => $val ) {
+					$var[ 'var' . $i] = $val;
+					$i++;
+				}
+
+				$body = array(
+					'template_id'	=> $template_id,
+					'sender'		=> $from,
+					'short_url'		=> '1',
+					'mobiles'		=> $to_phone,
+				);
+
+				$body = array_merge( $body, $var );
+				
+				$args = array(
+					'body'    => wp_json_encode( $body ),
+					'headers' => array(
+						'authkey' => $this->_msg91_authkey,
+						'Content-Type' => 'application/json',
+					),
+				);
+				$url = 'https://control.msg91.com/api/v5/flow/';
+			} else {
+				$body = array(
+					'sender'	=> $from,
+					'route'		=> '4',
+					'country'	=> $country_dial_code,
+					'sms' => array(
+						array (
+							'message' => $message,
+							'to' => array (
+								$to_phone,
+							),
 						),
 					),
-				),
-				'unicode'	=> 1
-			);
-			
-			$args = array(
-				'body'    => wp_json_encode( $body ),
-				'headers' => array(
-					'authkey' => $this->_msg91_authkey,
-					'Content-Type' => 'application/json',
-				),
-			);
-			
-			$url = 'https://api.msg91.com/api/v2/sendsms';
-			
+					'unicode'	=> 1
+				);
+				
+				$args = array(
+					'body'    => wp_json_encode( $body ),
+					'headers' => array(
+						'authkey' => $this->_msg91_authkey,
+						'Content-Type' => 'application/json',
+					),
+				);
+				$url = 'https://api.msg91.com/api/v2/sendsms';
+			}
+
 			$response = wp_safe_remote_post( $url, $args);
+			
+			$content = print_r($response, true);
+			$logger = wc_get_logger();
+			$context = array( 'source' => 'trackship_msg91_response' );
+			$logger->info( "trackship_msg91_response \n" . $content . "\n", $context );
 			//echo '<pre>';print_r($response);echo '</pre>';exit;
 			
 			// WP HTTP API error like network timeout, etc
@@ -108,20 +143,29 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 
 			}
 
+			if ( isset( $response['response']['code'] ) ) {
+
+				if ( $response['response']['code'] != 201 && $response['response']['code'] != 200 ) {
+
+					$response = json_decode( $response['body'], true );
+
+					throw new Exception( ( isset( $response['message'] ) ) ? $response['message'] : __( 'An error has occurred while sending the sms', 'trackship-for-woocommerce' ) );
+				}
+
+				$response = json_decode( $response['body'], true );
+
+			} else {
+
+				throw new Exception( __( 'No answer code', 'trackship-for-woocommerce' ) );
+
+			}
+
 			$this->_log[] = $response;
 
 			// Check for proper response / body
 			if ( ! isset( $response['response'] ) || ! isset( $response['body'] ) ) {
 
 				throw new Exception( __( 'No answer', 'smswoo' ) );
-
-			}
-			
-			$result = json_decode( $response['body'], true );
-
-			if ( 'error' == $result['type'] ) {
-				/* translators: %s: search for a tag */
-				throw new Exception( sprintf( __( 'An error has occurred: %s', 'smswoo' ), $result['message'] ) );
 
 			}
 
