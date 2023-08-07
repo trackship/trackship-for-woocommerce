@@ -48,6 +48,11 @@ class WC_TrackShip_Admin_notice {
 
 		// review notice
 		add_action( 'admin_notices', array( $this, 'trackship_upgrade_notice' ) );
+
+		// Database update notice
+		if ( version_compare( get_option( 'trackship_db' ), '1.18', '<' ) ) {
+			add_action( 'admin_notices', array( $this, 'trackship_database_notice' ) );
+		}
 	}
 	
 	/*
@@ -142,7 +147,7 @@ class WC_TrackShip_Admin_notice {
 			return;
 		}
 
-		$dismissable_url = esc_url(  add_query_arg( 'trackship-upgrade-ignore', 'true' ) );
+		$dismissable_url = esc_url( add_query_arg( 'trackship-upgrade-ignore', 'true' ) );
 		$url = 'https://my.trackship.com/settings/#billing';
 		?>		
 		<style>		
@@ -157,9 +162,31 @@ class WC_TrackShip_Admin_notice {
 		</style>
 		<div class="notice notice-success is-dismissible trackship-dismissable-notice">
 			<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
-			<p>Unlock TrackShip's PRO advantages: track more shipments, SMS Notifications, Priority Support, Shipments Dashboard, and more... Upgrade now and use discount code YEARLY10 to avail special extra 10% off on yearly plans. (Valid by June 5th)</p>
+			<p>Unlock TrackShip's PRO advantages: track more shipments, SMS Notifications, Priority Support, Shipments Dashboard, and more... Upgrade now and save with our special extra 10% off yearly plans! (Valid by June 5th)</p>
 			<a class="button button-primary" target="_blank" href="<?php echo esc_url($url); ?>" >Upgrade to PRO</a>
 			<a class="button" style="margin: 0 10px;" href="<?php echo esc_url($dismissable_url); ?>" >No thanks</a>
+		</div>
+		<?php
+	}
+
+	public function trackship_database_notice() {
+		$url = admin_url( '/admin.php?page=trackship-for-woocommerce&trackship-database-upgrade=true' );
+		?>		
+		<style>		
+		.wp-core-ui .notice.trackship-dismissable-notice {
+			padding: 12px;
+			text-decoration: none;
+		}
+		.wp-core-ui .notice.trackship-dismissable-notice a.notice-dismiss{
+			padding: 9px;
+			text-decoration: none;
+		}
+		</style>
+		<div class="notice notice-success trackship-dismissable-notice">
+			<p><strong>TrackShip database update required</strong></p>
+			<p>TrackShip has been updated! To keep things running smoothly, we have to update your database to the newest version.</p>
+			<p>The database update process runs in the background and may take a little while, so please be patient.</p>
+			<a class="button button-primary" href="<?php echo esc_url($url); ?>" >Update TrackShip database</a>
 		</div>
 		<?php
 	}
