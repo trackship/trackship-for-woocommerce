@@ -2,6 +2,11 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+$database_upg = isset( $_GET['trackship-database-upgrade'] ) ? sanitize_text_field( $_GET['trackship-database-upgrade'] ) : '';
+if ( 'true' == $database_upg ) {
+	trackship_for_woocommerce()->ts_install->update_database_check();
+}
+
 $url = 'https://my.trackship.com/api/user-plan/get/';
 $args[ 'body' ] = array(
 	'user_key' => get_trackship_key(), // Deprecated since 19-Aug-2022
