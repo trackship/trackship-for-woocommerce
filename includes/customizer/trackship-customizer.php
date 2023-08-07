@@ -159,6 +159,9 @@ class TS4WC_Admin_Customizer {
 					</div>
 				</section>
 			</form>
+			<div class="pending_color_event"></div>
+			<div class="pending_change_event"></div>
+			<div class="pending_keyup_event"></div>
 		</section>
 		<?php
     }
@@ -181,7 +184,7 @@ class TS4WC_Admin_Customizer {
 		
 		// Add tiptip js and css file		
 		wp_enqueue_style( 'trackship-customizer', plugin_dir_url(__FILE__) . 'assets/customizer.css', array(), trackship_for_woocommerce()->version );
-		wp_enqueue_script( 'trackship-customizer', plugin_dir_url(__FILE__) . 'assets/customizer.js', array( 'jquery', 'wp-util', 'wp-color-picker','jquery-tiptip' ), trackship_for_woocommerce()->version, true );
+		wp_enqueue_script( 'trackship-customizer', plugin_dir_url(__FILE__) . 'assets/customizer.js', array( 'jquery', 'wp-util', 'wp-color-picker','jquery-tiptip' ), time(), true );
 
 		wp_localize_script('trackship-customizer', 'trackship_customizer', array(
 			'site_title'			=> get_bloginfo( 'name' ),
@@ -728,7 +731,7 @@ class TS4WC_Admin_Customizer {
 				'option_name'=> 'tracking_form_settings',
 				'option_type'=> 'array',
 				'show'     => true,
-				'class' 	=> 'track_button_Text',
+				'class' 	=> 'form_button_Text',
 			),
 		);
 		

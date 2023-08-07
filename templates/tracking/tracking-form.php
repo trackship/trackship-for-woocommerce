@@ -72,6 +72,10 @@ $form_tab_view = $tracking_page_defaults->get_value( 'tracking_form_settings', '
     border: 1px solid #e0e0e0;
     min-height: 330px;
 }
+.track_fail_msg {
+	color: red;
+    padding: 0 20px 15px;
+}
 </style>
 <div class="track-order-section">
 	<form method="post" class="order_track_form">
@@ -81,19 +85,19 @@ $form_tab_view = $tracking_page_defaults->get_value( 'tracking_form_settings', '
 					.tracking_form_tabs, .order_id_email {display:none;}
 					.search_order_form .by_tracking_number.tracking_form { display:block; }
 					form.order_track_form {min-height:auto;}
-				</style>
+					</style>
 			<?php } elseif ( 'order_details' == $form_tab_view ) { ?>
 				<style>
 					.tracking_form_tabs, .by_tracking_number {display:none;}
 					.search_order_form .order_id_email.tracking_form { display:block; }
 					form.order_track_form {min-height:auto;}
-				</style>
+					</style>
 			<?php } else { ?>
 				<style>
 					.search_order_form .order_id_email.tracking_form { display:block; }
 					.by_tracking_number {display:none;}
 					form.order_track_form {min-height:auto;}
-				</style>
+					</style>
 			<?php } ?>
 			<div class="tracking_form_tabs">
 				<input id="for_order_number" type="radio" name="ts_tracking_form" class="ts_from_input" data-name="order_id_email" checked>
@@ -112,6 +116,7 @@ $form_tab_view = $tracking_page_defaults->get_value( 'tracking_form_settings', '
 				<p class="form-row"><label for="order_tracking_number"><?php echo esc_html( apply_filters( 'tracking_page_tracking_number_label', __( 'Tracking Number', 'trackship-for-woocommerce' ) ) ); ?></label><input class="input-text" type="text" name="order_tracking_number" id="order_tracking_number" value="" placeholder="<?php esc_html_e( 'Order tracking number.', 'trackship-for-woocommerce' ); ?>"></p>
 				<p class="form-row" style="margin-bottom:0;"><button type="submit" class="button btn btn-secondary" name="track" value="Track"><?php echo esc_html( $form_button_Text ); ?></button></p>
 			</div>
+			<div class="track_fail_msg" style="display:none;"></div>
 			<div class="trackship_branding">
 				<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></p>
 			</div>
@@ -122,7 +127,6 @@ $form_tab_view = $tracking_page_defaults->get_value( 'tracking_form_settings', '
 		<div class="clear"></div>
 		<input type="hidden" name="action" value="get_tracking_info">
 		<input type="hidden" name="fronted" value="yes">
-		<div class="track_fail_msg" style="display:none;color: red;padding: 0 20px 15px;"></div>
 		<?php wp_nonce_field( 'tracking_form' ); ?>
 	</form>
 </div>

@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<ul>
 					<li>
 						<span class="tracking_page_provider_name"><?php echo esc_html( apply_filters( 'ast_provider_title', $provider_name ) ); ?></span>
-						<?php if ( ( $wc_ast_link_to_shipping_provider || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) && $tracking_link ) { ?>
+						<?php if ( $wc_ast_link_to_shipping_provider && $tracking_link ) { ?>
 							<a href="<?php echo esc_url( $tracking_link ); ?>" target="blank"><strong><?php esc_html_e( $tracking_number ); ?></strong></a>	
 						<?php } else { ?>
 							<strong><?php esc_html_e( $tracking_number ); ?></strong>
@@ -58,7 +58,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	
 	<div class="shipment_status_heading <?php esc_html_e( $tracker->ep_status ); ?>">
 		<?php
-		if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'invalid_tracking', '' ) ) ) {
+		if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'invalid_tracking', 'unauthorized_store', 'unauthorized_api_key', 'unauthorized_api_key', 'missing_carrier', 'missing_tracking', 'missing_order_id', '' ) ) ) {
 			esc_html_e( 'Shipped', 'trackship-for-woocommerce' );
 		} else {
 			$message = isset( $trackind_detail_by_status_rev[0]->message ) ? $trackind_detail_by_status_rev[0]->message : '';

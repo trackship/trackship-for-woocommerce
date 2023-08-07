@@ -260,7 +260,6 @@ class WC_TrackShip_Front {
 	 * Ajax function for get tracking details
 	*/
 	public function get_tracking_info_fun() {
-		
 		$nonce = isset( $_REQUEST['_wpnonce'] ) ? wc_clean( $_REQUEST['_wpnonce'] ) : '';
 		if ( ! wp_verify_nonce( $nonce, 'tracking_form' ) ) {
 			wp_send_json( array('success' => 'false', 'message' => __( 'Security verification failed, please refresh page and try again.', 'trackship-for-woocommerce' ) ) );
@@ -410,7 +409,7 @@ class WC_TrackShip_Front {
 		?>
 		<style>
 			<?php if ( $link_color ) { ?>
-				.col.tracking-detail .tracking_number_wrap a, .tracking_event_tab_view .view_more_class {
+				.col.tracking-detail .tracking_number_wrap a, .tracking_event_tab_view .view_more_class, .content_panel.product_details a {
 					color: <?php echo esc_html( $link_color ); ?>;
 				}
 				span.copy_tracking_page.trackship-tip svg {
@@ -419,6 +418,9 @@ class WC_TrackShip_Front {
 				div.shipment-header .ts_from_input:checked + label {
 					color: <?php echo esc_html( $link_color ); ?> !important;
 					border-bottom: 3px solid <?php echo esc_html( $link_color ); ?>;
+				}
+				.heading_panel span.accordian-arrow.down {
+					border-color: <?php echo esc_html( $link_color ); ?>;
 				}
 			<?php } ?>
 			<?php if ( $border_radius ) { ?>
@@ -449,9 +451,12 @@ class WC_TrackShip_Front {
 				}
 			<?php } ?>
 			<?php if ( $font_color ) { ?>
-				body .tracking-detail .shipment-content, body .tracking-detail .shipment-content h4, .shipment-header label.ts_from_label {
-					color: <?php echo esc_html( $font_color ); ?>;
+				body .tracking-detail .shipment-content, body .tracking-detail .shipment-content h4, .shipment-header label.ts_from_label, .shipment_status_heading, .content_panel.shipment_status_notifications span {
+					color: <?php echo esc_html( $font_color ); ?> !important;
 				}				
+				.heading_panel span.accordian-arrow {
+					border-color: <?php echo esc_html( $font_color ); ?>;
+				}
 			<?php } ?>
 			.woocommerce-account.woocommerce-view-order .tracking-header span.wc_order_id {display: none;}
 			<?php if ( $remove_trackship_branding ) { ?>
