@@ -224,15 +224,15 @@ class WC_Trackship_Admin {
 		if ( is_trackship_connected() ) {
 			add_submenu_page( 'trackship-dashboard', 'Dashboard', __( 'Dashboard', 'trackship-for-woocommerce' ), apply_filters( 'trackship_dashboard_menu_capabilities', 'manage_woocommerce' ), 'trackship-dashboard', array( $this, 'dashboard_page_callback' ), 1 );
 			
-			add_submenu_page( 'trackship-dashboard', 'Settings', __( 'Settings', 'trackship-for-woocommerce' ), apply_filters( 'trackship_settings_menu_capabilities', 'manage_woocommerce' ), 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
-			
 			add_submenu_page( 'trackship-dashboard', 'Shipments', __( 'Shipments', 'trackship-for-woocommerce' ), apply_filters( 'trackship_shipments_menu_capabilities', 'manage_woocommerce' ), 'trackship-shipments', array( $this, 'shipments_page_callback' ) );
 			
 			add_submenu_page( 'trackship-dashboard', 'Logs', __( 'Logs', 'trackship-for-woocommerce' ), apply_filters( 'trackship_logs_menu_capabilities', 'manage_woocommerce' ), 'trackship-logs', array( $this, 'logs_page_callback' ) );
-
+			
 			add_submenu_page( 'trackship-dashboard', 'Analytics', __( 'Analytics', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-analytics', array( $this, 'analytics_page_callback' ) );
-
+			
 			add_submenu_page( 'trackship-dashboard', 'Tools', __( 'Tools', 'trackship-for-woocommerce' ), apply_filters( 'trackship_tools_menu_capabilities', 'manage_woocommerce' ), 'trackship-tools', array( $this, 'tools_page_callback' ) );
+
+			add_submenu_page( 'trackship-dashboard', 'Settings', __( 'Settings', 'trackship-for-woocommerce' ), apply_filters( 'trackship_settings_menu_capabilities', 'manage_woocommerce' ), 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
 		}
 	}
 	

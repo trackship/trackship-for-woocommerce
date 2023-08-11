@@ -14,6 +14,9 @@
 		.col.tracking-detail .tracking_number_wrap a, .tracking_event_tab_view .view_more_class {
 			color: <?php echo esc_html( $link_color ); ?>;
 		}
+		.heading_panel span.accordian-arrow.down {
+			border-color: <?php echo esc_html( $link_color ); ?>;
+		}
 	<?php } ?>
 	<?php if ( $border_radius ) { ?>
 		.col.tracking-detail {
@@ -37,9 +40,12 @@
 		}
 	<?php } ?>
 	<?php if ( $font_color ) { ?>
-		body .tracking-detail .shipment-content, body .tracking-detail .shipment-content h4 {
+		body .tracking-detail .shipment-content, body .tracking-detail .shipment-content h4, .shipment_status_heading {
 			color: <?php echo esc_html( $font_color ); ?>;
-		}				
+		}
+		.heading_panel span.accordian-arrow {
+			border-color: <?php echo esc_html( $font_color ); ?>;
+		}
 	<?php } ?>
 </style>
 
