@@ -57,18 +57,27 @@ jQuery(document).on("submit", ".order_track_form", function(){
 			}			
 			jQuery(".order_track_form").unblock();
 		},
-		error: function(jqXHR, exception) {
-			console.log(jqXHR.status);
-			if(jqXHR.status == 302){				
-				jQuery(".track_fail_msg ").show();
-				jQuery(".track_fail_msg ").text('Tracking details not found.');
-				jQuery(".order_track_form ").unblock();	
-			} else{				
-				jQuery(".track_fail_msg ").show();
-				jQuery(".track_fail_msg ").text('There are some issue with Trackship.');
-				jQuery(".order_track_form ").unblock();	
-			}	
-			
+		error: function (response, jqXHR, exception) {
+			console.log(response);
+			var warning_msg = '';
+			if (jqXHR.status === 0) {
+				warning_msg = 'Not connect.\n Verify Network.';
+			} else if (jqXHR.status === 404) {
+				warning_msg = 'Requested page not found. [404]';
+			} else if (jqXHR.status === 500) {
+				warning_msg = 'Internal Server Error [500].';
+			} else if (exception === 'parsererror') {
+				warning_msg = 'Requested JSON parse failed.';
+			} else if (exception === 'timeout') {
+				warning_msg = 'Time out error.';
+			} else if (exception === 'abort') {
+				warning_msg = 'Ajax request aborted.';
+			} else {
+				warning_msg = 'Uncaught Error.\n' + jqXHR.responseText;
+			}
+			jQuery(".track_fail_msg ").show();
+            jQuery(".track_fail_msg ").text(warning_msg);
+            jQuery(".order_track_form ").unblock();
 		}
 	});
 	return false;

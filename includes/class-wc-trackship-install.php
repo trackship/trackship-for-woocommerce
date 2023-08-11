@@ -43,7 +43,7 @@ class WC_Trackship_Install {
 	* init from parent mail class
 	*/
 	public function init() {			
-		add_action( 'admin_init', array( $this, 'update_database_check' ) );
+		// add_action( 'admin_init', array( $this, 'update_database_check' ) );
 		add_action( 'wp_ajax_update_trackship_providers', array( $this, 'update_trackship_providers' ) );
 	}
 	
@@ -97,26 +97,6 @@ class WC_Trackship_Install {
 			$Late_Shipments->remove_cron();
 			$Late_Shipments->setup_cron();
 		}
-		if ( version_compare( get_option( 'trackship_db' ), '1.12', '<' ) ) {
-			global $wpdb;
-			$log_table = $this->log_table;
-			$rows = $wpdb->get_results( "SELECT * FROM {$log_table}" );
-			$all_lang = array( 'Sent', 'נשלח', 'Verzonden', 'Enviado', 'مرسل', 'Изпратено', 'Sendt', 'Geschickt', 'Envoyé', 'મોકલેલો', 'भेज दिया', 'Inviato', 'Nosūtīts', 'Wysłane', 'Enviei', 'Отправил', 'Skickat', 'gönderildi', 'أرسلت', 'મોકલેલ', 'Spedito', 'Verstuurd', 'Wysłano', 'Gönderilmiş' );
-			foreach ( $rows as $row ) {
-				$status_msg = $row->status;
-				$status = in_array( $status_msg, $all_lang ) ? true : false;
-				$args = array(
-					'status' => $status,
-					'status_msg' => $status_msg
-				);
-				$where = array(
-					'id' => $row->id
-				);
-				$wpdb->update( $log_table, $args, $where );
-			}
-			update_option( 'trackship_db', '1.12' );
-		}
-
 		if ( version_compare( get_option( 'trackship_db' ), '1.13', '<' ) ) {
 			// migration to change api key name 
 			$trackship_apikey = get_option( 'wc_ast_api_key' );			
@@ -144,6 +124,13 @@ class WC_Trackship_Install {
 			$this->create_email_log_table();
 			$this->check_column_exists();
 			update_option( 'trackship_db', '1.17' );
+		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.18', '<' ) ) {
+			global $wpdb;
+			$shipment_meta_table = $this->shipment_table_meta;
+			$wpdb->query("ALTER TABLE $shipment_meta_table MODIFY COLUMN shipping_service varchar(60);");
+			update_option( 'trackship_db', '1.18' );
 		}
 	}
 
@@ -296,7 +283,7 @@ class WC_Trackship_Install {
 				`destination_country` VARCHAR(20) ,
 				`delivery_number` VARCHAR(80) ,
 				`delivery_provider` VARCHAR(30) ,
-				`shipping_service` VARCHAR(30) ,
+				`shipping_service` VARCHAR(60) ,
 				`tracking_events` LONGTEXT ,
 				`destination_events` LONGTEXT ,
 				PRIMARY KEY (`meta_id`),
@@ -344,7 +331,7 @@ class WC_Trackship_Install {
 			'destination_country'	=> ' VARCHAR(20)',
 			'delivery_number'		=> ' VARCHAR(80)',
 			'delivery_provider'		=> ' VARCHAR(30)',
-			'shipping_service'		=> ' VARCHAR(30)',
+			'shipping_service'		=> ' VARCHAR(60)',
 			'tracking_events'		=> ' LONGTEXT',
 			'destination_events'	=> ' LONGTEXT',
 		);

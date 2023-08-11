@@ -139,7 +139,7 @@ class WC_TrackShip_Api_Call {
 	*/
 	public function get_trackship_data( $order, $tracking_number, $tracking_provider ) {
 		$user_key = get_trackship_key();
-		$domain = get_home_url();
+		$domain = get_site_url();
 		$order_id = $order->get_id();
 		$custom_order_number = $order->get_order_number();
 		

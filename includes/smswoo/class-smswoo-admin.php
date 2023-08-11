@@ -361,6 +361,13 @@ class tswc_smswoo_admin {
 				'id'		=> 'smswoo_msg91_authkey',
 				'class'		=> 'smswoo_sms_provider smswoo_msg91_sms_provider',
 			),
+			'smswoo_msg91_dlt' => array(
+				'title'		=> __( 'Use DLT Template id', 'smswoo' ),
+				'type'		=> 'checkbox',
+				'show'		=> true,
+				'id'		=> 'smswoo_msg91_dlt',
+				'class'		=> 'smswoo_sms_provider smswoo_msg91_sms_provider',
+			),
 			'smswoo_smsalert_key' => array(
 				'title'		=> __( 'SMS Alert API Authorization Key', 'smswoo' ),
 				//'desc'		=> __( "Fast2sms API Authorization Key", 'smswoo'),
@@ -414,12 +421,14 @@ class tswc_smswoo_admin {
 			if(isset($_POST[ $val['id'] ])){
 				
 				update_option( $val['id'], $_POST[ $val['id'] ] );
-				
+
 				$enabled_customer = $val['id'] . "_enabled_customer";
-				$enabled_admin = $val['id'] . "_enabled_admin";
+				$templete_id = $val['id'] . "_templete_id";
+				$template_var = $val['id'] . "_template_var";
 				
 				update_option( $enabled_customer, $_POST[ $enabled_customer ] );
-				update_option( $enabled_admin, $_POST[ $enabled_admin ] );
+				update_option( $templete_id, $_POST[ $templete_id ] );
+				update_option( $template_var, $_POST[ $template_var ] );
 				
 			}
 		}
@@ -492,12 +501,12 @@ class tswc_smswoo_admin {
 		<div class="smswoo-container">
 			<?php foreach ( (array) $arrays as $id => $array ) {
 				$enabled_customer = $array['id'] . "_enabled_customer";
-				$enabled_admin = $array['id'] . "_enabled_admin";
+				$template_id = $array['id'] . "_templete_id";
+				$template_var = $array['id'] . "_template_var";
 				
 				$checked_customer = get_option( $enabled_customer );
-				$checked_admin = get_option( $enabled_admin );
 				?>
-				<div class="smswoo-row smswoo-shipment-row <?php echo ( $checked_customer ) ? 'enable_customer' : ''?> <?php echo ( $checked_admin ) ? 'enable_admin' : ''?>">
+				<div class="smswoo-row smswoo-shipment-row <?php echo ( $checked_customer ) ? 'enable_customer' : ''?>">
 					<div class="smswoo-top">
 						<div class="smswoo-top-click"></div>
 						<div>
@@ -528,19 +537,17 @@ class tswc_smswoo_admin {
 								<label class="tgl-btn" for="<?php echo $enabled_customer?>"></label>
 							</span>
 							<span class="smswoo-shipment-sendto-customer dashicons dashicons-admin-generic"></span>
+
 						</span>
 					</div>
 					<div class="smswoo-bottom">
 						<div class="smswoo-ast-textarea">
 							<div class="smawoo-textarea-placeholder">
 								<textarea class="smswoo-textarea" name="<?php echo $array['id']?>" id="<?php echo $array['id']?>" cols="30" rows="5"><?php echo get_option( $array['id'], $array['default'] )?></textarea>
-								<span class="mdl-list__item-secondary-action smswoo-inlineblock">
-								<label class="mdl-switch " for="<?php echo $enabled_admin?>" >
-									<?php echo __( 'Send to admin', 'trackship-for-woocommerce' ); ?>
-									<input type="hidden" name="<?php echo $enabled_admin?>" value="0"/>
-									<input type="checkbox" id="<?php echo $enabled_admin?>" name="<?php echo $enabled_admin?>" class="mdl-switch__input smswoo-shipment-checkbox" value="1" <?php echo $checked_admin ? 'checked' : ''?> data-row_class="enable_admin" />
-								</label>
-							</span>
+								
+								<input title="<?php echo __('Add template id for this SMS', 'trackship-for-woocommerce'); ?>" class="smswoo-text smswoo-msg91-field tipTip" placeholder="<?php echo __('Template ID', 'trackship-for-woocommerce'); ?>" type="text" name="<?php echo $template_id; ?>" id="<?php echo $template_id; ?>" value="<?php echo get_option( $template_id ); ?>">
+								<input title="<?php echo __('Add template variables that used for this SMS, add variables like this:- {shipment_status}, {tracking_number}', 'trackship-for-woocommerce'); ?>" class="smswoo-text smswoo-msg91-field tipTip" placeholder="<?php echo __('Template variables', 'trackship-for-woocommerce'); ?>" type="text" name="<?php echo $template_var; ?>" id="<?php echo $template_var; ?>" value="<?php echo get_option( $template_var ); ?>">
+
 							</div>
 							<div class="zorem_plugin_sidebar smswoo_sidebar">
 								<?php echo $this->build_html( 'plugin_sidebar_placeholders' ); ?>

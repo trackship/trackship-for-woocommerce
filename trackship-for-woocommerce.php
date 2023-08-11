@@ -198,12 +198,17 @@ class Trackship_For_Woocommerce {
 		$this->smswoo_init = TSWC_SMSWOO_Init::get_instance();
 
 		if ( is_plugin_active( 'automatewoo/automatewoo.php' ) ) {
-			require_once plugin_dir_path( __FILE__ ) . '/includes/class-wc-automatewoo-integration.php';
+			require_once plugin_dir_path( __FILE__ ) . '/includes/integration/class-wc-automatewoo-integration.php';
 		}
 
 		if ( $this->is_active_woo_order_tracking() ) {
-			require_once plugin_dir_path( __FILE__ ) . '/includes/class-woo-order-tracking-integration.php';
+			require_once plugin_dir_path( __FILE__ ) . '/includes/integration/class-woo-order-tracking-integration.php';
 			$this->wot_ts = WOO_Order_Tracking_TS4WC::get_instance();
+		}
+
+		if ( $this->is_active_klaviyo() ) {
+			require_once plugin_dir_path( __FILE__ ) . '/includes/integration/class-klaviyo-integration.php';
+			$this->kly_ts = WOO_Klaviyo_TS4WC::get_instance();
 		}
 	}
 	
@@ -345,6 +350,28 @@ class Trackship_For_Woocommerce {
 	
 		return $is_active;
 	}
+
+	/**
+	 * Check if Klaviyo is active
+	 *
+	 * @since  1.5.0
+	 * @return bool
+	*/
+	public function is_active_klaviyo() {
+		
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		}
+		
+		if ( is_plugin_active( 'klaviyo/klaviyo.php' ) ) {
+			$is_active = true;
+		} else {
+			$is_active = false;
+		}		
+	
+		return $is_active;
+	}
+	
 
 	/**
 	 * Check if Yith order Tracking is active

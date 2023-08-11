@@ -20,7 +20,7 @@ jQuery(document).on("click", ".zorem_plugin_setting_tab_form .woocommerce-save-b
 });
 
 /*ajax call for settings tab form toggle*/
-jQuery(document).on("change", ".zorem_plugin_setting_tab_form .tgl-flat", function(){
+jQuery(document).on("change", ".shipment-status-sms-section .tgl-flat", function(){
 	'use strict';
 	save_sms_settings();
 });
@@ -151,4 +151,34 @@ jQuery(document).on( "click", ".shipment-status-sms-section .clipboard", functio
 	jQuery(this).addClass("active");
 	
 	jQuery(document).trackship_snackbar( clipboard_text + ' is copied to clipboard.' );
+});
+
+jQuery(document).on( "change", "#smswoo_sms_provider", function(){
+	'use strict';
+	var provider = jQuery('#smswoo_sms_provider').val();
+	
+	if ( provider === 'smswoo_msg91' && jQuery('#smswoo_msg91_dlt').prop("checked") ) {
+		jQuery('.shipment-status-sms-section .smswoo-textarea').hide();
+		jQuery('.shipment-status-sms-section .smswoo-text').show();
+	} else {
+		jQuery('.shipment-status-sms-section .smswoo-textarea').show();
+		jQuery('.shipment-status-sms-section .smswoo-text').hide();
+	}
+});
+
+jQuery(document).on( "change", "#smswoo_msg91_dlt", function(){
+	'use strict';
+	var provider = jQuery('#smswoo_sms_provider').val();
+	
+	if ( provider === 'smswoo_msg91' && jQuery('#smswoo_msg91_dlt').prop("checked") ) {
+		jQuery('.shipment-status-sms-section .smswoo-textarea').hide();
+		jQuery('.shipment-status-sms-section .smswoo-text').show();
+	} else {
+		jQuery('.shipment-status-sms-section .smswoo-textarea').show();
+		jQuery('.shipment-status-sms-section .smswoo-text').hide();
+	}
+});
+
+jQuery(document).ready(function () {
+	jQuery("#smswoo_sms_provider").trigger('change');
 });

@@ -12,6 +12,8 @@ class tswc_smswoo_sms_notification {
 	 * not in use, remove in future
 	*/
 	private $sms_gateway;
+
+	private $new_status;
 	
 	private $_country_code;
 	
@@ -205,8 +207,10 @@ class tswc_smswoo_sms_notification {
 		}
 		
 		$sms_gateway = new $sms_provider();
+
+		$sms_gateway->new_status = $this->new_status;
 		$order_id    = ! empty( $this->order ) ? $this->order->get_id() : '';
-		
+
 		$this->_sms_length = 160;
 
 		$sms_limit = apply_filters( 'smswoo_sms_limit', $this->_sms_length );
@@ -319,7 +323,7 @@ class tswc_smswoo_sms_notification {
 		//$logger->log( 'debug', 'Order id: '.$this->order->get_id(), $context );
 		
 		// Check if sending SMS updates for this order's status
-		if ( get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_customer' ) || get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_admin' ) ) {
+		if ( get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_customer' ) ) {
 			
 			//$logger->log( 'debug', 'Sms will be sent', $context );
 			
@@ -352,15 +356,6 @@ class tswc_smswoo_sms_notification {
 				// allow modification of the "to" phone number
 				$phone = apply_filters( 'smswoo_sms_customer_phone', $this->order->get_billing_phone( 'edit' ), $this->order );
 				$this->_customer_sms = true;
-				$this->send_sms( $phone, $message );
-			}
-			
-			// send the SMS to admin!
-			if ( !in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) && get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_admin' ) ) {
-				
-				// allow modification of the "to" phone number
-				$phone = apply_filters( 'smswoo_sms_customer_admin', get_option( 'smswoo_admin_phone_number' ), $this->order );
-				$this->_customer_sms = false;
 				$this->send_sms( $phone, $message );
 			}
 		}
