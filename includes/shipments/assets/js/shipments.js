@@ -162,7 +162,7 @@ jQuery(document).ready(function() {
 		var active_provider = jQuery( "#shipping_provider" ).val();
 		jQuery(document).show_popup();
 		$table.ajax.reload();
-		if ( active_status != 'active' ) {
+		if ( active_status != 'all_ship' ) {
 			jQuery('.filter_data.status_filter').show();
 			jQuery('.filters_div').show();
 			jQuery('.status_name').text(jQuery('#shipment_status option:selected').text());
@@ -185,7 +185,7 @@ jQuery(document).ready(function() {
 		var active_status = jQuery( "#shipment_status" ).val();
 		jQuery(document).show_popup();
 		$table.ajax.reload();
-		if ( active_provider != 'all' ) {
+		if ( active_provider != 'all_ship' ) {
 			jQuery('.filter_data.provider_filter').show();
 			jQuery('.filters_div').show();
 			jQuery('.provider_name').text(jQuery('#shipping_provider option:selected').text());
@@ -211,7 +211,7 @@ jQuery(document).ready(function() {
 		}
 	}
 	// Show shipment_status filter default
-	if ( jQuery("#shipment_status").val() != 'active' ) {
+	if ( jQuery("#shipment_status").val() != 'all_ship' ) {
 		jQuery('.filter_data.status_filter').show();
 		jQuery('.filters_div').show();
 		jQuery('.status_name').text(jQuery('#shipment_status option:selected').text());
@@ -430,7 +430,7 @@ jQuery( document ).ready(function() {
 
 //remove status filter
 jQuery(document).on("click", ".status_filter .dashicons", function(){
-	jQuery('#shipment_status').val('active').trigger('change');
+	jQuery('#shipment_status').val('all_ship').trigger('change');
 });
 
 //remove provider filter
