@@ -7,7 +7,7 @@
 			$("#wc_ast_trackship_form").on('click', '.woocommerce-save-button', this.save_wc_ast_trackship_form);
 			$("#trackship_tracking_page_form").on('click', '.woocommerce-save-button', this.save_trackship_tracking_page_form);
 			$("#trackship_mapping_form").on('click', '.woocommerce-save-button', this.save_trackship_mapping_form);
-
+			$("#delivery_automation_form").on('click', '.woocommerce-save-button', this.save_delivery_automation_form);
 			$("#trackship_late_shipments_form").on('click', '.woocommerce-save-button', this.save_trackship_late_shipments_form);
 			$(".tipTip").tipTip();
 
@@ -55,6 +55,23 @@
 
 			$.post(ajaxurl, ajax_data, function (response) {
 				$("#trackship_mapping_form").find(".spinner").removeClass("active");
+				$(document).trackship_snackbar(trackship_script.i18n.data_saved);
+				jQuery('.heading_panel').removeClass('active');
+				jQuery('.heading_panel').siblings('.panel_content').removeClass('active').slideUp('slow');
+				jQuery('.heading_panel').find('span.dashicons').addClass('dashicons-arrow-right-alt2');
+				jQuery('.heading_panel').find('button.button-primary').hide();
+			});
+			return false;
+		},
+
+		save_delivery_automation_form: function (event) {
+			event.preventDefault();
+
+			$("#delivery_automation_form").find(".heading_panel .spinner").addClass("active");
+			var ajax_data = $("#delivery_automation_form").serialize();
+
+			$.post(ajaxurl, ajax_data, function (response) {
+				$("#delivery_automation_form").find(".spinner").removeClass("active");
 				$(document).trackship_snackbar(trackship_script.i18n.data_saved);
 				jQuery('.heading_panel').removeClass('active');
 				jQuery('.heading_panel').siblings('.panel_content').removeClass('active').slideUp('slow');

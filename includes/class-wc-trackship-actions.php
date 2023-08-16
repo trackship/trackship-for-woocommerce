@@ -50,6 +50,7 @@ class WC_Trackship_Actions {
 		//ajax save admin trackship settings
 		add_action( 'wp_ajax_wc_ast_trackship_form_update', array( $this, 'wc_ast_trackship_form_update_callback' ) );
 		add_action( 'wp_ajax_trackship_tracking_page_form_update', array( $this, 'trackship_tracking_page_form_update_callback' ) );
+		add_action( 'wp_ajax_trackship_delivery_automation_form_update', array( $this, 'trackship_delivery_automation_form_update_callback' ) );
 
 		if ( is_trackship_connected() ) {
 			//add Shipment status column after tracking
@@ -318,37 +319,11 @@ class WC_Trackship_Actions {
 			
 			$admin = WC_Trackship_Admin::get_instance();
 			
-			$data = $this->get_delivered_data();								
-			
 			$wcast_late_shipments_days = isset( $_POST['wcast_late_shipments_days'] ) ? sanitize_text_field( $_POST['wcast_late_shipments_days'] ) : '';
 			
 			$late_shipments_email_settings = get_option( 'late_shipments_email_settings', array() );
 			$late_shipments_email_settings[ 'wcast_late_shipments_days' ] = $wcast_late_shipments_days;
 			update_option( 'late_shipments_email_settings', $late_shipments_email_settings );
-			
-			foreach ( $data as $key => $val ) {
-				if ( 'wcast_enable_delivered_email' == $key ) {					
-					if ( isset( $_POST['wcast_enable_delivered_email'] ) ) {											
-						
-						if ( 1 == $_POST['wcast_enable_delivered_email'] ) {
-							update_option( 'customizer_delivered_order_settings_enabled', wc_clean( $_POST['wcast_enable_delivered_email'] ) );
-							$enabled = 'yes';
-						} else {
-							update_option( 'customizer_delivered_order_settings_enabled', '');	
-							$enabled = 'no';
-						}
-						
-						$wcast_enable_delivered_email = get_option('woocommerce_customer_delivered_order_settings'); 
-						$wcast_enable_delivered_email['enabled'] = $enabled;												
-						
-						update_option( 'woocommerce_customer_delivered_order_settings', $wcast_enable_delivered_email );	
-					}	
-				}
-				
-				if ( isset( $_POST[ $key ] ) ) {						
-					update_option( $key, wc_clean($_POST[ $key ]) );
-				}	
-			}
 			
 			$data2 = $admin->get_trackship_general_data();
 			foreach ( $data2 as $key2 => $val2 ) {
@@ -359,7 +334,6 @@ class WC_Trackship_Actions {
 					update_option( $key2, wc_clean( $_POST[ $key2 ] ) );
 				}
 			}
-			update_option( 'enable_email_widget', wc_clean( $_POST[ 'enable_email_widget' ] ) );
 			echo json_encode( array('success' => 'true') );
 			die();
 
@@ -382,6 +356,41 @@ class WC_Trackship_Actions {
 				}
 				$post_key1 = isset( $_POST[ $key1 ] ) ? sanitize_text_field( $_POST[ $key1 ] ) : '';
 				update_option( $key1, sanitize_text_field( $post_key1 ) );
+			}
+			
+			wp_send_json( array('success' => 'true') );
+		}
+	}
+
+	/*
+	* Delivery automation form save
+	*/
+	public function trackship_delivery_automation_form_update_callback() {
+		if ( ! empty( $_POST ) && check_admin_referer( 'trackship_delivery_automation_form', 'trackship_delivery_automation_form_nonce' ) ) {
+			
+			$data = $this->get_delivered_data();
+			foreach ( $data as $key => $val ) {
+				if ( 'wcast_enable_delivered_email' == $key ) {					
+					if ( isset( $_POST['wcast_enable_delivered_email'] ) ) {											
+						
+						if ( 1 == $_POST['wcast_enable_delivered_email'] ) {
+							update_option( 'customizer_delivered_order_settings_enabled', wc_clean( $_POST['wcast_enable_delivered_email'] ) );
+							$enabled = 'yes';
+						} else {
+							update_option( 'customizer_delivered_order_settings_enabled', '');	
+							$enabled = 'no';
+						}
+						
+						$wcast_enable_delivered_email = get_option('woocommerce_customer_delivered_order_settings'); 
+						$wcast_enable_delivered_email['enabled'] = $enabled;												
+						
+						update_option( 'woocommerce_customer_delivered_order_settings', $wcast_enable_delivered_email );	
+					}	
+				}
+				
+				if ( isset( $_POST[ $key ] ) ) {						
+					update_option( $key, wc_clean($_POST[ $key ]) );
+				}	
 			}
 			
 			wp_send_json( array('success' => 'true') );
