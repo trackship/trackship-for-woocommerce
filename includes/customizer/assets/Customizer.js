@@ -242,13 +242,21 @@ jQuery(document).on("change", "#email_trackship_branding", function () {
 			jQuery("#tracking_widget_privew").contents().find( '.trackship_branding' ).hide();
 		}
 	}
-	if ( jQuery.inArray( trackship_customizer.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 || trackship_customizer.unsubscribe == 1 || jQuery(this).prop("checked") == true ) {
-		jQuery("#tracking_widget_privew").contents().find( '.default_footer' ).hide();
-	} else {
-		jQuery("#tracking_widget_privew").contents().find( '.default_footer' ).show();
-	}
+	// if ( jQuery.inArray( trackship_customizer.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 || trackship_customizer.unsubscribe == 1 || jQuery(this).prop("checked") == true ) {
+	// 	jQuery("#tracking_widget_privew").contents().find( '.default_footer' ).hide();
+	// } else {
+	// 	jQuery("#tracking_widget_privew").contents().find( '.default_footer' ).show();
+	// }
 	var pend_change = jQuery(".pending_change_event").text();
 	jQuery('.pending_change_event').append(pend_change.includes('&#email_trackship_branding') ? '' : '&#email_trackship_branding');
+});
+
+jQuery(document).on( "click", ".email_placeholder", function(){
+	'use strict';
+	var clipboard_text = jQuery(this).data( "clipboard-text" );
+	copyToClipboard( clipboard_text );
+	
+	jQuery(document).zorem_snackbar( clipboard_text + ' is copied to clipboard.' );
 });
 
 /*
