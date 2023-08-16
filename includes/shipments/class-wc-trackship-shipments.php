@@ -124,7 +124,9 @@ class WC_Trackship_Shipments {
 			$where[] = "shipping_length > {$days}";
 		} elseif ( $active_shipment_status == 'tracking_issues' ) {
 			$where[] = "shipment_status NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' ) OR pending_status IS NOT NULL";
-		} elseif ( $active_shipment_status != 'active' ) {
+		} elseif ( $active_shipment_status == 'active' ) {
+			$where[] = "shipment_status != ( 'delivered')";
+		} elseif ( $active_shipment_status != 'all_ship' ) {
 			$where[] = "shipment_status = ( '{$active_shipment_status}')";
 		}
 
@@ -237,10 +239,8 @@ class WC_Trackship_Shipments {
 	}
 
 	public function get_flag_icon( $country_code ) {
-		// Country name form WC ->   WC()->countries->countries[ $country_code ]
-		$country_name = 'GB' == $country_code ? 'UK' : WC()->countries->countries[ $country_code ];
-		$country_name = 'US' == $country_code ? 'USA' : $country_name;
-		return '<img class="country_flag" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/' . $country_code . '.svg">' . $country_name;
+		$country_name = WC()->countries->countries[ $country_code ] ? WC()->countries->countries[ $country_code ] : $country_code;
+		return '<div class="shipment_country"><img class="country_flag" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/' . $country_code . '.svg"><span class="trackship-tip" title="' . $country_name . '">' . $country_name . '</span></div>';
 	}
 
 	/*
