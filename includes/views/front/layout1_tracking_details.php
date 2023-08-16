@@ -68,7 +68,7 @@ if ( ( !is_admin() && get_option( 'enable_email_widget' ) ) || ( 'yes' == $front
 											$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
 											
 											$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
-											echo esc_html( $single_event );
+											echo $single_event;
 											?>
 										</p>
 									</li>
@@ -94,7 +94,7 @@ if ( ( !is_admin() && get_option( 'enable_email_widget' ) ) || ( 'yes' == $front
 											$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
 											
 											$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
-											echo esc_html( $single_event );
+											echo $single_event;
 											?>
 										</p>
 									</li>
@@ -126,7 +126,7 @@ if ( ( !is_admin() && get_option( 'enable_email_widget' ) ) || ( 'yes' == $front
 										$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
 										
 										$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
-										echo esc_html( $single_event );
+										echo $single_event;
 										?>
 									</p>
 								</li>
@@ -152,7 +152,7 @@ if ( ( !is_admin() && get_option( 'enable_email_widget' ) ) || ( 'yes' == $front
 										$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
 										
 										$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
-										echo esc_html( $single_event );
+										echo $single_event;
 										?>
 									</p>
 								</li>
@@ -183,7 +183,7 @@ if ( ( !is_admin() && get_option( 'enable_email_widget' ) ) || ( 'yes' == $front
 										$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
 										
 										$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
-										echo esc_html( $single_event );
+										echo $single_event;
 										?>
 									</p>
 								</li>
@@ -209,7 +209,7 @@ if ( ( !is_admin() && get_option( 'enable_email_widget' ) ) || ( 'yes' == $front
 									$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
 									
 									$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
-									echo esc_html( $single_event );
+									echo $single_event;
 									?>
 								</p>
 							</li>

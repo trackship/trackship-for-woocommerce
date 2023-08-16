@@ -170,7 +170,7 @@ class WC_TrackShip_Admin_notice {
 	}
 
 	public function trackship_database_notice() {
-		$url = admin_url( '/admin.php?page=trackship-for-woocommerce&trackship-database-upgrade=true' );
+		$url = admin_url( '/admin.php?page=trackship-dashboard&trackship-database-upgrade=true' );
 		?>		
 		<style>		
 		.wp-core-ui .notice.trackship-dismissable-notice {

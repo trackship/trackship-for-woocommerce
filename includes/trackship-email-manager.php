@@ -215,17 +215,6 @@ class WC_TrackShip_Email_Manager {
 	 * Code for format email subject
 	*/
 	public function email_footer_text( $footer_text ) {
-
-		$email_trackship_branding = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'email_trackship_branding', 1);
-
-		$trackship_branding_text = '';
-		if ( $email_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
-			$tracking_number = isset( $this->tracking_number ) && $this->tracking_number ? $this->tracking_number : '';
-			$track_url = 'https://track.trackship.com/track/' . $tracking_number;
-			
-			$trackship_branding_text = '<div class="trackship_branding"><p><span style="vertical-align:middle;font-size: 14px;">Powered by <a href="' . $track_url . '" title="TrackShip" target="blank">TrackShip</a></span></p></div>';
-		}
-
 		$unsubscribe = '';
 		if ( get_option( 'enable_email_widget' ) ) {
 			$tracking_item = isset( $this->tracking_item ) && $this->tracking_item ? $this->tracking_item : [];
@@ -234,7 +223,7 @@ class WC_TrackShip_Email_Manager {
 			$unsubscribe = '<div style="text-align:center;padding-bottom: 10px;"><a href="' . $track_link . '">' . esc_html__( 'Unsubscribe', 'trackship-for-woocommerce' ) . '</a></div>';
 		}
 
-		$footer_text = ( $trackship_branding_text || $unsubscribe ) ? $trackship_branding_text . $unsubscribe : $footer_text;
+		$footer_text = $unsubscribe ? $unsubscribe : $footer_text;
 		return $footer_text;
 	}
 

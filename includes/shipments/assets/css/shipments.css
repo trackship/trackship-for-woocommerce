@@ -403,6 +403,17 @@ table.dataTable span.dashicons.dashicons-admin-page {
 span.shipments_go_to_page {
 	margin: 0 5px 0 15px;
 }
+.shipment_country {
+	display: flex;
+	align-items: center;
+}
+.shipment_country span {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 170px;
+	cursor: pointer;
+}
 .rtl span.shipments_go_to_page {
 	margin: 0 15px 0 5px;
 }

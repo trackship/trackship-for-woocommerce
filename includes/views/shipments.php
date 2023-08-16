@@ -24,7 +24,8 @@ $nonce = wp_create_nonce( 'wc_ast_tools');
 <input type="hidden" id="wc_ast_dashboard_tab" name="wc_ast_dashboard_tab" value="<?php echo esc_attr( $nonce ); ?>" />
 <?php
 $ship_status = array(
-	'active'				=> __( 'All Shipments', 'trackship-for-woocommerce' ),
+	'all_ship'				=> __( 'All Shipments', 'trackship-for-woocommerce' ),
+	'active'				=> __( 'Active Shipments', 'trackship-for-woocommerce' ),
 	'in_transit'			=> __( 'In Transit', 'trackship-for-woocommerce' ),
 	'out_for_delivery'		=> __( 'Out For Delivery', 'trackship-for-woocommerce' ),
 	'pre_transit'			=> __( 'Pre Transit', 'trackship-for-woocommerce' ),
@@ -59,7 +60,8 @@ $shipment_count = array_combine($statuses, $status_count); // combine the two ar
 $late_ship_day = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_days', 7 );
 $days = $late_ship_day - 1 ;
 $issues_count = $wpdb->get_row( "SELECT
-	COUNT(*) AS active,
+	COUNT(*) AS all_ship,
+	SUM( IF( shipment_status != ( 'delivered'), 1, 0 ) ) as active,
 	SUM( IF(shipment_status NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' ) OR pending_status IS NOT NULL, 1, 0) ) as tracking_issues,
 	SUM( IF(shipping_length > ".$days.", 1, 0) ) as late_shipment
 FROM {$woo_trackship_shipment}", ARRAY_A);

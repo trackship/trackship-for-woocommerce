@@ -44,12 +44,20 @@ ul.zoremmail-panels,ul.zoremmail-sub-panels {
 }
 .wordpress-to-back {
 	line-height: 60px;
-    padding: 0;
-    border: 0;
-    border-right: 1px solid #e0e0e0;
-    cursor: pointer;
-    background: #f8f8fb;
-    width: 46px;
+	padding: 0;
+	border: 0;
+	border-right: 1px solid #e0e0e0;
+	cursor: pointer;
+	background: #f8f8fb;
+	width: 46px;
+}
+.codeinfo span.email_placeholder {
+	background: #fff;
+	padding: 5px 8px;
+	margin: 2px;
+	border: 1px solid #e0e0e0;
+	border-radius: 5px;
+	display: inline-block;
 }
 .customize-section-back {
 	display: block;
@@ -208,8 +216,8 @@ a.zoremmail-back-wordpress-link {
 }
 .menu-sub-title {
 	font-size: 15px;
-    line-height: 28px;
-    color: #333333;
+	line-height: 28px;
+	color: #333333;
 }
 input[type=text] {
 	cursor: pointer;
@@ -405,13 +413,13 @@ aside .dashicons:focus, aside .dashicons:hover {
 }
 a.updgrade_feature {
 	color: #077ff1;
-    margin: 7px 0;
-    display: block;
-    text-decoration: none;
+	margin: 7px 0;
+	display: block;
+	text-decoration: none;
 }
 label.menu-sub-title.free_plan {
-    opacity: .6;
-    pointer-events: none;
+	opacity: .6;
+	pointer-events: none;
 }
 a.updgrade_feature .dashicons.dashicons-arrow-up-alt {
 	width: 16px;
