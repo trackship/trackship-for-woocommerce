@@ -16,14 +16,46 @@ $page_link = 'trackship-dashboard' != $page_slug ? admin_url( 'admin.php?page=tr
 $version = trackship_for_woocommerce()->version;
 $menu_items = array(
 	array(
-		'label' => __( 'Get Support', 'trackship-for-woocommerce' ),
-		'link' => 'https://trackship.com/support/?support=1',
-		'image' => 'get-support-icon.svg',
+		'label' => __( 'Dashboard', 'trackship-for-woocommerce' ),
+		'link' => admin_url( 'admin.php?page=trackship-dashboard' ),
+		'image' => 'ts-dashboard.png',
+	),
+	array(
+		'label' => __( 'Shipments', 'trackship-for-woocommerce' ),
+		'link' => admin_url( 'admin.php?page=trackship-shipments' ),
+		'image' => 'ts-shipments.png',
+	),
+	array(
+		'label' => __( 'Logs', 'trackship-for-woocommerce' ),
+		'link' => admin_url( 'admin.php?page=trackship-logs' ),
+		'image' => 'ts-logs.png',
+	),
+	array(
+		'label' => __( 'Analytics', 'trackship-for-woocommerce' ),
+		'link' => admin_url('admin.php?page=wc-admin&path=/analytics/trackship-analytics'),
+		'image' => 'ts-analytics.png',
+	),
+	array(
+		'label' => __( 'Settings', 'trackship-for-woocommerce' ),
+		'link' => admin_url( 'admin.php?page=trackship-for-woocommerce' ),
+		'image' => 'ts-settings.png',
 	),
 	array(
 		'label' =>__( 'Documentation', 'trackship-for-woocommerce' ),
 		'link' => 'https://docs.trackship.com/docs/trackship-for-woocommerce/',
-		'image' => 'documentation-icon.svg',
+		'image' => 'ts-documentation.png',
+		'target' => 'target="_blank"'
+	),
+	array(
+		'label' => __( 'Get Support', 'trackship-for-woocommerce' ),
+		'link' => 'https://my.trackship.com/?support=1',
+		'image' => 'ts-support.png',
+		'target' => 'target="_blank"'
+	),
+	array(
+		'label' => __( 'Tools', 'trackship-for-woocommerce' ),
+		'link' => admin_url( 'admin.php?page=trackship-for-woocommerce&tab=tools' ),
+		'image' => 'ts-tools.png',
 	),
 );
 ?> 

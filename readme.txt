@@ -2,9 +2,9 @@
 Contributors: TrackShip
 Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 5.3
-Tested up to: 6.2.2
+Tested up to: 6.3.0
 Requires PHP: 7.2
-Stable tag: 1.6.2
+Stable tag: 1.6.3
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,6 +111,23 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended).
 
 == Changelog ==
+= 1.6.3 - 2023-08-16 =
+* Enhancement - TrackShip SMS service provider added MSG91
+* Enhancement - TrackShip Settings design improved and a new tab (Tools) added
+* Fix - Database update method improved
+* Dev - Compatibility added to Dokan – WooCommerce Multivendor plugin
+* Dev - Compatibility added to Klaviyo for WooCommerce plugin
+* Dev - TrackShip page customizer improved
+* Dev - TrackShip Shipment status email customizer improved
+* Dev - TrackShip page widget error message improved
+* Dev - Tracking page widget design improved
+* Dev - TrackShip Analytics improved
+* Dev - TrackShip Dashboard design improved
+* Dev - TrackShip settings position changed
+* Dev - Active Shipment option added to shipment status filter in TrackShip Shipments
+* Dev - Tested with WordPress 6.3.0
+* Dev - Tested with WooCommerce 8.0.2
+
 = 1.6.2 - 2023-06-02 =
 * Fix - 2 times tracking information on the order admin for same Tracking number added in the 1 order
 * Fix - MYSQL lower version query issue fixed

@@ -28,6 +28,8 @@ if ( $tracking_items ) :
 				<?php
 				$ship_status = $new_status;
 				$tracking_link = $tracking_item['tracking_page_link'] ?  $tracking_item['tracking_page_link'] : $tracking_item['formatted_tracking_link'];
+				$email_trackship_branding = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'email_trackship_branding', 1);
+				$trackship_branding_class = $email_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? '' : 'hide';
 				do_action( 'before_tracking_widget_email', $tracking_item, $order_id );
 				?>
 				<div class="tracking_index display-table">
@@ -105,6 +107,12 @@ if ( $tracking_items ) :
 							<div style="clear: both;display: block;"></div>
 						<?php } ?>
 					</div>
+					<?php $track_url = 'https://track.trackship.com/track/' . $tracking_item['tracking_number']; ?>
+					<div class="tracking_widget_email trackship_branding <?php echo $trackship_branding_class; ?>">
+						<p style="margin: 0;">
+							<span style="vertical-align:middle;font-size: 14px;">Powered by <a href="<?php echo esc_url( $track_url ); ?>" title="TrackShip" target="blank">TrackShip</a></span>
+						</p>
+					</div>
 				</div>
 			<?php } ?>
 		</div>
@@ -114,7 +122,7 @@ if ( $tracking_items ) :
 		div.tracking_index.display-table .tracking_info a { color: <?php echo esc_html( $link_color ); ?>!important; }
 	<?php } ?>
 	<?php if ( !$ts4wc_preview  ) { ?>
-		.ts4wc_provider_logo  {
+		.ts4wc_provider_logo {
 			display: <?php echo $shipping_provider_logo ? 'inline-block' : 'none'; ?>;
 		}
 	<?php } ?>
@@ -156,6 +164,11 @@ if ( $tracking_items ) :
 	}
 	.tracking_widget_email {
 		padding:15px;
+	}
+	.tracking_widget_email.trackship_branding {
+		text-align: center;
+		border-top: 1px solid <?php echo esc_html( $border_color ); ?>;
+		display: <?php echo $email_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? 'block' : 'none'; ?>;;
 	}
 	.shipment_status {font-size: 24px;margin: 10px 0;display: inline-block;color: #333;vertical-align: middle;font-weight:500;}
 	.mb-0{margin:0;}

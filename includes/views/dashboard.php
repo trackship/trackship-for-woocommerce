@@ -59,19 +59,19 @@ $action_needed = array(
 $first_line = array(
 	'total_shipment' => array(
 		'title' => __( 'Total Shipments', 'trackship-for-woocommerce' ),
-		'image' => 'pre-transit.png',
+		'image' => 'pre-transit-v1.png',
 	),
 	'active_shipment' => array(
 		'title' => __( 'Active', 'trackship-for-woocommerce' ),
-		'image' => 'in-transit.png',
+		'image' => 'in-transit-v1.png',
 	),
 	'delivered_shipment' => array(
 		'title' => __( 'Delivered', 'trackship-for-woocommerce' ),
-		'image' => 'delivered.png',
+		'image' => 'delivered-v1.png',
 	),
 	'tracking_issues' => array(
 		'title' => __( 'Tracking Issues', 'trackship-for-woocommerce' ),
-		'image' => 'label_cancelled.png',
+		'image' => 'label_cancelled-v1.png',
 	),
 );
 $array = array(
@@ -116,13 +116,18 @@ $store_url = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active
 <input class="dashboard_hidden_field" type="hidden" value="<?php echo esc_html($current_plan); ?>">
 <?php if ( in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
 	<div class="ts_upgrade_notice">
-		<span class="ts_upgrade_msg"><?php esc_html_e( "Unlock TrackShip's PRO advantages: track more shipments, SMS Notifications, Priority Support, Shipments Dashboard, and more...", 'trackship-for-woocommerce' ); ?></span>
-		<button class="button-primary button-trackship btn_large">
-			<a href="<?php echo esc_url($store_url); ?>" class="" target="_blank">
-				<span><?php esc_html_e( $store_text ); ?></span>
-				<span class="dashicons dashicons-arrow-right-alt2"></span>
-			</a>
-		</button>
+		<div>
+			<span class="ts_upgrade_msg"><?php esc_html_e( "Access the PRO benefits of TrackShip: monitor TrackShip shipments, receive SMS notifications, enjoy priority support, utilize the Shipments Dashboard, and experience much more.", 'trackship-for-woocommerce' ); ?></span>
+			<button class="button-primary button-trackship btn_large">
+				<a href="<?php echo esc_url($store_url); ?>" class="" target="_blank">
+					<span><?php esc_html_e( $store_text ); ?></span>
+					<span class="dashicons dashicons-arrow-right-alt2"></span>
+				</a>
+			</button>
+		</div>
+		<div>
+			<img class="upgrade_pro_img" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/upgrade_pro.png">
+		</div>
 	</div>
 <?php } ?>
 <div class="fullfillment_dashboard">
@@ -146,7 +151,7 @@ $store_url = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active
 				</div>
 				<div class="ts_connected_status">
 					<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/ts-status.png">
-					<div class="ts_plan_details"><strong><span class="dashicons dashicons-yes"></span><?php esc_html_e( 'Connected', 'trackship-for-woocommerce' ); ?></strong></div>
+					<div class="ts_plan_details"><span class="check_status"><a href="https://my.trackship.com/connected-stores/" target="_blank"><?php esc_html_e( 'Check Status', 'trackship-for-woocommerce' ); ?></a></span></div>
 					<span class="ts_plan_details_bottom"><?php esc_html_e( 'Connection Status', 'trackship-for-woocommerce' ); ?></span>
 				</div>
 			</div>
