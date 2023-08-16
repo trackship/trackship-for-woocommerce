@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: TrackShip for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-23 07:09+0000\n"
-"PO-Revision-Date: 2023-04-24 05:16+0000\n"
+"PO-Revision-Date: 2023-08-16 10:44+0000\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar\n"
@@ -13,18 +13,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.4; wp-6.2\n"
+"X-Loco-Version: 2.6.4; wp-6.3\n"
 "X-Domain: trackship-for-woocommerce"
 
-#: includes/views/tools.php:32
+#: includes/views/tools.php:34
 msgid " Days."
 msgstr " أيام."
 
-#: includes/views/dashboard.php:113
+#: includes/views/dashboard.php:120
+msgid ""
+"Access the PRO benefits of TrackShip: monitor TrackShip shipments, receive "
+"SMS notifications, enjoy priority support, utilize the Shipments Dashboard, "
+"and experience much more."
+msgstr ""
+"الوصول إلى مزايا PRO الخاصة بـ TrackShip: مراقبة شحنات TrackShip ، وتلقي "
+"إشعارات الرسائل القصيرة ، والتمتع بالدعم ذي الأولوية ، واستخدام لوحة معلومات "
+"الشحنات ، وتجربة المزيد."
+
+#: includes/views/dashboard.php:112
 msgid "Account Dashboard"
 msgstr "لوحة حساب"
 
-#: includes/views/dashboard.php:120
+#: includes/views/dashboard.php:159
 msgid "Action Needed"
 msgstr "الإجراءات اللازمة"
 
@@ -33,15 +43,31 @@ msgstr "الإجراءات اللازمة"
 msgid "Actions"
 msgstr "أجراءات"
 
-#: includes/views/dashboard.php:66
+#: includes/views/dashboard.php:65
 msgid "Active"
 msgstr "نشيط"
+
+#: includes/views/shipments.php:28
+msgid "Active Shipments"
+msgstr "الشحنات النشطة"
 
 #: includes/views/map-providers.php:54
 msgid "Add mapping"
 msgstr "إضافة تعيين"
 
-#: includes/class-wc-trackship-admin.php:788
+#: includes/smswoo/class-smswoo-admin.php:548
+msgid "Add template id for this SMS"
+msgstr "أضف معرف قالب لهذه الرسائل القصيرة"
+
+#: includes/smswoo/class-smswoo-admin.php:549
+msgid ""
+"Add template variables that used for this SMS, add variables like this:- "
+"{shipment_status}, {tracking_number}"
+msgstr ""
+"أضف متغيرات القالب التي تم استخدامها لهذه الرسالة القصيرة ، أضف متغيرات مثل "
+"هذا: - {shipment_status} ، {tracking_number}"
+
+#: includes/class-wc-trackship-admin.php:743
 msgid "Add the [trackship-track-order] shortcode in the selected page."
 msgstr "أضف الرمز المختصر [trackship-track-order] في الصفحة المحددة."
 
@@ -57,7 +83,7 @@ msgstr "كل الإخطارات"
 msgid "All Shipments"
 msgstr "جميع الشحنات"
 
-#: includes/views/shipments.php:88
+#: includes/views/shipments.php:90
 msgid "All shipping providers"
 msgstr "جميع مزودي خدمات الشحن"
 
@@ -65,6 +91,15 @@ msgstr "جميع مزودي خدمات الشحن"
 msgid "All Types"
 msgstr "كل الانواع"
 
+#: includes/class-wc-trackship-admin.php:842
+msgid ""
+"Allow users to opt-out of receiving Shipment status notifications on the "
+"Tracking page and Shipment status emails."
+msgstr ""
+"اسمح للمستخدمين بإلغاء الاشتراك في تلقي إشعارات حالة الشحن على صفحة التتبع "
+"ورسائل البريد الإلكتروني الخاصة بحالة الشحن."
+
+#: includes/smswoo/services/class-smswoo-msg91.php:152
 #: includes/smswoo/services/class-smswoo-twilio.php:119
 #: includes/smswoo/services/class-smswoo-twilio.php:189
 msgid "An error has occurred while sending the sms"
@@ -86,20 +121,24 @@ msgstr ""
 "حدث خطأ: لا يتم دعم Clicksend للتحقق من صحة رقم الهاتف عند الخروج ، يرجى "
 "الاتصال بالدعم"
 
-#: includes/class-wc-trackship-admin.php:262
+#: includes/class-wc-trackship-admin.php:231 includes/views/header2.php:34
 msgid "Analytics"
 msgstr "تحليلات"
 
-#: includes/views/shipments.php:103
+#: includes/views/shipments.php:105
 msgid "Apply"
 msgstr "يتقدم"
 
-#: includes/class-wc-trackship-actions.php:727
-#: includes/class-wc-trackship-actions.php:778
-#: includes/class-wc-trackship-admin.php:1559
-#: includes/customizer/trackship-customizer.php:206
-#: includes/customizer/trackship-customizer.php:783
-#: includes/smswoo/class-smswoo-admin.php:565 includes/views/shipments.php:34
+#: includes/views/dashboard.php:140
+msgid "Available Balance"
+msgstr "الرصيد المتوفر"
+
+#: includes/class-wc-trackship-actions.php:739
+#: includes/class-wc-trackship-actions.php:790
+#: includes/class-wc-trackship-admin.php:1521
+#: includes/customizer/trackship-customizer.php:209
+#: includes/customizer/trackship-customizer.php:795
+#: includes/smswoo/class-smswoo-admin.php:572 includes/views/shipments.php:35
 msgid "Available For Pickup"
 msgstr "متاح للاستلام"
 
@@ -107,47 +146,47 @@ msgstr "متاح للاستلام"
 msgid "Available placeholders"
 msgstr "العناصر النائبة المتاحة"
 
-#: includes/customizer/trackship-customizer.php:836
+#: includes/customizer/trackship-customizer.php:848
 msgid "Available placeholders:"
 msgstr "العناصر النائبة المتوفرة:"
 
-#: includes/customizer/trackship-customizer.php:807
-#: includes/customizer/trackship-customizer.php:817
+#: includes/customizer/trackship-customizer.php:819
+#: includes/customizer/trackship-customizer.php:829
 msgid "Available variables:"
 msgstr "المتغيرات المتوفرة:"
 
-#: includes/views/dashboard.php:168
-msgid "Billing Plan "
-msgstr "خطة الفواتير"
-
-#: includes/views/shipments.php:100
+#: includes/views/shipments.php:102
 msgid "Bulk actions"
 msgstr "إجراءات جملة"
 
-#: includes/customizer/trackship-customizer.php:516
-#: includes/customizer/trackship-customizer.php:599
+#: includes/customizer/trackship-customizer.php:519
+#: includes/customizer/trackship-customizer.php:611
 msgid "Button color"
 msgstr "لون الزر"
 
-#: includes/customizer/trackship-customizer.php:525
-#: includes/customizer/trackship-customizer.php:608
+#: includes/customizer/trackship-customizer.php:528
+#: includes/customizer/trackship-customizer.php:620
 msgid "Button font color"
 msgstr "لون خط الزر"
 
-#: includes/customizer/trackship-customizer.php:617
+#: includes/customizer/trackship-customizer.php:629
 msgid "Button radius"
 msgstr "نصف قطر الزر"
 
-#: includes/customizer/trackship-customizer.php:724
+#: includes/customizer/trackship-customizer.php:736
 msgid "Button text"
 msgstr "زر كتابة"
 
-#: includes/class-wc-trackship-actions.php:732
-#: includes/class-wc-trackship-actions.php:808
+#: includes/class-wc-trackship-actions.php:744
+#: includes/class-wc-trackship-actions.php:823
 msgid "Carrier Unsupported"
 msgstr "الناقل غير مدعوم"
 
-#: includes/class-wc-trackship-admin.php:871
+#: includes/views/dashboard.php:154
+msgid "Check Status"
+msgstr "تحقق من حالة"
+
+#: includes/class-wc-trackship-admin.php:826
 msgid "Choose on which order emails to include the shipment tracking info"
 msgstr "اختر رسائل البريد الإلكتروني الخاصة بالطلب لتضمين معلومات تتبع الشحنة"
 
@@ -159,7 +198,7 @@ msgstr "انقر فوق مفتاح API"
 msgid "Clicksend API Username"
 msgstr "اسم مستخدم Clicksend API"
 
-#: trackship-for-woocommerce.php:276
+#: trackship-for-woocommerce.php:281
 msgid "Connect a Store"
 msgstr "قم بتوصيل المتجر"
 
@@ -167,19 +206,15 @@ msgstr "قم بتوصيل المتجر"
 msgid "Connect your store"
 msgstr "قم بتوصيل متجرك"
 
-#: includes/views/dashboard.php:177
-msgid "Connected"
-msgstr "متصل"
-
-#: includes/views/dashboard.php:177
+#: includes/views/dashboard.php:155
 msgid "Connection Status"
 msgstr "حالة الإتصال"
 
-#: includes/customizer/trackship-customizer.php:857
+#: includes/customizer/trackship-customizer.php:869
 msgid "Content Display"
 msgstr "عرض المحتوى"
 
-#: includes/customizer/trackship-customizer.php:387
+#: includes/customizer/trackship-customizer.php:390
 msgid "Content Type & Text"
 msgstr "نوع المحتوى والنص"
 
@@ -191,52 +226,53 @@ msgstr "نسخ رابط صفحة التتبع"
 msgid "Customer"
 msgstr "عميل"
 
-#: includes/class-wc-trackship-admin.php:728
+#: includes/class-wc-trackship-admin.php:683
 msgid "Customize"
 msgstr "يعدل أو يكيف"
 
-#: includes/class-wc-trackship-admin.php:801
+#: includes/class-wc-trackship-admin.php:756
 msgid "Customize the Tracking Widget"
 msgstr "تخصيص أداة التتبع"
 
-#: includes/views/settings.php:74
+#: includes/views/delivery-automation.php:44
 msgid "Dark Font"
 msgstr "خط غامق"
 
-#: includes/class-wc-trackship-admin.php:254 includes/views/header2.php:8
+#: includes/class-wc-trackship-admin.php:225 includes/views/header2.php:8
+#: includes/views/header2.php:19
 msgid "Dashboard"
 msgstr "لوحة القيادة"
 
-#: includes/views/tools.php:40
+#: includes/views/tools.php:42
 msgid "Delete notifications logs"
 msgstr "حذف سجلات الإخطارات"
 
-#: includes/views/tools.php:39
+#: includes/views/tools.php:41
 msgid "Delete notifications logs more than 30 days"
 msgstr "حذف سجلات الإخطارات أكثر من 30 يومًا"
 
-#: includes/views/tools.php:33
+#: includes/views/tools.php:35
 msgid "Delete Tracking Event details"
 msgstr "حذف تفاصيل تعقب الأحداث"
 
-#: includes/views/tools.php:25
+#: includes/views/tools.php:27
 msgid "Delete tracking events for orders delivered more then "
 msgstr "حذف أحداث التتبع للطلبات التي تم تسليمها أكثر من ذلك"
 
-#: includes/class-wc-trackship-actions.php:729
-#: includes/class-wc-trackship-actions.php:772
-#: includes/class-wc-trackship-admin.php:1021
-#: includes/class-wc-trackship-admin.php:1039
-#: includes/class-wc-trackship-admin.php:1601
-#: includes/customizer/trackship-customizer.php:212
-#: includes/customizer/trackship-customizer.php:789
-#: includes/smswoo/class-smswoo-admin.php:571 includes/views/dashboard.php:70
-#: includes/views/settings.php:66 includes/views/shipments.php:32
+#: includes/class-wc-trackship-actions.php:741
+#: includes/class-wc-trackship-actions.php:784
+#: includes/class-wc-trackship-admin.php:983
+#: includes/class-wc-trackship-admin.php:1001
+#: includes/class-wc-trackship-admin.php:1563
+#: includes/customizer/trackship-customizer.php:215
+#: includes/customizer/trackship-customizer.php:801
+#: includes/smswoo/class-smswoo-admin.php:578 includes/views/dashboard.php:69
+#: includes/views/delivery-automation.php:36 includes/views/shipments.php:33
 msgid "Delivered"
 msgstr "تم التوصيل"
 
 #. %s: search number of order
-#: includes/class-wc-trackship-admin.php:1027
+#: includes/class-wc-trackship-admin.php:989
 #, php-format
 msgid "Delivered <span class=\"count\">(%s)</span>"
 msgid_plural "Delivered <span class=\"count\">(%s)</span>"
@@ -246,6 +282,10 @@ msgstr[2] "تم التسليم <span class=\"count\">(٪ s)</span>"
 msgstr[3] "تم التسليم <span class=\"count\">(٪ s)</span>"
 msgstr[4] "تم التسليم <span class=\"count\">(٪ s)</span>"
 msgstr[5] "تم التسليم <span class=\"count\">(٪ s)</span>"
+
+#: includes/views/delivery-automation.php:8
+msgid "Delivery Automation"
+msgstr "أتمتة التسليم"
 
 #: includes/views/front/tracking_page_header.php:80
 msgid "Delivery Date"
@@ -264,65 +304,65 @@ msgstr "رقم تتبع التسليم"
 msgid "Destination Details"
 msgstr "تفاصيل الوجهة"
 
-#: includes/customizer/trackship-customizer.php:405
-#: includes/customizer/trackship-customizer.php:424
+#: includes/customizer/trackship-customizer.php:408
+#: includes/customizer/trackship-customizer.php:427
 msgid "Display Options"
 msgstr "خيارات العرض"
 
-#: includes/customizer/trackship-customizer.php:885
+#: includes/customizer/trackship-customizer.php:897
 msgid "Display product image"
 msgstr "عرض صورة المنتج"
 
-#: includes/customizer/trackship-customizer.php:867
+#: includes/customizer/trackship-customizer.php:879
 msgid "Display shipped products"
 msgstr "اعرض المنتجات المشحونة"
 
-#: includes/customizer/trackship-customizer.php:894
+#: includes/customizer/trackship-customizer.php:906
 msgid "Display shipping address"
 msgstr "عرض عنوان الشحن"
 
-#: includes/customizer/trackship-customizer.php:924
+#: includes/customizer/trackship-customizer.php:547
 msgid "Display Shipping provider logo"
 msgstr "عرض شعار مزود خدمة الشحن"
 
-#: includes/customizer/trackship-customizer.php:913
+#: includes/customizer/trackship-customizer.php:925
 msgid "Display TrackShip branding"
 msgstr "عرض العلامة التجارية TrackShip"
 
-#: includes/views/header2.php:24 includes/views/header-sidebar.php:13
+#: includes/views/header2.php:44
 msgid "Documentation"
 msgstr "توثيق"
 
-#: templates/tracking/tracking-form.php:107
+#: templates/tracking/tracking-form.php:111
 msgid "Email address"
 msgstr "عنوان بريد الكتروني"
 
-#: includes/customizer/trackship-customizer.php:368
-#: includes/customizer/trackship-customizer.php:749
-#: includes/customizer/trackship-customizer.php:826
+#: includes/customizer/trackship-customizer.php:371
+#: includes/customizer/trackship-customizer.php:761
+#: includes/customizer/trackship-customizer.php:838
 msgid "Email Content"
 msgstr "محتوى البريد الإلكتروني"
 
-#: includes/customizer/trackship-customizer.php:816
+#: includes/customizer/trackship-customizer.php:828
 msgid "Email heading"
 msgstr "عنوان البريد الإلكتروني"
 
-#: includes/customizer/trackship-customizer.php:347
-#: includes/customizer/trackship-customizer.php:348
+#: includes/customizer/trackship-customizer.php:350
+#: includes/customizer/trackship-customizer.php:351
 #: includes/views/notifications.php:15
-#: includes/views/front/preview_tracking_page.php:199
+#: includes/views/front/preview_tracking_page.php:205
 msgid "Email Notifications"
 msgstr "اشعارات البريد الالكتروني"
 
-#: includes/class-wc-trackship-front.php:834
+#: includes/class-wc-trackship-front.php:820
 msgid "Email notifications"
 msgstr "اشعارات البريد الالكتروني"
 
-#: includes/customizer/trackship-customizer.php:806
+#: includes/customizer/trackship-customizer.php:818
 msgid "Email subject"
 msgstr "موضوع البريد الإلكتروني"
 
-#: includes/customizer/trackship-customizer.php:777
+#: includes/customizer/trackship-customizer.php:789
 msgid "Email type"
 msgstr "نوع البريد الإلكتروني"
 
@@ -330,12 +370,12 @@ msgstr "نوع البريد الإلكتروني"
 msgid "Emails"
 msgstr "رسائل البريد الإلكتروني"
 
-#: includes/customizer/trackship-customizer.php:1113
+#: includes/customizer/trackship-customizer.php:1131
 #, php-format
 msgid "Enable  %1$s email"
 msgstr "تمكين البريد الإلكتروني٪ 1 $ s"
 
-#: includes/views/settings.php:57
+#: includes/views/delivery-automation.php:27
 msgid ""
 "Enable a Custom Order Status Delivered that will be set automatically when "
 "all the order shipments are delivered"
@@ -343,69 +383,69 @@ msgstr ""
 "قم بتمكين حالة الطلب المخصص التسليم التي سيتم تعيينها تلقائيًا عند تسليم "
 "جميع شحنات الطلبات"
 
-#: includes/class-wc-trackship-admin.php:878
+#: includes/class-wc-trackship-admin.php:833
 msgid "Enable a shipment status filter on orders admin"
 msgstr "قم بتمكين مرشح حالة الشحن في مسؤول الطلبات"
 
-#: includes/customizer/trackship-customizer.php:147
+#: includes/customizer/trackship-customizer.php:144
 msgid "Enable email"
 msgstr "تمكين البريد الإلكتروني"
 
-#: includes/views/settings.php:56
+#: includes/views/delivery-automation.php:26
 msgid "Enable Order Delivery Automation"
 msgstr "قم بتمكين أتمتة تسليم الطلبات"
 
-#: includes/class-wc-trackship-admin.php:887
+#: includes/class-wc-trackship-admin.php:849
 msgid "Enable shipment status notification for order created by Amazon"
 msgstr "تفعيل إشعار حالة الشحن للطلب الذي أنشأته أمازون"
 
-#: includes/customizer/trackship-customizer.php:660
+#: includes/customizer/trackship-customizer.php:672
 msgid "Enable tracking # link to carrier"
 msgstr "تمكين تتبع # رابط إلى الناقل"
 
-#: includes/class-wc-trackship-admin.php:1520
+#: includes/class-wc-trackship-admin.php:1482
 msgid "Enable Tracking Page"
 msgstr "تمكين صفحة التتبع"
 
-#: includes/views/settings.php:91
+#: includes/class-wc-trackship-admin.php:839
 msgid "Enable unsubscribe (opt-out) from Shipment status notifications"
 msgstr "تمكين إلغاء الاشتراك (الانسحاب) من إشعارات حالة الشحن"
 
-#: templates/emails/tracking-info.php:49
+#: templates/emails/tracking-info.php:51
 #: includes/views/front/tracking_page_header.php:80
 msgid "Est. Delivery Date"
 msgstr "EST. تاريخ التسليم او الوصول"
 
-#: includes/class-wc-trackship-actions.php:734
-#: includes/class-wc-trackship-admin.php:1587
-#: includes/customizer/trackship-customizer.php:210
-#: includes/customizer/trackship-customizer.php:787
-#: includes/smswoo/class-smswoo-admin.php:569 includes/views/shipments.php:31
+#: includes/class-wc-trackship-actions.php:746
+#: includes/class-wc-trackship-admin.php:1549
+#: includes/customizer/trackship-customizer.php:213
+#: includes/customizer/trackship-customizer.php:799
+#: includes/smswoo/class-smswoo-admin.php:576 includes/views/shipments.php:32
 msgid "Exception"
 msgstr "استثناء"
 
-#: includes/class-wc-trackship-actions.php:826
+#: includes/class-wc-trackship-actions.php:841
 msgid "Expired"
 msgstr "منتهي الصلاحية"
 
-#: includes/class-wc-trackship-actions.php:730
-#: includes/class-wc-trackship-actions.php:787
-#: includes/class-wc-trackship-admin.php:1573
-#: includes/customizer/trackship-customizer.php:208
-#: includes/customizer/trackship-customizer.php:785
-#: includes/smswoo/class-smswoo-admin.php:567
+#: includes/class-wc-trackship-actions.php:742
+#: includes/class-wc-trackship-actions.php:799
+#: includes/class-wc-trackship-admin.php:1535
+#: includes/customizer/trackship-customizer.php:211
+#: includes/customizer/trackship-customizer.php:797
+#: includes/smswoo/class-smswoo-admin.php:574
 msgid "Failed Attempt"
 msgstr "محاولة فاشلة"
 
-#: includes/class-wc-trackship-actions.php:740
+#: includes/class-wc-trackship-actions.php:752
 msgid "Filter by shipment status"
 msgstr "تصفية حسب حالة الشحن"
 
-#: includes/customizer/trackship-customizer.php:562
+#: includes/customizer/trackship-customizer.php:574
 msgid "Font color"
 msgstr "لون الخط"
 
-#: includes/customizer/trackship-customizer.php:705
+#: includes/customizer/trackship-customizer.php:717
 msgid "General options"
 msgstr "خيارات عامة"
 
@@ -413,41 +453,41 @@ msgstr "خيارات عامة"
 msgid "General Settings"
 msgstr "الاعدادات العامة"
 
-#: includes/class-wc-trackship-actions.php:657
-#: includes/class-wc-trackship-actions.php:1067
-#: includes/class-wc-trackship-admin.php:908 includes/views/tools.php:22
+#: includes/class-wc-trackship-actions.php:669
+#: includes/class-wc-trackship-actions.php:1081
+#: includes/class-wc-trackship-admin.php:870 includes/views/tools.php:24
 msgid "Get Shipment Status"
 msgstr "احصل على حالة الشحن"
 
-#: includes/views/shipments.php:101
+#: includes/views/shipments.php:103
 msgid "Get shipment status"
 msgstr "احصل على حالة الشحن"
 
-#: includes/views/header2.php:19
+#: includes/views/header2.php:50
 msgid "Get Support"
 msgstr "احصل على الدعم"
 
-#: includes/customizer/trackship-customizer.php:843
+#: includes/customizer/trackship-customizer.php:855
 msgid "Google analytics link tracking"
 msgstr "جوجل تحليلات الارتباط تتبع"
 
-#: includes/customizer/trackship-customizer.php:684
+#: includes/customizer/trackship-customizer.php:696
 msgid "Hide delivery tracking number"
 msgstr "إخفاء رقم تتبع التسليم"
 
-#: includes/customizer/trackship-customizer.php:676
+#: includes/customizer/trackship-customizer.php:688
 msgid "Hide shipping from-to"
 msgstr "إخفاء الشحن من إلى"
 
-#: includes/customizer/trackship-customizer.php:668
+#: includes/customizer/trackship-customizer.php:680
 msgid "Hide the shipping provider logo"
 msgstr "إخفاء شعار مزود الشحن"
 
-#: includes/customizer/trackship-customizer.php:640
+#: includes/customizer/trackship-customizer.php:652
 msgid "Hide tracking events"
 msgstr "إخفاء تتبع الأحداث"
 
-#: includes/customizer/trackship-customizer.php:693
+#: includes/customizer/trackship-customizer.php:705
 msgid "Hide TrackShip branding"
 msgstr "إخفاء علامة TrackShip التجارية"
 
@@ -461,8 +501,8 @@ msgstr "إخفاء علامة TrackShip التجارية"
 msgid "How to find your %s credential"
 msgstr "كيفية العثور على بيانات اعتماد٪ s الخاصة بك"
 
-#: includes/customizer/trackship-customizer.php:458
-#: includes/customizer/trackship-customizer.php:653
+#: includes/customizer/trackship-customizer.php:461
+#: includes/customizer/trackship-customizer.php:665
 msgid "Icons"
 msgstr "أيقونات"
 
@@ -474,39 +514,39 @@ msgstr ""
 "إذا حصلت على أسماء مختلفة من خدمة الشحن الخاصة بك ، فيمكنك تعيين أسماء موفري "
 "الشحن إلى تلك الموجودة على TrackShip."
 
-#: includes/class-wc-trackship-actions.php:726
-#: includes/class-wc-trackship-actions.php:763
-#: includes/class-wc-trackship-admin.php:1552
-#: includes/customizer/trackship-customizer.php:205
-#: includes/customizer/trackship-customizer.php:782
-#: includes/smswoo/class-smswoo-admin.php:564 includes/views/shipments.php:28
+#: includes/class-wc-trackship-actions.php:738
+#: includes/class-wc-trackship-actions.php:775
+#: includes/class-wc-trackship-admin.php:1514
+#: includes/customizer/trackship-customizer.php:208
+#: includes/customizer/trackship-customizer.php:794
+#: includes/smswoo/class-smswoo-admin.php:571 includes/views/shipments.php:29
 msgid "In Transit"
 msgstr "في مرحلة انتقالية"
 
-#: includes/class-wc-trackship-actions.php:735
+#: includes/class-wc-trackship-actions.php:747
 msgid "Invalid Tracking"
 msgstr "تتبع غير صالح"
 
+#: includes/customizer/trackship-customizer.php:332
 #: templates/emails/tswc-email-order-details.php:35
 #: templates/emails/tswc-tpi-email-order-details.php:35
-#: includes/customizer/trackship-customizer.php:329
 #: includes/views/front/layout1_tracking_details.php:10
 msgid "Items in this shipment"
 msgstr "العناصر الموجودة في هذه الشحنة"
 
-#: includes/class-wc-trackship-actions.php:796
+#: includes/class-wc-trackship-actions.php:808
 msgid "Label Cancelled"
 msgstr "تم إلغاء التسمية"
 
-#: includes/views/dashboard.php:85
+#: includes/views/dashboard.php:84
 msgid "Last 30 days"
 msgstr "آخر 30 يومًا"
 
-#: includes/views/dashboard.php:90
+#: includes/views/dashboard.php:89
 msgid "Last 60 days"
 msgstr "آخر 60 يومًا"
 
-#: includes/class-wc-trackship-actions.php:1014
+#: includes/class-wc-trackship-actions.php:1025
 msgid "Last event date: "
 msgstr "تاريخ آخر حدث:"
 
@@ -515,12 +555,12 @@ msgstr "تاريخ آخر حدث:"
 msgid "Late shipment"
 msgstr "تأخر الشحن"
 
-#: includes/views/dashboard.php:44 includes/views/notifications.php:67
-#: includes/views/shipments.php:35
+#: includes/views/dashboard.php:43 includes/views/notifications.php:67
+#: includes/views/shipments.php:36
 msgid "Late Shipments"
 msgstr "الشحنات المتأخرة"
 
-#: includes/class-wc-trackship-admin.php:1217
+#: includes/class-wc-trackship-admin.php:1179
 msgid "Late Shipments Notifications"
 msgstr "إخطارات الشحنات المتأخرة"
 
@@ -528,16 +568,17 @@ msgstr "إخطارات الشحنات المتأخرة"
 msgid "Latest Event"
 msgstr "الحدث الأخير"
 
-#: includes/views/settings.php:72
+#: includes/views/delivery-automation.php:42
 msgid "Light Font"
 msgstr "خط خفيف"
 
-#: includes/customizer/trackship-customizer.php:490
-#: includes/customizer/trackship-customizer.php:590
+#: includes/customizer/trackship-customizer.php:493
+#: includes/customizer/trackship-customizer.php:602
 msgid "Links color"
 msgstr "لون الروابط"
 
-#: includes/class-wc-trackship-admin.php:260 includes/views/header2.php:10
+#: includes/class-wc-trackship-admin.php:229 includes/views/header2.php:10
+#: includes/views/header2.php:29
 msgid "Logs"
 msgstr "السجلات"
 
@@ -545,11 +586,11 @@ msgstr "السجلات"
 msgid "Map Shipping Providers"
 msgstr "خريطة مزودي الشحن"
 
-#: includes/customizer/trackship-customizer.php:1139
+#: includes/customizer/trackship-customizer.php:1157
 msgid "Mockup Order"
 msgstr "ترتيب بالحجم الطبيعي"
 
-#: includes/views/dashboard.php:80
+#: includes/views/dashboard.php:79
 msgid "Month to date"
 msgstr "بقى شهر حتى المواعدة"
 
@@ -557,11 +598,11 @@ msgstr "بقى شهر حتى المواعدة"
 msgid "More info"
 msgstr "مزيد من المعلومات"
 
-#: includes/class-wc-trackship-actions.php:521
-#: includes/class-wc-trackship-actions.php:524
-#: includes/class-wc-trackship-actions.php:1021
-#: includes/class-wc-trackship-actions.php:1025
-#: includes/class-wc-trackship-admin.php:788
+#: includes/class-wc-trackship-actions.php:533
+#: includes/class-wc-trackship-actions.php:536
+#: includes/class-wc-trackship-actions.php:1033
+#: includes/class-wc-trackship-actions.php:1037
+#: includes/class-wc-trackship-admin.php:743
 msgid "more info"
 msgstr "مزيد من المعلومات"
 
@@ -573,7 +614,7 @@ msgstr "مفتاح Nexmo"
 msgid "Nexmo Secret"
 msgstr "سر Nexmo"
 
-#: includes/views/dashboard.php:56 includes/views/dashboard.php:136
+#: includes/views/dashboard.php:55 includes/views/dashboard.php:175
 msgid "No action needed for Shipments"
 msgstr "لا يلزم اتخاذ أي إجراء للشحنات"
 
@@ -585,6 +626,7 @@ msgstr "لا يلزم اتخاذ أي إجراء للشحنات"
 msgid "No answer"
 msgstr "لا اجابة"
 
+#: includes/smswoo/services/class-smswoo-msg91.php:159
 #: includes/smswoo/services/class-smswoo-twilio.php:126
 msgid "No answer code"
 msgstr "لا يوجد رمز إجابة"
@@ -598,19 +640,19 @@ msgstr "لا يوجد رمز استجابة"
 msgid "Notifications"
 msgstr "إشعارات"
 
-#: includes/class-wc-trackship-admin.php:1256
+#: includes/class-wc-trackship-admin.php:1218
 msgid "Notifications detail"
 msgstr "تفاصيل الإخطارات"
 
-#: includes/views/settings.php:82
+#: includes/views/settings.php:55
 msgid "Number of days for late shipments"
 msgstr "عدد أيام تأخر الشحنات"
 
-#: includes/class-wc-trackship-actions.php:766
-#: includes/class-wc-trackship-admin.php:1580
-#: includes/customizer/trackship-customizer.php:209
-#: includes/customizer/trackship-customizer.php:786
-#: includes/smswoo/class-smswoo-admin.php:568
+#: includes/class-wc-trackship-actions.php:778
+#: includes/class-wc-trackship-admin.php:1542
+#: includes/customizer/trackship-customizer.php:212
+#: includes/customizer/trackship-customizer.php:798
+#: includes/smswoo/class-smswoo-admin.php:575
 msgid "On Hold"
 msgstr "في الانتظار"
 
@@ -618,41 +660,41 @@ msgstr "في الانتظار"
 msgid "Order"
 msgstr "ترتيب"
 
-#: includes/class-automatewoo-delivered-trigger.php:18
+#: includes/integration/class-automatewoo-delivered-trigger.php:18
 msgid "Order Delivered"
 msgstr "أجل تسليم"
 
-#: templates/tracking/tracking-form.php:100
+#: templates/tracking/tracking-form.php:104
 msgid "Order Details"
 msgstr "تفاصيل الطلب"
 
-#: templates/tracking/tracking-form.php:107
+#: templates/tracking/tracking-form.php:111
 msgid "Order Email"
 msgstr "طلب البريد الإلكتروني"
 
-#: templates/tracking/tracking-form.php:106
+#: templates/tracking/tracking-form.php:110
 msgid "Order ID"
 msgstr "رقم التعريف الخاص بالطلب"
 
-#: includes/class-wc-trackship-actions.php:829
+#: includes/class-wc-trackship-actions.php:844
 msgid "Order id not found"
 msgstr "معرّف الطلب غير موجود"
 
-#: includes/class-wc-trackship-admin.php:1260
+#: includes/class-wc-trackship-admin.php:1222
 #: templates/emails/late-shipment-email.php:16
-#: templates/tracking/tracking-form.php:106
+#: templates/tracking/tracking-form.php:110
 msgid "Order Number"
 msgstr "رقم الأمر"
 
-#: includes/class-wc-trackship-front.php:375
+#: includes/class-wc-trackship-front.php:367
 msgid "Order Processing"
 msgstr "معالجة الطلب"
 
-#: includes/class-wc-trackship-admin.php:870
+#: includes/class-wc-trackship-admin.php:825
 msgid "Order statuses to trigger TrackShip "
 msgstr "حالات الطلب لتشغيل TrackShip"
 
-#: templates/tracking/tracking-form.php:112
+#: templates/tracking/tracking-form.php:116
 msgid "Order tracking number."
 msgstr "رقم تتبع الطلب."
 
@@ -661,25 +703,24 @@ msgstr "رقم تتبع الطلب."
 msgid "Origin Details"
 msgstr "تفاصيل المنشأ"
 
-#: includes/class-wc-trackship-admin.php:782
+#: includes/class-wc-trackship-admin.php:737
 msgid "Other"
 msgstr "آخر"
 
-#: includes/class-wc-trackship-actions.php:728
-#: includes/class-wc-trackship-actions.php:775
-#: includes/class-wc-trackship-admin.php:1566
-#: includes/customizer/trackship-customizer.php:207
-#: includes/customizer/trackship-customizer.php:784
-#: includes/smswoo/class-smswoo-admin.php:566 includes/views/shipments.php:29
+#: includes/class-wc-trackship-actions.php:740
+#: includes/class-wc-trackship-actions.php:787
+#: includes/class-wc-trackship-admin.php:1528
+#: includes/customizer/trackship-customizer.php:210
+#: includes/customizer/trackship-customizer.php:796
+#: includes/smswoo/class-smswoo-admin.php:573 includes/views/shipments.php:30
 msgid "Out For Delivery"
 msgstr "خارج للتوصيل"
 
-#: includes/class-wc-trackship-actions.php:723
-#: includes/class-wc-trackship-actions.php:805
+#: includes/class-wc-trackship-actions.php:735
 msgid "Pending TrackShip"
 msgstr "في انتظار TrackShip"
 
-#: includes/class-wc-trackship-actions.php:521
+#: includes/class-wc-trackship-actions.php:533
 msgid ""
 "Pending TrackShip is a temporary status that will display for a few minutes "
 "until we update the order with the first tracking event from the shipping "
@@ -692,7 +733,7 @@ msgstr ""
 msgid "Please choose SMS provider from Dropown."
 msgstr "الرجاء اختيار مزود خدمة الرسائل القصيرة من Dropown."
 
-#: includes/class-wc-trackship-admin.php:117
+#: includes/class-wc-trackship-admin.php:115
 msgid "Please connect your store with trackship.com."
 msgstr "يرجى توصيل متجرك بـ trackship.com."
 
@@ -710,35 +751,35 @@ msgstr ""
 msgid "Please note: "
 msgstr "يرجى الملاحظة:"
 
-#: includes/class-wc-trackship-admin.php:120
+#: includes/class-wc-trackship-admin.php:118
 msgid "Please refresh the page and try again."
 msgstr "يرجى تحديث الصفحة وحاول مرة أخرى."
 
-#: includes/class-wc-trackship-front.php:379
+#: includes/class-wc-trackship-front.php:371
 msgid "Please try again after you receive the shipping confirmation email."
 msgstr "يرجى المحاولة مرة أخرى بعد استلام البريد الإلكتروني لتأكيد الشحن."
 
-#: includes/class-wc-trackship-front.php:564
-#: templates/tracking/tracking-form.php:116
-#: includes/views/front/preview_tracking_page.php:210
+#: includes/class-wc-trackship-front.php:550
+#: templates/tracking/tracking-form.php:121
+#: includes/views/front/preview_tracking_page.php:216
 msgid "Powered by "
 msgstr "مشغل بواسطة"
 
-#: includes/class-wc-trackship-actions.php:725
-#: includes/class-wc-trackship-actions.php:769 includes/views/shipments.php:30
+#: includes/class-wc-trackship-actions.php:737
+#: includes/class-wc-trackship-actions.php:781 includes/views/shipments.php:31
 msgid "Pre Transit"
 msgstr "قبل العبور"
 
-#: includes/class-wc-trackship-admin.php:1213
+#: includes/class-wc-trackship-admin.php:1175
 msgid "Priority Support"
 msgstr "دعم الأولوية"
 
-#: includes/customizer/trackship-customizer.php:457
-#: includes/customizer/trackship-customizer.php:652
+#: includes/customizer/trackship-customizer.php:460
+#: includes/customizer/trackship-customizer.php:664
 msgid "Progress bar"
 msgstr "شريط التقدم"
 
-#: includes/class-wc-trackship-admin.php:1244
+#: includes/class-wc-trackship-admin.php:1206
 msgid "Providers list Updated"
 msgstr "تم تحديث قائمة المزودين"
 
@@ -746,23 +787,24 @@ msgstr "تم تحديث قائمة المزودين"
 msgid "Recipient(s)"
 msgstr "المستلم (المستلمون)"
 
-#: includes/class-wc-trackship-admin.php:1215
+#: includes/class-wc-trackship-admin.php:1177
 msgid "Remove TrackShip’s branding"
 msgstr "إزالة العلامة التجارية TrackShip"
 
-#: includes/class-wc-trackship-actions.php:733
-#: includes/class-wc-trackship-actions.php:781
-#: includes/class-wc-trackship-admin.php:1594
-#: includes/customizer/trackship-customizer.php:211
-#: includes/customizer/trackship-customizer.php:788
-#: includes/smswoo/class-smswoo-admin.php:570 includes/views/dashboard.php:52
-#: includes/views/shipments.php:33
+#: includes/class-wc-trackship-actions.php:745
+#: includes/class-wc-trackship-actions.php:793
+#: includes/class-wc-trackship-admin.php:1556
+#: includes/customizer/trackship-customizer.php:214
+#: includes/customizer/trackship-customizer.php:800
+#: includes/smswoo/class-smswoo-admin.php:577 includes/views/dashboard.php:51
+#: includes/views/shipments.php:34
 msgid "Return To Sender"
 msgstr "أعد للمرسل"
 
-#: includes/smswoo/class-smswoo-admin.php:524
+#: includes/smswoo/class-smswoo-admin.php:533
+#: includes/views/delivery-automation.php:13
 #: includes/views/map-providers.php:13 includes/views/notifications.php:70
-#: includes/views/settings.php:43 includes/views/settings.php:105
+#: includes/views/settings.php:43 includes/views/tracking-page.php:13
 #: includes/smswoo/admin-html/settings_tab.php:12
 msgid "Save & close"
 msgstr "احفظ وأغلق"
@@ -779,11 +821,11 @@ msgstr "أنقذ"
 msgid "Search"
 msgstr "بحث"
 
-#: includes/views/shipments.php:111
+#: includes/views/shipments.php:113
 msgid "Search by Tracking Number, Shipping carrier, Order number"
 msgstr "البحث عن طريق رقم التتبع ، شركة الشحن ، رقم الطلب"
 
-#: includes/class-wc-trackship-front.php:272
+#: includes/class-wc-trackship-front.php:265
 msgid "Security verification failed, please refresh page and try again."
 msgstr "فشل التحقق الأمني ، يرجى تحديث الصفحة والمحاولة مرة أخرى."
 
@@ -795,7 +837,7 @@ msgstr "حدد تكامل SMS"
 msgid "Select SMS provider"
 msgstr "حدد مزود خدمة الرسائل القصيرة"
 
-#: includes/class-wc-trackship-admin.php:1526
+#: includes/class-wc-trackship-admin.php:1488
 msgid "Select tracking page:"
 msgstr "حدد صفحة التتبع:"
 
@@ -803,25 +845,22 @@ msgstr "حدد صفحة التتبع:"
 msgid "Send email at"
 msgstr "إرسال بريد إلكتروني على"
 
-#: includes/class-wc-trackship-admin.php:1602
-#: includes/smswoo/class-smswoo-admin.php:517
+#: includes/class-wc-trackship-admin.php:1564
+#: includes/smswoo/class-smswoo-admin.php:526
 msgid "Send only when all shipments for the order are delivered"
 msgstr "أرسل فقط عندما يتم تسليم جميع الشحنات الخاصة بالطلب"
 
-#: includes/smswoo/class-smswoo-admin.php:539
-msgid "Send to admin"
-msgstr "أرسل إلى المسؤول"
-
-#: includes/smswoo/class-smswoo-admin.php:373
+#: includes/smswoo/class-smswoo-admin.php:380
 msgid "Sender phone number / Sender ID"
 msgstr "رقم هاتف المرسل / هوية المرسل"
 
-#: includes/smswoo/class-smswoo-sms-notification.php:225
+#: includes/smswoo/class-smswoo-sms-notification.php:227
 msgid "Sent"
 msgstr "أرسلت"
 
-#: trackship-for-woocommerce.php:276 includes/class-wc-trackship-admin.php:256
+#: trackship-for-woocommerce.php:281 includes/class-wc-trackship-admin.php:233
 #: includes/views/content.php:14 includes/views/header2.php:9
+#: includes/views/header2.php:39
 msgid "Settings"
 msgstr "إعدادات"
 
@@ -833,7 +872,7 @@ msgstr "الشحن من"
 msgid "Ship to"
 msgstr "سافر على متن سفينة لِـ"
 
-#: includes/class-wc-trackship-front.php:483
+#: includes/class-wc-trackship-front.php:481
 #, php-format
 msgid "Shipment %1$s"
 msgstr "شحنة٪ 1 $ s"
@@ -842,23 +881,26 @@ msgstr "شحنة٪ 1 $ s"
 msgid "Shipment Progress"
 msgstr "تقدم عملية الشحن"
 
-#: includes/class-wc-trackship-actions.php:435
-#: includes/class-wc-trackship-admin.php:1261
-#: templates/emails/late-shipment-email.php:17 includes/views/logs.php:51
+#: includes/class-wc-trackship-actions.php:454
+#: includes/class-wc-trackship-admin.php:1223 includes/views/logs.php:51
+#: templates/emails/late-shipment-email.php:17
 #: includes/shipments/views/trackship_shipments.php:19
 msgid "Shipment status"
 msgstr "حالة الشحن"
 
-#: includes/class-wc-trackship-admin.php:258 includes/views/header2.php:7
+#: includes/class-wc-trackship-admin.php:227 includes/views/header2.php:7
+#: includes/views/header2.php:24
 msgid "Shipments"
 msgstr "الشحنات"
 
-#: includes/class-wc-trackship-admin.php:1216
+#: includes/class-wc-trackship-admin.php:1178
 msgid "Shipments Dashboard"
 msgstr "لوحة تحكم الشحنات"
 
-#: includes/class-wc-trackship-actions.php:793
-#: templates/emails/tracking-info.php:85
+#: includes/class-wc-trackship-actions.php:805
+#: includes/class-wc-trackship-actions.php:817
+#: includes/class-wc-trackship-actions.php:820
+#: templates/emails/tracking-info.php:86
 #: includes/views/front/tracking_page_header.php:62
 msgid "Shipped"
 msgstr "شحنها"
@@ -867,7 +909,7 @@ msgstr "شحنها"
 msgid "Shipped date"
 msgstr "تاريخ الشحن"
 
-#: includes/customizer/trackship-customizer.php:876
+#: includes/customizer/trackship-customizer.php:888
 msgid "Shipped products header text"
 msgstr "نص عنوان المنتجات التي تم شحنها"
 
@@ -875,20 +917,20 @@ msgstr "نص عنوان المنتجات التي تم شحنها"
 msgid "Shipping & Delivery"
 msgstr "الشحن و التسليم"
 
-#: includes/class-wc-trackship-admin.php:1218
+#: includes/class-wc-trackship-admin.php:1180
 msgid "Shipping & Delivery Analytics"
 msgstr "تحليلات الشحن والتسليم"
 
-#: includes/views/dashboard.php:144
+#: includes/views/dashboard.php:183
 msgid "Shipping & Delivery Overview"
 msgstr "نظرة عامة على الشحن والتسليم"
 
+#: includes/customizer/trackship-customizer.php:333
 #: templates/emails/shipping-email-addresses.php:33
-#: includes/customizer/trackship-customizer.php:330
 msgid "Shipping address"
 msgstr "عنوان الشحن"
 
-#: includes/customizer/trackship-customizer.php:903
+#: includes/customizer/trackship-customizer.php:915
 msgid "Shipping address header text"
 msgstr "نص عنوان عنوان الشحن"
 
@@ -900,12 +942,12 @@ msgstr "شركة الشحن"
 msgid "Shipping days"
 msgstr "أيام الشحن"
 
-#: templates/emails/late-shipment-email.php:18
 #: includes/views/map-providers.php:25
+#: templates/emails/late-shipment-email.php:18
 msgid "Shipping provider"
 msgstr "مزود الشحن"
 
-#: includes/class-wc-trackship-actions.php:835
+#: includes/class-wc-trackship-actions.php:850
 msgid "Shipping provider not found"
 msgstr "مزود الشحن غير موجود"
 
@@ -913,23 +955,23 @@ msgstr "مزود الشحن غير موجود"
 msgid "Shipping time"
 msgstr "وقت الشحن"
 
-#: includes/customizer/trackship-customizer.php:639
+#: includes/customizer/trackship-customizer.php:651
 msgid "Show all events"
 msgstr "عرض كل الأحداث"
 
-#: includes/customizer/trackship-customizer.php:716
+#: includes/customizer/trackship-customizer.php:728
 msgid "Show both order details and Tracking number"
 msgstr "إظهار تفاصيل الطلب ورقم التتبع"
 
-#: includes/customizer/trackship-customizer.php:641
+#: includes/customizer/trackship-customizer.php:653
 msgid "Show last events & expand"
 msgstr "عرض الأحداث الأخيرة والتوسيع"
 
-#: includes/customizer/trackship-customizer.php:717
+#: includes/customizer/trackship-customizer.php:729
 msgid "show only Order details"
 msgstr "عرض تفاصيل الطلب فقط"
 
-#: includes/customizer/trackship-customizer.php:718
+#: includes/customizer/trackship-customizer.php:730
 msgid "show only Tracking details"
 msgstr "إظهار تفاصيل التتبع فقط"
 
@@ -943,8 +985,8 @@ msgstr ""
 "منذ تثبيت AST PRO ، يتم تعيين اسم موفر الشحن على إعدادات مزود الشحن "
 "(WooCommerce> تتبع الشحنة>٪ 1 $ s موفرو الشحن٪ 2 $ s)"
 
-#: includes/customizer/trackship-customizer.php:459
-#: includes/customizer/trackship-customizer.php:654
+#: includes/customizer/trackship-customizer.php:462
+#: includes/customizer/trackship-customizer.php:666
 msgid "Single icon"
 msgstr "رمز واحد"
 
@@ -952,47 +994,46 @@ msgstr "رمز واحد"
 msgid "SMS"
 msgstr "رسالة قصيرة"
 
-#: includes/class-wc-trackship-admin.php:1214
+#: includes/class-wc-trackship-admin.php:1176
 #: includes/views/notifications.php:18
 msgid "SMS Notifications"
 msgstr "إخطارات الرسائل القصيرة"
 
-#: includes/class-wc-trackship-front.php:839
+#: includes/class-wc-trackship-front.php:825
 msgid "SMS notifications"
 msgstr "إشعارات الرسائل القصيرة"
 
-#: includes/class-wc-trackship-admin.php:1626
+#: includes/class-wc-trackship-admin.php:1588
 #: includes/smswoo/admin-html/settings_tab.php:8
 msgid "SMS Settings"
 msgstr "إعدادات الرسائل القصيرة"
 
-#: includes/class-wc-trackship-admin.php:1219
+#: includes/class-wc-trackship-admin.php:1181
 msgid "Starting from $9 a month"
 msgstr "تبدأ من 9 دولارات شهريًا"
 
-#: includes/class-wc-trackship-admin.php:1266 includes/views/dashboard.php:166
-#: includes/views/logs.php:55
+#: includes/class-wc-trackship-admin.php:1228 includes/views/logs.php:55
 msgid "Status"
 msgstr "حالة"
 
-#: includes/class-wc-trackship-actions.php:844
+#: includes/class-wc-trackship-actions.php:859
 msgid "Store is conneted with different account"
 msgstr "المتجر مرتبط بحساب مختلف"
 
-#: includes/class-wc-trackship-actions.php:841
-msgid "Store is not exists in TrackShip"
-msgstr "المتجر غير موجود في TrackShip"
+#: includes/class-wc-trackship-actions.php:856
+msgid "Store is not Connected to TrackShip"
+msgstr "المتجر غير متصل بشركة TrackShip"
 
-#: includes/customizer/trackship-customizer.php:415
+#: includes/customizer/trackship-customizer.php:418
 msgid "Style & Colors"
 msgstr "الأسلوب والألوان"
 
-#: includes/class-wc-trackship-admin.php:1238
-#: includes/class-wc-trackship-admin.php:1246
+#: includes/class-wc-trackship-admin.php:1200
+#: includes/class-wc-trackship-admin.php:1208
 msgid "Sync TrackShip Providers"
 msgstr "مزامنة موفري TrackShip"
 
-#: includes/class-wc-trackship-admin.php:1242
+#: includes/class-wc-trackship-admin.php:1204
 msgid ""
 "Syncing the TrackShip providers list add or updates the pre-set TrackShip "
 "providers and will not effect custom shipping providers."
@@ -1000,11 +1041,19 @@ msgstr ""
 "مزامنة قائمة موفري TrackShip إضافة أو تحديث موفري TrackShip المعينين مسبقًا "
 "ولن تؤثر على موفري الشحن المخصصين."
 
-#: includes/customizer/trackship-customizer.php:711
+#: includes/customizer/trackship-customizer.php:723
 msgid "Tabs display"
 msgstr "عرض علامات التبويب"
 
-#: includes/customizer/trackship-customizer.php:687
+#: includes/smswoo/class-smswoo-admin.php:548
+msgid "Template ID"
+msgstr "معرف النموذج"
+
+#: includes/smswoo/class-smswoo-admin.php:549
+msgid "Template variables"
+msgstr "متغيرات القالب"
+
+#: includes/customizer/trackship-customizer.php:699
 msgid ""
 "The delivery tracking number will display if the shipment is getting a "
 "different tracking number at the destination country from the local postal "
@@ -1017,7 +1066,7 @@ msgstr ""
 msgid "The following shipments are late:"
 msgstr "الشحنات التالية متأخرة:"
 
-#: includes/class-wc-trackship-actions.php:643
+#: includes/class-wc-trackship-actions.php:655
 msgid ""
 "The shipment status updates will run in the background, please refresh the "
 "page in a few minutes."
@@ -1025,27 +1074,27 @@ msgstr ""
 "سيتم تشغيل تحديثات حالة الشحنة في الخلفية ، يرجى تحديث الصفحة في غضون بضع "
 "دقائق."
 
-#: includes/smswoo/class-smswoo-admin.php:374
+#: includes/smswoo/class-smswoo-admin.php:381
 msgid "This field appears as a from or Sender ID"
 msgstr "يظهر هذا الحقل كمعرّف من أو معرّف المرسل"
 
-#: includes/customizer/trackship-customizer.php:844
+#: includes/customizer/trackship-customizer.php:856
 msgid "This will be appended to URL in the email content"
 msgstr "سيتم إلحاق هذا بـ URL في محتوى البريد الإلكتروني"
 
-#: includes/class-wc-trackship-admin.php:1263 includes/views/logs.php:52
+#: includes/class-wc-trackship-admin.php:1225 includes/views/logs.php:52
 msgid "Time"
 msgstr "وقت"
 
-#: includes/class-wc-trackship-admin.php:1264 includes/views/logs.php:53
+#: includes/class-wc-trackship-admin.php:1226 includes/views/logs.php:53
 msgid "To"
 msgstr "ل"
 
-#: templates/tracking/tracking-form.php:105
+#: templates/tracking/tracking-form.php:109
 msgid "To track your order, enter your order number and email address:"
 msgstr "لتتبع طلبك ، أدخل رقم الطلب وعنوان البريد الإلكتروني:"
 
-#: templates/tracking/tracking-form.php:111
+#: templates/tracking/tracking-form.php:115
 msgid ""
 "To track your order, please enter the tracking number you received in the "
 "shipping confirmation email"
@@ -1053,52 +1102,52 @@ msgstr ""
 "لتتبع طلبك ، يرجى إدخال رقم التتبع الذي تلقيته في البريد الإلكتروني لتأكيد "
 "الشحن"
 
-#: includes/class-wc-trackship-admin.php:264 includes/views/header2.php:11
-#: includes/views/tools.php:14
+#: includes/views/content.php:24 includes/views/header2.php:11
+#: includes/views/header2.php:56
 msgid "Tools"
 msgstr "أدوات"
 
-#: includes/views/dashboard.php:62
+#: includes/views/dashboard.php:61
 msgid "Total Shipments"
 msgstr "إجمالي الشحنات"
 
-#: includes/class-wc-trackship-actions.php:511
-#: includes/class-wc-trackship-actions.php:517
-#: includes/class-wc-trackship-actions.php:1018
+#: includes/class-wc-trackship-actions.php:523
+#: includes/class-wc-trackship-actions.php:529
 #: includes/class-wc-trackship-actions.php:1030
+#: includes/class-wc-trackship-actions.php:1044
 msgid "Track"
 msgstr "مسار"
 
-#: includes/customizer/trackship-customizer.php:534
+#: includes/customizer/trackship-customizer.php:537
 msgid "Track Button radius"
 msgstr "نصف قطر زر التتبع"
 
-#: includes/customizer/trackship-customizer.php:506
+#: includes/customizer/trackship-customizer.php:509
 msgid "Track button text"
 msgstr "نص زر المسار"
 
-#: includes/customizer/trackship-customizer.php:276
+#: includes/customizer/trackship-customizer.php:279
 msgid "Track Order"
 msgstr "ترتيب المسار"
 
-#: includes/class-wc-trackship-admin.php:210
+#: includes/class-wc-trackship-admin.php:182
 msgid "Track Shipment"
 msgstr "شحنة المسار"
 
-#: includes/customizer/trackship-customizer.php:268
+#: includes/customizer/trackship-customizer.php:271
 msgid "Track your order"
 msgstr "أتبع طلبك"
 
-#: includes/customizer/trackship-customizer.php:450
-#: includes/customizer/trackship-customizer.php:647
+#: includes/customizer/trackship-customizer.php:453
+#: includes/customizer/trackship-customizer.php:659
 msgid "Tracker type"
 msgstr "نوع المقتفي"
 
-#: includes/class-wc-trackship-admin.php:1625
+#: includes/class-wc-trackship-admin.php:1587
 msgid "Tracking Analytics"
 msgstr "تتبع التحليلات"
 
-#: includes/customizer/trackship-customizer.php:634
+#: includes/customizer/trackship-customizer.php:646
 msgid "Tracking event display"
 msgstr "عرض حدث التتبع"
 
@@ -1106,35 +1155,35 @@ msgstr "عرض حدث التتبع"
 msgid "Tracking information is not available, please try again later."
 msgstr "معلومات التتبع غير متوفرة ، يرجى المحاولة مرة أخرى لاحقًا."
 
-#: includes/views/dashboard.php:48 includes/views/dashboard.php:74
-#: includes/views/shipments.php:36
+#: includes/views/dashboard.php:47 includes/views/dashboard.php:73
+#: includes/views/shipments.php:37
 msgid "Tracking Issues"
 msgstr "مشاكل التتبع"
 
-#: includes/class-wc-trackship-admin.php:1262
+#: includes/class-wc-trackship-admin.php:1224
 #: templates/emails/late-shipment-email.php:19
-#: templates/tracking/tracking-form.php:102
-#: templates/tracking/tracking-form.php:112
+#: templates/tracking/tracking-form.php:106
+#: templates/tracking/tracking-form.php:116
 #: includes/shipments/views/trackship_shipments.php:17
 msgid "Tracking Number"
 msgstr "رقم التعقب"
 
-#: includes/class-wc-trackship-actions.php:832
+#: includes/class-wc-trackship-actions.php:847
 msgid "Tracking number not found"
 msgstr "رقم التتبع غير موجود"
 
-#: includes/customizer/trackship-customizer.php:377
-#: includes/views/settings.php:100
+#: includes/customizer/trackship-customizer.php:380
+#: includes/views/tracking-page.php:8
 msgid "Tracking Page"
 msgstr "صفحة التتبع"
 
-#: includes/customizer/trackship-customizer.php:357
-#: includes/customizer/trackship-customizer.php:358
+#: includes/customizer/trackship-customizer.php:360
+#: includes/customizer/trackship-customizer.php:361
 msgid "Tracking Page Widget"
 msgstr "أداة تتبع الصفحة"
 
-#: includes/customizer/trackship-customizer.php:396
-#: includes/customizer/trackship-customizer.php:444
+#: includes/customizer/trackship-customizer.php:399
+#: includes/customizer/trackship-customizer.php:447
 msgid "Tracking Widget"
 msgstr "أداة التتبع"
 
@@ -1156,7 +1205,7 @@ msgstr "جدول سجلات TrackShip غير موجود ، يرجى المحاو
 msgid "TrackShip Provider"
 msgstr "مزود تراكشيب"
 
-#: includes/views/dashboard.php:18 includes/views/shipments.php:18
+#: includes/views/dashboard.php:17 includes/views/shipments.php:18
 msgid "TrackShip Shipments table does not exist, Please try after few minutes"
 msgstr "جدول شحنات TrackShip غير موجود ، يرجى المحاولة بعد بضع دقائق"
 
@@ -1168,81 +1217,77 @@ msgstr "حساب Twilio SID"
 msgid "Twilio Auth Token"
 msgstr "Twilio Auth Token"
 
-#: includes/class-wc-trackship-admin.php:1265 includes/views/logs.php:54
+#: includes/class-wc-trackship-admin.php:1227 includes/views/logs.php:54
 msgid "Type"
 msgstr "يكتب"
 
-#: includes/class-wc-trackship-front.php:214
-#: includes/class-wc-trackship-front.php:235
-#: includes/class-wc-trackship-front.php:296
-#: includes/class-wc-trackship-front.php:306
+#: includes/class-wc-trackship-front.php:209
+#: includes/class-wc-trackship-front.php:230
+#: includes/class-wc-trackship-front.php:289
+#: includes/class-wc-trackship-front.php:299
 msgid "Unable to locate the order."
 msgstr "تعذر تحديد موقع الطلب."
 
-#: includes/class-wc-trackship-front.php:220
+#: includes/class-wc-trackship-front.php:215
 msgid "Unable to locate the order. or Invalid order key"
 msgstr "تعذر تحديد موقع الطلب. أو مفتاح الطلب غير صالح"
 
-#: includes/class-wc-trackship-actions.php:811
+#: includes/class-wc-trackship-actions.php:826
 msgid "Unauthorized"
 msgstr "غير مصرح"
 
-#: includes/class-wc-trackship-actions.php:724
-#: includes/class-wc-trackship-actions.php:790
+#: includes/class-wc-trackship-actions.php:736
+#: includes/class-wc-trackship-actions.php:802
 msgid "Unknown"
 msgstr "مجهول"
 
-#: includes/trackship-email-manager.php:246
-#: includes/customizer/class-wc-availableforpickup-email-customizer.php:172
-#: includes/customizer/class-wc-delivered-email-customizer.php:177
-#: includes/customizer/class-wc-exception-email-customizer.php:172
-#: includes/customizer/class-wc-failure-email-customizer.php:172
-#: includes/customizer/class-wc-intransit-email-customizer.php:166
-#: includes/customizer/class-wc-onhold-email-customizer.php:172
-#: includes/customizer/class-wc-outfordelivery-email-customizer.php:173
-#: includes/customizer/class-wc-returntosender-email-customizer.php:171
+#: includes/trackship-email-manager.php:223
+#: includes/customizer/class-wc-availableforpickup-email-customizer.php:165
+#: includes/customizer/class-wc-delivered-email-customizer.php:170
+#: includes/customizer/class-wc-exception-email-customizer.php:165
+#: includes/customizer/class-wc-failure-email-customizer.php:165
+#: includes/customizer/class-wc-intransit-email-customizer.php:159
+#: includes/customizer/class-wc-onhold-email-customizer.php:165
+#: includes/customizer/class-wc-outfordelivery-email-customizer.php:166
+#: includes/customizer/class-wc-returntosender-email-customizer.php:164
 msgid "Unsubscribe"
 msgstr "إلغاء الاشتراك"
 
-#: includes/class-wc-trackship-admin.php:1222
+#: includes/class-wc-trackship-admin.php:1184
 msgid "UPGRADE TO PRO"
 msgstr "التطور للاحترافية"
 
-#: includes/views/dashboard.php:113
+#: includes/views/dashboard.php:112
 msgid "Upgrade to Pro"
 msgstr "التطور للاحترافية"
 
-#: includes/class-wc-trackship-admin.php:1209
+#: includes/class-wc-trackship-admin.php:1171
 msgid "Upgrade to TrackShip Pro"
 msgstr "قم بالترقية إلى TrackShip Pro"
 
-#: includes/views/dashboard.php:174
-msgid "Usage Balance "
-msgstr "رصيد الاستخدام"
-
-#: includes/class-wc-trackship-actions.php:838
+#: includes/class-wc-trackship-actions.php:853
 msgid "User not found for this key"
 msgstr "المستخدم غير موجود لهذا المفتاح"
 
-#: includes/views/dashboard.php:164
+#: includes/views/dashboard.php:203
 msgid "View detailed stats"
 msgstr "عرض احصائيات مفصلة"
 
 #: includes/views/front/layout1_tracking_details.php:165
-#: includes/views/front/preview_tracking_page.php:167
+#: includes/views/front/preview_tracking_page.php:173
 msgid "view less"
 msgstr "عرض أقل"
 
 #: includes/views/front/layout1_tracking_details.php:164
-#: includes/views/front/preview_tracking_page.php:166
+#: includes/views/front/preview_tracking_page.php:172
 msgid "view more"
 msgstr "عرض المزيد"
 
-#: includes/class-wc-trackship-actions.php:1033
+#: includes/class-wc-trackship-actions.php:1047
 msgid "View Shipment log"
 msgstr "عرض سجل الشحن"
 
-#: includes/views/tools.php:22
+#: includes/views/tools.php:24
 #, php-format
 msgid ""
 "We detected %1$s Shipped orders from the last 30 days that were not sent to "
@@ -1258,53 +1303,56 @@ msgid "We detected %d late shipments:"
 msgstr "اكتشفنا٪ d شحنات متأخرة:"
 
 #. %s: search for a total_orders
-#: includes/class-wc-trackship-admin.php:907
+#: includes/class-wc-trackship-admin.php:869
 #, php-format
+#| msgid ""
+#| "We detected %s Shipped orders from the last 30 days that were not sent to "
+#| "TrackShip, you can bulk send them to TrackShip"
 msgid ""
-"We detected %s Shipped orders from the last 30 days that were not sent to "
+"We detected %s Shipments from the last 30 days that were not sent to "
 "TrackShip, you can bulk send them to TrackShip"
 msgstr ""
 "اكتشفنا٪ s من الطلبات التي تم شحنها من آخر 30 يومًا والتي لم يتم إرسالها إلى "
 "TrackShip ، يمكنك إرسالها بالجملة إلى TrackShip"
 
-#: includes/customizer/trackship-customizer.php:553
+#: includes/customizer/trackship-customizer.php:565
 msgid "Widget Background color"
 msgstr "القطعة لون الخلفية"
 
-#: includes/customizer/trackship-customizer.php:463
+#: includes/customizer/trackship-customizer.php:466
 msgid "Widget background color"
 msgstr "القطعة لون الخلفية"
 
-#: includes/customizer/trackship-customizer.php:571
+#: includes/customizer/trackship-customizer.php:583
 msgid "Widget Border color"
 msgstr "القطعة لون الحدود"
 
-#: includes/customizer/trackship-customizer.php:481
+#: includes/customizer/trackship-customizer.php:484
 msgid "Widget border color"
 msgstr "القطعة لون الحدود"
 
-#: includes/customizer/trackship-customizer.php:580
+#: includes/customizer/trackship-customizer.php:592
 msgid "Widget Border radius"
 msgstr "القطعة حدود نصف قطرها"
 
-#: includes/customizer/trackship-customizer.php:472
+#: includes/customizer/trackship-customizer.php:475
 msgid "Widget font color"
 msgstr "لون خط القطعة"
 
-#: includes/customizer/trackship-customizer.php:433
+#: includes/customizer/trackship-customizer.php:436
 msgid "Widget Form"
 msgstr "نموذج القطعة"
 
-#: includes/customizer/trackship-customizer.php:628
+#: includes/customizer/trackship-customizer.php:640
 msgid "Widget Layout"
 msgstr "القطعة تخطيط"
 
-#: includes/customizer/trackship-customizer.php:547
+#: includes/customizer/trackship-customizer.php:559
 msgid "Widget Style"
 msgstr "القطعة نمط"
 
-#: includes/customizer/trackship-customizer.php:945
-#: includes/customizer/trackship-customizer.php:985
+#: includes/customizer/trackship-customizer.php:957
+#: includes/customizer/trackship-customizer.php:997
 msgid "You are customizing"
 msgstr "أنت تقوم بالتخصيص"
 
@@ -1316,7 +1364,7 @@ msgstr ""
 "يمكنك تحرير موفر خدمة الرسائل القصيرة من SMS لـ WooCommerce٪ 1 $ ssettings٪ "
 "2 $ s"
 
-#: includes/class-wc-trackship-front.php:403
+#: includes/class-wc-trackship-front.php:395
 msgid "You have been unsubscribed from shipment status emails."
 msgstr "لقد تم إلغاء اشتراكك من رسائل البريد الإلكتروني الخاصة بحالة الشحن."
 
@@ -1330,12 +1378,12 @@ msgstr ""
 "يجب أن يكون لديك المكون الإضافي٪ 1 $ s لتتبع الشحن٪ 2 $ s مثبتًا لاستخدام "
 "TrackShip لـ WooCommerce."
 
-#: includes/class-wc-trackship-front.php:378
+#: includes/class-wc-trackship-front.php:370
 msgid ""
 "Your order is being processed, the tracking details will be available once "
 "it's Shipped."
 msgstr "تتم معالجة طلبك ، وستتوفر تفاصيل التتبع بمجرد شحنه."
 
-#: includes/class-wc-trackship-actions.php:181
+#: includes/class-wc-trackship-actions.php:182
 msgid "Your settings have been successfully saved."
 msgstr "أعداداتك قد حفظت بنجاح."
