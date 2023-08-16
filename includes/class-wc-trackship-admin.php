@@ -229,8 +229,6 @@ class WC_Trackship_Admin {
 			add_submenu_page( 'trackship-dashboard', 'Logs', __( 'Logs', 'trackship-for-woocommerce' ), apply_filters( 'trackship_logs_menu_capabilities', 'manage_woocommerce' ), 'trackship-logs', array( $this, 'logs_page_callback' ) );
 			
 			add_submenu_page( 'trackship-dashboard', 'Analytics', __( 'Analytics', 'trackship-for-woocommerce' ), 'manage_woocommerce', 'trackship-analytics', array( $this, 'analytics_page_callback' ) );
-			
-			add_submenu_page( 'trackship-dashboard', 'Tools', __( 'Tools', 'trackship-for-woocommerce' ), apply_filters( 'trackship_tools_menu_capabilities', 'manage_woocommerce' ), 'trackship-tools', array( $this, 'tools_page_callback' ) );
 
 			add_submenu_page( 'trackship-dashboard', 'Settings', __( 'Settings', 'trackship-for-woocommerce' ), apply_filters( 'trackship_settings_menu_capabilities', 'manage_woocommerce' ), 'trackship-for-woocommerce', array( $this, 'settings_page_callback' ) );
 		}
@@ -286,24 +284,6 @@ class WC_Trackship_Admin {
 		<?php
 	}
 
-	/*
-	* callback for Shipment
-	*/
-	public function tools_page_callback() {
-		?>
-		<div class="zorem-layout">
-			<?php include 'views/header2.php'; ?>
-			<div class="trackship_admin_content">
-				<section id="content_trackship_tools" style="display:block" class="inner_tab_section">
-					<div class="tab_inner_container">
-						<?php include 'views/tools.php'; ?>
-					</div>
-				</section>
-			</div>
-		</div>
-		<?php
-	}
-	
 	/*
 	* callback for Dashboard
 	*/
@@ -720,7 +700,7 @@ class WC_Trackship_Admin {
 						<?php } ?>
 					</li>					
 				<?php } else if ( 'multiple_select' == $array['type'] ) { ?>
-					<li class="multiple_select_li">
+					<li class="multiple_select_li dis_block">
 						<label><?php esc_html_e( $array['title'] ); ?>
 							<?php if ( isset($array['tooltip']) ) { ?>
 								<span class="woocommerce-help-tip tipTip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
@@ -769,7 +749,7 @@ class WC_Trackship_Admin {
 							</label>
 						<?php } ?>
 						<?php if ( isset($array['customize_link']) ) { ?>
-							<a href="<?php echo esc_url( $array['customize_link'] ); ?>" class="button-primary btn_ts_sidebar ts_customizer_btn"><?php esc_html_e( 'Customize the Tracking Widget', 'trackship-for-woocommerce' ); ?></a>	
+							<a href="<?php echo esc_url( $array['customize_link'] ); ?>" target="_blank" class="button-primary btn_ts_sidebar ts_customizer_btn"><?php esc_html_e( 'Customize the Tracking Widget', 'trackship-for-woocommerce' ); ?></a>	
 						<?php } ?>	
 					</li>	
 				<?php } elseif ( isset( $array['type'] ) && 'dropdown' == $array['type'] ) { ?>
@@ -840,7 +820,7 @@ class WC_Trackship_Admin {
 				'type'		=> 'multiple_select',
 				'title'		=> __( 'Order statuses to trigger TrackShip ', 'trackship-for-woocommerce' ),
 				'tooltip'	=> __( 'Choose on which order emails to include the shipment tracking info', 'trackship-for-woocommerce' ),
-				'options'   => $status_array,					
+				'options'   => $status_array,
 				'show'		=> true,
 				'class'     => '',
 			),
@@ -848,7 +828,14 @@ class WC_Trackship_Admin {
 				'type'		=> 'tgl_checkbox',
 				'title'		=> __( 'Enable a shipment status filter on orders admin', 'trackship-for-woocommerce' ),				
 				'show'		=> true,
-				'class'     => '',				
+				'class'     => '',
+			),
+			'enable_email_widget' => array(
+				'type'		=> 'tgl_checkbox',
+				'title'		=> __( 'Enable unsubscribe (opt-out) from Shipment status notifications', 'trackship-for-woocommerce' ),				
+				'show'		=> true,
+				'class'		=> '',
+				'tooltip'	=> __( 'Allow users to opt-out of receiving Shipment status notifications on the Tracking page and Shipment status emails.', 'trackship-for-woocommerce' ),
 			),
 		);
 
