@@ -134,17 +134,17 @@ class TS4WC_Admin_Customizer {
 										<option value="<?php echo esc_html( $key ); ?>" <?php echo $preview_id == $key ? 'selected' : ''; ?>><?php echo esc_html( $label ); ?></option>
 									<?php } ?>
 								</select>
-								<span class="tgl-btn-parent" style="margin: 0 10px;">
+								<span class="tgl-btn-parent" style="margin: 20px;float: right;">
 									<?php foreach ( $shipment_status as $key => $value ) { ?>
 										<span class="tgl_<?php esc_attr_e( $key ); ?>" <?php echo $shipmentStatus == $key ? '' : 'style="display:none;"'; ?>>
 											<?php $slug_status = str_replace( '_', '',$key ); ?>
 											<?php $slug_status = 'delivered' == $slug_status ? 'delivered_status' : $slug_status; ?>
 											<?php $id =  'wcast_enable_' . $slug_status . '_email'; ?>
 											<?php $enable_email = $this->get_value( 'wcast_' . $slug_status . '_email_settings', $id, $slug_status ); ?>
+											<label style="vertical-align: middle;" for="<?php esc_attr_e( $id ); ?>"><?php esc_html_e( 'Enable email', 'trackship-for-woocommerce' ); ?></label>
 											<input type="hidden" name="<?php esc_attr_e( $id ); ?>" value="0">
 											<input type="checkbox" id="<?php esc_attr_e( $id ); ?>" name="<?php esc_attr_e( $id ); ?>" class="tgl tgl-flat" <?php echo $enable_email ? 'checked' : ''; ?> value="1">
-											<label class="tgl-btn" for="<?php esc_attr_e( $id ); ?>"></label>
-											<label for="<?php esc_attr_e( $id ); ?>"><?php esc_html_e( 'Enable email', 'trackship-for-woocommerce' ); ?></label>
+											<label style="vertical-align: middle;" class="tgl-btn" for="<?php esc_attr_e( $id ); ?>"></label>
 										</span>
 									<?php } ?>
 								</span>
@@ -543,6 +543,15 @@ class TS4WC_Admin_Customizer {
 				'min'		=> 0,
 				'max'		=> 10,
 			),
+			'shipping_provider_logo' => array(
+				'title'		=> esc_html__( 'Display Shipping provider logo', 'trackship-for-woocommerce' ),
+				'default'	=> $shipping_provider_logo,
+				'type'		=> 'checkbox',
+				'option_name'=> 'shipment_email_settings',
+				'option_type'=> 'array',
+				'show'		=> true,
+				'class'		=> 'ts4wc_provider_logo',
+			),
 			// Tracking Page Settings
 			'heading5'	=> array(
 				'id'	=> 'widget_style',
@@ -837,7 +846,7 @@ class TS4WC_Admin_Customizer {
 			);
 			$settings[ 'codeinfoblock '. $key ] = array(
 				'title'    => esc_html__( 'Available placeholders:', 'trackship-for-woocommerce' ),
-				'default'  => '<code>{customer_first_name}<br>{customer_last_name}<br>{site_title}<br>{order_number}<br>{customer_company_name}<br>{customer_username}<br>{customer_email}<br>{est_delivery_date}</code>',
+				'default'  => array('{customer_first_name}', '{customer_last_name}', '{site_title}', '{order_number}', '{customer_company_name}', '{customer_username}', '{customer_email}', '{est_delivery_date}'),
 				'type'     => 'codeinfo',
 				'show'     => true,
 				'class'		=> $value . '_sub_menu all_status_submenu',
@@ -923,15 +932,15 @@ class TS4WC_Admin_Customizer {
 			'required' 	=> 'pro',
 			'plan'		=> in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ),
 		);
-		$settings[ 'shipping_provider_logo' ] = array(
-			'title'		=> esc_html__( 'Display Shipping provider logo', 'trackship-for-woocommerce' ),
-			'default'	=> $shipping_provider_logo,
-			'type'		=> 'checkbox',
-			'option_name'=> 'shipment_email_settings',
-			'option_type'=> 'array',
-			'show'		=> true,
-			'class'		=> 'ts4wc_provider_logo',
-		);
+		// $settings[ 'shipping_provider_logo' ] = array(
+		// 	'title'		=> esc_html__( 'Display Shipping provider logo', 'trackship-for-woocommerce' ),
+		// 	'default'	=> $shipping_provider_logo,
+		// 	'type'		=> 'checkbox',
+		// 	'option_name'=> 'shipment_email_settings',
+		// 	'option_type'=> 'array',
+		// 	'show'		=> true,
+		// 	'class'		=> 'ts4wc_provider_logo',
+		// );
 		return $settings;
 	}
 
@@ -1058,7 +1067,13 @@ class TS4WC_Admin_Customizer {
 								</div>
 							<?php } else if ( isset($array['type']) && $array['type'] == 'codeinfo' ) { ?>
 								<div class="menu-sub-field">
-									<span class="menu-sub-codeinfo <?php esc_html_e($array['type']); ?>"><?php echo isset($array['default']) ? wp_kses_post($array['default']) : ''; ?></span>
+									<span class="menu-sub-codeinfo <?php esc_html_e($array['type']); ?>">
+										<?php
+										foreach ( $array['default'] as $place_key => $placeholder ) {
+											echo '<span class="email_placeholder" data-clipboard-text="' . $placeholder . '">' . $placeholder . '</span>';
+										}
+										?>
+									</span>
 								</div>
 							<?php } else if ( isset($array['type']) && $array['type'] == 'select' ) { ?>
 								<div class="menu-sub-field">
