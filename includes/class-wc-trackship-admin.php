@@ -288,6 +288,10 @@ class WC_Trackship_Admin {
 	* callback for Dashboard
 	*/
 	public function dashboard_page_callback() {
+		$database_upg = isset( $_GET['trackship-database-upgrade'] ) ? sanitize_text_field( $_GET['trackship-database-upgrade'] ) : '';
+		if ( 'true' == $database_upg ) {
+			trackship_for_woocommerce()->ts_install->update_database_check();
+		}
 		?>
 		<div class="zorem-layout">
 			<?php
