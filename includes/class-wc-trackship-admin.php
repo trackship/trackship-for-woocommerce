@@ -1308,11 +1308,19 @@ class WC_Trackship_Admin {
 			$order->update_meta_data( 'shipment_events_deleted', 1 );
 			$order->save();
 		}
-		$json = array(
-			'order_count' => $query->post_count,
-			'found_orders' => $query->found_posts
-		);
-		wp_send_json($json);
+
+		global $wpdb;
+		$shipment_table = $wpdb->prefix . 'trackship_shipment';
+		$shipment_meta = $wpdb->prefix . 'trackship_shipment_meta';
+		$query = "
+			UPDATE {$shipment_meta} meta
+			JOIN {$shipment_table} shipment ON shipment.id = meta.meta_id
+			SET meta.tracking_events = NULL
+			WHERE shipment_status LIKE ('delivered') AND shipment.shipping_date <= NOW() - INTERVAL {$days} DAY
+		";
+		
+		$response = $wpdb->query($query);
+		wp_send_json(array('success' => true, 'response' => $response));
 	}
 	
 	public function remove_trackship_logs() {
