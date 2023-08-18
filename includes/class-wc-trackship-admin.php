@@ -340,27 +340,18 @@ class WC_Trackship_Admin {
 		
 		global $wpdb;
 		$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
-		$total_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row1 WHERE shipping_date BETWEEN %s AND %s", $start_date, $end_date ) );
-		$active_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row1 WHERE (shipment_status NOT LIKE ( %s ) OR pending_status IS NOT NULL) AND shipping_date BETWEEN %s AND %s", '%delivered%', $start_date, $end_date ) );
-		$delivered_shipment = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row1 WHERE shipment_status LIKE ( %s ) AND shipping_date BETWEEN %s AND %s", '%delivered%', $start_date, $end_date ) );
-		$tracking_issues = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$woo_trackship_shipment} AS row1	
-			WHERE
-				((shipment_status NOT LIKE ( %s )
-				AND shipment_status NOT LIKE ( %s )
-				AND shipment_status NOT LIKE ( %s )
-				AND shipment_status NOT LIKE ( %s )
-				AND shipment_status NOT LIKE ( %s )
-				AND shipment_status NOT LIKE ( %s )
-				AND shipment_status NOT LIKE ( %s ))
-				OR pending_status IS NOT NULL)
-				AND shipping_date BETWEEN %s AND %s
-		", '%delivered%', '%pre_transit%', '%in_transit%','%out_for_delivery%', '%return_to_sender%', '%available_for_pickup%', '%exception%', $start_date, $end_date ) );
 		
-		$result['total_shipment']		= $total_shipment;
-		$result['active_shipment']		= $active_shipment;
-		$result['delivered_shipment']	= $delivered_shipment;
-		$result['tracking_issues']		= $tracking_issues;
-		
+		$query = $wpdb->prepare("
+		SELECT
+			SUM( IF( shipping_date BETWEEN %s AND %s, 1, 0 ) ) as total_shipment,
+			SUM( IF( (shipment_status NOT LIKE 'delivered' OR pending_status IS NOT NULL) AND shipping_date BETWEEN %s AND %s, 1, 0 ) ) as active_shipment,
+			SUM( IF( (shipment_status LIKE 'delivered' OR pending_status IS NOT NULL) AND shipping_date BETWEEN %s AND %s, 1, 0 ) ) as delivered_shipment,
+			SUM( IF((shipment_status NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' ) OR pending_status IS NOT NULL) AND shipping_date BETWEEN %s AND %s, 1, 0) ) as tracking_issues
+			FROM {$woo_trackship_shipment} AS row1",
+			$start_date, $end_date, $start_date, $end_date, $start_date, $end_date, $start_date, $end_date
+		);
+
+		$result = $wpdb->get_row($query, ARRAY_A);
 		wp_send_json($result);
 	}
 	
@@ -885,7 +876,6 @@ class WC_Trackship_Admin {
 			'limit'	 => 100,
 			'date_created' => '>' . ( time() - 2592000 ),
 		);
-		
 		$orders = wc_get_orders( $args );
 		
 		$completed_order_with_tracking = 0;
