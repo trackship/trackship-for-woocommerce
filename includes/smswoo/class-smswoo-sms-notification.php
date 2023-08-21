@@ -36,7 +36,7 @@ class tswc_smswoo_sms_notification {
 	 * Get the class instance
 	 *
 	 * @since  1.0
-	 * @return WC_Advanced_Shipment_Tracking_Admin
+	 * @return tswc_smswoo_sms_notification
 	*/
 	public static function get_instance() {
 
@@ -69,7 +69,7 @@ class tswc_smswoo_sms_notification {
 	 * @param string $message raw SMS message to replace with variable info
 	 * @return string message with variables replaced with indicated values
 	 */
-	private function replace_message_variables( $message ) {
+	public function replace_message_variables( $message ) {
 
 		$replacements = array(
 			'%shop_name%'       => get_bloginfo( 'name' ),
@@ -222,9 +222,9 @@ class tswc_smswoo_sms_notification {
 			$this->_country_code	= ! empty( $customer_country ) ? $customer_country : $shop_country;
 			$this->_calling_code = $this->get_calling_code( $this->_country_code );
 
-			$phone          = $this->format_phone_number( $phone );
-			//$message        = mb_substr( $message, 0, $sms_limit );
-			$status_message = __( 'Sent', 'trackship-for-woocommerce' );
+			$phone				= $this->format_phone_number( $phone );
+			//$message			= mb_substr( $message, 0, $sms_limit );
+			$status_message		= __( 'Sent', 'trackship-for-woocommerce' );
 			$sms_gateway->send( $phone, $message, $this->_country_code );
 			$success = true;
 
