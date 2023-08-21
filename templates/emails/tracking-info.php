@@ -125,6 +125,9 @@ if ( $tracking_items ) :
 		.ts4wc_provider_logo {
 			display: <?php echo $shipping_provider_logo ? 'inline-block' : 'none'; ?>;
 		}
+		.tracking_widget_email.trackship_branding {
+			display: <?php echo $email_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? 'block' : 'none'; ?>;
+		}
 	<?php } ?>
 	#ts-email-widget-wrapper{max-width: 500px;margin: 50px auto;font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;font-size: 14px;line-height: 150%;}
 	.tracker-progress-bar .progress {
@@ -168,7 +171,6 @@ if ( $tracking_items ) :
 	.tracking_widget_email.trackship_branding {
 		text-align: center;
 		border-top: 1px solid <?php echo esc_html( $border_color ); ?>;
-		display: <?php echo $email_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? 'block' : 'none'; ?>;;
 	}
 	.shipment_status {font-size: 24px;margin: 10px 0;display: inline-block;color: #333;vertical-align: middle;font-weight:500;}
 	.mb-0{margin:0;}

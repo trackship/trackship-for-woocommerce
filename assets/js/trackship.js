@@ -774,7 +774,7 @@ jQuery(document).on("click", ".tracking-event-delete-notice .bulk_shipment_statu
 		type: 'POST',
 		dataType: "json",
 		success: function (response) {
-			jQuery(document).trackship_snackbar('Tracking event deleted for ' + response.order_count + ' orders out of ' + response.found_orders + ' orders');
+			jQuery(document).trackship_snackbar('Tracking events deleted');
 		},
 		error: function (response) {
 			var warning_msg = '';
