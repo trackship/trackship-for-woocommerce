@@ -50,7 +50,7 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 		 * @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
 		 */
 		public function send( $to_phone, $message, $country_code ) {
-			
+
 			$to_phone = str_replace( '+', '', $to_phone );
 
 			if ( '' != $this->_from_asid ) {
@@ -76,6 +76,8 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 			if ( get_option('smswoo_msg91_dlt') ) {
 				$template_id = get_option('smswoo_trackship_status_' . $this->new_status . '_sms_template_templete_id');
 				$template_var = get_option('smswoo_trackship_status_' . $this->new_status . '_sms_template_template_var' );
+				$sms_notification = tswc_smswoo_sms_notification::get_instance();
+				$template_var = $sms_notification->replace_message_variables($template_var);
 				$template_var = $template_var ? explode( ',',$template_var) : [];
 
 				$var = [];
