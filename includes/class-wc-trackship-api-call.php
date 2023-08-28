@@ -140,6 +140,7 @@ class WC_TrackShip_Api_Call {
 	public function get_trackship_data( $order, $tracking_number, $tracking_provider ) {
 		$user_key = get_trackship_key();
 		$domain = get_site_url();
+		$domain = apply_filters( 'trackship_for_site_url', $domain );
 		$order_id = $order->get_id();
 		$custom_order_number = $order->get_order_number();
 		
@@ -183,7 +184,8 @@ class WC_TrackShip_Api_Call {
 	public function delete_tracking_number_from_trackship( $order_id, $tracking_number, $tracking_provider ) {
 		$user_key = get_trackship_key();
 		$domain = get_site_url();
-		
+		$domain = apply_filters( 'trackship_for_site_url', $domain );
+
 		$url = 'https://my.trackship.com/api/shipment/delete';
 		
 		$args['body'] = array(
