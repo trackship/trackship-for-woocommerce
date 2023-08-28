@@ -185,7 +185,7 @@ jQuery(document).ready(function() {
 		var active_status = jQuery( "#shipment_status" ).val();
 		jQuery(document).show_popup();
 		$table.ajax.reload();
-		if ( active_provider != 'all_ship' ) {
+		if ( active_provider != 'all' ) {
 			jQuery('.filter_data.provider_filter').show();
 			jQuery('.filters_div').show();
 			jQuery('.provider_name').text(jQuery('#shipping_provider option:selected').text());
