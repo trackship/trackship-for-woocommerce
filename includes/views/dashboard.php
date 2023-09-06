@@ -148,11 +148,6 @@ $store_url = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active
 						<span class="dashicons dashicons-arrow-right-alt2"></span>
 					</a>
 				</div>
-				<div class="ts_connected_status">
-					<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/ts-status.png">
-					<div class="ts_plan_details"><span class="check_status"><a href="https://my.trackship.com/connected-stores/" target="_blank"><?php esc_html_e( 'Check Status', 'trackship-for-woocommerce' ); ?></a></span></div>
-					<span class="ts_plan_details_bottom"><?php esc_html_e( 'Connection Status', 'trackship-for-woocommerce' ); ?></span>
-				</div>
 			</div>
 		</div>
 		<h3><?php esc_html_e( 'Action Needed', 'trackship-for-woocommerce' ); ?></h3>
