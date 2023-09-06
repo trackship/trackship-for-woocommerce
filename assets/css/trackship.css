@@ -1869,25 +1869,19 @@ span.fullfillment_status {
 	border: 0;
 }
 .fullfillment_dashboard .fullfillment_dashboard_status {
-	background: #fff;
-	border: 1px solid #e0e0e0;
 	margin-bottom: 15px;
 	font-size: 14px;
 	color: #3c4758;
 }
 .ts_billing_plan_status {
 	display: grid;
-	grid-template-columns: auto auto auto;
-	margin: 25px;
-}
-.ts_billing_plan_status {
-	display: grid;
-	grid-template-columns: auto auto auto;
-	margin: 25px;
+	grid-template-columns: auto auto;
 	column-gap: 20px;
 }
 .ts_tracker_balance, .ts_subscription {
-	border-right: 1px solid #e0e0e0;
+	padding: 25px;
+	background: #fff;
+	border: 1px solid #e0e0e0;
 }
 .ts_plan_details {
 	font-size: 20px;
@@ -1921,12 +1915,6 @@ span.ts_plan_details_bottom {
 	padding: 20px;
 	font-size: 16px;
 	color: #6e708c;
-}
-span.check_status {
-	font-size: 15px;
-	border: 1px solid #124fd6;
-	padding: 6px 15px;
-	border-radius: 3px;
 }
 .fullfillment_dashboard_status .btn_large {
 	margin: 0 20px 20px;
