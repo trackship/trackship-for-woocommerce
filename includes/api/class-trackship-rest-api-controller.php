@@ -126,39 +126,69 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		
 		//check which shipment tracking plugin active
 		$plugin = 'tswc';
+		$version_info = [];
 		
 		if ( is_plugin_active( 'woo-advanced-shipment-tracking/woocommerce-advanced-shipment-tracking.php' ) ) {
 			$plugin.= '-ast-free';
+			$version_info['ast-free-version'] = wc_advanced_shipment_tracking()->version;
 		}
 
 		if ( is_plugin_active( 'ast-pro/ast-pro.php' ) ) {
 			$plugin.= '-ast-pro';
+			$version_info['ast-pro-version'] = ast_pro()->version;
 		}
 		
 		if ( trackship_for_woocommerce()->is_st_active() ) {
 			$plugin.= '-st';
+			$version_info['st-version'] = WC_SHIPMENT_TRACKING_VERSION;
 		}
 
 		if ( is_plugin_active( 'yith-woocommerce-order-tracking/init.php' ) ) {
 			$plugin.= '-yith-free';
+			$version_info['yith-free-version'] = YITH_YWOT_VERSION;
 		}
 
 		if ( is_plugin_active( 'yith-woocommerce-order-tracking-premium/init.php' ) ) {
 			$plugin.= '-yith-pro';
+			$version_info['yith-pro-version'] = YITH_YWOT_VERSION;
 		}
 
 		if ( is_plugin_active( 'woo-orders-tracking/woo-orders-tracking.php' ) ) {
 			$plugin.= '-wot-free';
+			$version_info['wot-free-version'] = VI_WOO_ORDERS_TRACKING_VERSION;
 		}
 
 		if ( is_plugin_active( 'woocommerce-orders-tracking/woocommerce-orders-tracking.php' ) ) {
 			$plugin.= '-wot-pro';
+			$version_info['wot-pro-version'] = VI_WOOCOMMERCE_ORDERS_TRACKING_VERSION;
 		}
 		
+		$database_version	= wc_get_server_database_version();
+
+		global $wpdb;
+		$shipment = $wpdb->prefix . 'trackship_shipment';
+		$shipment_structure = $wpdb->get_results("DESCRIBE $shipment");
+		$shipment_meta = $wpdb->prefix . 'trackship_shipment_meta';
+		$shipment_meta_structure = $wpdb->get_results("DESCRIBE $shipment_meta");
+		$shipping_provider = $wpdb->prefix . 'trackship_shipping_provider';
+		$shipping_provider_structure = $wpdb->get_results("DESCRIBE $shipping_provider");
+
+		$server_info = array(
+			'phpversion' => PHP_VERSION,
+			'SERVER_SOFTWARE' => isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '',
+			'mysql_version' => $database_version['number'],
+			'trackship_shipment' => $shipment_structure ? $shipment_structure : 'Table does not exist',
+			'trackship_shipment_meta' => $shipment_meta_structure ? $shipment_meta_structure : 'Table does not exist',
+			'trackship_shipping_provider' => $shipping_provider_structure ? $shipping_provider_structure : 'Table does not exist',
+		);
+
 		$data = array(
-			'status' => 'installed',
-			'plugin' => $plugin,
-			'version'=> trackship_for_woocommerce()->version
+			'status'		=> 'installed',
+			'plugin'		=> $plugin,
+			'version'		=> trackship_for_woocommerce()->version,
+			'execution_time'=> microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'],
+			'server_info'	=> $server_info,
+			'version_info'	=> $version_info
 		);
 		return rest_ensure_response( $data );
 	}
@@ -190,6 +220,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			);
 			return rest_ensure_response( $data );
 		}
+		$query = [];
 		
 		foreach ( ( array ) $tracking_items as $key => $tracking_item ) {
 			if ( trim( $tracking_item['tracking_number'] ) != trim($tracking_number) ) {
@@ -238,7 +269,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 				'destination_events'	=> json_encode($tracking_destination_events),
 			);
 			$args['est_delivery_date'] = $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : null;
-			trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_item['tracking_number'], $args, $args2 );
+			$query = trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_item['tracking_number'], $args, $args2 );
 			
 			$order->update_meta_data( 'ts_shipment_status', $ts_shipment_status );
 			$order->save();
@@ -261,7 +292,9 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		$trackship->check_tracking_delivered( $order_id );
 		
 		$data = array(
-			'status' => 'success'
+			'status' => 'success',
+			'execution_time' => microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'],
+			'data' => $query,
 		);
 		
 		return rest_ensure_response( $data );

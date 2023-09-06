@@ -1560,6 +1560,11 @@ class WC_Trackship_Actions {
 		$shipment_table = $wpdb->prefix . 'trackship_shipment';
 		$shipment_meta = $wpdb->prefix . 'trackship_shipment_meta';
 		$row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $shipment_table WHERE order_id = %d AND tracking_number = %s", $order_id, $tracking_number ) );
+		$query = [];
+		
+		$logger = wc_get_logger();
+		$context = array( 'source' => 'trackship_database_update_error' );
+		
 		if ( $row ) {
 			//update
 			// main table
@@ -1568,14 +1573,24 @@ class WC_Trackship_Actions {
 					'order_id'			=> $order_id,
 					'tracking_number'	=> $tracking_number,
 				);
-				$wpdb->update( $shipment_table, $args, $where );
+				$query['shipment_update'] = $wpdb->update( $shipment_table, $args, $where );
+				if ( false === $query['shipment_update'] ) {
+					$query['shipment_meta_update_error'] = $wpdb->last_error;
+					$content = print_r( $wpdb->last_error . ' for the Query ' . $wpdb->last_query, true);
+					$logger->error( "trackship_database_update_error \n" . $content . "\n", $context );
+				}
 			}
 			//meta table
 			if ( $args2 ) {
 				$where2 = array(
 					'meta_id' => $row->id,
 				);
-				$wpdb->update( $shipment_meta, $args2, $where2 );
+				$query['shipment_meta_update'] = $wpdb->update( $shipment_meta, $args2, $where2 );
+				if ( false === $query['shipment_meta_update'] ) {
+					$query['shipment_meta_update_error'] = $wpdb->last_error;
+					$content = print_r( $wpdb->last_error . ' for the Query ' . $wpdb->last_query, true);
+					$logger->error( "trackship_database_update_error \n" . $content . "\n", $context );
+				}
 			}
 
 		} else {
@@ -1585,7 +1600,12 @@ class WC_Trackship_Actions {
 			$args['order_number'] =  wc_get_order( $order_id )->get_order_number();
 			$args['tracking_number'] = $tracking_number;
 			$args['shipping_date'] = date('Y-m-d');
-			$wpdb->insert( $shipment_table, $args );
+			$query['shipment_insert'] = $wpdb->insert( $shipment_table, $args );
+			if ( false === $query['shipment_insert'] ) {
+				$query['shipment_meta_update_error'] = $wpdb->last_error;
+				$content = print_r( $wpdb->last_error . ' for the Query ' . $wpdb->last_query, true);
+				$logger->error( "trackship_database_update_error \n" . $content . "\n", $context );
+			}
 			$id = $wpdb->insert_id;
 
 			if ( $id ) {
@@ -1593,9 +1613,17 @@ class WC_Trackship_Actions {
 				$data2 = [
 					'meta_id'	=> $id
 				];
-				$wpdb->insert( $shipment_meta, $data2 );
+				$query['shipment_meta_insert'] = $wpdb->insert( $shipment_meta, $data2 );
+				if ( false === $query['shipment_meta_insert'] ) {
+					$query['shipment_meta_update_error'] = $wpdb->last_error;
+					$content = print_r( $wpdb->last_error . ' for the Query ' . $wpdb->last_query, true);
+					$logger->error( "trackship_database_update_error \n" . $content . "\n", $context );
+				}
 			}
 		}
+
+
+		return $query;
 		
 	}
 	
