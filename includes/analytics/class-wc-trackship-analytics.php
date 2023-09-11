@@ -47,9 +47,26 @@ class WC_Trackship_Analytics {
 	}
 	
 	public function add_ts_analytics_menu( $report_pages ) {
+		?>
+		<style>
+			trackship-icon {
+				content: "";
+				display: inline-block;
+				height: 15px;
+				width: 18px;
+				background-image: url( <?php echo trackship_for_woocommerce()->plugin_dir_url() . 'includes/analytics/assets/ts.svg'; ?> );
+				background-size: contain;
+				background-repeat: no-repeat;
+				background-position: center;
+				filter: invert(100%);
+				margin-right: 0.5em;
+				vertical-align: text-bottom;
+			}
+		</style>
+		<?php
 		$report_pages[] = array(
 			'id' => 'trackship-analytics',
-			'title' => __('Shipping & Delivery', 'trackship-for-woocommerce'),
+			'title' => '<trackship-icon aria-label="TrackShip"></trackship-icon>' . __('Shipping & Delivery', 'trackship-for-woocommerce'),
 			'parent' => 'woocommerce-analytics',
 			'path' => '/analytics/trackship-analytics',
 		);
