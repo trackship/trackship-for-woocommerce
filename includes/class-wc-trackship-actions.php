@@ -1222,14 +1222,14 @@ class WC_Trackship_Actions {
 		
 		if ( isset( $array_data[$key] ) ) {
 			$value = $array_data[$key];	
-		}					
+		}
 		
 		if ( '' == $value ) {
 			$value = $default_value;
 		}
 		return $value;
 	}
-	
+
 	/*
 	* Return checkbox option value for customizer
 	*/
@@ -1238,12 +1238,12 @@ class WC_Trackship_Actions {
 		$value = '';
 		
 		if ( isset( $array_data[$key] ) ) {
-			$value = $array_data[$key];				
+			$value = $array_data[$key];			
 			return $value;
 		}							
 		if ( '' == $value ) {
 			$value = $default_value;
-		}		
+		}
 		return $value;
 	}
 	

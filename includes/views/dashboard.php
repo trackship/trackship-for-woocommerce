@@ -2,6 +2,13 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+if ( !get_trackship_settings( 'wc_admin_notice', '') ) {
+	trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_pro();
+	trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_review();
+	update_trackship_settings( 'wc_admin_notice', 'true');
+}
+
 global $wpdb;
 $woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
 
