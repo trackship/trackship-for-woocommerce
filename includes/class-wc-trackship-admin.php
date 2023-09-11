@@ -47,6 +47,7 @@ class WC_Trackship_Admin {
 		add_action( 'wp_ajax_add_trackship_mapping_row', array( $this, 'add_trackship_mapping_row' ) );
 		add_action( 'wp_ajax_remove_tracking_event', array( $this, 'remove_tracking_event' ) );
 		add_action( 'wp_ajax_remove_trackship_logs', array( $this, 'remove_trackship_logs' ) );
+		add_action( 'wp_ajax_verify_database_table', array( $this, 'verify_database_table' ) );
 		add_action( 'wp_ajax_trackship_mapping_form_update', array( $this, 'trackship_custom_mapping_form_update') );
 		add_filter( 'convert_provider_name_to_slug', array( $this, 'detect_custom_mapping_provider') );	
 		add_action( 'wp_ajax_ts_late_shipments_email_form_update', array( $this, 'ts_late_shipments_email_form_update_callback' ) );
@@ -1335,6 +1336,18 @@ class WC_Trackship_Admin {
 				FROM {$log_table}
 			WHERE ( `type` = 'Email' OR `sms_type` = 'shipment_status' ) AND `date` < NOW() - INTERVAL 30 DAY;
 		");
+		wp_send_json( array( 'success' => 'true' ) );
+	}
+
+	public function verify_database_table() {
+		check_ajax_referer( 'wc_ast_tools', 'security' );
+
+		$install = trackship_for_woocommerce()->ts_install;
+		$install->create_shipment_table();
+		$install->create_shipment_meta_table();
+		$install->create_email_log_table();
+		$install->check_column_exists();
+
 		wp_send_json( array( 'success' => 'true' ) );
 	}
 
