@@ -132,6 +132,15 @@ class WC_Trackship_Install {
 			$wpdb->query("ALTER TABLE $shipment_meta_table MODIFY COLUMN shipping_service varchar(60);");
 			update_option( 'trackship_db', '1.18' );
 		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.19', '<' ) ) {
+			global $wpdb;
+			$shipment_table = $this->shipment_table;
+			$log_table = $this->log_table;
+			$wpdb->query("ALTER TABLE $shipment_table MODIFY COLUMN order_number varchar(40);");
+			$wpdb->query("ALTER TABLE $log_table MODIFY COLUMN order_number varchar(40);");
+			update_option( 'trackship_db', '1.19' );
+		}
 	}
 
 	public function update_trackship_providers() {
@@ -202,7 +211,7 @@ class WC_Trackship_Install {
 			$sql = "CREATE TABLE $log_table (
 				`id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
 				`order_id` BIGINT(20) ,
-				`order_number` VARCHAR(20) ,
+				`order_number` VARCHAR(40) ,
 				`user_id` BIGINT(20) ,
 				`tracking_number` VARCHAR(50) ,
 				`date` DATETIME NOT NULL,
@@ -238,7 +247,7 @@ class WC_Trackship_Install {
 			$sql = "CREATE TABLE $woo_trackship_shipment (
 				`id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
 				`order_id` BIGINT(20) ,
-				`order_number` VARCHAR(20) ,
+				`order_number` VARCHAR(40) ,
 				`tracking_number` VARCHAR(80) ,
 				`shipping_provider` VARCHAR(50) ,
 				`shipment_status` VARCHAR(30) ,
@@ -303,7 +312,7 @@ class WC_Trackship_Install {
 		$shipment_table = array(
 			'id'					=> ' BIGINT(20) NOT NULL AUTO_INCREMENT',
 			'order_id'				=> ' BIGINT(20)',
-			'order_number'			=> ' VARCHAR(20)',
+			'order_number'			=> ' VARCHAR(40)',
 			'tracking_number'		=> ' VARCHAR(80)',
 			'shipping_provider'		=> ' VARCHAR(50)',
 			'shipment_status'		=> ' VARCHAR(30)',
@@ -345,7 +354,7 @@ class WC_Trackship_Install {
 		$log_table = array( 
 			'id' => ' BIGINT(20) NOT NULL AUTO_INCREMENT',
 			'order_id' => ' BIGINT(20)',
-			'order_number' => ' VARCHAR(20)',
+			'order_number' => ' VARCHAR(40)',
 			'user_id' => ' BIGINT(20)',
 			'tracking_number' => ' VARCHAR(50)',
 			'date' => ' DATETIME NOT NULL',

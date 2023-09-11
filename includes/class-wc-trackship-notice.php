@@ -50,7 +50,7 @@ class WC_TrackShip_Admin_notice {
 		add_action( 'admin_notices', array( $this, 'trackship_upgrade_notice' ) );
 
 		// Database update notice
-		if ( version_compare( get_option( 'trackship_db' ), '1.18', '<' ) ) {
+		if ( version_compare( get_option( 'trackship_db' ), '1.19', '<' ) ) {
 			add_action( 'admin_notices', array( $this, 'trackship_database_notice' ) );
 		}
 	}
