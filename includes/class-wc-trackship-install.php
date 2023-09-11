@@ -57,11 +57,6 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.0' );
 		}
 
-		if ( version_compare( get_option( 'trackship_db' ), '1.5', '<' ) ) {
-			trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_pro();
-			update_option( 'trackship_db', '1.5' );
-		}
-		
 		if ( version_compare( get_option( 'trackship_db' ), '1.6', '<' ) ) {
 			
 			$border_color = get_option('wc_ast_select_border_color', '#cccccc' );
@@ -139,6 +134,8 @@ class WC_Trackship_Install {
 			$log_table = $this->log_table;
 			$wpdb->query("ALTER TABLE $shipment_table MODIFY COLUMN order_number varchar(40);");
 			$wpdb->query("ALTER TABLE $log_table MODIFY COLUMN order_number varchar(40);");
+
+			update_trackship_settings( 'trackship_db', '1.19' );
 			update_option( 'trackship_db', '1.19' );
 		}
 	}
