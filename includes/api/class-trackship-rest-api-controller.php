@@ -166,6 +166,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			$plugin.= '-wot-pro';
 			$version_info['wot-pro'] = VI_WOOCOMMERCE_ORDERS_TRACKING_VERSION;
 		}
+		$version_info['trackship_settings'] = get_option( 'trackship_settings' );
 		
 		$database_version	= wc_get_server_database_version();
 

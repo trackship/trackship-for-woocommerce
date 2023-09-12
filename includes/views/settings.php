@@ -4,7 +4,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( !get_trackship_settings( 'wc_admin_notice', '') ) {
-	trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_pro();
+	if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+		trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_pro();
+	}
 	trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_review();
 	update_trackship_settings( 'wc_admin_notice', 'true');
 }

@@ -88,7 +88,8 @@ class WC_TrackShip_Admin_notice {
 		</style>	
 		<div class="notice notice-success is-dismissible trackship-dismissable-notice">
 			<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
-			<p>Enjoying TrackShip for WooCommerce? We'd love to hear your thoughts! Please take a moment to leave a review on <a href="<?php echo esc_url($url); ?>" target="_blank">WordPress.org</a>. Your feedback helps us improve and grow. Thank you for your support!</p>
+			<p><strong>Enjoying TrackShip for WooCommerce?</strong></p>
+			<p> We'd love to hear your thoughts! Please take a moment to leave a review on <a href="<?php echo esc_url($url); ?>" target="_blank">WordPress.org</a>. Your feedback helps us improve and grow. Thank you for your support!</p>
 
 			<a class="button button-primary" href="<?php echo esc_url($url); ?>" target="_blank">Review Now</a>
 			<a class="button" style="margin: 0 10px;" href="<?php echo esc_url($dismissable_url); ?>" >No thanks</a>
@@ -120,6 +121,7 @@ class WC_TrackShip_Admin_notice {
 		</style>
 		<div class="notice notice-success is-dismissible trackship-dismissable-notice">
 			<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
+			<p><strong>Supercharge Customer Experience with TrackShip for WooCommerce</strong></p>
 			<p>Upgrade your plan today to unlock premium features and maximize your tracking capabilities. Whether you choose a monthly or yearly subscription, you'll enjoy enhanced tracking benefits. Plus, get up to 2 months FREE with an annual plan! Don't miss out on this opportunity to boost your post-shipping workflow.</p>
 			<a class="button button-primary" target="_blank" href="<?php echo esc_url($url); ?>" >UPGRADE NOW</a>
 			<a class="button" style="margin: 0 10px;" href="<?php echo esc_url($dismissable_url); ?>" >No thanks</a>
@@ -141,10 +143,9 @@ class WC_TrackShip_Admin_notice {
 		}
 		</style>
 		<div class="notice notice-success trackship-dismissable-notice">
-			<p><strong>TrackShip database update required</strong></p>
-			<p>TrackShip has been updated! To keep things running smoothly, we have to update your database to the newest version.</p>
-			<p>The database update process runs in the background and may take a little while, so please be patient.</p>
-			<a class="button button-primary" href="<?php echo esc_url($url); ?>" >Update TrackShip database</a>
+			<p><strong>TrackShip's database update required</strong></p>
+			<p>TrackShip has been updated! To keep things running smoothly, we have to update your database to the newest version. The database update process runs in the background and may take a little while, so please be patient.</p>
+			<a class="button button-primary" href="<?php echo esc_url($url); ?>" >Update TrackShip's database</a>
 		</div>
 		<?php
 	}
