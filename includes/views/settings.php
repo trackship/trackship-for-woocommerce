@@ -2,6 +2,15 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+if ( !get_trackship_settings( 'wc_admin_notice', '') ) {
+	if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+		trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_pro();
+	}
+	trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_review();
+	update_trackship_settings( 'wc_admin_notice', 'true');
+}
+
 $url = 'https://my.trackship.com/api/user-plan/get/';
 $args[ 'body' ] = array(
 	'user_key' => get_trackship_key(), // Deprecated since 19-Aug-2022
