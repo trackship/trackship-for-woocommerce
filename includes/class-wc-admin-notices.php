@@ -41,7 +41,7 @@ class WC_TS4WC_Admin_Notices_Under_WC_Admin {
 		$activated_time = current_time( 'timestamp', 0 );
 		$activated_time_formatted = gmdate( 'F jS', $activated_time );
 		$note = new Automattic\WooCommerce\Admin\Notes\WC_Admin_Note();
-		$note->set_title( 'TrackShip' );
+		$note->set_title( 'Supercharge Customer Experience with TrackShip for WooCommerce' );
 		$note->set_content( "Upgrade your plan today to unlock premium features and maximize your tracking capabilities. Whether you choose a monthly or yearly subscription, you'll enjoy enhanced tracking benefits. Plus, get up to 2 months FREE with an annual plan! Don't miss out on this opportunity to boost your post-shipping workflow." );
 
 		$note->set_content_data( (object) array(
@@ -75,8 +75,8 @@ class WC_TS4WC_Admin_Notices_Under_WC_Admin {
 		$activated_time = current_time( 'timestamp', 0 );
 		$activated_time_formatted = gmdate( 'F jS', $activated_time );
 		$note = new Automattic\WooCommerce\Admin\Notes\WC_Admin_Note();
-		$note->set_title( 'TrackShip' );
-		$note->set_content( "Enjoying TrackShip for WooCommerce? We'd love to hear your thoughts! Please take a moment to leave a review on WordPress.org. Your feedback helps us improve and grow. Thank you for your support!" );
+		$note->set_title( 'Enjoying TrackShip for WooCommerce?' );
+		$note->set_content( "We'd love to hear your thoughts! Please take a moment to leave a review on WordPress.org. Your feedback helps us improve and grow. Thank you for your support!" );
 
 		$note->set_content_data( (object) array(
 			'getting_started'     => true,
