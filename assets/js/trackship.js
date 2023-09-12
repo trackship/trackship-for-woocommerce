@@ -842,6 +842,45 @@ jQuery(document).on("click", ".tracking_notification_log_delete .delete_notifica
 	return false;
 });
 
+jQuery(document).on("click", ".trackship-verify-table .verify_database_table", function () {
+	var ajax_data = {
+		action: 'verify_database_table',
+		security: jQuery('#wc_ast_tools').val()
+	};
+	jQuery.ajax({
+		url: ajaxurl,
+		data: ajax_data,
+		type: 'POST',
+		dataType: "json",
+		success: function (response) {
+			jQuery(document).trackship_snackbar('Database table verified successfully');
+		},
+		error: function (response) {
+			var warning_msg = '';
+			if (jqXHR.status === 0) {
+				warning_msg = 'Not connect.\n Verify Network.';
+			} else if (jqXHR.status === 404) {
+				warning_msg = 'Requested page not found. [404]';
+			} else if (jqXHR.status === 500) {
+				warning_msg = 'Internal Server Error [500].';
+			} else if (exception === 'parsererror') {
+				warning_msg = 'Requested JSON parse failed.';
+			} else if (exception === 'timeout') {
+				warning_msg = 'Time out error.';
+			} else if (exception === 'abort') {
+				warning_msg = 'Ajax request aborted.';
+			} else if (jqXHR.responseText === '-1') {
+				msg = 'Security check fail, please refresh and try again.';
+			} else {
+				warning_msg = 'Uncaught Error.\n' + jqXHR.responseText;
+			}
+			jQuery(document).trackship_snackbar_warning(warning_msg);
+			console.log(response);
+		}
+	});
+	return false;
+});
+
 jQuery(document).on("click", ".trackship-notice p span.dashicons", function () {
 	var date = new Date();
 	date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000));

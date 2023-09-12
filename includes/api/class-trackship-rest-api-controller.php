@@ -127,41 +127,46 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		//check which shipment tracking plugin active
 		$plugin = 'tswc';
 		$version_info = [];
+		$version_info['ts4wc'] = trackship_for_woocommerce()->version;
+		$version_info['site_url'] = get_site_url();
+		$version_info['home_url'] = get_home_url();
+		$version_info['trackship_db'] = get_option( 'trackship_db' );
 		
 		if ( is_plugin_active( 'woo-advanced-shipment-tracking/woocommerce-advanced-shipment-tracking.php' ) ) {
 			$plugin.= '-ast-free';
-			$version_info['ast-free-version'] = wc_advanced_shipment_tracking()->version;
+			$version_info['ast-free'] = wc_advanced_shipment_tracking()->version;
 		}
 
 		if ( is_plugin_active( 'ast-pro/ast-pro.php' ) ) {
 			$plugin.= '-ast-pro';
-			$version_info['ast-pro-version'] = ast_pro()->version;
+			$version_info['ast-pro'] = ast_pro()->version;
 		}
 		
 		if ( trackship_for_woocommerce()->is_st_active() ) {
 			$plugin.= '-st';
-			$version_info['st-version'] = WC_SHIPMENT_TRACKING_VERSION;
+			$version_info['st'] = WC_SHIPMENT_TRACKING_VERSION;
 		}
 
 		if ( is_plugin_active( 'yith-woocommerce-order-tracking/init.php' ) ) {
 			$plugin.= '-yith-free';
-			$version_info['yith-free-version'] = YITH_YWOT_VERSION;
+			$version_info['yith-free'] = YITH_YWOT_VERSION;
 		}
 
 		if ( is_plugin_active( 'yith-woocommerce-order-tracking-premium/init.php' ) ) {
 			$plugin.= '-yith-pro';
-			$version_info['yith-pro-version'] = YITH_YWOT_VERSION;
+			$version_info['yith-pro'] = YITH_YWOT_VERSION;
 		}
 
 		if ( is_plugin_active( 'woo-orders-tracking/woo-orders-tracking.php' ) ) {
 			$plugin.= '-wot-free';
-			$version_info['wot-free-version'] = VI_WOO_ORDERS_TRACKING_VERSION;
+			$version_info['wot-free'] = VI_WOO_ORDERS_TRACKING_VERSION;
 		}
 
 		if ( is_plugin_active( 'woocommerce-orders-tracking/woocommerce-orders-tracking.php' ) ) {
 			$plugin.= '-wot-pro';
-			$version_info['wot-pro-version'] = VI_WOOCOMMERCE_ORDERS_TRACKING_VERSION;
+			$version_info['wot-pro'] = VI_WOOCOMMERCE_ORDERS_TRACKING_VERSION;
 		}
+		$version_info['trackship_settings'] = get_option( 'trackship_settings' );
 		
 		$database_version	= wc_get_server_database_version();
 
@@ -185,10 +190,9 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		$data = array(
 			'status'		=> 'installed',
 			'plugin'		=> $plugin,
-			'version'		=> trackship_for_woocommerce()->version,
 			'execution_time'=> microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'],
+			'version_info'	=> $version_info,
 			'server_info'	=> $server_info,
-			'version_info'	=> $version_info
 		);
 		return rest_ensure_response( $data );
 	}

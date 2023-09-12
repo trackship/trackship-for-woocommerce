@@ -164,6 +164,24 @@ class WC_Trackship_Actions {
 	* Load trackship styles.
 	*/
 	public function trackship_styles( $hook ) {
+		?>
+		<style>
+			trackship-icon {
+				content: "";
+				display: inline-block;
+				height: 15px;
+				width: 18px;
+				background-image: url( <?php echo trackship_for_woocommerce()->plugin_dir_url() . 'includes/analytics/assets/ts.svg'; ?> );
+				background-size: contain;
+				background-repeat: no-repeat;
+				background-position: center;
+				filter: invert(100%);
+				margin-right: 0.5em;
+				vertical-align: text-bottom;
+			}
+		</style>
+		<?php
+
 		$screen = get_current_screen(); 
 		
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
@@ -1222,14 +1240,14 @@ class WC_Trackship_Actions {
 		
 		if ( isset( $array_data[$key] ) ) {
 			$value = $array_data[$key];	
-		}					
+		}
 		
 		if ( '' == $value ) {
 			$value = $default_value;
 		}
 		return $value;
 	}
-	
+
 	/*
 	* Return checkbox option value for customizer
 	*/
@@ -1238,12 +1256,12 @@ class WC_Trackship_Actions {
 		$value = '';
 		
 		if ( isset( $array_data[$key] ) ) {
-			$value = $array_data[$key];				
+			$value = $array_data[$key];			
 			return $value;
 		}							
 		if ( '' == $value ) {
 			$value = $default_value;
-		}		
+		}
 		return $value;
 	}
 	

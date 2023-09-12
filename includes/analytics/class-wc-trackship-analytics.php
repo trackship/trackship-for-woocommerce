@@ -49,7 +49,7 @@ class WC_Trackship_Analytics {
 	public function add_ts_analytics_menu( $report_pages ) {
 		$report_pages[] = array(
 			'id' => 'trackship-analytics',
-			'title' => __('Shipping & Delivery', 'trackship-for-woocommerce'),
+			'title' => '<trackship-icon aria-label="TrackShip"></trackship-icon>' . __('Shipping & Delivery', 'trackship-for-woocommerce'),
 			'parent' => 'woocommerce-analytics',
 			'path' => '/analytics/trackship-analytics',
 		);

@@ -43,4 +43,10 @@ $total_orders = $completed_order_with_tracking + $completed_order_with_zero_bala
 		<?php $nonce = wp_create_nonce( 'wc_ast_tools'); ?>
 		<input type="hidden" id="wc_ast_tools" name="wc_ast_tools" value="<?php echo esc_attr( $nonce ); ?>" />
 	</div>
+	<div class="trackship-verify-table p15 inner_div">
+		<p>
+			<?php esc_html_e( 'Verify if all TrackShip database tables are present.', 'trackship-for-woocommerce' ); ?>
+			<button class="button-primary button-trackship bulk_shipment_status_button verify_database_table"><?php esc_html_e( 'Verify tables', 'trackship-for-woocommerce' ); ?></button>
+		</p>
+	</div>
 </div>
