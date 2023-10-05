@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 	<div class="panel_content section_tracking_page_content">
 		<div class="outer_form_table">
-			<?php $this->get_html_ul( $this->get_tracking_page_data() ); ?>
+			<?php $this->get_settings_html( $this->get_tracking_page_data() ); ?>
 		</div>
 	</div>
 </form>

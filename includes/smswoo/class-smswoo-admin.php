@@ -332,6 +332,18 @@ class tswc_smswoo_admin {
 				'id'		=> 'smswoo_twilio_auth_token',
 				'class'		=> 'smswoo_sms_provider smswoo_twilio_sms_provider',
 			),
+			'enable_twilio_whatsapp' => array(
+				'title'		=> __( 'Notifications Type (SMS/WhatsApp)', 'sms-for-woocommerce' ),
+				'type'		=> 'dropdown_button',
+				'options'	=> array(
+					'enable_sms'		=> 'SMS',
+					'enable_whatsapp'		=> 'WhatsApp',
+				),
+				'link'		=> [],
+				'show'		=> true,
+				'id'		=> 'enable_twilio_whatsapp',
+				'class'		=> 'smswoo_sms_provider smswoo_twilio_sms_provider',
+			),
 			'smswoo_clicksend_username' => array(
 				'title'		=> __( 'Clicksend API Username', 'trackship-for-woocommerce' ),
 				'type'		=> 'text',

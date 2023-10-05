@@ -38,7 +38,6 @@ class Trackship_For_Woocommerce {
 		
 		if ( !$this->is_ast_active() && !$this->is_st_active() && !$this->is_active_woo_order_tracking() && !$this->is_active_yith_order_tracking() ) {
 			add_action( 'admin_notices', array( $this, 'notice_activate_ast' ) );
-			return;
 		}
 			
 		// Include required files.
@@ -171,7 +170,10 @@ class Trackship_For_Woocommerce {
 		$this->actions		= WC_Trackship_Actions::get_instance();
 		
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-admin.php';
-		$this->admin = WC_Trackship_Admin::get_instance();						
+		$this->admin = WC_Trackship_Admin::get_instance();
+		
+		require_once $this->get_plugin_path() . '/includes/html/class-wc-trackship-html.php';
+		$this->html = WC_Trackship_Html::get_instance();
 		
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-late-shipments.php';
 		$this->late_shipments = WC_TrackShip_Late_Shipments::get_instance();
@@ -216,7 +218,7 @@ class Trackship_For_Woocommerce {
 	 * Register shipment tracking routes.
 	 *
 	 */
-	public function rest_api_register_routes() {		
+	public function rest_api_register_routes() {
 		if ( ! is_a( WC()->api, 'WC_API' ) ) {
 			return;
 		}
@@ -300,7 +302,7 @@ class Trackship_For_Woocommerce {
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		}
 		
-		if ( is_plugin_active( 'woo-advanced-shipment-tracking/woocommerce-advanced-shipment-tracking.php' ) || is_plugin_active( 'ast-pro/ast-pro.php' )) {
+		if ( is_plugin_active( 'woo-advanced-shipment-tracking/woocommerce-advanced-shipment-tracking.php' ) || is_plugin_active( 'ast-pro/ast-pro.php' ) || is_plugin_active( 'advanced-shipment-tracking-pro/advanced-shipment-tracking-pro.php' ) ) {
 			$is_active = true;
 		} else {
 			$is_active = false;
@@ -499,7 +501,7 @@ function get_trackship_key() {
 	return $trackship_apikey;
 }
 
-function get_trackship_settings( $key, $default_value ) {
+function get_trackship_settings( $key, $default_value = '' ) {
 	$data_array = get_option( 'trackship_settings', array() );
 	$value = '';
 	if ( isset( $data_array[$key] ) ) {

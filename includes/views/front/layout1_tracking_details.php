@@ -24,7 +24,7 @@ if ( $this->check_if_tpi_order( $tracking_items, wc_get_order( $order_id ) ) || 
 		'class'	=> $class,
 	);
 }
-if ( ( !is_admin() && get_option( 'enable_email_widget' ) ) || ( 'yes' == $fronted && get_option( 'enable_email_widget' ) ) ) {
+if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'yes' == $fronted && get_trackship_settings( 'enable_email_widget' ) ) ) {
 	$tab_array['shipment_status_notifications'] = array(
 		'label'	=> $labels_name['notifications_label'],
 	);

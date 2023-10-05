@@ -199,7 +199,7 @@ class TS4WC_Admin_Customizer {
 			'tracking_iframe_url'	=> add_query_arg( array( 'action' => 'preview_tracking_page' ), home_url( '' ) ),
 			'form_iframe_url'		=> $this->get_tracking_form_preview_url(),
 			'user_plan'				=> get_option( 'user_plan' ),
-			'unsubscribe'			=> get_option( 'enable_email_widget' ),
+			'unsubscribe'			=> get_trackship_settings( 'enable_email_widget' ),
 		));
 	}
 

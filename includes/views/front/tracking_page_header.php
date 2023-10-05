@@ -58,7 +58,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	
 	<div class="shipment_status_heading <?php esc_html_e( $tracker->ep_status ); ?>">
 		<?php
-		if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'invalid_tracking', 'unauthorized_store', 'unauthorized_api_key', 'unauthorized_api_key', 'missing_carrier', 'missing_tracking', 'missing_order_id', '' ) ) ) {
+		if ( in_array( $tracker->ep_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'invalid_tracking', 'unauthorized_store', 'unauthorized_api_key', 'unauthorized_api_key', 'missing_carrier', 'missing_tracking', 'missing_order_id', 'ssl_error', '' ) ) ) {
 			esc_html_e( 'Shipped', 'trackship-for-woocommerce' );
 		} else {
 			$message = isset( $trackind_detail_by_status_rev[0]->message ) ? $trackind_detail_by_status_rev[0]->message : '';
