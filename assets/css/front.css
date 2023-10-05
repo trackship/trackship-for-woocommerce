@@ -8,10 +8,10 @@ form.order_track_form input {
 	margin-bottom: 10px;
 	max-width: 50%;
 }
-.progress {
+.tracker-progress-bar .progress {
 	display: -ms-flexbox;
 	display: flex;
-	overflow: hidden;
+	overflow: hidden !important;
 	background-color: #C1C1C1;
 }
 .progress-bar {
@@ -111,7 +111,7 @@ span.wc_order_id {
 .search_order_form .form-row button {
 	margin-bottom: 0;
 }
-.shipment-header {
+div.shipment-header {
 	margin: 10px auto -1px;
 	max-width: 800px;
 	border: 1px solid #e0e0e0;
@@ -521,6 +521,20 @@ span.copy_tracking_page.trackship-tip svg {
 }
 .not_shipped_content {
 	padding: 0 15px;
+}
+.ts_loader {
+	z-index: 1000;
+	border: none;
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	background: rgb(255, 255, 255);
+	opacity: 0.6;
+	position: absolute;
+	background: url('../images/ts-loader-2.svg') 50% 50% no-repeat rgba(255,255,255,.6);
 }
 /**** Tracking Lightbox CSS ***/
 .popupwrapper {

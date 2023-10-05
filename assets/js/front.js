@@ -28,14 +28,7 @@ jQuery(document).on("submit", ".order_track_form", function(){
 		return false;
 	}
 	
-	jQuery(".order_track_form ").block({
-    message: null,
-    overlayCSS: {
-        background: "#fff",
-        opacity: .6
-	}	
-    });
-	
+	jQuery(".search_order_form").ts_start_loader();
 	jQuery.ajax({
 		url: zorem_ajax_object.ajax_url,		
 		data: form.serialize(),
@@ -55,7 +48,7 @@ jQuery(document).on("submit", ".order_track_form", function(){
 				jQuery(".track_fail_msg").text(response.message);
 				jQuery(".track_fail_msg").show();				
 			}			
-			jQuery(".order_track_form").unblock();
+			jQuery(".search_order_form").ts_stop_loader();
 		},
 		error: function (response, jqXHR, exception) {
 			console.log(response);
@@ -77,7 +70,7 @@ jQuery(document).on("submit", ".order_track_form", function(){
 			}
 			jQuery(".track_fail_msg ").show();
             jQuery(".track_fail_msg ").text(warning_msg);
-            jQuery(".order_track_form ").unblock();
+			jQuery(".search_order_form").ts_stop_loader();
 		}
 	});
 	return false;
@@ -270,6 +263,21 @@ jQuery(document).on("change", ".unsubscribe_emails_checkbox, .unsubscribe_sms_ch
 	});
 	return false;
 });
+
+(function( $ ){
+	'use strict';
+	$.fn.ts_start_loader = function() {
+		if( this.find(".ts_loader").length === 0 ){this.append("<span class=ts_loader></span>");}
+		return this;
+	}; 
+})( jQuery );
+(function( $ ){
+	'use strict';
+	$.fn.ts_stop_loader = function() {
+		this.find(".ts_loader").remove();
+		return this;
+	}; 
+})( jQuery );
 
 (function( $ ){
 	'use strict';

@@ -46,6 +46,9 @@ class WC_TrackShip_Admin_notice {
 		// review notice
 		add_action( 'admin_notices', array( $this, 'trackship_upgrade_notice' ) );
 
+		// klaviyo notice
+		add_action( 'admin_notices', array( $this, 'trackship_klaviyo_notice' ) );
+
 		// Database update notice
 		if ( version_compare( get_option( 'trackship_db' ), '1.19', '<' ) ) {
 			add_action( 'admin_notices', array( $this, 'trackship_database_notice' ) );
@@ -61,6 +64,9 @@ class WC_TrackShip_Admin_notice {
 		}
 		if ( isset( $_GET['trackship-upgrade-ignore'] ) ) {
 			update_trackship_settings( 'trackship_upgrade_ignore', 'true');
+		}
+		if ( isset( $_GET['klaviyo-notice-ignore'] ) ) {
+			update_trackship_settings( 'klaviyo_notice_ignore', 'true');
 		}
 	}
 
@@ -125,6 +131,34 @@ class WC_TrackShip_Admin_notice {
 			<p>Upgrade your plan today to unlock premium features and maximize your tracking capabilities. Whether you choose a monthly or yearly subscription, you'll enjoy enhanced tracking benefits. Plus, get up to 2 months FREE with an annual plan! Don't miss out on this opportunity to boost your post-shipping workflow.</p>
 			<a class="button button-primary" target="_blank" href="<?php echo esc_url($url); ?>" >UPGRADE NOW</a>
 			<a class="button" style="margin: 0 10px;" href="<?php echo esc_url($dismissable_url); ?>" >No thanks</a>
+		</div>
+		<?php
+	}
+
+	public function trackship_klaviyo_notice() {
+		if ( get_trackship_settings( 'klaviyo_notice_ignore', '') ) {
+			return;
+		}
+		
+		$dismissable_url = esc_url( add_query_arg( 'klaviyo-notice-ignore', 'true' ) );
+		$url = 'https://docs.trackship.com/docs/trackship-for-woocommerce/integration/klaviyo/';
+		$btn_url = 'https://brijesh.zorem.dev/wp-admin/admin.php?page=trackship-for-woocommerce&tab=integrations';
+		?>		
+		<style>		
+		.wp-core-ui .notice.trackship-dismissable-notice {
+			padding: 12px;
+			text-decoration: none;
+		}
+		.wp-core-ui .notice.trackship-dismissable-notice a.notice-dismiss{
+			padding: 9px;
+			text-decoration: none;
+		}
+		</style>	
+		<div class="notice notice-success is-dismissible trackship-dismissable-notice">
+			<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
+			<p><strong>Seamless Integration: Klaviyo and TrackShip for WooCommerce</strong></p>
+			<p>Streamline your WooCommerce store's performance with the seamless integration of Klaviyo and TrackShip. With this powerful combination, you can effortlessly manage your email marketing campaigns through Klaviyo while efficiently tracking your WooCommerce shipments with TrackShip. Enhance your customer experience and drive sales growth with these integrated solutions at your fingertips. For more detail please refer <a href="<?php echo esc_url($url); ?>" target="_blank">documentation</a>.</p>
+			<a class="button button-primary" href="<?php echo esc_url($btn_url); ?>" >Enable Klaviyo integration</a>
 		</div>
 		<?php
 	}

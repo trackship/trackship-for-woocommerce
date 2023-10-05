@@ -124,7 +124,7 @@ class WC_TrackShip_Late_Shipments {
 		global $wpdb;
 		$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
 		
-		$late_ship_day = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_days', 7 );
+		$late_ship_day = get_trackship_settings( 'late_shipments_days', 7);
 		$day = $late_ship_day - 1;
 		
 		//total late shipment count
