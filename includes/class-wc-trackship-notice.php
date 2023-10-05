@@ -142,7 +142,7 @@ class WC_TrackShip_Admin_notice {
 		
 		$dismissable_url = esc_url( add_query_arg( 'klaviyo-notice-ignore', 'true' ) );
 		$url = 'https://docs.trackship.com/docs/trackship-for-woocommerce/integration/klaviyo/';
-		$btn_url = 'https://brijesh.zorem.dev/wp-admin/admin.php?page=trackship-for-woocommerce&tab=integrations';
+		$btn_url = admin_url( 'admin.php?page=trackship-for-woocommerce&tab=integrations' );
 		?>		
 		<style>		
 		.wp-core-ui .notice.trackship-dismissable-notice {

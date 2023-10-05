@@ -101,9 +101,9 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.13' );
 		}
 
+		global $wpdb;
+		$shipment_table = $this->shipment_table;
 		if ( version_compare( get_option( 'trackship_db' ), '1.14', '<' ) ) {
-			global $wpdb;
-			$shipment_table = $this->shipment_table;
 			$sql = "ALTER TABLE {$shipment_table} CHANGE shipping_date shipping_date DATE NULL DEFAULT CURRENT_TIMESTAMP";
 			$wpdb->query($sql);
 			$this->check_column_exists();
@@ -112,15 +112,12 @@ class WC_Trackship_Install {
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.18', '<' ) ) {
-			global $wpdb;
 			$shipment_meta_table = $this->shipment_table_meta;
 			$wpdb->query("ALTER TABLE $shipment_meta_table MODIFY COLUMN shipping_service varchar(60);");
 			update_option( 'trackship_db', '1.18' );
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.19', '<' ) ) {
-			global $wpdb;
-			$shipment_table = $this->shipment_table;
 			$log_table = $this->log_table;
 			$wpdb->query("ALTER TABLE $shipment_table MODIFY COLUMN order_number varchar(40);");
 			$wpdb->query("ALTER TABLE $log_table MODIFY COLUMN order_number varchar(40);");
@@ -131,28 +128,44 @@ class WC_Trackship_Install {
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.20', '<' ) ) {
 			$valid_order_statuses = get_option( 'trackship_trigger_order_statuses', array() );
-			update_trackship_settings( 'trackship_trigger_order_statuses', $valid_order_statuses );
+			if ( $valid_order_statuses ) {
+				update_trackship_settings( 'trackship_trigger_order_statuses', $valid_order_statuses );
+			}
 
 			$wc_ts_shipment_status_filter = get_option( 'wc_ast_show_shipment_status_filter' );
-			update_trackship_settings( 'wc_ts_shipment_status_filter', $wc_ts_shipment_status_filter );
+			if ( $wc_ts_shipment_status_filter ) {
+				update_trackship_settings( 'wc_ts_shipment_status_filter', $wc_ts_shipment_status_filter );
+			}
 
 			$enable_email_widget = get_option( 'enable_email_widget' );
-			update_trackship_settings( 'enable_email_widget', $enable_email_widget );
+			if ( $enable_email_widget ) {
+				update_trackship_settings( 'enable_email_widget', $enable_email_widget );
+			}
 
 			$enable_notification_for_amazon_order = get_option( 'enable_notification_for_amazon_order', '' );
-			update_trackship_settings( 'enable_notification_for_amazon_order', $enable_notification_for_amazon_order );
+			if ( $enable_notification_for_amazon_order ) {
+				update_trackship_settings( 'enable_notification_for_amazon_order', $enable_notification_for_amazon_order );
+			}
 
 			$late_shipments_days = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_days', 7 );
-			update_trackship_settings( 'late_shipments_days', $late_shipments_days );
+			if ( $late_shipments_days ) {
+				update_trackship_settings( 'late_shipments_days', $late_shipments_days );
+			}
 
 			$wc_ast_use_tracking_page = get_option( 'wc_ast_use_tracking_page', '' );
-			update_trackship_settings( 'wc_ast_use_tracking_page', $wc_ast_use_tracking_page );
+			if ( $wc_ast_use_tracking_page ) {
+				update_trackship_settings( 'wc_ast_use_tracking_page', $wc_ast_use_tracking_page );
+			}
 
 			$wc_ast_trackship_page_id = get_option( 'wc_ast_trackship_page_id', '' );
-			update_trackship_settings( 'wc_ast_trackship_page_id', $wc_ast_trackship_page_id );
+			if ( $wc_ast_trackship_page_id ) {
+				update_trackship_settings( 'wc_ast_trackship_page_id', $wc_ast_trackship_page_id );
+			}
 
 			$wc_ast_trackship_other_page = get_option( 'wc_ast_trackship_other_page', '' );
-			update_trackship_settings( 'wc_ast_trackship_other_page', $wc_ast_trackship_other_page );
+			if ( $wc_ast_trackship_other_page ) {
+				update_trackship_settings( 'wc_ast_trackship_other_page', $wc_ast_trackship_other_page );
+			}
 
 			delete_option( 'trackship_trigger_order_statuses' );
 			delete_option( 'wc_ast_show_shipment_status_filter' );
@@ -165,7 +178,7 @@ class WC_Trackship_Install {
 			unset($late_shipments_settings['wcast_late_shipments_days']);
 			update_option( 'late_shipments_email_settings', $late_shipments_settings );
 
-			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '%1s' AND COLUMN_NAME = 'new_shipping_provider' ", $this->shipment_table ), ARRAY_A );
+			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '%1s' AND COLUMN_NAME = 'new_shipping_provider' ", $shipment_table ), ARRAY_A );
 			if ( $columns ) {
 				$wpdb->query("ALTER TABLE $shipment_table 
 					DROP COLUMN new_shipping_provider");
