@@ -101,9 +101,9 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.13' );
 		}
 
+		global $wpdb;
+		$shipment_table = $this->shipment_table;
 		if ( version_compare( get_option( 'trackship_db' ), '1.14', '<' ) ) {
-			global $wpdb;
-			$shipment_table = $this->shipment_table;
 			$sql = "ALTER TABLE {$shipment_table} CHANGE shipping_date shipping_date DATE NULL DEFAULT CURRENT_TIMESTAMP";
 			$wpdb->query($sql);
 			$this->check_column_exists();
@@ -112,15 +112,12 @@ class WC_Trackship_Install {
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.18', '<' ) ) {
-			global $wpdb;
 			$shipment_meta_table = $this->shipment_table_meta;
 			$wpdb->query("ALTER TABLE $shipment_meta_table MODIFY COLUMN shipping_service varchar(60);");
 			update_option( 'trackship_db', '1.18' );
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.19', '<' ) ) {
-			global $wpdb;
-			$shipment_table = $this->shipment_table;
 			$log_table = $this->log_table;
 			$wpdb->query("ALTER TABLE $shipment_table MODIFY COLUMN order_number varchar(40);");
 			$wpdb->query("ALTER TABLE $log_table MODIFY COLUMN order_number varchar(40);");
@@ -165,7 +162,7 @@ class WC_Trackship_Install {
 			unset($late_shipments_settings['wcast_late_shipments_days']);
 			update_option( 'late_shipments_email_settings', $late_shipments_settings );
 
-			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '%1s' AND COLUMN_NAME = 'new_shipping_provider' ", $this->shipment_table ), ARRAY_A );
+			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '%1s' AND COLUMN_NAME = 'new_shipping_provider' ", $shipment_table ), ARRAY_A );
 			if ( $columns ) {
 				$wpdb->query("ALTER TABLE $shipment_table 
 					DROP COLUMN new_shipping_provider");
