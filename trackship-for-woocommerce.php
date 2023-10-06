@@ -526,3 +526,22 @@ function delete_trackship_settings( $key ) {
 	update_option( 'trackship_settings', $data_array );
 }
 
+if ( ! function_exists( 'zorem_tracking' ) ) {
+	function zorem_tracking() {
+		require_once dirname(__FILE__) . '/zorem-tracking/zorem-tracking.php';
+		$plugin_name = "TrackShip for WooCommerce";
+		$plugin_slug = "trackship-for-woocommerce";
+		$user_id = "12";
+		$setting_page_type = "top-level";
+		$setting_page_location = "A custom top-level admin menu (admin.php)";
+		$parent_menu_type = "";
+		$menu_slug = "trackship-for-woocommerce";
+		$plugin_id = "12";
+		$zorem_tracking = WC_Trackers::get_instance( $plugin_name, $plugin_slug, $user_id,
+			$setting_page_type, $setting_page_location, $parent_menu_type,  $menu_slug, $plugin_id );
+
+
+		return $zorem_tracking;
+	}
+	zorem_tracking();
+}
