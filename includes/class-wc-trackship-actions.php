@@ -741,7 +741,7 @@ class WC_Trackship_Actions {
 
 	public function ts_admin_shop_order_filter() {
 		$terms = array(
-			'pending_trackship' => (object) array( 'term' => __( 'Pending TrackShip', 'trackship-for-woocommerce' ) ),
+			'pending_trackship' => (object) array( 'term' => __( 'Pending Update', 'trackship-for-woocommerce' ) ),
 			'unknown' => (object) array( 'term' => __( 'Unknown', 'trackship-for-woocommerce' ) ),
 			'pre_transit' => (object) array( 'term' => __( 'Pre Transit', 'trackship-for-woocommerce' ) ),
 			'in_transit' => (object) array( 'term' => __( 'In Transit', 'trackship-for-woocommerce' ) ),

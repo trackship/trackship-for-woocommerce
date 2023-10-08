@@ -141,6 +141,7 @@ class WC_TrackShip_Api_Call {
 		$user_key = get_trackship_key();
 		$domain = get_site_url();
 		$domain = apply_filters( 'trackship_for_site_url', $domain );
+		$domain = str_replace( 'http://', 'https://', $domain );
 		$order_id = $order->get_id();
 		$custom_order_number = $order->get_order_number();
 		
@@ -185,7 +186,7 @@ class WC_TrackShip_Api_Call {
 		$user_key = get_trackship_key();
 		$domain = get_site_url();
 		$domain = apply_filters( 'trackship_for_site_url', $domain );
-
+		$domain = str_replace( 'http://', 'https://', $domain );
 		$url = 'https://my.trackship.com/api/shipment/delete';
 		
 		$args['body'] = array(
