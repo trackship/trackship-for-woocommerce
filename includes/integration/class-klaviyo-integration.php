@@ -58,6 +58,10 @@ class WOO_Klaviyo_TS4WC {
 	 */
 	public function klaviyo_callback( $order_id, $old_status, $new_status, $tracking_number ) {
 
+		if ( !get_trackship_settings( 'klaviyo', '') ) {
+			return;
+		}
+
 		$klaviyo_settings = get_option('klaviyo_settings');
 		$api_key = isset($klaviyo_settings['klaviyo_public_api_key']) ? $klaviyo_settings['klaviyo_public_api_key'] : '';
 

@@ -2,7 +2,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
 if ( !get_trackship_settings( 'wc_admin_notice', '') ) {
 	if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
 		trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_pro();
@@ -56,14 +55,7 @@ $section = isset( $_GET['section'] ) ? sanitize_text_field( $_GET['section'] ) :
 				</div>
 			</div>
 			<div class="panel_content section_settings_content">
-				<?php $this->get_html_ul( $this->get_trackship_general_data() ); ?>
-				<?php
-				$late_shipments_days = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_days', 7 );
-				?>
-				<div class="late_shipment_days_settings dis_block">
-					<label><?php esc_html_e('Number of days for late shipments', 'trackship-for-woocommerce'); ?></label>	
-					<input class="input-text" type="number" name="wcast_late_shipments_days" id="wcast_late_shipments_days" min="1" value="<?php echo esc_html( $late_shipments_days ); ?>">
-				</div>
+				<?php $this->get_settings_html( $this->get_trackship_general_data() ); ?>
 			</div>
 		</div>
 	</form>

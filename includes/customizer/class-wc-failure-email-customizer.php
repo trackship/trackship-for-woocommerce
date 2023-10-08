@@ -162,7 +162,7 @@ class TSWC_Failure_Customizer_Email {
 	 * Code for format email subject
 	*/
 	public function email_footer_text( $footer_text ) {
-		$unsubscribe = get_option( 'enable_email_widget' ) ? '<div style="text-align:center;"><a href="#">' . esc_html__( 'Unsubscribe', 'trackship-for-woocommerce' ) . '</a></div>' : '';
+		$unsubscribe = get_trackship_settings( 'enable_email_widget' ) ? '<div style="text-align:center;"><a href="#">' . esc_html__( 'Unsubscribe', 'trackship-for-woocommerce' ) . '</a></div>' : '';
 		$class = $unsubscribe ? 'hide' : '';
 		$default_footer = '<div class="default_footer ' . $class . '">' . $footer_text . '</div>';
 		return $unsubscribe . $default_footer;

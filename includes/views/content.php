@@ -21,6 +21,11 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 					'show'	=> true,
 				),
 				array(
+					'label'	=> __( 'Integrations', 'trackship-for-woocommerce' ),
+					'slug'	=> 'integrations',
+					'show'	=> true,
+				),
+				array(
 					'label'	=> __( 'Tools', 'trackship-for-woocommerce' ),
 					'slug'	=> 'tools',
 					'show'	=> true,

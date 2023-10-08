@@ -80,12 +80,12 @@ if ( ! class_exists( 'smswoo_twilio' ) ) {
 					'Authorization' => sprintf( 'Basic %s', base64_encode( $this->_twilio_sid . ':' . $this->_twilio_auth_token ) )
 				),
 				'body'        => http_build_query(
-									array(
-										'From' => $from,
-										 'To'   => $to_phone,
-										 'Body' => $message,
-										)
-									),
+					array(
+						'From' => 'enable_whatsapp' == get_option('enable_twilio_whatsapp') ? 'whatsapp:' . $from : $from,
+						'To'   => 'enable_whatsapp' == get_option('enable_twilio_whatsapp') ? 'whatsapp:' . $to_phone : $to_phone,
+						'Body' => $message,
+					)
+				),
 				'cookies'     => array()
 			);
 
