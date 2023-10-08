@@ -43,7 +43,7 @@ class WC_Trackship_Install {
 	* init from parent mail class
 	*/
 	public function init() {			
-		// add_action( 'admin_init', array( $this, 'update_database_check' ) );
+		add_action( 'admin_init', array( $this, 'update_database_check' ) );
 		add_action( 'wp_ajax_update_trackship_providers', array( $this, 'update_trackship_providers' ) );
 	}
 	
@@ -101,9 +101,9 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.13' );
 		}
 
+		global $wpdb;
+		$shipment_table = $this->shipment_table;
 		if ( version_compare( get_option( 'trackship_db' ), '1.14', '<' ) ) {
-			global $wpdb;
-			$shipment_table = $this->shipment_table;
 			$sql = "ALTER TABLE {$shipment_table} CHANGE shipping_date shipping_date DATE NULL DEFAULT CURRENT_TIMESTAMP";
 			$wpdb->query($sql);
 			$this->check_column_exists();
@@ -111,32 +111,88 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.14' );
 		}
 
-		if ( version_compare( get_option( 'trackship_db' ), '1.17', '<' ) ) {
-			$this->create_shipping_provider_table();
-			$this->update_shipping_providers();
-			$this->create_shipment_table();
-			$this->create_shipment_meta_table();
-			$this->create_email_log_table();
-			$this->check_column_exists();
-			update_option( 'trackship_db', '1.17' );
-		}
-
 		if ( version_compare( get_option( 'trackship_db' ), '1.18', '<' ) ) {
-			global $wpdb;
 			$shipment_meta_table = $this->shipment_table_meta;
 			$wpdb->query("ALTER TABLE $shipment_meta_table MODIFY COLUMN shipping_service varchar(60);");
 			update_option( 'trackship_db', '1.18' );
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.19', '<' ) ) {
-			global $wpdb;
-			$shipment_table = $this->shipment_table;
 			$log_table = $this->log_table;
 			$wpdb->query("ALTER TABLE $shipment_table MODIFY COLUMN order_number varchar(40);");
 			$wpdb->query("ALTER TABLE $log_table MODIFY COLUMN order_number varchar(40);");
 
 			update_trackship_settings( 'trackship_db', '1.19' );
 			update_option( 'trackship_db', '1.19' );
+		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.20', '<' ) ) {
+			$valid_order_statuses = get_option( 'trackship_trigger_order_statuses', array() );
+			if ( $valid_order_statuses ) {
+				update_trackship_settings( 'trackship_trigger_order_statuses', $valid_order_statuses );
+			}
+
+			$wc_ts_shipment_status_filter = get_option( 'wc_ast_show_shipment_status_filter' );
+			if ( $wc_ts_shipment_status_filter ) {
+				update_trackship_settings( 'wc_ts_shipment_status_filter', $wc_ts_shipment_status_filter );
+			}
+
+			$enable_email_widget = get_option( 'enable_email_widget' );
+			if ( $enable_email_widget ) {
+				update_trackship_settings( 'enable_email_widget', $enable_email_widget );
+			}
+
+			$enable_notification_for_amazon_order = get_option( 'enable_notification_for_amazon_order', '' );
+			if ( $enable_notification_for_amazon_order ) {
+				update_trackship_settings( 'enable_notification_for_amazon_order', $enable_notification_for_amazon_order );
+			}
+
+			$late_shipments_days = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_days', 7 );
+			if ( $late_shipments_days ) {
+				update_trackship_settings( 'late_shipments_days', $late_shipments_days );
+			}
+
+			$wc_ast_use_tracking_page = get_option( 'wc_ast_use_tracking_page', '' );
+			if ( $wc_ast_use_tracking_page ) {
+				update_trackship_settings( 'wc_ast_use_tracking_page', $wc_ast_use_tracking_page );
+			}
+
+			$wc_ast_trackship_page_id = get_option( 'wc_ast_trackship_page_id', '' );
+			if ( $wc_ast_trackship_page_id ) {
+				update_trackship_settings( 'wc_ast_trackship_page_id', $wc_ast_trackship_page_id );
+			}
+
+			$wc_ast_trackship_other_page = get_option( 'wc_ast_trackship_other_page', '' );
+			if ( $wc_ast_trackship_other_page ) {
+				update_trackship_settings( 'wc_ast_trackship_other_page', $wc_ast_trackship_other_page );
+			}
+
+			delete_option( 'trackship_trigger_order_statuses' );
+			delete_option( 'wc_ast_show_shipment_status_filter' );
+			delete_option( 'enable_email_widget' );
+			delete_option( 'enable_notification_for_amazon_order' );
+			delete_option( 'wc_ast_use_tracking_page' );
+			delete_option( 'wc_ast_trackship_page_id' );
+			delete_option( 'wc_ast_trackship_other_page' );
+			$late_shipments_settings = get_option( 'late_shipments_email_settings', [] );
+			unset($late_shipments_settings['wcast_late_shipments_days']);
+			update_option( 'late_shipments_email_settings', $late_shipments_settings );
+
+			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '%1s' AND COLUMN_NAME = 'new_shipping_provider' ", $shipment_table ), ARRAY_A );
+			if ( $columns ) {
+				$wpdb->query("ALTER TABLE $shipment_table 
+					DROP COLUMN new_shipping_provider");
+			}
+
+			$this->create_shipping_provider_table();
+			$this->update_shipping_providers();
+			$this->create_shipment_table();
+			$this->create_shipment_meta_table();
+			$this->create_email_log_table();
+			$this->check_column_exists();
+
+			update_trackship_settings( 'trackship_db', '1.20' );
+			update_option( 'trackship_db', '1.20' );
 		}
 	}
 
@@ -255,7 +311,6 @@ class WC_Trackship_Install {
 				`updated_date` DATE ,
 				`late_shipment_email` TINYINT DEFAULT 0,
 				`est_delivery_date` DATE,
-				`new_shipping_provider` VARCHAR(50),
 				`last_event` LONGTEXT ,
 				`last_event_time` DATETIME ,
 				PRIMARY KEY (`id`),
@@ -267,8 +322,7 @@ class WC_Trackship_Install {
 				INDEX `order_id_tracking_number` (`order_id`,`tracking_number`),
 				INDEX `updated_date` (`updated_date`),
 				INDEX `late_shipment_email` (`late_shipment_email`),
-				INDEX `est_delivery_date` (`est_delivery_date`),
-				INDEX `new_shipping_provider` (`new_shipping_provider`)
+				INDEX `est_delivery_date` (`est_delivery_date`)
 			) $charset_collate;";
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 			dbDelta( $sql );
@@ -292,6 +346,8 @@ class WC_Trackship_Install {
 				`shipping_service` VARCHAR(60) ,
 				`tracking_events` LONGTEXT ,
 				`destination_events` LONGTEXT ,
+				`destination_state` VARCHAR(40) ,
+				`destination_city` VARCHAR(40) ,
 				PRIMARY KEY (`meta_id`),
 				INDEX `meta_id` (`meta_id`)
 			) $charset_collate;";
@@ -320,7 +376,6 @@ class WC_Trackship_Install {
 			'updated_date'			=> ' DATE',
 			'late_shipment_email'	=> ' TINYINT DEFAULT 0',
 			'est_delivery_date'		=> ' DATE',
-			'new_shipping_provider'	=> ' VARCHAR(50)',
 			'last_event'			=> ' LONGTEXT',
 			'last_event_time'		=> ' DATETIME',
 		);
@@ -340,6 +395,8 @@ class WC_Trackship_Install {
 			'shipping_service'		=> ' VARCHAR(60)',
 			'tracking_events'		=> ' LONGTEXT',
 			'destination_events'	=> ' LONGTEXT',
+			'destination_state'		=> ' VARCHAR(40)',
+			'destination_city'		=> ' VARCHAR(40)',
 		);
 		foreach( $shipment_table_meta as $column_name => $type ) {
 			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '%1s' AND COLUMN_NAME = '%2s' ", $this->shipment_table_meta, $column_name ), ARRAY_A );

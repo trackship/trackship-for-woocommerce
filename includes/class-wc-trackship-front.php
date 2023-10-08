@@ -806,7 +806,7 @@ class WC_TrackShip_Front {
 	}
 
 	public function get_notifications_option ( $order_id ) {
-		if ( get_option( 'enable_email_widget' ) ) {
+		if ( get_trackship_settings( 'enable_email_widget' ) ) {
 			$order = wc_get_order( $order_id );
 			$receive_email = $order->get_meta( '_receive_shipment_emails', true );
 			$receive_email = '' != $receive_email ? $receive_email : 1;

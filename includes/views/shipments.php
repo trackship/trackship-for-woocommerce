@@ -57,7 +57,7 @@ $res = $wpdb->get_results( "SELECT shipment_status, COUNT(*) AS status_count FRO
 $statuses = array_column($res, "shipment_status");
 $status_count = array_column($res, "status_count");
 $shipment_count = array_combine($statuses, $status_count); // combine the two arrays using shipment_status as keys
-$late_ship_day = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_days', 7 );
+$late_ship_day = get_trackship_settings( 'late_shipments_days', 7);
 $days = $late_ship_day - 1 ;
 $issues_count = $wpdb->get_row( "SELECT
 	COUNT(*) AS all_ship,

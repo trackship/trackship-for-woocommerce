@@ -121,7 +121,7 @@ label.tab_label a {
 section.inner_tab_section {
 	display: none;
 }
-section#content_trackship_settings, section#content_trackship_notifications, section#content_trackship_tracking_page {
+section#content_trackship_settings, section#content_trackship_notifications, section#content_trackship_integrations, section#content_trackship_tracking_page {
 	margin: 0 20px;
 }
 .trackship_admin_content section#content_trackship_dashboard, section#content_trackship_tools, section#content_trackship_logs {
@@ -489,11 +489,12 @@ tr:nth-child(even) .ast-shipment-status .shipment-icon {
 .woocommerce.trackship_admin_layout table.form-table select {
 	width: auto;
 	max-width: 400px;
-	min-width: 90px;
+	min-width: 200px;
 	line-height: 20px;
 }
 .form-table tr td .link_row a, .tracking_page_desc a {
-	color: #6e708c;
+	color: #124fd6;
+	font-size: 0.9em;
 }
 #wc_ast_status_label_color, #wc_ast_select_primary_color, #wc_ast_select_border_color {
 	width: 80px;
@@ -584,13 +585,13 @@ label.tab_label.first_label {
 }
 .settings_ul > li {
 	padding: 15px 0;
-	border-bottom: 1px solid #e0e0e0;
+	border-bottom: 1px solid #eee;
 	margin: 0;
 	min-height: 25px;
 	position: relative;
 }
 .section_sms_content tr {
-	border-bottom: 1px solid #e0e0e0;
+	border-bottom: 1px solid #eee;
 }
 .settings_ul li:last-child, .section_sms_content tr:last-child {
 	border-bottom: 0;
@@ -688,9 +689,6 @@ tr.late-shipment-tr.open td {
 	border-radius: 0 0 5px 5px;
 	border-collapse: separate;
 	table-layout: auto;
-}
-.trackship_admin_layout .late-shipments-email-content-table #wcast_late_shipments_days {
-	width: 60px;
 }
 .trackship_admin_layout .late-shipments-email-content-table #wcast_late_shipments_email_content {
 	width: 100%;
@@ -1227,7 +1225,7 @@ button.button-primary.button-trackship.bulk_shipment_status_button {
 .p15 {
 	padding: 15px;
 }
-.tracking-event-delete-notice p, .trackship-notice p, .trackship-verify-table p {
+.trackship-notice p, .trackship-verify-table p {
 	margin: 0;
 	line-height: 35px;
 }
@@ -1260,15 +1258,10 @@ button.bulk_shipment_status_button {
 	width: auto;
 	display: inline-block;
 }
-.panel_content li.dis_block label,
-.late_shipment_days_settings.dis_block label {
+.panel_content li.dis_block label {
 	display: block;
 	margin-bottom: 10px;
 }
-.panel_content li.dis_block {
-	border-bottom: 1px solid #e0e0e0;
-}
-
 .multiple_select_container {
 	display: inline-block;
 	width: 100%;
@@ -1397,14 +1390,10 @@ input.tab_input, input.inner_tab_input {
 label.setting_ul_tgl_checkbox_label {
 	margin: 0 5px;
 }
-div.late_shipment_days_settings {
-    border-top: 1px solid #e0e0e0;
-    padding: 10px 0 15px;
-}
 .section_mapping_content p.map_providers_note {
 	margin-top: 0;
 }
-div.late_shipment_days_settings input {
+input#late_shipments_days {
 	width: 50px;
 }
 div.late-shipments-email-content-table tr input, div.late-shipments-email-content-table tr td select {
@@ -1557,37 +1546,6 @@ span.admin_tracking_page_close .dashicons {
 	height: 30px;
 	width: 30px;
 	padding: 15px;
-}
-#admin_error_more_info_widget .more_info_popup.popuprow {
-	max-width: 700px;
-}
-.more_info_error_detail {
-	display: flex;
-	flex-wrap: wrap;
-}
-.error_details {
-	box-sizing: border-box;
-	border-bottom: 1px solid #e0e0e0;
-	padding: 20px;
-	width: 50%;
-}
-.error_details:nth-child(odd) {
-	border-right: 1px solid #e0e0e0;
-}
-.error_details:nth-last-child(-n+2) {
-	border-bottom: 0;
-}
-.error_details span {
-	margin-left: 10px;
-	font-size: 20px;
-	font-weight: 500;
-	vertical-align: middle;
-}
-.error_details img {
-	vertical-align: middle;
-}
-.error_details p {
-	margin-bottom: 0;
 }
 .ts4wc_logo {
 	width: 100px;
@@ -1887,7 +1845,7 @@ span.fullfillment_status {
 	font-size: 20px;
 	margin: 15px 0;
 }
-.ts_upgrade_notice {
+.ts_upgrade_notice, .ts_ast_notice {
 	background: #fff;
 	padding: 20px;
 	border: 1px solid #e0e0e0;
@@ -1895,9 +1853,12 @@ span.fullfillment_status {
 	display: grid;
 	grid-template-columns: auto auto;
 }
-.ts_upgrade_notice a {
+.ts_upgrade_notice a, .ts_ast_notice a {
 	text-decoration: none;
 	color: #fff;
+}
+.ts_ast_notice p {
+	margin: 0 0 15px 0;
 }
 .ts_upgrade_notice .ts_upgrade_msg{
 	font-size: 15px;
@@ -1953,8 +1914,91 @@ span.ts_plan_details_bottom {
 .fullfillment_dashboard_section_content .innner_content:nth-child(n+3), .fullfillment_dashboard .fullfillment_dashboard_section .detailed_stats {
 	border-top: 0;
 }
-
 /** End Fullfillment Dashboard **/
+.ts_integrations_row {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+}
+.ts_integrations_row .ts-grid-item {
+    padding: 14px;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    margin: 0 14px 14px 0;
+	display: flex;
+}
+.ts_integrations_row .ts-grid-item:hover{
+	background: #f6f6f6;
+}
+.ts_integration_image {
+	margin-right: 15px;
+	height: 40px;
+}
+.ts_integration_checkbox {
+    margin-left: auto;
+}
+.ts_integration_title, .ts_integration_checkbox {
+	display: flex;
+	align-items: center;
+}
+.ts_integration_title {
+    color: #005b9a;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+@media(min-width: 1550px) {
+	.ts_integrations_row .ts-grid-item:nth-child(5n){
+		margin: 0 0 14px 0;
+	}
+}
+
+@media(min-width: 1301px) and (max-width: 1500px){
+	.ts_integrations_row{
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+	}
+	.ts_integrations_row .ts-grid-item:nth-child(4n){
+		margin: 0 0 14px 0;
+	}	
+}
+
+@media(min-width: 768px) and (max-width: 1100px) {
+	.ts_integrations_row{
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+	}
+	.ts_integrations_row .ts-grid-item:nth-child(3n){
+		margin: 0 0 14px 0;
+	}	
+}
+@media(min-width: 1100px) and (max-width: 1300px) {
+	.ts_integrations_row{
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+@media(min-width: 500px) and (max-width: 767px) {
+	.ts_integrations_row{
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.ts_integrations_row .ts-grid-item:nth-child(2n){
+		margin: 0 0 14px 0;
+	}	
+}
+
+@media(max-width: 499px) {
+	.ts_integrations_row{
+		display: grid;
+		grid-template-columns: repeat(1, 1fr);
+	}
+	.ts_integrations_row .ts-grid-item:nth-child(1n){
+		margin: 0 0 14px 0;
+	}	
+}
+
 
 @media (min-width: 992px) {
 .col-lg-6 {

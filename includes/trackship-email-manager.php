@@ -216,7 +216,7 @@ class WC_TrackShip_Email_Manager {
 	*/
 	public function email_footer_text( $footer_text ) {
 		$unsubscribe = '';
-		if ( get_option( 'enable_email_widget' ) ) {
+		if ( get_trackship_settings( 'enable_email_widget' ) ) {
 			$tracking_item = isset( $this->tracking_item ) && $this->tracking_item ? $this->tracking_item : [];
 			$track_link = $tracking_item['tracking_page_link'] ?  $tracking_item['tracking_page_link'] : $this->order->get_view_order_url();
 			$track_link = add_query_arg( array( 'unsubscribe' => 'true' ), $track_link );

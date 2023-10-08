@@ -114,7 +114,7 @@ class WC_Trackship_Shipments {
 			$where[] = "( `order_id` = '{$search_bar}' OR `order_number` = '{$search_bar}' OR `shipping_provider` LIKE ( '%{$search_bar}%' ) OR `tracking_number` = '{$search_bar}' OR `shipping_country` LIKE ( '%{$search_bar}%' ) )";
 		}
 		
-		$late_ship_day = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_days', 7 );
+		$late_ship_day = get_trackship_settings( 'late_shipments_days', 7);
 		$days = $late_ship_day - 1 ;
 		$active_shipment_status = $_POST['active_shipment'] ;
 		
@@ -172,12 +172,10 @@ class WC_Trackship_Shipments {
 			foreach ( $tracking_items as $key1 => $val1 ) {
 				if ( $val1['tracking_number'] == $value->tracking_number ) {
 					$tracking_url = $val1['tracking_page_link'] ?  $val1['tracking_page_link'] : $val1['formatted_tracking_link'];
-					$provider_name = isset($value->new_shipping_provider) ? $value->new_shipping_provider : $value->shipping_provider;
+					$provider_name = $value->shipping_provider;
 					// print_r($provider_name);
 					$formatted_provider = trackship_for_woocommerce()->actions->get_provider_name( $provider_name );
 					$tracking_provider = isset($formatted_provider) && $formatted_provider ? $formatted_provider : $provider_name;
-					$provider_tip_tip = $value->new_shipping_provider ? '<span class="dashicons dashicons-info trackship-tip" title="TrackShip updated ' . $value->shipping_provider . ' to ' . $tracking_provider .'"></span>' : '';
-					
 					$tracking_number_colom = '<span class="copied_tracking_numnber dashicons dashicons-admin-page" data-number="' . $value->tracking_number . '"></span><a class="open_tracking_details shipment_tracking_number" data-tracking_id="' . $val1['tracking_id'] . '" data-orderid="' . $value->order_id . '" data-tnumber="' . $value->tracking_number . '" data-nonce="' . wp_create_nonce( 'tswc-' . $value->order_id ) . '">' . $value->tracking_number . '</a>';
 				}
 			}
@@ -217,7 +215,7 @@ class WC_Trackship_Shipments {
 			$result[$i]->shipment_status = apply_filters("trackship_status_filter", $status );
 			$result[$i]->shipment_status_id = $status;
 			$result[$i]->shipment_length = '<span class="shipment_length ' . $late_class. '">' . $late_shipment . $shipping_length . '</span>';
-			$result[$i]->formated_tracking_provider = $tracking_provider . $provider_tip_tip;
+			$result[$i]->formated_tracking_provider = $tracking_provider;
 			$result[$i]->tracking_number_colom = $tracking_number_colom;
 			$result[$i]->tracking_url = $tracking_url;
 			$result[$i]->est_delivery_date = $value->est_delivery_date ? date_i18n( $date_format, strtotime( $value->est_delivery_date ) ) : '';

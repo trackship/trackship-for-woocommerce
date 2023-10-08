@@ -25,7 +25,7 @@ class WC_Trackship_Admin {
 	/**
 	 * Get the class instance
 	 *
-	 * @return WC_Advanced_Shipment_Tracking_Admin
+	 * @return WC_Trackship_Admin
 	*/
 	public static function get_instance() {
 
@@ -49,6 +49,8 @@ class WC_Trackship_Admin {
 		add_action( 'wp_ajax_remove_trackship_logs', array( $this, 'remove_trackship_logs' ) );
 		add_action( 'wp_ajax_verify_database_table', array( $this, 'verify_database_table' ) );
 		add_action( 'wp_ajax_trackship_mapping_form_update', array( $this, 'trackship_custom_mapping_form_update') );
+		add_action( 'wp_ajax_trackship_integration_form_update', array( $this, 'trackship_integration_form_update_callback') );
+
 		add_filter( 'convert_provider_name_to_slug', array( $this, 'detect_custom_mapping_provider') );	
 		add_action( 'wp_ajax_ts_late_shipments_email_form_update', array( $this, 'ts_late_shipments_email_form_update_callback' ) );
 		add_action( 'wp_ajax_dashboard_page_count_query', array( $this, 'dashboard_page_count_query' ) );
@@ -63,7 +65,7 @@ class WC_Trackship_Admin {
 		
 		add_filter('woocommerce_order_is_download_permitted', array( $this, 'add_onhold_status_to_download_permission' ), 10, 2);
 
-		$newstatus = get_option( 'wc_ast_status_delivered', 0);
+		$newstatus = get_option( 'wc_ast_status_delivered', 1);
 		if ( true == $newstatus ) {
 			//register order status 
 			add_action( 'init', array( $this, 'register_order_status') );
@@ -153,7 +155,7 @@ class WC_Trackship_Admin {
 	}
 
 	public function register_metabox() {
-		if ( ! trackship_for_woocommerce()->is_ast_active() && ( trackship_for_woocommerce()->is_st_active() || trackship_for_woocommerce()->is_active_yith_order_tracking() || trackship_for_woocommerce()->is_active_woo_order_tracking() ) ) {
+		if ( ! trackship_for_woocommerce()->is_ast_active() ) {
 			if ( class_exists( 'Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController' ) ) {
 				$screen = wc_get_container()->get( CustomOrdersTableController::class )->custom_orders_table_usage_is_enabled() ? wc_get_page_screen_id( 'shop-order' ) : 'shop_order';
 			} else {
@@ -785,7 +787,31 @@ class WC_Trackship_Admin {
 		?>
 		</ul>
 	<?php
-	}	
+	}
+
+	public function get_settings_html( $arrays ) {
+		?>
+		<ul class="settings_ul">
+		<?php foreach ( (array) $arrays as $id => $array ) { ?>
+			<?php
+			if ( $array['show'] ) {
+				if ( 'multiple_select' == $array['type'] ) {
+					trackship_for_woocommerce()->html->get_multiple_select_html( $id, $array );
+				} elseif ( 'tgl_checkbox' == $array['type'] ) {
+					trackship_for_woocommerce()->html->get_tgl_checkbox_html( $id, $array );
+				} elseif ( 'dropdown' == $array['type'] ) {
+					trackship_for_woocommerce()->html->get_number_html( $id, $array );
+				} elseif ( 'dropdown_tpage' == $array['type'] ) {
+					trackship_for_woocommerce()->html->get_dropdown_tpage_html( $id, $array );
+				} elseif ( 'button' == $array['type'] ) {
+					trackship_for_woocommerce()->html->get_button_html( $id, $array );
+				}
+			}
+		}
+		?>
+		</ul>
+		<?php
+	}
 	
 	/*
 	* get settings tab array data
@@ -820,7 +846,7 @@ class WC_Trackship_Admin {
 				'show'		=> true,
 				'class'     => '',
 			),
-			'wc_ast_show_shipment_status_filter' => array(
+			'wc_ts_shipment_status_filter' => array(
 				'type'		=> 'tgl_checkbox',
 				'title'		=> __( 'Enable a shipment status filter on orders admin', 'trackship-for-woocommerce' ),				
 				'show'		=> true,
@@ -844,7 +870,30 @@ class WC_Trackship_Admin {
 			);
 		}
 
+		$form_data[ 'late_shipments_days' ] = array(
+			'type'		=> 'dropdown',
+			'title'		=> __( 'Number of days for late shipments', 'trackship-for-woocommerce' ),
+			'show'		=> true,
+			'class'		=> '',
+		);
+
 		return $form_data;
+	}
+
+	/*
+	* get Integrations tab array data
+	* return array
+	*/
+	public function get_trackship_integrations_data() {
+		$integrations = array(
+			'klaviyo' => array(
+				'title'	=> 'Klaviyo',
+				'value'	=> get_trackship_settings( 'klaviyo', ''),
+				'docs'	=> '',
+				'image' => trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/integrations/klaviyo.png',
+			),
+		);
+		return $integrations;
 	}
 
 	public function get_trackship_notice_msg() {
@@ -1037,7 +1086,7 @@ class WC_Trackship_Admin {
 	*/
 	public function additional_admin_order_preview_buttons_actions( $actions, $order ) {
 		
-		$wc_ast_status_delivered = get_option( 'wc_ast_status_delivered' );
+		$wc_ast_status_delivered = get_option( 'wc_ast_status_delivered', 1 );
 		if ( $wc_ast_status_delivered ) {
 			// Below set your custom order statuses (key / label / allowed statuses) that needs a button
 			$custom_statuses = array(
@@ -1068,7 +1117,7 @@ class WC_Trackship_Admin {
 	*/
 	public function add_delivered_order_status_actions_button( $actions, $order ) {
 		
-		$wc_ast_status_delivered = get_option( 'wc_ast_status_delivered' );
+		$wc_ast_status_delivered = get_option( 'wc_ast_status_delivered', 1 );
 		
 		if ( $wc_ast_status_delivered ) {
 			if ( $order->has_status( array( 'completed' ) ) || $order->has_status( array( 'shipped' ) ) ) {
@@ -1106,57 +1155,6 @@ class WC_Trackship_Admin {
 		<?php } ?>
 		<style> #toplevel_page_trackship_customizer { display: none !important; } </style>
 		<?php echo '<div id=admin_tracking_widget class=popupwrapper style="display:none;"><span class="admin_tracking_page_close popupclose"><span class="dashicons dashicons-no-alt"></span></span><div class=popuprow></div><div class=popupclose></div></div>'; ?>
-		<div id=admin_error_more_info_widget class=popupwrapper style="display:none;">
-			<div class="more_info_popup popuprow">
-				<?php
-				$ssl = '<a href="https://docs.trackship.com/docs/trackship-for-woocommerce/getting-started/requirements/#ssl-certificate">SSL Requirements</a>';
-				$array_more_info = array(
-					'pending_trackShip' => array(
-						'heading'	=> 'Pending TrackShip',
-						'detail'	=> 'This is a temporary status that indicated that the tracking info was sent to TrackShip and the first tracking data will update shortly. please try to refresh the orders admin in a few minutes.',
-						'image'		=> 'pending-trackship.png',
-					),
-					'invalid_tracking' => array(
-						'heading'	=> 'Invalid Tracking',
-						'detail'	=> 'The Tracking number you entered for this order does not match the shipping carrier.',
-						'image'		=> 'unknown.png',
-					),
-					'carrier_unsupported' => array(
-						'heading'	=> 'Carrier Unsupported',
-						'detail'	=> 'This message indicates that TrackShip does not support the shipping provider you used.',
-						'image'		=> 'label_cancelled.png',
-					),
-					'insufficient_balance' => array(
-						'heading'	=> 'Insufficient Balance',
-						'detail'	=> 'The Shipment Tracking balance in your TrackShip account is 0, please upgrade your billing plan.',
-						'image'		=> 'failure.png',
-					),
-					'ssl_error' => array(
-						'heading'	=> 'SSL Error',
-						'detail'	=> 'This means that you got SSL issue on your store, check the ' . $ssl . ' for more details.',
-						'image'		=> 'failure.png',
-					),
-					'Unauthorized' => array(
-						'heading'	=> 'Unauthorized',
-						'detail'	=> 'Your store connection key does not exist or the user is not found on TrackShip. Please log in to your TrackShip account, disconnect your store, and re-connect it.',
-						'image'		=> 'failure.png',
-					),
-				);
-				?>
-				<div class="more_info_error_detail">
-					<?php foreach ( $array_more_info as $key => $value ) { ?>
-						<div class="error_details">
-							<div class="">
-								<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/<?php echo esc_html( $value['image'] ); ?>">
-								<span class="shipment_status_label <?php echo esc_html( $key ); ?>"><?php echo esc_html( $value['heading'] ); ?></span>
-							</div>
-							<p><?php echo wp_kses_post( $value['detail'] ); ?></p>
-						</div>
-					<?php } ?>
-				</div>
-			</div>
-			<div class=popupclose></div>
-		</div>
 		<div id="free_user_popup" class="popupwrapper" style="display:none;">
 			<div class="free_user_popup popuprow" style="padding:20px">
 				<h1 style="text-align: center;"><?php esc_html_e( 'Upgrade to TrackShip Pro', 'trackship-for-woocommerce' ); ?></h1>
@@ -1351,6 +1349,16 @@ class WC_Trackship_Admin {
 		wp_send_json( array( 'success' => 'true' ) );
 	}
 
+	public function trackship_integration_form_update_callback() {
+		check_ajax_referer( 'ts_integrations', 'integrations_nonce' );
+		$integrations = $this->get_trackship_integrations_data();
+		foreach ( $integrations as $key => $value ) {
+			$posted_val = isset( $_POST[ $key ] ) ? wc_clean( $_POST[ $key ] ) : '';
+			update_trackship_settings( $key, $posted_val );
+		}
+		wp_send_json( array( 'success' => 'true' ) );
+	}
+
 	/*
 	* Save Custom Mapping data
 	*/
@@ -1432,40 +1440,7 @@ class WC_Trackship_Admin {
 			wp_send_json_success( $return );
 		}
 	}
-	
-	/*
-	* get settings tab array data
-	* return array
-	*/
-	public function get_delivered_data() {		
-		$form_data = array(			
-			'wc_ast_status_delivered' => array(
-				'type'		=> 'checkbox',
-				'title'		=> __( 'Enable custom order status “Delivered"', '' ),				
-				'show'		=> true,
-				'class'     => '',
-			),			
-			'wc_ast_status_label_color' => array(
-				'type'		=> 'color',
-				'title'		=> __( 'Delivered Label color', '' ),				
-				'class'		=> 'status_label_color_th',
-				'show'		=> true,
-			),
-			'wc_ast_status_label_font_color' => array(
-				'type'		=> 'dropdown',
-				'title'		=> __( 'Delivered Label font color', '' ),
-				'options'   => array( 
-					'' =>__( 'Select', 'woocommerce' ),
-					'#fff' =>__( 'Light', '' ),
-					'#000' =>__( 'Dark', '' ),
-				),			
-				'class'		=> 'status_label_color_th',
-				'show'		=> true,
-			),							
-		);
-		return $form_data;
-	}
-	
+		
 	/*
 	* get settings tab array data
 	* return array
@@ -1475,7 +1450,7 @@ class WC_Trackship_Admin {
 		
 		$slug = '';
 		
-		$wc_ast_trackship_page_id = get_option('wc_ast_trackship_page_id');
+		$wc_ast_trackship_page_id = get_trackship_settings('wc_ast_trackship_page_id');
 		$post = get_post($wc_ast_trackship_page_id); 
 		if ( $post ) {
 			$slug = $post->post_name;

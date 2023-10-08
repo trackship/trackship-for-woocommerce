@@ -398,6 +398,41 @@ jQuery(document).on("change", "#all-shipment-status-delivered", function () {
 	return false;
 });
 
+/* Ajex call for Integration save*/
+jQuery(document).on("change", ".ts_integration_checkbox input", function () {
+	"use strict";
+
+	jQuery.ajax({
+		url: ajaxurl,
+		data: jQuery("#trackship_integrations_form").serialize(),
+		type: 'POST',
+		success: function (response) {
+			jQuery(document).trackship_snackbar(trackship_script.i18n.data_saved);
+		},
+		error: function (response, jqXHR, exception) {
+			console.log(response);
+			var warning_msg = '';
+			if (jqXHR.status === 0) {
+				warning_msg = 'Not connect.\n Verify Network.';
+			} else if (jqXHR.status === 404) {
+				warning_msg = 'Requested page not found. [404]';
+			} else if (jqXHR.status === 500) {
+				warning_msg = 'Internal Server Error [500].';
+			} else if (exception === 'parsererror') {
+				warning_msg = 'Requested JSON parse failed.';
+			} else if (exception === 'timeout') {
+				warning_msg = 'Time out error.';
+			} else if (exception === 'abort') {
+				warning_msg = 'Ajax request aborted.';
+			} else {
+				warning_msg = 'Uncaught Error.\n' + jqXHR.responseText;
+			}
+			jQuery(document).trackship_snackbar_warning(warning_msg);
+		}
+	});
+	return false;
+});
+
 jQuery(document).on("click", ".late-shipment-tr", function (event) {
 	var $trigger = jQuery(".shipment_status_toggle");
 	if ($trigger !== event.target && !$trigger.has(event.target).length) {
@@ -761,48 +796,6 @@ function copyTextToClipboard(text) {
 	document.body.removeChild(textArea);
 }
 
-jQuery(document).on("click", ".tracking-event-delete-notice .bulk_shipment_status_button", function () {
-	var days = jQuery("#delete_time").val();
-	var ajax_data = {
-		action: 'remove_tracking_event',
-		days: days,
-		security: jQuery('#wc_ast_tools').val()
-	};
-	jQuery.ajax({
-		url: ajaxurl,
-		data: ajax_data,
-		type: 'POST',
-		dataType: "json",
-		success: function (response) {
-			jQuery(document).trackship_snackbar('Tracking events deleted');
-		},
-		error: function (response) {
-			var warning_msg = '';
-			if (jqXHR.status === 0) {
-				warning_msg = 'Not connect.\n Verify Network.';
-			} else if (jqXHR.status === 404) {
-				warning_msg = 'Requested page not found. [404]';
-			} else if (jqXHR.status === 500) {
-				warning_msg = 'Internal Server Error [500].';
-			} else if (exception === 'parsererror') {
-				warning_msg = 'Requested JSON parse failed.';
-			} else if (exception === 'timeout') {
-				warning_msg = 'Time out error.';
-			} else if (exception === 'abort') {
-				warning_msg = 'Ajax request aborted.';
-			} else if (jqXHR.responseText === '-1') {
-				msg = 'Security check fail, please refresh and try again.';
-			} else {
-				warning_msg = 'Uncaught Error.\n' + jqXHR.responseText;
-			}
-
-			jQuery(document).trackship_snackbar_warning(warning_msg);
-			console.log(response);
-		}
-	});
-	return false;
-});
-
 jQuery(document).on("click", ".tracking_notification_log_delete .delete_notification", function () {
 	var ajax_data = {
 		action: 'remove_trackship_logs',
@@ -888,14 +881,6 @@ jQuery(document).on("click", ".trackship-notice p span.dashicons", function () {
 	var cookies = document.cookie = "Notice=delete " + expires;
 	jQuery('.trackship_notice_msg').hide();
 	console.log(cookies);
-});
-
-/*
-* click on more info
-*/
-jQuery(document).on("click", ".open_more_info_popup", function () {
-	jQuery("#admin_error_more_info_widget").show();
-	return false;
 });
 
 jQuery(document).on('click', '.inner_tab_section .heading_panel.section_sms_heading', function() {

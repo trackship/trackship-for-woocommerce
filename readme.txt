@@ -4,7 +4,7 @@ Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 5.3
 Tested up to: 6.3.0
 Requires PHP: 7.2
-Stable tag: 1.6.4
+Stable tag: 1.6.5
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,6 +111,15 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended).
 
 == Changelog ==
+= 1.6.5 - 2023-10-06 =
+* Enhancement - added Integration tab and Klaviyo integration added
+* Enhancement - added Twilio WhatsApp for Shipment status notifications
+* Enhancement - Tracking page loader improved
+* Dev - Tracking evets delete option removed from tools tab
+* Dev - In the admin, Pending Update added instead of Shipped
+* Dev - Tested with WordPress 6.3.1
+* Dev - Tested with WooCommerce 8.1.1
+
 = 1.6.4 - 2023-09-12 =
 * Dev - TrackShip Dashboard design updated
 * Dev - TrackShip Dashboard code improved

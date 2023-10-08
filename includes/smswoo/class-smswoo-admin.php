@@ -111,9 +111,9 @@ class tswc_smswoo_admin {
 								</select>
 								<br>
 								<?php foreach($array['link'] as $key1 => $links) {?>
-								<strong valign="top" class="link_row smswoo_sms_provider <?php echo $key1; ?>_sms_provider">
+								<p valign="top" class="link_row smswoo_sms_provider <?php echo $key1; ?>_sms_provider">
 									<a href= "<?php echo $links['link']?>" target="_blank"><?php echo $links['title']?></a>
-								</strong>
+								</p>
 								<?php } ?>
 							</td>
 						</tr>
@@ -206,9 +206,9 @@ class tswc_smswoo_admin {
 								<?php } ?>
 								<?php if(isset($array['link'])){ ?>
 									<?php foreach($array['link'] as $key1 => $links) {?>
-									<strong valign="top" class="link_row <?php echo $links['class']?>">
+									<p valign="top" class="link_row <?php echo $links['class']?>">
 										<a href= "<?php echo $links['link']?>" target="_blank"><?php echo $links['title']?></a>
-									</strong>
+									</p>
 									<?php } ?>
 								<?php } ?>
 							</fieldset>
@@ -256,20 +256,20 @@ class tswc_smswoo_admin {
 	function get_sms_provider_data() {
         $settings = array(
 			/*'title1' => array(
-				'title'			=> __( 'SMS Service Provider', 'trackship-for-woocommerce' ),
+				'title'			=> __( 'SMS gateways', 'trackship-for-woocommerce' ),
 				'type'			=> 'title',
 				'id'			=> 'title1',
 			),*/
 			'smswoo_sms_provider' => array(
-				'title'		=> __( 'Select SMS Integration', 'trackship-for-woocommerce' ),
-				'desc'		=> __( "Please choose SMS provider from Dropown.", 'trackship-for-woocommerce' ),
+				'title'		=> __( 'SMS gateways', 'trackship-for-woocommerce' ),
+				'desc'		=> __( "Please choose SMS gateway from Dropown.", 'trackship-for-woocommerce' ),
 				'type'		=> 'dropdown_button',
 				'show'		=> true,
 				'id'		=> 'smswoo_sms_provider',
 				'class'		=> '',
 				'default'	=> '',
 				'options'	=> array(
-					''					=> __( 'Select SMS provider', 'trackship-for-woocommerce' ),
+					''					=> __( 'SMS gateways', 'trackship-for-woocommerce' ),
 					'smswoo_nexmo'		=> 'Nexmo',
 					'smswoo_twilio'		=> 'Twilio',
 					'smswoo_clicksend'	=> 'ClickSend',
@@ -305,57 +305,69 @@ class tswc_smswoo_admin {
 				),
 			),
 			'smswoo_nexmo_key' => array(
-				'title'		=> __( 'Nexmo key', 'trackship-for-woocommerce' ),
+				'title'		=> __( 'Key', 'trackship-for-woocommerce' ),
 				'type'		=> 'text',
 				'show'		=> true,
 				'id'		=> 'smswoo_nexmo_key',
 				'class'		=> 'smswoo_sms_provider smswoo_nexmo_sms_provider',
 			),
 			'smswoo_nexmo_secret' => array(
-				'title'		=> __( 'Nexmo Secret', 'trackship-for-woocommerce' ),
+				'title'		=> __( 'Secret', 'trackship-for-woocommerce' ),
 				'type'		=> 'text',
 				'show'		=> true,
 				'id'		=> 'smswoo_nexmo_secret',
 				'class'		=> 'smswoo_sms_provider smswoo_nexmo_sms_provider',
 			),
 			'smswoo_twilio_account_sid' => array(
-				'title'		=> __( 'Twilio Account SID', 'trackship-for-woocommerce' ),
+				'title'		=> __( 'Account SID', 'trackship-for-woocommerce' ),
 				'type'		=> 'text',
 				'show'		=> true,
 				'id'		=> 'smswoo_twilio_account_sid',
 				'class'		=> 'smswoo_sms_provider smswoo_twilio_sms_provider',
 			),
 			'smswoo_twilio_auth_token' => array(
-				'title'		=> __( 'Twilio Auth Token', 'trackship-for-woocommerce' ),
+				'title'		=> __( 'Auth Token', 'trackship-for-woocommerce' ),
 				'type'		=> 'text',
 				'show'		=> true,
 				'id'		=> 'smswoo_twilio_auth_token',
 				'class'		=> 'smswoo_sms_provider smswoo_twilio_sms_provider',
 			),
+			'enable_twilio_whatsapp' => array(
+				'title'		=> __( 'Notifications Type (SMS/WhatsApp)', 'trackship-for-woocommerce' ),
+				'type'		=> 'dropdown_button',
+				'options'	=> array(
+					'enable_sms'		=> 'SMS',
+					'enable_whatsapp'		=> 'WhatsApp',
+				),
+				'link'		=> [],
+				'show'		=> true,
+				'id'		=> 'enable_twilio_whatsapp',
+				'class'		=> 'smswoo_sms_provider smswoo_twilio_sms_provider',
+			),
 			'smswoo_clicksend_username' => array(
-				'title'		=> __( 'Clicksend API Username', 'trackship-for-woocommerce' ),
+				'title'		=> __( 'API Username', 'trackship-for-woocommerce' ),
 				'type'		=> 'text',
 				'show'		=> true,
 				'id'		=> 'smswoo_clicksend_username',
 				'class'		=> 'smswoo_sms_provider smswoo_clicksend_sms_provider',
 			),
 			'smswoo_clicksend_key' => array(
-				'title'		=> __( 'Clicksend API key', 'trackship-for-woocommerce' ),
+				'title'		=> __( 'API key', 'trackship-for-woocommerce' ),
 				'type'		=> 'text',
 				'show'		=> true,
 				'id'		=> 'smswoo_clicksend_key',
 				'class'		=> 'smswoo_sms_provider smswoo_clicksend_sms_provider',
 			),
 			'smswoo_fast2sms_key' => array(
-				'title'		=> __( 'Fast2sms API Authorization Key', 'smswoo' ),
-				//'desc'		=> __( "Fast2sms API Authorization Key", 'smswoo'),
+				'title'		=> __( 'API Authorization Key', 'trackship-for-woocommerce' ),
+				//'desc'		=> __( "Fast2sms API Authorization Key", 'trackship-for-woocommerce'),
 				'type'		=> 'text',
 				'show'		=> true,
 				'id'		=> 'smswoo_fast2sms_key',
 				'class'		=> 'smswoo_sms_provider smswoo_fast2sms_sms_provider',
 			),
 			'smswoo_msg91_authkey' => array(
-				'title'		=> __( 'MSG91 Authentication Key', 'smswoo' ),
+				'title'		=> __( 'Authentication Key', 'smswoo' ),
 				'type'		=> 'text',
 				'show'		=> true,
 				'id'		=> 'smswoo_msg91_authkey',
@@ -369,8 +381,8 @@ class tswc_smswoo_admin {
 				'class'		=> 'smswoo_sms_provider smswoo_msg91_sms_provider',
 			),
 			'smswoo_smsalert_key' => array(
-				'title'		=> __( 'SMS Alert API Authorization Key', 'smswoo' ),
-				//'desc'		=> __( "Fast2sms API Authorization Key", 'smswoo'),
+				'title'		=> __( 'API Authorization Key', 'trackship-for-woocommerce' ),
+				//'desc'		=> __( "Fast2sms API Authorization Key", 'trackship-for-woocommerce'),
 				'type'		=> 'text',
 				'show'		=> true,
 				'id'		=> 'smswoo_smsalert_key',
@@ -385,9 +397,9 @@ class tswc_smswoo_admin {
 				'class'		=> 'smswoo_sms_provider smswoo_nexmo_sms_provider smswoo_twilio_sms_provider smswoo_clicksend_sms_provider smswoo_smsalert_sms_provider smswoo_msg91_sms_provider', //add provider class if need this field in another provider
 			),
 			'smswoo_admin_phone_number' => array(
-				'title'		=> __( 'Admin Phone Number', 'sms-for-woocommerce' ),
-				'tooltip'		=> __( 'Enter admin phone number with country code.', 'sms-for-woocommerce'),
-				'desc_tip'	=> __( 'Enter admin phone number with country code.', 'sms-for-woocommerce' ),
+				'title'		=> __( 'Admin Phone Number', 'trackship-for-woocommerce' ),
+				'tooltip'		=> __( 'Enter admin phone number with country code.', 'trackship-for-woocommerce'),
+				'desc_tip'	=> __( 'Enter admin phone number with country code.', 'trackship-for-woocommerce' ),
 				'type'		=> 'text',
 				'show'		=> true,
 				'id'		=> 'smswoo_admin_phone_number',
