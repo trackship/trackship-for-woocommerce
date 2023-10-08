@@ -156,9 +156,9 @@ class WC_TrackShip_Admin_notice {
 		</style>	
 		<div class="notice notice-success is-dismissible trackship-dismissable-notice">
 			<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
-			<p><strong>Seamless Integration: Klaviyo and TrackShip for WooCommerce</strong></p>
-			<p>Streamline your WooCommerce store's performance with the seamless integration of Klaviyo and TrackShip. With this powerful combination, you can effortlessly manage your email marketing campaigns through Klaviyo while efficiently tracking your WooCommerce shipments with TrackShip. Enhance your customer experience and drive sales growth with these integrated solutions at your fingertips. For more detail please refer <a href="<?php echo esc_url($url); ?>" target="_blank">documentation</a>.</p>
-			<a class="button button-primary" href="<?php echo esc_url($btn_url); ?>" >Enable Klaviyo integration</a>
+			<p><strong>New Feature Alert!</strong></p>
+			<p>We're excited to announce that TrackShip for WooCommerce now integrates seamlessly with Klaviyo. Harness the power of Klaviyo to take your tracking and shipping communication to the next level.</p>
+			<p>To enable the integration, head over to the integration <a href="<?php echo esc_url($btn_url); ?>">settings</a>. For more details and setup guidance, please visit our <a href="<?php echo esc_url($url); ?>" target="_blank">documentation</a>.</p>
 		</div>
 		<?php
 	}

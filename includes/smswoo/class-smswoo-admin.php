@@ -333,7 +333,7 @@ class tswc_smswoo_admin {
 				'class'		=> 'smswoo_sms_provider smswoo_twilio_sms_provider',
 			),
 			'enable_twilio_whatsapp' => array(
-				'title'		=> __( 'Notifications Type (SMS/WhatsApp)', 'sms-for-woocommerce' ),
+				'title'		=> __( 'Notifications Type (SMS/WhatsApp)', 'trackship-for-woocommerce' ),
 				'type'		=> 'dropdown_button',
 				'options'	=> array(
 					'enable_sms'		=> 'SMS',
@@ -359,8 +359,8 @@ class tswc_smswoo_admin {
 				'class'		=> 'smswoo_sms_provider smswoo_clicksend_sms_provider',
 			),
 			'smswoo_fast2sms_key' => array(
-				'title'		=> __( 'API Authorization Key', 'smswoo' ),
-				//'desc'		=> __( "Fast2sms API Authorization Key", 'smswoo'),
+				'title'		=> __( 'API Authorization Key', 'trackship-for-woocommerce' ),
+				//'desc'		=> __( "Fast2sms API Authorization Key", 'trackship-for-woocommerce'),
 				'type'		=> 'text',
 				'show'		=> true,
 				'id'		=> 'smswoo_fast2sms_key',
@@ -381,8 +381,8 @@ class tswc_smswoo_admin {
 				'class'		=> 'smswoo_sms_provider smswoo_msg91_sms_provider',
 			),
 			'smswoo_smsalert_key' => array(
-				'title'		=> __( 'API Authorization Key', 'smswoo' ),
-				//'desc'		=> __( "Fast2sms API Authorization Key", 'smswoo'),
+				'title'		=> __( 'API Authorization Key', 'trackship-for-woocommerce' ),
+				//'desc'		=> __( "Fast2sms API Authorization Key", 'trackship-for-woocommerce'),
 				'type'		=> 'text',
 				'show'		=> true,
 				'id'		=> 'smswoo_smsalert_key',
@@ -397,9 +397,9 @@ class tswc_smswoo_admin {
 				'class'		=> 'smswoo_sms_provider smswoo_nexmo_sms_provider smswoo_twilio_sms_provider smswoo_clicksend_sms_provider smswoo_smsalert_sms_provider smswoo_msg91_sms_provider', //add provider class if need this field in another provider
 			),
 			'smswoo_admin_phone_number' => array(
-				'title'		=> __( 'Admin Phone Number', 'sms-for-woocommerce' ),
-				'tooltip'		=> __( 'Enter admin phone number with country code.', 'sms-for-woocommerce'),
-				'desc_tip'	=> __( 'Enter admin phone number with country code.', 'sms-for-woocommerce' ),
+				'title'		=> __( 'Admin Phone Number', 'trackship-for-woocommerce' ),
+				'tooltip'		=> __( 'Enter admin phone number with country code.', 'trackship-for-woocommerce'),
+				'desc_tip'	=> __( 'Enter admin phone number with country code.', 'trackship-for-woocommerce' ),
 				'type'		=> 'text',
 				'show'		=> true,
 				'id'		=> 'smswoo_admin_phone_number',
