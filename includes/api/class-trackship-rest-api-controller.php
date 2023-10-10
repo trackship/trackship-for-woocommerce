@@ -238,6 +238,8 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			$args2 = array(
 				'origin_country'		=> $request['origin_country'],
 				'destination_country'	=> $request['destination_country'],
+				'destination_state'		=> $request['destination_state'],
+				'destination_city'		=> $request['destination_city'],
 				'delivery_number'		=> $request['delivery_number'],
 				'delivery_provider'		=> $request['delivery_provider'],
 				'shipping_service'		=> $request['shipping_service'],
