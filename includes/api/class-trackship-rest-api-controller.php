@@ -203,10 +203,6 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 				continue;
 			}
 			$row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id , $tracking_item['tracking_number'] );
-			if ( isset( $row->shipment_status ) && 'delivered' == $row->shipment_status ) {
-				continue;
-			}
-			
 			$previous_status = isset( $row->shipment_status ) ? $row->shipment_status : '';	
 			
 			/* START -- to be removed in the future */
