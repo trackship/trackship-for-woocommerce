@@ -34,6 +34,7 @@ jQuery('.shipping_date').on('cancel.daterangepicker', function(ev, picker) {
 
 jQuery(document).ready(function() {
 	'use strict';
+	localStorage_migraine();
 	var url;
 	var $table = jQuery("#active_shipments_table").DataTable({
 		dom: "i<'shipments_custom_data'>B<'table_scroll't><'datatable_footer'ilp>",
@@ -123,6 +124,16 @@ jQuery(document).ready(function() {
 				"width": "140px",
 				'orderable': false,
 				'data': 'ship_to',
+			},
+			{
+				"width": "140px",
+				'orderable': false,
+				'data': 'ship_state',
+			},
+			{
+				"width": "140px",
+				'orderable': false,
+				'data': 'ship_city',
 			},
 			{
 				"width": "200px",
@@ -298,7 +309,7 @@ jQuery(document).ready(function() {
 		}	
 	});
 
-	var localStorageData = localStorage.getItem('shipments_column');
+	var localStorageData = localStorage.getItem('shipment_column');
 	if(localStorageData){
 		var data = JSON.parse(localStorageData)
 		Object.keys(data).map((keyName) => {
@@ -308,25 +319,44 @@ jQuery(document).ready(function() {
 	}
 
 	jQuery(document).on("change", ".column_toogle input", function () {
-		var localStorageData = localStorage.getItem('shipments_column')
+		var localStorageData = localStorage.getItem('shipment_column')
 		var number = jQuery(this).data('number');
 		if(localStorageData){
-			localStorage.setItem('shipments_column',JSON.stringify({
+			localStorage.setItem('shipment_column',JSON.stringify({
 				...JSON.parse(localStorageData),
 				[number]:jQuery(this).prop("checked") == true
 			}));
 		}else{
-			localStorage.setItem('shipments_column',JSON.stringify({
+			localStorage.setItem('shipment_column',JSON.stringify({
 				[number]:jQuery(this).prop("checked") == true
 			}));
 		}
-		if (jQuery(this).prop("checked") == true) {	
+		if (jQuery(this).prop("checked") == true) {
 			$table.columns(number).visible(true);
 		} else {
 			$table.columns(number).visible(false);
 		}
 	});
 });
+
+function localStorage_migraine() {
+	var localStorageData = localStorage.getItem('shipments_column');
+	if(localStorageData){
+		var objectNew = {}
+		var data = JSON.parse(localStorageData)
+		Object.keys(data).map((keyName) => {
+			if(keyName == "8") objectNew["10"] = data[keyName];
+			else if(keyName == "9") objectNew["11"] = data[keyName];
+			else if(keyName == "10") objectNew["12"] = data[keyName];
+			else if(keyName == "11") objectNew["13"] = data[keyName];
+			else if(keyName == "12") objectNew["14"] = data[keyName];
+
+			else objectNew[keyName] = data[keyName];
+		})
+		localStorage.setItem('shipment_column',JSON.stringify(objectNew));
+		localStorage.removeItem('shipments_column');
+	}
+}
 
 jQuery(document).on("click", "#bulk_actions", function(){
 	var length = jQuery('.shipment_checkbox:checked').length;

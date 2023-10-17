@@ -221,6 +221,8 @@ class WC_Trackship_Shipments {
 			$result[$i]->est_delivery_date = $value->est_delivery_date ? date_i18n( $date_format, strtotime( $value->est_delivery_date ) ) : '';
 			$result[$i]->ship_from = $ori_country ? $this->get_flag_icon( $ori_country ) : '';
 			$result[$i]->ship_to = $dest_country ? $this->get_flag_icon( $dest_country ) : '';
+			$result[$i]->ship_state = isset($value->destination_state) ? $value->destination_state : '';
+			$result[$i]->ship_city = isset($value->destination_city) ? $value->destination_city : '';
 			$result[$i]->customer = $customer;
 			$result[$i]->refresh_button = 'delivered' == $status ? '' : $active_shipment;
 			$i++;
