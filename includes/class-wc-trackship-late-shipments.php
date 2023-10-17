@@ -10,7 +10,7 @@ class WC_TrackShip_Late_Shipments {
 	 *
 	 * @var object Class Instance
 	*/
-	private static $instance;	
+	private static $instance;
 
 	const CRON_HOOK = 'trackship_late_shipments_hook';
 	
@@ -46,10 +46,10 @@ class WC_TrackShip_Late_Shipments {
 	public function init() {
 		
 		$ts_actions = new WC_Trackship_Actions();
+
+		$late_shipments_email_enable = get_trackship_settings( 'late_shipments_email_enable' );
 		
-		$wcast_enable_late_shipments_email = $ts_actions->get_option_value_from_array( 'late_shipments_email_settings', 'wcast_enable_late_shipments_admin_email', '');
-		
-		if ( !$wcast_enable_late_shipments_email || ! is_trackship_connected() ) {
+		if ( !$late_shipments_email_enable || ! is_trackship_connected() ) {
 			return;
 		}
 		
@@ -79,31 +79,28 @@ class WC_TrackShip_Late_Shipments {
 	public function setup_cron() {
 
 		$late_shipments_email_settings = get_option('late_shipments_email_settings');
-
-		if ( !isset( $late_shipments_email_settings['wcast_enable_late_shipments_admin_email'] ) || wp_next_scheduled( self::CRON_HOOK ) ) {
+		$daily_digest_time = get_option('late_shipments_digest_time');
+		
+		if ( !get_trackship_settings( 'late_shipments_email_enable' ) || wp_next_scheduled( self::CRON_HOOK ) ) {
 			return;
 		}
 
-		if ( isset( $late_shipments_email_settings['wcast_late_shipments_daily_digest_time'] ) ) {
-			
-			$wcast_late_shipments_daily_digest_time = $late_shipments_email_settings['wcast_late_shipments_daily_digest_time'];
-			
+		if ( $daily_digest_time ) {
+
 			// Create a Date Time object when the cron should run for the first time
-			$first_cron = new DateTime( gmdate( 'Y-m-d' ) . ' ' . $wcast_late_shipments_daily_digest_time . ':00', new DateTimeZone( wc_timezone_string() ) );	
-			
+			$first_cron = new DateTime( gmdate( 'Y-m-d' ) . ' ' . $daily_digest_time . ':00', new DateTimeZone( wc_timezone_string() ) );
 			$first_cron->setTimeZone(new DateTimeZone('GMT'));
-			
 			$time = new DateTime( gmdate( 'Y-m-d H:i:s' ), new DateTimeZone( wc_timezone_string() ) );
 			
 			if ( $time->getTimestamp() >  $first_cron->getTimestamp() ) {
 				$first_cron->modify( '+1 day' );
 			}
 
-			wp_schedule_event( $first_cron->format( 'U' ) + $first_cron->getOffset(), 'daily', self::CRON_HOOK );					
+			wp_schedule_event( $first_cron->format( 'U' ) + $first_cron->getOffset(), 'daily', self::CRON_HOOK );
 		
 		} else {
 			if (!wp_next_scheduled( self::CRON_HOOK ) ) {
-				wp_schedule_event( time() , 'daily', self::CRON_HOOK );			
+				wp_schedule_event( time() , 'daily', self::CRON_HOOK );
 			}
 		}
 	}
@@ -113,7 +110,7 @@ class WC_TrackShip_Late_Shipments {
 	 * Send Late Shipments Email
 	 *
 	 */
-	public function send_late_shipments_email() {	
+	public function send_late_shipments_email() {
 		
 		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
 			$logger = wc_get_logger();
@@ -129,20 +126,20 @@ class WC_TrackShip_Late_Shipments {
 		
 		//total late shipment count
 		$count = $wpdb->get_var("
-			SELECT 				
+			SELECT
 				COUNT(*)
-				FROM {$woo_trackship_shipment}			
+				FROM {$woo_trackship_shipment}
 			WHERE 
 				shipment_status NOT LIKE ( 'delivered')
 				AND shipment_status NOT LIKE ( 'available_for_pickup')
 				AND late_shipment_email = 0
 				AND shipping_length > {$day}
 		");
-		
+
 		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) || 0 == $count ) {
 			return;
 		}
-		
+
 		// late shipment query in trackship_shipment table
 		$total_order = $wpdb->get_results("
 			SELECT *
@@ -154,10 +151,10 @@ class WC_TrackShip_Late_Shipments {
 				AND shipping_length > {$day}
 			LIMIT 10
 		");
-		
+
 		//Send email for late shipment
 		$email_send = $this->late_shippment_email_trigger( $total_order, $count );
-		
+
 		foreach ( $total_order as $key => $orders ) {
 			if ( in_array( 1, $email_send ) ) {
 				$where = array(
@@ -180,30 +177,30 @@ class WC_TrackShip_Late_Shipments {
 		$logger = wc_get_logger();
 		$sent_to_admin = false;
 		$plain_text = false;
-		
+
 		//Email Subject
 		$subject =  __( 'Late shipment', 'trackship-for-woocommerce' );
 		// Email heading
 		/* translators: %s: search for a count */
 		$email_heading = sprintf( __( 'We detected %d late shipments:', 'trackship-for-woocommerce' ) , $count );
-		
+
 		//Email Content
 		$email_content = __( 'The following shipments are late:', 'trackship-for-woocommerce' );
 		$email_content .= wc_get_template_html( 'emails/late-shipment-email.php', array(
 			'orders' => $orders,
 		), 'woocommerce-advanced-shipment-tracking/', trackship_for_woocommerce()->get_plugin_path() . '/templates/' );
-				
+
 		$mailer = WC()->mailer();
 		// create a new email
 		$email = new WC_Email();
-	
+
 		// wrap the content with the email template and then add styles
 		$email_content = apply_filters( 'woocommerce_mail_content', $email->style_inline( $mailer->wrap_message( $email_heading, $email_content ) ) );
-		
+
 		add_filter( 'wp_mail_from', array( WC_TrackShip_Email_Manager(), 'get_from_address' ) );
 		add_filter( 'wp_mail_from_name', array( WC_TrackShip_Email_Manager(), 'get_from_name' ) );
-		
-		$email_to = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'late_shipments_email_settings', 'wcast_late_shipments_email_to', '{admin_email}' );
+
+		$email_to = get_trackship_settings( 'late_shipments_email_to', '{admin_email}' );
 		$email_to = explode( ',', $email_to );
 		$email_send = array();
 		foreach ( $email_to as $email_addr ) {

@@ -689,6 +689,7 @@ tr.late-shipment-tr.open td {
 	border-radius: 0 0 5px 5px;
 	border-collapse: separate;
 	table-layout: auto;
+	padding: 0 15px;
 }
 .trackship_admin_layout .late-shipments-email-content-table #wcast_late_shipments_email_content {
 	width: 100%;
@@ -1258,7 +1259,7 @@ button.bulk_shipment_status_button {
 	width: auto;
 	display: inline-block;
 }
-.panel_content li.dis_block label {
+.inner_tab_section li.dis_block label {
 	display: block;
 	margin-bottom: 10px;
 }
@@ -1344,10 +1345,6 @@ form.zorem_plugin_setting_tab_form tr.title_row {
 }
 form.zorem_plugin_setting_tab_form h1 {
 	margin: 0;
-}
-ul.settings_ul li label.left_label {
-	width: 30%;
-	display: inline-block;
 }
 .trackship_notice_msg.tools_tab_ts4wc {
 	border: 1px solid #e0e0e0;
@@ -1493,9 +1490,13 @@ div#trackship-tracking-items .ts-tracking-item {
 	padding-left: 10px;
 	box-sizing: border-box;
 }
-.wp-core-ui #trackship_tracking_page_form select {
+.wp-core-ui #trackship_tracking_page_form select, input#wc_ast_trackship_other_page, select.daily_digest_time {
 	background-color: #fafafa;
 	width: 250px;
+}
+input#late_shipments_email_to {
+	max-width: 500px;
+	width: 100%;
 }
 /* .trackship_sms_settings .form-table {
 	width: 1000px;
@@ -2039,9 +2040,6 @@ span.select_t_layout_section {
 }
 .shipment-status-email-table.form-table td {
 	display: table-cell;
-}
-ul.settings_ul li label.left_label {
-	width: 35%;
 }
 }
 

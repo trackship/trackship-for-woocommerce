@@ -4,8 +4,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 <div class="outer_form_table ts_notifications_outer_table">
-	<?php 
-	$wcast_enable_late_shipments_admin_email = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_enable_late_shipments_admin_email', '');
+	<?php
+	$late_shipments_email_enable = get_trackship_settings( 'late_shipments_email_enable' );
 	$tab_type = isset( $_GET['tab'] ) ? sanitize_text_field($_GET['tab']) : '';	
 	
 	$ts_notifications = $this->trackship_shipment_status_notifications_data();
@@ -61,7 +61,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<form method="post" id="trackship_late_shipments_form" action="" enctype="multipart/form-data">
 			<table class="form-table heading-table shipment-status-email-table">
 				<tbody>
-					<tr class="late-shipment-tr <?php echo 1 == $wcast_enable_late_shipments_admin_email ? 'enable' : 'disable'; ?> ">
+					<tr class="late-shipment-tr <?php echo 1 == $late_shipments_email_enable ? 'enable' : 'disable'; ?> ">
 						<td class="forminp status-label-column">
 							<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/late-shipment.png">
 							<strong><?php esc_html_e('Late Shipments', 'trackship-for-woocommerce'); ?></strong>
@@ -71,54 +71,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php wp_nonce_field( 'ts_late_shipments_email_form', 'ts_late_shipments_email_form_nonce' ); ?>
 							<input type="hidden" name="action" value="ts_late_shipments_email_form_update">
 							<span class="shipment_status_toggle">
-								<input type="hidden" name="wcast_enable_late_shipments_admin_email" value="0"/>
-								<input class="ast-tgl ast-tgl-flat" id="wcast_enable_late_shipments_admin_email" name="wcast_enable_late_shipments_admin_email" data-settings="late_shipments_email_settings" type="checkbox" <?php echo 1 == $wcast_enable_late_shipments_admin_email ? 'checked' : ''; ?> value="1"/>
-								<label class="ast-tgl-btn ast-tgl-btn-green" for="wcast_enable_late_shipments_admin_email"></label>
+								<input type="hidden" name="late_shipments_email_enable" value="0"/>
+								<input class="ast-tgl ast-tgl-flat" id="late_shipments_email_enable" name="late_shipments_email_enable" data-settings="late_shipments_email_settings" type="checkbox" <?php echo 1 == $late_shipments_email_enable ? 'checked' : ''; ?> value="1"/>
+								<label class="ast-tgl-btn ast-tgl-btn-green" for="late_shipments_email_enable"></label>
 							</span>
 							<span class="edit_customizer_a dashicons dashicons-admin-generic"></span>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-			<?php 
-			$late_shipments_email_settings = get_option('late_shipments_email_settings');
-			$wcast_late_shipments_email_to = isset( $late_shipments_email_settings['wcast_late_shipments_email_to'] ) ? $late_shipments_email_settings['wcast_late_shipments_email_to'] : '';
-			$wcast_late_shipments_daily_digest_time = isset( $late_shipments_email_settings['wcast_late_shipments_daily_digest_time'] ) ? $late_shipments_email_settings['wcast_late_shipments_daily_digest_time'] : '' ;
-			?>
 			<div class="late-shipments-email-content-table">
-				<table class="form-table hide_table">
-					<tr class="">
-						<th scope="row" class="titledesc">
-							<label for=""><?php esc_html_e('Recipient(s)', 'trackship-for-woocommerce'); ?></label>
-						</th>	
-						<td class="forminp">
-							<fieldset>
-								<input class="input-text regular-input " style="width: 60%;" type="text" name="wcast_late_shipments_email_to" id="wcast_late_shipments_email_to" placeholder="<?php esc_html_e( 'E.g. {admin_email}, admin@example.org' ); ?>" value="<?php echo esc_html($wcast_late_shipments_email_to, get_option( 'admin_email' ) ); ?>">
-							</fieldset>
-						</td>
-					</tr>
-					<?php 
-					$send_time_array = array();
-					for ( $hour = 0; $hour < 24; $hour++ ) {
-						for ( $min = 0; $min < 60; $min = $min + 30 ) {
-							$this_time = gmdate( 'H:i', strtotime( "$hour:$min" ) );
-							$send_time_array[ $this_time ] = $this_time;
-						}
-					}
-					?>
-					<tr class="">
-						<th scope="row" class="titledesc" style="width:30%">
-							<label for=""><?php esc_html_e('Send email at', 'trackship-for-woocommerce'); ?></label>
-						</th>
-						<td class="forminp" style="width:70%">
-							<select class="select daily_digest_time" name="wcast_late_shipments_daily_digest_time">
-								<?php foreach ( (array) $send_time_array as $key1 => $val1 ) { ?>
-									<option <?php echo $wcast_late_shipments_daily_digest_time == $key1 ? 'selected' : ''; ?> value="<?php echo esc_html( $key1 ); ?>" ><?php echo esc_html( $val1 ); ?></option>
-								<?php } ?>
-							</select>
-						</td>
-					</tr>
-				</table>
+				<?php $this->get_settings_html( $this->get_late_shipment_data() ); ?>
 			</div>
 		</form>
 	</section>
