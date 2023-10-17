@@ -124,7 +124,7 @@ class WC_Trackship_Html {
 
 	public function get_button_html( $id, $array ) {
 		?>
-		<li>
+		<li >
 			<?php if ( $array['title'] ) { ?>
 				<label class="left_label"><?php echo esc_html( $array['title'] ); ?>
 					<?php if ( isset($array['tooltip']) ) { ?>
@@ -137,6 +137,53 @@ class WC_Trackship_Html {
 			<?php } ?>
 		</li>
 		<?php
+	}
+
+	public function get_text_html( $id, $array ) {
+		?>
+		<li class="dis_block">
+			<?php if ( $array['title'] ) { ?>
+				<label class="left_label"><?php echo esc_html( $array['title'] ); ?>
+					<?php if ( isset($array['tooltip']) ) { ?>
+					<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
+					<?php } ?>
+				</label>
+			<?php } ?>
+			<fieldset>
+				<input class="input-text regular-input " type="text" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" placeholder="<?php esc_html_e( 'E.g. {admin_email}, admin@example.org' ); ?>" value="<?php echo get_trackship_settings( $id, '{admin_email}' ); ?>">
+			</fieldset>
+		</li>
+		<?php
+		
+	}
+
+	public function get_time_html( $id, $array ) {
+		?>
+		<li class="dis_block">
+			<?php if ( $array['title'] ) { ?>
+				<label class="left_label"><?php echo esc_html( $array['title'] ); ?>
+					<?php if ( isset($array['tooltip']) ) { ?>
+					<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
+					<?php } ?>
+				</label>
+			<?php } ?>
+			<?php 
+			$send_time_array = array();
+			for ( $hour = 0; $hour < 24; $hour++ ) {
+				for ( $min = 0; $min < 60; $min = $min + 30 ) {
+					$this_time = gmdate( 'H:i', strtotime( "$hour:$min" ) );
+					$send_time_array[ $this_time ] = $this_time;
+				}
+			}
+			?>
+			<select class="select daily_digest_time" name="<?php echo esc_html( $id ); ?>">
+				<?php foreach ( (array) $send_time_array as $key1 => $val1 ) { ?>
+					<option <?php echo get_trackship_settings( $id ) == $key1 ? 'selected' : ''; ?> value="<?php echo esc_html( $key1 ); ?>" ><?php echo esc_html( $val1 ); ?></option>
+				<?php } ?>
+			</select>
+		</li>
+		<?php
+		
 	}
 
 }

@@ -83,7 +83,8 @@
 
 		save_trackship_late_shipments_form: function (event) {
 			event.preventDefault();
-			email_address = document.getElementById("wcast_late_shipments_email_to").value;
+			var email_address = jQuery('#late_shipments_email_to').val();
+
 			if (email_address === "") {
 				alert("Please fill the email address");
 				return false;

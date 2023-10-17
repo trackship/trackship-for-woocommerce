@@ -792,23 +792,25 @@ class WC_Trackship_Admin {
 	public function get_settings_html( $arrays ) {
 		?>
 		<ul class="settings_ul">
-		<?php foreach ( (array) $arrays as $id => $array ) { ?>
-			<?php
-			if ( $array['show'] ) {
-				if ( 'multiple_select' == $array['type'] ) {
-					trackship_for_woocommerce()->html->get_multiple_select_html( $id, $array );
-				} elseif ( 'tgl_checkbox' == $array['type'] ) {
-					trackship_for_woocommerce()->html->get_tgl_checkbox_html( $id, $array );
-				} elseif ( 'dropdown' == $array['type'] ) {
-					trackship_for_woocommerce()->html->get_number_html( $id, $array );
-				} elseif ( 'dropdown_tpage' == $array['type'] ) {
-					trackship_for_woocommerce()->html->get_dropdown_tpage_html( $id, $array );
-				} elseif ( 'button' == $array['type'] ) {
-					trackship_for_woocommerce()->html->get_button_html( $id, $array );
+			<?php foreach ( (array) $arrays as $id => $array ) { ?>
+				<?php
+				if ( $array['show'] ) {
+					if ( 'multiple_select' == $array['type'] ) {
+						trackship_for_woocommerce()->html->get_multiple_select_html( $id, $array );
+					} elseif ( 'tgl_checkbox' == $array['type'] ) {
+						trackship_for_woocommerce()->html->get_tgl_checkbox_html( $id, $array );
+					} elseif ( 'number' == $array['type'] ) {
+						trackship_for_woocommerce()->html->get_number_html( $id, $array );
+					} elseif ( 'dropdown_tpage' == $array['type'] ) {
+						trackship_for_woocommerce()->html->get_dropdown_tpage_html( $id, $array );
+					} elseif ( 'text' == $array['type'] ) {
+						trackship_for_woocommerce()->html->get_text_html( $id, $array );
+					} elseif ( 'time' == $array['type'] ) {
+						trackship_for_woocommerce()->html->get_time_html( $id, $array );
+					}
 				}
 			}
-		}
-		?>
+			?>
 		</ul>
 		<?php
 	}
@@ -869,15 +871,35 @@ class WC_Trackship_Admin {
 				'class'     => '',				
 			);
 		}
-
-		$form_data[ 'late_shipments_days' ] = array(
-			'type'		=> 'dropdown',
-			'title'		=> __( 'Number of days for late shipments', 'trackship-for-woocommerce' ),
-			'show'		=> true,
-			'class'		=> '',
-		);
-
 		return $form_data;
+	}
+
+	/*
+	* get Integrations tab array data
+	* return array
+	*/
+	public function get_late_shipment_data() {
+		$late_shipment = array(
+			'late_shipments_days' => array(
+				'type'		=> 'number',
+				'title'		=> __( 'Number of days for late shipments', 'trackship-for-woocommerce' ),
+				'show'		=> true,
+				'class'		=> '',
+			),
+			'late_shipments_email_to' => array(
+				'title'		=> __( 'Recipient(s)', 'trackship-for-woocommerce'),
+				'type'		=> 'text',
+				'show'		=> true,
+				'class'		=> '',
+			),
+			'late_shipments_digest_time' => array(
+				'title'		=> __( 'Send email at', 'trackship-for-woocommerce'),
+				'type'		=> 'time',
+				'show'		=> true,
+				'class'		=> '',
+			),
+		);
+		return $late_shipment;
 	}
 
 	/*
@@ -1420,22 +1442,21 @@ class WC_Trackship_Admin {
 		}
 		if ( ! empty( $_POST ) && check_admin_referer( 'ts_late_shipments_email_form', 'ts_late_shipments_email_form_nonce' ) ) {
 			
-			$wcast_late_shipments_email_to = isset( $_POST['wcast_late_shipments_email_to'] ) ? sanitize_text_field( $_POST['wcast_late_shipments_email_to'] ) : '';			
-			$wcast_late_shipments_daily_digest_time = isset( $_POST['wcast_late_shipments_daily_digest_time'] ) ? sanitize_text_field( $_POST['wcast_late_shipments_daily_digest_time'] ) : '';
-			$wcast_enable_late_shipments_admin_email = isset( $_POST['wcast_enable_late_shipments_admin_email'] ) ? sanitize_text_field( $_POST['wcast_enable_late_shipments_admin_email'] ) : '';
+			$late_shipments_email_enable = isset( $_POST['late_shipments_email_enable'] ) ? sanitize_text_field( $_POST['late_shipments_email_enable'] ) : '';
+			$late_shipments_email_to = isset( $_POST['late_shipments_email_to'] ) ? sanitize_text_field( $_POST['late_shipments_email_to'] ) : '';
+			$late_shipments_digest_time = isset( $_POST['late_shipments_digest_time'] ) ? sanitize_text_field( $_POST['late_shipments_digest_time'] ) : '';
+			$late_shipments_days = isset( $_POST['late_shipments_days'] ) ? sanitize_text_field( $_POST['late_shipments_days'] ) : '';
 
-			$late_shipments_email_settings = get_option( 'late_shipments_email_settings', array() );
-			$late_shipments_email_settings[ 'wcast_enable_late_shipments_admin_email' ] = $wcast_enable_late_shipments_admin_email;
-			$late_shipments_email_settings[ 'wcast_late_shipments_email_to' ] = $wcast_late_shipments_email_to;
-			$late_shipments_email_settings[ 'wcast_late_shipments_daily_digest_time' ] = $wcast_late_shipments_daily_digest_time;
-			update_option( 'late_shipments_email_settings', $late_shipments_email_settings );
-						
+			update_trackship_settings( 'late_shipments_email_enable', $late_shipments_email_enable );
+			update_trackship_settings( 'late_shipments_email_to', $late_shipments_email_to );
+			update_trackship_settings( 'late_shipments_digest_time', $late_shipments_digest_time );
+			update_trackship_settings( 'late_shipments_days', $late_shipments_days );
+
 			$Late_Shipments = new WC_TrackShip_Late_Shipments();
 			$Late_Shipments->remove_cron();
 			$Late_Shipments->setup_cron();
 			$return = array(
 				'message'	=> 'success',
-				'data'		=> $late_shipments_email_settings,
 			);
 			wp_send_json_success( $return );
 		}
@@ -1480,7 +1501,7 @@ class WC_Trackship_Admin {
 			'wc_ast_trackship_other_page' => array(
 				'type'		=> 'text',
 				'title'		=> __( 'Other', '' ),						
-				'show'		=> true,				
+				'show'		=> false,				
 				'class'     => '',
 			),
 			'wc_ast_tracking_page_customize_btn' => array(

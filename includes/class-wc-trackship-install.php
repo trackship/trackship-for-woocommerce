@@ -194,6 +194,23 @@ class WC_Trackship_Install {
 			update_trackship_settings( 'trackship_db', '1.20' );
 			update_option( 'trackship_db', '1.20' );
 		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.21', '<' ) ) {
+			$late_email_enable = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_enable_late_shipments_admin_email', '' );
+			if ( $late_email_enable ) {
+				update_trackship_settings( 'late_shipments_email_enable', $late_email_enable );
+			}
+			$late_email_to = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_email_to', '' );
+			if ( $late_email_to ) {
+				update_trackship_settings( 'late_shipments_email_to', $late_email_to );
+			}
+			$late_digest_time = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_daily_digest_time', '' );
+			if ( $late_digest_time ) {
+				update_trackship_settings( 'late_shipments_digest_time', $late_digest_time );
+			}
+			delete_option( 'late_shipments_email_settings' );
+			update_option( 'trackship_db', '1.21' );
+		}
 	}
 
 	public function update_trackship_providers() {
