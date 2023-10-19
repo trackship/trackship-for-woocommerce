@@ -78,8 +78,7 @@ class WC_TrackShip_Late_Shipments {
 	 */
 	public function setup_cron() {
 
-		$late_shipments_email_settings = get_option('late_shipments_email_settings');
-		$daily_digest_time = get_option('late_shipments_digest_time');
+		$daily_digest_time = get_trackship_settings('late_shipments_digest_time');
 		
 		if ( !get_trackship_settings( 'late_shipments_email_enable' ) || wp_next_scheduled( self::CRON_HOOK ) ) {
 			return;

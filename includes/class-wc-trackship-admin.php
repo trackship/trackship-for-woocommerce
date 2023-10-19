@@ -357,437 +357,6 @@ class WC_Trackship_Admin {
 		$result = $wpdb->get_row($query, ARRAY_A);
 		wp_send_json($result);
 	}
-	
-	/*
-	* get html of fields
-	*/
-	public function get_html( $arrays ) {
-		
-		$checked = '';
-		?>
-		<table class="form-table">
-			<tbody>
-				<?php 
-				foreach ( (array) $arrays as $id => $array ) {
-					if ( $array['show'] ) {
-						if ( 'title' == $array['type'] ) {
-							?>
-							<tr valign="top titlerow">
-								<th colspan="2"><h3><?php echo esc_html( $array['title'] ); ?></h3></th>
-							</tr>    	
-						<?php continue; } ?>
-						<tr valign="top" class="<?php echo esc_html( $array['class'] ); ?>">
-							<?php if ( 'desc' != $array['type'] ) { ?>										
-							<th scope="row" class="titledesc">
-								<label for=""><?php echo esc_html( $array['title'] ); ?><?php echo isset ( $array['title_link'] ) ? esc_html( $array['title_link'] ) : ''; ?>
-									<?php if ( isset($array['tooltip']) ) { ?>
-										<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
-									<?php } ?>
-								</label>
-							</th>
-							<?php } ?>
-							<td class="forminp" <?php echo 'desc' == $array['type'] ? '' : 'colspan=2'; ?>>
-								<?php 
-								if ( 'checkbox' == $array['type'] ) {								
-									if ( 'wcast_enable_delivered_email' === $id ) {
-										$wcast_enable_delivered_email = get_option('woocommerce_customer_delivered_order_settings');
-										
-										if ( 'yes' == $wcast_enable_delivered_email['enabled'] || 1 == $wcast_enable_delivered_email['enabled'] ) {
-											$checked = 'checked';
-										} else {
-											$checked = '';									
-										}
-										
-									} elseif ( 'wcast_enable_partial_shipped_email' === $id ) {
-										$wcast_enable_partial_shipped_email = get_option('woocommerce_customer_partial_shipped_order_settings');
-								
-										if ( 'yes' == $wcast_enable_partial_shipped_email['enabled'] || 1 == $wcast_enable_partial_shipped_email['enabled'] ) {
-											$checked = 'checked';
-										} else {
-											$checked = '';									
-										}								
-									} else {																		
-										if ( get_option($id) ) {
-											$checked = 'checked';
-										} else {
-											$checked = '';
-										} 
-									} 
-									
-									if ( isset ($array['disabled']) && true == $array['disabled'] ) {
-										$disabled = 'disabled';
-										$checked = '';
-									} else {
-										$disabled = '';
-									}							
-									?>
-									<input type="hidden" name="<?php echo esc_html( $id ); ?>" value="0"/>
-									<input class="tgl tgl-flat" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>" type="checkbox" <?php echo esc_html( $checked ); ?> value="1" <?php echo esc_html( $disabled ); ?>/>
-									<label class="tgl-btn" for="<?php echo esc_html( $id ); ?>"></label>	
-								<?php } elseif ( isset ( $array['type'] ) && 'dropdown' == $array['type'] ) { ?>
-									<?php
-									if ( isset($array['multiple'] ) ) {
-										$multiple = 'multiple';
-										$field_id = $array['multiple'];
-									} else {
-										$multiple = '';
-										$field_id = $id;
-									}
-									?>
-									<fieldset>
-										<select class="select select2" id="<?php echo esc_html( $field_id ); ?>" name="<?php echo esc_html( $id ); ?>" <?php echo esc_html( $multiple ); ?>>
-											<?php 
-											foreach ( (array) $array['options'] as $key => $val ) {
-												$selected = '';
-												if ( isset ( $array['multiple'] ) ) {
-													if ( in_array( $key, (array) $this->data->$field_id ) ) {
-														$selected = 'selected';
-													}
-												} else {
-													if ( get_option($id) == (string) $key ) {
-														$selected = 'selected';
-													}
-												}
-												?>
-												<option value="<?php echo esc_html( $key ); ?>" <?php echo esc_html( $selected ); ?> ><?php echo esc_html( $val ); ?></option>
-											<?php } ?>
-										</select>
-									</fieldset>
-								<?php } elseif ( isset ( $array['type'] ) && 'radio' == $array['type'] ) { ?>                        	
-									<fieldset>
-										<?php 
-										foreach ( (array) $array['options'] as $key => $val ) {
-											$selected = '';									
-											if ( get_option( $id, $array['default'] ) == (string) $key ) {
-												$selected = 'checked';
-											}
-											?>
-											<span class="radio_section">
-												<label class="" for="<?php echo esc_html( $id); ?>_<?php echo esc_html( $key ); ?>">												
-													<input type="radio" id="<?php echo esc_html( $id ); ?>_<?php echo esc_html( $key ); ?>" name="<?php echo esc_html( $id ); ?>" class="<?php echo esc_html( $id ); ?>"  value="<?php echo esc_html( $key ); ?>" <?php echo esc_html( $selected ); ?>/>
-													<span class=""><?php echo esc_html( $val ); ?></span>	
-													</br>
-												</label>																		
-											</span></br>	
-										<?php } ?>								
-									</fieldset>
-								<?php } elseif ( 'key_field' == $array['type'] ) { ?>
-								<?php } elseif ( 'label' == $array['type'] ) { ?>
-									<fieldset>
-										<label><?php echo esc_html( $array['value'] ); ?></label>
-									</fieldset>
-								<?php } elseif ( 'tooltip_button' == $array['type'] ) { ?>
-									<fieldset>
-										<a href="<?php echo esc_html( $array['link'] ); ?>" class="button-primary" target="<?php echo esc_html( $array['target'] ); ?>"><?php echo esc_html( $array['link_label'] ); ?></a>
-									</fieldset>
-								<?php } elseif ( 'button' == $array['type'] ) { ?>
-									<fieldset>
-										<button class="button-primary btn_green2 <?php echo esc_html( $array['button_class'] ); ?>" <?php echo 1 == $array['disable'] ? 'disabled' : ''; ?>>
-											<?php echo esc_html( $array['label'] ); ?>
-										</button>
-									</fieldset>
-								<?php } else { ?>
-									<fieldset>
-										<input class="input-text regular-input " type="text" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" style="" value="<?php echo esc_html( get_option($id) ); ?>" placeholder="<?php echo !empty( $array['placeholder'] ) ? esc_html( $array['placeholder'] ) : ''; ?>">
-									</fieldset>
-								<?php } ?>
-							</td>
-						</tr>
-						<?php if ( isset( $array['desc'] ) && '' != $array['desc'] ) { ?>
-							<tr class="<?php echo esc_html( $array['class'] ); ?>"><td colspan="2" style=""><p class="description"><?php echo esc_html( ( isset( $array['desc'] ) ) ? $array['desc']: '' ); ?></p></td></tr>
-						<?php } ?>				
-					<?php } ?>
-				<?php } ?>
-			</tbody>
-		</table>
-	<?php 
-	}
-	
-	/*
-	* get html of fields
-	*/
-	public function get_html_2( $arrays ) {
-		
-		$checked = '';
-		?>
-		<table class="form-table table-layout-2">
-			<tbody>
-				<?php foreach ( (array) $arrays as $id => $array ) { ?>
-					<?php if ( $array['show'] ) { ?>                						
-						<tr valign="top" class="<?php echo esc_html( $array['class'] ); ?>">
-							<th scope="row" class="titledesc"  <?php echo 'desc' == $array['type'] ? 'colspan=2' : ''; ?>>
-								<?php
-								if ( 'checkbox' == $array['type'] ) {								
-									if ( 'wcast_enable_delivered_email' === $id ) {
-										$wcast_enable_delivered_email = get_option('woocommerce_customer_delivered_order_settings');
-										
-										if ( 'yes' == $wcast_enable_delivered_email['enabled'] || 1 == $wcast_enable_delivered_email['enabled'] ) {
-											$checked = 'checked';
-										} else {
-											$checked = '';									
-										}
-										
-									} elseif ( 'wcast_enable_partial_shipped_email' === $id ) {
-										$wcast_enable_partial_shipped_email = get_option('woocommerce_customer_partial_shipped_order_settings');
-								
-										if ( 'yes' == $wcast_enable_partial_shipped_email['enabled'] || 1 == $wcast_enable_partial_shipped_email['enabled'] ) {
-											$checked = 'checked';
-										} else {
-											$checked = '';									
-										}								
-									} else {																		
-										if ( get_option( $id) ) {
-											$checked = 'checked';
-										} else {
-											$checked = '';
-										} 
-									} 
-									if ( isset( $array['disabled'] ) && true == $array['disabled'] ) {
-										$disabled = 'disabled';
-										$checked = '';
-									} else {
-										$disabled = '';
-									}							
-									?>
-								<input type="hidden" name="<?php echo esc_html( $id ); ?>" value="0"/>
-								<input class="tgl tgl-flat" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>" type="checkbox" <?php echo esc_html( $checked ); ?> value="1" <?php echo esc_html( $disabled ); ?>/>
-								<label class="tgl-btn" for="<?php echo esc_html( $id ); ?>"></label>
-							<?php } elseif ( isset( $array['type'] ) && 'dropdown' == $array['type'] ) { ?>
-								<?php
-									if ( isset( $array['multiple'] ) ) {
-										$multiple = 'multiple';
-										$field_id = $array['multiple'];
-									} else {
-										$multiple = '';
-										$field_id = $id;
-									}
-									?>
-								<fieldset>
-									<select class="select select2" id="<?php echo esc_html( $field_id ); ?>" name="<?php echo esc_html( $id ); ?>" <?php echo esc_html( $multiple ); ?>>
-										<?php foreach ( (array) $array['options'] as $key => $val ) { ?>
-											<?php
-											$selected = '';
-											if ( isset( $array['multiple'] ) ) {
-												if ( in_array( $key, (array) $this->data->$field_id ) ) {
-													$selected = 'selected';
-												}
-											} else {
-												if ( get_option($id) == (string) $key ) {
-													$selected = 'selected';
-												}
-											}
-											?>
-											<option value="<?php echo esc_html( $key ); ?>" <?php echo esc_html( $selected ); ?> ><?php echo esc_html( $val ); ?></option>
-										<?php } ?>
-									</select>
-								</fieldset>
-							<?php } elseif ( 'label' == $array['type'] ) { ?>
-								<fieldset>
-									<label><?php echo esc_html( $array['value'] ); ?></label>
-								</fieldset>
-							<?php } elseif ( 'tooltip_button' == $array['type'] ) { ?>
-								<fieldset>
-									<a href="<?php echo esc_html( $array['link'] ); ?>" class="button-primary" target="<?php echo esc_html( $array['target'] ); ?>"><?php echo esc_html( $array['link_label'] ); ?></a>
-								</fieldset>
-							<?php } elseif ( 'button' == $array['type'] ) { ?>
-								<fieldset>
-									<button class="button-primary btn_green2 <?php echo esc_html( $array['button_class'] ); ?>" <?php echo 1 == $array['disable'] ? 'disabled' : ''; ?>>
-										<?php echo esc_html( $array['label'] ); ?>
-									</button>
-								</fieldset>
-							<?php } else { ?>
-								<fieldset>
-									<input class="input-text regular-input " type="text" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" style="" value="<?php echo esc_html( get_option($id) ); ?>" placeholder="<?php echo !empty( $array['placeholder'] ) ? esc_html( $array['placeholder'] ) : ''; ?>">
-								</fieldset>
-							<?php } ?>
-							</th>
-							<?php if ( 'desc' != $array['type'] ) { ?>										
-								<th class="forminp">
-									<label for="">
-									<span>
-										<?php echo esc_html( $array['title'] ); ?>
-										<?php if ( isset( $array['tooltip'] ) ) { ?>
-											<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
-										<?php } ?>
-									</span>
-									<span class="html2_title1"><?php echo esc_html( $array['title1'] ); ?></span>
-									</label>						
-								</th>
-							<?php } ?>
-						</tr>
-						<?php if ( isset($array['desc']) && '' != $array['desc'] ) { ?>
-							<tr class="<?php echo esc_html( $array['class'] ); ?>">
-								<td colspan="2" style="">
-									<p class="description"><?php echo esc_html( isset( $array['desc'] ) ? $array['desc'] : '' ); ?></p>
-								</td>
-							</tr>
-						<?php } ?>				
-					<?php } ?>
-				<?php } ?>
-			</tbody>
-		</table>
-	<?php 
-	}
-	
-	/*
-	* get html of fields
-	*/
-	public function get_html_ul( $arrays ) {
-		?>
-		<ul class="settings_ul">
-		<?php foreach ( (array) $arrays as $id => $array ) { ?>
-			<?php
-			if ( $array['show'] ) { 
-				if ( 'checkbox' == $array['type'] ) {
-					$checked = get_option($id) ? 'checked' : '';
-					?>
-					<li>
-						<input type="hidden" name="<?php echo esc_html( $id ); ?>" value="0"/>
-						<input class="" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>" type="checkbox" <?php echo esc_html( $checked ); ?> value="1"/>
-											
-						<label class="setting_ul_checkbox_label" for="<?php echo esc_html( $id ); ?>"><?php echo esc_html( $array['title'] ); ?>
-						<?php if ( isset( $array['tooltip'] ) ) { ?>
-							<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
-						<?php } ?>
-						</label>						
-					</li>	
-				<?php
-				} else if ( 'tgl_checkbox' == $array['type'] ) {
-					if ( get_option($id) ) {
-						$checked = 'checked';
-					} else {
-						$checked = '';
-					}
-					$tgl_class = '';	
-					if ( isset( $array['tgl_color'] ) ) {
-						$tgl_class = 'ast-tgl-btn-green';
-					}
-					?>
-					<li>
-						<input type="hidden" name="<?php echo esc_html( $id ); ?>" value="0"/>
-						<input class="ast-tgl ast-tgl-flat" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>" type="checkbox" <?php echo esc_html( $checked ); ?> value="1"/>
-						<label class="ast-tgl-btn <?php echo esc_html( $tgl_class ); ?>" for="<?php echo esc_html( $id ); ?>"></label>
-											
-						<label class="setting_ul_tgl_checkbox_label" for="<?php echo esc_html( $id ); ?>"><?php echo esc_html( $array['title'] ); ?>
-						<?php if ( isset( $array['tooltip'] ) ) { ?>
-							<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
-						<?php } ?>
-						</label>
-						<?php if ( isset( $array['customize_link'] ) ) { ?>
-							<a href="<?php echo esc_url( $array['customize_link'] ); ?>" class="button-primary btn_outline"><?php esc_html_e( 'Customize', 'trackship-for-woocommerce' ); ?></a>	
-						<?php } ?>
-					</li>	
-				<?php } else if ( 'radio' == $array['type'] ) { ?>
-					<li class="settings_radio_li">
-						<label><strong><?php esc_html_e( $array['title'] ); ?></strong>
-							<?php if ( isset($array['tooltip'] ) ) { ?>
-								<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
-							<?php } ?>
-						</label>	
-						<?php 
-						foreach ( (array) $array['options'] as $key => $val ) {
-							$selected = ( get_option( $id, $array['default'] ) == (string) $key ) ? 'checked' : '';							
-							?>
-							<span class="radio_section">
-								<label class="" for="<?php echo esc_html( $id ); ?>_<?php echo esc_html( $key ); ?>">												
-									<input type="radio" id="<?php echo esc_html( $id ); ?>_<?php echo esc_html( $key ); ?>" name="<?php echo esc_html( $id ); ?>" class="<?php echo esc_html( $id ); ?>"  value="<?php echo esc_html( $key ); ?>" <?php echo esc_html( $selected ); ?>/>
-									<span class=""><?php echo esc_html( $val ); ?></span>	
-									</br>
-								</label>																		
-							</span>
-						<?php } ?>
-					</li>					
-				<?php } else if ( 'multiple_select' == $array['type'] ) { ?>
-					<li class="multiple_select_li dis_block">
-						<label><?php esc_html_e( $array['title'] ); ?>
-							<?php if ( isset($array['tooltip']) ) { ?>
-								<span class="woocommerce-help-tip tipTip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
-							<?php } ?>
-						</label>
-						<div class="multiple_select_container">	
-							<select multiple class="wc-enhanced-select" name="<?php echo esc_html( $id ); ?>[]" id="<?php echo esc_html( $id ); ?>">
-							<?php
-							foreach ( (array) $array['options'] as $key => $val ) { 
-								$multi_checkbox_data = get_option($id);
-								$selected = in_array( $key, $multi_checkbox_data ) ? 'selected' : '';
-								?>
-								<option value="<?php echo esc_attr( $key ); ?>" <?php echo esc_html( $selected ); ?>><?php echo esc_html( $val ); ?></option>
-							<?php } ?>
-							</select>	
-						</div>
-					</li>	
-				<?php } else if ( 'dropdown_tpage' == $array['type'] ) { ?>
-					<li class="li_<?php esc_html_e( $id ); ?>">
-						<label class="left_label"><b><?php esc_html_e( $array['title'] ); ?></b>
-							<?php if ( isset( $array['tooltip'] ) ) { ?>
-								<span class="woocommerce-help-tip tipTip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
-							<?php } ?>
-						</label>
-						<span style="display: block; padding-top: 10px;">
-							<select class="select select2 tracking_page_select" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>">
-								<?php foreach ( (array) $array['options'] as $page_id => $page_name ) { ?>
-									<option <?php echo get_option( $id ) == $page_id ? 'selected' : ''; ?> value="<?php echo esc_html( $page_id ); ?>"><?php esc_html_e( $page_name ); ?></option>
-								<?php } ?>
-								<option <?php echo 'other' == get_option( $id ) ? 'selected' : ''; ?> value="other"><?php esc_html_e( 'Other', 'trackship-for-woocommerce' ); ?>
-								</option>	
-							</select>
-							<fieldset style="<?php echo 'other' != get_option( $id ) ? 'display:none;' : 'padding-top: 10px;'; ?>" class="trackship_other_page_fieldset">
-								<input type="text" name="wc_ast_trackship_other_page" id="wc_ast_trackship_other_page" value="<?php echo esc_html( get_option('wc_ast_trackship_other_page') ); ?>">
-							</fieldset>
-							<p class="tracking_page_desc"><?php esc_html_e( 'Add the [trackship-track-order] shortcode in the selected page.', 'trackship-for-woocommerce' ); ?> <a href="https://www.zorem.com/docs/woocommerce-advanced-shipment-tracking/integration/" target="blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a></p>
-						</span>
-					</li>	
-				<?php } else if ( 'button' == $array['type'] ) { ?>
-					<li>
-						<?php if ( $array['title'] ) { ?>
-							<label class="left_label"><?php echo esc_html( $array['title'] ); ?>
-								<?php if ( isset($array['tooltip']) ) { ?>
-								<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
-								<?php } ?>
-							</label>
-						<?php } ?>
-						<?php if ( isset($array['customize_link']) ) { ?>
-							<a href="<?php echo esc_url( $array['customize_link'] ); ?>" target="_blank" class="button-primary btn_ts_sidebar ts_customizer_btn"><?php esc_html_e( 'Customize the Tracking Widget', 'trackship-for-woocommerce' ); ?></a>	
-						<?php } ?>	
-					</li>	
-				<?php } elseif ( isset( $array['type'] ) && 'dropdown' == $array['type'] ) { ?>
-						<?php
-							$field_id = $id;
-						?>
-						<li>
-						<label class="left_label"><?php esc_html_e( $array['title'] ); ?>
-							<?php if ( isset($array['tooltip']) ) { ?>
-								<span class="woocommerce-help-tip tipTip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
-							<?php } ?>
-						</label>
-						<fieldset style="display: inline-block;vertical-align: top;">
-							<select class="select select2" id="<?php esc_html_e( $field_id ); ?>" name="<?php esc_html_e( $id ); ?>" >
-								<?php foreach ( (array) $array['options'] as $key => $val ) { ?>
-									<?php
-									$selected = '';
-									if ( isset( $array['multiple'] ) ) {
-										if ( in_array( $key, (array) $this->data->$field_id ) ) {
-											$selected = 'selected';
-										}
-									} else {
-										if ( get_option($id) == (string) $key ) {
-											$selected = 'selected';
-										}
-									}
-									?>
-									<option value="<?php esc_html_e( $key ); ?>" <?php esc_html_e( $selected ); ?> ><?php esc_html_e( $val ); ?></option>
-								<?php } ?>
-							</select>
-						</fieldset>
-					</li>
-				<?php
-				}
-			}
-		}
-		?>
-		</ul>
-	<?php
-	}
 
 	public function get_settings_html( $arrays ) {
 		?>
@@ -807,6 +376,8 @@ class WC_Trackship_Admin {
 						trackship_for_woocommerce()->html->get_text_html( $id, $array );
 					} elseif ( 'time' == $array['type'] ) {
 						trackship_for_woocommerce()->html->get_time_html( $id, $array );
+					} elseif ( 'button' == $array['type'] ) {
+						trackship_for_woocommerce()->html->get_button_html( $id, $array );
 					}
 				}
 			}
@@ -1486,29 +1057,29 @@ class WC_Trackship_Admin {
 		$form_data = array(
 			'wc_ast_use_tracking_page' => array(
 				'type'		=> 'tgl_checkbox',
-				'title'		=> __( 'Enable Tracking Page', 'trackship-for-woocommerce' ),				
+				'title'		=> __( 'Enable Tracking Page', 'trackship-for-woocommerce' ),
 				'show'		=> true,
-				'class'     => 'wc_ast_use_tracking_page',				
-			),											
+				'class'		=> 'wc_ast_use_tracking_page',
+			),
 			'wc_ast_trackship_page_id' => array(
 				'type'		=> 'dropdown_tpage',
 				'title'		=> __( 'Select tracking page:', 'trackship-for-woocommerce' ),
-				'options'   => $page_list,				
+				'options'   => $page_list,
 				'show'		=> true,
 				'desc'		=> $page_desc,
-				'class'     => '',
+				'class'		=> '',
 			),
 			'wc_ast_trackship_other_page' => array(
 				'type'		=> 'text',
-				'title'		=> __( 'Other', '' ),						
-				'show'		=> false,				
-				'class'     => '',
+				'title'		=> __( 'Other', '' ),
+				'show'		=> false,
+				'class'		=> '',
 			),
 			'wc_ast_tracking_page_customize_btn' => array(
 				'type'		=> 'button',
-				'title'		=> '',						
-				'show'		=> true,				
-				'class'     => '',
+				'title'		=> '',
+				'show'		=> true,
+				'class'		=> '',
 				'customize_link' => admin_url( 'admin.php?page=trackship_customizer' ),
 			),	
 		);
@@ -1517,61 +1088,61 @@ class WC_Trackship_Admin {
 	
 	public function trackship_shipment_status_notifications_data() {
 		$notifications_data = array(
-			'in_transit' => array(					
+			'in_transit' => array(
 				'title'			=> __( 'In Transit', 'trackship-for-woocommerce' ),
 				'slug' => 'in-transit',
 				'option_name'	=> 'wcast_intransit_email_settings',
-				'enable_status_name' => 'wcast_enable_intransit_email',		
+				'enable_status_name' => 'wcast_enable_intransit_email',
 				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=in_transit' ),	
 			),
-			'available_for_pickup' => array(					
+			'available_for_pickup' => array(
 				'title'	=> __( 'Available For Pickup', 'trackship-for-woocommerce' ),
 				'slug'  => 'available-for-pickup',
 				'option_name'	=> 'wcast_availableforpickup_email_settings',
-				'enable_status_name' => 'wcast_enable_availableforpickup_email',		
+				'enable_status_name' => 'wcast_enable_availableforpickup_email',
 				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=available_for_pickup' ),	
 			),
-			'out_for_delivery' => array(					
+			'out_for_delivery' => array(
 				'title'	=> __( 'Out For Delivery', 'trackship-for-woocommerce' ),
 				'slug'  => 'out-for-delivery',
 				'option_name'	=> 'wcast_outfordelivery_email_settings',
-				'enable_status_name' => 'wcast_enable_outfordelivery_email',		
+				'enable_status_name' => 'wcast_enable_outfordelivery_email',
 				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=out_for_delivery' ),	
 			),
-			'failure' => array(					
+			'failure' => array(
 				'title'	=> __( 'Failed Attempt', 'trackship-for-woocommerce' ),
 				'slug'  => 'failed-attempt',
 				'option_name'	=> 'wcast_failure_email_settings',
-				'enable_status_name' => 'wcast_enable_failure_email',		
-				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=failure' ),	
+				'enable_status_name' => 'wcast_enable_failure_email',
+				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=failure' ),
 			),
-			'on_hold' => array(					
+			'on_hold' => array(
 				'title'	=> __( 'On Hold', 'trackship-for-woocommerce' ),
 				'slug'  => 'on-hold',
 				'option_name'	=> 'wcast_onhold_email_settings',
-				'enable_status_name' => 'wcast_enable_onhold_email',		
-				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=on_hold' ),	
+				'enable_status_name' => 'wcast_enable_onhold_email',
+				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=on_hold' ),
 			),
-			'exception' => array(					
+			'exception' => array(
 				'title'	=> __( 'Exception', 'trackship-for-woocommerce' ),
 				'slug'  => 'exception',
 				'option_name'	=> 'wcast_exception_email_settings',
-				'enable_status_name' => 'wcast_enable_exception_email',		
-				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=exception' ),	
+				'enable_status_name' => 'wcast_enable_exception_email',
+				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=exception' ),
 			),
-			'return_to_sender' => array(					
+			'return_to_sender' => array(
 				'title'	=> __( 'Return To Sender', 'trackship-for-woocommerce' ),
 				'slug'  => 'return-to-sender',
 				'option_name'	=> 'wcast_returntosender_email_settings',
-				'enable_status_name' => 'wcast_enable_returntosender_email',		
-				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=return_to_sender' ),	
+				'enable_status_name' => 'wcast_enable_returntosender_email',
+				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=return_to_sender' ),
 			),
-			'delivered' => array(					
+			'delivered' => array(
 				'title'	=> __( 'Delivered', 'trackship-for-woocommerce' ),
 				'title2'=> __( 'Send only when all shipments for the order are delivered', 'trackship-for-woocommerce' ),
 				'slug'  => 'delivered-status',
 				'option_name'	=> 'wcast_delivered_status_email_settings',
-				'enable_status_name' => 'wcast_enable_delivered_status_email',		
+				'enable_status_name' => 'wcast_enable_delivered_status_email',
 				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=delivered' ),
 			),
 		);

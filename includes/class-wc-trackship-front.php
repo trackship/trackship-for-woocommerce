@@ -466,24 +466,25 @@ class WC_TrackShip_Front {
 		<?php
 		$num = 1;
 		$total_trackings = count( $tracking_items );
-			if ( $total_trackings > 1 ) {
-				$i = 1;
-				$post_tracking = isset( $_POST['tnumber'] ) ? $_POST['tnumber'] : '' ;
-				$post_tracking = isset( $_POST['order_tracking_number'] ) ? $_POST['order_tracking_number'] : $post_tracking;
-				$url_tracking = isset( $_GET['tracking'] ) ? $_GET['tracking'] : $post_tracking;
-				$url_tracking = str_replace( ' ', '', $url_tracking );
-				echo '<div class="shipment-header">';
-					foreach ( $tracking_items as $key => $item ) {
-						$tracking_number = $item['tracking_number'];
-						$class = str_replace( ' ', '', $tracking_number );
-						?>
-						<input id="<?php echo 'shipment_' . $i ?>" type="radio" name="ts_shipments" class="ts_from_input" <?php echo $class == $url_tracking ? 'checked' : ''; ?> >
-						<label for="<?php echo 'shipment_' . $i ?>" class="ts_from_label"><?php printf( esc_html__( 'Shipment %1$s', 'trackship-for-woocommerce' ), esc_html($i) ); ?></label>
-						<?php
-						$i++;
-					}
-				echo '</div>';
-			}
+		$rows = trackship_for_woocommerce()->actions->get_shipment_rows( $order_id );
+		if ( $total_trackings > 1 && $rows ) {
+			$i = 1;
+			$post_tracking = isset( $_POST['tnumber'] ) ? $_POST['tnumber'] : '' ;
+			$post_tracking = isset( $_POST['order_tracking_number'] ) ? $_POST['order_tracking_number'] : $post_tracking;
+			$url_tracking = isset( $_GET['tracking'] ) ? $_GET['tracking'] : $post_tracking;
+			$url_tracking = str_replace( ' ', '', $url_tracking );
+			echo '<div class="shipment-header">';
+				foreach ( $tracking_items as $key => $item ) {
+					$tracking_number = $item['tracking_number'];
+					$class = str_replace( ' ', '', $tracking_number );
+					?>
+					<input id="<?php echo 'shipment_' . $i ?>" type="radio" name="ts_shipments" class="ts_from_input" <?php echo $class == $url_tracking ? 'checked' : ''; ?> >
+					<label for="<?php echo 'shipment_' . $i ?>" class="ts_from_label"><?php printf( esc_html__( 'Shipment %1$s', 'trackship-for-woocommerce' ), esc_html($i) ); ?></label>
+					<?php
+					$i++;
+				}
+			echo '</div>';
+		}
 		foreach ( $tracking_items as $key => $item ) {
 			$tracking_number = $item['tracking_number'];
 			$tracking_provider = $item['tracking_provider'];
