@@ -62,7 +62,7 @@ class WC_Trackship_Html {
 		} else {
 			$checked = '';
 		}
-		$tgl_class = '';	
+		$tgl_class = '';
 		if ( isset( $array['tgl_color'] ) ) {
 			$tgl_class = 'ast-tgl-btn-green';
 		}
@@ -78,7 +78,7 @@ class WC_Trackship_Html {
 			<?php } ?>
 			</label>
 			<?php if ( isset( $array['customize_link'] ) ) { ?>
-				<a href="<?php echo esc_url( $array['customize_link'] ); ?>" class="button-primary btn_outline"><?php esc_html_e( 'Customize', 'trackship-for-woocommerce' ); ?></a>	
+				<a href="<?php echo esc_url( $array['customize_link'] ); ?>" class="button-primary btn_outline"><?php esc_html_e( 'Customize', 'trackship-for-woocommerce' ); ?></a>
 			<?php } ?>
 		</li>
 		<?php
@@ -111,7 +111,7 @@ class WC_Trackship_Html {
 						<option <?php echo get_trackship_settings( $id ) == $page_id ? 'selected' : ''; ?> value="<?php echo esc_html( $page_id ); ?>"><?php esc_html_e( $page_name ); ?></option>
 					<?php } ?>
 					<option <?php echo 'other' == get_trackship_settings( $id ) ? 'selected' : ''; ?> value="other"><?php esc_html_e( 'Other', 'trackship-for-woocommerce' ); ?>
-					</option>	
+					</option>
 				</select>
 				<fieldset style="<?php echo 'other' != get_trackship_settings( $id ) ? 'display:none;' : 'padding-top: 10px;'; ?>" class="trackship_other_page_fieldset">
 					<input type="text" name="wc_ast_trackship_other_page" id="wc_ast_trackship_other_page" value="<?php echo esc_html( get_trackship_settings('wc_ast_trackship_other_page') ); ?>">
@@ -183,7 +183,5 @@ class WC_Trackship_Html {
 			</select>
 		</li>
 		<?php
-		
 	}
-
 }
