@@ -77,175 +77,166 @@ class tswc_smswoo_admin {
 	public function get_html( $arrays ){
 		$checked = '';
 		?>
-		<table class="form-table">
-			<tbody>
-				<?php foreach( (array)$arrays as $id => $array ){ ?>
-					
-					<?php if( $array['type'] == 'title' ){ ?>
-						<tr valign="top" class="<?php echo $array['type']?>_row <?php echo isset( $array['class'] ) ? $array['class'] : ''?>">
-							<th colspan="2">
-									<?php if ( ( $button == 'true' ) ) {?>
-										<div style="float:right;">
-											<div class="spinner workflow_spinner"></div>
-											<button name="save" class="button-primary button-trackship btn_large button-primary woocommerce-save-button button-smswoo" type="submit" ><?php esc_html_e( 'Save Changes', 'trackship-for-woocommerce' )?></button>
-										</div>
-									<?php } ?>
-								<h3><?php echo $array['title'] ?></h3>
-							</th>
-						</tr>
-                        <?php continue; ?>
+		<ul class="settings_ul">
+			<?php foreach( (array)$arrays as $id => $array ){ ?>
+				
+				<?php if( $array['type'] == 'title' ){ ?>
+					<li class="<?php echo $array['type']?>_row <?php echo isset( $array['class'] ) ? $array['class'] : ''?>">
+						<?php if ( ( $button == 'true' ) ) {?>
+							<div style="float:right;">
+								<div class="spinner workflow_spinner"></div>
+								<button name="save" class="button-primary button-trackship btn_large button-primary woocommerce-save-button button-smswoo" type="submit" ><?php esc_html_e( 'Save Changes', 'trackship-for-woocommerce' )?></button>
+							</div>
+						<?php } ?>
+						<h3><?php echo $array['title'] ?></h3>
+					</li>
+					<?php continue; ?>
+				<?php } ?>
+				
+				<?php if( $array['type'] == 'dropdown_button' ){ ?>
+					<li class="<?php echo $array['type']?>_row <?php echo $array['class']; ?> dis_block">
+						<label><?php esc_html_e( $array['title'] ); ?>
+							<?php if ( isset($array['tooltip']) ) { ?>
+								<span class="woocommerce-help-tip tipTip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
+							<?php } ?>
+						</label>
+						<?php $value = get_option($id); ?>
+						<select id="<?php echo $id?>" name="<?php echo $id?>" >
+							<?php foreach((array)$array['options'] as $key => $val ){?>
+								<?php $imgpath = isset( $array[ 'img_path_24x24' ][ $key ] ) ? $array[ 'img_path_24x24' ][ $key ] : '' ?>
+								<option value="<?php echo $key?>" image_path="<?php echo $imgpath?>" <?php echo ( $value == (string)$key ) ? 'selected' : '' ?> ><?php echo $val?></option>
+							<?php } ?>
+						</select>
+						<br>
+						<?php foreach( $array['link'] as $key1 => $links ) { ?>
+							<p valign="top" class="link_row smswoo_sms_provider <?php echo $key1; ?>_sms_provider" style="margin:0;">
+								<a href= "<?php echo $links['link']?>" target="_blank"><?php echo $links['title']?></a>
+							</p>
+						<?php } ?>
+					</li>
+					<?php continue; ?>
+				<?php } ?>
+				
+				<?php if( $array['type'] == 'link' ){ ?>
+					<li class="<?php echo $array['type']?>_row <?php echo $array['class']; ?>">
+						<a href="<?php echo $array['link']?>" target="_blank"><?php echo $array['title']?></a>
+					</li>
+					<?php continue; ?>
+				<?php } ?>
+				
+				<?php if( $array['type'] == 'button' ){ ?>
+					<li class="<?php echo $array['type']?>_row <?php echo $array['class']; ?>">
+						<fieldset>
+							<button class="button-primary btn_green2 button-smswoo <?php echo $array['button_class'];?>" id="<?php echo $id?>" type="button"><?php echo $array['title'];?></button>
+							<div class="spinner test_sms_spinner"></div>
+						</fieldset>
+					</li>
+					<?php continue; ?>
+				<?php } ?>
+
+				<li class="<?php echo $array['type']?>_row <?php echo $array['class']; ?> <?php echo 'checkbox' != $array['type'] ? 'dis_block' : ''; ?>">
+					<?php if( $array['type'] == 'checkbox' ){
+						
+							$default = isset( $array['default'] ) ? 1 : 0;
+
+							if( get_option( $id, $default ) ){
+								$checked = 'checked';
+							} else{
+								$checked = '';
+							} 
+						
+						if(isset($array['disabled']) && $array['disabled'] == true){
+							$disabled = 'disabled';
+							$checked = '';
+						} else{
+							$disabled = '';
+						}
+						?>
+						<input type="hidden" name="<?php echo $id?>" value="0"/>
+						<input class="tgl tgl-flat" type="checkbox" id="<?php echo $id?>" name="<?php echo $id?>" <?php echo $checked ?> value="1" <?php echo $disabled; ?>/>
+						<label class="tgl-btn" for="<?php echo $id?>">
+						</label>
 					<?php } ?>
-                    
-                    <?php if( $array['type'] == 'dropdown_button' ){ ?>
-						<tr valign="top" class="<?php echo $array['type']?>_row <?php echo $array['class']; ?>">
-							<th><?php echo $array['title']?></th>
-								<?php
-									$value = get_option($id);
+					<?php if ( $array['type'] != 'desc' ) { ?>										
+						<label for="" class=""><?php echo $array['title']?><?php if(isset($array['title_link'])){ echo $array['title_link']; } ?>
+							<?php if( isset($array['tooltip']) ){?>
+								<span class="woocommerce-help-tip tipTip" title="<?php echo $array['tooltip']?>"></span>
+							<?php } ?>
+						</label>
+					<?php } ?>
+					<?php if( $array['type'] == 'textarea' ){ ?>
+						<fieldset>
+							<textarea rows="3" cols="20" class="input-text regular-input" type="textarea" name="<?php echo $id?>" id="<?php echo $id?>" placeholder="<?php if(!empty($array['placeholder'])){echo $array['placeholder'];} ?>"><?php echo get_option( $id, isset($array['default']) ? $array['default'] : false )?></textarea>
+						</fieldset>
+					<?php }  elseif( isset( $array['type'] ) && $array['type'] == 'dropdown' ){?>
+						<?php
+							if( isset($array['multiple']) ){
+								$multiple = 'multiple';
+								$field_id = $array['multiple'];
+							} else {
+								$multiple = '';
+								$field_id = $id;
+							}
+							
+						?>
+						<fieldset>
+							<select class="select select2" id="<?php echo $field_id?>" name="<?php echo $id?>" <?php echo $multiple;?>>    <?php foreach((array)$array['options'] as $key => $val ){?>
+								<?php 
+									$selected = '';
+									if( isset($array['multiple']) ){
+										if (in_array($key, (array)$this->data->$field_id ))$selected = 'selected';
+									} else {
+										if( get_option($id) == (string)$key )$selected = 'selected';
+									}
 								?>
-							<td>
-								<select id="<?php echo $id?>" name="<?php echo $id?>" >
-									<?php foreach((array)$array['options'] as $key => $val ){?>
-										<?php $imgpath = isset( $array[ 'img_path_24x24' ][ $key ] ) ? $array[ 'img_path_24x24' ][ $key ] : '' ?>
-										<option value="<?php echo $key?>" image_path="<?php echo $imgpath?>" <?php echo ( $value == (string)$key ) ? 'selected' : '' ?> ><?php echo $val?></option>
-									<?php } ?>
-								</select>
-								<br>
+								<option value="<?php echo $key?>" <?php echo $selected?> ><?php echo $val?></option>
+								<?php } ?><p class="description"><?php echo (isset($array['desc']))? $array['desc']: ''?></p>
+							</select> 
+							<br>
+							<?php if(isset($array['desc']) && !empty($array['desc'])){?>
+							<p class="description"><?php echo $array['desc'];?></p>
+							<?php } ?>
+							<?php if(isset($array['link'])){ ?>
 								<?php foreach($array['link'] as $key1 => $links) {?>
-								<p valign="top" class="link_row smswoo_sms_provider <?php echo $key1; ?>_sms_provider">
+								<p valign="top" class="link_row <?php echo $links['class']?>">
 									<a href= "<?php echo $links['link']?>" target="_blank"><?php echo $links['title']?></a>
 								</p>
 								<?php } ?>
-							</td>
-						</tr>
-                        <?php continue; ?>
-					<?php } ?>
-                    
-                    <?php if( $array['type'] == 'link' ){ ?>
-						<tr valign="top" class="<?php echo $array['type']?>_row <?php echo $array['class']; ?>">
-							<th colspan="2"><a href="<?php echo $array['link']?>" target="_blank"><?php echo $array['title']?></a></th>
-						</tr>
-                        <?php continue; ?>
-					<?php } ?>
-                    
-                    <?php if( $array['type'] == 'button' ){ ?>
-						<tr valign="top" class="<?php echo $array['type']?>_row <?php echo $array['class']; ?>">
-							<td colspan="2">
-                                <fieldset>
-                                    <button class="button-primary btn_green2 button-smswoo <?php echo $array['button_class'];?>" id="<?php echo $id?>" type="button"><?php echo $array['title'];?></button>
-                                    <div class="spinner test_sms_spinner"></div>
-                                </fieldset>
-                            </td>
-						</tr>
-                        <?php continue; ?>
-					<?php } ?>
+							<?php } ?>
+						</fieldset>
+					<?php } elseif ( $array['type'] == 'title' ) { ?>
+					<?php } elseif ( $array['type'] == 'checkbox' ) { ?>
+					<?php } elseif ( $array['type'] == 'label' ) { ?>
+						<fieldset>
+						<label><?php echo $array['value']; ?></label>
+						</fieldset>
+					<?php } elseif( $array['type'] == 'radio' ) { ?>
+						<fieldset>
+							<ul>
+								<?php foreach ( (array) $array['options'] as $key => $val ) { ?>
+									<li><label class="label_product_visibility"><input name="product_visibility" value="<?php echo $key; ?>" type="radio" style="" class="product_visibility" <?php if( $product_visibility == $key ) { echo 'checked'; } ?> /><?php echo $val;?><br></label></li>
+								<?php } ?>
+							</ul>
+						</fieldset>
+					<?php } elseif ( $array['type'] == 'dummyfield' ) { ?>
+					<?php } elseif ( $array['type'] == 'time' ) { ?>
+						<fieldset>
+							<input id="time_schedule_from" name="time_schedule_from" type="text" class="time" value="<?php echo get_option('time_schedule_from');?>" /> - 
+							<input id="time_schedule_to" name="time_schedule_to" type="text" class="time" value="<?php echo get_option('time_schedule_to');?>" />
+						</fieldset>
+					<?php } else { ?>
 
-                	
-				<tr valign="top" class="<?php echo $array['type']?>_row <?php echo $array['class']; ?>">
-					<?php if($array['type'] != 'desc'){ ?>										
-					<th scope="row" class="titledesc"  >
-						<label for=""><?php echo $array['title']?><?php if(isset($array['title_link'])){ echo $array['title_link']; } ?>
-							<?php if( isset($array['tooltip']) ){?>
-                            	<span class="woocommerce-help-tip tipTip" title="<?php echo $array['tooltip']?>"></span>
-                            <?php } ?>
-                        </label>
-					</th>
+						<fieldset>
+							<input class="input-text regular-input " type="text" name="<?php echo $id?>" id="<?php echo $id?>" style="" value="<?php echo get_option( $id, isset($array['default']) ? $array['default'] : false )?>" placeholder="<?php if(!empty($array['placeholder'])){echo $array['placeholder'];} ?>">
+							<?php if(isset($array['desc']) && !empty($array['desc'])){?>
+							<p class="description" style="margin:0;"><?php echo (isset($array['desc']))? $array['desc']: ''?></p>
+							<?php } ?>
+						</fieldset>
 					<?php } ?>
-					<td class="forminp"  <?php if($array['type'] == 'desc'){ ?> colspan=2 <?php } ?>>
-                    	<?php if( $array['type'] == 'checkbox' ){
-							
-								$default = isset( $array['default'] ) ? 1 : 0;
-
-								if( get_option( $id, $default ) ){
-									$checked = 'checked';
-								} else{
-									$checked = '';
-								} 
-							
-							if(isset($array['disabled']) && $array['disabled'] == true){
-								$disabled = 'disabled';
-								$checked = '';
-							} else{
-								$disabled = '';
-							}							
-							?>
-							<input type="hidden" name="<?php echo $id?>" value="0"/>
-							<input class="tgl tgl-flat" type="checkbox" id="<?php echo $id?>" name="<?php echo $id?>" <?php echo $checked ?> value="1" <?php echo $disabled; ?>/>
-							<label class="tgl-btn" for="<?php echo $id?>">
-							</label><p class="description"><?php echo (isset($array['desc']))? $array['desc']: ''?></p>
-						<?php } elseif( $array['type'] == 'textarea' ){ ?>
-							<fieldset>
-								<textarea rows="3" cols="20" class="input-text regular-input" type="textarea" name="<?php echo $id?>" id="<?php echo $id?>" placeholder="<?php if(!empty($array['placeholder'])){echo $array['placeholder'];} ?>"><?php echo get_option( $id, isset($array['default']) ? $array['default'] : false )?></textarea>
-							</fieldset>
-                        <?php }  elseif( isset( $array['type'] ) && $array['type'] == 'dropdown' ){?>
-                        	<?php
-								if( isset($array['multiple']) ){
-									$multiple = 'multiple';
-									$field_id = $array['multiple'];
-								} else {
-									$multiple = '';
-									$field_id = $id;
-								}
-								
-							?>
-                        	<fieldset>
-								<select class="select select2" id="<?php echo $field_id?>" name="<?php echo $id?>" <?php echo $multiple;?>>    <?php foreach((array)$array['options'] as $key => $val ){?>
-									<?php 
-                                        $selected = '';
-                                        if( isset($array['multiple']) ){
-                                            if (in_array($key, (array)$this->data->$field_id ))$selected = 'selected';
-                                        } else {
-                                            if( get_option($id) == (string)$key )$selected = 'selected';
-                                        }
-                                    ?>
-									<option value="<?php echo $key?>" <?php echo $selected?> ><?php echo $val?></option>
-                                    <?php } ?><p class="description"><?php echo (isset($array['desc']))? $array['desc']: ''?></p>
-								</select> 
-								<br>
-								<?php if(isset($array['desc']) && !empty($array['desc'])){?>
-								<p class="description"><?php echo $array['desc'];?></p>
-								<?php } ?>
-								<?php if(isset($array['link'])){ ?>
-									<?php foreach($array['link'] as $key1 => $links) {?>
-									<p valign="top" class="link_row <?php echo $links['class']?>">
-										<a href= "<?php echo $links['link']?>" target="_blank"><?php echo $links['title']?></a>
-									</p>
-									<?php } ?>
-								<?php } ?>
-							</fieldset>
-                        <?php } elseif ( $array['type'] == 'title' ) { ?>
-						<?php } elseif ( $array['type'] == 'label' ) { ?>
-							<fieldset>
-                               <label><?php echo $array['value']; ?></label>
-                            </fieldset>
-						<?php } elseif( $array['type'] == 'radio' ) { ?>
-							<fieldset>
-                            	<ul>
-									<?php foreach ( (array) $array['options'] as $key => $val ) { ?>
-										<li><label class="label_product_visibility"><input name="product_visibility" value="<?php echo $key; ?>" type="radio" style="" class="product_visibility" <?php if( $product_visibility == $key ) { echo 'checked'; } ?> /><?php echo $val;?><br></label></li>
-                                    <?php } ?>
-                                 </ul>
-							</fieldset>
-						<?php } elseif ( $array['type'] == 'dummyfield' ) { ?>
-                        <?php } elseif ( $array['type'] == 'time' ) { ?>
-							<fieldset>
-                            	<input id="time_schedule_from" name="time_schedule_from" type="text" class="time" value="<?php echo get_option('time_schedule_from');?>" /> - 
-                                <input id="time_schedule_to" name="time_schedule_to" type="text" class="time" value="<?php echo get_option('time_schedule_to');?>" />
-							</fieldset>
-						<?php } else { ?>
-                                                    
-                        	<fieldset>
-                                <input class="input-text regular-input " type="text" name="<?php echo $id?>" id="<?php echo $id?>" style="" value="<?php echo get_option( $id, isset($array['default']) ? $array['default'] : false )?>" placeholder="<?php if(!empty($array['placeholder'])){echo $array['placeholder'];} ?>">
-								<?php if(isset($array['desc']) && !empty($array['desc'])){?>
-                                <p class="description"><?php echo (isset($array['desc']))? $array['desc']: ''?></p>
-								<?php } ?>
-                            </fieldset>
-                        <?php } ?>
-					</td>
-				</tr>
-	<?php } ?>
-			</tbody>
-		</table>
-	<?php 
+				</li>
+			<?php } ?>
+		</ul>
+		<?php 
 	}
 	
 	/**
