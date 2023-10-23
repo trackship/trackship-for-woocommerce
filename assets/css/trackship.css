@@ -590,10 +590,11 @@ label.tab_label.first_label {
 	min-height: 25px;
 	position: relative;
 }
-.section_sms_content tr {
-	border-bottom: 1px solid #eee;
+.section_sms_content .input-text, .section_sms_content select {
+	max-width: 300px;
+	width: 100%;
 }
-.settings_ul li:last-child, .section_sms_content tr:last-child {
+.settings_ul li:last-child {
 	border-bottom: 0;
 }
 .ts4wc_delivered_color {
@@ -795,6 +796,9 @@ span.filter_data .dashicons {
 .plugin_setting_note {
 	display: block;
 	font-size: 14px;
+}
+.section_sms_content .plugin_setting_note {
+	padding: 20px 0 10px;
 }
 .rtl .dataTables_wrapper .dataTables_info {
 	float: right;
