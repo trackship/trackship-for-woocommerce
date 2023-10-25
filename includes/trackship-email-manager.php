@@ -5,6 +5,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WC_TrackShip_Email_Manager {
 
 	private static $instance;
+	public $order;
+	public $shipment_row;
+	public $tracking_item;
+	public $tracking_number;
 	
 	/**
 	 * Constructor sets up actions
@@ -103,8 +107,6 @@ class WC_TrackShip_Email_Manager {
 
 		$email_content = $this->email_content($email_content, $order_id, $order);
 		
-		$mailer = WC()->mailer();
-		
 		$email_heading = $this->email_heading($email_heading, $order_id, $order);
 		$message = $this->append_analytics_link($email_content, $status);
 
@@ -178,19 +180,18 @@ class WC_TrackShip_Email_Manager {
 		);
 
 		// create a new email
+		$mailer = WC()->mailer();
 		$email_class = new WC_Email();
+		$email_class->id = 'shipment_email';
 	
 		add_filter( 'woocommerce_email_footer_text', array( $this, 'email_footer_text' ) );
 
 		// wrap the content with the email template and then add styles
-		$message = apply_filters( 'woocommerce_mail_content', $email_class->style_inline( $mailer->wrap_message( $email_heading, $message ) ) );
+		$message = $mailer->wrap_message( $email_heading, $message );
 		$message = apply_filters( 'trackship_mail_content', $message, $email_heading );
 
-		add_filter( 'wp_mail_from', array( $this, 'get_from_address' ) );
-		add_filter( 'wp_mail_from_name', array( $this, 'get_from_name' ) );
-
 		foreach ( $recipients as $recipient ) {
-			$email_send = wp_mail( $recipient, $subject, $message, $email_class->get_headers() );
+			$email_send = $email_class->send( $recipient, $subject, $message, $email_class->get_headers(), [] );
 			$arg = array(
 				'order_id'			=> $order_id,
 				'order_number'		=> wc_get_order( $order_id )->get_order_number(),
@@ -371,27 +372,6 @@ class WC_TrackShip_Email_Manager {
 	public function get_blogname() {
 		return wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
 	}
-	
-	/**
-	 * Get the from name for outgoing emails.
-	 *
-	 * @return string
-	 */
-	public function get_from_name( $from_name = '' ) {
-		$from_name = apply_filters( 'woocommerce_email_from_name', get_option( 'woocommerce_email_from_name' ), $this, $from_name );
-		return wp_specialchars_decode( esc_html( $from_name ), ENT_QUOTES );
-	}
-
-	/**
-	 * Get the from address for outgoing emails.
-	 *
-	 * @return string
-	 */
-	public function get_from_address( $from_email = '' ) {
-		$from_address = apply_filters( 'woocommerce_email_from_address', get_option( 'woocommerce_email_from_address' ), $this, $from_email );
-		return sanitize_email( $from_address );
-	}		
-	
 }
 
 function WC_TrackShip_Email_Manager() {

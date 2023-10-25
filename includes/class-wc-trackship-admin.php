@@ -7,6 +7,8 @@ use Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableControlle
 
 class WC_Trackship_Admin {
 	
+	public $log_table;
+	
 	/**
 	 * Initialize the main plugin function
 	*/
