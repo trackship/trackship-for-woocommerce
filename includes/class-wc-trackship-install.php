@@ -5,6 +5,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WC_Trackship_Install {
 	
+	public $table;
+	public $shipment_table;
+	public $shipment_table_meta;
+	public $log_table;
+
 	/**
 	 * Initialize the main plugin function
 	*/
@@ -55,6 +60,11 @@ class WC_Trackship_Install {
 		if ( version_compare( get_option( 'trackship_db' ), '1.0', '<' ) ) {
 			update_option( 'trackship_trigger_order_statuses', array( 'completed', 'shipped' ) );
 			update_option( 'trackship_db', '1.0' );
+
+			$this->create_shipping_provider_table();
+			$this->create_shipment_table();
+			$this->create_shipment_meta_table();
+			$this->create_email_log_table();
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.6', '<' ) ) {
@@ -64,7 +74,7 @@ class WC_Trackship_Install {
 			$font_color = get_option('wc_ast_select_font_color', '#333' );
 			$tracking_page_layout = get_option('wc_ast_select_tracking_page_layout', '#333' );
 			
-			$shipment_email_settings = get_option( 'shipment_email_settings' );
+			$shipment_email_settings = get_option( 'shipment_email_settings', [] );
 			
 			$shipment_email_settings['border_color'] = $border_color;
 			$shipment_email_settings['bg_color'] = $background_color;
@@ -76,7 +86,6 @@ class WC_Trackship_Install {
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.8', '<' ) ) {
-			$this->create_shipment_meta_table();
 			$delivered_settings = get_option( 'wcast_delivered_email_settings' );
 			update_option( 'wcast_delivered_status_email_settings', $delivered_settings );
 			delete_option( 'wcast_delivered_email_settings' );
@@ -106,7 +115,6 @@ class WC_Trackship_Install {
 		if ( version_compare( get_option( 'trackship_db' ), '1.14', '<' ) ) {
 			$sql = "ALTER TABLE {$shipment_table} CHANGE shipping_date shipping_date DATE NULL DEFAULT CURRENT_TIMESTAMP";
 			$wpdb->query($sql);
-			$this->check_column_exists();
 			$wpdb->query( "ALTER TABLE $shipment_table ADD INDEX last_event (last_event);" );
 			update_option( 'trackship_db', '1.14' );
 		}
@@ -184,11 +192,7 @@ class WC_Trackship_Install {
 					DROP COLUMN new_shipping_provider");
 			}
 
-			$this->create_shipping_provider_table();
 			$this->update_shipping_providers();
-			$this->create_shipment_table();
-			$this->create_shipment_meta_table();
-			$this->create_email_log_table();
 			$this->check_column_exists();
 
 			update_trackship_settings( 'trackship_db', '1.20' );

@@ -11,6 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Adds the individual sections, settings, and controls to the theme customizer
  */
 class TSWC_Outfordelivery_Customizer_Email {
+
+	public $defaults;
+
 	// Get our default values
 	public function __construct() {
 		if ( ! self::is_own_preview_request() ) {

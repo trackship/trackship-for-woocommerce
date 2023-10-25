@@ -5,6 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class TS4WC_Admin_Customizer {
 
+	public $defaults;
+
     /**
 	 * Get the class instance
 	 *

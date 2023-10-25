@@ -4,11 +4,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 class WC_Trackship_Shipments {
-	
+
+	public $shipment_table;
+	public $shipment_meta;
+
 	/**
 	 * Initialize the main plugin function
 	*/
-    public function __construct() {
+	public function __construct() {
 		global $wpdb;
 		$this->shipment_table = $wpdb->prefix . 'trackship_shipment';
 		$this->shipment_meta = $wpdb->prefix . 'trackship_shipment_meta';
@@ -91,11 +94,11 @@ class WC_Trackship_Shipments {
 		wp_enqueue_script( 'TS-buttons-html5' );
 		wp_enqueue_script( 'TS-colVis' );
 
-		wp_enqueue_style( 'shipments_styles',  trackship_for_woocommerce()->plugin_dir_url() . '/includes/shipments/assets/css/shipments.css', array(), trackship_for_woocommerce()->version );
-		wp_enqueue_script( 'shipments_script',  trackship_for_woocommerce()->plugin_dir_url() . '/includes/shipments/assets/js/shipments.js', array( 'jquery' ), trackship_for_woocommerce()->version, true );
+		wp_enqueue_style( 'shipments_styles', trackship_for_woocommerce()->plugin_dir_url() . '/includes/shipments/assets/css/shipments.css', array(), trackship_for_woocommerce()->version );
+		wp_enqueue_script( 'shipments_script', trackship_for_woocommerce()->plugin_dir_url() . '/includes/shipments/assets/js/shipments.js', array( 'jquery' ), trackship_for_woocommerce()->version, true );
 		wp_localize_script('shipments_script', 'shipments_script', array(
-			'admin_url'   =>  admin_url(),
-			'user_plan'   =>  $user_plan,
+			'admin_url'	=> admin_url(),
+			'user_plan'	=> $user_plan,
 		));
 	}
 	

@@ -8,6 +8,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( !class_exists( 'WC_Trackers' ) ) {
 	class WC_Trackers {
 		
+		public $plugin_name;
+		public $plugin_slug;
+		public $user_id;
+		public $setting_page_type;
+		public $setting_page_location;
+		public $parent_menu_type;
+		public $menu_slug;
+		public $plugin_id;
+		public $plugin_slug_with_hyphens;
+
 		/**
 		 * URL to the AST Tracker API endpoint.
 		 *

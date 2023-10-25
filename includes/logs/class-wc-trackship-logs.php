@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WC_Trackship_Logs {
 
 	const CRON_HOOK = 'notification_log_clean_cron_hook';
+	public $log_table;
 
     /**
 	 * Initialize the main plugin function

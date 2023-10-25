@@ -11,6 +11,8 @@ class tswc_smswoo_init {
 	 * @var object Class Instance
 	*/
 	private static $instance;
+	public $smswoo_admin;
+	public $sms_notification;
 	
 	/**
 	 * Initialize the main plugin function
