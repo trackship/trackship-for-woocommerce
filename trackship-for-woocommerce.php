@@ -24,6 +24,23 @@ class Trackship_For_Woocommerce {
 	 * @var string
 	*/
 	public $version = '1.6.5.3';
+	public $plugin_path;
+	public $ts_install;
+	public $ts_actions;
+	public $actions;
+	public $front;
+	public $admin;
+	public $html;
+	public $late_shipments;
+	public $shipments;
+	public $logs;
+	public $analytics;
+	public $trackship_admin_notice;
+	public $wc_admin_notice;
+	public $smswoo_admin;
+	public $smswoo_init;
+	public $wot_ts;
+	public $kly_ts;
 
 	/**
 	 * Initialize the main plugin function
@@ -50,7 +67,7 @@ class Trackship_For_Woocommerce {
 		$this->init();
 
 		//admin class init
-		$this->ts_actions->init();			
+		$this->ts_actions->init();
 		
 		//admin class init
 		$this->admin->init();
@@ -123,7 +140,7 @@ class Trackship_For_Woocommerce {
 
 		add_filter( 'yith_wcbm_add_badge_tags_in_wp_kses_allowed_html', '__return_true' );
 		add_filter( 'yith_wcbm_is_allowed_adding_badge_tags_in_wp_kses', '__return_true' );
-	}				
+	}
 	
 	/**
 	 * Init trackship REST API.
@@ -132,7 +149,7 @@ class Trackship_For_Woocommerce {
 	private function init_rest_api() {
 		add_action( 'rest_api_init', array( $this, 'rest_api_register_routes' ) );
 	}
-		
+
 	/**
 	 * Gets the absolute plugin path without a trailing slash, e.g.
 	 * /path/to/wp-content/plugins/plugin-directory.
@@ -152,11 +169,11 @@ class Trackship_For_Woocommerce {
 	/*
 	* include files
 	*/
-	private function includes() {				
+	private function includes() {
 	
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-install.php';
 		$this->ts_install = WC_Trackship_Install::get_instance();
-	
+
 		$trackship_apikey = get_option( 'trackship_apikey' );
 		if ( $trackship_apikey ) {
 			require_once $this->get_plugin_path() . '/includes/class-wc-trackship-front.php';
@@ -164,34 +181,34 @@ class Trackship_For_Woocommerce {
 			add_action( 'template_redirect', array( $this->front, 'preview_tracking_page' ) );
 			add_action( 'template_redirect', array( $this->front, 'track_form_preview' ) );
 		}
-		
+
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-actions.php';
 		$this->ts_actions	= WC_Trackship_Actions::get_instance();
 		$this->actions		= WC_Trackship_Actions::get_instance();
-		
+
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-admin.php';
 		$this->admin = WC_Trackship_Admin::get_instance();
-		
+
 		require_once $this->get_plugin_path() . '/includes/html/class-wc-trackship-html.php';
 		$this->html = WC_Trackship_Html::get_instance();
-		
+
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-late-shipments.php';
 		$this->late_shipments = WC_TrackShip_Late_Shipments::get_instance();
 
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-api-call.php';
-		
+
 		require_once $this->get_plugin_path() . '/includes/shipments/class-wc-trackship-shipments.php';
 		$this->shipments = WC_Trackship_Shipments::get_instance();
-		
+
 		require_once $this->get_plugin_path() . '/includes/logs/class-wc-trackship-logs.php';
 		$this->logs = WC_Trackship_Logs::get_instance();
-		
+
 		require_once $this->get_plugin_path() . '/includes/analytics/class-wc-trackship-analytics.php';
 		$this->analytics = WC_Trackship_Analytics::get_instance();
-		
+
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-notice.php';
 		$this->trackship_admin_notice = WC_TrackShip_Admin_notice::get_instance();
-		
+
 		require_once $this->get_plugin_path() . '/includes/class-wc-admin-notices.php';
 		$this->wc_admin_notice = WC_TS4WC_Admin_Notices_Under_WC_Admin::get_instance();
 
@@ -223,14 +240,14 @@ class Trackship_For_Woocommerce {
 			return;
 		}
 		require_once $this->get_plugin_path() . '/includes/api/class-trackship-rest-api-controller.php';
-		
+
 		$trackship_controller_v1 = new TrackShip_REST_API_Controller();
 		$trackship_controller_v1->register_routes();
-		
+
 		$trackship_controller_v2 = new TrackShip_REST_API_Controller();
 		$trackship_controller_v2->set_namespace( 'wc/v2' );
 		$trackship_controller_v2->register_routes();
-		
+
 		$trackship_controller_v3 = new TrackShip_REST_API_Controller();
 		$trackship_controller_v3->set_namespace( 'wc/v3' );
 		$trackship_controller_v3->register_routes();
@@ -266,7 +283,7 @@ class Trackship_For_Woocommerce {
 	*/
 	public function plugin_dir_url() {
 		return plugin_dir_url( __FILE__ );
-	}				
+	}
 	
 	/**
 	* Add plugin action links.
@@ -301,13 +318,13 @@ class Trackship_For_Woocommerce {
 		if ( ! function_exists( 'is_plugin_active' ) ) {
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		}
-		
+
 		if ( is_plugin_active( 'woo-advanced-shipment-tracking/woocommerce-advanced-shipment-tracking.php' ) || is_plugin_active( 'ast-pro/ast-pro.php' ) || is_plugin_active( 'advanced-shipment-tracking-pro/advanced-shipment-tracking-pro.php' ) ) {
 			$is_active = true;
 		} else {
 			$is_active = false;
 		}		
-	
+
 		return $is_active;
 	}
 	
@@ -322,12 +339,12 @@ class Trackship_For_Woocommerce {
 		if ( ! function_exists( 'is_plugin_active' ) ) {
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		}
-		
+
 		if ( is_plugin_active( 'woocommerce-shipment-tracking/woocommerce-shipment-tracking.php' ) ) {
 			$is_active = true;
 		} else {
 			$is_active = false;
-		}		
+		}
 	
 		return $is_active;
 	}
@@ -343,13 +360,13 @@ class Trackship_For_Woocommerce {
 		if ( ! function_exists( 'is_plugin_active' ) ) {
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		}
-		
+
 		if ( is_plugin_active( 'woo-orders-tracking/woo-orders-tracking.php' ) || is_plugin_active( 'woocommerce-orders-tracking/woocommerce-orders-tracking.php' ) ) {
 			$is_active = true;
 		} else {
 			$is_active = false;
-		}		
-	
+		}
+
 		return $is_active;
 	}
 
@@ -364,13 +381,13 @@ class Trackship_For_Woocommerce {
 		if ( ! function_exists( 'is_plugin_active' ) ) {
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		}
-		
+
 		if ( is_plugin_active( 'klaviyo/klaviyo.php' ) ) {
 			$is_active = true;
 		} else {
 			$is_active = false;
-		}		
-	
+		}
+
 		return $is_active;
 	}
 	
@@ -386,19 +403,19 @@ class Trackship_For_Woocommerce {
 		if ( ! function_exists( 'is_plugin_active' ) ) {
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		}
-		
+
 		if ( is_plugin_active( 'yith-woocommerce-order-tracking/init.php' ) || is_plugin_active( 'yith-woocommerce-order-tracking-premium/init.php' ) ) {
 			$is_active = true;
 		} else {
 			$is_active = false;
-		}		
+		}
 	
 		return $is_active;
 	}
 
 	public function get_tracking_items( $order_id ) {
 		if ( function_exists( 'ast_get_tracking_items' ) ) {
-			$tracking_items = ast_get_tracking_items( $order_id );	
+			$tracking_items = ast_get_tracking_items( $order_id );
 		} elseif ( class_exists( 'WC_Shipment_Tracking' ) ) {
 			$tracking_items = WC_Shipment_Tracking()->actions->get_tracking_items( $order_id, true );
 		} elseif ( class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
@@ -431,7 +448,6 @@ class Trackship_For_Woocommerce {
 
 		return $tracking_items;
 	}
-	
 }
 
 if ( ! function_exists( 'trackship_for_woocommerce' ) ) {
@@ -447,7 +463,7 @@ if ( ! function_exists( 'trackship_for_woocommerce' ) ) {
 	function trackship_for_woocommerce() {
 		static $instance;
 	
-		if ( ! isset( $instance ) ) {		
+		if ( ! isset( $instance ) ) {
 			$instance = new Trackship_For_Woocommerce();
 		}
 	
@@ -505,8 +521,8 @@ function get_trackship_settings( $key, $default_value = '' ) {
 	$data_array = get_option( 'trackship_settings', array() );
 	$value = '';
 	if ( isset( $data_array[$key] ) ) {
-		$value = $data_array[$key];	
-	}					
+		$value = $data_array[$key];
+	}
 	
 	if ( '' == $value ) {
 		$value = $default_value;
@@ -538,8 +554,7 @@ if ( ! function_exists( 'zorem_tracking' ) ) {
 		$menu_slug = "trackship-for-woocommerce";
 		$plugin_id = "12";
 		$zorem_tracking = WC_Trackers::get_instance( $plugin_name, $plugin_slug, $user_id,
-			$setting_page_type, $setting_page_location, $parent_menu_type,  $menu_slug, $plugin_id );
-
+		$setting_page_type, $setting_page_location, $parent_menu_type,  $menu_slug, $plugin_id );
 
 		return $zorem_tracking;
 	}
