@@ -52,17 +52,17 @@ class Trackship_For_Woocommerce {
 			add_action( 'admin_notices', array( $this, 'notice_activate_wc' ) );
 			return;
 		}
-		
+
 		if ( !$this->is_ast_active() && !$this->is_st_active() && !$this->is_active_woo_order_tracking() && !$this->is_active_yith_order_tracking() ) {
 			add_action( 'admin_notices', array( $this, 'notice_activate_ast' ) );
 		}
-			
+
 		// Include required files.
 		$this->includes();
-		
+
 		// Init REST API.
 		$this->init_rest_api();
-		
+
 		//start adding hooks
 		$this->init();
 
@@ -97,7 +97,7 @@ class Trackship_For_Woocommerce {
 			$is_active = true;
 		} else {
 			$is_active = false;
-		}		
+		}
 		return $is_active;
 	}
 	
