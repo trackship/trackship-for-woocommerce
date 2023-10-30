@@ -411,15 +411,7 @@ class tswc_smswoo_admin {
 		
 		check_ajax_referer( 'smswoo_settings_tab', 'smswoo_settings_tab_nonce' );
 		
-		$data = $this->get_sms_provider_data();
-		foreach( $data as $key => $val ){
-			if(isset($_POST[ $key ])){
-				update_option( $key, $_POST[ $key ] );
-			}
-		}
-		
 		$data = $this->get_customer_tracking_status_settings();
-		
 		foreach( $data as $key => $val ){
 			if(isset($_POST[ $val['id'] ])){
 				
@@ -436,46 +428,28 @@ class tswc_smswoo_admin {
 			}
 		}
 		
-		return;
-		
-		$data = $this->get_settings_data();
+		if ( isset($_POST[ 'smswoo_sms_provider' ]) && 'smswoo_clicksend' == $_POST[ 'smswoo_sms_provider' ] ) {
+			$args = array(
+				'headers' => array(
+					'Authorization' => 'Basic ' . base64_encode( $_POST[ 'smswoo_clicksend_username' ] . ':' . $_POST[ 'smswoo_clicksend_key' ] ),
+				),
+			);
+			$url = 'https://rest.clicksend.com/v3/account';
+			$response = wp_safe_remote_get( $url, $args);
+
+			if ( 200 != wp_remote_retrieve_response_code( $response ) ) {
+				wp_send_json( array('success' => 'false', 'message' => 'ClickSend credentials error') );
+			}
+		}
+
+		$data = $this->get_sms_provider_data();
 		foreach( $data as $key => $val ){
 			if(isset($_POST[ $key ])){
 				update_option( $key, $_POST[ $key ] );
 			}
 		}
 		
-		$data = $this->get_url_shortening_data();
-		foreach( $data as $key => $val ){
-			if(isset($_POST[ $key ])){
-				update_option( $key, $_POST[ $key ] );
-			}
-		}
-		
-		$data = $this->get_customer_orderstatus_settings();
-		
-		foreach( $data as $key => $val ){
-			if(isset($_POST[ $val['id'] ])){
-				update_option( $val['id'], $_POST[ $val['id'] ] );
-				
-				$enabled_id = $val['id'] . "_enabled";
-				update_option( $enabled_id, $_POST[ $enabled_id ] );
-			}
-		}
-		
-		
-		
-		$data = $this->get_admin_notification_settings();
-		foreach( $data as $key => $val ){
-			if(isset($_POST[ $val['id'] ])){
-				update_option( $val['id'], $_POST[ $val['id'] ] );
-				
-				$enabled_id = $val['id'] . "_enabled";
-				update_option( $enabled_id, $_POST[ $enabled_id ] );
-			}
-		}
-		
-		echo json_encode( array('success' => 'true') );die();
+		wp_send_json( array('success' => 'true', 'message' => __( 'Your settings have been successfully saved.', 'trackship-for-woocommerce' )) );
 	}
 	
 	/*
