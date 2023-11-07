@@ -1,10 +1,10 @@
 === TrackShip for WooCommerce  ===
 Contributors: TrackShip
 Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
-Requires at least: 5.3
+Requires at least: 6.2
 Tested up to: 6.4.0
-Requires PHP: 7.2
-Stable tag: 1.6.5
+Requires PHP: 7.4
+Stable tag: 1.7.0
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,6 +111,16 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended).
 
 == Changelog ==
+= 1.7.0 - 2023-10-06 =
+* Enhancement - added Destination city and state in TrackShip Shipments
+* Enhancement - Admin notifications design improved
+* Fix - Tracking widget fix on View order page
+* Dev - TrackShip SMS settings desgin update
+* Dev - Validation for ClickSend credentials during the data saving process.
+* Dev - Tested with PHP 8.2.0
+* Dev - Tested with WordPress 6.4.0
+* Dev - Tested with WooCommerce 8.2.1
+
 = 1.6.5 - 2023-10-06 =
 * Enhancement - added Integration tab and Klaviyo integration added
 * Enhancement - added Twilio WhatsApp for Shipment status notifications
