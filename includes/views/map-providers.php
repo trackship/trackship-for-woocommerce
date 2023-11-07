@@ -55,6 +55,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php } else { ?>
 					<span class="plugin_setting_note">
 						<strong><?php esc_html_e( 'Please note: ', 'trackship-for-woocommerce' ); ?></strong>
+						<?php /* translators: %s: search for a count */ ?>
 						<?php printf( esc_html__( 'Since AST PRO is installed, the shipping provider name mapping is done on the shipping provider settings (WooCommerce > Shipment Tracking > %1$sShipping Providers%2$s)', 'trackship-for-woocommerce' ), '<a href="' . esc_url( admin_url( 'admin.php?page=woocommerce-advanced-shipment-tracking&tab=shipping-providers' ) ) . '">', '</a>' ); ?>
 					</span>
 				<?php } ?>

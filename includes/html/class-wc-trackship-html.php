@@ -44,7 +44,7 @@ class WC_Trackship_Html {
 			<div class="multiple_select_container">	
 				<select multiple class="wc-enhanced-select" name="<?php echo esc_html( $id ); ?>[]" id="<?php echo esc_html( $id ); ?>">
 				<?php
-				$multi_checkbox_data = get_trackship_settings($id);
+				$multi_checkbox_data = get_trackship_settings( $id, ['completed', 'partial-shipped', 'shipped'] );
 				foreach ( (array) $array['options'] as $key => $val ) { 
 					$selected = in_array( $key, $multi_checkbox_data ) ? 'selected' : '';
 					?>
@@ -62,7 +62,7 @@ class WC_Trackship_Html {
 		} else {
 			$checked = '';
 		}
-		$tgl_class = '';	
+		$tgl_class = '';
 		if ( isset( $array['tgl_color'] ) ) {
 			$tgl_class = 'ast-tgl-btn-green';
 		}
@@ -78,7 +78,7 @@ class WC_Trackship_Html {
 			<?php } ?>
 			</label>
 			<?php if ( isset( $array['customize_link'] ) ) { ?>
-				<a href="<?php echo esc_url( $array['customize_link'] ); ?>" class="button-primary btn_outline"><?php esc_html_e( 'Customize', 'trackship-for-woocommerce' ); ?></a>	
+				<a href="<?php echo esc_url( $array['customize_link'] ); ?>" class="button-primary btn_outline"><?php esc_html_e( 'Customize', 'trackship-for-woocommerce' ); ?></a>
 			<?php } ?>
 		</li>
 		<?php
@@ -92,7 +92,7 @@ class WC_Trackship_Html {
 					<span class="woocommerce-help-tip tipTip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
 				<?php } ?>
 			</label>
-			<input class="input-text" type="number" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" min="1" value="<?php echo get_trackship_settings($id); ?>">
+			<input class="input-text" type="number" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" min="1" value="<?php echo esc_attr(get_trackship_settings($id)); ?>">
 		</li>
 		<?php
 	}
@@ -111,7 +111,7 @@ class WC_Trackship_Html {
 						<option <?php echo get_trackship_settings( $id ) == $page_id ? 'selected' : ''; ?> value="<?php echo esc_html( $page_id ); ?>"><?php esc_html_e( $page_name ); ?></option>
 					<?php } ?>
 					<option <?php echo 'other' == get_trackship_settings( $id ) ? 'selected' : ''; ?> value="other"><?php esc_html_e( 'Other', 'trackship-for-woocommerce' ); ?>
-					</option>	
+					</option>
 				</select>
 				<fieldset style="<?php echo 'other' != get_trackship_settings( $id ) ? 'display:none;' : 'padding-top: 10px;'; ?>" class="trackship_other_page_fieldset">
 					<input type="text" name="wc_ast_trackship_other_page" id="wc_ast_trackship_other_page" value="<?php echo esc_html( get_trackship_settings('wc_ast_trackship_other_page') ); ?>">
@@ -124,7 +124,7 @@ class WC_Trackship_Html {
 
 	public function get_button_html( $id, $array ) {
 		?>
-		<li>
+		<li >
 			<?php if ( $array['title'] ) { ?>
 				<label class="left_label"><?php echo esc_html( $array['title'] ); ?>
 					<?php if ( isset($array['tooltip']) ) { ?>
@@ -139,4 +139,49 @@ class WC_Trackship_Html {
 		<?php
 	}
 
+	public function get_text_html( $id, $array ) {
+		?>
+		<li class="dis_block">
+			<?php if ( $array['title'] ) { ?>
+				<label class="left_label"><?php echo esc_html( $array['title'] ); ?>
+					<?php if ( isset($array['tooltip']) ) { ?>
+					<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
+					<?php } ?>
+				</label>
+			<?php } ?>
+			<fieldset>
+				<input class="input-text regular-input " type="text" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" placeholder="<?php esc_html_e( 'E.g. {admin_email}, admin@example.org' ); ?>" value="<?php echo esc_attr(get_trackship_settings( $id, '{admin_email}' )); ?>">
+			</fieldset>
+		</li>
+		<?php
+		
+	}
+
+	public function get_time_html( $id, $array ) {
+		?>
+		<li class="dis_block">
+			<?php if ( $array['title'] ) { ?>
+				<label class="left_label"><?php echo esc_html( $array['title'] ); ?>
+					<?php if ( isset($array['tooltip']) ) { ?>
+					<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
+					<?php } ?>
+				</label>
+			<?php } ?>
+			<?php 
+			$send_time_array = array();
+			for ( $hour = 0; $hour < 24; $hour++ ) {
+				for ( $min = 0; $min < 60; $min = $min + 30 ) {
+					$this_time = gmdate( 'H:i', strtotime( "$hour:$min" ) );
+					$send_time_array[ $this_time ] = $this_time;
+				}
+			}
+			?>
+			<select class="select daily_digest_time" name="<?php echo esc_html( $id ); ?>">
+				<?php foreach ( (array) $send_time_array as $key1 => $val1 ) { ?>
+					<option <?php echo get_trackship_settings( $id ) == $key1 ? 'selected' : ''; ?> value="<?php echo esc_html( $key1 ); ?>" ><?php echo esc_html( $val1 ); ?></option>
+				<?php } ?>
+			</select>
+		</li>
+		<?php
+	}
 }

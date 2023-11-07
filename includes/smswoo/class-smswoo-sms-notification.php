@@ -3,14 +3,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class tswc_smswoo_sms_notification {
+class TSWC_SMSWoo_SMS_Notification {
 	
 	private static $instance;
 	
-	/**
-	 * @var sms_gateway SMS gateway
-	 * not in use, remove in future
-	*/
 	private $sms_gateway;
 
 	private $new_status;
@@ -36,7 +32,7 @@ class tswc_smswoo_sms_notification {
 	 * Get the class instance
 	 *
 	 * @since  1.0
-	 * @return tswc_smswoo_sms_notification
+	 * @return TSWC_SMSWoo_SMS_Notification
 	*/
 	public static function get_instance() {
 
@@ -61,7 +57,7 @@ class tswc_smswoo_sms_notification {
 		add_filter( 'smswoo_sms_message_replacements', array( $this, 'ast_order_variable_support' ), 10, 2 );
 		
 	}
-		
+
 	/**
 	 * Replaces SMS template variables in SMS message
 	 *
@@ -236,12 +232,12 @@ class tswc_smswoo_sms_notification {
 		}
 
 		$log_args = array(
-			'type'           => $this->_sms_type,
-			'order'          => $order_id,
-			'success'        => $success,
-			'status_message' => $status_message,
-			'phone'          => $phone,
-			'message'        => $message
+			'type'			=> $this->_sms_type,
+			'order'			=> $order_id,
+			'success'		=> $success,
+			'status_message'=> $status_message,
+			'phone'			=> $phone,
+			'message'		=> $message
 		);
 
 		$tracking_item = $this->tracking_item;
@@ -711,45 +707,29 @@ class tswc_smswoo_sms_notification {
 		switch ( $this->_country_code ) {
 
 			case 'IT':
-
 				/**
 				 * In Italy, the telephone prefixes released by "H3G" operator have the first two digits equal to the Italian international prefix.
 				 * If the customer has entered the number without the country code, the sending of SMS can fail because of this similarity
 				 */
 				if ( strlen( $phone ) <= apply_filters( 'smswoo_italian_numbers_length', 10 ) ) {
-
 					$mobile_prefixes = apply_filters( 'smswoo_italian_prefixes', array( '390', '391', '392', '393', '397' ) );
-
 					if ( in_array( substr( $phone, 0, 3 ), $mobile_prefixes ) ) {
-
 						$phone = $this->_calling_code . $phone;
-
 					}
-
 				}
-
 				break;
-
 			case 'NO':
-
 				/**
 				 * In Norway, the newer telephone prefixes have the first two digits equal to the Norwegian international prefix.
 				 * If the customer has entered the number without the country code, the sending of SMS can fail because of this similarity
 				 */
 				if ( strlen( $phone ) <= apply_filters( 'smswoo_norwegian_numbers_length', 8 ) ) {
-
 					$mobile_prefixes = apply_filters( 'smswoo_norwegian_prefixes', array( '47' ) );
-
 					if ( in_array( substr( $phone, 0, 2 ), $mobile_prefixes ) ) {
-
 						$phone = $this->_calling_code . $phone;
-
 					}
-
 				}
-
 				break;
-
 		}
 
 		return $phone;

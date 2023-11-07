@@ -44,33 +44,35 @@ $columns = array(
 	5 => 'Shipment status',
 	6 => 'Ship from',
 	7 => 'Ship to',
-	8 => 'Last Event',
-	9 => 'Customer',
-	10=> 'Shipping time',
-	11 => 'Delivery date',
-	12 => 'Actions',
+	8 => 'Ship State',
+	9 => 'Ship City',
+	10 => 'Last Event',
+	11 => 'Customer',
+	12 => 'Shipping time',
+	13 => 'Delivery date',
+	14 => 'Actions',
 );
-$status = isset( $_GET['status'] ) ? sanitize_text_field( $_GET['status'] ) : '';
+$url_status = isset( $_GET['status'] ) ? sanitize_text_field( $_GET['status'] ) : '';
 $url_provider = isset( $_GET['provider'] ) ? sanitize_text_field( $_GET['provider'] ) : '';
 
-$res = $wpdb->get_results( "SELECT shipment_status, COUNT(*) AS status_count FROM $woo_trackship_shipment GROUP BY shipment_status", ARRAY_A );
-$statuses = array_column($res, "shipment_status");
-$status_count = array_column($res, "status_count");
+$res = $wpdb->get_results( "SELECT shipment_status, COUNT(*) AS status_count FROM {$wpdb->prefix}trackship_shipment GROUP BY shipment_status", ARRAY_A );
+$statuses = array_column($res, 'shipment_status');
+$status_count = array_column($res, 'status_count');
 $shipment_count = array_combine($statuses, $status_count); // combine the two arrays using shipment_status as keys
 $late_ship_day = get_trackship_settings( 'late_shipments_days', 7);
 $days = $late_ship_day - 1 ;
-$issues_count = $wpdb->get_row( "SELECT
+$issues_count = $wpdb->get_row( $wpdb->prepare( "SELECT
 	COUNT(*) AS all_ship,
 	SUM( IF( shipment_status != ( 'delivered'), 1, 0 ) ) as active,
 	SUM( IF(shipment_status NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' ) OR pending_status IS NOT NULL, 1, 0) ) as tracking_issues,
-	SUM( IF(shipping_length > ".$days.", 1, 0) ) as late_shipment
-FROM {$woo_trackship_shipment}", ARRAY_A);
+	SUM( IF(shipping_length > %d, 1, 0) ) as late_shipment
+FROM {$wpdb->prefix}trackship_shipment", $days), ARRAY_A);
 
 $shipment_count = array_merge($shipment_count, $issues_count);
 
-$res = $wpdb->get_results( "SELECT shipping_provider, COUNT(*) AS provider_count FROM $woo_trackship_shipment GROUP BY shipping_provider", ARRAY_A );
-$provider_array = array_column($res, "shipping_provider");
-$provider_count_array = array_column($res, "provider_count");
+$res = $wpdb->get_results( "SELECT shipping_provider, COUNT(*) AS provider_count FROM {$wpdb->prefix}trackship_shipment GROUP BY shipping_provider", ARRAY_A );
+$provider_array = array_column($res, 'shipping_provider');
+$provider_count_array = array_column($res, 'provider_count');
 $provider_count = array_combine($provider_array, $provider_count_array);
 ?>
 <div>
@@ -78,12 +80,12 @@ $provider_count = array_combine($provider_array, $provider_count_array);
 		<select class="select_option" name="shipment_status" id="shipment_status">
 			<?php foreach ( $ship_status as $key => $val ) { ?>
 				<?php $count = isset($shipment_count[$key]) ? $shipment_count[$key] : 0; ?>
-				<option value="<?php echo esc_html( $key ); ?>" <?php echo $status == $key ? 'selected' : ''; ?>><?php echo esc_html( $val . ' (' . $count . ') ' ); ?></option>
+				<option value="<?php echo esc_html( $key ); ?>" <?php echo $url_status == $key ? 'selected' : ''; ?>><?php echo esc_html( $val . ' (' . $count . ') ' ); ?></option>
 			<?php } ?>
 		</select>
 	</span>
 	<?php
-	$all_providers = $wpdb->get_results( "SELECT shipping_provider FROM {$woo_trackship_shipment} WHERE shipping_provider NOT LIKE ( '%NULL%') GROUP BY shipping_provider" );
+	$all_providers = $wpdb->get_results( $wpdb->prepare("SELECT shipping_provider FROM {$wpdb->prefix}trackship_shipment WHERE shipping_provider NOT LIKE ( %s ) GROUP BY shipping_provider", '%NULL%' ) );
 	?>
 	<span class="shipping_provider">
 		<select class="select_option" name="shipping_provider" id="shipping_provider">
@@ -120,10 +122,10 @@ $provider_count = array_combine($provider_array, $provider_count_array);
 		<div class="popover__content">
 			<?php foreach ( $columns as $key => $val) { ?>
 				<div class="column_toogle">
-					<input type="hidden" name="<?php echo 'column_' . $key; ?>" value="0"/>
-					<input class="ast-tgl ast-tgl-flat" id="<?php echo 'column_' . $key; ?>" name="<?php echo 'column_' . $key; ?>" data-number="<?php echo $key; ?>" type="checkbox" checked value="1"/>
-					<label class="ast-tgl-btn ast-tgl-btn-green" for="<?php echo 'column_' . $key; ?>"></label>
-					<label for="<?php echo 'column_' . $key; ?>"><span><?php echo $val; ?></span></label>
+					<input type="hidden" name="<?php echo 'column_' . esc_attr($key); ?>" value="0"/>
+					<input class="ast-tgl ast-tgl-flat" id="<?php echo 'column_' . esc_attr($key); ?>" name="<?php echo 'column_' . esc_attr($key); ?>" data-number="<?php echo esc_attr($key); ?>" type="checkbox" checked value="1"/>
+					<label class="ast-tgl-btn ast-tgl-btn-green" for="<?php echo 'column_' . esc_attr($key); ?>"></label>
+					<label for="<?php echo 'column_' . esc_attr($key); ?>"><span><?php echo esc_html($val); ?></span></label>
 				</div>
 			<?php } ?>
 		</div>

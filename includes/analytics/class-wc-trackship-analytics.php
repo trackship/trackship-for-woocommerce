@@ -30,7 +30,7 @@ class WC_Trackship_Analytics {
 	public static function get_instance() {
 
 		if ( null === self::$instance ) {
-			self::$instance = new self;
+			self::$instance = new self();
 		}
 
 		return self::$instance;
@@ -74,7 +74,7 @@ class WC_Trackship_Analytics {
 
 	public function analytics_script() {
 		
-		if ( version_compare( WC_VERSION, 6.5, ">=" ) ) {
+		if ( version_compare( WC_VERSION, 6.5, '>=' ) ) {
 			if ( ! class_exists( 'Automattic\WooCommerce\Admin\PageController' ) || ! \Automattic\WooCommerce\Admin\PageController::is_admin_or_embed_page() ) {
 				return;
 			}

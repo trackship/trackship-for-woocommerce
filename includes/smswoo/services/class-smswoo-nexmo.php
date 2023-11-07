@@ -11,20 +11,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'smswoo_nexmo' ) ) {
+if ( ! class_exists( 'SMSWOO_Nexmo' ) ) {
 
-	/**
-	 *
-	 * @class   smswoo_nexmo
-	 * @since   1.0
-	 *
-	 */
-	class smswoo_nexmo extends smswoo_sms_gateway {
+	class SMSWOO_Nexmo extends SMSWOO_Sms_Gateway {
 
-		/** @var string nexmo api key */
 		private $_nexmo_api_key;
 
-		/** @var string nexmo api secret */
 		private $_nexmo_api_secret;
 
 		/**
@@ -70,20 +62,20 @@ if ( ! class_exists( 'smswoo_nexmo' ) ) {
 
 			$args = http_build_query(
 				array(
-					'from'       => $from,
-					'to'         => $to_phone,
-					'type'       => $type,
-					'text'       => $message,
-					'api_key'    => $this->_nexmo_api_key,
-					'api_secret' => $this->_nexmo_api_secret,
+					'from'		=> $from,
+					'to'		=> $to_phone,
+					'type'		=> $type,
+					'text'		=> $message,
+					'api_key'	=> $this->_nexmo_api_key,
+					'api_secret'=> $this->_nexmo_api_secret,
 				)
 			);
 
 			$wp_remote_http_args = array(
 				'method' => 'POST',
 				'body'   => $args,
-				'header' => "Content-type: application/x-www-form-urlencoded\r\n" .
-				            "Content-Length: " . strlen( $args ) . "\r\n"
+				'header' => 'Content-type: application/x-www-form-urlencoded\r\n' .
+							'Content-Length: ' . strlen( $args ) . '\r\n'
 			);
 
 			$endpoint = 'https://rest.nexmo.com/sms/json';
@@ -109,8 +101,8 @@ if ( ! class_exists( 'smswoo_nexmo' ) ) {
 
 			$result = json_decode( $response['body'], true );
 
-			if ( $result['messages'][0]['status'] != 0 ) {
-
+			if ( 0 != $result['messages'][0]['status'] ) {
+				/* translators: %s: search for a tag */
 				throw new Exception( sprintf( __( 'An error has occurred: %s', 'trackship-for-woocommerce' ), $result['messages'][0]['error-text'] ) );
 
 			}
@@ -122,9 +114,9 @@ if ( ! class_exists( 'smswoo_nexmo' ) ) {
 		/**
 		 * Send SMS
 		 *
-		 * @since   1.0
+		 * @since 1.0
 		 *
-		 * @param   $to_phone     string
+		 * @param $to_phone string
 		 *
 		 * @return  void
 		 * @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
@@ -133,17 +125,17 @@ if ( ! class_exists( 'smswoo_nexmo' ) ) {
 
 			$args = http_build_query(
 				array(
-					'api_key'		=> $this->_nexmo_api_key,
-					'api_secret'	=> $this->_nexmo_api_secret,
-					'number'		=> $to_phone,
+					'api_key'	=> $this->_nexmo_api_key,
+					'api_secret'=> $this->_nexmo_api_secret,
+					'number'	=> $to_phone,
 				)
 			);
 
 			$wp_remote_http_args = array(
 				'method' => 'POST',
 				'body'   => $args,
-				'header' => "Content-type: application/x-www-form-urlencoded\r\n" .
-				            "Content-Length: " . strlen( $args ) . "\r\n"
+				'header' => 'Content-type: application/x-www-form-urlencoded\r\n' .
+							'Content-Length: ' . strlen( $args ) . '\r\n'
 			);
 
 			$endpoint = 'https://api.nexmo.com/ni/basic/json';
@@ -169,8 +161,8 @@ if ( ! class_exists( 'smswoo_nexmo' ) ) {
 
 			$result = json_decode( $response['body'], true );
 
-			if ( $result['status'] != 0 ) {
-
+			if ( 0 != $result['status'] ) {
+				/* translators: %s: search for a tag */
 				throw new Exception( sprintf( __( 'An error has occurred: %s', 'trackship-for-woocommerce' ), $result['status_message'] ) );
 
 			}

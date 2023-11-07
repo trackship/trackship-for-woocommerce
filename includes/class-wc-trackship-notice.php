@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WC_TrackShip_Admin_notice {
+class WC_TrackShip_Admin_Notice {
 
 	/**
 	 * Instance of this class.
@@ -16,13 +16,13 @@ class WC_TrackShip_Admin_notice {
 	 * Initialize the main plugin function
 	*/
 	public function __construct() {
-		$this->init();	
+		$this->init();
 	}
 	
 	/**
 	 * Get the class instance
 	 *
-	 * @return WC_TrackShip_Admin_notice
+	 * @return WC_TrackShip_Admin_Notice
 	*/
 	public static function get_instance() {
 
@@ -78,11 +78,11 @@ class WC_TrackShip_Admin_notice {
 		if ( get_trackship_settings( 'review_notice_ignore', '') ) {
 			return;
 		}
-		
+
 		$dismissable_url = esc_url( add_query_arg( 'trackship-review-ignore', 'true' ) );
 		$url = 'https://wordpress.org/support/plugin/trackship-for-woocommerce/reviews/#new-post';
-		?>		
-		<style>		
+		?>
+		<style>
 		.wp-core-ui .notice.trackship-dismissable-notice {
 			padding: 12px;
 			text-decoration: none;
@@ -114,8 +114,8 @@ class WC_TrackShip_Admin_notice {
 
 		$dismissable_url = esc_url( add_query_arg( 'trackship-upgrade-ignore', 'true' ) );
 		$url = 'https://my.trackship.com/settings/#billing';
-		?>		
-		<style>		
+		?>
+		<style>
 		.wp-core-ui .notice.trackship-dismissable-notice {
 			padding: 12px;
 			text-decoration: none;
@@ -139,12 +139,12 @@ class WC_TrackShip_Admin_notice {
 		if ( get_trackship_settings( 'klaviyo_notice_ignore', '') ) {
 			return;
 		}
-		
+
 		$dismissable_url = esc_url( add_query_arg( 'klaviyo-notice-ignore', 'true' ) );
 		$url = 'https://docs.trackship.com/docs/trackship-for-woocommerce/integration/klaviyo/';
 		$btn_url = admin_url( 'admin.php?page=trackship-for-woocommerce&tab=integrations' );
-		?>		
-		<style>		
+		?>
+		<style>
 		.wp-core-ui .notice.trackship-dismissable-notice {
 			padding: 12px;
 			text-decoration: none;
@@ -153,7 +153,7 @@ class WC_TrackShip_Admin_notice {
 			padding: 9px;
 			text-decoration: none;
 		}
-		</style>	
+		</style>
 		<div class="notice notice-success is-dismissible trackship-dismissable-notice">
 			<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
 			<p><strong>New Feature Alert!</strong></p>
@@ -165,8 +165,8 @@ class WC_TrackShip_Admin_notice {
 
 	public function trackship_database_notice() {
 		$url = admin_url( '/admin.php?page=trackship-dashboard&trackship-database-upgrade=true' );
-		?>		
-		<style>		
+		?>
+		<style>
 		.wp-core-ui .notice.trackship-dismissable-notice {
 			padding: 12px;
 			text-decoration: none;
