@@ -2,7 +2,7 @@
 Contributors: TrackShip
 Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 5.3
-Tested up to: 6.3.0
+Tested up to: 6.4.0
 Requires PHP: 7.2
 Stable tag: 1.6.5
 License: GPLv2 
