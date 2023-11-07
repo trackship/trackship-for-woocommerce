@@ -207,7 +207,7 @@ class Trackship_For_Woocommerce {
 		$this->analytics = WC_Trackship_Analytics::get_instance();
 
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-notice.php';
-		$this->trackship_admin_notice = WC_TrackShip_Admin_notice::get_instance();
+		$this->trackship_admin_notice = WC_TrackShip_Admin_Notice::get_instance();
 
 		require_once $this->get_plugin_path() . '/includes/class-wc-admin-notices.php';
 		$this->wc_admin_notice = WC_TS4WC_Admin_Notices_Under_WC_Admin::get_instance();
@@ -421,7 +421,7 @@ class Trackship_For_Woocommerce {
 		} elseif ( class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 			$order = wc_get_order( $order_id );
 			if ( !$order || !$order->get_meta( 'ywot_tracking_code', true ) ) {
-				return $tracking_items = array();
+				return array();
 			}
 			$tracking_provider = $order->get_meta( 'ywot_carrier_name', true ) ? $order->get_meta( 'ywot_carrier_name', true ) : $order->get_meta( 'ywot_carrier_id', true );
 			$tracking_items[0] = array(
@@ -545,16 +545,16 @@ function delete_trackship_settings( $key ) {
 if ( ! function_exists( 'zorem_tracking' ) ) {
 	function zorem_tracking() {
 		require_once dirname(__FILE__) . '/zorem-tracking/zorem-tracking.php';
-		$plugin_name = "TrackShip for WooCommerce";
-		$plugin_slug = "trackship-for-woocommerce";
-		$user_id = "12";
-		$setting_page_type = "top-level";
-		$setting_page_location = "A custom top-level admin menu (admin.php)";
-		$parent_menu_type = "";
-		$menu_slug = "trackship-for-woocommerce";
-		$plugin_id = "12";
+		$plugin_name = 'TrackShip for WooCommerce';
+		$plugin_slug = 'trackship-for-woocommerce';
+		$user_id = '12';
+		$setting_page_type = 'top-level';
+		$setting_page_location = 'A custom top-level admin menu (admin.php)';
+		$parent_menu_type = '';
+		$menu_slug = 'trackship-for-woocommerce';
+		$plugin_id = '12';
 		$zorem_tracking = WC_Trackers::get_instance( $plugin_name, $plugin_slug, $user_id,
-		$setting_page_type, $setting_page_location, $parent_menu_type,  $menu_slug, $plugin_id );
+		$setting_page_type, $setting_page_location, $parent_menu_type, $menu_slug, $plugin_id );
 
 		return $zorem_tracking;
 	}

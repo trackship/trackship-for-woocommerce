@@ -7,7 +7,7 @@ class TS4WC_Admin_Customizer {
 
 	public $defaults;
 
-    /**
+	/**
 	 * Get the class instance
 	 *
 	 * @since  1.2.5
@@ -22,14 +22,14 @@ class TS4WC_Admin_Customizer {
 		return self::$instance;
 	}
 
-    /**
+	/**
 	 * Instance of this class.
 	 *
 	 * @var object Class Instance
 	*/
 	private static $instance;
 
-    /**
+	/**
 	 * Initialize the main plugin function
 	 * 
 	 * @since  1.2.5
@@ -38,24 +38,24 @@ class TS4WC_Admin_Customizer {
 		$this->init();
 	}
 
-    /*
+	/*
 	 * init function
 	 *
 	 * @since  1.2.5
 	*/
 	public function init() {
 		$this->defaults = $this->wcast_generate_defaults();	
-        //adding hooks
+		//adding hooks
 		add_action( 'admin_menu', array( $this, 'register_woocommerce_menu' ), 99 );
 
-        //save of settings hook
+		//save of settings hook
 		add_action( 'wp_ajax_save_trackship_customizer', array( $this, 'customizer_save_trackship_customizer' ) );
 		
 		//load javascript in admin
 		add_action('admin_enqueue_scripts', array( $this, 'customizer_enqueue_scripts' ) );
-    }
+	}
 
-    /*
+	/*
 	 * Admin Menu add function
 	 *
 	 * @since  1.2.5
@@ -65,20 +65,19 @@ class TS4WC_Admin_Customizer {
 		add_menu_page( 'TrackShip Customizer', 'TrackShip Customizer', 'manage_options', 'trackship_customizer', array( $this, 'settingsPage' ) );
 	}
 
-    /*
+	/*
 	 * callback for settingsPage
 	 *
 	 * @since  1.2.5
 	*/
 	public function settingsPage() {
-        $page = isset( $_GET['page'] ) ? $_GET['page'] : '' ;
-		// Add condition for css & js include for admin page  
-		if ( $page != 'trackship_customizer' ) {
+		$page = isset( $_GET['page'] ) ? sanitize_text_field($_GET['page']) : '' ;
+		if ( 'trackship_customizer' != $page ) {
 			return;
 		}
 
-		$type = isset( $_GET['type'] ) ? $_GET['type'] : 'tracking_page' ;
-		$shipmentStatus = isset( $_GET["status"] ) ? $_GET["status"] : 'in_transit' ;
+		$type = isset( $_GET['type'] ) ? sanitize_text_field($_GET['type']) : 'tracking_page' ;
+		$shipmentStatus = isset( $_GET['status'] ) ? sanitize_text_field($_GET['status']) : 'in_transit' ;
 		$iframe_url = 'shipment_email' == $type ? $this->get_email_preview_url( $shipmentStatus ) : $this->get_tracking_preview_url( $shipmentStatus ) ;
 		$shipment_status = $this->shipment_status();
 		?>
@@ -122,24 +121,26 @@ class TS4WC_Admin_Customizer {
 					<div class="zoremmail-layout-content-header">
 						<div class="header-panel options-content">
 							<input type="hidden" name="customizer_type" id="customizer_type" value="<?php echo esc_html( $type ); ?>">
-							<?php /*<span class="header_shipment_status">
+							<?php
+							/*<span class="header_shipment_status">
 								<select name="shipmentStatus" id="shipmentStatus" class="select">
 									<?php foreach( $shipment_status as $slug => $status) { ?>
 										<option value="<?php echo esc_html($slug); ?>" <?php echo $shipmentStatus == $slug ? 'selected' : ''; ?>><?php echo esc_html($status); ?></option>
 									<?php } ?>
 								</select>
-							</span> */?>
+							</span> */
+							?>
 							<?php $preview_id = get_option( 'email_preview', 'mockup' ); ?>
 							<span class="header_mockup_order" style="padding: 0 17px;">
 								<select name="email_preview" id="email_preview" class="select">
-									<?php foreach( $this->get_order_ids() as $key => $label ) { ?>
+									<?php foreach ( $this->get_order_ids() as $key => $label ) { ?>
 										<option value="<?php echo esc_html( $key ); ?>" <?php echo $preview_id == $key ? 'selected' : ''; ?>><?php echo esc_html( $label ); ?></option>
 									<?php } ?>
 								</select>
 								<span class="tgl-btn-parent" style="margin: 20px;float: right;">
 									<?php foreach ( $shipment_status as $key => $value ) { ?>
 										<span class="tgl_<?php esc_attr_e( $key ); ?>" <?php echo $shipmentStatus == $key ? '' : 'style="display:none;"'; ?>>
-											<?php $slug_status = str_replace( '_', '',$key ); ?>
+											<?php $slug_status = str_replace( '_', '', $key ); ?>
 											<?php $slug_status = 'delivered' == $slug_status ? 'delivered_status' : $slug_status; ?>
 											<?php $id =  'wcast_enable_' . $slug_status . '_email'; ?>
 											<?php $enable_email = $this->get_value( 'wcast_' . $slug_status . '_email_settings', $id, $slug_status ); ?>
@@ -166,19 +167,19 @@ class TS4WC_Admin_Customizer {
 			<div class="pending_keyup_event"></div>
 		</section>
 		<?php
-    }
+	}
 
-    /*
+	/*
 	* Add admin javascript
 	*
 	* @since 1.2.5
 	*/	
 	public function customizer_enqueue_scripts() {
 		
-		$page = isset( $_GET["page"] ) ? $_GET["page"] : "" ;
+		$page = isset( $_GET['page'] ) ? sanitize_text_field($_GET['page']) : '' ;
 		
 		// Add condition for css & js include for admin page 
-		if ( $page != 'trackship_customizer' ) {
+		if ( 'trackship_customizer' != $page ) {
 			return;
 		}
 		
@@ -243,7 +244,7 @@ class TS4WC_Admin_Customizer {
 	/**
 	 * Code for initialize default value for customizer
 	*/
-	public function wcast_shipment_settings_defaults($status) {
+	public function wcast_shipment_settings_defaults( $status ) {
 		$name = $status;
 		$name = 'intransit' == $status ? 'In transit' : $name;
 		$name = 'availableforpickup' == $status ? 'Available For Pickup' : $name;
@@ -591,49 +592,49 @@ class TS4WC_Admin_Customizer {
 				'option_type'=> 'key',
 			),
 			'wc_ast_select_border_radius' => array(
-				'title'    => esc_html__( 'Widget Border radius', 'trackship-for-woocommerce' ),
-				'type'     => 'range',
+				'title'		=> esc_html__( 'Widget Border radius', 'trackship-for-woocommerce' ),
+				'type'		=> 'range',
 				'option_name'=> 'wc_ast_select_border_radius',
 				'option_type'=> 'key',
-				'default'  => $wc_ast_select_border_radius,
-				'show'     => true,
+				'default'	=> $wc_ast_select_border_radius,
+				'show'		=> true,
 				'min'		=> 0,
 				'max'		=> 10,
 			),
 			'wc_ast_select_link_color' => array(
-				'title'    => esc_html__( 'Links color', 'trackship-for-woocommerce' ),
-				'type'     => 'color',
-				'default'  => $wc_ast_select_link_color,
-				'show'     => true,
+				'title'		=> esc_html__( 'Links color', 'trackship-for-woocommerce' ),
+				'type'		=> 'color',
+				'default'	=> $wc_ast_select_link_color,
+				'show'		=> true,
 				'class'		=> 'colorset',
 				'option_name'=> 'wc_ast_select_link_color',
 				'option_type'=> 'key',
 			),
 			'form_button_color' => array(
-				'title'    => esc_html__( 'Button color', 'trackship-for-woocommerce' ),
-				'type'     => 'color',
+				'title'		=> esc_html__( 'Button color', 'trackship-for-woocommerce' ),
+				'type'		=> 'color',
 				'option_name'=> 'tracking_form_settings',
 				'option_type'=> 'array',
-				'default'  => $form_button_color,
-				'show'     => true,
+				'default'	=> $form_button_color,
+				'show'		=> true,
 				'class'		=> 'colorset',
 			),
 			'form_button_text_color' => array(
-				'title'    => esc_html__( 'Button font color', 'trackship-for-woocommerce' ),
-				'type'     => 'color',
+				'title'		=> esc_html__( 'Button font color', 'trackship-for-woocommerce' ),
+				'type'		=> 'color',
 				'option_name'=> 'tracking_form_settings',
 				'option_type'=> 'array',
-				'default'  => $form_button_text_color,
-				'show'     => true,
+				'default'	=> $form_button_text_color,
+				'show'		=> true,
 				'class'		=> 'colorset',
 			),
 			'form_button_border_radius' => array(
-				'title'    => esc_html__( 'Button radius', 'trackship-for-woocommerce' ),
-				'type'     => 'range',
+				'title'		=> esc_html__( 'Button radius', 'trackship-for-woocommerce' ),
+				'type'		=> 'range',
 				'option_name'=> 'tracking_form_settings',
 				'option_type'=> 'array',
-				'default'  => $form_button_border_radius,
-				'show'     => true,
+				'default'	=> $form_button_border_radius,
+				'show'		=> true,
 				'min'		=> 0,
 				'max'		=> 10,
 			),
@@ -645,24 +646,24 @@ class TS4WC_Admin_Customizer {
 				'show'		=> true,
 			),
 			'wc_ast_hide_tracking_events' => array(
-				'title'    => esc_html__( 'Tracking event display', 'trackship-for-woocommerce' ),
-				'type'     => 'select',
-				'default'  => $tracking_events,
-				'show'     => true,
-				'options'  => array(
+				'title'		=> esc_html__( 'Tracking event display', 'trackship-for-woocommerce' ),
+				'type'		=> 'select',
+				'default'	=> $tracking_events,
+				'show'		=> true,
+				'options'	=> array(
 					0 => __( 'Show all events', 'trackship-for-woocommerce' ),
-					1 => __( 'Hide tracking events', 'trackship-for-woocommerce' ),					
+					1 => __( 'Hide tracking events', 'trackship-for-woocommerce' ),
 					2 => __( 'Show last events & expand', 'trackship-for-woocommerce' ),
 				),
 				'option_name'=> 'wc_ast_hide_tracking_events',
 				'option_type'=> 'key',
 			),
 			'wc_ast_select_tracking_page_layout' => array(
-				'title'    => __( 'Tracker type', 'trackship-for-woocommerce' ),
-				'type'     => 'select',
-				'default'  => $wc_ast_select_tracking_page_layout,
-				'show'     => true,
-				'options'  => array(
+				'title'		=> __( 'Tracker type', 'trackship-for-woocommerce' ),
+				'type'		=> 'select',
+				'default'	=> $wc_ast_select_tracking_page_layout,
+				'show'		=> true,
+				'options'	=> array(
 					't_layout_2' => __( 'Progress bar', 'trackship-for-woocommerce' ),
 					't_layout_1' => __( 'Icons', 'trackship-for-woocommerce' ),
 					't_layout_3' => __( 'Single icon', 'trackship-for-woocommerce' ),
@@ -671,62 +672,62 @@ class TS4WC_Admin_Customizer {
 				'option_type'=> 'key',
 			),
 			'wc_ast_link_to_shipping_provider' => array(
-				'title'    => __( 'Enable tracking # link to carrier', 'trackship-for-woocommerce' ),
-				'default'  => $link_to_provider,
-				'type'     => 'checkbox',
-				'show'     => true,
+				'title'		=> __( 'Enable tracking # link to carrier', 'trackship-for-woocommerce' ),
+				'default'	=> $link_to_provider,
+				'type'		=> 'checkbox',
+				'show'		=> true,
 				'option_name'=> 'wc_ast_link_to_shipping_provider',
 				'option_type'=> 'key',
 			),
 			'wc_ast_hide_tracking_provider_image' => array(
-				'title'    => __( 'Hide the shipping provider logo', 'trackship-for-woocommerce' ),
-				'default'  => $hide_provider_image,
-				'type'     => 'checkbox',
-				'show'     => true,
+				'title'		=> __( 'Hide the shipping provider logo', 'trackship-for-woocommerce' ),
+				'default'	=> $hide_provider_image,
+				'type'		=> 'checkbox',
+				'show'		=> true,
 				'option_name'=> 'wc_ast_hide_tracking_provider_image',
 				'option_type'=> 'key',
 			),
 			'wc_ast_hide_from_to' => array(
-				'title'    => __( 'Hide shipping from-to', 'trackship-for-woocommerce' ),
-				'default'  => $hide_shipping_from_to,
-				'type'     => 'checkbox',
-				'show'     => true,
+				'title'		=> __( 'Hide shipping from-to', 'trackship-for-woocommerce' ),
+				'default'	=> $hide_shipping_from_to,
+				'type'		=> 'checkbox',
+				'show'		=> true,
 				'option_name'=> 'wc_ast_hide_from_to',
 				'option_type'=> 'key',
 			),
 			'wc_ast_hide_list_mile_tracking' => array(
-				'title'    => __( 'Hide delivery tracking number', 'trackship-for-woocommerce' ),
-				'default'  => $hide_last_mile,
-				'type'     => 'checkbox',
-				'tip-tip'  => __( 'The delivery tracking number will display if the shipment is getting a different tracking number at the destination country from the local postal service (i.e 4PX -> USPS)', 'trackship-for-woocommerce' ),
-				'show'     => true,
+				'title'		=> __( 'Hide delivery tracking number', 'trackship-for-woocommerce' ),
+				'default'	=> $hide_last_mile,
+				'type'		=> 'checkbox',
+				'tip-tip'	=> __( 'The delivery tracking number will display if the shipment is getting a different tracking number at the destination country from the local postal service (i.e 4PX -> USPS)', 'trackship-for-woocommerce' ),
+				'show'		=> true,
 				'option_name'=> 'wc_ast_hide_list_mile_tracking',
 				'option_type'=> 'key',
 			),
 			'wc_ast_remove_trackship_branding' => array(
-				'title'    => __( 'Hide TrackShip branding', 'trackship-for-woocommerce' ),
-				'default'  => $remove_trackship_branding,
-				'type'     => 'checkbox',
-				'show'     => true,
+				'title'		=> __( 'Hide TrackShip branding', 'trackship-for-woocommerce' ),
+				'default'	=> $remove_trackship_branding,
+				'type'		=> 'checkbox',
+				'show'		=> true,
 				'option_name'=> 'wc_ast_remove_trackship_branding',
 				'option_type'=> 'key',
 				'required' 	=> 'pro',
 				'plan'		=> in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ),
 			),
 			// Tracking widget form sections from below
-			'heading7'		=> array(
-				'id'		=> 'form_content',
-				'title'		=> esc_html__( 'General options', 'trackship-for-woocommerce' ),
-				'type'		=> 'section',
-				'parent'	=> 'form_content',
-				'show'		=> true,
+			'heading7'	=> array(
+				'id'	=> 'form_content',
+				'title'	=> esc_html__( 'General options', 'trackship-for-woocommerce' ),
+				'type'	=> 'section',
+				'parent'=> 'form_content',
+				'show'	=> true,
 			),
 			'form_tab_view' => array(
-				'title'    => __( 'Tabs display', 'trackship-for-woocommerce' ),
-				'type'     => 'select',
-				'default'  => $form_tab_view,
-				'show'     => true,
-				'options'  => array(
+				'title'		=> __( 'Tabs display', 'trackship-for-woocommerce' ),
+				'type'		=> 'select',
+				'default'	=> $form_tab_view,
+				'show'		=> true,
+				'options'	=> array(
 					'both'				=> __( 'Show both order details and Tracking number', 'trackship-for-woocommerce' ),
 					'order_details'		=> __( 'show only Order details', 'trackship-for-woocommerce' ),
 					'tracking_details'	=> __( 'show only Tracking details', 'trackship-for-woocommerce' ),
@@ -735,14 +736,14 @@ class TS4WC_Admin_Customizer {
 				'option_type'=> 'array',
 			),
 			'form_button_Text' => array(
-				'title'    => esc_html__( 'Button text', 'trackship-for-woocommerce' ),
-				'default'  => $form_button_Text,
+				'title'		=> esc_html__( 'Button text', 'trackship-for-woocommerce' ),
+				'default'	=> $form_button_Text,
 				'placeholder' => 'Track Order',
-				'type'     => 'text',
+				'type'		=> 'text',
 				'option_name'=> 'tracking_form_settings',
 				'option_type'=> 'array',
-				'show'     => true,
-				'class' 	=> 'form_button_Text',
+				'show'		=> true,
+				'class'		=> 'form_button_Text',
 			),
 		);
 		
@@ -768,11 +769,11 @@ class TS4WC_Admin_Customizer {
 
 		$settings[ 'email_preview' ] = array(
 			// for add in section 
-			// 'title'    => __( 'Mockup order', 'trackship-for-woocommerce' ),
-			// 'type'     => 'select',
-			// 'default'  => get_option( 'email_preview', 'mockup' ),
-			// 'show'     => true,
-			// 'options'  => $this->get_order_ids(),
+			// 'title'		=> __( 'Mockup order', 'trackship-for-woocommerce' ),
+			// 'type'		=> 'select',
+			// 'default'	=> get_option( 'email_preview', 'mockup' ),
+			// 'show'		=> true,
+			// 'options'	=> $this->get_order_ids(),
 			// 'option_name'=> 'email_preview',
 			// 'option_type'=> 'key',
 
@@ -788,11 +789,11 @@ class TS4WC_Admin_Customizer {
 		);
 
 		$settings[ 'shipmentStatus' ] = array(
-			'title'    => __( 'Email type', 'trackship-for-woocommerce' ),
-			'type'     => 'select',
-			'default'  => isset( $_GET['status'] ) ? $_GET['status'] : 'in_transit',
-			'show'     => true,
-			'options'  => array(
+			'title'		=> __( 'Email type', 'trackship-for-woocommerce' ),
+			'type'		=> 'select',
+			'default'	=> isset( $_GET['status'] ) ? sanitize_text_field($_GET['status']) : 'in_transit',
+			'show'		=> true,
+			'options'	=> array(
 				'in_transit' => __( 'In Transit', 'trackship-for-woocommerce' ),
 				'available_for_pickup' => __( 'Available For Pickup', 'trackship-for-woocommerce' ),
 				'out_for_delivery' => __( 'Out For Delivery', 'trackship-for-woocommerce' ),
@@ -805,7 +806,7 @@ class TS4WC_Admin_Customizer {
 		);
 
 		foreach ( $all_statuses as $key => $value ) {
-			$email_settings = 'wcast_' . $key . '_email_settings';			
+			$email_settings = 'wcast_' . $key . '_email_settings';
 			
 			$settings[ 'wcast_enable_' . $key . '_email' ] = array(
 				'type'		=> 'tgl-btn',
@@ -816,27 +817,27 @@ class TS4WC_Admin_Customizer {
 				'class'		=> $value . '_sub_menu all_status_submenu',
 				'name'		=> $this->shipment_status()[$value]
 			);
-			$settings[ 'wcast_'.$key.'_email_subject' ] = array(
-				'title'    => esc_html__( 'Email subject', 'trackship-for-woocommerce' ),
-				'desc'  => esc_html__( 'Available variables:', 'trackship-for-woocommerce' ) . ' {site_title}, {order_number}',
-				'default'  => $this->get_value( $email_settings, 'wcast_' . $key . '_email_subject', $key ),
-				'type'     => 'text',
+			$settings[ 'wcast_' . $key . '_email_subject' ] = array(
+				'title'		=> esc_html__( 'Email subject', 'trackship-for-woocommerce' ),
+				'desc'		=> esc_html__( 'Available variables:', 'trackship-for-woocommerce' ) . ' {site_title}, {order_number}',
+				'default'	=> $this->get_value( $email_settings, 'wcast_' . $key . '_email_subject', $key ),
+				'type'		=> 'text',
 				'option_name'=> $email_settings,
 				'option_type'=> 'array',
-				'show'     => true,
+				'show'		=> true,
 				'class'		=> $value . '_sub_menu all_status_submenu',
 			);
-			$settings[ 'wcast_'.$key.'_email_heading' ] = array(
-				'title'    => esc_html__( 'Email heading', 'trackship-for-woocommerce' ),
-				'desc'  => esc_html__( 'Available variables:', 'trackship-for-woocommerce' ) . ' {site_title}, {order_number}',
-				'default'  => $this->get_value( $email_settings, 'wcast_' . $key . '_email_heading', $key ),
-				'type'     => 'text',
+			$settings[ 'wcast_' . $key . '_email_heading' ] = array(
+				'title'	=> esc_html__( 'Email heading', 'trackship-for-woocommerce' ),
+				'desc'	=> esc_html__( 'Available variables:', 'trackship-for-woocommerce' ) . ' {site_title}, {order_number}',
+				'default'	=> $this->get_value( $email_settings, 'wcast_' . $key . '_email_heading', $key ),
+				'type'	=> 'text',
 				'option_name'=> $email_settings,
 				'option_type'=> 'array',
-				'show'     => true,
+				'show'	=> true,
 				'class'	=> 'heading ' . $value . '_sub_menu all_status_submenu',
 			);
-			$settings[ 'wcast_'.$key.'_email_content' ] = array(
+			$settings[ 'wcast_' . $key . '_email_content' ] = array(
 				'title'		=> esc_html__( 'Email Content', 'trackship-for-woocommerce' ),
 				'desc'		=> '',
 				'default'	=> $this->get_value( $email_settings, 'wcast_' . $key . '_email_content', $key ),
@@ -846,14 +847,14 @@ class TS4WC_Admin_Customizer {
 				'show'		=> true,
 				'class'		=> 'email_content ' . $value . '_sub_menu all_status_submenu',
 			);
-			$settings[ 'codeinfoblock '. $key ] = array(
-				'title'    => esc_html__( 'Available placeholders:', 'trackship-for-woocommerce' ),
-				'default'  => array('{customer_first_name}', '{customer_last_name}', '{site_title}', '{order_number}', '{customer_company_name}', '{customer_username}', '{customer_email}', '{est_delivery_date}'),
-				'type'     => 'codeinfo',
-				'show'     => true,
+			$settings[ 'codeinfoblock ' . $key ] = array(
+				'title'		=> esc_html__( 'Available placeholders:', 'trackship-for-woocommerce' ),
+				'default'	=> array('{customer_first_name}', '{customer_last_name}', '{site_title}', '{order_number}', '{customer_company_name}', '{customer_username}', '{customer_email}', '{est_delivery_date}'),
+				'type'		=> 'codeinfo',
+				'show'		=> true,
 				'class'		=> $value . '_sub_menu all_status_submenu',
 			);
-			$settings[ 'wcast_'.$key.'_analytics_link' ] = array(
+			$settings[ 'wcast_' . $key . '_analytics_link' ] = array(
 				'title'		=> esc_html__( 'Google analytics link tracking', 'trackship-for-woocommerce' ),
 				'desc'		=> esc_html__( 'This will be appended to URL in the email content', 'trackship-for-woocommerce' ),
 				'default'	=> $this->get_value( $email_settings, 'wcast_' . $key . '_analytics_link', $key ),
@@ -877,49 +878,49 @@ class TS4WC_Admin_Customizer {
 		foreach ( $all_statuses as $key => $value ) {
 			$email_settings = 'wcast_' . $key . '_email_settings';
 			
-			$settings[ 'wcast_'.$key.'_show_order_details' ] = array(
-				'title'    => esc_html__( 'Display shipped products', 'trackship-for-woocommerce' ),
-				'default'  => $this->get_value( $email_settings, 'wcast_' . $key . '_show_order_details', $key ),
-				'type'     => 'checkbox',
+			$settings[ 'wcast_' . $key . '_show_order_details' ] = array(
+				'title'		=> esc_html__( 'Display shipped products', 'trackship-for-woocommerce' ),
+				'default'	=> $this->get_value( $email_settings, 'wcast_' . $key . '_show_order_details', $key ),
+				'type'		=> 'checkbox',
 				'option_name'=> $email_settings,
 				'option_type'=> 'array',
-				'show'     => true,
+				'show'		=> true,
 				'class'		=> $value . '_sub_menu all_status_submenu ts4wc_shipped_products',
 			);
-			$settings[ 'wcast_'.$key.'_shipped_product_label' ] = array(
-				'title'    => esc_html__( 'Shipped products header text', 'trackship-for-woocommerce' ),
-				'default'  => $shipped_product_label,
-				'type'     => 'text',
+			$settings[ 'wcast_' . $key . '_shipped_product_label' ] = array(
+				'title'		=> esc_html__( 'Shipped products header text', 'trackship-for-woocommerce' ),
+				'default'	=> $shipped_product_label,
+				'type'		=> 'text',
 				'option_name'=> 'shipped_product_label',
 				'option_type'=> 'key',
-				'show'     => true,
+				'show'		=> true,
 				'class'		=> $value . '_sub_menu all_status_submenu shipped_product_label',
 			);
-			$settings[ 'wcast_'.$key.'_show_product_image' ] = array(
-				'title'    => esc_html__( 'Display product image', 'trackship-for-woocommerce' ),
-				'default'  => $this->get_value( $email_settings, 'wcast_' . $key . '_show_product_image', $key ),
-				'type'     => 'checkbox',
+			$settings[ 'wcast_' . $key . '_show_product_image' ] = array(
+				'title'		=> esc_html__( 'Display product image', 'trackship-for-woocommerce' ),
+				'default'	=> $this->get_value( $email_settings, 'wcast_' . $key . '_show_product_image', $key ),
+				'type'		=> 'checkbox',
 				'option_name'=> $email_settings,
 				'option_type'=> 'array',
-				'show'     => true,
+				'show'		=> true,
 				'class'		=> $value . '_sub_menu all_status_submenu ts4wc_shipped_product_image',
 			);
-			$settings[ 'wcast_'.$key.'_show_shipping_address' ] = array(
-				'title'    => esc_html__( 'Display shipping address', 'trackship-for-woocommerce' ),
-				'default'  => $this->get_value( $email_settings, 'wcast_' . $key . '_show_shipping_address', $key ),
-				'type'     => 'checkbox',
+			$settings[ 'wcast_' . $key . '_show_shipping_address' ] = array(
+				'title'		=> esc_html__( 'Display shipping address', 'trackship-for-woocommerce' ),
+				'default'	=> $this->get_value( $email_settings, 'wcast_' . $key . '_show_shipping_address', $key ),
+				'type'		=> 'checkbox',
 				'option_name'=> $email_settings,
 				'option_type'=> 'array',
-				'show'     => true,
+				'show'		=> true,
 				'class'		=> $value . '_sub_menu all_status_submenu ts4wc_shipping_address',
 			);
-			$settings[ 'wcast_'.$key.'_shipping_address_label' ] = array(
-				'title'    => esc_html__( 'Shipping address header text', 'trackship-for-woocommerce' ),
-				'default'  => $shipping_address_label,
-				'type'     => 'text',
+			$settings[ 'wcast_' . $key . '_shipping_address_label' ] = array(
+				'title'		=> esc_html__( 'Shipping address header text', 'trackship-for-woocommerce' ),
+				'default'	=> $shipping_address_label,
+				'type'		=> 'text',
 				'option_name'=> 'shipping_address_label',
 				'option_type'=> 'key',
-				'show'     => true,
+				'show'		=> true,
 				'class'		=> $value . '_sub_menu all_status_submenu shipping_address_label',
 			);
 		}
@@ -964,11 +965,11 @@ class TS4WC_Admin_Customizer {
 		<?php
 		foreach ( (array) $arrays as $id => $array ) {
 			
-			if ( isset($array['show']) && $array['show'] != true ) {
+			if ( isset($array['show']) && true != $array['show'] ) {
 				continue; 
 			}
 
-			if ( isset($array['type']) && $array['type'] == 'panel' ) {
+			if ( isset($array['type']) && 'panel' == $array['type'] ) {
 				?>
 				<li id="<?php isset($array['id']) ? esc_attr_e($array['id']) : ''; ?>" data-label="<?php isset($array['label']) ? esc_attr_e($array['label']) : ''; ?>" data-iframe_url="<?php isset($array['iframe_url']) ? esc_attr_e($array['iframe_url']) : ''; ?>" class="zoremmail-panel-title <?php isset($array['class']) ? esc_attr_e($array['class']) : ''; ?>">
 					<span><?php isset($array['title']) ? esc_html_e($array['title']) : ''; ?></span>
@@ -986,7 +987,7 @@ class TS4WC_Admin_Customizer {
 			if ( isset($array['show']) && true != $array['show'] ) {
 				continue; 
 			}
-				
+
 			if ( isset($array['type']) && 'sub-panel-heading' == $array['type'] ) {
 				?>
 				<li data-id="<?php isset($array['parent']) ? esc_attr_e($array['parent']) : ''; ?>" class="zoremmail-sub-panel-heading <?php isset($array['class']) ? esc_attr_e($array['class']) : ''; ?> <?php isset($array['parent']) ? esc_attr_e($array['parent']) : ''; ?>">
@@ -1019,11 +1020,11 @@ class TS4WC_Admin_Customizer {
 
 		foreach ( (array) $arrays as $id => $array ) {
 
-			if ( isset($array['show']) && $array['show'] != true ) {
+			if ( isset($array['show']) && true != $array['show'] ) {
 				continue; 
 			}
 
-			if ( isset($array['type']) && $array['type'] == 'panel' ) {
+			if ( isset($array['type']) && 'panel' == $array['type'] ) {
 				continue; 
 			}
 			
@@ -1036,7 +1037,7 @@ class TS4WC_Admin_Customizer {
 			}
 			
 			if ( isset($array['type']) && 'section' == $array['type'] ) {
-				echo $id != 'heading' ? '</div>' : '';
+				echo 'heading' != $id ? '</div>' : '';
 				?>
 				<div data-id="<?php isset($array['parent']) ? esc_attr_e($array['parent']) : ''; ?>" class="zoremmail-menu-submenu-title <?php isset($array['class']) ? esc_attr_e($array['class']) : ''; ?>">
 					<span><?php esc_html_e( $array['title'] ); ?></span>
@@ -1050,10 +1051,10 @@ class TS4WC_Admin_Customizer {
 				<div class="zoremmail-menu zoremmail-menu-inline zoremmail-menu-sub <?php isset($array['class']) ? esc_attr_e($array['class']) : ''; ?>">
 					<div class="zoremmail-menu-item">
 						<div class="<?php esc_attr_e( $id ); ?> <?php esc_attr_e( $array['type'] ); ?>">
-							<?php if ( isset($array['title']) && $array['type'] != 'checkbox' ) { ?>
+							<?php if ( isset($array['title']) && 'checkbox' != $array['type'] ) { ?>
 								<div class="menu-sub-title"><?php esc_html_e( $array['title'] ); ?></div>
 							<?php } ?>
-							<?php if ( isset($array['type']) && $array['type'] == 'text' ) { ?>
+							<?php if ( isset($array['type']) && 'text' == $array['type'] ) { ?>
 								<?php //echo '<pre>';print_r($array);echo '</pre>'; ?>
 								<?php $field_name = isset( $array['option_type'] ) && 'key' == $array['option_type'] ? $array['option_name'] : $id; ?>
 								<div class="menu-sub-field">
@@ -1061,23 +1062,23 @@ class TS4WC_Admin_Customizer {
 									<br>
 									<span class="menu-sub-tooltip"><?php isset($array['desc']) ? esc_html_e($array['desc']) : ''; ?></span>
 								</div>
-							<?php } else if ( isset($array['type']) && $array['type'] == 'textarea' ) { ?>
+							<?php } else if ( isset($array['type']) && 'textarea' == $array['type'] ) { ?>
 								<div class="menu-sub-field">
 									<textarea id="<?php esc_attr_e( $id ); ?>" rows="4" name="<?php esc_attr_e( $id ); ?>" placeholder="<?php isset($array['placeholder']) ? esc_attr_e($array['placeholder']) : ''; ?>" class="zoremmail-input <?php esc_html_e($array['type']); ?> <?php isset($array['class']) ? esc_attr_e($array['class']) : ''; ?>"><?php echo esc_html( $array_default ); ?></textarea>
 									<br>
 									<span class="menu-sub-tooltip"><?php isset($array['desc']) ? esc_html_e($array['desc']) : ''; ?></span>
 								</div>
-							<?php } else if ( isset($array['type']) && $array['type'] == 'codeinfo' ) { ?>
+							<?php } else if ( isset($array['type']) && 'codeinfo' == $array['type'] ) { ?>
 								<div class="menu-sub-field">
 									<span class="menu-sub-codeinfo <?php esc_html_e($array['type']); ?>">
 										<?php
 										foreach ( $array['default'] as $place_key => $placeholder ) {
-											echo '<span class="email_placeholder" data-clipboard-text="' . $placeholder . '">' . $placeholder . '</span>';
+											echo '<span class="email_placeholder" data-clipboard-text="' . esc_html($placeholder) . '">' . esc_html($placeholder) . '</span>';
 										}
 										?>
 									</span>
 								</div>
-							<?php } else if ( isset($array['type']) && $array['type'] == 'select' ) { ?>
+							<?php } else if ( isset($array['type']) && 'select' == $array['type'] ) { ?>
 								<div class="menu-sub-field">
 									<select name="<?php esc_attr_e( $id ); ?>" id="<?php esc_attr_e( $id ); ?>" class="zoremmail-input <?php esc_html_e($array['type']); ?> <?php isset($array['class']) ? esc_attr_e($array['class']) : ''; ?>">
 										<?php foreach ( (array) $array['options'] as $key => $val ) { ?>
@@ -1087,16 +1088,16 @@ class TS4WC_Admin_Customizer {
 									<br>
 									<span class="menu-sub-tooltip"><?php isset($array['desc']) ? esc_html_e($array['desc']) : ''; ?></span>
 								</div>
-							<?php } else if ( isset($array['type']) && $array['type'] == 'color' ) { ?>
+							<?php } else if ( isset($array['type']) &&  'color' == $array['type'] ) { ?>
 								<div class="menu-sub-field">
 									<input type="text" name="<?php esc_attr_e( $id ); ?>" id="<?php esc_attr_e( $id ); ?>" class="input-text regular-input zoremmail-input <?php esc_html_e($array['type']); ?> <?php isset($array['class']) ? esc_attr_e($array['class']) : ''; ?>" value="<?php echo esc_html( $array_default ); ?>" placeholder="<?php isset($array['placeholder']) ? esc_attr_e($array['placeholder']) : ''; ?>">
 									<br>
 									<span class="menu-sub-tooltip"><?php isset($array['desc']) ? esc_html_e($array['desc']) : ''; ?></span>
 								</div>
-							<?php } else if ( isset($array['type']) && $array['type'] == 'checkbox' ) { ?>
+							<?php } else if ( isset($array['type']) &&  'checkbox' == $array['type'] ) { ?>
 								<?php //echo '<pre>';print_r($array);echo '</pre>'; ?>
 								<div class="menu-sub-field">
-									<label class="menu-sub-title <?php echo ( isset($array['required']) && $array['required'] == 'pro' ) && ( isset($array['plan']) && $array['plan'] ) ? 'free_plan' : ''; ?>">
+									<label class="menu-sub-title <?php echo ( isset($array['required']) && 'pro' == $array['required'] ) && ( isset($array['plan']) && $array['plan'] ) ? 'free_plan' : ''; ?>">
 										<input type="hidden" name="<?php esc_attr_e( $id ); ?>" value="0"/>
 										<input type="checkbox" id="<?php esc_attr_e( $id ); ?>" name="<?php esc_attr_e( $id ); ?>" class="zoremmail-checkbox <?php isset($array['class']) ? esc_attr_e($array['class']) : ''; ?>" value="1" <?php echo $array_default ? 'checked' : ''; ?>/>
 										<?php esc_html_e( $array['title'] ); ?>
@@ -1104,13 +1105,13 @@ class TS4WC_Admin_Customizer {
 											<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tip-tip'] ); ?>"></span>
 										<?php } ?>
 									</label>
-									<?php if ( ( isset($array['required']) && $array['required'] == 'pro' ) && ( isset($array['plan']) && $array['plan'] ) ) { ?>
+									<?php if ( ( isset($array['required']) && 'pro' == $array['required'] ) && ( isset($array['plan']) && $array['plan'] ) ) { ?>
 										<a class="updgrade_feature" href="https://trackship.com/pricing/" target="_blank">
 											<span class="dashicons dashicons-arrow-up-alt"></span> Unlock Feature
 										</a>
 									<?php } ?>
 								</div>
-							<?php } else if ( isset($array['type']) && $array['type'] == 'radio_butoon' ) { ?>
+							<?php } else if ( isset($array['type']) && 'radio_butoon' == $array['type'] ) { ?>
 								<div class="menu-sub-field">
 									<label class="menu-sub-title">
 										<?php foreach ( $array['choices'] as $key => $value ) { ?>
@@ -1121,7 +1122,7 @@ class TS4WC_Admin_Customizer {
 										<?php } ?>
 									</label>
 								</div>
-							<?php } else if ( isset($array['type']) && $array['type'] == 'tgl-btn' ) { ?>
+							<?php } else if ( isset($array['type']) && 'tgl-btn' == $array['type'] ) { ?>
 								<div class="menu-sub-field">
 									<?php //echo $array_default; ?>
 									<label class="menu-sub-title">
@@ -1130,10 +1131,11 @@ class TS4WC_Admin_Customizer {
 											<input type="checkbox" id="<?php esc_attr_e( $id ); ?>" name="<?php esc_attr_e( $id ); ?>" class="tgl tgl-flat" <?php echo $array_default ? 'checked' : ''; ?> value="1">
 											<label class="tgl-btn" for="<?php esc_attr_e( $id ); ?>"></label>
 										</span>
-										<label for="<?php esc_attr_e( $id ); ?>" class="shipment_email_label"><?php printf( esc_html__( 'Enable  %1$s email', 'trackship-for-woocommerce' ), $array['name'] ); ?></label>
+										<?php /* translators: %s: search for a tag */ ?>
+										<label for="<?php esc_attr_e( $id ); ?>" class="shipment_email_label"><?php printf( esc_html__( 'Enable  %1$s email', 'trackship-for-woocommerce' ), esc_html($array['name']) ); ?></label>
 									</label>
 								</div>
-							<?php } else if ( isset($array['type']) && $array['type'] == 'range' ) { ?>
+							<?php } else if ( isset($array['type']) && 'range' == $array['type'] ) { ?>
 								<div class="menu-sub-field">
 									<label class="menu-sub-title">
 										<input type="range" class="zoremmail-range" id="<?php esc_attr_e( $id ); ?>" name="<?php esc_attr_e( $id ); ?>" value="<?php echo esc_html( $array_default ); ?>" min="<?php esc_html_e( $array['min'] ); ?>" max="<?php esc_html_e( $array['max'] ); ?>" oninput="this.nextElementSibling.value = this.value">
@@ -1154,16 +1156,14 @@ class TS4WC_Admin_Customizer {
 	 *
 	 * @return array
 	 */
-	public static function get_order_ids() {		
+	public static function get_order_ids() {
 		$order_array = array();
 		$order_array['mockup'] = __( 'Mockup Order', 'trackship-for-woocommerce' );
 
 		global $wpdb;
-		$shipment_table = $wpdb->prefix . 'trackship_shipment';
-		$ids = $wpdb->get_results( "SELECT order_id FROM {$shipment_table} GROUP BY order_id ORDER BY order_id DESC LIMIT 20", 'ARRAY_A' );
-
+		$ids = $wpdb->get_results( "SELECT order_id FROM {$wpdb->prefix}trackship_shipment GROUP BY order_id ORDER BY order_id DESC LIMIT 20", 'ARRAY_A' );
 		
-		foreach ( $ids as $value ) {				
+		foreach ( $ids as $value ) {
 			$order_id = $value['order_id'];
 			$order = wc_get_order($order_id);
 			if ( $order ) {
@@ -1177,11 +1177,11 @@ class TS4WC_Admin_Customizer {
 	 * Get Customizer URL
 	 *
 	 */
-	public static function get_tracking_preview_url( $status ) {		
+	public static function get_tracking_preview_url( $status ) {
 		$tracking_preview_url = add_query_arg( array(
 			'action'	=> 'preview_tracking_page',
 			'status'	=> $status
-		), home_url( '' ) );		
+		), home_url( '' ) );
 
 		return $tracking_preview_url;
 	}
@@ -1233,51 +1233,50 @@ class TS4WC_Admin_Customizer {
 	public function get_wc_order_for_preview( $order_id ) {
 		if ( ! empty( $order_id ) && 'mockup' != $order_id ) {
 			return wc_get_order( $order_id );
-		} else {			
+		} else {
 			// Instantiate order object
-			$order = new WC_Order();			
-			
+			$order = new WC_Order();
 			// Other order properties
 			$order->set_props( array(
-				'id'                 => 1,
-				'status'             => ( 'processing' ),
-				'shipping_first_name' => 'Sherlock',
-				'shipping_last_name'  => 'Holmes',
-				'shipping_company'    => 'Detectives Ltd.',
-				'shipping_address_1'  => '221B Baker Street',
-				'shipping_city'       => 'London',
-				'shipping_postcode'   => 'NW1 6XE',
-				'shipping_country'    => 'GB',
-				'billing_first_name' => 'Sherlock',
-				'billing_last_name'  => 'Holmes',
-				'billing_company'    => 'Detectives Ltd.',
-				'billing_address_1'  => '221B Baker Street',
-				'billing_city'       => 'London',
-				'billing_postcode'   => 'NW1 6XE',
-				'billing_country'    => 'GB',
-				'billing_email'      => 'sherlock@holmes.co.uk',
-				'billing_phone'      => '02079304832',
-				'date_created'       => gmdate( 'Y-m-d H:i:s' ),
-				'total'              => 24.90,				
+				'id'					=> 1,
+				'status'				=> ( 'processing' ),
+				'shipping_first_name'	=> 'Sherlock',
+				'shipping_last_name'	=> 'Holmes',
+				'shipping_company'		=> 'Detectives Ltd.',
+				'shipping_address_1'	=> '221B Baker Street',
+				'shipping_city'			=> 'London',
+				'shipping_postcode'		=> 'NW1 6XE',
+				'shipping_country'		=> 'GB',
+				'billing_first_name'	=> 'Sherlock',
+				'billing_last_name'		=> 'Holmes',
+				'billing_company'		=> 'Detectives Ltd.',
+				'billing_address_1'		=> '221B Baker Street',
+				'billing_city'			=> 'London',
+				'billing_postcode'		=> 'NW1 6XE',
+				'billing_country'		=> 'GB',
+				'billing_email'			=> 'sherlock@holmes.co.uk',
+				'billing_phone'			=> '02079304832',
+				'date_created'			=> gmdate( 'Y-m-d H:i:s' ),
+				'total'					=> 24.90,
 			) );
 
 			// Item #1
 			$order_item = new WC_Order_Item_Product();
 			$order_item->set_props( array(
-				'name'     => 'A Study in Scarlet',
-				'subtotal' => '9.95',
-				'sku'      => 'kwd_ex_1',
+				'name'		=> 'A Study in Scarlet',
+				'subtotal'	=> '9.95',
+				'sku'		=> 'kwd_ex_1',
 			) );
 			$order->add_item( $order_item );
 
 			// Item #2
 			$order_item = new WC_Order_Item_Product();
 			$order_item->set_props( array(
-				'name'     => 'The Hound of the Baskervilles',
-				'subtotal' => '14.95',
-				'sku'      => 'kwd_ex_2',
+				'name'		=> 'The Hound of the Baskervilles',
+				'subtotal'	=> '14.95',
+				'sku'		=> 'kwd_ex_2',
 			) );
-			$order->add_item( $order_item );						
+			$order->add_item( $order_item );
 
 			// Return mockup order
 			return $order;
@@ -1292,8 +1291,8 @@ class TS4WC_Admin_Customizer {
 			$row = $rows[0];
 		} else {
 			$row = (object) array(
-				'est_delivery_date'		=> '2021-07-30 15:28:02',
-				'shipment_status'		=> $status,
+				'est_delivery_date'	=> '2021-07-30 15:28:02',
+				'shipment_status'	=> $status,
 			);
 		}
 		return $row;
@@ -1322,7 +1321,7 @@ class TS4WC_Admin_Customizer {
 			echo json_encode( array('permission' => 'false') );
 			die();
 		}
-		
+
 		if ( !empty($_POST) && check_admin_referer( 'trackship_customizer_options_actions', 'trackship_customizer_options_nonce_field' ) ) {
 
 			$customizer_type = isset( $_POST['customizer_type'] ) ? sanitize_text_field( $_POST['customizer_type'] ) : '';
@@ -1359,7 +1358,7 @@ class TS4WC_Admin_Customizer {
 function trackship_admin_customizer() {
 	static $instance;
 
-	if ( ! isset( $instance ) ) {		
+	if ( ! isset( $instance ) ) {
 		$instance = new TS4WC_Admin_Customizer();
 	}
 

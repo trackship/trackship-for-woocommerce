@@ -117,7 +117,9 @@ class WC_Trackship_Admin {
 			if ( $trackship_apikey ) {
 				trackship_for_woocommerce()->front->admin_tracking_page_widget( $order_id, $tracking_id );
 			} else {
-				echo '<strong>';esc_html_e( 'Please connect your store with trackship.com.', 'trackship-for-woocommerce' );echo '</strong>';
+				echo '<strong>';
+				esc_html_e( 'Please connect your store with trackship.com.', 'trackship-for-woocommerce' );
+				echo '</strong>';
 			}
 		} else {
 			esc_html_e( 'Please refresh the page and try again.', 'trackship-for-woocommerce' );
@@ -130,9 +132,10 @@ class WC_Trackship_Admin {
 			exit( 'You are not allowed' );
 		}
 		$o_id = isset( $_POST['order_id'] ) ? sanitize_text_field( $_POST['order_id'] ) : '' ;
-		$order_id    = wc_clean( $o_id );
+		$security = isset( $_POST['security'] ) ? sanitize_text_field( $_POST['security'] ) : '' ;
+		$order_id = wc_clean( $o_id );
 		
-		if ( !wp_verify_nonce( $_POST['security'], 'tswc-' . $order_id ) ) {
+		if ( !wp_verify_nonce( $security, 'tswc-' . $order_id ) ) {
 			$data = array(
 				'msg' => 'Security check fail, please refresh and try again.'
 			);
@@ -313,7 +316,7 @@ class WC_Trackship_Admin {
 						<?php } else { ?>
 							<div class="woocommerce trackship_admin_layout">
 								<div class="trackship_admin_content" >
-									<div class="trackship_nav_div">	
+									<div class="trackship_nav_div">
 										<?php include 'views/trackship-integration.php'; ?>
 									</div>
 								</div>
@@ -330,7 +333,7 @@ class WC_Trackship_Admin {
 	* callback for Analytics
 	*/
 	public function analytics_page_callback () {
-		wp_redirect( admin_url('admin.php?page=wc-admin&path=/analytics/trackship-analytics'), 301 ); 
+		wp_redirect( admin_url('admin.php?page=wc-admin&path=/analytics/trackship-analytics'), 301 );
 		exit;
 	}
 
@@ -345,18 +348,19 @@ class WC_Trackship_Admin {
 		
 		global $wpdb;
 		$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
-		
-		$query = $wpdb->prepare("
-		SELECT
-			SUM( IF( shipping_date BETWEEN %s AND %s, 1, 0 ) ) as total_shipment,
-			SUM( IF( (shipment_status NOT LIKE 'delivered' OR pending_status IS NOT NULL) AND shipping_date BETWEEN %s AND %s, 1, 0 ) ) as active_shipment,
-			SUM( IF( (shipment_status LIKE 'delivered' OR pending_status IS NOT NULL) AND shipping_date BETWEEN %s AND %s, 1, 0 ) ) as delivered_shipment,
-			SUM( IF((shipment_status NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' ) OR pending_status IS NOT NULL) AND shipping_date BETWEEN %s AND %s, 1, 0) ) as tracking_issues
-			FROM {$woo_trackship_shipment} AS row1",
-			$start_date, $end_date, $start_date, $end_date, $start_date, $end_date, $start_date, $end_date
-		);
 
-		$result = $wpdb->get_row($query, ARRAY_A);
+		$result = $wpdb->get_row( $wpdb->prepare("
+			SELECT
+				SUM( IF( `shipping_date` BETWEEN %s AND %s, 1, 0 ) ) as total_shipment,
+				SUM( IF( (`shipment_status` NOT LIKE 'delivered' OR `pending_status` IS NOT NULL) AND `shipping_date` BETWEEN %s AND %s, 1, 0 ) ) as active_shipment,
+				SUM( IF( (`shipment_status` LIKE 'delivered' OR `pending_status` IS NOT NULL) AND `shipping_date` BETWEEN %s AND %s, 1, 0 ) ) as delivered_shipment,
+				SUM( IF((`shipment_status` NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' ) OR `pending_status` IS NOT NULL) AND `shipping_date` BETWEEN %s AND %s, 1, 0) ) as tracking_issues
+				FROM {$wpdb->prefix}trackship_shipment AS row1",
+				$start_date, $end_date, $start_date, $end_date, $start_date, $end_date, $start_date, $end_date
+		), ARRAY_A);
+
+		// print_r($wpdb->last_query);
+
 		wp_send_json($result);
 	}
 
@@ -419,17 +423,17 @@ class WC_Trackship_Admin {
 				'tooltip'	=> __( 'Choose on which order emails to include the shipment tracking info', 'trackship-for-woocommerce' ),
 				'options'   => $status_array,
 				'show'		=> true,
-				'class'     => '',
+				'class'		=> '',
 			),
 			'wc_ts_shipment_status_filter' => array(
 				'type'		=> 'tgl_checkbox',
-				'title'		=> __( 'Enable a shipment status filter on orders admin', 'trackship-for-woocommerce' ),				
+				'title'		=> __( 'Enable a shipment status filter on orders admin', 'trackship-for-woocommerce' ),
 				'show'		=> true,
-				'class'     => '',
+				'class'		=> '',
 			),
 			'enable_email_widget' => array(
 				'type'		=> 'tgl_checkbox',
-				'title'		=> __( 'Enable unsubscribe (opt-out) from Shipment status notifications', 'trackship-for-woocommerce' ),				
+				'title'		=> __( 'Enable unsubscribe (opt-out) from Shipment status notifications', 'trackship-for-woocommerce' ),
 				'show'		=> true,
 				'class'		=> '',
 				'tooltip'	=> __( 'Allow users to opt-out of receiving Shipment status notifications on the Tracking page and Shipment status emails.', 'trackship-for-woocommerce' ),
@@ -439,9 +443,9 @@ class WC_Trackship_Admin {
 		if ( ( is_plugin_active( 'wp-lister-for-amazon/wp-lister-amazon.php' ) || is_plugin_active( 'wp-lister-amazon/wp-lister-amazon.php' ) ) && !in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
 			$form_data[ 'enable_notification_for_amazon_order' ] = array(
 				'type'		=> 'tgl_checkbox',
-				'title'		=> __( 'Enable shipment status notification for order created by Amazon', 'trackship-for-woocommerce' ),				
+				'title'		=> __( 'Enable shipment status notification for order created by Amazon', 'trackship-for-woocommerce' ),
 				'show'		=> true,
-				'class'     => '',				
+				'class'		=> '',
 			);
 		}
 		return $form_data;
@@ -553,7 +557,7 @@ class WC_Trackship_Admin {
 			'status' => 'wc-completed',
 			'limit'	 => 100,	
 			'date_created' => '>' . ( time() - 2592000 ),
-		);		
+		);
 		
 		$orders = wc_get_orders( $args );
 		
@@ -568,11 +572,11 @@ class WC_Trackship_Admin {
 				foreach ( $tracking_items as $key => $tracking_item ) {
 					$row = trackship_for_woocommerce()->actions->get_shipment_row($order_id, $tracking_item['tracking_number']);
 					if ( isset( $row->pending_status ) && 'insufficient_balance' == $row->pending_status ) {
-						$completed_order_with_zero_balance++;		
+						$completed_order_with_zero_balance++;
 					}
-				}									
-			}			
-		}				
+				}
+			}
+		}
 		return $completed_order_with_zero_balance;
 	}
 	
@@ -587,7 +591,7 @@ class WC_Trackship_Admin {
 			'status' => 'wc-completed',
 			'limit'	 => 100,	
 			'date_created' => '>' . ( time() - 2592000 ),
-		);		
+		);
 		
 		$orders = wc_get_orders( $args );
 		
@@ -615,13 +619,13 @@ class WC_Trackship_Admin {
 	**/
 	public function register_order_status() {
 		register_post_status( 'wc-delivered', array(
-			'label'                     => __( 'Delivered', 'trackship-for-woocommerce' ),
-			'public'                    => true,
-			'show_in_admin_status_list' => true,
-			'show_in_admin_all_list'    => true,
-			'exclude_from_search'       => false,
+			'label'						=> __( 'Delivered', 'trackship-for-woocommerce' ),
+			'public'					=> true,
+			'show_in_admin_status_list'	=> true,
+			'show_in_admin_all_list'	=> true,
+			'exclude_from_search'		=> false,
 			/* translators: %s: search number of order */
-			'label_count'               => _n_noop( 'Delivered <span class="count">(%s)</span>', 'Delivered <span class="count">(%s)</span>', 'trackship-for-woocommerce' )
+			'label_count'				=> _n_noop( 'Delivered <span class="count">(%s)</span>', 'Delivered <span class="count">(%s)</span>', 'trackship-for-woocommerce' )
 		) );
 	}
 	
@@ -665,7 +669,7 @@ class WC_Trackship_Admin {
 	public function add_bulk_actions( $bulk_actions ) {
 		$lable = wc_get_order_status_name( 'delivered' );
 		$bulk_actions['mark_delivered'] = __( 'Change status to ' . $lable . '', 'trackship-for-woocommerce' );	
-		return $bulk_actions;		
+		return $bulk_actions;
 	}
 	
 	/*
@@ -673,7 +677,7 @@ class WC_Trackship_Admin {
 	*/
 	public function add_reorder_button_delivered( $statuses ) {
 		$statuses[] = 'delivered';
-		return $statuses;	
+		return $statuses;
 	}
 
 	/*
@@ -696,14 +700,14 @@ class WC_Trackship_Admin {
 				if ( $order->has_status( $values['allowed'] ) ) {
 					$actions[ 'status' ][ 'group' ] = __( 'Change status: ', 'woocommerce' );
 					$actions[ 'status' ][ 'actions' ][ $status_slug ] = array(
-						'url'    => wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=' . $status_slug . '&order_id=' . $order->get_id() ), 'woocommerce-mark-order-status' ),
-						'name'   => $values['label'],
-						'title'  => __( 'Change order status to', 'ast-pro' ) . ' ' . strtolower( $values['label'] ),
-						'action' => $status_slug,
+						'url'	=> wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=' . $status_slug . '&order_id=' . $order->get_id() ), 'woocommerce-mark-order-status' ),
+						'name'	=> $values['label'],
+						'title'	=> __( 'Change order status to', 'ast-pro' ) . ' ' . strtolower( $values['label'] ),
+						'action'=> $status_slug,
 					);
 				}
 			}
-		}		
+		}
 		return $actions;
 	}
 	
@@ -722,12 +726,12 @@ class WC_Trackship_Admin {
 				
 				// Set the action button
 				$actions['delivered'] = array(
-					'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=delivered&order_id=' . $order_id ), 'woocommerce-mark-order-status' ),
-					'name'      => __( 'Mark order as delivered', 'ast-pro' ),
-					'icon' => '<i class="fa fa-truck">&nbsp;</i>',
-					'action'    => 'delivered_icon', // keep "view" class for a clean button CSS
+					'url'		=> wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=delivered&order_id=' . $order_id ), 'woocommerce-mark-order-status' ),
+					'name'		=> __( 'Mark order as delivered', 'ast-pro' ),
+					'icon'		=> '<i class="fa fa-truck">&nbsp;</i>',
+					'action'	=> 'delivered_icon', // keep "view" class for a clean button CSS
 				);
-			}	
+			}
 		}
 		
 		return $actions;
@@ -778,13 +782,13 @@ class WC_Trackship_Admin {
 				<div class="popupclose"></div>
 			<?php } ?>
 		</div>
-        <div id="" class="popupwrapper sync_trackship_provider_popup" style="display:none;">
+		<div id="" class="popupwrapper sync_trackship_provider_popup" style="display:none;">
 			<div class="popuprow trackship_provider">
 				<div class="popup_header">
-					<h3 class="popup_title"><?php esc_html_e( 'Sync TrackShip Providers', 'trackship-for-woocommerce'); ?></h3>						
+					<h3 class="popup_title"><?php esc_html_e( 'Sync TrackShip Providers', 'trackship-for-woocommerce'); ?></h3>
 					<span class="dashicons dashicons-no-alt popup_close_icon"></span>
-				</div>	
-				<div class="popup_body">	
+				</div>
+				<div class="popup_body">
 					<p class="sync_message"><?php esc_html_e( 'Syncing the TrackShip providers list add or updates the pre-set TrackShip providers and will not effect custom shipping providers.', 'trackship-for-woocommerce' ); ?></p>
 					<ul class="synch_result">
 						<li class="providers_updated"><?php esc_html_e( 'Providers list Updated', 'trackship-for-woocommerce' ); ?></li>
@@ -792,14 +796,14 @@ class WC_Trackship_Admin {
 					<button class="sync_trackship_providers_btn button-primary button-trackship"><?php esc_html_e( 'Sync TrackShip Providers', 'trackship-for-woocommerce' ); ?></button>
 					<div class="spinner"></div>
 				</div>
-                <input type="hidden" id="nonce_trackship_provider" value="<?php esc_html_e( wp_create_nonce( 'nonce_trackship_provider' ) ); ?>">
+				<input type="hidden" id="nonce_trackship_provider" value="<?php esc_html_e( wp_create_nonce( 'nonce_trackship_provider' ) ); ?>">
 			</div>	
 			<div class="popupclose"></div>
 		</div>
 		<div class="popupwrapper trackship_logs_details" style="display:none;">
 			<div class="popuprow">
 				<div class="popup_header">
-					<h3 class="popup_title"><?php esc_html_e( 'Notifications detail', 'trackship-for-woocommerce'); ?></h3>						
+					<h3 class="popup_title"><?php esc_html_e( 'Notifications detail', 'trackship-for-woocommerce'); ?></h3>
 					<span class="dashicons dashicons-no-alt popup_close_icon"></span>
 				</div>
 				<div class="popup_body">
@@ -904,16 +908,13 @@ class WC_Trackship_Admin {
 		}
 
 		global $wpdb;
-		$shipment_table = $wpdb->prefix . 'trackship_shipment';
-		$shipment_meta = $wpdb->prefix . 'trackship_shipment_meta';
-		$query = "
-			UPDATE {$shipment_meta} meta
-			JOIN {$shipment_table} shipment ON shipment.id = meta.meta_id
-			SET meta.tracking_events = NULL
-			WHERE shipment_status LIKE ('delivered') AND shipment.shipping_date <= NOW() - INTERVAL {$days} DAY
-		";
 		
-		$response = $wpdb->query($query);
+		$response = $wpdb->query($wpdb->prepare( "
+			UPDATE {$wpdb->prefix}trackship_shipment_meta meta
+			JOIN {$wpdb->prefix}trackship_shipment shipment ON shipment.id = meta.meta_id
+			SET meta.tracking_events = NULL
+			WHERE shipment_status LIKE ('delivered') AND shipment.shipping_date <= NOW() - INTERVAL %d DAY
+		", $days ));
 		wp_send_json(array('success' => true, 'response' => $response));
 	}
 	
@@ -924,11 +925,11 @@ class WC_Trackship_Admin {
 		check_ajax_referer( 'wc_ast_tools', 'security' );
 		global $wpdb;
 		$log_table = $this->log_table;
-		$row_query = $wpdb->get_results("
+		$row_query = $wpdb->get_results($wpdb->prepare("
 			DELETE
-				FROM {$log_table}
+			FROM %s
 			WHERE ( `type` = 'Email' OR `sms_type` = 'shipment_status' ) AND `date` < NOW() - INTERVAL 30 DAY;
-		");
+		", $log_table));
 		wp_send_json( array( 'success' => 'true' ) );
 	}
 

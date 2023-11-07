@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 $class = 1 == $hide_tracking_events ? 'checked' : '';
-$fronted = isset( $_POST['fronted'] ) ? $_POST['fronted'] : '';
+$fronted = isset( $_POST['fronted'] ) ? sanitize_text_field($_POST['fronted']) : '';
 $tab_array = [];
 $labels_name = array(
 	'tracking_progress_label' => __( 'Shipment Progress', 'trackship-for-woocommerce' ),
@@ -18,7 +18,7 @@ if ( 1 != $hide_tracking_events ) {
 	);
 }
 $tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
-if ( $this->check_if_tpi_order( $tracking_items, wc_get_order( $order_id ) ) || $this->shipped_order_has_one_shipment( $tracking_items, wc_get_order( $order_id ) ) ){
+if ( $this->check_if_tpi_order( $tracking_items, wc_get_order( $order_id ) ) || $this->shipped_order_has_one_shipment( $tracking_items, wc_get_order( $order_id ) ) ) {
 	$tab_array[ 'product_details' ] = array(
 		'label'	=> $labels_name['items_label'],
 		'class'	=> $class,
@@ -68,7 +68,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 											$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
 											
 											$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
-											echo $single_event;
+											echo wp_kses_post( $single_event );
 											?>
 										</p>
 									</li>
@@ -94,7 +94,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 											$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
 											
 											$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
-											echo $single_event;
+											echo wp_kses_post( $single_event );
 											?>
 										</p>
 									</li>
@@ -126,7 +126,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 										$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
 										
 										$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
-										echo $single_event;
+										echo wp_kses_post( $single_event );
 										?>
 									</p>
 								</li>
@@ -152,7 +152,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 										$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
 										
 										$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
-										echo $single_event;
+										echo wp_kses_post( $single_event );
 										?>
 									</p>
 								</li>
@@ -183,7 +183,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 										$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
 										
 										$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
-										echo $single_event;
+										echo wp_kses_post( $single_event );
 										?>
 									</p>
 								</li>
@@ -209,7 +209,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 									$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
 									
 									$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
-									echo $single_event;
+									echo wp_kses_post( $single_event );
 									?>
 								</p>
 							</li>

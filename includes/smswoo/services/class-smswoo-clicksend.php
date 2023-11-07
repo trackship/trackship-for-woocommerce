@@ -11,15 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'smswoo_clicksend' ) ) {
+if ( ! class_exists( 'SMSWOO_Clicksend' ) ) {
 
-	/**
-	*
-	* @class   smswoo_clicksend
-	* @since   1.0
-	*
-	*/
-	class smswoo_clicksend extends smswoo_sms_gateway {
+	class SMSWOO_Clicksend extends SMSWOO_Sms_Gateway {
 		
 		private $_clicksend_authkey;
 		
@@ -53,13 +47,9 @@ if ( ! class_exists( 'smswoo_clicksend' ) ) {
 		public function send( $to_phone, $message, $country_code ) {
 
 			if ( '' != $this->_from_asid ) {
-
 				$from = $this->_from_asid;
-
 			} else {
-
 				$from = $this->_from_number;
-
 			}
 			
 			$type = empty( apply_filters( 'smswoo_additional_charsets', get_option( 'smswoo_active_charsets', array() ) ) ) ? 'english' : 'unicode';	
@@ -67,18 +57,18 @@ if ( ! class_exists( 'smswoo_clicksend' ) ) {
 			$body = array(
 				'messages' => array(
 					array(
-						'to'		=> $to_phone,
-						'from'		=> $from,
-						'source'	=> "smswoo",
-						'body'		=> $message,
+						'to'	=> $to_phone,
+						'from'	=> $from,
+						'source'=> 'smswoo',
+						'body'	=> $message,
 					),
 				),
 			);
 			
 			$args = array(
-				'body'    => wp_json_encode( $body ),
+				'body' => wp_json_encode( $body ),
 				'headers' => array(
-					'Authorization' => "Basic " . base64_encode( $this->_clicksend_username.":".$this->_clicksend_key ),
+					'Authorization' => 'Basic ' . base64_encode( $this->_clicksend_username . ':' . $this->_clicksend_key ),
 					'Content-Type' => 'application/json',
 				),
 			);
@@ -99,14 +89,14 @@ if ( ! class_exists( 'smswoo_clicksend' ) ) {
 			}
 			
 			$result = json_decode( $response['body'], true );
-			if ( $result['response_code'] != 'SUCCESS' ) {
-				
+			if ( 'SUCCESS' != $result['response_code'] ) {
+				/* translators: %s: search for a tag */
 				throw new Exception( sprintf( __( 'An error has occurred: %s', 'trackship-for-woocommerce' ), $result['response_msg'] ) );
 
 			}
 
-			if ( $result[ 'data' ][ 'messages' ][0]['status'] != 'SUCCESS' ) {
-				
+			if ( 'SUCCESS' != $result[ 'data' ][ 'messages' ][0]['status'] ) {
+				/* translators: %s: search for a tag */
 				throw new Exception( sprintf( __( 'An error has occurred: %s', 'trackship-for-woocommerce' ), $result[ 'data' ][ 'messages' ][0]['status'] ) );
 				
 			}
@@ -115,13 +105,10 @@ if ( ! class_exists( 'smswoo_clicksend' ) ) {
 		}
 		
 		/**
-		 * Send SMS
+		 * Phone number validation
 		 *
 		 * @since   1.0
 		 *
-		 * @param   $to_phone     string
-		 *
-		 * @return  void
 		 * @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
 		 */
 		public function validate_number( $to_phone ) {

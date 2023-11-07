@@ -124,32 +124,31 @@ class WC_TrackShip_Late_Shipments {
 		$day = $late_ship_day - 1;
 		
 		//total late shipment count
-		$count = $wpdb->get_var("
+		$count = $wpdb->get_var($wpdb->prepare("
 			SELECT
 				COUNT(*)
-				FROM {$woo_trackship_shipment}
+				FROM {$wpdb->prefix}trackship_shipment
 			WHERE 
-				shipment_status NOT LIKE ( 'delivered')
-				AND shipment_status NOT LIKE ( 'available_for_pickup')
-				AND late_shipment_email = 0
-				AND shipping_length > {$day}
-		");
+				shipment_status NOT LIKE 'delivered'
+				AND shipment_status NOT LIKE %s
+				AND late_shipment_email = %d
+				AND shipping_length > %d
+		", 'available_for_pickup', 0, $day ));
 
 		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) || 0 == $count ) {
 			return;
 		}
 
 		// late shipment query in trackship_shipment table
-		$total_order = $wpdb->get_results("
+		$total_order = $wpdb->get_results($wpdb->prepare("
 			SELECT *
-				FROM {$woo_trackship_shipment}
+				FROM {$wpdb->prefix}trackship_shipment
 			WHERE 
-				shipment_status NOT LIKE ( 'delivered')
-				AND shipment_status NOT LIKE ( 'available_for_pickup')
-				AND late_shipment_email = 0
-				AND shipping_length > {$day}
-			LIMIT 10
-		");
+				shipment_status NOT LIKE 'delivered'
+				AND shipment_status NOT LIKE %s
+				AND late_shipment_email = %d
+				AND shipping_length > %d
+		", 'available_for_pickup', 0, $day ));
 
 		//Send email for late shipment
 		$email_send = $this->late_shippment_email_trigger( $total_order, $count );
@@ -196,8 +195,8 @@ class WC_TrackShip_Late_Shipments {
 		// wrap the content with the email template and then add styles
 		$email_content = apply_filters( 'woocommerce_mail_content', $email->style_inline( $mailer->wrap_message( $email_heading, $email_content ) ) );
 
-		add_filter( 'wp_mail_from', array( WC_TrackShip_Email_Manager(), 'get_from_address' ) );
-		add_filter( 'wp_mail_from_name', array( WC_TrackShip_Email_Manager(), 'get_from_name' ) );
+		$email_class = new WC_Email();
+		$email_class->id = 'late_shipment';
 
 		$email_to = get_trackship_settings( 'late_shipments_email_to', '{admin_email}' );
 		$email_to = explode( ',', $email_to );
@@ -209,7 +208,8 @@ class WC_TrackShip_Late_Shipments {
 			//string replace for '{admin_email}'
 			$recipient = str_replace( '{admin_email}', get_option('admin_email'), $email_addr );
 			//Send Email
-			$response = wp_mail( $recipient, $subject, $email_content, $email->get_headers() );
+			$response = $email_class->send( $recipient, $subject, $email_content, $email_class->get_headers(), [] );
+
 			$email_send[] = $response;
 			$arg = array(
 				'order_id'			=> '',

@@ -134,5 +134,4 @@ if ( ! class_exists( 'SMSWOO_SMSAlert' ) ) {
 		}
 
 	}
-
 }

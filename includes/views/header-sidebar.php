@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<ul class="woocommerce-list woocommerce-quick-links__list">
 				<?php foreach ( $menu_items as $item ) { ?>
 					<li class="woocommerce-list__item has-action">
-						<a href="<?php echo esc_url( $item['link'] ); ?>" class="woocommerce-list__item-inner" <?php echo isset( $item['target'] ) ? $item['target'] : '' ?>>
+						<a href="<?php echo esc_url( $item['link'] ); ?>" class="woocommerce-list__item-inner" <?php echo isset( $item['target'] ) ? esc_html($item['target']) : ''; ?>>
 							<div class="woocommerce-list__item-before">
 								<img class="ts4wc_help_logo" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/<?php echo esc_html( $item['image'] ); ?>">
 							</div>

@@ -47,7 +47,8 @@ class WOO_Order_Tracking_TS4WC {
 
 	public function woo_orders_tracking_items( $order_id ) {
 		$order = wc_get_order( $order_id );
-		$tracking_items = $tracking_number = [];
+		$tracking_number = [];
+		$tracking_items = [];
 		
 		$_wot_tracking_number = $order->get_meta( '_wot_tracking_number', true );
 		if ( $_wot_tracking_number ) {
@@ -122,7 +123,7 @@ class WOO_Order_Tracking_TS4WC {
 						'formatted_tracking_link'		=> $tracking_data->carrier_url,
 						'tracking_id'					=> '',
 						'date_shipped'					=> $tracking_data->time,
-						'tracking_page_link'				=> trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $value->tracking_number ),
+						'tracking_page_link'			=> trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $value->tracking_number ),
 						'products_list'					=> $product_array,
 					);
 					$i++;
@@ -141,10 +142,9 @@ class WOO_Order_Tracking_TS4WC {
 			'formatted_tracking_link'		=> '',
 			'tracking_number'				=> $_wot_tracking_number,
 			'tracking_id'					=> '',
-			'tracking_page_link'				=> trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $value->tracking_number ),
+			'tracking_page_link'			=> trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $value->tracking_number ),
 			'date_shipped'					=> time(),
 		);
 		return $tracking_items;
 	}
-
 }
