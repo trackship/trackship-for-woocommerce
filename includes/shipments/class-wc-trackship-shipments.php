@@ -158,11 +158,11 @@ class WC_Trackship_Shipments {
 				FROM {$wpdb->prefix}trackship_shipment t
 				LEFT JOIN {$wpdb->prefix}trackship_shipment_meta m
 				ON t.id = m.meta_id
-			%1s
+				{$where_condition}
 			ORDER BY
-				%2s
-			%3s
-		", $where_condition, $order_by, $limit ) );
+				%1s
+			%2s
+		", $order_by, $limit ) );
 		
 		$date_format = 'M d';
 			

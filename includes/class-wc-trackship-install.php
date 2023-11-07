@@ -212,6 +212,16 @@ class WC_Trackship_Install {
 			delete_option( 'late_shipments_email_settings' );
 			update_option( 'trackship_db', '1.21' );
 		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.22', '<' ) ) {
+			$status = get_trackship_settings( 'trackship_trigger_order_statuses' );
+			if ( !$status ) {
+				update_trackship_settings( 'trackship_trigger_order_statuses', ['completed', 'partial-shipped', 'shipped'] );
+			}
+
+			update_trackship_settings( 'trackship_db', '1.22' );
+			update_option( 'trackship_db', '1.22' );
+		}
 	}
 
 	public function update_trackship_providers() {
