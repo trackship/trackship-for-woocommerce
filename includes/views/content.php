@@ -41,7 +41,7 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 						$checked = $val[ 'slug' ] == $menu_tab ? 'checked' : '';
 					}
 					?>
-					<input id="tab_trackship_<?php esc_html_e( $val[ 'slug' ] ); ?>" type="radio" name="tabs" class="tab_input" data-label="<?php esc_html_e( $val[ 'label' ] ); ?>" data-tab="<?php esc_html_e( $val[ 'slug' ] ); ?>" <?php echo $checked; ?> >
+					<input id="tab_trackship_<?php esc_html_e( $val[ 'slug' ] ); ?>" type="radio" name="tabs" class="tab_input" data-label="<?php esc_html_e( $val[ 'label' ] ); ?>" data-tab="<?php esc_html_e( $val[ 'slug' ] ); ?>" <?php esc_html_e( $checked ); ?> >
 					<label for="tab_trackship_<?php esc_html_e( $val[ 'slug' ] ); ?>" class="tab_label <?php echo 'settings' == $val[ 'slug' ] ? 'first_label' : ''; ?>">
 						<?php esc_html_e( $val[ 'label' ] ); ?>
 					</label>

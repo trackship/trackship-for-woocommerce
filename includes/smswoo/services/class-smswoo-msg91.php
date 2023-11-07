@@ -76,9 +76,9 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 			if ( get_option('smswoo_msg91_dlt') ) {
 				$template_id = get_option('smswoo_trackship_status_' . $this->new_status . '_sms_template_templete_id');
 				$template_var = get_option('smswoo_trackship_status_' . $this->new_status . '_sms_template_template_var' );
-				$sms_notification = tswc_smswoo_sms_notification::get_instance();
+				$sms_notification = TSWC_SMSWoo_SMS_Notification::get_instance();
 				$template_var = $sms_notification->replace_message_variables($template_var);
-				$template_var = $template_var ? explode( ',',$template_var) : [];
+				$template_var = $template_var ? explode( ',', $template_var) : [];
 
 				$var = [];
 				$i = 1;
@@ -147,7 +147,7 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 
 			if ( isset( $response['response']['code'] ) ) {
 
-				if ( $response['response']['code'] != 201 && $response['response']['code'] != 200 ) {
+				if ( 201 != $response['response']['code'] && 200 != $response['response']['code'] ) {
 
 					$response = json_decode( $response['body'], true );
 

@@ -5,6 +5,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WC_Trackship_Install {
 	
+	public $table;
+	public $shipment_table;
+	public $shipment_table_meta;
+	public $log_table;
+
 	/**
 	 * Initialize the main plugin function
 	*/
@@ -55,6 +60,11 @@ class WC_Trackship_Install {
 		if ( version_compare( get_option( 'trackship_db' ), '1.0', '<' ) ) {
 			update_option( 'trackship_trigger_order_statuses', array( 'completed', 'shipped' ) );
 			update_option( 'trackship_db', '1.0' );
+
+			$this->create_shipping_provider_table();
+			$this->create_shipment_table();
+			$this->create_shipment_meta_table();
+			$this->create_email_log_table();
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.6', '<' ) ) {
@@ -64,7 +74,7 @@ class WC_Trackship_Install {
 			$font_color = get_option('wc_ast_select_font_color', '#333' );
 			$tracking_page_layout = get_option('wc_ast_select_tracking_page_layout', '#333' );
 			
-			$shipment_email_settings = get_option( 'shipment_email_settings' );
+			$shipment_email_settings = get_option( 'shipment_email_settings', [] );
 			
 			$shipment_email_settings['border_color'] = $border_color;
 			$shipment_email_settings['bg_color'] = $background_color;
@@ -76,7 +86,6 @@ class WC_Trackship_Install {
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.8', '<' ) ) {
-			$this->create_shipment_meta_table();
 			$delivered_settings = get_option( 'wcast_delivered_email_settings' );
 			update_option( 'wcast_delivered_status_email_settings', $delivered_settings );
 			delete_option( 'wcast_delivered_email_settings' );
@@ -104,30 +113,27 @@ class WC_Trackship_Install {
 		global $wpdb;
 		$shipment_table = $this->shipment_table;
 		if ( version_compare( get_option( 'trackship_db' ), '1.14', '<' ) ) {
-			$sql = "ALTER TABLE {$shipment_table} CHANGE shipping_date shipping_date DATE NULL DEFAULT CURRENT_TIMESTAMP";
-			$wpdb->query($sql);
-			$this->check_column_exists();
-			$wpdb->query( "ALTER TABLE $shipment_table ADD INDEX last_event (last_event);" );
+			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment CHANGE shipping_date shipping_date DATE NULL DEFAULT CURRENT_TIMESTAMP" );
+			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment ADD INDEX last_event (last_event);");
+			
 			update_option( 'trackship_db', '1.14' );
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.18', '<' ) ) {
-			$shipment_meta_table = $this->shipment_table_meta;
-			$wpdb->query("ALTER TABLE $shipment_meta_table MODIFY COLUMN shipping_service varchar(60);");
+			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment_meta MODIFY COLUMN shipping_service varchar(60);" );
 			update_option( 'trackship_db', '1.18' );
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.19', '<' ) ) {
-			$log_table = $this->log_table;
-			$wpdb->query("ALTER TABLE $shipment_table MODIFY COLUMN order_number varchar(40);");
-			$wpdb->query("ALTER TABLE $log_table MODIFY COLUMN order_number varchar(40);");
+			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment MODIFY COLUMN order_number varchar(40);" );
+			$wpdb->query( "ALTER TABLE {$wpdb->prefix}zorem_email_sms_log MODIFY COLUMN order_number varchar(40);" );
 
 			update_trackship_settings( 'trackship_db', '1.19' );
 			update_option( 'trackship_db', '1.19' );
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.20', '<' ) ) {
-			$valid_order_statuses = get_option( 'trackship_trigger_order_statuses', array() );
+			$valid_order_statuses = get_option( 'trackship_trigger_order_statuses', ['completed', 'partial-shipped', 'shipped'] );
 			if ( $valid_order_statuses ) {
 				update_trackship_settings( 'trackship_trigger_order_statuses', $valid_order_statuses );
 			}
@@ -178,21 +184,43 @@ class WC_Trackship_Install {
 			unset($late_shipments_settings['wcast_late_shipments_days']);
 			update_option( 'late_shipments_email_settings', $late_shipments_settings );
 
-			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '%1s' AND COLUMN_NAME = 'new_shipping_provider' ", $shipment_table ), ARRAY_A );
+			$columns = $wpdb->get_row( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}trackship_shipment' AND COLUMN_NAME = 'new_shipping_provider' ", ARRAY_A );
 			if ( $columns ) {
-				$wpdb->query("ALTER TABLE $shipment_table 
-					DROP COLUMN new_shipping_provider");
+				$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment DROP COLUMN pending_status;" );
 			}
 
-			$this->create_shipping_provider_table();
 			$this->update_shipping_providers();
-			$this->create_shipment_table();
-			$this->create_shipment_meta_table();
-			$this->create_email_log_table();
 			$this->check_column_exists();
 
 			update_trackship_settings( 'trackship_db', '1.20' );
 			update_option( 'trackship_db', '1.20' );
+		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.21', '<' ) ) {
+			$late_email_enable = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_enable_late_shipments_admin_email', '' );
+			if ( $late_email_enable ) {
+				update_trackship_settings( 'late_shipments_email_enable', $late_email_enable );
+			}
+			$late_email_to = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_email_to', '' );
+			if ( $late_email_to ) {
+				update_trackship_settings( 'late_shipments_email_to', $late_email_to );
+			}
+			$late_digest_time = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('late_shipments_email_settings', 'wcast_late_shipments_daily_digest_time', '' );
+			if ( $late_digest_time ) {
+				update_trackship_settings( 'late_shipments_digest_time', $late_digest_time );
+			}
+			delete_option( 'late_shipments_email_settings' );
+			update_option( 'trackship_db', '1.21' );
+		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.22', '<' ) ) {
+			$status = get_trackship_settings( 'trackship_trigger_order_statuses' );
+			if ( !$status ) {
+				update_trackship_settings( 'trackship_trigger_order_statuses', ['completed', 'partial-shipped', 'shipped'] );
+			}
+
+			update_trackship_settings( 'trackship_db', '1.22' );
+			update_option( 'trackship_db', '1.22' );
 		}
 	}
 
@@ -212,7 +240,7 @@ class WC_Trackship_Install {
 		$woo_ts_shipment_table_name = $this->table;
 		if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_ts_shipment_table_name ) ) ) {
 			$charset_collate = $wpdb->get_charset_collate();
-			$sql = "CREATE TABLE $woo_ts_shipment_table_name (
+			$sql = "CREATE TABLE {$wpdb->prefix}trackship_shipping_provider (
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
 				provider_name varchar(500) DEFAULT '' NOT NULL,
 				ts_slug text NULL DEFAULT NULL,
@@ -235,7 +263,7 @@ class WC_Trackship_Install {
 		
 			$providers = json_decode($resp['body'], true );
 			
-			$wpdb->query("TRUNCATE TABLE $this->table;");
+			$wpdb->query( "TRUNCATE TABLE {$wpdb->prefix}trackship_shipping_provider" );
 			foreach ( $providers as $provider ) {
 				if ( 1 != $provider[ 'trackship_supported' ] ) {
 					continue;
@@ -261,7 +289,7 @@ class WC_Trackship_Install {
 		$log_table = $this->log_table;
 		if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $log_table ) ) ) {
 			$charset_collate = $wpdb->get_charset_collate();			
-			$sql = "CREATE TABLE $log_table (
+			$sql = "CREATE TABLE {$wpdb->prefix}zorem_email_sms_log (
 				`id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
 				`order_id` BIGINT(20) ,
 				`order_number` VARCHAR(40) ,
@@ -296,8 +324,8 @@ class WC_Trackship_Install {
 		$woo_trackship_shipment = $this->shipment_table;
 		if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipment ) ) ) {
 			
-			$charset_collate = $wpdb->get_charset_collate();			
-			$sql = "CREATE TABLE $woo_trackship_shipment (
+			$charset_collate = $wpdb->get_charset_collate();
+			$sql = "CREATE TABLE {$wpdb->prefix}trackship_shipment (
 				`id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
 				`order_id` BIGINT(20) ,
 				`order_number` VARCHAR(40) ,
@@ -337,7 +365,7 @@ class WC_Trackship_Install {
 		$table = $this->shipment_table_meta;
 		if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $table ) ) ) {
 			$charset_collate = $wpdb->get_charset_collate();			
-			$sql = "CREATE TABLE $table (
+			$sql = "CREATE TABLE {$wpdb->prefix}trackship_shipment_meta (
 				`meta_id` BIGINT(20),
 				`origin_country` VARCHAR(20) ,
 				`destination_country` VARCHAR(20) ,
@@ -357,7 +385,7 @@ class WC_Trackship_Install {
 	}
 
 	/**
-	 * check column exists in TrackShip table
+	 * Check column exists in TrackShip table
 	*/
 	public function check_column_exists() {
 		global $wpdb;
@@ -379,10 +407,10 @@ class WC_Trackship_Install {
 			'last_event'			=> ' LONGTEXT',
 			'last_event_time'		=> ' DATETIME',
 		);
-		foreach( $shipment_table as $column_name => $type ) {
-			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '%1s' AND COLUMN_NAME = '%2s' ", $this->shipment_table, $column_name ), ARRAY_A );
+		foreach ( $shipment_table as $column_name => $type ) {
+			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}trackship_shipment' AND COLUMN_NAME = '%s' ", $column_name ), ARRAY_A );
 			if ( ! $columns ) {
-				$wpdb->query( $wpdb->prepare( "ALTER TABLE %1s ADD %2s %3s", $this->shipment_table, $column_name, $type ) );
+				$wpdb->query( $wpdb->prepare( "ALTER TABLE {$wpdb->prefix}trackship_shipment ADD %1s %2s", $column_name, $type ) );
 			}
 		}
 
@@ -398,10 +426,10 @@ class WC_Trackship_Install {
 			'destination_state'		=> ' VARCHAR(40)',
 			'destination_city'		=> ' VARCHAR(40)',
 		);
-		foreach( $shipment_table_meta as $column_name => $type ) {
-			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '%1s' AND COLUMN_NAME = '%2s' ", $this->shipment_table_meta, $column_name ), ARRAY_A );
+		foreach ( $shipment_table_meta as $column_name => $type ) {
+			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}trackship_shipment_meta' AND COLUMN_NAME = '%s' ", $column_name ), ARRAY_A );
 			if ( ! $columns ) {
-				$wpdb->query( $wpdb->prepare( "ALTER TABLE %1s ADD %2s %3s", $this->shipment_table_meta, $column_name, $type ) );
+				$wpdb->query( $wpdb->prepare( "ALTER TABLE {$wpdb->prefix}trackship_shipment_meta ADD %1s %2s", $column_name, $type ) );
 			}
 		}
 
@@ -419,10 +447,10 @@ class WC_Trackship_Install {
 			'type' => ' VARCHAR(20)',
 			'sms_type' => ' VARCHAR(30)',
 		);
-		foreach( $log_table as $column_name => $type ) {
-			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '%1s' AND COLUMN_NAME = '%2s' ", $this->log_table, $column_name ), ARRAY_A );
+		foreach ( $log_table as $column_name => $type ) {
+			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}zorem_email_sms_log' AND COLUMN_NAME = '%s' ", $column_name ), ARRAY_A );
 			if ( ! $columns ) {
-				$wpdb->query( $wpdb->prepare( "ALTER TABLE %1s ADD %2s %3s", $this->log_table, $column_name, $type ) );
+				$wpdb->query( $wpdb->prepare( "ALTER TABLE {$wpdb->prefix}zorem_email_sms_log ADD %1s %2s", $column_name, $type ) );
 			}
 		}
 	}

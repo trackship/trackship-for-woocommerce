@@ -11,6 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Adds the individual sections, settings, and controls to the theme customizer
  */
 class TSWC_Failure_Customizer_Email {
+
+	public $defaults;
+
 	// Get our default values	
 	public function __construct() {
 		// Only proceed if this is own request.
@@ -155,7 +158,8 @@ class TSWC_Failure_Customizer_Email {
 		
 		// wrap the content with the email template and then add styles
 		$email_html = apply_filters( 'woocommerce_mail_content', $email->style_inline( $mailer->wrap_message( $email_heading, $message ) ) );
-		echo $email_html = apply_filters( 'trackship_mail_content', $email_html, $email_heading );
+		$email_html = apply_filters( 'trackship_mail_content', $email_html, $email_heading );
+		echo wp_kses_post($email_html);
 	}	
 	
 	/**

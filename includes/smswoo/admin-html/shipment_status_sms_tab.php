@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	
 		<?php $this->get_shipment_template_html( $this->get_customer_tracking_status_settings() ); ?>
 		<?php $nonce = wp_create_nonce( 'smswoo_settings_tab' ); ?>
-		<input type="hidden" name="smswoo_settings_tab_nonce" value="<?php echo $nonce;?>">
+		<input type="hidden" name="smswoo_settings_tab_nonce" value="<?php echo esc_attr($nonce); ?>">
 		<input type="hidden" name="action" value="smswoo_settings_tab_save">
 				
 	</form>

@@ -72,9 +72,9 @@ if ( $tracking_items ) :
 						<?php } elseif ( 'shipped' != $ship_status && $ts4wc_preview ) { ?>
 							<div class="widget_progress_bar" style="width:100%;margin: 15px 0 10px;">
 								<?php $url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ); ?>
-								<div><img class="t_layout_2 <?php echo $tracking_page_layout != 't_layout_2' ? 'hide' : ''; ?>" style="width:100%;" src="<?php echo esc_url( $url . '-widget-v4.png' ); ?>"></div>
-								<div><img class="t_layout_3 <?php echo $tracking_page_layout != 't_layout_3' ? 'hide' : ''; ?>" style="width:100%;" src="<?php echo esc_url( $url . '-widget-v2.png' ); ?>"></div>
-								<div><img class="t_layout_1 <?php echo $tracking_page_layout != 't_layout_1' ? 'hide' : ''; ?>" style="width:100%;" src="<?php echo esc_url( $url . '-widget.png' ); ?>"></div>
+								<div><img class="t_layout_2 <?php echo 't_layout_2' != $tracking_page_layout ? 'hide' : ''; ?>" style="width:100%;" src="<?php echo esc_url( $url . '-widget-v4.png' ); ?>"></div>
+								<div><img class="t_layout_3 <?php echo 't_layout_3' != $tracking_page_layout ? 'hide' : ''; ?>" style="width:100%;" src="<?php echo esc_url( $url . '-widget-v2.png' ); ?>"></div>
+								<div><img class="t_layout_1 <?php echo 't_layout_1' != $tracking_page_layout ? 'hide' : ''; ?>" style="width:100%;" src="<?php echo esc_url( $url . '-widget.png' ); ?>"></div>
 							</div>
 						<?php } ?>
 					</div>
@@ -88,7 +88,7 @@ if ( $tracking_items ) :
 							} else {
 								if ( isset( $tracking_item['tracking_provider_image'] ) ) {
 									?>
-									<img class="ts4wc_provider_logo <?php echo !$shipping_provider_logo ? $class : '' ?>" style="height:45px;width:45px;vertical-align:middle;margin-right: 10px;" src="<?php echo esc_url( $tracking_item['tracking_provider_image'] ); ?>">
+									<img class="ts4wc_provider_logo <?php echo !$shipping_provider_logo ? esc_attr($class) : ''; ?>" style="height:45px;width:45px;vertical-align:middle;margin-right: 10px;" src="<?php echo esc_url( $tracking_item['tracking_provider_image'] ); ?>">
 								<?php } ?>
 								<div class="tracking_info" style="margin:10px 0;">
 									<?php echo esc_html( $tracking_item['formatted_tracking_provider'] ); ?>
@@ -108,7 +108,7 @@ if ( $tracking_items ) :
 						<?php } ?>
 					</div>
 					<?php $track_url = 'https://track.trackship.com/track/' . $tracking_item['tracking_number']; ?>
-					<div class="tracking_widget_email trackship_branding <?php echo $trackship_branding_class; ?>">
+					<div class="tracking_widget_email trackship_branding <?php echo esc_attr($trackship_branding_class); ?>">
 						<p style="margin: 0;">
 							<span style="vertical-align:middle;font-size: 14px;">Powered by <a href="<?php echo esc_url( $track_url ); ?>" title="TrackShip" target="blank">TrackShip</a></span>
 						</p>

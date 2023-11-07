@@ -143,26 +143,24 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		$database_version	= wc_get_server_database_version();
 
 		global $wpdb;
-		$shipment = $wpdb->prefix . 'trackship_shipment';
-		$shipment_structure = $wpdb->get_results("DESCRIBE $shipment");
-		$shipment_meta = $wpdb->prefix . 'trackship_shipment_meta';
-		$shipment_meta_structure = $wpdb->get_results("DESCRIBE $shipment_meta");
-		$shipping_provider = $wpdb->prefix . 'trackship_shipping_provider';
-		$shipping_provider_structure = $wpdb->get_results("DESCRIBE $shipping_provider");
+		$shipment_structure = $wpdb->get_results("DESCRIBE {$wpdb->prefix}trackship_shipment");
+		$shipment_meta_structure = $wpdb->get_results("DESCRIBE {$wpdb->prefix}trackship_shipment_meta");
+		$shipping_provider_structure = $wpdb->get_results("DESCRIBE {$wpdb->prefix}trackship_shipping_provider");
 
 		$server_info = array(
 			'phpversion' => PHP_VERSION,
-			'SERVER_SOFTWARE' => isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '',
+			'SERVER_SOFTWARE' => isset($_SERVER['SERVER_SOFTWARE']) ? sanitize_text_field($_SERVER['SERVER_SOFTWARE']) : '',
 			'mysql_version' => $database_version['number'],
 			'trackship_shipment' => $shipment_structure ? $shipment_structure : 'Table does not exist',
 			'trackship_shipment_meta' => $shipment_meta_structure ? $shipment_meta_structure : 'Table does not exist',
 			'trackship_shipping_provider' => $shipping_provider_structure ? $shipping_provider_structure : 'Table does not exist',
 		);
 
+		$REQUEST_TIME_FLOAT = isset($_SERVER['REQUEST_TIME_FLOAT']) ? sanitize_text_field($_SERVER['REQUEST_TIME_FLOAT']) : '';
 		$data = array(
 			'status'		=> 'installed',
 			'plugin'		=> $plugin,
-			'execution_time'=> microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'],
+			'execution_time'=> microtime(true) - $REQUEST_TIME_FLOAT,
 			'version_info'	=> $version_info,
 			'server_info'	=> $server_info,
 		);
@@ -203,10 +201,6 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 				continue;
 			}
 			$row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id , $tracking_item['tracking_number'] );
-			if ( isset( $row->shipment_status ) && 'delivered' == $row->shipment_status ) {
-				continue;
-			}
-			
 			$previous_status = isset( $row->shipment_status ) ? $row->shipment_status : '';	
 			
 			/* START -- to be removed in the future */
@@ -269,9 +263,10 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		
 		$trackship->check_tracking_delivered( $order_id );
 		
+		$REQUEST_TIME_FLOAT = isset($_SERVER['REQUEST_TIME_FLOAT']) ? sanitize_text_field($_SERVER['REQUEST_TIME_FLOAT']) : '';
 		$data = array(
 			'status' => 'success',
-			'execution_time' => microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'],
+			'execution_time' => microtime(true) - $REQUEST_TIME_FLOAT,
 			'data' => $query,
 		);
 		

@@ -33,11 +33,15 @@ function save_sms_settings(){
 		url: ajaxurl,
 		data: form.serialize(),
 		type: 'POST',
-		dataType:"json",	
+		dataType:"json",
 		success: function(response) {
 			form.find(".spinner").removeClass("active");
 			jQuery( '.smswoo-top.smswoo-open .smswoo-top-click' ).trigger('click');
-			jQuery(document).trackship_snackbar( trackship_script.i18n.data_saved );
+			if ( response.success == 'false' ) {
+				jQuery(document).trackship_snackbar_warning( response.message );
+			} else {
+				jQuery(document).trackship_snackbar( response.message );
+			}
 			jQuery( '.heading_panel' ).removeClass( 'active' );
 			jQuery( '.heading_panel' ).siblings( '.panel_content' ).removeClass('active').slideUp( 'slow' );
 			jQuery( '.heading_panel' ).find('span.dashicons').addClass('dashicons-arrow-right-alt2');
@@ -55,11 +59,10 @@ jQuery(document).on("change", "#all-shipment-status-sms-delivered", function(){
 	"use strict";
 	
 	if(jQuery(this).prop("checked") == true){
-		var checked = 1;		
+		var checked = 1;
 	} else {
-		var checked = 0;		
+		var checked = 0;
 	}
-	
 	var ajax_data = {
 		action: 'update_all_shipment_status_sms_delivered',
 		sms_delivered: checked,
@@ -68,14 +71,14 @@ jQuery(document).on("change", "#all-shipment-status-sms-delivered", function(){
 	
 	jQuery.ajax({
 		url: ajaxurl,
-		data: ajax_data,		
+		data: ajax_data,
 		type: 'POST',
-		success: function(response) {	
+		success: function(response) {
 			jQuery(document).trackship_snackbar( trackship_script.i18n.data_saved );
 		},
 		error: function(response) {
 			console.log(response);
-			jQuery(document).trackship_snackbar_warning( trackship_script.i18n.data_saved );		
+			jQuery(document).trackship_snackbar_warning( trackship_script.i18n.data_saved );
 		}
 	});
 	return false;
@@ -156,7 +159,7 @@ jQuery(document).on( "click", ".shipment-status-sms-section .clipboard", functio
 jQuery(document).on( "change", "#smswoo_sms_provider", function(){
 	'use strict';
 	var provider = jQuery('#smswoo_sms_provider').val();
-	
+
 	if ( provider === 'smswoo_msg91' && jQuery('#smswoo_msg91_dlt').prop("checked") ) {
 		jQuery('.shipment-status-sms-section .smswoo-textarea').hide();
 		jQuery('.shipment-status-sms-section .smswoo-text').show();

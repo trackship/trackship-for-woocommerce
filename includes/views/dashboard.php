@@ -32,11 +32,10 @@ $days = $late_ship_day - 1 ;
 
 $results = $wpdb->get_row($wpdb->prepare("
 SELECT
-	SUM( IF( shipping_length > %d, 1, 0 ) ) as late_shipment,
-	SUM( IF(shipment_status NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' ) OR pending_status IS NOT NULL, 1, 0) ) as tracking_issues,
-	SUM( IF( shipment_status LIKE 'return_to_sender', 1, 0 ) ) as return_to_sender_shipment
-FROM {$woo_trackship_shipment}",
-$days ), ARRAY_A);
+	SUM( IF( shipping_length > %1d, 1, 0 ) ) as late_shipment,
+	SUM( IF(shipment_status NOT IN ( '%2s', '%3s', '%4s', '%5s', '%6s', '%7s', '%8s' ) OR pending_status IS NOT NULL, 1, 0) ) as tracking_issues,
+	SUM( IF( shipment_status LIKE '%9s', 1, 0 ) ) as return_to_sender_shipment
+FROM {$wpdb->prefix}trackship_shipment", $days, 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup', 'return_to_sender' ), ARRAY_A);
 
 $late_shipment = $results['late_shipment'];
 $tracking_issues = $results['tracking_issues'];
@@ -125,7 +124,7 @@ $store_url = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active
 <?php if ( in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
 	<div class="ts_upgrade_notice">
 		<div>
-			<span class="ts_upgrade_msg"><?php esc_html_e( "Access the PRO benefits of TrackShip: monitor TrackShip shipments, receive SMS notifications, enjoy priority support, utilize the Shipments Dashboard, and experience much more.", 'trackship-for-woocommerce' ); ?></span>
+			<span class="ts_upgrade_msg"><?php esc_html_e( 'Access the PRO benefits of TrackShip: monitor TrackShip shipments, receive SMS notifications, enjoy priority support, utilize the Shipments Dashboard, and experience much more.', 'trackship-for-woocommerce' ); ?></span>
 			<button class="button-primary button-trackship btn_large">
 				<a href="<?php echo esc_url($store_url); ?>" class="" target="_blank">
 					<span><?php esc_html_e( $store_text ); ?></span>
@@ -143,7 +142,7 @@ $store_url = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active
 		<div>
 			<div class="ast_activate_message">
 				<strong>
-					<p style="font-size:16px;"><?php esc_html_e('You must have a Shipment Tracking plugin installed to use TrackShip for WooCommerce.','trackship-for-woocommerce'); ?></p>
+					<p style="font-size:16px;"><?php esc_html_e('You must have a Shipment Tracking plugin installed to use TrackShip for WooCommerce.', 'trackship-for-woocommerce'); ?></p>
 				</strong>
 				<p><?php esc_html_e( "Include shipment tracking details in your WooCommerce orders, enabling customers to effortlessly monitor their orders. Shipment tracking information will be accessible within customers' accounts, located in the order section, and will also be included in the WooCommerce order completion email.", 'trackship-for-woocommerce' ); ?></p>
 			</div>
