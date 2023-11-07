@@ -14,17 +14,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! class_exists( 'smswoo_sms_gateway' ) ) {
+if ( ! class_exists( 'SMSWOO_Sms_Gateway' ) ) {
 
 	/**
 	 * Smswoo SMS Gateway abstract class
 	 *
-	 * @class   smswoo_sms_gateway
+	 * @class   SMSWOO_Sms_Gateway
 	 * @package zorem
 	 * @since   1.0.0
 	 *
 	 */
-	abstract class smswoo_sms_gateway {
+	abstract class SMSWOO_Sms_Gateway {
 
 		protected $_from_number;
 
@@ -64,7 +64,7 @@ if ( ! class_exists( 'smswoo_sms_gateway' ) ) {
 		 */
 		public function send( $to_phone, $message, $country_code ) {
 
-			die( 'function smswoo_sms_gateway->send() must be over-ridden in a sub-class.' );
+			die( 'function SMSWOO_Sms_Gateway->send() must be over-ridden in a sub-class.' );
 
 		}
 		
@@ -80,7 +80,7 @@ if ( ! class_exists( 'smswoo_sms_gateway' ) ) {
 		 */
 		public function validate_number( $to_phone ) {
 
-			die( 'function smswoo_sms_gateway->validate_number() must be over-ridden in a sub-class.' );
+			die( 'function SMSWOO_Sms_Gateway->validate_number() must be over-ridden in a sub-class.' );
 
 		}
 

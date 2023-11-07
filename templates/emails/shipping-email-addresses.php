@@ -27,7 +27,7 @@ $address    = $order->get_formatted_billing_address();
 $shipping   = $order->get_formatted_shipping_address();
 $class = $ts4wc_preview ? 'hide' : '';
 ?>
-<div class="ts4wc_shipping_address <?php echo !$wcast_show_shipping_address ? $class : '' ?>">
+<div class="ts4wc_shipping_address <?php echo !$wcast_show_shipping_address ? esc_html($class) : ''; ?>">
 	<?php
 	if ( !empty($shipping) ) { 
 		$shipping_address_label = get_option( 'shipping_address_label', __( 'Shipping address', 'trackship-for-woocommerce' ) );

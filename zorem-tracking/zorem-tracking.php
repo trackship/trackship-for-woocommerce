@@ -8,6 +8,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( !class_exists( 'WC_Trackers' ) ) {
 	class WC_Trackers {
 		
+		/**
+		 * URL to the AST Tracker API endpoint.
+		 *
+		 * @var string
+		 */
+		private static $api_url = 'https://tracking.zorem.com/wp-json/usage-tracking/v1/update';
 		public $plugin_name;
 		public $plugin_slug;
 		public $user_id;
@@ -17,18 +23,10 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 		public $menu_slug;
 		public $plugin_id;
 		public $plugin_slug_with_hyphens;
-
-		/**
-		 * URL to the AST Tracker API endpoint.
-		 *
-		 * @var string
-		 */
-		private static $api_url = 'https://tracking.zorem.com/wp-json/usage-tracking/v1/update';
-	
 		/**
 		 * Initialize the main plugin function
 		*/
-		public function __construct( $plugin_name, $plugin_slug, $user_id ,$setting_page_type, $setting_page_location, $parent_menu_type,  $menu_slug, $plugin_id ) {				
+		public function __construct( $plugin_name, $plugin_slug, $user_id, $setting_page_type, $setting_page_location, $parent_menu_type, $menu_slug, $plugin_id ) {				
 			$this->plugin_name = $plugin_name;
 			$this->plugin_slug = $plugin_slug;
 			$this->user_id = $user_id;
@@ -54,10 +52,10 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 		 *
 		 * @return WC_Advanced_Shipment_Tracking_Settings
 		*/
-		public static function get_instance( $plugin_name, $plugin_slug, $user_id ,$setting_page_type, $setting_page_location, $parent_menu_type,  $menu_slug, $plugin_id ) {
+		public static function get_instance( $plugin_name, $plugin_slug, $user_id, $setting_page_type, $setting_page_location, $parent_menu_type, $menu_slug, $plugin_id ) {
 		
 			if ( null === self::$instance ) {
-				self::$instance = new self( $plugin_name, $plugin_slug, $user_id ,$setting_page_type, $setting_page_location, $parent_menu_type,  $menu_slug, $plugin_id );
+				self::$instance = new self( $plugin_name, $plugin_slug, $user_id, $setting_page_type, $setting_page_location, $parent_menu_type, $menu_slug, $plugin_id );
 			}
 		
 			return self::$instance;
@@ -430,14 +428,11 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 					'first' => '-',
 					'last'  => '-',
 				);
-			}else {
+			} else {
 				$first = $min_max['first'];
 				$last = $min_max['last'];
 			}
 			$firstDate = strtotime('-12 months');
-			$current_date = date('Y-m-d');
-			$last_12_months_start_date = date('Y-m-d', strtotime('-12 months', strtotime($current_date)));
-			$orderStatuses = array('wc-completed', 'wc-processing');
 			$countQuery = $wpdb->get_var(
 				$wpdb->prepare(
 					"
@@ -445,7 +440,7 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 					FROM {$wpdb->prefix}wc_order_stats 
 					WHERE date_created_gmt >= %s 
 					AND date_created_gmt <= %s
-					AND status IN ('" . implode("','", $orderStatuses) . "')
+					AND status NOT IN ('wc-trash','wc-pending','wc-failed','wc-cancelled','wc-on-hold','wc-refund-requested')
 					",
 					$first,
 					$last
@@ -464,7 +459,7 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 				if ($months > 0) {
 					$monthly_average = round( $total_orders / $months, 2 );
 				} else {
-					$monthly_average = $days !== '0' ? round( $total_orders / $days, 2 ) : 0; // Set a default value or handle this case accordingly
+					$monthly_average = '0' !== $days ? round($total_orders / $days, 2) : 0; // Set a default value or handle this case accordingly
 				}
 			} else {
 				$monthly_average = round( $total_orders / 12, 2 );
@@ -493,14 +488,11 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 					'first' => '-',
 					'last'  => '-',
 				);
-			}else {
+			} else {
 				$first = $min_max['first'];
 				$last = $min_max['last'];
 			}
 			$firstDate = strtotime('-3 months');
-			$current_date = date('Y-m-d');
-			$last_12_months_start_date = date('Y-m-d', strtotime('-12 months', strtotime($current_date)));
-			$orderStatuses = array('wc-completed', 'wc-processing');
 			$countQuery = $wpdb->get_var(
 				$wpdb->prepare(
 					"
@@ -508,7 +500,7 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 					FROM {$wpdb->prefix}wc_order_stats 
 					WHERE date_created_gmt >= %s 
 					AND date_created_gmt <= %s
-					AND status IN ('" . implode("','", $orderStatuses) . "')
+					AND status NOT IN ('wc-trash','wc-pending','wc-failed','wc-cancelled','wc-on-hold','wc-refund-requested')
 					",
 					$first,
 					$last
@@ -526,7 +518,7 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 				if ($months > 0) {
 					$monthly_average = round( $total_orders / $months, 2 );
 				} else {
-					$monthly_average = $days !== '0' ? round( $total_orders / $days, 2 ) : 0;
+					$monthly_average = '0' !== $days ? round($total_orders / $days, 2) : 0;
 				}
 			} else {
 				$monthly_average = round( $total_orders / 3, 2 );
@@ -561,8 +553,6 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 				$first = $min_max['first'];
 				$last = $min_max['last'];
 			}
-			
-			$orderStatuses = array('wc-completed', 'wc-processing');
 			$net_total = $wpdb->get_var(
 				$wpdb->prepare(
 					"
@@ -570,10 +560,11 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 					FROM {$wpdb->prefix}wc_order_stats 
 					WHERE date_created_gmt >= %s 
 					AND date_created_gmt <= %s
-					AND status IN ('" . implode("','", $orderStatuses) . "')
+					AND status NOT IN ('wc-trash','wc-pending','wc-failed','wc-cancelled','wc-on-hold','wc-refund-requested')
 					",
 					$first,
 					$last
+					
 				)
 			);
 			$firstDate = strtotime('-12 months');
@@ -586,9 +577,8 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 				$days = $interval->days;
 				if ($months > 0) {
 					$monthly_average = $net_total / $months;
-				}
-				else {
-					$monthly_average = $days !== '0' ? round( $net_total / $days, 2 ) : 0;
+				} else {
+					$monthly_average = '0' !== $days ? round($net_total / $days, 2) : 0;
 				}
 				
 			} else {
@@ -625,7 +615,9 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 				$last = $min_max['last'];
 			}
 			
-			$orderStatuses = array('wc-completed', 'wc-processing');
+			
+			$placeholders = implode(', ', array_fill(0, count($orderStatuses), '%s'));
+			$placeholders = '(' . $placeholders . ')';
 			$net_total = $wpdb->get_var(
 				$wpdb->prepare(
 					"
@@ -633,7 +625,7 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 					FROM {$wpdb->prefix}wc_order_stats 
 					WHERE date_created_gmt >= %s 
 					AND date_created_gmt <= %s
-					AND status IN ('" . implode("','", $orderStatuses) . "')
+					AND status NOT IN ('wc-trash','wc-pending','wc-failed','wc-cancelled','wc-on-hold','wc-refund-requested')
 					",
 					$first,
 					$last
@@ -649,9 +641,8 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 				$days = $interval->days;
 				if ($months > 0) {
 					$monthly_average = $net_total / $months;
-				}
-				else {
-					$monthly_average = $days !== '0' ? round( $net_total / $days, 2 ) : 0;
+				} else {
+					$monthly_average = '0' !== $days ? round($net_total / $days, 2) : 0;
 				}
 			} else {
 				// Calculate monthly average based on the last 12 months

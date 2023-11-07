@@ -70,7 +70,7 @@ class WC_TrackShip_Api_Call {
 					wp_schedule_single_event( $timestamp, $hook, $args );
 					
 					$args = array(
-						'pending_status'	=> "Something went wrong",
+						'pending_status'	=> 'Something went wrong',
 						'shipping_provider'	=> $tracking_provider,
 						'shipping_date'		=> date_i18n('Y-m-d', $val['date_shipped'] ),
 						'est_delivery_date' => null,

@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				}
 				?>
 				<div class="ts-grid-item">
-					<div class="ts_integration_image"><img src="<?php echo $value['image']; ?>"></div>
-					<div class="ts_integration_title"><?php echo $value['title'] ?></div>
+					<div class="ts_integration_image"><img src="<?php echo esc_url($value['image']); ?>"></div>
+					<div class="ts_integration_title"><?php echo esc_html($value['title']); ?></div>
 					<div class="ts_integration_checkbox">
 						<input type="hidden" name="<?php echo esc_html( $key ); ?>" value="0"/>
 						<input class="tgl tgl-flat" id="<?php echo esc_html( $key ); ?>" name="<?php echo esc_html( $key ); ?>" type="checkbox" <?php echo esc_html( $checked ); ?> value="1"/>

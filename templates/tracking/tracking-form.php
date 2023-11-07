@@ -62,19 +62,19 @@ $form_tab_view = $tracking_page_defaults->get_value( 'tracking_form_settings', '
 	.trackship_branding {display:none;}
 <?php } ?>
 .order_track_form input.ts_from_input:checked + label {
-    color: <?php echo esc_html( $link_color ); ?> !important;
-    border-bottom: 3px solid <?php echo esc_html( $link_color ); ?>;
-    margin-bottom: -2px;
+	color: <?php echo esc_html( $link_color ); ?> !important;
+	border-bottom: 3px solid <?php echo esc_html( $link_color ); ?>;
+	margin-bottom: -2px;
 }
 .order_track_form {
-    max-width: 800px;
-    margin: 0 auto 20px;
-    border: 1px solid #e0e0e0;
-    min-height: 330px;
+	max-width: 800px;
+	margin: 0 auto 20px;
+	border: 1px solid #e0e0e0;
+	min-height: 330px;
 }
 .track_fail_msg {
 	color: red;
-    padding: 0 20px 15px;
+	padding: 0 20px 15px;
 }
 </style>
 <div class="track-order-section">

@@ -219,12 +219,9 @@ class WC_TrackShip_Front {
 		}
 
 		if ( isset( $_GET['tracking'] ) ) {
-			$_GET['tracking'];
 			global $wpdb;
-			$shipment_table = $wpdb->prefix . 'trackship_shipment';
-
 			$tracking_number = wc_clean( $_GET[ 'tracking' ] );
-			$order_id = $wpdb->get_var( $wpdb->prepare( "SELECT order_id FROM $shipment_table WHERE tracking_number = %s", $tracking_number ) );
+			$order_id = $wpdb->get_var( $wpdb->prepare( "SELECT order_id FROM {$wpdb->prefix}trackship_shipment WHERE tracking_number = %s", $tracking_number ) );
 			$order = wc_get_order( $order_id );
 			if ( empty( $order ) ) {
 				$error = new WP_Error( 'ts4wc', __( 'Unable to locate the order.', 'trackship-for-woocommerce' ) );
@@ -233,8 +230,8 @@ class WC_TrackShip_Front {
 	
 		if ( ! isset( $order_id ) || empty( $order ) || isset( $error ) ) {
 
-			if ( isset( $error ) && is_wp_error( $error ) ){
-				echo $error->get_error_message();
+			if ( isset( $error ) && is_wp_error( $error ) ) {
+				echo esc_html($error->get_error_message());
 			}
 
 			ob_start();		
@@ -272,12 +269,11 @@ class WC_TrackShip_Front {
 		$email = isset( $_POST['order_email'] ) ? sanitize_email( $_POST['order_email'] ) : '';
 		$tracking_number = isset( $_POST['order_tracking_number'] ) ? wc_clean( $_POST['order_tracking_number'] ) : '';
 		
-		$order_id = trackship_for_woocommerce()->ts_actions->get_formated_order_id($order_id);
+		$order_id = $order_id ? trackship_for_woocommerce()->ts_actions->get_formated_order_id($order_id) : $order_id;
 		
 		if ( !empty( $tracking_number ) ) {
 			global $wpdb;
-			$shipment_table = $wpdb->prefix . 'trackship_shipment';
-			$row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $shipment_table WHERE tracking_number = %s", $tracking_number ) );
+			$row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}trackship_shipment WHERE tracking_number = %s", $tracking_number ) );
 			$order_id = $row ? $row->order_id : '';
 		}
 		
@@ -362,7 +358,7 @@ class WC_TrackShip_Front {
 				<div class="tracking-header">
 					<div class="tracking_number_wrap">
 						<span class="wc_order_id">
-							<a href="<?php echo esc_url( $order->get_view_order_url() ); ?>" target="_blank">#<?php echo $order_id; ?></a>
+							<a href="<?php echo esc_url( $order->get_view_order_url() ); ?>" target="_blank">#<?php echo esc_html($order_id); ?></a>
 						</span>
 						<div class="shipment_heading"><?php esc_html_e( 'Order Processing', 'trackship-for-woocommerce' ); ?></div>	
 					</div>
@@ -386,7 +382,7 @@ class WC_TrackShip_Front {
 		
 		global $wpdb;
 
-		$unsubscribe = isset( $_GET["unsubscribe"] ) ? $_GET["unsubscribe"] : "" ;
+		$unsubscribe = isset( $_GET['unsubscribe'] ) ? sanitize_text_field($_GET['unsubscribe']) : '' ;
 		if ( 'true' == $unsubscribe ) {
 			$order = wc_get_order( $order_id );
 			$order->update_meta_data( '_receive_shipment_emails', 0 );
@@ -469,20 +465,21 @@ class WC_TrackShip_Front {
 		$rows = trackship_for_woocommerce()->actions->get_shipment_rows( $order_id );
 		if ( $total_trackings > 1 && $rows ) {
 			$i = 1;
-			$post_tracking = isset( $_POST['tnumber'] ) ? $_POST['tnumber'] : '' ;
-			$post_tracking = isset( $_POST['order_tracking_number'] ) ? $_POST['order_tracking_number'] : $post_tracking;
-			$url_tracking = isset( $_GET['tracking'] ) ? $_GET['tracking'] : $post_tracking;
+			$post_tracking = isset( $_POST['tnumber'] ) ? sanitize_text_field($_POST['tnumber']) : '' ;
+			$post_tracking = isset( $_POST['order_tracking_number'] ) ? sanitize_text_field($_POST['order_tracking_number']) : $post_tracking;
+			$url_tracking = isset( $_GET['tracking'] ) ? sanitize_text_field($_GET['tracking']) : $post_tracking;
 			$url_tracking = str_replace( ' ', '', $url_tracking );
 			echo '<div class="shipment-header">';
-				foreach ( $tracking_items as $key => $item ) {
-					$tracking_number = $item['tracking_number'];
-					$class = str_replace( ' ', '', $tracking_number );
-					?>
-					<input id="<?php echo 'shipment_' . $i ?>" type="radio" name="ts_shipments" class="ts_from_input" <?php echo $class == $url_tracking ? 'checked' : ''; ?> >
-					<label for="<?php echo 'shipment_' . $i ?>" class="ts_from_label"><?php printf( esc_html__( 'Shipment %1$s', 'trackship-for-woocommerce' ), esc_html($i) ); ?></label>
-					<?php
-					$i++;
-				}
+			foreach ( $tracking_items as $key => $item ) {
+				$tracking_number = $item['tracking_number'];
+				$class = str_replace( ' ', '', $tracking_number );
+				?>
+				<input id="<?php echo 'shipment_' . esc_attr($i); ?>" type="radio" name="ts_shipments" class="ts_from_input" <?php echo $class == $url_tracking ? 'checked' : ''; ?> >
+				<?php /* translators: %s: search for a tag */ ?>
+				<label for="<?php echo 'shipment_' . esc_attr($i); ?>" class="ts_from_label"><?php printf( esc_html__( 'Shipment %1$s', 'trackship-for-woocommerce' ), esc_html($i) ); ?></label>
+				<?php
+				$i++;
+			}
 			echo '</div>';
 		}
 		foreach ( $tracking_items as $key => $item ) {
@@ -535,7 +532,7 @@ class WC_TrackShip_Front {
 			$order = wc_get_order( $order_id );
 			if ( isset( $tracker->ep_status ) ) {
 				?>
-				<div class="tracking-detail col <?php echo !in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking-layout-2' : ''; ?><?php echo ' shipment_' . $num; ?>" <?php echo 1 == $total_trackings ? 'style="display:block;"' : ''; ?>>
+				<div class="tracking-detail col <?php echo !in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ? 'tracking-layout-2' : ''; ?><?php echo ' shipment_' . esc_html($num); ?>" <?php echo 1 == $total_trackings ? 'style="display:block;"' : ''; ?>>
 					<div class="shipment-content">
 						<?php
 						
@@ -827,7 +824,7 @@ class WC_TrackShip_Front {
 				</label>
 			<?php } ?>
 			<?php $ajax_nonce = wp_create_nonce( 'unsubscribe_emails' . $order_id ); ?>
-			<input type="hidden" class="order_id_field" value="<?php echo $order_id; ?>">
+			<input type="hidden" class="order_id_field" value="<?php echo esc_attr( $order_id ); ?>">
 			<input type="hidden" name="action" value="unsubscribe_emails_save">
 			<input type="hidden" name="unsubscribe_emails_nonce" class="unsubscribe_emails_nonce" value="<?php echo esc_html( $ajax_nonce ); ?>"/>
 
@@ -843,8 +840,8 @@ class WC_TrackShip_Front {
 		
 		$action = isset( $_REQUEST[ 'action' ] ) ? sanitize_text_field( $_REQUEST[ 'action'] ) : '';
 		//echo '<pre>';print_r($_GET);echo '</pre>';
-		$type = isset( $_GET["type"] ) ? $_GET["type"] : "" ;
-		$status = isset( $_GET["status"] ) ? $_GET["status"] : "" ;
+		$type = isset( $_GET['type'] ) ? sanitize_text_field($_GET['type']) : '' ;
+		$status = isset( $_GET['status'] ) ? sanitize_text_field($_GET['status']) : '' ;
 		
 		if ( 'preview_tracking_page' != $action ) {
 			return;

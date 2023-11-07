@@ -14,15 +14,15 @@ if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $log_table ) ) ) {
 	return;
 }
 
-$all_shipment_status = $wpdb->get_results( "SELECT shipment_status FROM {$log_table} WHERE `type` = 'Email' OR `sms_type` = 'shipment_status' GROUP BY shipment_status" );
-$search = isset( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
+$all_shipment_status = $wpdb->get_results( $wpdb->prepare( "SELECT shipment_status FROM %1s WHERE `type` = 'Email' OR `sms_type` = 'shipment_status' GROUP BY shipment_status", $log_table ) );
+$url_search = isset( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
 ?>
 <div class="trackship_logs_option">
 	<span class="log_shipment_status">
 		<select class="select_option" name="log_shipment_status" id="log_shipment_status">
 			<option value=""><?php esc_html_e('All Notifications', 'trackship-for-woocommerce'); ?></option>
-			<?php foreach ( $all_shipment_status as $status ) { ?>
-				<option value="<?php echo esc_html( $status->shipment_status ); ?>"><?php echo esc_html( apply_filters("trackship_status_filter", $status->shipment_status ) ); ?></option>
+			<?php foreach ( $all_shipment_status as $ship_status ) { ?>
+				<option value="<?php echo esc_html( $ship_status->shipment_status ); ?>"><?php echo esc_html( apply_filters( 'trackship_status_filter', $ship_status->shipment_status ) ); ?></option>
 			<?php } ?>
 		</select>
 	</span>
@@ -35,7 +35,7 @@ $search = isset( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
 	</span>
 	<button class="serch_button" type="button" style="float:right;"><?php esc_html_e( 'Search', 'trackship-for-woocommerce' ); ?></button>
 	<span class="log_search_bar">
-		<input type="text" id="search_bar" name="search_bar" placeholder="Order id, Email, Phone number" value="<?php echo esc_html($search); ?>">
+		<input type="text" id="search_bar" name="search_bar" placeholder="Order id, Email, Phone number" value="<?php echo esc_html($url_search); ?>">
 		<span class="dashicons dashicons-no"></span>
 	</span>
 </div>
@@ -43,7 +43,7 @@ $search = isset( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
 	<section class="trackship_logs_section">
 		<div class="woocommerce trackship_admin_layout">
 			<div class="">
-				<input type="hidden" id="nonce_trackship_logs" value="<?php echo wp_create_nonce( "_trackship_logs" );?>">
+				<input type="hidden" id="nonce_trackship_logs" value="<?php echo esc_attr(wp_create_nonce( '_trackship_logs' )); ?>">
 				<table class="widefat dataTable fixed trackship_logs hover" cellspacing="0" id="trackship_notifications_logs" style="width: 100%;">
 					<thead>
 						<tr class="tabel_heading_th">

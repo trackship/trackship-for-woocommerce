@@ -44,7 +44,7 @@ class WC_Trackship_Html {
 			<div class="multiple_select_container">	
 				<select multiple class="wc-enhanced-select" name="<?php echo esc_html( $id ); ?>[]" id="<?php echo esc_html( $id ); ?>">
 				<?php
-				$multi_checkbox_data = get_trackship_settings($id);
+				$multi_checkbox_data = get_trackship_settings( $id, ['completed', 'partial-shipped', 'shipped'] );
 				foreach ( (array) $array['options'] as $key => $val ) { 
 					$selected = in_array( $key, $multi_checkbox_data ) ? 'selected' : '';
 					?>
@@ -92,7 +92,7 @@ class WC_Trackship_Html {
 					<span class="woocommerce-help-tip tipTip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
 				<?php } ?>
 			</label>
-			<input class="input-text" type="number" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" min="1" value="<?php echo get_trackship_settings($id); ?>">
+			<input class="input-text" type="number" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" min="1" value="<?php echo esc_attr(get_trackship_settings($id)); ?>">
 		</li>
 		<?php
 	}
@@ -150,7 +150,7 @@ class WC_Trackship_Html {
 				</label>
 			<?php } ?>
 			<fieldset>
-				<input class="input-text regular-input " type="text" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" placeholder="<?php esc_html_e( 'E.g. {admin_email}, admin@example.org' ); ?>" value="<?php echo get_trackship_settings( $id, '{admin_email}' ); ?>">
+				<input class="input-text regular-input " type="text" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" placeholder="<?php esc_html_e( 'E.g. {admin_email}, admin@example.org' ); ?>" value="<?php echo esc_attr(get_trackship_settings( $id, '{admin_email}' )); ?>">
 			</fieldset>
 		</li>
 		<?php

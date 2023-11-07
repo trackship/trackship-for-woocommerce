@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class tswc_smswoo_init {
+class TSWC_SMSWOO_Init {
 	
 	/**
 	 * Instance of this class.
@@ -42,12 +42,12 @@ class tswc_smswoo_init {
 		
 		//admin
 		require_once 'class-smswoo-admin.php';
-		$this->smswoo_admin = tswc_smswoo_admin::get_instance();
+		$this->smswoo_admin = TSWC_SMSWoo_Admin::get_instance();
 		
 		if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocommerce/zorem-sms-for-woocommerce.php' ) ) {
 			//sms-notification
 			require_once 'class-smswoo-sms-notification.php';
-			$this->sms_notification = tswc_smswoo_sms_notification::get_instance();
+			$this->sms_notification = TSWC_SMSWoo_SMS_Notification::get_instance();
 			
 			//sms-gateway
 			require_once 'class-smswoo-sms-gateway.php';
