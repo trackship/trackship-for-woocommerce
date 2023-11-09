@@ -144,10 +144,10 @@ class WC_Trackship_Shipments {
 		
 		$where_condition = !empty( $where ) ? 'WHERE ' . implode( ' AND ', $where ) : '';
 
-		$sum = $wpdb->get_var( $wpdb->prepare("
+		$sum = $wpdb->get_var( "
 			SELECT COUNT(*) FROM {$wpdb->prefix}trackship_shipment AS row1
-			%1s
-		", $where_condition ) );
+			{$where_condition}
+		" );
 
 		$column = isset( $_POST['order'][0]['column'] ) && '1' == wc_clean($_POST['order'][0]['column']) ? 'order_id' : 'shipping_date';
 		$dir =  isset( $_POST['order'][0]['dir'] ) && 'asc' == wc_clean($_POST['order'][0]['dir']) ? ' ASC' : ' DESC';
