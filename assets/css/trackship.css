@@ -1202,7 +1202,7 @@ opacity: 1;
 	left: 0;
 }
 /* TrackShip Dashboard CSS*/
-button.button-primary.button-trackship.bulk_shipment_status_button {
+button.button-primary.button-trackship.tools-ts-button {
 	float: none;
 }
 #content_trackship_status .trackship-notice {
@@ -1230,11 +1230,11 @@ button.button-primary.button-trackship.bulk_shipment_status_button {
 .p15 {
 	padding: 15px;
 }
-.trackship-notice p, .trackship-verify-table p {
+.trackship-notice p, .trackship-verify-table p, .trackship-update-tracking-info p {
 	margin: 0;
 	line-height: 35px;
 }
-button.bulk_shipment_status_button {
+button.tools-ts-button {
 	box-shadow: none;
 	font-size: 14px;
 	line-height: 32px;
@@ -2012,12 +2012,17 @@ span.ts_plan_details_bottom {
 	flex: 0 0 50%;
 	max-width: 50%;
 }
-.tab_inner_container .tools_tab_ts4wc.tools_tab button.button-primary.bulk_shipment_status_button, .button-trackship-red.delete_notification {
+.tab_inner_container .tools_tab_ts4wc.tools_tab button.button-primary.tools-ts-button {
 	float: right;
 }
-.rtl .tab_inner_container .tools_tab_ts4wc.tools_tab button.button-primary.bulk_shipment_status_button, .rtl .button-trackship-red.delete_notification {
+.rtl .tab_inner_container .tools_tab_ts4wc.tools_tab button.button-primary.tools-ts-button {
 	float: left;
 }
+}
+@media (max-width: 992px) {
+	.tab_inner_container .tools_tab_ts4wc.tools_tab button.button-primary.tools-ts-button {
+		display: block;
+	}
 }
 
 @media screen and (min-width: 768px) and (max-width: 1269px) {
