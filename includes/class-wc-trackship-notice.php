@@ -49,6 +49,9 @@ class WC_TrackShip_Admin_Notice {
 		// klaviyo notice
 		add_action( 'admin_notices', array( $this, 'trackship_klaviyo_notice' ) );
 
+		// Migration notice
+		add_action( 'admin_notices', array( $this, 'trackship_migration_notice' ) );
+
 		// Database update notice
 		if ( version_compare( get_option( 'trackship_db' ), '1.19', '<' ) ) {
 			add_action( 'admin_notices', array( $this, 'trackship_database_notice' ) );
@@ -159,6 +162,27 @@ class WC_TrackShip_Admin_Notice {
 			<p><strong>New Feature Alert!</strong></p>
 			<p>We're excited to announce that TrackShip for WooCommerce now integrates seamlessly with Klaviyo. Harness the power of Klaviyo to take your tracking and shipping communication to the next level.</p>
 			<p>To enable the integration, head over to the integration <a href="<?php echo esc_url($btn_url); ?>">settings</a>. For more details and setup guidance, please visit our <a href="<?php echo esc_url($url); ?>" target="_blank">documentation</a>.</p>
+		</div>
+		<?php
+	}
+
+	public function trackship_migration_notice() {
+		if ( !get_trackship_settings( 'old_user' ) ) {
+			return;
+		}
+
+		$url = admin_url( '/admin.php?page=trackship-for-woocommerce&tab=tools&auto=yes' );
+		?>
+		<style>
+		.wp-core-ui .notice.trackship-dismissable-notice {
+			padding: 12px;
+			text-decoration: none;
+		}
+		</style>
+		<div class="notice notice-success trackship_migration_notice trackship-dismissable-notice">
+			<p><strong>Migrating from a lower version to the latest version of TrackShip for WooCommerce</strong></p>
+			<p>Moving from an older version to the newest version of TrackShip for WooCommerce involves transferring and updating tracking events data </p>
+			<a class="button button-primary" href="<?php echo esc_url($url); ?>" >Migration</a>
 		</div>
 		<?php
 	}

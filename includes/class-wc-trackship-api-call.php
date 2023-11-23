@@ -36,8 +36,8 @@ class WC_TrackShip_Api_Call {
 					continue;
 				}
 				$row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id, $tracking_number );
-				
-				if ( isset($row->shipment_status) && 'delivered' == $row->shipment_status ) {
+
+				if ( isset($row->shipment_status) && 'delivered' == $row->shipment_status && !get_trackship_settings( 'ts_migration' ) ) {
 					continue;
 				}
 				
@@ -67,7 +67,7 @@ class WC_TrackShip_Api_Call {
 					$timestamp = time() + 5*60;
 					$args = array( $order->get_id() );
 					$hook = 'wcast_retry_trackship_apicall';
-					wp_schedule_single_event( $timestamp, $hook, $args );
+					as_schedule_single_action( $timestamp, $hook, $args );
 					
 					$args = array(
 						'pending_status'	=> 'Something went wrong',

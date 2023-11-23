@@ -30,6 +30,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 	<input type="hidden" name="action" value="trackship_integration_form_update">
-	<?php $nonce = wp_create_nonce( 'ts_integrations'); ?>
+	<?php $nonce = wp_create_nonce( 'ts_integrations' ); ?>
 	<input type="hidden" id="integrations_nonce" name="integrations_nonce" value="<?php echo esc_attr( $nonce ); ?>" />
 </form>
