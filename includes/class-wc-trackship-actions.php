@@ -1124,7 +1124,7 @@ class WC_Trackship_Actions {
 		$shipment_table = $wpdb->prefix . 'trackship_shipment';
 		$shipment_meta_table = $wpdb->prefix . 'trackship_shipment_meta';
 
-		$ids = $wpdb->get_results( $wpdb->prepare( 'SELECT id FROM %s WHERE order_id = %d', $shipment_table, $order_id ), ARRAY_A );
+		$ids = $wpdb->get_results( $wpdb->prepare( "SELECT id FROM {$wpdb->prefix}trackship_shipment WHERE order_id = %d", $order_id ), ARRAY_A );
 
 		$wpdb->delete( $shipment_table, array( 'order_id' => $order_id ) );
 		foreach ( $ids as $id) {
