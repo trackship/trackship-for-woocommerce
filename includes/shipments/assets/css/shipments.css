@@ -258,9 +258,6 @@ table.dataTable tbody .shipment_status_label:before {
 .rtl table.dataTable tbody .shipment_status_label:before {
 	margin: 0 0 0 5px;
 }
-table.dataTable tbody .shipment_status_label.carrier_unsupported:before {
-	background-color: #f44336;
-}
 table.dataTable tbody .shipment_status_label.pre_transit:before {
 	background-color: #37609a;
 }
@@ -276,7 +273,7 @@ table.dataTable tbody .shipment_status_label.available_for_pickup:before {
 table.dataTable tbody .shipment_status_label.return_to_sender:before {
 	background-color: #A8414A;
 }
-table.dataTable tbody .shipment_status_label.failure:before, table.dataTable tbody .shipment_status_label.label_cancelled:before, table.dataTable tbody .shipment_status_label.expired:before {
+table.dataTable tbody .shipment_status_label.failure:before, table.dataTable tbody .shipment_status_label.label_cancelled:before, table.dataTable tbody .shipment_status_label.expired:before, table.dataTable tbody .shipment_status_label.invalid_tracking:before, table.dataTable tbody .shipment_status_label.carrier_unsupported:before {
 	background-color: #CD2128;
 }
 table.dataTable tbody .shipment_status_label.out_for_delivery:before {

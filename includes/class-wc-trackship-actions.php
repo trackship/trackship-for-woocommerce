@@ -122,6 +122,7 @@ class WC_Trackship_Actions {
 		
 		//run cron action
 		add_action( 'wcast_retry_trackship_apicall', array( $this, 'trigger_trackship_apicall' ) );
+		add_action( 'remove_ts_temp_key', array( $this, 'remove_ts_temp_key' ) );
 		
 		$valid_order_statuses = get_trackship_settings( 'trackship_trigger_order_statuses', ['completed', 'partial-shipped', 'shipped'] );
 		foreach ( $valid_order_statuses as $order_status ) {
@@ -1123,7 +1124,7 @@ class WC_Trackship_Actions {
 		$shipment_table = $wpdb->prefix . 'trackship_shipment';
 		$shipment_meta_table = $wpdb->prefix . 'trackship_shipment_meta';
 
-		$ids = $wpdb->get_results( $wpdb->prepare( 'SELECT id FROM %s WHERE order_id = %d', $shipment_table, $order_id ), ARRAY_A );
+		$ids = $wpdb->get_results( $wpdb->prepare( "SELECT id FROM {$wpdb->prefix}trackship_shipment WHERE order_id = %d", $order_id ), ARRAY_A );
 
 		$wpdb->delete( $shipment_table, array( 'order_id' => $order_id ) );
 		foreach ( $ids as $id) {
@@ -1287,6 +1288,7 @@ class WC_Trackship_Actions {
 	public function check_order_status( $bool, $order ) {
 		$valid_order_statuses = get_trackship_settings( 'trackship_trigger_order_statuses', ['completed', 'partial-shipped', 'shipped'] );
 		$bool = in_array( $order->get_status(), $valid_order_statuses );
+		$bool = get_trackship_settings( 'ts_migration' ) && 'delivered' == $order->get_status() ? true : $bool;
 		return $bool;
 	}
 
@@ -1355,6 +1357,10 @@ class WC_Trackship_Actions {
 			$api = new WC_TrackShip_Api_Call();
 			$array = $api->get_trackship_apicall( $order_id );
 		}
+	}
+
+	public function remove_ts_temp_key() {
+		delete_trackship_settings( 'ts_migration' );
 	}
 	
 	/*
