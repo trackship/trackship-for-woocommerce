@@ -614,10 +614,6 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 				$first = $min_max['first'];
 				$last = $min_max['last'];
 			}
-			
-			
-			$placeholders = implode(', ', array_fill(0, count($orderStatuses), '%s'));
-			$placeholders = '(' . $placeholders . ')';
 			$net_total = $wpdb->get_var(
 				$wpdb->prepare(
 					"
