@@ -50,25 +50,25 @@ class WC_TrackShip_Email_Manager {
 		$arg = array(
 			'order_id'			=> $order_id,
 			'order_number'		=> wc_get_order( $order_id )->get_order_number(),
-			'user_id'			=> wc_get_order( $order_id )->get_user_id(),
 			'tracking_number'	=> $tracking_item['tracking_number'],
 			'date'				=> current_time( 'Y-m-d H:i:s' ),
 			'shipment_status'	=> $new_status,
 			'status_msg'		=> 'Settings disabled',
-			'type'				=> 'Email',
 		);
+
+		$logger = wc_get_logger();
 		
 		if ( ! $enable || ! $for_amazon_order || '0' == $receive_email ) {
-			trackship_for_woocommerce()->ts_actions->update_notification_table( $arg );
+			$logger->info( print_r($arg, true), array( 'source' => 'trackship_email_log' ) );
 			return;
 		}
-
+		
 		if ( 'delivered_status' == $status ) {
 			$toggle = get_option( 'all-shipment-status-delivered' );
 			$all_delivered = trackship_for_woocommerce()->ts_actions->is_all_shipments_delivered( $order_id );
 			
 			if ( $toggle && !$all_delivered ) {
-				trackship_for_woocommerce()->ts_actions->update_notification_table( $arg );
+				$logger->info( print_r($arg, true), array( 'source' => 'trackship_email_log' ) );
 				return;
 			}
 		}
