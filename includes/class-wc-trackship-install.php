@@ -116,10 +116,6 @@ class WC_Trackship_Install {
 			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment CHANGE shipping_date shipping_date DATE NULL DEFAULT CURRENT_TIMESTAMP" );
 			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment ADD INDEX last_event (last_event);");
 			
-			update_option( 'trackship_db', '1.14' );
-		}
-
-		if ( version_compare( get_option( 'trackship_db' ), '1.16', '<' ) ) {
 			$result = $wpdb->get_col(
 				"SELECT t.order_id FROM {$wpdb->prefix}trackship_shipment t
 				LEFT JOIN {$wpdb->prefix}trackship_shipment_meta m  
@@ -132,7 +128,7 @@ class WC_Trackship_Install {
 			if ( $result ) {
 				update_trackship_settings( 'old_user', true );
 			}
-			update_option( 'trackship_db', '1.16' );
+			update_option( 'trackship_db', '1.14' );
 		}
 		
 		if ( version_compare( get_option( 'trackship_db' ), '1.18', '<' ) ) {
