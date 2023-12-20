@@ -224,13 +224,13 @@ class TS4WC_Admin_Customizer {
 	*/	
 	public function wcast_generate_defaults() {
 		$customizer_defaults = array(
+			'tracking_page_type'					=> 'classic',
 			'wc_ast_select_tracking_page_layout'	=> 't_layout_1',
 			'wc_ast_select_border_color'			=> '#cccccc',
 			'wc_ast_select_border_radius'			=> 0,
 			'wc_ast_select_bg_color'				=> '#fafafa',
 			'wc_ast_hide_tracking_provider_image'	=> 0,
 			'wc_ast_link_to_shipping_provider'		=> 1,
-			'wc_ast_remove_trackship_branding'		=> 0,
 			'wc_ast_hide_tracking_events'			=> 2,
 			'wc_ast_select_font_color'				=> '#333',
 			'wc_ast_select_link_color'				=> '#2271b1',
@@ -275,7 +275,7 @@ class TS4WC_Admin_Customizer {
 			'track_button_color'			=> '#3c4858',
 			'track_button_text_color'		=> '#fff',
 			'track_button_border_radius'	=> 0,
-			'email_trackship_branding'		=> 1,
+			'show_trackship_branding'		=> 1,
 			'shipping_provider_logo'		=> 1,
 			// Tracking form's defauls
 			'form_tab_view' 				=> 'both',
@@ -316,7 +316,7 @@ class TS4WC_Admin_Customizer {
 		$track_button_color = $this->get_value( 'shipment_email_settings', 'track_button_color', $status );
 		$track_button_text_color = $this->get_value( 'shipment_email_settings', 'track_button_text_color', $status );
 		$track_button_border_radius = $this->get_value( 'shipment_email_settings', 'track_button_border_radius', $status );
-		$email_trackship_branding = $this->get_value( 'shipment_email_settings', 'email_trackship_branding', $status );
+		$show_trackship_branding = $this->get_value( 'shipment_email_settings', 'show_trackship_branding', $status );
 		$shipping_provider_logo = $this->get_value( 'shipment_email_settings', 'shipping_provider_logo', $status );
 
 		//Tracking page saved/default vaule
@@ -328,8 +328,8 @@ class TS4WC_Admin_Customizer {
 		$tracking_events = get_option( 'wc_ast_hide_tracking_events', $this->defaults['wc_ast_hide_tracking_events'] );
 		$link_to_provider = get_option( 'wc_ast_link_to_shipping_provider', $this->defaults['wc_ast_link_to_shipping_provider'] );
 		$hide_provider_image = get_option( 'wc_ast_hide_tracking_provider_image', $this->defaults['wc_ast_hide_tracking_provider_image'] );
-		$remove_trackship_branding = get_option( 'wc_ast_remove_trackship_branding', $this->defaults['wc_ast_remove_trackship_branding'] );
 		$wc_ast_select_tracking_page_layout = get_option( 'wc_ast_select_tracking_page_layout', $this->defaults['wc_ast_select_tracking_page_layout'] );
+		$tracking_page_type = get_option( 'tracking_page_type', $this->defaults['tracking_page_type'] );
 		$hide_shipping_from_to = get_option( 'wc_ast_hide_from_to', $this->defaults['wc_ast_hide_from_to'] );
 		$hide_last_mile = get_option( 'wc_ast_hide_list_mile_tracking', $this->defaults['wc_ast_hide_list_mile_tracking'] );
 		$shipped_product_label = get_option( 'shipped_product_label', __( 'Items in this shipment', 'trackship-for-woocommerce' ) );
@@ -645,6 +645,18 @@ class TS4WC_Admin_Customizer {
 				'parent'	=> 'widget_layout',
 				'show'		=> true,
 			),
+			'tracking_page_type' => array(
+				'title'		=> __( 'Tracking Page', 'trackship-for-woocommerce' ),
+				'type'		=> 'select',
+				'default'	=> $tracking_page_type,
+				'show'		=> true,
+				'options'	=> array(
+					'classic' => __( 'Classic', 'trackship-for-woocommerce' ),
+					'modern' => __( 'Modern', 'trackship-for-woocommerce' ),
+				),
+				'option_name'=> 'tracking_page_type',
+				'option_type'=> 'key',
+			),
 			'wc_ast_hide_tracking_events' => array(
 				'title'		=> esc_html__( 'Tracking event display', 'trackship-for-woocommerce' ),
 				'type'		=> 'select',
@@ -704,13 +716,13 @@ class TS4WC_Admin_Customizer {
 				'option_name'=> 'wc_ast_hide_list_mile_tracking',
 				'option_type'=> 'key',
 			),
-			'wc_ast_remove_trackship_branding' => array(
-				'title'		=> __( 'Hide TrackShip branding', 'trackship-for-woocommerce' ),
-				'default'	=> $remove_trackship_branding,
+			'show_trackship_branding' => array(
+				'title'		=> __( 'Display TrackShip branding', 'trackship-for-woocommerce' ),
+				'default'	=> $show_trackship_branding,
 				'type'		=> 'checkbox',
 				'show'		=> true,
-				'option_name'=> 'wc_ast_remove_trackship_branding',
-				'option_type'=> 'key',
+				'option_name'=> 'shipment_email_settings',
+				'option_type'=> 'array',
 				'required' 	=> 'pro',
 				'plan'		=> in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ),
 			),
@@ -926,7 +938,7 @@ class TS4WC_Admin_Customizer {
 		}
 		$settings[ 'email_trackship_branding' ] = array(
 			'title'		=> esc_html__( 'Display TrackShip branding', 'trackship-for-woocommerce' ),
-			'default'	=> $email_trackship_branding,
+			'default'	=> $show_trackship_branding,
 			'type'		=> 'checkbox',
 			'option_name'=> 'shipment_email_settings',
 			'option_type'=> 'array',

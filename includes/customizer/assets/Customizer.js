@@ -35,12 +35,13 @@ jQuery(document).ready(function(){
 		minimumResultsForSearch: Infinity
 	});
 
+	
 	jQuery( '#email_preview' ).select2({
 		templateSelection: text_contain,
 		minimumResultsForSearch: Infinity,
 		width: '250px'
 	});
-
+	
 	var type = jQuery('#customizer_type').val();
 	jQuery('#customizer_type').trigger('change');
 	if ( 'tracking_page' == type ) {
@@ -117,6 +118,8 @@ jQuery(document).ready(function(){
 			jQuery("#tracking_widget_privew").contents().find('body .col.tracking-detail .shipment-header' ).css( 'border-color', color );
 			jQuery("#tracking_widget_privew").contents().find('body .col.tracking-detail .trackship_branding, .tracking-detail .heading_panel' ).css( 'border-color', color );
 			jQuery("#tracking_widget_privew").contents().find('body .tracking-detail .h4-heading, .tracking-detail .tracking_number_wrap' ).css( 'border-color', color );
+			jQuery("#tracking_widget_privew").contents().find('.col.enhanced_tracking_detail, div.est_delivery_section, div.tracking_widget_tracking_events_section, .enhanced_tracking_detail .enhanced_heading, .enhanced_tracking_detail .enhanced_content, div.last_mile_tracking_number, .enhanced_content .shipping_from_to' ).css( 'border-color', color );
+			
 			var pend_color = jQuery(".pending_color_event").text();
 			jQuery('.pending_color_event').append(pend_color.includes('&#wc_ast_select_border_color') ? '' : '&#wc_ast_select_border_color');
 			setting_change_trigger();
@@ -232,21 +235,19 @@ jQuery(document).on("change", ".zoremmail-checkbox.ts4wc_provider_logo", functio
 	jQuery('.pending_change_event').append(pend_change.includes('&#shipping_provider_logo') ? '' : '&#shipping_provider_logo');
 });
 
-jQuery(document).on("change", "#email_trackship_branding", function () {
+// TrackShip branding for Tracking page and Email
+jQuery(document).on("change", "#email_trackship_branding, #show_trackship_branding", function () {
 	if (jQuery(this).prop("checked") == true) {
-		jQuery("#tracking_widget_privew").contents().find( '.trackship_branding' ).show();
+		jQuery("#tracking_widget_privew").contents().find( '.trackship_branding, .enhanced_trackship_branding' ).show();
+		jQuery("#email_trackship_branding, #show_trackship_branding").prop('checked', true);
 	} else {
 		if ( jQuery.inArray( trackship_customizer.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
-			jQuery("#tracking_widget_privew").contents().find( '.trackship_branding' ).show();
+			jQuery("#tracking_widget_privew").contents().find( '.trackship_branding, .enhanced_trackship_branding' ).show();
 		} else {
-			jQuery("#tracking_widget_privew").contents().find( '.trackship_branding' ).hide();
+			jQuery("#tracking_widget_privew").contents().find( '.trackship_branding, .enhanced_trackship_branding' ).hide();
 		}
+		jQuery("#email_trackship_branding, #show_trackship_branding").prop('checked', false);
 	}
-	// if ( jQuery.inArray( trackship_customizer.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 || trackship_customizer.unsubscribe == 1 || jQuery(this).prop("checked") == true ) {
-	// 	jQuery("#tracking_widget_privew").contents().find( '.default_footer' ).hide();
-	// } else {
-	// 	jQuery("#tracking_widget_privew").contents().find( '.default_footer' ).show();
-	// }
 	var pend_change = jQuery(".pending_change_event").text();
 	jQuery('.pending_change_event').append(pend_change.includes('&#email_trackship_branding') ? '' : '&#email_trackship_branding');
 });
@@ -304,19 +305,7 @@ jQuery(document).on("change", "#wc_ast_hide_list_mile_tracking", function () {
 	var pend_change = jQuery(".pending_change_event").text();
 	jQuery('.pending_change_event').append(pend_change.includes('&#wc_ast_hide_list_mile_tracking') ? '' : '&#wc_ast_hide_list_mile_tracking');
 });
-// TrackShip branding
-jQuery(document).on("change", "#wc_ast_remove_trackship_branding", function () {
-	if (jQuery(this).prop("checked") == true) {
-		jQuery("#tracking_widget_privew").contents().find( '.trackship_branding' ).hide();
-	} else {
-		jQuery("#tracking_widget_privew").contents().find( '.trackship_branding' ).show();
-	}
-	if ( jQuery.inArray( trackship_customizer.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
-		jQuery("#tracking_widget_privew").contents().find( '.trackship_branding' ).show();
-	}
-	var pend_change = jQuery(".pending_change_event").text();
-	jQuery('.pending_change_event').append(pend_change.includes('&#wc_ast_remove_trackship_branding') ? '' : '&#wc_ast_remove_trackship_branding');
-});
+
 /*
 * Tracking Page checkbox End
 */
@@ -513,6 +502,17 @@ jQuery('iframe').load(function(){
 	});
 })
 
+jQuery('#tracking_page_type').on("change", function(){
+	var type = jQuery( this ).val();
+	if ( 'modern' == type ) {
+		jQuery("#tracking_widget_privew").contents().find('body .enhanced_tracking_detail, body .enhanced_trackship_branding' ).show();
+		jQuery("#tracking_widget_privew").contents().find('body .tracking-detail.col' ).hide();
+	} else {
+		jQuery("#tracking_widget_privew").contents().find('body .enhanced_tracking_detail, body .enhanced_trackship_branding' ).hide();
+		jQuery("#tracking_widget_privew").contents().find('body .tracking-detail.col' ).show();
+	}
+});
+
 jQuery(document).on("change", "#track_button_border_radius", function(){
 	var radius = jQuery( this ).val();
 	jQuery("#tracking_widget_privew").contents().find('div.tracking_index a.track_your_order' ).css( 'border-radius', radius+'px' );
@@ -537,7 +537,7 @@ jQuery(document).on("change", ".form_button_border_radius .slider__value", funct
 
 jQuery(document).on("change", "#wc_ast_select_border_radius", function(){
 	var radius = jQuery( this ).val();
-	jQuery("#tracking_widget_privew").contents().find('.col.tracking-detail' ).css( 'border-radius', radius+'px' );
+	jQuery("#tracking_widget_privew").contents().find('.col.tracking-detail, .col.enhanced_tracking_detail' ).css( 'border-radius', radius+'px' );
 	var pend_change = jQuery(".pending_change_event").text();
 	jQuery('.pending_change_event').append(pend_change.includes('&#wc_ast_select_border_radius') ? '' : '&#wc_ast_select_border_radius');
 });
@@ -561,7 +561,7 @@ if ( jQuery.fn.wpColorPicker ) {
 		change: function(e, ui) {
 			var color = ui.color.toString();
 			jQuery('#widget_form_bg_color').val( color );
-			jQuery("#tracking_widget_privew").contents().find('body .col.tracking-detail, form.order_track_form' ).css( 'background', color );
+			jQuery("#tracking_widget_privew").contents().find('body .col.tracking-detail, body .col.enhanced_tracking_detail, form.order_track_form' ).css( 'background', color );
 			var pend_color = jQuery(".pending_color_event").text();
 			jQuery('.pending_color_event').append(pend_color.includes('&#wc_ast_select_bg_color') ? '' : '&#wc_ast_select_bg_color');
 			setting_change_trigger();
@@ -572,8 +572,8 @@ if ( jQuery.fn.wpColorPicker ) {
 		change: function(e, ui) {
 			var color = ui.color.toString();
 			jQuery('#widget_form_font_color').val( color );
-			jQuery("#tracking_widget_privew").contents().find('body .tracking-detail .shipment-content, body .tracking-detail .shipment-content h4, .shipment-header label.ts_from_label, .shipment_status_heading, .content_panel.shipment_status_notifications span, body .search_order_form, body form.order_track_form label' ).css( 'color', color );
-			jQuery("#tracking_widget_privew").contents().find('.heading_panel span.accordian-arrow.right' ).css( 'border-color', color );
+			jQuery("#tracking_widget_privew").contents().find('body .tracking-detail .shipment-content, body .tracking-detail .shipment-content h4, .shipment-header label.ts_from_label, .shipment_status_heading, .content_panel.shipment_status_notifications span, body .search_order_form, body form.order_track_form label, body .col.enhanced_tracking_detail, body .enhanced_content label' ).css( 'color', color );
+			jQuery("#tracking_widget_privew").contents().find('span.accordian-arrow.right' ).css( 'border-color', color );
 			var pend_color = jQuery(".pending_color_event").text();
 			jQuery('.pending_color_event').append(pend_color.includes('&#wc_ast_select_font_color') ? '' : '&#wc_ast_select_font_color');
 			setting_change_trigger();
@@ -583,8 +583,8 @@ if ( jQuery.fn.wpColorPicker ) {
 	jQuery('#wc_ast_select_link_color').wpColorPicker({
 		change: function(e, ui) {
 			var color = ui.color.toString();
-			jQuery("#tracking_widget_privew").contents().find('.col.tracking-detail .tracking_number_wrap a, .tracking_event_tab_view .view_more_class, .content_panel.product_details a' ).css( 'color', color );
-			jQuery("#tracking_widget_privew").contents().find('.heading_panel span.accordian-arrow.down' ).css( 'border-color', color );
+			jQuery("#tracking_widget_privew").contents().find('.col.tracking-detail .tracking_number_wrap a, .tracking_event_tab_view .view_more_class, .content_panel.product_details a, div.col.enhanced_tracking_detail a' ).css( 'color', color );
+			jQuery("#tracking_widget_privew").contents().find('.heading_panel span.accordian-arrow.down, span.accordian-arrow.down' ).css( 'border-color', color );
 			var pend_color = jQuery(".pending_color_event").text();
 			jQuery('.pending_color_event').append(pend_color.includes('&#wc_ast_select_link_color') ? '' : '&#wc_ast_select_link_color');
 			setting_change_trigger();

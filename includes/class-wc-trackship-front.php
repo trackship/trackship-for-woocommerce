@@ -401,11 +401,11 @@ class WC_TrackShip_Front {
 		$hide_tracking_events = get_option('wc_ast_hide_tracking_events', $tracking_page_defaults->defaults['wc_ast_hide_tracking_events'] );
 		$tracking_page_layout = get_option('wc_ast_select_tracking_page_layout', $tracking_page_defaults->defaults['wc_ast_select_tracking_page_layout'] );
 		$border_radius = get_option('wc_ast_select_border_radius', $tracking_page_defaults->defaults['wc_ast_select_border_radius'] );
-		$remove_trackship_branding =  get_option('wc_ast_remove_trackship_branding', $tracking_page_defaults->defaults['wc_ast_remove_trackship_branding'] );
+		$show_trackship_branding = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'show_trackship_branding', 1 );
 		?>
 		<style>
 			<?php if ( $link_color ) { ?>
-				.col.tracking-detail .tracking_number_wrap a, .tracking_event_tab_view .view_more_class, .content_panel.product_details a {
+				.col.tracking-detail .tracking_number_wrap a, .tracking_event_tab_view .view_more_class, .content_panel.product_details a, div.col.enhanced_tracking_detail a {
 					color: <?php echo esc_html( $link_color ); ?>;
 				}
 				span.copy_tracking_page.trackship-tip svg {
@@ -415,12 +415,12 @@ class WC_TrackShip_Front {
 					color: <?php echo esc_html( $link_color ); ?> !important;
 					border-bottom: 3px solid <?php echo esc_html( $link_color ); ?>;
 				}
-				.heading_panel span.accordian-arrow.down {
-					border-color: <?php echo esc_html( $link_color ); ?>;
+				.heading_panel span.accordian-arrow.down, span.accordian-arrow.down {
+					border-color: <?php echo esc_html( $link_color ); ?> !important;
 				}
 			<?php } ?>
 			<?php if ( $border_radius ) { ?>
-				.col.tracking-detail {
+				.col.tracking-detail, .col.enhanced_tracking_detail {
 					border-radius: <?php echo esc_html( $border_radius ); ?>px;
 				}
 			<?php } ?>
@@ -440,26 +440,34 @@ class WC_TrackShip_Front {
 				.trackship_branding, .tracking-detail .heading_panel {
 					border-top: 1px solid <?php echo esc_html( $border_color ); ?> !important;
 				}
+				.col.enhanced_tracking_detail, div.est_delivery_section, div.tracking_widget_tracking_events_section, .enhanced_tracking_detail .enhanced_heading, .enhanced_tracking_detail .enhanced_content, div.last_mile_tracking_number, .enhanced_content .shipping_from_to , .enhanced_content ul.tpi_product_tracking_ul li {
+					border-color: <?php echo esc_html( $border_color ); ?> !important;
+				}
 			<?php } ?>
 			<?php if ( $background_color ) { ?>
-				body .col.tracking-detail, .shipment-header, .tracking-detail .heading_panel, .tracking-detail .content_panel {
+				body .col.tracking-detail, .shipment-header, .tracking-detail .heading_panel, .tracking-detail .content_panel, .col.enhanced_tracking_detail {
 					background: <?php echo esc_html( $background_color ); ?> !important;
 				}
 			<?php } ?>
 			<?php if ( $font_color ) { ?>
-				body .tracking-detail .shipment-content, body .tracking-detail .shipment-content h4, .shipment-header label.ts_from_label, .shipment_status_heading, .content_panel.shipment_status_notifications span {
+				body .tracking-detail .shipment-content, body .tracking-detail .shipment-content h4, .shipment-header label.ts_from_label, .shipment_status_heading, .content_panel.shipment_status_notifications span, body .col.enhanced_tracking_detail, body .enhanced_content label, .enhanced_trackship_branding p {
 					color: <?php echo esc_html( $font_color ); ?> !important;
 				}				
-				.heading_panel span.accordian-arrow {
+				.heading_panel span.accordian-arrow, span.accordian-arrow.right {
 					border-color: <?php echo esc_html( $font_color ); ?>;
 				}
 			<?php } ?>
 			.woocommerce-account.woocommerce-view-order .tracking-header span.wc_order_id {display: none;}
-			<?php if ( $remove_trackship_branding ) { ?>
-				.trackship_branding {display:none;}
+			<?php if ( !$show_trackship_branding ) { ?>
+				.trackship_branding, .enhanced_trackship_branding {display:none;}
 			<?php } ?>
 		</style>
 		<?php
+		$tracking_page_type = get_option( 'tracking_page_type', $tracking_page_defaults->defaults['tracking_page_type'] );
+		if ( 'modern' == $tracking_page_type ) {
+			$this->new_tracking_widget( $order_id, $tracking_items );
+			return;
+		}
 		$num = 1;
 		$total_trackings = count( $tracking_items );
 		$rows = trackship_for_woocommerce()->actions->get_shipment_rows( $order_id );
@@ -528,7 +536,7 @@ class WC_TrackShip_Front {
 					$tracking_destination_details_by_date[$date][] = $details;
 				}
 			}	
-			
+
 			$order = wc_get_order( $order_id );
 			if ( isset( $tracker->ep_status ) ) {
 				?>
@@ -545,7 +553,7 @@ class WC_TrackShip_Front {
 						?>
 					</div>
 					<div class="trackship_branding">
-						<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://track.trackship.com/track/<?php esc_html_e( $tracking_number ); ?>" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
+						<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://trackship.com" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
 					</div>
 					<?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
 						<style> .trackship_branding{display:block !important;} </style>
@@ -653,19 +661,19 @@ class WC_TrackShip_Front {
 
 		?>
 		
-			<ul class="tpi_product_tracking_ul">
-				<?php
-				foreach ( $products as $item_id => $product ) {
-					$_product = wc_get_product( $product['product_id'] );
-					if ( $_product ) {
-						$image_size = array( 50, 50 );
-						$image = $_product->get_image( $image_size );
-						// echo esc_html($image);
-						echo '<li>' . wp_kses_post( $image ) . '<span><a target="_blank" href=' . esc_url( get_permalink( $product['product_id'] ) ) . '>' . esc_html( $product['product_name'] ) . '</a> x ' . esc_html( $product['product_qty'] ) . '</span></li>';
-					}
+		<ul class="tpi_product_tracking_ul">
+			<?php
+			foreach ( $products as $item_id => $product ) {
+				$_product = wc_get_product( $product['product_id'] );
+				if ( $_product ) {
+					$image_size = array( 50, 50 );
+					$image = $_product->get_image( $image_size );
+					// echo esc_html($image);
+					echo '<li>' . wp_kses_post( $image ) . '<span><a target="_blank" href=' . esc_url( get_permalink( $product['product_id'] ) ) . '>' . esc_html( $product['product_name'] ) . '</a> x ' . esc_html( $product['product_qty'] ) . '</span></li>';
 				}
-				?>
-			</ul>
+			}
+			?>
+		</ul>
 		
 		<style>
 		ul.tpi_product_tracking_ul {
@@ -857,16 +865,17 @@ class WC_TrackShip_Front {
 		$hide_tracking_events = get_option( 'wc_ast_hide_tracking_events', $tracking_page_defaults->defaults['wc_ast_hide_tracking_events'] );
 		$border_color = get_option( 'wc_ast_select_border_color', $tracking_page_defaults->defaults['wc_ast_select_border_color'] );
 		$link_color = get_option( 'wc_ast_select_link_color', $tracking_page_defaults->defaults['wc_ast_select_link_color'] );
-		$font_color = get_option( 'wc_ast_select_font_color', $tracking_page_defaults->defaults['wc_ast_select_font_color'] );
 		$wc_ast_link_to_shipping_provider = get_option( 'wc_ast_link_to_shipping_provider' );
 		$hide_tracking_provider_image = get_option( 'wc_ast_hide_tracking_provider_image' );
-		$remove_trackship_branding =  get_option( 'wc_ast_remove_trackship_branding' );
+		$show_trackship_branding = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'show_trackship_branding', 1 );
 		$font_color = get_option( 'wc_ast_select_font_color', $tracking_page_defaults->defaults['wc_ast_select_font_color'] );
 		$border_radius = get_option('wc_ast_select_border_radius', $tracking_page_defaults->defaults['wc_ast_select_border_radius'] );
 		$background_color = get_option( 'wc_ast_select_bg_color' );
 		$hide_from_to = get_option('wc_ast_hide_from_to', $tracking_page_defaults->defaults['wc_ast_hide_from_to'] );
 		$hide_last_mile = get_option( 'wc_ast_hide_list_mile_tracking', $tracking_page_defaults->defaults['wc_ast_hide_list_mile_tracking'] );
+		$tracking_page_type = get_option( 'tracking_page_type', $tracking_page_defaults->defaults['tracking_page_type'] );
 		
+		include 'views/front/preview_enhanced_tracking_page.php';
 		include 'views/front/preview_tracking_page.php';
 		wp_footer();
 		die();
