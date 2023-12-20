@@ -116,6 +116,10 @@ class WC_Trackship_Install {
 			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment CHANGE shipping_date shipping_date DATE NULL DEFAULT CURRENT_TIMESTAMP" );
 			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment ADD INDEX last_event (last_event);");
 			
+			update_option( 'trackship_db', '1.14' );
+		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.16', '<' ) ) {
 			$result = $wpdb->get_col(
 				"SELECT t.order_id FROM {$wpdb->prefix}trackship_shipment t
 				LEFT JOIN {$wpdb->prefix}trackship_shipment_meta m  
@@ -128,7 +132,7 @@ class WC_Trackship_Install {
 			if ( $result ) {
 				update_trackship_settings( 'old_user', true );
 			}
-			update_option( 'trackship_db', '1.14' );
+			update_option( 'trackship_db', '1.16' );
 		}
 		
 		if ( version_compare( get_option( 'trackship_db' ), '1.18', '<' ) ) {
@@ -233,6 +237,41 @@ class WC_Trackship_Install {
 
 			update_trackship_settings( 'trackship_db', '1.22' );
 			update_option( 'trackship_db', '1.22' );
+		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.23', '<' ) ) {
+			$email_trackship_branding = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'email_trackship_branding', 1 );
+			$tp_trackship_branding = get_option( 'wc_ast_remove_trackship_branding', 0 );
+			$value = 1;
+			if ( 1 != $email_trackship_branding || $tp_trackship_branding ) {
+				$value = 0;
+			}
+			$option_data = get_option( 'shipment_email_settings', array() );
+			unset( $option_data['email_trackship_branding'] );
+			$option_data['show_trackship_branding'] = $value;
+			update_option( 'shipment_email_settings', $option_data );
+			delete_option( 'wc_ast_remove_trackship_branding' );
+
+			update_trackship_settings( 'trackship_db', '1.23' );
+			update_option( 'trackship_db', '1.23' );
+		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.24', '<' ) ) {
+
+			$this->create_shipping_provider_table();
+			$this->update_shipping_providers();
+			$this->check_column_exists();
+
+			$Exception_Shipments = new WC_TrackShip_Exception_Shipments();
+			$Exception_Shipments->remove_cron();
+			$Exception_Shipments->setup_cron();
+
+			$On_Hold_Shipments = new WC_TrackShip_On_Hold_Shipments();
+			$On_Hold_Shipments->remove_cron();
+			$On_Hold_Shipments->setup_cron();
+
+			update_trackship_settings( 'trackship_db', '1.24' );
+			update_option( 'trackship_db', '1.24' );
 		}
 	}
 
@@ -350,6 +389,8 @@ class WC_Trackship_Install {
 				`shipping_length` VARCHAR(10) ,
 				`updated_date` DATE ,
 				`late_shipment_email` TINYINT DEFAULT 0,
+				`exception_email` TINYINT DEFAULT 0,
+				`on_hold_email` TINYINT DEFAULT 0,
 				`est_delivery_date` DATE,
 				`last_event` LONGTEXT ,
 				`last_event_time` DATETIME ,
@@ -362,6 +403,8 @@ class WC_Trackship_Install {
 				INDEX `order_id_tracking_number` (`order_id`,`tracking_number`),
 				INDEX `updated_date` (`updated_date`),
 				INDEX `late_shipment_email` (`late_shipment_email`),
+				INDEX `on_hold_email` (`on_hold_email`),
+				INDEX `exception_email` (`exception_email`),
 				INDEX `est_delivery_date` (`est_delivery_date`)
 			) $charset_collate;";
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
@@ -415,6 +458,8 @@ class WC_Trackship_Install {
 			'shipping_length'		=> ' VARCHAR(10)',
 			'updated_date'			=> ' DATE',
 			'late_shipment_email'	=> ' TINYINT DEFAULT 0',
+			'exception_email'=> ' TINYINT DEFAULT 0',
+			'on_hold_email'=> ' TINYINT DEFAULT 0',
 			'est_delivery_date'		=> ' DATE',
 			'last_event'			=> ' LONGTEXT',
 			'last_event_time'		=> ' DATETIME',

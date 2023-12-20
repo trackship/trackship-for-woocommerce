@@ -96,8 +96,8 @@
 			$.post(ajaxurl, ajax_data, function (response) {
 				$("#trackship_late_shipments_form").find(".spinner").removeClass("active").slideUp('slow');
 				jQuery(document).trackship_snackbar(trackship_script.i18n.data_saved);
-				jQuery('.late-shipment-tr').removeClass('open');
-				jQuery('.late-shipments-email-content-table').slideUp('slow');
+				jQuery('.admin_notifications_tr').removeClass('open');
+				jQuery('.admin_notifiations_content').slideUp('slow');
 			});
 			return false;
 		},
@@ -371,27 +371,28 @@ jQuery(document).on("change", ".ts_integration_checkbox input", function () {
 	return false;
 });
 
-jQuery(document).on("click", ".late-shipment-tr", function (event) {
-	var $trigger = jQuery(".shipment_status_toggle");
-	if ($trigger !== event.target && !$trigger.has(event.target).length) {
-		if (jQuery(this).hasClass("open")) {
-			jQuery('.late-shipments-email-content-table').slideUp('slow');
-			jQuery(this).removeClass('open');
-		} else {
-			jQuery('.late-shipments-email-content-table').slideDown('slow');
-			jQuery(this).addClass('open');
-		}
-	}
+jQuery(document).on("click", ".admin_notifications_tr", function (event) {
+    var $trigger = jQuery(".shipment_status_toggle");
+    if ($trigger !== event.target && !$trigger.has(event.target).length) {
+        var parent = jQuery(this).closest('.admin_notifications_div');
+        if (jQuery(this).hasClass("open")) {
+            parent.find(".admin_notifiations_content").slideUp('slow');
+            jQuery(this).removeClass('open');
+        } else {
+            jQuery('.admin_notifications_tr').removeClass('open');
+            jQuery('.admin_notifiations_content').slideUp('slow');
+            parent.find(".admin_notifiations_content").slideDown('slow');
+            jQuery(this).addClass('open');
+        }
+    }
 });
 
 jQuery(document).on("change", ".ts_order_status_toggle", function () {
-
 	if (jQuery(this).prop("checked") == true) {
 		jQuery('.ts4wc_delivered_color').fadeIn();
 	} else {
 		jQuery('.ts4wc_delivered_color').fadeOut();
 	}
-
 });
 
 jQuery(document).on("change", "#wc_ast_use_tracking_page", function () {
@@ -401,15 +402,12 @@ jQuery(document).on("change", "#wc_ast_use_tracking_page", function () {
 	} else {
 		jQuery('.li_wc_ast_trackship_page_id').fadeOut();
 	}
-
 });
 
 jQuery(document).on("change", "#smswoo_sms_provider", function () {
 	'use strict';
 	jQuery(".smswoo_sms_provider").hide();
-
 	var provider = jQuery(this).val();
-	//jQuery( "."+provider+"_link_provider" ).show();
 	jQuery("." + provider + "_sms_provider").show();
 });
 
