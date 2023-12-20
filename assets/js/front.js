@@ -6,7 +6,7 @@ jQuery(document).on("submit", ".order_track_form", function(){
 	var tracking_number = form.find("#order_tracking_number");
 	
 	if (tracking_number.val() == '') {
-		if( order_id.val() === '' ){		
+		if( order_id.val() === '' ){
 			showerror( order_id );error = true;
 		} else{
 			hideerror(order_id);
@@ -17,7 +17,7 @@ jQuery(document).on("submit", ".order_track_form", function(){
 			hideerror(order_email);
 		}
 	} else {
-		if(tracking_number.val() == '' ){		
+		if(tracking_number.val() == '' ){
 			showerror(tracking_number);error = true;
 		} else {
 			hideerror(tracking_number);
@@ -38,13 +38,18 @@ jQuery(document).on("submit", ".order_track_form", function(){
 			if(response.success == 'true'){
 				jQuery('.track-order-section').replaceWith(response.html);
 				jQuery('.shipment-header .ts_from_input:checked').trigger('change'); // click on the heading
+				jQuery('.enhanced_tracking_detail .tracking_number_wrap.checked').trigger('click'); // click on the heading
 				jQuery('.heading_panel.checked').trigger('click'); //clicked on the heading panel in the tracking widget
 				jQuery(".not-shipped-widget").show(); // not shipped widget show
 				var length = jQuery('.shipment-header .ts_from_input:checked').length;
 				if ( length == 0 ) {
 					jQuery('.shipment-header .ts_from_input#shipment_1').trigger('click');
 				}
-			} else{				
+				var length = jQuery('.enhanced_tracking_detail .tracking_number_wrap.checked').length;
+				if ( length == 0 ) {
+					jQuery('.enhanced_tracking_detail.shipment_1 .tracking_number_wrap').trigger('click');
+				}
+			} else{
 				jQuery(".track_fail_msg").text(response.message);
 				jQuery(".track_fail_msg").show();				
 			}			
@@ -190,6 +195,22 @@ jQuery(document).on("click", ".tracking-detail .heading_panel", function () {
 	}
 });
 //If we will do change into below jQuery so we need to also change in trackship.js and front.js
+jQuery(document).on("click", ".enhanced_tracking_detail .enhanced_heading", function () {
+	if (jQuery(this).hasClass('active')) {
+		jQuery(this).removeClass('active');
+		jQuery(this).children('.enhanced_tracking_content .accordian-arrow').removeClass('down').addClass('right');
+		jQuery(this).siblings('.enhanced_content').slideUp('slow');
+	} else {
+		var parent = jQuery(this).closest('.enhanced_tracking_detail');
+		parent.find(".enhanced_heading").removeClass('active');
+		parent.find(".enhanced_content").removeClass('active').slideUp('slow');
+		jQuery(this).addClass('active');
+		parent.find('.enhanced_tracking_content .accordian-arrow').removeClass('down').addClass('right');
+		jQuery(this).children('.enhanced_tracking_content .accordian-arrow').removeClass('right').addClass('down');
+		jQuery(this).next('.enhanced_content').slideDown('slow');
+	}
+});
+//If we will do change into below jQuery so we need to also change in trackship.js and front.js
 jQuery(document).on("change", ".shipment-header .ts_from_input", function(){
 	var id = jQuery(this).attr('id');
 	var count = jQuery('.tracking-detail.col.active').length > 0;
@@ -201,24 +222,54 @@ jQuery(document).on("change", ".shipment-header .ts_from_input", function(){
 		jQuery( '.tracking-detail.col.' + id ).addClass('active').slideDown("slow");
 	}
 });
+//If we will do change into below jQuery so we need to also change in trackship.js and front.js
+jQuery(document).on("change", ".tracking_details_switch .enhanced_switch_input", function(){
+	var number = jQuery(this).data('number');
+	var type = jQuery(this).data('type');
+	if ( 'overview' == type ) {
+		jQuery( '.' + number + ' .enhanced_journey' ).slideUp();
+	} else {
+		jQuery( '.' + number + ' .enhanced_journey' ).slideDown();
+	}
+});
+//If we will do change into below jQuery so we need to also change in trackship.js and front.js
+jQuery(document).on("click", ".enhanced_tracking_detail .tracking_number_wrap", function () {
+	if (jQuery(this).hasClass('active')) {
+		jQuery(this).removeClass('active');
+		jQuery(this).find('.accordian-arrow').removeClass('down').addClass('right');
+		jQuery(this).siblings('.enhanced_tracking_content').slideUp('slow');
+	} else {
+		jQuery(".enhanced_tracking_detail .tracking_number_wrap").removeClass('active');
+		jQuery(".enhanced_tracking_content").slideUp('slow');
+		jQuery(this).addClass('active');
+		jQuery('.tracking_number_wrap .accordian-arrow').removeClass('down').addClass('right');
+		jQuery(this).find('.accordian-arrow').removeClass('right').addClass('down');
+		jQuery(this).siblings('.enhanced_tracking_content').slideDown('slow');
+	}
+});
 
 jQuery(document).ready(function () {
 	'use strict';
 	jQuery('.heading_panel.checked').trigger('click');
+	jQuery('.enhanced_tracking_detail .tracking_number_wrap.checked').trigger('click');
 	jQuery('.shipment-header .ts_from_input:checked').trigger('change');
 	var length = jQuery('.shipment-header .ts_from_input:checked').length;
 	if ( length == 0 ) {
 		jQuery('.shipment-header .ts_from_input#shipment_1').trigger('click');
 	}
+	var length = jQuery('.enhanced_tracking_detail .tracking_number_wrap.checked').length;
+	if ( length == 0 ) {
+		jQuery('.enhanced_tracking_detail.shipment_1 .tracking_number_wrap').trigger('click');
+	}
 });
 
 jQuery(document).on("change", ".unsubscribe_emails_checkbox, .unsubscribe_sms_checkbox", function () {
-	jQuery(this).parent('.shipment_status_notifications label').start_loader();
+	jQuery(this).parent('.shipment_status_notifications label, .enhanced_notifications label').start_loader();
 
 	if (jQuery(this).prop("checked") == true) {
 		var checkbox = 1;
 	} else {
-		var checkbox = '';
+		var checkbox = 0;
 	}
 
 	var ajax_data = {
@@ -233,7 +284,7 @@ jQuery(document).on("change", ".unsubscribe_emails_checkbox, .unsubscribe_sms_ch
 		data: ajax_data,
 		type: 'POST',
 		success: function (response) {
-			jQuery(".shipment_status_notifications label").stop_loader();
+			jQuery(".shipment_status_notifications label, .enhanced_notifications label").stop_loader();
 			if ( checkbox == 1 ) {
 				jQuery(this).prop('checked', true);
 			} else {

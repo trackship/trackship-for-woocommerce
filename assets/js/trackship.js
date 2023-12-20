@@ -568,6 +568,7 @@ jQuery(document).on("click", ".open_tracking_details", function () {
 			jQuery("#admin_tracking_widget").show();
 			jQuery('.shipment-header .ts_from_input:checked').trigger('change');
 			jQuery('.heading_panel.checked').trigger('click');
+			jQuery('.enhanced_tracking_detail .tracking_number_wrap.checked').trigger('click');
 			jQuery(".trackship-tip").tipTip();
 		},
 		error: function (response, jqXHR, exception) {
@@ -814,6 +815,22 @@ jQuery(document).on("click", ".tracking-detail .heading_panel", function () {
 	}
 });
 //If we will do change into below jQuery so we need to also change in trackship.js and front.js
+jQuery(document).on("click", ".enhanced_tracking_detail .enhanced_heading", function () {
+	if (jQuery(this).hasClass('active')) {
+		jQuery(this).removeClass('active');
+		jQuery(this).children('.enhanced_tracking_content .accordian-arrow').removeClass('down').addClass('right');
+		jQuery(this).siblings('.enhanced_content').slideUp('slow');
+	} else {
+		var parent = jQuery(this).closest('.enhanced_tracking_detail');
+		parent.find(".enhanced_heading").removeClass('active');
+		parent.find(".enhanced_content").removeClass('active').slideUp('slow');
+		jQuery(this).addClass('active');
+		parent.find('.enhanced_tracking_content .accordian-arrow').removeClass('down').addClass('right');
+		jQuery(this).children('.enhanced_tracking_content .accordian-arrow').removeClass('right').addClass('down');
+		jQuery(this).next('.enhanced_content').slideDown('slow');
+	}
+});
+//If we will do change into below jQuery so we need to also change in trackship.js and front.js
 jQuery(document).on("change", ".shipment-header .ts_from_input", function(){
 	var id = jQuery(this).attr('id');
 	var count = jQuery('.tracking-detail.col.active').length > 0;
@@ -823,5 +840,30 @@ jQuery(document).on("change", ".shipment-header .ts_from_input", function(){
 		} );
 	} else {
 		jQuery( '.tracking-detail.col.' + id ).addClass('active').slideDown("slow");
+	}
+});
+//If we will do change into below jQuery so we need to also change in trackship.js and front.js
+jQuery(document).on("change", ".tracking_details_switch .enhanced_switch_input", function(){
+	var number = jQuery(this).data('number');
+	var type = jQuery(this).data('type');
+	if ( 'overview' == type ) {
+		jQuery( '.' + number + ' .enhanced_journey' ).slideUp();
+	} else {
+		jQuery( '.' + number + ' .enhanced_journey' ).slideDown();
+	}
+});
+//If we will do change into below jQuery so we need to also change in trackship.js and front.js
+jQuery(document).on("click", ".enhanced_tracking_detail .tracking_number_wrap", function () {
+	if (jQuery(this).hasClass('active')) {
+		jQuery(this).removeClass('active');
+		jQuery(this).find('.accordian-arrow').removeClass('down').addClass('right');
+		jQuery(this).siblings('.enhanced_tracking_content').slideUp('slow');
+	} else {
+		jQuery(".enhanced_tracking_detail .tracking_number_wrap").removeClass('active');
+		jQuery(".enhanced_tracking_content").slideUp('slow');
+		jQuery(this).addClass('active');
+		jQuery('.tracking_number_wrap .accordian-arrow').removeClass('down').addClass('right');
+		jQuery(this).find('.accordian-arrow').removeClass('right').addClass('down');
+		jQuery(this).siblings('.enhanced_tracking_content').slideDown('slow');
 	}
 });
