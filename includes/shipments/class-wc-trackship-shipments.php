@@ -303,7 +303,7 @@ class WC_Trackship_Shipments {
 		$orderids = isset( $_POST['orderids'] ) ? sanitize_text_field($_POST['orderids']) : [];
 		foreach ( ( array ) $orderids as $order_id ) {
 			trackship_for_woocommerce()->actions->set_temp_pending( $order_id );
-			as_schedule_single_action( time() + 1, 'wcast_retry_trackship_apicall', array( $order_id ) );
+			as_schedule_single_action( time() + 1, 'trackship_tracking_apicall', array( $order_id ) );
 		}
 		wp_send_json(true);
 	}

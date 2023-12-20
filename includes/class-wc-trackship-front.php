@@ -566,6 +566,276 @@ class WC_TrackShip_Front {
 	}
 	
 	/*
+	* New Tracking Page
+	*/
+	public function new_tracking_widget( $order_id, $tracking_items ) {
+		$post_tracking = isset( $_POST['tnumber'] ) ? sanitize_text_field($_POST['tnumber']) : '' ;
+		$post_tracking = isset( $_POST['order_tracking_number'] ) ? sanitize_text_field($_POST['order_tracking_number']) : $post_tracking;
+		$url_tracking = isset( $_GET['tracking'] ) ? sanitize_text_field($_GET['tracking']) : $post_tracking;
+		$url_tracking = str_replace( ' ', '', $url_tracking );
+
+		$num = 1;
+		foreach ( $tracking_items as $key => $item ) {
+			$tracking_number = isset( $item[ 'tracking_number' ] )? $item[ 'tracking_number' ] : false;
+			$row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id, $tracking_number );
+			if ( !$row ) {
+				continue;
+			}
+			// echo '<pre>';print_r($row);echo '</pre>';
+			?>
+			<div class="enhanced_tracking_detail col <?php echo 'shipment_' . esc_html($num); ?>">
+				<?php $this->new_tracking_widget_header( $order_id, $row, $item, $tracking_number, $url_tracking ); ?>
+				<div class="enhanced_tracking_content <?php echo 'shipment_' . esc_html($num); ?>">
+					<?php $this->tracking_widget_est_delivery_section( $row, $num ); ?>
+					<?php $this->new_tracking_widget_tracking_events( $order_id, $row, $item, $tracking_number, $num ); ?>
+					<?php $this->shipment_details_notifications( $order_id, $tracking_items, $row, $tracking_number ); ?>
+				</div>
+			</div>
+			<?php
+			$num++;
+		}
+		if ( $num > 1 ) {
+			?>
+			<div class="enhanced_trackship_branding">
+				<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://trackship.com/" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
+			</div>
+			<?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
+				<style> .enhanced_trackship_branding{display:block !important;} </style>
+			<?php } ?>
+			<?php
+		}
+	}
+
+	public function new_tracking_widget_header( $order_id, $row, $item, $tracking_number, $url_tracking ) {
+		$hide_tracking_provider_image = get_option('wc_ast_hide_tracking_provider_image');
+		$wc_ast_link_to_shipping_provider = get_option( 'wc_ast_link_to_shipping_provider' );
+		$provider_image = isset( $item[ 'tracking_provider_image' ] ) ? $item[ 'tracking_provider_image' ] : false ;
+		$tracking_link = isset( $item[ 'formatted_tracking_link' ] )? $item[ 'formatted_tracking_link' ] : false;
+		$provider_name = isset( $item[ 'tracking_provider' ] )? $item[ 'tracking_provider' ] : false;
+
+		?>
+		<div class="tracking_number_wrap <?php echo $url_tracking == str_replace( ' ', '', $tracking_number ) ? 'checked' : ''; ?>">
+			<div style="display: flex;">
+				<?php if ( ! $hide_tracking_provider_image && $provider_image ) { ?>
+					<div class="provider_image_div" >
+						<img class="provider_image" src="<?php echo esc_url( $provider_image ); ?>">
+					</div>
+				<?php } ?>
+
+				<div class="tracking_number_div">
+					<ul>
+						<li>
+							<span class="tracking_page_provider_name"><?php echo esc_html( trackship_for_woocommerce()->actions->get_provider_name( $provider_name ) ); ?></span>
+						</li>
+						<li>
+							<?php if ( $wc_ast_link_to_shipping_provider && $tracking_link ) { ?>
+								<a href="<?php echo esc_url( $tracking_link ); ?>" target="blank"><strong><?php esc_html_e( $tracking_number ); ?></strong></a>	
+							<?php } else { ?>
+								<strong><?php esc_html_e( $tracking_number ); ?></strong>
+							<?php } ?>
+						</li>
+					</ul>
+				</div>
+				<span class="accordian-arrow right"></span>
+			</div>
+		</div>
+		<?php
+	}
+	
+	public function tracking_widget_est_delivery_section ( $row, $num, ) {
+		$show_est_delivery_date = apply_filters( 'show_est_delivery_date', true, $row->shipping_provider );
+		if ( $row->est_delivery_date && $show_est_delivery_date ) {
+			$tracking_detail_org = '';	
+			$trackind_detail_by_status_rev = [];
+			if ( isset( $row->tracking_events ) && 'null' != $row->tracking_events ) {
+				$tracking_detail_org = json_decode($row->tracking_events);
+				$trackind_detail_by_status_rev = is_array($tracking_detail_org) ? array_reverse($tracking_detail_org) : array();	
+			}
+			$event_count = count($trackind_detail_by_status_rev);
+			?>
+			<div class="est_delivery_section">
+				<span class="est-delivery-date <?php echo esc_html($row->shipment_status); ?>">
+					<?php echo 'delivered' != $row->shipment_status ? __( 'Est. Delivery Date', 'trackship-for-woocommerce' ) : __( 'Delivered on', 'trackship-for-woocommerce' ); ?> : 
+					<strong><?php esc_html_e( date_i18n( 'l, M d', strtotime( $row->est_delivery_date ) ) ); ?></strong>
+				</span>
+				<?php
+				if ( $event_count > 1 ) {
+					$this->enhanced_toogle_switch($num);
+				}
+				?>
+			</div>
+			<?php
+		}
+	}
+
+	public function new_tracking_widget_tracking_events( $order_id, $row, $item, $tracking_number, $num ) {
+		$tracking_detail_org = '';
+		$trackind_detail_by_status_rev = [];
+		if ( isset( $row->tracking_events ) && 'null' != $row->tracking_events ) {
+			$tracking_detail_org = json_decode($row->tracking_events);
+			$trackind_detail_by_status_rev = is_array($tracking_detail_org) ? array_reverse($tracking_detail_org) : array();	
+		}
+
+		$tracking_destination_detail_org = '';	
+		$trackind_destination_detail_by_status_rev = [];
+		
+		if ( isset( $row->destination_events ) && 'null' != $row->destination_events ) {						
+			$tracking_destination_detail_org = json_decode($row->destination_events);	
+			$trackind_destination_detail_by_status_rev = array_reverse($tracking_destination_detail_org);	
+		}
+
+		$event_count = count($trackind_detail_by_status_rev);
+		// echo '<pre>';print_r($trackind_destination_detail_by_status_rev);echo '</pre>';
+		$show_est_delivery_date = apply_filters( 'show_est_delivery_date', true, $row->shipping_provider );
+		?>
+		<div class="tracking_widget_tracking_events_section">
+			<?php
+			if ( $event_count > 1 && ( !$show_est_delivery_date || !$row->est_delivery_date ) ) {
+				$this->enhanced_toogle_switch($num);
+			}
+			?>
+			<div class="enhanced_overview enhanced_tracking_details enhanced_overview_<?php echo esc_html($num); ?>">
+				<div class="heading_shipment_status <?php echo esc_html($row->shipment_status); ?>">
+					<?php
+					if ( in_array( $row->shipment_status, array( 'pending_trackship', 'pending', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'invalid_tracking', 'unauthorized_store', 'unauthorized_api_key', 'unauthorized_store_api_key', 'missing_carrier', 'missing_tracking', 'missing_order_id', 'ssl_error', 'connection_issue', '' ) ) ) {
+						esc_html_e( 'Shipped', 'trackship-for-woocommerce' );
+					} else {
+						$message = isset( $trackind_detail_by_status_rev[0]->message ) ? $trackind_detail_by_status_rev[0]->message : '';
+						$tracker_status = str_contains( $message, 'Delivered, Parcel Locker') ? 'Delivered, Parcel Locker' : $row->shipment_status;
+						esc_html_e( apply_filters( 'trackship_status_filter', $tracker_status ) );
+					}
+					?>
+				</div>
+				<div class="tracking_detail shipped <?php echo esc_html($row->shipment_status); ?>">
+					<?php
+					if ( isset( $trackind_detail_by_status_rev[0] ) && $trackind_detail_by_status_rev[0] ) {
+						$date = $trackind_detail_by_status_rev[0]->datetime;
+						?>
+						<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?></strong>
+						<div>
+							<?php echo $trackind_detail_by_status_rev[0]->message; ?>
+						</div>
+						<?php
+					} else {
+						$date = $row->shipping_date;
+						?>
+						<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?></strong>
+						<div>
+							<?php
+							$pending_message = __( 'Tracking is still not yet available for this shipment, please try again later.', 'trackship-for-woocommerce' );
+							esc_html_e( apply_filters( 'trackship_pending_status_message', $pending_message, $row->shipment_status ) );
+						echo '</div>';
+					}
+					?>
+				</div> 
+			</div>
+			<?php if ( $event_count > 1 ) { ?>
+				<div class="enhanced_journey enhanced_tracking_details enhanced_journey_<?php echo esc_html($num); ?>" style="display:none;">
+					<?php if ( !empty( $trackind_destination_detail_by_status_rev ) ) { ?>
+						<?php foreach ( $trackind_destination_detail_by_status_rev as $key => $value ) { ?>
+							<div class="tracking_detail">
+								<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($value->datetime) ) ); ?></strong>
+								<div>
+									<?php
+									$tracking_description = apply_filters( 'trackship_tracking_event_description', $value->message );
+									$tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city );
+									$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
+									
+									$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
+									echo wp_kses_post( $single_event );
+									?>
+								</div>
+							</div>
+							<?php
+						}
+					}
+
+					if ( !empty( $trackind_destination_detail_by_status_rev ) ) {
+						?>
+						<h4 class="heading_origin_details" style=""><?php esc_html_e( 'Origin Details', 'trackship-for-woocommerce' ); ?></h4>
+						<?php
+					}
+					$a = 1;
+					foreach ( $trackind_detail_by_status_rev as $key => $value ) {
+						if ( 1 == $a && empty( $trackind_destination_detail_by_status_rev ) ) {
+							$a++;
+							continue;
+						}
+						?>
+						<div class="tracking_detail">
+							<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($value->datetime) ) ); ?></strong>
+							<div>
+								<?php
+								$tracking_description = apply_filters( 'trackship_tracking_event_description', $value->message );
+								$tracking_location_city = apply_filters( 'trackship_tracking_event_location', $value->tracking_location->city );
+								$tracking_location_city = null != $tracking_location_city ? ' - ' . $tracking_location_city : $tracking_location_city;
+								
+								$single_event = apply_filters( 'trackship_tracking_event', $tracking_description . $tracking_location_city );
+								echo wp_kses_post( $single_event );
+								?>
+							</div>
+						</div>
+						<?php
+						$a++;
+					}
+					?>
+				</div>
+			<?php } ?>
+		</div>
+		<?php
+	}
+
+	public function shipment_details_notifications( $order_id, $tracking_items, $row, $tracking_number ) {
+		$hide_last_mile = get_option( 'wc_ast_hide_list_mile_tracking', trackship_admin_customizer()->defaults['wc_ast_hide_list_mile_tracking'] );
+		$hide_from_to = get_option('wc_ast_hide_from_to', trackship_admin_customizer()->defaults['wc_ast_hide_from_to'] );
+		?>
+		<div class="enhanced_shipment_details_section">
+			<div data-label="enhanced_details" class="enhanced_heading ">
+				<span><?php esc_html_e('Details', 'trackship-for-woocommerce' ); ?></span>
+				<span class="accordian-arrow right"></span>
+			</div>
+			<div class="enhanced_content enhanced_details">
+				<?php if ( !$hide_last_mile && isset($row->delivery_number) && $row->delivery_number ) { ?>
+					<div class="last_mile_tracking_number">
+						<span><?php esc_html_e( 'Delivery tracking Number', 'trackship-for-woocommerce' ); ?></span>
+						<strong> <?php echo esc_html( $row->delivery_number ); ?></strong>
+					</div>
+				<?php } ?>
+				<?php if ( !$hide_from_to && $row->origin_country && $row->destination_country && $row->destination_country != $row->origin_country ) { ?>
+					<div class="shipping_from_to">
+						<span class="shipping_from"><?php echo esc_html( WC()->countries->countries[ $row->origin_country ] ); ?></span>
+						<img class="shipping_to_img" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/arrow.png">
+						<span class="shipping_to"><?php echo esc_html( WC()->countries->countries[ $row->destination_country ] ); ?></span>
+					</div>
+				<?php } ?>
+				<?php $this->get_products_detail_in_shipment( $order_id, $row, $row->shipping_provider, $tracking_number ); ?>
+			</div>
+		</div>
+		<div class="enhanced_notifications_section">
+			<div data-label="enhanced_notifications" class="enhanced_heading ">
+				<span><?php esc_html_e('Notifications', 'trackship-for-woocommerce' ); ?></span>
+				<span class="accordian-arrow right"></span>
+			</div>
+			<div class="enhanced_content enhanced_notifications">
+				<?php $this->get_notifications_option( $order_id ); ?>
+			</div>
+		</div>
+		<?php
+	}
+
+	public function enhanced_toogle_switch ( $num ) {
+		?>
+		<span class="tracking_details_switch">
+			<input id="enhanced_overview_<?php echo esc_html($num); ?>" data-type="overview" data-number="shipment_<?php echo esc_html($num); ?>" type="radio" name="enhanced_switch_<?php echo esc_html($num); ?>" class="enhanced_switch_input" checked >
+			<label for="enhanced_overview_<?php echo esc_html($num); ?>" class="enhanced_switch"><?php esc_html_e('Overview', 'trackship-for-woocommerce' ); ?></label>
+
+			<input id="enhanced_journey_<?php echo esc_html($num); ?>" data-type="journey" data-number="shipment_<?php echo esc_html($num); ?>" type="radio" name="enhanced_switch_<?php echo esc_html($num); ?>" class="enhanced_switch_input"  >
+			<label for="enhanced_journey_<?php echo esc_html($num); ?>" class="enhanced_switch"><?php esc_html_e('Journey', 'trackship-for-woocommerce' ); ?></label>
+		</span>
+		<?php
+	}
+
+	/*
 	* Tracking Page Header
 	*/
 	public function tracking_page_header( $order, $tracking_provider, $tracking_number, $tracker, $item, $trackind_detail_by_status_rev ) {
