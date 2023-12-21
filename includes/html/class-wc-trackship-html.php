@@ -161,7 +161,7 @@ class WC_Trackship_Html {
 				</label>
 			<?php } ?>
 			<fieldset>
-				<input class="input-text regular-input " type="text" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" placeholder="<?php esc_html_e( 'E.g. {admin_email}, admin@example.org' ); ?>" value="<?php echo esc_attr(get_trackship_settings( $id, '{admin_email}' )); ?>">
+				<input class="input-text regular-input " type="text" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" placeholder="<?php esc_html_e( 'E.g. {admin_email}, admin@example.org' ); ?>" value="<?php echo esc_attr(get_trackship_settings( $id, get_option('admin_email') )); ?>">
 			</fieldset>
 		</li>
 		<?php
