@@ -3,7 +3,7 @@
 		background-color: #f7f7f7 !important;
 		margin-top: 0px !important;
 	}
-	.col.tracking-detail{
+	.col.tracking-detail {
 		margin: 30px auto 100px;
 	}
 	.est_delivery_date {
@@ -35,7 +35,7 @@
 		}
 	<?php }	?>
 	<?php if ( $background_color ) { ?>
-		body .col.tracking-detail{
+		body .col.tracking-detail {
 			background: <?php echo esc_html( $background_color ); ?>;
 		}
 	<?php } ?>
@@ -49,7 +49,7 @@
 	<?php } ?>
 </style>
 
-<div class="tracking-detail col">
+<div class="tracking-detail col <?php echo 'modern' == $tracking_page_type ? 'hide' : ''; ?>">
 	<div class="shipment-content">
 		<div class="tracking-header">
 			<div class="tracking_number_wrap">
@@ -228,7 +228,7 @@
 <?php if ( $hide_last_mile ) { ?>
 	.last_mile_tracking_number{display:none;}
 <?php } ?>	
-<?php if ( $remove_trackship_branding ) { ?>
+<?php if ( !$show_trackship_branding ) { ?>
 	.trackship_branding{display:none;}
 <?php } ?>
 <?php if (in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>

@@ -32,6 +32,8 @@ class Trackship_For_Woocommerce {
 	public $admin;
 	public $html;
 	public $late_shipments;
+	public $exception_shipments;
+	public $on_hold_shipments;
 	public $shipments;
 	public $logs;
 	public $analytics;
@@ -194,6 +196,12 @@ class Trackship_For_Woocommerce {
 
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-late-shipments.php';
 		$this->late_shipments = WC_TrackShip_Late_Shipments::get_instance();
+
+		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-exception-shipments.php';
+		$this->exception_shipments = WC_TrackShip_Exception_Shipments::get_instance();
+
+		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-on-hold-shipments.php';
+		$this->on_hold_shipments = WC_TrackShip_On_Hold_Shipments::get_instance();
 
 		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-api-call.php';
 

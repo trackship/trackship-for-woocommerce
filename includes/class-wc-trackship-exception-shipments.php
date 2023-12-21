@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class WC_TrackShip_Late_Shipments {
+class WC_TrackShip_Exception_Shipments {
 	
 	/**
 	 * Instance of this class.
@@ -12,7 +12,7 @@ class WC_TrackShip_Late_Shipments {
 	*/
 	private static $instance;
 
-	const CRON_HOOK = 'trackship_late_shipments_hook';
+	const CRON_HOOK = 'trackship_exception_shipments_hook';
 	
 	/**
 	 * Get the class instance
@@ -47,17 +47,17 @@ class WC_TrackShip_Late_Shipments {
 		
 		$ts_actions = new WC_Trackship_Actions();
 
-		$late_shipments_email_enable = get_trackship_settings( 'late_shipments_email_enable' );
+		$exception_admin_email_enable = get_trackship_settings( 'exception_admin_email_enable' );
 		
-		if ( !$late_shipments_email_enable || ! is_trackship_connected() ) {
+		if ( !$exception_admin_email_enable || ! is_trackship_connected() ) {
 			return;
 		}
 		
 		//cron schedule added
-		// add_action( 'wp_ajax_send_late_shipments_email', array( $this, 'send_late_shipments_email') );
+		// add_action( 'wp_ajax_send_exception_shipments_email', array( $this, 'send_exception_shipments_email') );
 		
-		//Send Late Shipments Email
-		add_action( self::CRON_HOOK, array( $this, 'send_late_shipments_email' ) );
+		//Send exception Shipments Email
+		add_action( self::CRON_HOOK, array( $this, 'send_exception_shipments_email' ) );
 
 	}
 	
@@ -67,8 +67,7 @@ class WC_TrackShip_Late_Shipments {
 	 * @since  1.0.0
 	 */
 	public function remove_cron() {
-		wp_clear_scheduled_hook( 'ast_late_shipments_cron_hook' );
-		wp_clear_scheduled_hook( 'trackship_late_shipments_hook' );
+		wp_clear_scheduled_hook( 'trackship_exception_shipments_hook' );
 	}
 
 	/**
@@ -78,9 +77,9 @@ class WC_TrackShip_Late_Shipments {
 	 */
 	public function setup_cron() {
 
-		$daily_digest_time = get_trackship_settings('late_shipments_digest_time');
+		$daily_digest_time = get_trackship_settings('exception_shipments_digest_time');
 		
-		if ( !get_trackship_settings( 'late_shipments_email_enable' ) || wp_next_scheduled( self::CRON_HOOK ) ) {
+		if ( !get_trackship_settings( 'exception_admin_email_enable' ) || wp_next_scheduled( self::CRON_HOOK ) ) {
 			return;
 		}
 
@@ -106,53 +105,45 @@ class WC_TrackShip_Late_Shipments {
 	
 	/**
 	 *
-	 * Send Late Shipments Email
+	 * Send Exception Shipments Email
 	 *
 	 */
-	public function send_late_shipments_email() {
+	public function send_exception_shipments_email() {
 		
 		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
 			$logger = wc_get_logger();
-			$context = array( 'source' => 'trackship_late_shipments_email' );
-			$logger->info( 'Late Shipments email not sent. Upgrade your plan', $context );
+			$context = array( 'source' => 'trackship' );
+			$logger->info( 'Exception Shipments email not sent. Upgrade your plan', $context );
 			return;
 		}
 		global $wpdb;
-		$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
 		
-		$late_ship_day = get_trackship_settings( 'late_shipments_days', 7);
-		$day = $late_ship_day - 1;
-		
-		//total late shipment count
+		//total exception shipment count
 		$count = $wpdb->get_var($wpdb->prepare("
 			SELECT
 				COUNT(*)
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE 
-				shipment_status NOT LIKE 'delivered'
-				AND shipment_status NOT LIKE %s
-				AND late_shipment_email = %d
-				AND shipping_length > %d
-		", 'available_for_pickup', 0, $day ));
+				shipment_status LIKE 'exception'
+				AND exception_email = %d
+		", 0 ));
 
 		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) || 0 == $count ) {
 			return;
 		}
 
-		// late shipment query in trackship_shipment table
+		// exception shipment query in trackship_shipment table
 		$total_order = $wpdb->get_results($wpdb->prepare("
 			SELECT *
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE 
-				shipment_status NOT LIKE 'delivered'
-				AND shipment_status NOT LIKE %s
-				AND late_shipment_email = %d
-				AND shipping_length > %d
-			LIMIT 10
-		", 'available_for_pickup', 0, $day ));
+				shipment_status LIKE 'exception'
+				AND exception_email = %d
+            LIMIT 10
+		", 0 ));
 
-		//Send email for late shipment
-		$email_send = $this->late_shippment_email_trigger( $total_order, $count );
+		//Send email for exception shipment
+		$email_send = $this->exception_shippment_email_trigger( $total_order, $count );
 
 		foreach ( $total_order as $key => $orders ) {
 			if ( in_array( 1, $email_send ) ) {
@@ -160,16 +151,16 @@ class WC_TrackShip_Late_Shipments {
 					'order_id'			=> $orders->order_id,
 					'tracking_number'	=> $orders->tracking_number,
 				);
-				$wpdb->update( $woo_trackship_shipment, array( 'late_shipment_email' => 1 ), $where );
+				$wpdb->update( $wpdb->prefix . 'trackship_shipment', array( 'exception_email' => 1 ), $where );
 			}
 		}
 		exit;
 	}
 
 	/**
-	 * Code for send late shipment status email
+	 * Code for send exception shipment status email
 	 */
-	public function late_shippment_email_trigger( $orders, $count ) {
+	public function exception_shippment_email_trigger( $orders, $count ) {
 		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
 			return;
 		}
@@ -178,14 +169,14 @@ class WC_TrackShip_Late_Shipments {
 		$plain_text = false;
 
 		//Email Subject
-		$subject =  __( 'Late shipment', 'trackship-for-woocommerce' );
+		$subject =  __( 'Exception shipment', 'trackship-for-woocommerce' );
 		// Email heading
 		/* translators: %s: search for a count */
-		$email_heading = sprintf( __( 'We detected %d late shipments:', 'trackship-for-woocommerce' ) , $count );
+		$email_heading = sprintf( __( 'We detected %d Exception shipments:', 'trackship-for-woocommerce' ) , $count );
 
 		//Email Content
-		$email_content = __( 'The following shipments are late:', 'trackship-for-woocommerce' );
-		$email_content .= wc_get_template_html( 'emails/late-shipment-email.php', array(
+		$email_content = __( 'The following shipments are exception:', 'trackship-for-woocommerce' );
+		$email_content .= wc_get_template_html( 'emails/exception-shipment-email.php', array(
 			'orders' => $orders,
 		), 'woocommerce-advanced-shipment-tracking/', trackship_for_woocommerce()->get_plugin_path() . '/templates/' );
 
@@ -197,9 +188,9 @@ class WC_TrackShip_Late_Shipments {
 		$email_content = apply_filters( 'woocommerce_mail_content', $email->style_inline( $mailer->wrap_message( $email_heading, $email_content ) ) );
 
 		$email_class = new WC_Email();
-		$email_class->id = 'late_shipment';
+		$email_class->id = 'exception_shipment';
 
-		$email_to = get_trackship_settings( 'late_shipments_email_to', '{admin_email}' );
+		$email_to = get_trackship_settings( 'exception_shipments_email_to', '{admin_email}' );
 		$email_to = explode( ',', $email_to );
 		$email_send = array();
 		foreach ( $email_to as $email_addr ) {
@@ -219,7 +210,7 @@ class WC_TrackShip_Late_Shipments {
 				'tracking_number'	=> '',
 				'date'				=> current_time( 'Y-m-d H:i:s' ),
 				'to'				=> $recipient,
-				'shipment_status'	=> 'Late shipment',
+				'shipment_status'	=> 'Exception shipment',
 				'status'			=> $response,
 				'status_msg'		=> $response ? 'Sent' : 'Not Sent',
 				'type'				=> 'Email',

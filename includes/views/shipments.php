@@ -30,6 +30,7 @@ $ship_status = array(
 	'out_for_delivery'		=> __( 'Out For Delivery', 'trackship-for-woocommerce' ),
 	'pre_transit'			=> __( 'Pre Transit', 'trackship-for-woocommerce' ),
 	'exception'				=> __( 'Exception', 'trackship-for-woocommerce' ),
+	'on_hold'				=> __( 'On Hold', 'trackship-for-woocommerce' ),
 	'delivered'				=> __( 'Delivered', 'trackship-for-woocommerce' ),
 	'return_to_sender'		=> __( 'Return To Sender', 'trackship-for-woocommerce' ),
 	'available_for_pickup'	=> __( 'Available For Pickup', 'trackship-for-woocommerce' ),

@@ -28,8 +28,8 @@ if ( $tracking_items ) :
 				<?php
 				$ship_status = $new_status;
 				$tracking_link = $tracking_item['tracking_page_link'] ?  $tracking_item['tracking_page_link'] : $tracking_item['formatted_tracking_link'];
-				$email_trackship_branding = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'email_trackship_branding', 1);
-				$trackship_branding_class = $email_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? '' : 'hide';
+				$show_trackship_branding = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'show_trackship_branding', 1 );
+				$trackship_branding_class = $show_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? '' : 'hide';
 				do_action( 'before_tracking_widget_email', $tracking_item, $order_id );
 				?>
 				<div class="tracking_index display-table">
@@ -126,7 +126,7 @@ if ( $tracking_items ) :
 			display: <?php echo $shipping_provider_logo ? 'inline-block' : 'none'; ?>;
 		}
 		.tracking_widget_email.trackship_branding {
-			display: <?php echo $email_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? 'block' : 'none'; ?>;
+			display: <?php echo $show_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? 'block' : 'none'; ?>;
 		}
 	<?php } ?>
 	#ts-email-widget-wrapper{max-width: 500px;margin: 50px auto;font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;font-size: 14px;line-height: 150%;}
