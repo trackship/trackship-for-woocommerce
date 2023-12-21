@@ -486,13 +486,6 @@ class WC_Trackship_Admin {
 	*/
 	public function get_exception_shipment_data() {
 		$exception_shipment = array(
-			'exception_shipments_days' => array(
-				'type'		=> 'number',
-				'title'		=> __( 'Number of days for Exception shipments', 'trackship-for-woocommerce' ),
-				'show'		=> true,
-				'class'		=> '',
-				'default'	=> 5,
-			),
 			'exception_shipments_email_to' => array(
 				'title'		=> __( 'Recipient(s)', 'trackship-for-woocommerce'),
 				'type'		=> 'text',
@@ -515,13 +508,6 @@ class WC_Trackship_Admin {
 	*/
 	public function get_on_hold_shipment_data() {
 		$on_hold_shipment = array(
-			'on_hold_shipments_days' => array(
-				'type'		=> 'number',
-				'title'		=> __( 'Number of days for On Hold shipments', 'trackship-for-woocommerce' ),
-				'show'		=> true,
-				'class'		=> '',
-				'default'	=> 5,
-			),
 			'on_hold_shipments_email_to' => array(
 				'title'		=> __( 'Recipient(s)', 'trackship-for-woocommerce'),
 				'type'		=> 'text',
@@ -1135,17 +1121,17 @@ class WC_Trackship_Admin {
 			$Exception_Shipments = new WC_TrackShip_Exception_Shipments();
 			$Exception_Shipments->remove_cron();
 			$Exception_Shipments->setup_cron();
-			$return2 = array(
+			$return3 = array(
 				'message'	=> 'success',
 			);
 
 			$On_Hold_Shipments = new WC_TrackShip_On_Hold_Shipments();
 			$On_Hold_Shipments->remove_cron();
 			$On_Hold_Shipments->setup_cron();
-			$return2 = array(
+			$return3 = array(
 				'message'	=> 'success',
 			);
-			wp_send_json_success( array($return1, $return2 ));
+			wp_send_json_success( array($return1, $return2, $return3 ));
 		}
 	}
 		

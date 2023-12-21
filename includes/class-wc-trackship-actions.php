@@ -929,6 +929,17 @@ class WC_Trackship_Actions {
 		
 		if ( in_array(  $settings_data, array( 'late_shipments_email_settings', 'exception_admin_email', 'on_hold_admin_email' ) ) ) {
 			update_trackship_settings( $p_id, $enable_status_email );
+			$Late_Shipments = new WC_TrackShip_Late_Shipments();
+			$Late_Shipments->remove_cron();
+			$Late_Shipments->setup_cron();
+
+			$Exception_Shipments = new WC_TrackShip_Exception_Shipments();
+			$Exception_Shipments->remove_cron();
+			$Exception_Shipments->setup_cron();
+
+			$On_Hold_Shipments = new WC_TrackShip_On_Hold_Shipments();
+			$On_Hold_Shipments->remove_cron();
+			$On_Hold_Shipments->setup_cron();
 		} else {
 			$status_settings = get_option( $settings_data );
 			$status_settings[$p_id] = $enable_status_email;

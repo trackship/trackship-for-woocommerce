@@ -112,15 +112,11 @@ class WC_TrackShip_Exception_Shipments {
 		
 		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
 			$logger = wc_get_logger();
-			$context = array( 'source' => 'trackship_exception_shipments_email' );
+			$context = array( 'source' => 'trackship' );
 			$logger->info( 'Exception Shipments email not sent. Upgrade your plan', $context );
 			return;
 		}
 		global $wpdb;
-		$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
-		
-		$exception_ship_day = get_trackship_settings( 'exception_shipments_days', 5);
-		$day = $exception_ship_day - 1;
 		
 		//total exception shipment count
 		$count = $wpdb->get_var($wpdb->prepare("
@@ -130,8 +126,7 @@ class WC_TrackShip_Exception_Shipments {
 			WHERE 
 				shipment_status LIKE 'exception'
 				AND exception_email = %d
-				AND shipping_length > %d
-		", 0, $day ));
+		", 0 ));
 
 		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) || 0 == $count ) {
 			return;
@@ -144,9 +139,8 @@ class WC_TrackShip_Exception_Shipments {
 			WHERE 
 				shipment_status LIKE 'exception'
 				AND exception_email = %d
-				AND shipping_length > %d
             LIMIT 10
-		", 0, $day ));
+		", 0 ));
 
 		//Send email for exception shipment
 		$email_send = $this->exception_shippment_email_trigger( $total_order, $count );
@@ -157,7 +151,7 @@ class WC_TrackShip_Exception_Shipments {
 					'order_id'			=> $orders->order_id,
 					'tracking_number'	=> $orders->tracking_number,
 				);
-				$wpdb->update( $woo_trackship_shipment, array( 'exception_email' => 1 ), $where );
+				$wpdb->update( $wpdb->prefix . 'trackship_shipment', array( 'exception_email' => 1 ), $where );
 			}
 		}
 		exit;
