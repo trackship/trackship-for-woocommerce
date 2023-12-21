@@ -59,29 +59,90 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</section>
 	<section class="inner_tab_section shipment-status-late-email-section">
 		<form method="post" id="trackship_late_shipments_form" action="" enctype="multipart/form-data">
-			<table class="form-table heading-table shipment-status-email-table">
-				<tbody>
-					<tr class="late-shipment-tr <?php echo 1 == $late_shipments_email_enable ? 'enable' : 'disable'; ?> ">
-						<td class="forminp status-label-column">
-							<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/late-shipment.png">
-							<strong><?php esc_html_e('Late Shipments', 'trackship-for-woocommerce'); ?></strong>
-						</td>
-						<td class="forminp">
-							<button name="save" class="button-primary woocommerce-save-button btn_green2 btn_large" type="submit" value="Save & close"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
-							<?php wp_nonce_field( 'ts_late_shipments_email_form', 'ts_late_shipments_email_form_nonce' ); ?>
-							<input type="hidden" name="action" value="ts_late_shipments_email_form_update">
-							<span class="shipment_status_toggle">
-								<input type="hidden" name="late_shipments_email_enable" value="0"/>
-								<input class="ast-tgl ast-tgl-flat" id="late_shipments_email_enable" name="late_shipments_email_enable" data-settings="late_shipments_email_settings" type="checkbox" <?php echo 1 == $late_shipments_email_enable ? 'checked' : ''; ?> value="1"/>
-								<label class="ast-tgl-btn ast-tgl-btn-green" for="late_shipments_email_enable"></label>
-							</span>
-							<span class="edit_customizer_a dashicons dashicons-admin-generic"></span>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="late-shipments-email-content-table">
-				<?php $this->get_settings_html( $this->get_late_shipment_data() ); ?>
+			<?php wp_nonce_field( 'ts_late_shipments_email_form', 'ts_late_shipments_email_form_nonce' ); ?>
+			<input type="hidden" name="action" value="ts_late_shipments_email_form_update">
+			<div class="admin_notifications_div">
+				<table class="form-table heading-table shipment-status-email-table">
+					<tbody>
+						<tr class="admin_notifications_tr late-shipment-tr <?php echo 1 == $late_shipments_email_enable ? 'enable' : 'disable'; ?> ">
+							<td class="forminp status-label-column">
+								<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/late-shipment.png">
+								<strong><?php esc_html_e('Late Shipments', 'trackship-for-woocommerce'); ?></strong>
+							</td>
+							<td class="forminp">
+								<button name="save" class="button-primary woocommerce-save-button btn_green2 btn_large" type="submit" value="Save & close"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
+								<?php
+								$array_data = array(
+									'type'		=> 'tgl_checkbox',
+									'class'		=> 'shipment_status_toggle',
+									'settings'	=> 'late_shipments_email_settings',
+								);
+								?>
+								<?php trackship_for_woocommerce()->html->get_tgl_checkbox( 'late_shipments_email_enable', $array_data ); ?>
+								<span class="edit_customizer_a dashicons dashicons-admin-generic"></span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="late-shipments-email-content-table admin_notifiations_content">
+					<?php $this->get_settings_html( $this->get_late_shipment_data() ); ?>
+				</div>
+			</div>
+			
+			<div class="admin_notifications_div">
+				<table class="form-table heading-table shipment-status-email-table">
+					<tbody>
+						<tr class="admin_notifications_tr exception-shipment-tr <?php echo 1 == get_trackship_settings( 'exception_admin_email_enable' ) ? 'enable' : 'disable'; ?> ">
+							<td class="forminp status-label-column">
+								<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/failure.png">
+								<strong><?php esc_html_e('Exception Shipments', 'trackship-for-woocommerce'); ?></strong>
+							</td>
+							<td class="forminp">
+								<button name="save" class="button-primary woocommerce-save-button btn_green2 btn_large" type="submit" value="Save & close"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
+								<?php
+								$array_data = array(
+									'type'		=> 'tgl_checkbox',
+									'class'		=> 'shipment_status_toggle',
+									'settings'	=> 'exception_admin_email',
+								);
+								?>
+								<?php trackship_for_woocommerce()->html->get_tgl_checkbox( 'exception_admin_email_enable', $array_data ); ?>
+								<span class="edit_customizer_a dashicons dashicons-admin-generic"></span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="exception-shipments-email-content-table admin_notifiations_content">
+					<?php $this->get_settings_html( $this->get_exception_shipment_data() ); ?>
+				</div>
+			</div>
+
+			<div class="admin_notifications_div">
+				<table class="form-table heading-table shipment-status-email-table">
+					<tbody>
+						<tr class="admin_notifications_tr on-hold-shipment-tr <?php echo 1 == get_trackship_settings( 'on_hold_admin_email_enable' ) ? 'enable' : 'disable'; ?> ">
+							<td class="forminp status-label-column">
+								<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/on-hold.png">
+								<strong><?php esc_html_e('On Hold Shipments', 'trackship-for-woocommerce'); ?></strong>
+							</td>
+							<td class="forminp">
+								<button name="save" class="button-primary woocommerce-save-button btn_green2 btn_large" type="submit" value="Save & close"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
+								<?php
+								$array_data = array(
+									'type'		=> 'tgl_checkbox',
+									'class'		=> 'shipment_status_toggle',
+									'settings'	=> 'on_hold_admin_email',
+								);
+								?>
+								<?php trackship_for_woocommerce()->html->get_tgl_checkbox( 'on_hold_admin_email_enable', $array_data ); ?>
+								<span class="edit_customizer_a dashicons dashicons-admin-generic"></span>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="exception-shipments-email-content-table admin_notifiations_content">
+					<?php $this->get_settings_html( $this->get_on_hold_shipment_data() ); ?>
+				</div>
 			</div>
 		</form>
 	</section>

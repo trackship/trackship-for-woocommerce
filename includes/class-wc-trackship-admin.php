@@ -453,7 +453,7 @@ class WC_Trackship_Admin {
 	}
 
 	/*
-	* get Integrations tab array data
+	* get Admin notifications Late shipments tab array data
 	* return array
 	*/
 	public function get_late_shipment_data() {
@@ -478,6 +478,50 @@ class WC_Trackship_Admin {
 			),
 		);
 		return $late_shipment;
+	}
+
+	/*
+	* Get Admin notifications exception admin shipments tab array data
+	* return array
+	*/
+	public function get_exception_shipment_data() {
+		$exception_shipment = array(
+			'exception_shipments_email_to' => array(
+				'title'		=> __( 'Recipient(s)', 'trackship-for-woocommerce'),
+				'type'		=> 'text',
+				'show'		=> true,
+				'class'		=> '',
+			),
+			'exception_shipments_digest_time' => array(
+				'title'		=> __( 'Send email at', 'trackship-for-woocommerce'),
+				'type'		=> 'time',
+				'show'		=> true,
+				'class'		=> '',
+			),
+		);
+		return $exception_shipment;
+	}
+
+	/*
+	* Get Admin notifications on_hold admin shipments tab array data
+	* return array
+	*/
+	public function get_on_hold_shipment_data() {
+		$on_hold_shipment = array(
+			'on_hold_shipments_email_to' => array(
+				'title'		=> __( 'Recipient(s)', 'trackship-for-woocommerce'),
+				'type'		=> 'text',
+				'show'		=> true,
+				'class'		=> '',
+			),
+			'on_hold_shipments_digest_time' => array(
+				'title'		=> __( 'Send email at', 'trackship-for-woocommerce'),
+				'type'		=> 'time',
+				'show'		=> true,
+				'class'		=> '',
+			),
+		);
+		return $on_hold_shipment;
 	}
 
 	/*
@@ -1045,22 +1089,49 @@ class WC_Trackship_Admin {
 		if ( ! empty( $_POST ) && check_admin_referer( 'ts_late_shipments_email_form', 'ts_late_shipments_email_form_nonce' ) ) {
 			
 			$late_shipments_email_enable = isset( $_POST['late_shipments_email_enable'] ) ? sanitize_text_field( $_POST['late_shipments_email_enable'] ) : '';
-			$late_shipments_email_to = isset( $_POST['late_shipments_email_to'] ) ? sanitize_text_field( $_POST['late_shipments_email_to'] ) : '';
-			$late_shipments_digest_time = isset( $_POST['late_shipments_digest_time'] ) ? sanitize_text_field( $_POST['late_shipments_digest_time'] ) : '';
-			$late_shipments_days = isset( $_POST['late_shipments_days'] ) ? sanitize_text_field( $_POST['late_shipments_days'] ) : '';
+			$exception_admin_email_enable = isset( $_POST['exception_admin_email_enable'] ) ? sanitize_text_field( $_POST['exception_admin_email_enable'] ) : '';
+			$on_hold_admin_email_enable = isset( $_POST['on_hold_admin_email_enable'] ) ? sanitize_text_field( $_POST['on_hold_admin_email_enable'] ) : '';
+
+			$data = $this->get_late_shipment_data();
+			foreach ( $data as $key => $val ) {
+				update_trackship_settings( $key, wc_clean( $_POST[ $key ] ) );
+			}
+
+			$data2 = $this->get_exception_shipment_data();
+			foreach ( $data2 as $key2 => $val2 ) {
+				update_trackship_settings( $key2, wc_clean( $_POST[ $key2 ] ) );
+			}
+
+			$data3 = $this->get_on_hold_shipment_data();
+			foreach ( $data3 as $key3 => $val3 ) {
+				update_trackship_settings( $key3, wc_clean( $_POST[ $key3 ] ) );
+			}
 
 			update_trackship_settings( 'late_shipments_email_enable', $late_shipments_email_enable );
-			update_trackship_settings( 'late_shipments_email_to', $late_shipments_email_to );
-			update_trackship_settings( 'late_shipments_digest_time', $late_shipments_digest_time );
-			update_trackship_settings( 'late_shipments_days', $late_shipments_days );
+			update_trackship_settings( 'exception_admin_email_enable', $exception_admin_email_enable );
+			update_trackship_settings( 'on_hold_admin_email_enable', $on_hold_admin_email_enable );
 
 			$Late_Shipments = new WC_TrackShip_Late_Shipments();
 			$Late_Shipments->remove_cron();
 			$Late_Shipments->setup_cron();
-			$return = array(
+			$return1 = array(
 				'message'	=> 'success',
 			);
-			wp_send_json_success( $return );
+
+			$Exception_Shipments = new WC_TrackShip_Exception_Shipments();
+			$Exception_Shipments->remove_cron();
+			$Exception_Shipments->setup_cron();
+			$return3 = array(
+				'message'	=> 'success',
+			);
+
+			$On_Hold_Shipments = new WC_TrackShip_On_Hold_Shipments();
+			$On_Hold_Shipments->remove_cron();
+			$On_Hold_Shipments->setup_cron();
+			$return3 = array(
+				'message'	=> 'success',
+			);
+			wp_send_json_success( array($return1, $return2, $return3 ));
 		}
 	}
 		

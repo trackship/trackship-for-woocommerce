@@ -122,6 +122,7 @@ class WC_Trackship_Actions {
 		
 		//run cron action
 		add_action( 'wcast_retry_trackship_apicall', array( $this, 'trigger_trackship_apicall' ) );
+		add_action( 'trackship_tracking_apicall', array( $this, 'trigger_trackship_apicall' ) );
 		add_action( 'remove_ts_temp_key', array( $this, 'remove_ts_temp_key' ) );
 		
 		$valid_order_statuses = get_trackship_settings( 'trackship_trigger_order_statuses', ['completed', 'partial-shipped', 'shipped'] );
@@ -795,7 +796,7 @@ class WC_Trackship_Actions {
 				$status = __( 'Exception', 'woocommerce' );
 				break;
 			case 'failure':
-				$status = __( 'Failed Attempt', 'trackship-for-woocommerce' );
+				$status = __( 'Delivery Failure', 'trackship-for-woocommerce' );
 				break;
 			case 'unknown':
 				$status = __( 'Unknown', 'trackship-for-woocommerce' );
@@ -922,11 +923,28 @@ class WC_Trackship_Actions {
 	public function update_shipment_status_email_status_fun() {
 		check_ajax_referer( 'tswc_shipment_status_email', 'security' );
 		$settings_data = isset( $_POST['settings_data'] ) ? wc_clean( $_POST['settings_data'] ) : '';
-		$status_settings = get_option( $settings_data );
+
 		$enable_status_email = isset( $_POST['wcast_enable_status_email'] ) ? wc_clean( $_POST['wcast_enable_status_email'] ) : '';
 		$p_id = isset( $_POST['id'] ) ? wc_clean( $_POST['id'] ) : '';
-		$status_settings[$p_id] = wc_clean( $enable_status_email );
-		update_option( wc_clean( $settings_data ), $status_settings );		
+		
+		if ( in_array(  $settings_data, array( 'late_shipments_email_settings', 'exception_admin_email', 'on_hold_admin_email' ) ) ) {
+			update_trackship_settings( $p_id, $enable_status_email );
+			$Late_Shipments = new WC_TrackShip_Late_Shipments();
+			$Late_Shipments->remove_cron();
+			$Late_Shipments->setup_cron();
+
+			$Exception_Shipments = new WC_TrackShip_Exception_Shipments();
+			$Exception_Shipments->remove_cron();
+			$Exception_Shipments->setup_cron();
+
+			$On_Hold_Shipments = new WC_TrackShip_On_Hold_Shipments();
+			$On_Hold_Shipments->remove_cron();
+			$On_Hold_Shipments->setup_cron();
+		} else {
+			$status_settings = get_option( $settings_data );
+			$status_settings[$p_id] = $enable_status_email;
+			update_option( wc_clean( $settings_data ), $status_settings );		
+		}
 		
 		exit;
 	}
@@ -1307,7 +1325,7 @@ class WC_Trackship_Actions {
 		$order = wc_get_order( $order_id );
 		$order_shipped = apply_filters( 'is_order_shipped', false, $order );
 		if ( $order_shipped ) {
-			as_schedule_single_action( time() + 1, 'wcast_retry_trackship_apicall', array( $order_id ), 'TrackShip' );
+			as_schedule_single_action( time() + 1, 'trackship_tracking_apicall', array( $order_id ), 'TrackShip' );
 			$this->set_temp_pending( $order_id );
 			return true;
 		}
@@ -1667,7 +1685,7 @@ class WC_Trackship_Actions {
 	public function get_provider_name ( $slug ) {
 		global $wpdb;
 		$tracking_provider = $wpdb->get_var( $wpdb->prepare( "SELECT provider_name FROM {$wpdb->prefix}trackship_shipping_provider WHERE ts_slug = %s", $slug ) );
-		return $tracking_provider;
+		return $tracking_provider ? $tracking_provider : $slug;
 	}
 
 	public function get_tracking_page_link( $order_id, $tracking_number = '' ) {
@@ -1697,7 +1715,7 @@ class WC_Trackship_Actions {
 
 	public function ast_tracking_link( $formatted_tracking_link, $tracking_number, $order_id, $trackship_supported ) {
 		if ( $trackship_supported && is_trackship_connected() ) {
-			$tracking_page_link = $this->get_tracking_page_link( $order_id, $tracking_number ); 
+			$tracking_page_link = $this->get_tracking_page_link( $order_id, $tracking_number );
 			$formatted_tracking_link = $tracking_page_link ? $tracking_page_link : $formatted_tracking_link;
 		}
 		return $formatted_tracking_link;

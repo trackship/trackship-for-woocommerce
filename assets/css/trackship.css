@@ -178,6 +178,9 @@ section#content_trackship_settings, section#content_trackship_notifications, sec
 	margin: 0;
 	border: 0;
 }
+.trackship_admin_layout #trackship_late_shipments_form .admin_notifications_div {
+	margin-bottom: 10px;
+}
 .trackship_admin_layout table.form-table.heading-table h1 {
 	margin: 0;
 	font-size: 22px;
@@ -635,14 +638,14 @@ label.tab_label.first_label {
 	border: 1px solid #e0e0e0;
 	background: #fff;
 }
-tr.late-shipment-tr.open td {
+tr.admin_notifications_tr.open td {
 	border-bottom-left-radius: 0 !important;
 	border-bottom-right-radius: 0 !important;
 }
-.late-shipment-tr .woocommerce-save-button, .late-shipment-tr.open .shipment_status_toggle, .late-shipment-tr.open .edit_customizer_a {
+.admin_notifications_tr .woocommerce-save-button, .admin_notifications_tr.open .shipment_status_toggle, .admin_notifications_tr.open .edit_customizer_a {
 	display: none;
 }
-.late-shipment-tr.open .woocommerce-save-button, .late-shipment-tr .shipment_status_toggle, .late-shipment-tr .edit_customizer_a {
+.admin_notifications_tr.open .woocommerce-save-button, .admin_notifications_tr .shipment_status_toggle, .admin_notifications_tr .edit_customizer_a {
 	display: inline-block;
 }
 .woocommerce.trackship_admin_layout table.form-table.shipment-status-email-table tr {
@@ -682,7 +685,7 @@ tr.late-shipment-tr.open td {
 #trackship_late_shipments_form .shipment-status-email-table tr.disable td:last-child .edit_customizer_a {
 	pointer-events: all;
 }
-.trackship_admin_layout .late-shipments-email-content-table {
+.trackship_admin_layout .admin_notifiations_content {
 	display: none;
 	border: 1px solid #e0e0e0;
 	border-top: 0;
@@ -692,22 +695,17 @@ tr.late-shipment-tr.open td {
 	table-layout: auto;
 	padding: 0 15px;
 }
-.trackship_admin_layout .late-shipments-email-content-table #wcast_late_shipments_email_content {
-	width: 100%;
-	height: 80px;
-	margin-bottom: 10px;
-}
-.trackship_admin_layout .late-shipments-email-content-table tr td {
+.trackship_admin_layout .admin_notifiations_content tr td {
 	padding: 15px;
 }
-.trackship_admin_layout .late-shipments-email-content-table tr td label {
+.trackship_admin_layout .admin_notifiations_content tr td label {
 	margin: 0 10px;
 }
-.trackship_admin_layout .late-shipments-email-content-table tr td select {
+.trackship_admin_layout .admin_notifiations_content tr td select {
 	width: 100px;
 	vertical-align: middle;
 }
-.trackship_admin_content .late-shipments-email-content-table .spinner {
+.trackship_admin_content .admin_notifiations_content .spinner {
 	float: none;
 	margin: 0px 10px 0;
 }
@@ -1394,10 +1392,10 @@ label.setting_ul_tgl_checkbox_label {
 .section_mapping_content p.map_providers_note {
 	margin-top: 0;
 }
-input#late_shipments_days {
+input#late_shipments_days, input#exception_shipments_days, input#on_hold_shipments_days {
 	width: 50px;
 }
-div.late-shipments-email-content-table tr input, div.late-shipments-email-content-table tr td select {
+div.admin_notifiations_content tr input, div.admin_notifiations_content tr td select {
 	max-width: 350px !important;
 	width: 100% !important;
 }
@@ -1498,7 +1496,7 @@ div#trackship-tracking-items .ts-tracking-item {
 	background-color: #fafafa;
 	width: 250px;
 }
-input#late_shipments_email_to {
+input#late_shipments_email_to, input#exception_shipments_email_to, input#on_hold_shipments_email_to {
 	max-width: 500px;
 	width: 100%;
 }

@@ -62,15 +62,11 @@ class WC_Trackship_Html {
 		} else {
 			$checked = '';
 		}
-		$tgl_class = '';
-		if ( isset( $array['tgl_color'] ) ) {
-			$tgl_class = 'ast-tgl-btn-green';
-		}
 		?>
 		<li>
 			<input type="hidden" name="<?php echo esc_html( $id ); ?>" value="0"/>
 			<input class="ast-tgl ast-tgl-flat" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>" type="checkbox" <?php echo esc_html( $checked ); ?> value="1"/>
-			<label class="ast-tgl-btn <?php echo esc_html( $tgl_class ); ?>" for="<?php echo esc_html( $id ); ?>"></label>
+			<label class="ast-tgl-btn" for="<?php echo esc_html( $id ); ?>"></label>
 								
 			<label class="setting_ul_tgl_checkbox_label" for="<?php echo esc_html( $id ); ?>"><?php echo esc_html( $array['title'] ); ?>
 			<?php if ( isset( $array['tooltip'] ) ) { ?>
@@ -84,6 +80,21 @@ class WC_Trackship_Html {
 		<?php
 	}
 
+	public function get_tgl_checkbox( $id, $array ) {
+		if ( get_trackship_settings($id) ) {
+			$checked = 'checked';
+		} else {
+			$checked = '';
+		}
+		?>
+		<span class="<?php echo isset( $array['class'] ) ? esc_html( $array['class'] ) : ''; ?>">
+			<input type="hidden" name="<?php echo esc_html( $id ); ?>" value="0"/>
+			<input class="ast-tgl ast-tgl-flat" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>" data-settings="<?php echo isset( $array['settings'] ) ? esc_html( $array['settings'] ) : ''; ?>" type="checkbox" <?php echo esc_html( $checked ); ?> value="1"/>
+			<label class="ast-tgl-btn" for="<?php echo esc_html( $id ); ?>"></label>
+		</span>
+		<?php
+	}
+
 	public function get_number_html( $id, $array ) {
 		?>
 		<li class="dis_block">
@@ -92,7 +103,7 @@ class WC_Trackship_Html {
 					<span class="woocommerce-help-tip tipTip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
 				<?php } ?>
 			</label>
-			<input class="input-text" type="number" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" min="1" value="<?php echo esc_attr(get_trackship_settings($id)); ?>">
+			<input class="input-text" type="number" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" min="1" value="<?php echo esc_attr(get_trackship_settings( $id, isset( $array['default'] ) ? $array['default'] : '' )); ?>">
 		</li>
 		<?php
 	}
@@ -124,7 +135,7 @@ class WC_Trackship_Html {
 
 	public function get_button_html( $id, $array ) {
 		?>
-		<li >
+		<li>
 			<?php if ( $array['title'] ) { ?>
 				<label class="left_label"><?php echo esc_html( $array['title'] ); ?>
 					<?php if ( isset($array['tooltip']) ) { ?>
@@ -150,7 +161,7 @@ class WC_Trackship_Html {
 				</label>
 			<?php } ?>
 			<fieldset>
-				<input class="input-text regular-input " type="text" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" placeholder="<?php esc_html_e( 'E.g. {admin_email}, admin@example.org' ); ?>" value="<?php echo esc_attr(get_trackship_settings( $id, '{admin_email}' )); ?>">
+				<input class="input-text regular-input " type="text" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" placeholder="<?php esc_html_e( 'E.g. {admin_email}, admin@example.org' ); ?>" value="<?php echo esc_attr(get_trackship_settings( $id, get_option('admin_email') )); ?>">
 			</fieldset>
 		</li>
 		<?php
