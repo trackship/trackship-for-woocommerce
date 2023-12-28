@@ -55,21 +55,17 @@ if ( $tracking_items ) :
 									echo '</span></p>';
 								}
 								?>
-								<?php if ( 'shipped' != $ship_status ) { ?>
-									<?php $icon_layout = 't_layout_1' == $tracking_page_layout ? '-widget.png' : '-widget-v2.png'; ?>
-									<?php $icon_layout = 't_layout_2' == $tracking_page_layout ? '-widget-v4.png' : $icon_layout; ?>
-								<?php } ?>
 							</div>
 						</div>
 						<div style="display:block;"></div>
-						<?php if ( 'shipped' != $ship_status && !$ts4wc_preview ) { ?>
+						<?php if ( !$ts4wc_preview ) { ?>
 							<?php $icon_layout = 't_layout_1' == $tracking_page_layout ? '-widget.png' : '-widget-v4.png'; ?>
 							<?php $icon_layout = 't_layout_3' == $tracking_page_layout ? '-widget-v2.png' : $icon_layout; ?>
 							<div class="widget_progress_bar" style="width:100%;margin: 15px 0 10px;">
 								<?php $widget_icon_url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ) . esc_html( $icon_layout ); ?>
 								<img style="width:100%;" src="<?php echo esc_url( $widget_icon_url ); ?>">
 							</div>
-						<?php } elseif ( 'shipped' != $ship_status && $ts4wc_preview ) { ?>
+						<?php } elseif ( $ts4wc_preview ) { ?>
 							<div class="widget_progress_bar" style="width:100%;margin: 15px 0 10px;">
 								<?php $url = trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/widget-icon/' . esc_html( $ship_status ); ?>
 								<div><img class="t_layout_2 <?php echo 't_layout_2' != $tracking_page_layout ? 'hide' : ''; ?>" style="width:100%;" src="<?php echo esc_url( $url . '-widget-v4.png' ); ?>"></div>
@@ -107,12 +103,11 @@ if ( $tracking_items ) :
 							<div style="clear: both;display: block;"></div>
 						<?php } ?>
 					</div>
-					<?php $track_url = 'https://track.trackship.com/track/' . $tracking_item['tracking_number']; ?>
-					<div class="tracking_widget_email trackship_branding <?php echo esc_attr($trackship_branding_class); ?>">
-						<p style="margin: 0;">
-							<span style="vertical-align:middle;font-size: 14px;">Powered by <a href="<?php echo esc_url( $track_url ); ?>" title="TrackShip" target="blank">TrackShip</a></span>
-						</p>
-					</div>
+				</div>
+				<div class="tracking_widget_email trackship_branding <?php echo esc_attr($trackship_branding_class); ?>">
+					<p style="margin: 0;">
+						<span style="vertical-align:middle;font-size: 14px;">Powered by <a href="https://trackship.com" title="TrackShip" target="blank">TrackShip</a></span>
+					</p>
 				</div>
 			<?php } ?>
 		</div>
@@ -169,8 +164,9 @@ if ( $tracking_items ) :
 		padding:15px;
 	}
 	.tracking_widget_email.trackship_branding {
+		padding: 0;
 		text-align: center;
-		border-top: 1px solid <?php echo esc_html( $border_color ); ?>;
+		margin-bottom: 20px;
 	}
 	.shipment_status {font-size: 24px;margin: 10px 0;display: inline-block;color: #333;vertical-align: middle;font-weight:500;}
 	.mb-0{margin:0;}
