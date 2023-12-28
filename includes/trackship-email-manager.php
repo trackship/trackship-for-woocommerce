@@ -84,7 +84,7 @@ class WC_TrackShip_Email_Manager {
 
 		$email_to = [];
 		$email_to[] = $order ? $order->get_billing_email() : '';
-		$email_to = apply_filters( 'add_multiple_emails_to_shipment_email', $email_to );
+		$email_to = apply_filters( 'add_multiple_emails_to_shipment_email', $email_to, $new_status );
 
 		$email_subject = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'wcast_' . $status . '_email_settings', 'wcast_' . $status . '_email_subject', $default['wcast_' . $status . '_email_subject']);
 		$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_email_heading', $default['wcast_' . $status . '_email_heading']);
