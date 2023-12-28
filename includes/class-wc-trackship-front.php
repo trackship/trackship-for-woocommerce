@@ -108,6 +108,7 @@ class WC_TrackShip_Front {
 			wc_get_template( 'emails/tracking-info.php', array( 
 				'tracking_items' => trackship_for_woocommerce()->get_tracking_items( $order->get_id() ),
 				'order_id' => $order->get_id(),
+				'new_status' => 'shipped',
 				'ts4wc_preview' => false,
 			), 'woocommerce-advanced-shipment-tracking/', get_stylesheet_directory() . '/woocommerce/' );
 		} else {

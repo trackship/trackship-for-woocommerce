@@ -1010,7 +1010,7 @@ class WC_Trackship_Admin {
 
 		foreach ( ( array ) $orderids as $order_id ) {
 			trackship_for_woocommerce()->actions->set_temp_pending( $order_id );
-			as_schedule_single_action( time() + 1, 'wcast_retry_trackship_apicall', array( $order_id ) );
+			as_schedule_single_action( time() + 1, 'trackship_tracking_apicall', array( $order_id ) );
 		}
 		as_schedule_single_action( time() + 3600*60, 'remove_ts_temp_key' );
 		delete_trackship_settings( 'old_user' );
@@ -1121,7 +1121,7 @@ class WC_Trackship_Admin {
 			$Exception_Shipments = new WC_TrackShip_Exception_Shipments();
 			$Exception_Shipments->remove_cron();
 			$Exception_Shipments->setup_cron();
-			$return3 = array(
+			$return2 = array(
 				'message'	=> 'success',
 			);
 

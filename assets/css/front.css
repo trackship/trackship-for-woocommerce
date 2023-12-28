@@ -514,6 +514,28 @@ div.shipment-header {
 	font-size: 18px;
 	display: inline-block;
 }
+.est_delivery_section span.est-delivery-date.pre_transit {
+	background: #673ab720;
+}
+.est_delivery_section span.est-delivery-date.in_transit {
+	background: #05a9f420;
+}
+.est_delivery_section span.est-delivery-date.on_hold {
+	background: #ffdd0020;
+}
+.est_delivery_section span.est-delivery-date.out_for_delivery {
+	background: #8fc95c20;
+}
+.est_delivery_section span.est-delivery-date.available_for_pickup {
+	background: #ff980020;
+}
+.est_delivery_section span.est-delivery-date.return_to_sender {
+	background: #e91e6320;
+}
+.est_delivery_section span.est-delivery-date.exception,
+.est_delivery_section span.est-delivery-date.failure {
+	background: #cd212820;
+}
 span.tracking_details_switch {
 	background: #e0e0e0;
 	padding: 7px 10px;
