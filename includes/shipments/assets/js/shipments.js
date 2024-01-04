@@ -2,7 +2,7 @@
 (function( $ ){
 	'use strict';
 	$.fn.show_popup = function() {
-		if ( jQuery.inArray( shipments_script.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+		if ( jQuery.inArray( shipments_script.user_plan, ["Free Trial", "Free 50", "No active plan"] ) !== -1 ) {
 			jQuery("#free_user_popup").show();
 		}
 		return this;
@@ -395,7 +395,7 @@ jQuery(document).on("change", ".shipment_checkbox", function(){
 jQuery(document).on("click", ".fullfillment_dashboard_section .fullfillment_table tr", function(){
 	'use strict';
 	var current_plan = jQuery(".dashboard_hidden_field").val();
-	if ( jQuery.inArray( current_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+	if ( jQuery.inArray( current_plan, ["Free Trial", "Free 50", "No active plan"] ) !== -1 ) {
 		jQuery("#free_user_popup").show();
 	}
 });
@@ -403,7 +403,7 @@ jQuery(document).on("click", ".fullfillment_dashboard_section .fullfillment_tabl
 jQuery(document).on("click", ".dashboard_input_tab .tab_input", function(){
 	'use strict';
 	var current_plan = jQuery(".dashboard_hidden_field").val();
-	if ( jQuery.inArray( current_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+	if ( jQuery.inArray( current_plan, ["Free Trial", "Free 50", "No active plan"] ) !== -1 ) {
 		if (jQuery( this ).hasClass('not_show')) {
 			jQuery("#free_user_popup").show();
 			jQuery('.dashboard_input_tab .tab_input.first_label').trigger("click");
@@ -452,7 +452,7 @@ jQuery(document).on( "click", ".popupclose", function(){
 jQuery( document ).ready(function() {
 	'use strict';
 	var current_plan = jQuery(".dashboard_hidden_field").val();
-	if ( jQuery.inArray( current_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+	if ( jQuery.inArray( current_plan, ["Free Trial", "Free 50", "No active plan"] ) !== -1 ) {
 		jQuery('.fullfillment_dashboard_section .fullfillment_table tr').removeAttr('onclick');
 	}
 	jQuery('.bulk_action_button').attr('disabled','disabled');

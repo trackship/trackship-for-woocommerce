@@ -41,7 +41,9 @@
 	<?php if ( !$show_trackship_branding ) { ?>
 		.enhanced_trackship_branding{display:none;}
 	<?php } ?>
-	<?php if (in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
+	<?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) && 'classic' == $tracking_page_type ) { ?>
+		.enhanced_trackship_branding{display:none;}
+	<?php } elseif ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
 		.enhanced_trackship_branding{display:block !important;}
 	<?php } ?>
 </style>
