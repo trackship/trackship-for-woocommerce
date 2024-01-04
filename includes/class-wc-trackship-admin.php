@@ -810,8 +810,10 @@ class WC_Trackship_Admin {
 							<li><?php esc_html_e( 'Remove TrackShip’s branding', 'trackship-for-woocommerce' ); ?></li>
 							<li><?php esc_html_e( 'Shipments Dashboard', 'trackship-for-woocommerce' ); ?></li>
 							<li><?php esc_html_e( 'Late Shipments Notifications', 'trackship-for-woocommerce' ); ?></li>
+							<li><?php esc_html_e( 'Exception Shipments Notifications', 'trackship-for-woocommerce' ); ?></li>
+							<li><?php esc_html_e( 'On Hold Shipments Notifications', 'trackship-for-woocommerce' ); ?></li>							
 							<li><?php esc_html_e( 'Shipping & Delivery Analytics', 'trackship-for-woocommerce' ); ?></li>
-							<p style="font-size: 16px;"><?php esc_html_e( 'Starting from $9 a month', 'trackship-for-woocommerce' ); ?></p>
+							<p style="font-size: 16px;"><?php esc_html_e( 'Starting from $11 a month', 'trackship-for-woocommerce' ); ?></p>
 						</ul>
 						<div>
 							<a href="https://my.trackship.com/?utm_source=wpadmin&utm_medium=TS4WC&utm_campaign=shipment"><button class="button-primary button-trackship btn_large" style="font-size: 17px; padding: 8px 30px; background-color: #09d3ac;border-color:#09d3ac;"><?php esc_html_e( 'UPGRADE TO PRO', 'trackship-for-woocommerce' ); ?><span style="line-height: 18px;" class="dashicons dashicons-arrow-right-alt2"></span></button></a>
@@ -1246,6 +1248,13 @@ class WC_Trackship_Admin {
 				'option_name'	=> 'wcast_delivered_status_email_settings',
 				'enable_status_name' => 'wcast_enable_delivered_status_email',
 				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=delivered' ),
+			),
+			'pickup_reminder' => array(
+				'title'	=> __( 'Pickup reminder', 'trackship-for-woocommerce' ),
+				'slug'  => 'pickup-reminder',
+				'option_name'	=> 'wcast_pickupreminder_email_settings',
+				'enable_status_name' => 'wcast_enable_pickupreminder_email',
+				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=pickup_reminder' ),
 			),
 		);
 		return $notifications_data;
