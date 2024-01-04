@@ -279,6 +279,7 @@ class Trackship_For_Woocommerce {
 			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-exception-email-customizer.php';
 			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-returntosender-email-customizer.php';
 			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-delivered-email-customizer.php';
+			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-pickupreminder-email-customizer.php';
 		}
 		require_once $this->get_plugin_path() . '/includes/trackship-email-manager.php';
 		

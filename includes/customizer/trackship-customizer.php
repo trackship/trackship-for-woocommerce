@@ -216,6 +216,7 @@ class TS4WC_Admin_Customizer {
 			'exception'				=> esc_html__( 'Exception', 'trackship-for-woocommerce' ),
 			'return_to_sender'		=> esc_html__( 'Return To Sender', 'trackship-for-woocommerce' ),
 			'delivered'				=> esc_html__( 'Delivered', 'trackship-for-woocommerce' ),
+			'pickup_reminder'		=> esc_html__( 'Pickup Reminder', 'trackship-for-woocommerce' ),
 		);
 	}
 
@@ -254,11 +255,13 @@ class TS4WC_Admin_Customizer {
 		$name = 'exception' == $status ? 'Exception' : $name;
 		$name = 'returntosender' == $status ? 'Return To Sender' : $name;
 		$name = 'delivered_status' == $status ? 'Delivered' : $name;
+		$name = 'pickupreminder' == $status ? 'Available for Pickup Reminder' : $name;
 		
 		$customizer_defaults = array(			
 			'wcast_' . $status . '_email_subject' => __( 'Your order #{order_number} is ' . $name, 'trackship-for-woocommerce' ),
 			'wcast_' . $status . '_email_heading' => __( $name, 'trackship-for-woocommerce' ),
-			'wcast_' . $status . '_email_content' => __( "Hi there. we thought you'd like to know that your recent order from {site_title} is {$name}", 'trackship-for-woocommerce' ),				
+			'wcast_' . $status . '_email_content' => __( "Hi there. we thought you'd like to know that your recent order from {site_title} is {$name}", 'trackship-for-woocommerce' ),
+			'wcast_pickupreminder_email_content' => __( "Hi there. we thought you'd like to know that your recent order from {site_title} is pending for pickup", 'trackship-for-woocommerce' ),
 			'wcast_enable_' . $status . '_email'  => '',		
 			'wcast_' . $status . '_show_order_details' => 1,			
 			'wcast_' . $status . '_hide_shipping_item_price' => 1,	
@@ -266,6 +269,7 @@ class TS4WC_Admin_Customizer {
 			'wcast_' . $status . '_show_product_image' => 1,
 			'wcast_' . $status . '_analytics_link' => '',
 			'wcast_' . $status . '_show_tracking_details' => 1,
+			'pickupreminder_days'			=> 2,
 			'border_color'					=> '#e8e8e8',
 			'link_color'					=> '',
 			'bg_color'						=> '#fff',
@@ -305,6 +309,7 @@ class TS4WC_Admin_Customizer {
 		$status = 'on_hold' == $status ? 'onhold' : $status;
 		$status = 'return_to_sender' == $status ? 'returntosender' : $status;
 		$status = 'delivered' == $status ? 'delivered_status' : $status;
+		$status = 'pickupreminder' == $status ? 'pickupre_minder' : $status;
 
 		//Email saved/default vaule
 		$border_color = $this->get_value( 'shipment_email_settings', 'border_color', $status );
@@ -318,6 +323,7 @@ class TS4WC_Admin_Customizer {
 		$track_button_border_radius = $this->get_value( 'shipment_email_settings', 'track_button_border_radius', $status );
 		$show_trackship_branding = $this->get_value( 'shipment_email_settings', 'show_trackship_branding', $status );
 		$shipping_provider_logo = $this->get_value( 'shipment_email_settings', 'shipping_provider_logo', $status );
+		$reminder_days = $this->get_value( 'shipment_email_settings', 'pickupreminder_days', $status );
 
 		//Tracking page saved/default vaule
 		$wc_ast_select_bg_color = get_option( 'wc_ast_select_bg_color', $this->defaults['wc_ast_select_bg_color'] );
@@ -768,6 +774,7 @@ class TS4WC_Admin_Customizer {
 			'exception' => 'exception',
 			'returntosender' => 'return_to_sender',
 			'delivered_status' => 'delivered',
+			'pickupreminder' => 'pickup_reminder',
 		);
 
 		$settings[ 'heading1' ] = array(
@@ -814,6 +821,7 @@ class TS4WC_Admin_Customizer {
 				'exception' => __( 'Exception', 'trackship-for-woocommerce' ),
 				'return_to_sender' => __( 'Return To Sender', 'trackship-for-woocommerce' ),
 				'delivered' => __( 'Delivered', 'trackship-for-woocommerce' ),
+				'pickup_reminder' => __( 'Available for Pickup Reminder', 'trackship-for-woocommerce' ),
 			),
 		);
 
@@ -861,7 +869,7 @@ class TS4WC_Admin_Customizer {
 			);
 			$settings[ 'codeinfoblock ' . $key ] = array(
 				'title'		=> esc_html__( 'Available placeholders:', 'trackship-for-woocommerce' ),
-				'default'	=> array('{customer_first_name}', '{customer_last_name}', '{site_title}', '{order_number}', '{customer_company_name}', '{customer_username}', '{customer_email}', '{est_delivery_date}'),
+				'default'	=> array('{customer_first_name}', '{customer_last_name}', '{site_title}', '{order_number}', '{customer_company_name}', '{customer_username}', '{customer_email}'),
 				'type'		=> 'codeinfo',
 				'show'		=> true,
 				'class'		=> $value . '_sub_menu all_status_submenu',
@@ -917,24 +925,38 @@ class TS4WC_Admin_Customizer {
 				'show'		=> true,
 				'class'		=> $value . '_sub_menu all_status_submenu ts4wc_shipped_product_image',
 			);
-			$settings[ 'wcast_' . $key . '_show_shipping_address' ] = array(
-				'title'		=> esc_html__( 'Display shipping address', 'trackship-for-woocommerce' ),
-				'default'	=> $this->get_value( $email_settings, 'wcast_' . $key . '_show_shipping_address', $key ),
-				'type'		=> 'checkbox',
-				'option_name'=> $email_settings,
-				'option_type'=> 'array',
-				'show'		=> true,
-				'class'		=> $value . '_sub_menu all_status_submenu ts4wc_shipping_address',
-			);
-			$settings[ 'wcast_' . $key . '_shipping_address_label' ] = array(
-				'title'		=> esc_html__( 'Shipping address header text', 'trackship-for-woocommerce' ),
-				'default'	=> $shipping_address_label,
-				'type'		=> 'text',
-				'option_name'=> 'shipping_address_label',
-				'option_type'=> 'key',
-				'show'		=> true,
-				'class'		=> $value . '_sub_menu all_status_submenu shipping_address_label',
-			);
+			if ( 'pickupreminder' != $key ) {
+				$settings[ 'wcast_' . $key . '_show_shipping_address' ] = array(
+					'title'		=> esc_html__( 'Display shipping address', 'trackship-for-woocommerce' ),
+					'default'	=> $this->get_value( $email_settings, 'wcast_' . $key . '_show_shipping_address', $key ),
+					'type'		=> 'checkbox',
+					'option_name'=> $email_settings,
+					'option_type'=> 'array',
+					'show'		=> true,
+					'class'		=> $value . '_sub_menu all_status_submenu ts4wc_shipping_address',
+				);
+				$settings[ 'wcast_' . $key . '_shipping_address_label' ] = array(
+					'title'		=> esc_html__( 'Shipping address header text', 'trackship-for-woocommerce' ),
+					'default'	=> $shipping_address_label,
+					'type'		=> 'text',
+					'option_name'=> 'shipping_address_label',
+					'option_type'=> 'key',
+					'show'		=> true,
+					'class'		=> $value . '_sub_menu all_status_submenu shipping_address_label',
+				);
+			} else {
+				$settings[ $key . '_days' ] = array(
+					'title'		=> esc_html__( 'Set Pickup reminder notifications(in days)', 'trackship-for-woocommerce' ),
+					'default'	=> $reminder_days,
+					'default'	=> $this->get_value( $email_settings, $key . '_days', $key ),
+					'type'		=> 'number',
+					'min'		=> 0,
+					'option_name'=> $email_settings,
+					'option_type'=> 'array',
+					'show'		=> true,
+					'class'		=> $value . '_sub_menu all_status_submenu pickupreminder_days',
+				);
+			}
 		}
 		$settings[ 'email_trackship_branding' ] = array(
 			'title'		=> esc_html__( 'Display TrackShip branding', 'trackship-for-woocommerce' ),
@@ -1154,6 +1176,12 @@ class TS4WC_Admin_Customizer {
 										<input style="width:50px;" class="slider__value" type="number" min="<?php esc_attr_e( $array['min'] ); ?>" max="<?php esc_attr_e( $array['max'] ); ?>" value="<?php echo esc_html( $array_default ); ?>">
 									</label>
 								</div>
+							<?php } else if ( isset($array['type']) && 'number' == $array['type'] ) { ?>
+								<div class="menu-sub-field">
+									<label class="menu-sub-title">
+										<input style="width:50px;" name="<?php esc_attr_e( $id ); ?>" class="slider__value" type="number" min="<?php esc_attr_e( $array['min'] ); ?>" value="<?php echo esc_html( $array_default ); ?>">
+									</label>
+								</div>
 							<?php } ?>
 						</div>
 					</div>
@@ -1348,6 +1376,7 @@ class TS4WC_Admin_Customizer {
 				} elseif ( isset( $val['option_type'] ) && 'key' == $val['option_type'] ) {
 					update_option( $val['option_name'], wc_clean( $_POST[ $val['option_name'] ] ) );
 				} elseif ( isset( $val['option_type'] ) && 'array' == $val['option_type'] ) {
+					// echo $val['option_name']; echo ' // ' . $key . ' // ' . $_POST[$key] . ' <br>';
 					$option_data = get_option( $val['option_name'], array() );
 					$option_data[$key] = wc_clean( wp_unslash( $_POST[$key] ) );
 					update_option( $val['option_name'], $option_data );

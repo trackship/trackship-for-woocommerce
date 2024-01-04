@@ -252,6 +252,14 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 					as_schedule_single_action( time(), 'ts_status_change_trigger', array( $order_id, $previous_status, $tracking_event_status, $tracking_number ), 'TrackShip' );
 				}
 
+				// Schedule action for send Pickup reminder notifiations
+				$enable = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_pickupreminder_email_settings', 'wcast_enable_pickupreminder_email', '');
+				if ( 'available_for_pickup' == $tracking_event_status && $enable ) {
+					$time = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_pickupreminder_email_settings', 'pickupreminder_days', 2);
+					$time = 24*60*60*intval($time);
+					as_schedule_single_action( time() + $time, 'trigger_pickup_reminder_email', array( $order_id, $previous_status, $tracking_event_status, $tracking_number ), 'TrackShip' );
+				}
+
 				// hook for send SMS
 				// depricated after version 1.4.8
 				do_action( 'ast_trigger_ts_status_change', $order_id, $previous_status, $tracking_event_status, $tracking_item, $shipment_status[$key] );

@@ -15,6 +15,7 @@ class WC_TrackShip_Email_Manager {
 	 */
 	public function __construct() {
 		add_action( 'ts_status_change_trigger', array( $this, 'ts_status_change_trigger' ), 10, 4 );
+		add_action( 'trigger_pickup_reminder_email', array( $this, 'trigger_pickup_reminder_email' ), 10, 4 );
 	}
 
 	public function ts_status_change_trigger ( $order_id, $old_status, $new_status, $tracking_number ) {
@@ -139,11 +140,11 @@ class WC_TrackShip_Email_Manager {
 			$message.= wc_get_template_html(
 				'emails/tswc-tpi-email-order-details.php',
 				array(
-					'order'         => $order,
+					'order'			=> $order,
 					'sent_to_admin' => $sent_to_admin,
-					'plain_text'    => $plain_text,
+					'plain_text'	=> $plain_text,
 					'tracking_items'=> array($tracking_item),
-					'email'         => '',
+					'email'			=> '',
 					'wcast_show_product_image' => $wcast_show_product_image,
 					'wcast_show_order_details' => $wcast_show_order_details,
 					'ts4wc_preview' => false,
@@ -210,6 +211,149 @@ class WC_TrackShip_Email_Manager {
 		if ( $sitepress ) {
 			$sitepress->switch_lang($old_lan);
 		}
+	}
+
+	public function trigger_pickup_reminder_email( $order_id, $old_status, $new_status, $tracking_number ) {
+		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
+
+		foreach ( ( array ) $tracking_items as $key => $tracking_item ) {
+			if ( trim( $tracking_item['tracking_number'] ) != trim($tracking_number) ) {
+				continue;
+			}
+			$shipment_row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id , $tracking_item['tracking_number'] );
+			$order = wc_get_order( $order_id );
+			$this->order = $order;
+			$this->shipment_row = $shipment_row;
+			$this->tracking_item = $tracking_item;
+			$this->tracking_number = $tracking_item['tracking_number'];
+	
+			$enable = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_pickupreminder_email_settings', 'wcast_enable_pickupreminder_email', '');
+	
+			$arg = array(
+				'order_id'			=> $order_id,
+				'order_number'		=> wc_get_order( $order_id )->get_order_number(),
+				'tracking_number'	=> $tracking_item['tracking_number'],
+				'date'				=> current_time( 'Y-m-d H:i:s' ),
+				'shipment_status'	=> 'pickup_reminder',
+				'status_msg'		=> 'available_for_pickup' != $shipment_row->shipment_status ? 'Shipment is not available for pickup.' : 'Settings disabled',
+			);
+	
+			$logger = wc_get_logger();
+			if ( ! $enable || 'available_for_pickup' != $shipment_row->shipment_status ) {
+				$logger->info( print_r($arg, true), array( 'source' => 'trackship_email_log' ) );
+				return;
+			}
+	
+			global $sitepress;
+			if ( $sitepress ) {
+				$old_lan = $sitepress->get_current_language();
+				$new_lan = $order->get_meta( 'wpml_language', true );
+				$sitepress->switch_lang($new_lan);
+			}
+	
+			$default = trackship_admin_customizer()->wcast_shipment_settings_defaults( 'pickupreminder' );
+	
+			$email_to = [];
+			$email_to[] = $order ? $order->get_billing_email() : '';
+			$email_to = apply_filters( 'add_multiple_emails_to_shipment_email', $email_to, $new_status );
+	
+			$email_subject = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'wcast_pickupreminder_email_settings', 'wcast_pickupreminder_email_subject', $default['wcast_pickupreminder_email_subject']);
+			$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_pickupreminder_email_settings', 'wcast_pickupreminder_email_heading', $default['wcast_pickupreminder_email_heading']);	
+		
+			$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_pickupreminder_email_settings', 'wcast_pickupreminder_email_content', $default['wcast_pickupreminder_email_content']);
+			$email_content = html_entity_decode( $email_content );
+			
+			$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_pickupreminder_email_settings', 'wcast_pickupreminder_show_order_details', $default['wcast_pickupreminder_show_order_details']);
+			
+			$wcast_show_product_image = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_pickupreminder_email_settings', 'wcast_pickupreminder_show_product_image', $default['wcast_pickupreminder_show_product_image']);
+			
+			$sent_to_admin = false;
+			$plain_text = false;
+	
+			$recipients = $this->email_to($email_to, $order, $order_id);
+			
+			$subject = $this->email_subject($email_subject, $order_id, $order);
+	
+			$email_content = $this->email_content($email_content, $order_id, $order);
+			
+			$email_heading = $this->email_heading($email_heading, $order_id, $order);
+			$message = $this->append_analytics_link($email_content, 'pickupreminder');
+
+			$message .= wc_get_template_html( 'emails/tracking-info.php', array( 
+				'tracking_items' => array($tracking_item),
+				'shipment_row' => $shipment_row,
+				'order_id' => $order_id,
+				'show_shipment_status' => false,
+				'new_status' => $new_status,
+				'ts4wc_preview' => false,
+			), 'woocommerce-advanced-shipment-tracking/', trackship_for_woocommerce()->get_plugin_path() . '/templates/' );
+	
+			$tpi_order = false;
+			$tpi_order = trackship_for_woocommerce()->front->check_if_tpi_order( $tracking_items, $order );
+			
+			if ( $tpi_order ) {
+				$message.= wc_get_template_html(
+					'emails/tswc-tpi-email-order-details.php',
+					array(
+						'order'			=> $order,
+						'sent_to_admin' => $sent_to_admin,
+						'plain_text'	=> $plain_text,
+						'tracking_items'=> array($tracking_item),
+						'email'			=> '',
+						'wcast_show_product_image' => $wcast_show_product_image,
+						'wcast_show_order_details' => $wcast_show_order_details,
+						'ts4wc_preview' => false,
+					),
+					'woocommerce-advanced-shipment-tracking/', 
+					trackship_for_woocommerce()->get_plugin_path() . '/templates/'
+				);
+			} else {
+				$message.= wc_get_template_html(
+					'emails/tswc-email-order-details.php',
+					array(
+						'order'         => $order,
+						'sent_to_admin' => $sent_to_admin,
+						'plain_text'    => $plain_text,
+						'email'         => '',
+						'wcast_show_product_image' => $wcast_show_product_image,
+						'wcast_show_order_details' => $wcast_show_order_details,
+						'ts4wc_preview' => false,
+					),
+					'woocommerce-advanced-shipment-tracking/', 
+					trackship_for_woocommerce()->get_plugin_path() . '/templates/'
+				);
+			}
+	
+			// create a new email
+			$mailer = WC()->mailer();
+			$email_class = new WC_Email();
+			$email_class->id = 'pickup_reminder';
+
+			// wrap the content with the email template and then add styles
+			$message = $mailer->wrap_message( $email_heading, $message );
+			$message = apply_filters( 'trackship_mail_content', $message, $email_heading );
+	
+			$email_send = $email_class->send( implode(', ', $recipients), $subject, $message, $email_class->get_headers(), [] );
+			$arg = array(
+				'order_id'			=> $order_id,
+				'order_number'		=> wc_get_order( $order_id )->get_order_number(),
+				'user_id'			=> wc_get_order( $order_id )->get_user_id(),
+				'tracking_number'	=> $tracking_item['tracking_number'],
+				'date'				=> current_time( 'Y-m-d H:i:s' ),
+				'to'				=> implode(', ', $recipients),
+				'shipment_status'	=> 'pickup_reminder',
+				'status'			=> $email_send,
+				'status_msg'		=> $email_send ? 'Sent' : 'Not Sent',
+				'type'				=> 'Email',
+			);
+			trackship_for_woocommerce()->ts_actions->update_notification_table( $arg );
+	
+			if ( $sitepress ) {
+				$sitepress->switch_lang($old_lan);
+			}
+			break;
+		}
+
 	}
 
 	/**
