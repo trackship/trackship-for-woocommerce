@@ -298,14 +298,14 @@ div.shipment-header {
 .heading_shipment_status.exception:before, .heading_shipment_status.failure:before {
 	background-image: url(icons/failure.png);
 }
-.enhanced_content .shipping_from_to {
+.enhanced_content .shipping_from_to, .enhanced_content .wc_order_id {
 	margin: 0;
 	padding: 10px 0 30px;
 	border-bottom: 1px dotted #ccc;
 	margin-bottom: 20px;
+	font-size: 14px;
 }
 .shipping_from_to {
-	font-size: 14px;
 	margin: 5px 15px;
 }
 .shipping_from_to span {
@@ -514,6 +514,28 @@ div.shipment-header {
 	font-size: 18px;
 	display: inline-block;
 }
+.est_delivery_section span.est-delivery-date.pre_transit {
+	background: #673ab720;
+}
+.est_delivery_section span.est-delivery-date.in_transit {
+	background: #05a9f420;
+}
+.est_delivery_section span.est-delivery-date.on_hold {
+	background: #ffdd0020;
+}
+.est_delivery_section span.est-delivery-date.out_for_delivery {
+	background: #8fc95c20;
+}
+.est_delivery_section span.est-delivery-date.available_for_pickup {
+	background: #ff980020;
+}
+.est_delivery_section span.est-delivery-date.return_to_sender {
+	background: #e91e6320;
+}
+.est_delivery_section span.est-delivery-date.exception,
+.est_delivery_section span.est-delivery-date.failure {
+	background: #cd212820;
+}
 span.tracking_details_switch {
 	background: #e0e0e0;
 	padding: 7px 10px;
@@ -664,6 +686,9 @@ ul.timeline > li > p {
 	font-size: 15px;
 	font-weight: 600;
 }
+.enhanced_tracking_detail .enhanced_heading .accordian-arrow {
+	padding: 3.5px;
+}
 .enhanced_tracking_detail .enhanced_content {
 	padding: 20px;
 	border-top: 1px solid #ccc;
@@ -677,7 +702,7 @@ ul.timeline > li > p {
 	border: solid black;
 	border-width: 0px 3px 3px 0;
 	display: inline-block;
-	padding: 4px;
+	padding: 4.5px;
 	float: right;
 	margin: 4px;
 }

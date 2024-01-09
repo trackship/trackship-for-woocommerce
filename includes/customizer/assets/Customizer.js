@@ -146,7 +146,7 @@ jQuery(document).on("click", ".back_to_notice", function(){
 	}
 });
 
-jQuery(document).on("change", ".tgl.tgl-flat, .zoremmail-checkbox, .zoremmail-input.color, .zoremmail-range, .zoremmail-input.select", function(){
+jQuery(document).on("change", ".tgl.tgl-flat, .zoremmail-checkbox, .zoremmail-input.color, .zoremmail-range, .zoremmail-input.select, .slider__value", function(){
 	setting_change_trigger();
 });
 
