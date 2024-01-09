@@ -43,7 +43,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div style="display: flex;flex-direction: column;">
 			<span class="wc_order_id">
 				<?php esc_html_e( 'Order', 'trackship-for-woocommerce' ); ?> 
-				<a href="<?php echo esc_url( $order->get_view_order_url() ); ?>" target="_blank"><?php echo esc_html( '#' . $order->get_order_number() ); ?></a>
+				<?php if ( $order->get_customer_id() ) { ?>
+					<a href="<?php echo esc_url( $order->get_view_order_url() ); ?>" target="_blank"><?php echo esc_html( '#' . $order->get_order_number() ); ?></a>
+				<?php } else { ?>
+					<?php echo esc_html( '#' . $order->get_order_number() ); ?>
+				<?php } ?>
 			</span>
 			<?php if ( $tracking_page_link && is_admin() && !isset( $_POST['order_tracking_number'] ) ) { ?>
 				<span style="margin-top: 5px;">

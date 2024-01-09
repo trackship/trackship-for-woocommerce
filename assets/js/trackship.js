@@ -284,6 +284,13 @@ jQuery(document).on("change", ".shipment_status_toggle input", function () {
 	});
 
 	var settings_data = jQuery(this).data("settings");
+	if ( jQuery.inArray( settings_data, [ "late_shipments_email_settings", "exception_admin_email", "on_hold_admin_email" ] ) !== -1 ) {
+		if ( jQuery.inArray( shipments_script.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+			jQuery("#free_user_popup").show();
+			return;
+		}
+	}
+
 	var wcast_enable_status_email;
 
 	if (jQuery(this).prop("checked") == true) {
@@ -372,6 +379,12 @@ jQuery(document).on("change", ".ts_integration_checkbox input", function () {
 });
 
 jQuery(document).on("click", ".admin_notifications_tr", function (event) {
+
+	if ( jQuery.inArray( shipments_script.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+		jQuery("#free_user_popup").show();
+		return;
+	}
+
     var $trigger = jQuery(".shipment_status_toggle");
     if ($trigger !== event.target && !$trigger.has(event.target).length) {
         var parent = jQuery(this).closest('.admin_notifications_div');

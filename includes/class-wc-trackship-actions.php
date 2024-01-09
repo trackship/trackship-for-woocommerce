@@ -198,7 +198,8 @@ class WC_Trackship_Actions {
 		
 		wp_localize_script( 'trackship_script', 'trackship_script', array(
 			'i18n' => array(				
-				'data_saved'	=> __( 'Your settings have been successfully saved.', 'trackship-for-woocommerce' ),			
+				'data_saved'	=> __( 'Your settings have been successfully saved.', 'trackship-for-woocommerce' ),
+				'user_plan'	=> get_option( 'user_plan' ),
 			),
 		) );
 		
