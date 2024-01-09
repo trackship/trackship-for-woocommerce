@@ -2,9 +2,9 @@
 Contributors: TrackShip
 Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 6.2
-Tested up to: 6.4.0
+Tested up to: 6.4.2
 Requires PHP: 7.4
-Stable tag: 1.7.3
+Stable tag: 1.7.4
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,7 +111,8 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended.
 
 == Changelog ==
-= 1.7.3 - 2024-01-09 =
+= 1.7.4 - 2024-01-09 =
+* Fix - fix error of expecting variable (T_VARIABLE)
 * Enhancement - New tracking page design added(option added in TrackShip Customizer)
 * Enhancement - Added a progress bar in Shipped emails for users without the Advanced Shipment Tracking (Zorem) plugin installed.
 * Enhancement - Implemented admin notifications for On Hold and Exception Shipments.
