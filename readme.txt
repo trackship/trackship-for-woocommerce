@@ -4,7 +4,7 @@ Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 6.2
 Tested up to: 6.4.0
 Requires PHP: 7.4
-Stable tag: 1.7.2
+Stable tag: 1.7.3
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,9 +108,24 @@ It doesn’t. When a shipment tracker is not supported by TrackShip or returned 
 Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipments monthly plan, once you finish your trial balance, you can sign up for a paid subscription in order to continue to track additional shipments.
 
 = Will I be charged when my free shipment trackers are finished?
-No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended).
+No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended.
 
 == Changelog ==
+= 1.7.3 - 2024-01-09 =
+* Enhancement - New tracking page design added(option added in TrackShip Customizer)
+* Enhancement - Added a progress bar in Shipped emails for users without the Advanced Shipment Tracking (Zorem) plugin installed.
+* Enhancement - Implemented admin notifications for On Hold and Exception Shipments.
+* Enhancement - Implemented customer notification for Pickup reminder Shipments.
+* Enhancement - Improved the design of shipment status emails.
+* Enhancement - Greek language translation added
+* Dev - translation updated
+* Dev - Removed the view order link for guest orders on the Tracking page.
+* Dev - removed functionality of notifications log of disabled settings from TrackShip Logs
+* Dev - Merged TrackShip branding options for Tracking Widget and Shipment Status emails.
+* Fix - Resolved database query issues related to deleting shipment meta table rows for deleted orders.
+* Dev - tested compatibility with WordPress version 6.4.2.
+* Dev - tested compatibility with WooCommerce version 8.4.0.
+
 = 1.7.2 - 2023-12-04 =
 * Fix - Fix database error on delete post
 
