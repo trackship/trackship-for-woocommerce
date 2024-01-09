@@ -69,7 +69,7 @@
 	</div>
 	<div class="enhanced_tracking_content">
 		<div class="est_delivery_section">
-			<span class="est-delivery-date delivered">
+			<span class="est-delivery-date <?php echo esc_html($status); ?>">
 				<?php echo 'delivered' != $status ? __( 'Est. Delivery Date', 'trackship-for-woocommerce' ) : __( 'Delivered on', 'trackship-for-woocommerce' ); ?> :
 				<strong>Friday, Oct 02</strong>
 			</span>
@@ -124,6 +124,10 @@
 					<span class="shipping_from">India</span>
 					<img class="shipping_to_img" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/arrow.png">
 					<span class="shipping_to">United states</span>
+				</div>
+				<div class="wc_order_id">
+					<?php esc_html_e( 'View your order details', 'trackship-for-woocommerce' ); ?> 
+					<a href="#" target="_blank">#2213</a>
 				</div>
 				<ul class="tpi_product_tracking_ul">
 					<li>
