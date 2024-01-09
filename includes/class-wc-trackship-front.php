@@ -617,7 +617,7 @@ class WC_TrackShip_Front {
 		include 'views/front/enhanced_tracking_widget_header.php';
 	}
 	
-	public function tracking_widget_est_delivery_section ( $row, $num, ) {
+	public function tracking_widget_est_delivery_section ( $row, $num ) {
 		$show_est_delivery_date = apply_filters( 'show_est_delivery_date', true, $row->shipping_provider );
 		if ( $row->est_delivery_date && $show_est_delivery_date ) {
 			$tracking_detail_org = '';	
