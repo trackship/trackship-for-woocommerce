@@ -123,7 +123,7 @@ class WOO_Klaviyo_TS4WC {
 
 		$content = print_r($response, true);
 		$logger = wc_get_logger();
-		$context = array( 'source' => 'TrackShip Klaviyo response' );
+		$context = array( 'source' => 'trackship-klaviyo-response' );
 		$logger->info( "Response \n" . $content . "\n", $context );
 
 	}
