@@ -87,7 +87,7 @@ class TS4WC_Admin_Customizer {
 		</style>
 		<script type="text/javascript" id="zoremmail-onload">
 			jQuery(document).ready( function() {
-				jQuery('#adminmenuback, #adminmenuwrap, #wpadminbar, #wpfooter, div#query-monitor-main').remove();
+				jQuery('#adminmenuback, #adminmenuwrap, #wpadminbar, #wpfooter, div#query-monitor-main, #cookie-law-info-bar').remove();
 			});
 		</script>
 		<section class="zoremmail-layout zoremmail-layout-has-sider">
