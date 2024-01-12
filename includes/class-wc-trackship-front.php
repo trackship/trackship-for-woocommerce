@@ -994,6 +994,23 @@ class WC_TrackShip_Front {
 		$hide_last_mile = get_option( 'wc_ast_hide_list_mile_tracking', $tracking_page_defaults->defaults['wc_ast_hide_list_mile_tracking'] );
 		$tracking_page_type = get_option( 'tracking_page_type', $tracking_page_defaults->defaults['tracking_page_type'] );
 		
+		?>
+		<style>
+			<?php if ( 'modern' == $tracking_page_type ) { ?>
+				.tracking-detail.col {
+					display: none;
+				}
+			<?php } else { ?>
+				.preview_enhanced_tracking_widget {
+					display: none;
+				}
+				.tracking-detail.col {
+					display: block;
+				}
+			<?php } ?>
+		</style>
+		<?php
+
 		include 'views/front/preview_enhanced_tracking_page.php';
 		include 'views/front/preview_tracking_page.php';
 		wp_footer();
