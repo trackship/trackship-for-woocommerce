@@ -49,7 +49,7 @@
 	<?php } ?>
 </style>
 
-<div class="tracking-detail col <?php echo 'modern' == $tracking_page_type ? 'hide' : ''; ?>">
+<div class="tracking-detail col ">
 	<div class="shipment-content">
 		<div class="tracking-header">
 			<div class="tracking_number_wrap">
