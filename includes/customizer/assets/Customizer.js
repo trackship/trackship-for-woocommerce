@@ -476,7 +476,7 @@ jQuery(document).on("change", "#shipmentStatus", function(){
 jQuery('iframe').load(function(){
 	jQuery('.zoremmail-layout-content-preview').removeClass('customizer-unloading');
 	jQuery("#tracking_widget_privew").contents().find( 'div#query-monitor-main' ).css( 'display', 'none');
-	jQuery("#tracking_widget_privew").contents().find( 'div.col.tracking-detail' ).css( 'display', 'block');
+	// jQuery("#tracking_widget_privew").contents().find( 'div.col.tracking-detail' ).css( 'display', 'block');
 	jQuery( '.zoremmail-layout-content-media .last-checked .dashicons' ).trigger('click');
 	
 	jQuery("#tracking_widget_privew").contents().find( '.hide' ).hide();
@@ -505,10 +505,13 @@ jQuery('iframe').load(function(){
 jQuery('#tracking_page_type').on("change", function(){
 	var type = jQuery( this ).val();
 	if ( 'modern' == type ) {
-		jQuery("#tracking_widget_privew").contents().find('body .enhanced_tracking_detail, body .enhanced_trackship_branding' ).show();
+		jQuery("#tracking_widget_privew").contents().find('body .preview_enhanced_tracking_widget' ).show();
 		jQuery("#tracking_widget_privew").contents().find('body .tracking-detail.col' ).hide();
+		if ( jQuery.inArray( trackship_customizer.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+			jQuery("#tracking_widget_privew").contents().find( '.enhanced_trackship_branding' ).show();
+		}
 	} else {
-		jQuery("#tracking_widget_privew").contents().find('body .enhanced_tracking_detail, body .enhanced_trackship_branding' ).hide();
+		jQuery("#tracking_widget_privew").contents().find('body .preview_enhanced_tracking_widget' ).hide();
 		jQuery("#tracking_widget_privew").contents().find('body .tracking-detail.col' ).show();
 	}
 });
