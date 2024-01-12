@@ -185,6 +185,7 @@ class WC_TrackShip_Email_Manager {
 		$email_class = new WC_Email();
 		$email_class->id = 'shipment_email';
 	
+		add_filter( 'safe_style_css', array( $this, 'safe_style_css' ), 10, 1 );
 		add_filter( 'woocommerce_email_footer_text', array( $this, 'email_footer_text' ) );
 
 		// wrap the content with the email template and then add styles
@@ -370,6 +371,11 @@ class WC_TrackShip_Email_Manager {
 
 		$footer_text = $unsubscribe ? $unsubscribe : $footer_text;
 		return $footer_text;
+	}
+
+	public function safe_style_css ( $styles ) {
+		$styles[] = 'display';
+		return $styles;
 	}
 
 	/**
