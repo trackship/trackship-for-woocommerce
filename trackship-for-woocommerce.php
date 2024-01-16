@@ -214,9 +214,6 @@ class Trackship_For_Woocommerce {
 		require_once $this->get_plugin_path() . '/includes/analytics/class-wc-trackship-analytics.php';
 		$this->analytics = WC_Trackship_Analytics::get_instance();
 
-		require_once $this->get_plugin_path() . '/includes/class-wc-trackship-notice.php';
-		$this->trackship_admin_notice = WC_TrackShip_Admin_Notice::get_instance();
-
 		require_once $this->get_plugin_path() . '/includes/class-wc-admin-notices.php';
 		$this->wc_admin_notice = WC_TS4WC_Admin_Notices_Under_WC_Admin::get_instance();
 
