@@ -62,14 +62,16 @@ class WC_TrackShip_Admin_Notice {
 	* Dismiss admin notice for trackship
 	*/
 	public function trackship_admin_notice_ignore() {
-		if ( isset( $_GET['trackship-review-ignore'] ) ) {
-			update_trackship_settings( 'review_notice_ignore', 'true' );
-		}
-		if ( isset( $_GET['trackship-upgrade-ignore'] ) ) {
-			update_trackship_settings( 'trackship_upgrade_ignore', 'true');
-		}
-		if ( isset( $_GET['klaviyo-notice-ignore'] ) ) {
-			update_trackship_settings( 'klaviyo_notice_ignore', 'true');
+		if (isset($_GET['nonce']) && wp_verify_nonce( sanitize_text_field( $_GET['nonce'] ), 'wpts_dismiss_notice' )) {
+			if ( isset( $_GET['trackship-review-ignore'] ) ) {
+				update_trackship_settings( 'review_notice_ignore', 'true' );
+			}
+			if ( isset( $_GET['trackship-upgrade-ignore'] ) ) {
+				update_trackship_settings( 'trackship_upgrade_ignore', 'true');
+			}
+			if ( isset( $_GET['klaviyo-notice-ignore'] ) ) {
+				update_trackship_settings( 'klaviyo_notice_ignore', 'true');
+			}
 		}
 	}
 
@@ -82,7 +84,9 @@ class WC_TrackShip_Admin_Notice {
 			return;
 		}
 
-		$dismissable_url = esc_url( add_query_arg( 'trackship-review-ignore', 'true' ) );
+		$nonce = wp_create_nonce('wpts_dismiss_notice');
+
+		$dismissable_url = esc_url( add_query_arg( [ 'trackship-review-ignore' => 'true', 'nonce' => $nonce ] ) );
 		$url = 'https://wordpress.org/support/plugin/trackship-for-woocommerce/reviews/#new-post';
 		?>
 		<style>
@@ -115,7 +119,9 @@ class WC_TrackShip_Admin_Notice {
 			return;
 		}
 
-		$dismissable_url = esc_url( add_query_arg( 'trackship-upgrade-ignore', 'true' ) );
+		$nonce = wp_create_nonce('wpts_dismiss_notice');
+
+		$dismissable_url = esc_url( add_query_arg( ['trackship-upgrade-ignore' => 'true', 'nonce' => $nonce ] ) );
 		$url = 'https://my.trackship.com/settings/#billing';
 		?>
 		<style>
@@ -143,7 +149,9 @@ class WC_TrackShip_Admin_Notice {
 			return;
 		}
 
-		$dismissable_url = esc_url( add_query_arg( 'klaviyo-notice-ignore', 'true' ) );
+		$nonce = wp_create_nonce('wpts_dismiss_notice');
+
+		$dismissable_url = esc_url( add_query_arg( [ 'klaviyo-notice-ignore' => 'true', 'nonce' => $nonce ] ) );
 		$url = 'https://docs.trackship.com/docs/trackship-for-woocommerce/integration/klaviyo/';
 		$btn_url = admin_url( 'admin.php?page=trackship-for-woocommerce&tab=integrations' );
 		?>
