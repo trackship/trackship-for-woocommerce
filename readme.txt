@@ -4,7 +4,7 @@ Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 6.2
 Tested up to: 6.4.2
 Requires PHP: 7.4
-Stable tag: 1.7.4
+Stable tag: 1.7.5
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -111,6 +111,12 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended.
 
 == Changelog ==
+= 1.7.5 - 2024-01-16 =
+* Dev - Improve code of modern tracking page preview
+* Dev - remove Cookie popup from Customizer for CookieYes plugin
+* Dev - Add compatibility with WP HTML Mail - Email Template Designer
+* Dev - tested compatibility with WPML.
+
 = 1.7.4 - 2024-01-09 =
 * Fix - fix error of expecting variable (T_VARIABLE)
 * Enhancement - New tracking page design added(option added in TrackShip Customizer)

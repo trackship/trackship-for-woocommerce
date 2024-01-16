@@ -6,15 +6,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 use Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController;
 
 class WC_Trackship_Admin {
-	
-	public $log_table;
-	
+
 	/**
 	 * Initialize the main plugin function
 	*/
 	public function __construct() {
 		global $wpdb;
-		$this->log_table = $wpdb->prefix . 'zorem_email_sms_log';
 	}
 	
 	/**
@@ -971,12 +968,11 @@ class WC_Trackship_Admin {
 		}
 		check_ajax_referer( 'wc_ast_tools', 'security' );
 		global $wpdb;
-		$log_table = $this->log_table;
-		$row_query = $wpdb->get_results($wpdb->prepare("
+		$row_query = $wpdb->get_results("
 			DELETE
-			FROM %s
+			FROM {$wpdb->prefix}zorem_email_sms_log
 			WHERE ( `type` = 'Email' OR `sms_type` = 'shipment_status' ) AND `date` < NOW() - INTERVAL 30 DAY;
-		", $log_table));
+		");
 		wp_send_json( array( 'success' => 'true' ) );
 	}
 
