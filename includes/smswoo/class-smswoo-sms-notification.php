@@ -8,16 +8,18 @@ class TSWC_SMSWoo_SMS_Notification {
 	private static $instance;
 	
 	private $sms_gateway;
-
-	private $new_status;
-	
-	private $_country_code;
-	
-	private $_sms_type;
-	
-	public $_customer_sms = false;
+	private $_sms_gateway;
 	
 	public $_sms_length = 160;
+
+	public $new_status;
+	public $_country_code;
+	public $_calling_code;
+	public $_sms_type;
+	public $_customer_sms = false;
+	public $tracking_item;
+	public $order;
+	public $shipment_row;
 	
 	/**
 	 * Initialize the main plugin function

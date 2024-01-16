@@ -14,9 +14,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 
 	/**
-	 * Class   SMSWOO_Msg91
+	 * Class SMSWOO_Msg91
 	 * 
-	 * @since   1.0
+	 * @since 1.0
 	 *
 	 */
 	class SMSWOO_Msg91 extends SMSWOO_Sms_Gateway {
@@ -26,12 +26,12 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 		/**
 		 * Constructor
 		 *
-		 * @since   1.0
-		 * @return  void
+		 * @since 1.0
+		 * @return void
 		 */
 		public function __construct() {
 
-			$this->_msg91_authkey    = get_option( 'smswoo_msg91_authkey' );
+			$this->_msg91_authkey = get_option( 'smswoo_msg91_authkey' );
 
 			parent::__construct();
 
@@ -40,14 +40,14 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 		/**
 		 * Send SMS
 		 *
-		 * @since   1.0
+		 * @since 1.0
 		 *
-		 * @param   $to_phone     string
-		 * @param   $message      string
-		 * @param   $country_code string
+		 * @param $to_phone string
+		 * @param $message string
+		 * @param $country_code string
 		 *
-		 * @return  void
-		 * @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
+		 * @return void
+		 * @throws Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
 		 */
 		public function send( $to_phone, $message, $country_code ) {
 
@@ -97,8 +97,8 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 				$body = array_merge( $body, $var );
 				
 				$args = array(
-					'body'    => wp_json_encode( $body ),
-					'headers' => array(
+					'body'		=> wp_json_encode( $body ),
+					'headers'	=> array(
 						'authkey' => $this->_msg91_authkey,
 						'Content-Type' => 'application/json',
 					),
@@ -131,11 +131,6 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 			}
 
 			$response = wp_safe_remote_post( $url, $args);
-			
-			$content = print_r($response, true);
-			$logger = wc_get_logger();
-			$context = array( 'source' => 'trackship_msg91_response' );
-			$logger->info( "trackship_msg91_response \n" . $content . "\n", $context );
 			//echo '<pre>';print_r($response);echo '</pre>';exit;
 			
 			// WP HTTP API error like network timeout, etc
@@ -178,9 +173,9 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 		/**
 		 * Send SMS
 		 *
-		 * @since   1.0
+		 * @since 1.0
 		 *
-		 * @param   $to_phone     string
+		 * @param $to_phone string
 		 *
 		 * @return  void
 		 * @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
