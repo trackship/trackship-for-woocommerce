@@ -202,21 +202,8 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			}
 			$row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id , $tracking_item['tracking_number'] );
 			$previous_status = isset( $row->shipment_status ) ? $row->shipment_status : '';	
-			
-			/* START -- to be removed in the future */
-			$shipment_status = $order->get_meta( 'shipment_status', true );
-			if ( is_string($shipment_status) ) {
-				$shipment_status = array();			
-			}
-			unset($shipment_status[$key]['pending_status']);
-			$shipment_status[$key]['status'] = $tracking_event_status;
-			$shipment_status[$key]['status_date'] = gmdate( 'Y-m-d H:i:s' );
-			$shipment_status[$key]['last_event_time'] = $last_event_time;
-			$shipment_status[$key]['est_delivery_date'] = $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : null;
-			/* END -- to be removed in the future */
-			
+
 			$order = wc_get_order( $order_id );
-			$order->save();
 			
 			$ts_shipment_status[$key]['status'] = $tracking_event_status;
 			
@@ -260,9 +247,8 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 					as_schedule_single_action( time() + $time, 'trigger_pickup_reminder_email', array( $order_id, $previous_status, $tracking_event_status, $tracking_number ), 'TrackShip' );
 				}
 
-				// hook for send SMS
-				// depricated after version 1.4.8
-				do_action( 'ast_trigger_ts_status_change', $order_id, $previous_status, $tracking_event_status, $tracking_item, $shipment_status[$key] );
+				// hook for send data to paypal in AST PRO
+				do_action( 'ast_trigger_ts_status_change', $order_id, $previous_status, $tracking_event_status, $tracking_item, [] );
 
 				do_action( 'trackship_shipment_status_trigger', $order_id, $previous_status, $tracking_event_status, $tracking_number );
 			}

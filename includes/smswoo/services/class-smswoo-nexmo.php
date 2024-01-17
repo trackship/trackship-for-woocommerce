@@ -18,6 +18,8 @@ if ( ! class_exists( 'SMSWOO_Nexmo' ) ) {
 		private $_nexmo_api_key;
 
 		private $_nexmo_api_secret;
+		
+		public $new_status;
 
 		/**
 		 * Constructor
