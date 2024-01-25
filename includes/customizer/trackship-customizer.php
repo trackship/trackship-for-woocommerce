@@ -10,7 +10,7 @@ class TS4WC_Admin_Customizer {
 	/**
 	 * Get the class instance
 	 *
-	 * @since  1.2.5
+	 * @since 1.2.5
 	 * @return TS4WC_Admin_Customizer
 	*/
 	public static function get_instance() {
@@ -32,7 +32,7 @@ class TS4WC_Admin_Customizer {
 	/**
 	 * Initialize the main plugin function
 	 * 
-	 * @since  1.2.5
+	 * @since 1.2.5
 	*/
 	public function __construct() {
 		$this->init();
@@ -41,7 +41,7 @@ class TS4WC_Admin_Customizer {
 	/*
 	 * init function
 	 *
-	 * @since  1.2.5
+	 * @since 1.2.5
 	*/
 	public function init() {
 		$this->defaults = $this->wcast_generate_defaults();	
@@ -50,6 +50,8 @@ class TS4WC_Admin_Customizer {
 
 		//save of settings hook
 		add_action( 'wp_ajax_save_trackship_customizer', array( $this, 'customizer_save_trackship_customizer' ) );
+
+		add_action( 'wp_ajax_ts_email_preview', array( $this, 'ts_email_preview_callback' ) );
 		
 		//load javascript in admin
 		add_action('admin_enqueue_scripts', array( $this, 'customizer_enqueue_scripts' ) );
@@ -58,7 +60,7 @@ class TS4WC_Admin_Customizer {
 	/*
 	 * Admin Menu add function
 	 *
-	 * @since  1.2.5
+	 * @since 1.2.5
 	 * WC sub menu 
 	*/
 	public function register_woocommerce_menu() {
@@ -68,7 +70,7 @@ class TS4WC_Admin_Customizer {
 	/*
 	 * callback for settingsPage
 	 *
-	 * @since  1.2.5
+	 * @since 1.2.5
 	*/
 	public function settingsPage() {
 		$page = isset( $_GET['page'] ) ? sanitize_text_field($_GET['page']) : '' ;
@@ -142,7 +144,7 @@ class TS4WC_Admin_Customizer {
 										<span class="tgl_<?php esc_attr_e( $key ); ?>" <?php echo $shipmentStatus == $key ? '' : 'style="display:none;"'; ?>>
 											<?php $slug_status = str_replace( '_', '', $key ); ?>
 											<?php $slug_status = 'delivered' == $slug_status ? 'delivered_status' : $slug_status; ?>
-											<?php $id =  'wcast_enable_' . $slug_status . '_email'; ?>
+											<?php $id = 'wcast_enable_' . $slug_status . '_email'; ?>
 											<?php $enable_email = $this->get_value( 'wcast_' . $slug_status . '_email_settings', $id, $slug_status ); ?>
 											<label style="vertical-align: middle;" for="<?php esc_attr_e( $id ); ?>"><?php esc_html_e( 'Enable email', 'trackship-for-woocommerce' ); ?></label>
 											<input type="hidden" name="<?php esc_attr_e( $id ); ?>" value="0">
@@ -198,7 +200,7 @@ class TS4WC_Admin_Customizer {
 			'customer_username'		=> 'sher_lock',
 			'customer_email'		=> 'sherlock@holmes.co.uk',
 			'est_delivery_date'		=> '2021-07-30 15:28:02',
-			'email_iframe_url'		=> add_query_arg( array( 'shipment-email-customizer-preview' => '1' ), home_url( '' ) ),
+			'email_iframe_url'		=> add_query_arg( array( 'action' => 'ts_email_preview', 'nonce' => wp_create_nonce( 'ts_email') ), admin_url( 'admin-ajax.php' ) ),
 			'tracking_iframe_url'	=> add_query_arg( array( 'action' => 'preview_tracking_page' ), home_url( '' ) ),
 			'form_iframe_url'		=> $this->get_tracking_form_preview_url(),
 			'user_plan'				=> get_option( 'user_plan' ),
@@ -225,18 +227,18 @@ class TS4WC_Admin_Customizer {
 	*/	
 	public function wcast_generate_defaults() {
 		$customizer_defaults = array(
-			'tracking_page_type'					=> 'classic',
-			'wc_ast_select_tracking_page_layout'	=> 't_layout_1',
-			'wc_ast_select_border_color'			=> '#cccccc',
-			'wc_ast_select_border_radius'			=> 0,
-			'wc_ast_select_bg_color'				=> '#fafafa',
-			'wc_ast_hide_tracking_provider_image'	=> 0,
-			'wc_ast_link_to_shipping_provider'		=> 1,
-			'wc_ast_hide_tracking_events'			=> 2,
-			'wc_ast_select_font_color'				=> '#333',
-			'wc_ast_select_link_color'				=> '#2271b1',
-			'wc_ast_hide_from_to'					=> 1,
-			'wc_ast_hide_list_mile_tracking'		=> 1,
+			'tracking_page_type'			=> 'modern',
+			'ts_tracking_page_layout'		=> 't_layout_1',
+			'wc_ts_border_color'			=> '#cccccc',
+			'wc_ts_border_radius'			=> 0,
+			'wc_ts_bg_color'				=> '#fafafa',
+			'hide_provider_image'			=> 0,
+			'ts_link_to_carrier'			=> 1,
+			'ts_tracking_events'			=> 2,
+			'wc_ts_font_color'				=> '#333',
+			'wc_ts_link_color'				=> '#2271b1',
+			'ts_hide_from_to'				=> 1,
+			'ts_hide_list_mile_tracking'	=> 1,
 		);
 
 		return apply_filters( 'ast_customizer_defaults', $customizer_defaults );
@@ -262,9 +264,9 @@ class TS4WC_Admin_Customizer {
 			'wcast_' . $status . '_email_heading' => __( $name, 'trackship-for-woocommerce' ),
 			'wcast_' . $status . '_email_content' => __( "Hi there. we thought you'd like to know that your recent order from {site_title} is {$name}", 'trackship-for-woocommerce' ),
 			'wcast_pickupreminder_email_content' => __( "Hi there. we thought you'd like to know that your recent order from {site_title} is pending for pickup", 'trackship-for-woocommerce' ),
-			'wcast_enable_' . $status . '_email'  => '',		
-			'wcast_' . $status . '_show_order_details' => 1,			
-			'wcast_' . $status . '_hide_shipping_item_price' => 1,	
+			'wcast_enable_' . $status . '_email' => '',
+			'wcast_' . $status . '_show_order_details' => 1,
+			'wcast_' . $status . '_hide_shipping_item_price' => 1,
 			'wcast_' . $status . '_show_shipping_address' => 1,
 			'wcast_' . $status . '_show_product_image' => 1,
 			'wcast_' . $status . '_analytics_link' => '',
@@ -295,7 +297,7 @@ class TS4WC_Admin_Customizer {
 
 	public function get_value ( $email_settings, $key, $status = '' ) {
 		//echo $email_settings;
-		//echo '  ' . $key;
+		//echo ' ' . $key;
 		$value = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( $email_settings, $key, $this->wcast_shipment_settings_defaults($status)[$key] );
 		return $value;
 	}
@@ -326,18 +328,18 @@ class TS4WC_Admin_Customizer {
 		$reminder_days = $this->get_value( 'shipment_email_settings', 'pickupreminder_days', $status );
 
 		//Tracking page saved/default vaule
-		$wc_ast_select_bg_color = get_option( 'wc_ast_select_bg_color', $this->defaults['wc_ast_select_bg_color'] );
-		$wc_ast_select_font_color = get_option( 'wc_ast_select_font_color', $this->defaults['wc_ast_select_font_color'] );
-		$wc_ast_select_border_color = get_option( 'wc_ast_select_border_color', $this->defaults['wc_ast_select_border_color'] );
-		$wc_ast_select_border_radius = get_option( 'wc_ast_select_border_radius', $this->defaults['wc_ast_select_border_radius'] );
-		$wc_ast_select_link_color = get_option( 'wc_ast_select_link_color', $this->defaults['wc_ast_select_link_color'] );
-		$tracking_events = get_option( 'wc_ast_hide_tracking_events', $this->defaults['wc_ast_hide_tracking_events'] );
-		$link_to_provider = get_option( 'wc_ast_link_to_shipping_provider', $this->defaults['wc_ast_link_to_shipping_provider'] );
-		$hide_provider_image = get_option( 'wc_ast_hide_tracking_provider_image', $this->defaults['wc_ast_hide_tracking_provider_image'] );
-		$wc_ast_select_tracking_page_layout = get_option( 'wc_ast_select_tracking_page_layout', $this->defaults['wc_ast_select_tracking_page_layout'] );
-		$tracking_page_type = get_option( 'tracking_page_type', $this->defaults['tracking_page_type'] );
-		$hide_shipping_from_to = get_option( 'wc_ast_hide_from_to', $this->defaults['wc_ast_hide_from_to'] );
-		$hide_last_mile = get_option( 'wc_ast_hide_list_mile_tracking', $this->defaults['wc_ast_hide_list_mile_tracking'] );
+		$wc_ts_bg_color = get_trackship_settings( 'wc_ts_bg_color', $this->defaults['wc_ts_bg_color'] );
+		$wc_ts_font_color = get_trackship_settings( 'wc_ts_font_color', $this->defaults['wc_ts_font_color'] );
+		$wc_ts_border_color = get_trackship_settings( 'wc_ts_border_color', $this->defaults['wc_ts_border_color'] );
+		$wc_ts_border_radius = get_trackship_settings( 'wc_ts_border_radius', $this->defaults['wc_ts_border_radius'] );
+		$wc_ts_link_color = get_trackship_settings( 'wc_ts_link_color', $this->defaults['wc_ts_link_color'] );
+		$tracking_events = get_trackship_settings( 'ts_tracking_events', $this->defaults['ts_tracking_events'] );
+		$link_to_provider = get_trackship_settings( 'ts_link_to_carrier', $this->defaults['ts_link_to_carrier'] );
+		$hide_provider_image = get_trackship_settings( 'hide_provider_image', $this->defaults['hide_provider_image'] );
+		$ts_tracking_page_layout = get_trackship_settings( 'ts_tracking_page_layout', $this->defaults['ts_tracking_page_layout'] );
+		$tracking_page_type = get_trackship_settings( 'tracking_page_type', $this->defaults['tracking_page_type'] );
+		$hide_shipping_from_to = get_trackship_settings( 'ts_hide_from_to', $this->defaults['ts_hide_from_to'] );
+		$hide_last_mile = get_trackship_settings( 'ts_hide_list_mile_tracking', $this->defaults['ts_hide_list_mile_tracking'] );
 		$shipped_product_label = get_option( 'shipped_product_label', __( 'Items in this shipment', 'trackship-for-woocommerce' ) );
 		$shipping_address_label = get_option( 'shipping_address_label', __( 'Shipping address', 'trackship-for-woocommerce' ) );
 
@@ -376,21 +378,21 @@ class TS4WC_Admin_Customizer {
 			// SUB-PANELS
 			// Email Content sub panel : Back
 			'back_section1' => array(
-				'id'     => 'email_notifications',
-				'title'       => esc_html__( 'Email Content', 'trackship-for-woocommerce' ),
-				'type'     => 'sub-panel-heading',
+				'id'		=> 'email_notifications',
+				'title'		=> esc_html__( 'Email Content', 'trackship-for-woocommerce' ),
+				'type'		=> 'sub-panel-heading',
 				'parent'	=> 'email_notifications',
-				'show'     => true,
-				'class' => 'sub_options_panel',
+				'show'		=> true,
+				'class'		=> 'sub_options_panel',
 			),
 			// Tracking Page sub panel : Back
 			'back_section3' => array(
-				'id'     => 'tracking_page',
-				'title'       => esc_html__( 'Tracking Page', 'trackship-for-woocommerce' ),
-				'type'     => 'sub-panel-heading',
+				'id'		=> 'tracking_page',
+				'title'		=> esc_html__( 'Tracking Page', 'trackship-for-woocommerce' ),
+				'type'		=> 'sub-panel-heading',
 				'parent'	=> 'tracking_page',
-				'show'     => true,
-				'class' => 'sub_options_panel',
+				'show'		=> true,
+				'class'		=> 'sub_options_panel',
 			),
 
 			// Email Notifications sub panel
@@ -459,52 +461,52 @@ class TS4WC_Admin_Customizer {
 				'show'	=> true,
 			),
 			'tracking_page_layout' => array(
-				'title'    => __( 'Tracker type', 'trackship-for-woocommerce' ),
-				'type'     => 'select',
+				'title'		=> __( 'Tracker type', 'trackship-for-woocommerce' ),
+				'type'		=> 'select',
 				'option_name'=> 'shipment_email_settings',
 				'option_type'=> 'array',
-				'default'  => $tracking_page_layout,
-				'show'     => true,
-				'options'  => array(
+				'default'	=> $tracking_page_layout,
+				'show'		=> true,
+				'options'	=> array(
 					't_layout_2' => __( 'Progress bar', 'trackship-for-woocommerce' ),
 					't_layout_1' => __( 'Icons', 'trackship-for-woocommerce' ),
 					't_layout_3' => __( 'Single icon', 'trackship-for-woocommerce' ),
 				)
 			),
 			'bg_color' => array(
-				'title'    => esc_html__( 'Widget background color', 'trackship-for-woocommerce' ),
-				'type'     => 'color',
+				'title'		=> esc_html__( 'Widget background color', 'trackship-for-woocommerce' ),
+				'type'		=> 'color',
 				'option_name'=> 'shipment_email_settings',
 				'option_type'=> 'array',
-				'default'  => $bg_color,
-				'show'     => true,
+				'default'	=> $bg_color,
+				'show'		=> true,
 				'class'		=> 'colorset',
 			),
 			'font_color' => array(
-				'title'    => esc_html__( 'Widget font color', 'trackship-for-woocommerce' ),
-				'type'     => 'color',
+				'title'		=> esc_html__( 'Widget font color', 'trackship-for-woocommerce' ),
+				'type'		=> 'color',
 				'option_name'=> 'shipment_email_settings',
 				'option_type'=> 'array',
-				'default'  => $font_color,
-				'show'     => true,
+				'default'	=> $font_color,
+				'show'		=> true,
 				'class'		=> 'colorset',
 			),
 			'border_color' => array(
-				'title'    => esc_html__( 'Widget border color', 'trackship-for-woocommerce' ),
-				'type'     => 'color',
+				'title'		=> esc_html__( 'Widget border color', 'trackship-for-woocommerce' ),
+				'type'		=> 'color',
 				'option_name'=> 'shipment_email_settings',
 				'option_type'=> 'array',
-				'default'  => $border_color,
-				'show'     => true,
+				'default'	=> $border_color,
+				'show'		=> true,
 				'class'		=> 'colorset',
 			),
 			'link_color' => array(
-				'title'    => esc_html__( 'Links color', 'trackship-for-woocommerce' ),
-				'type'     => 'color',
+				'title'		=> esc_html__( 'Links color', 'trackship-for-woocommerce' ),
+				'type'		=> 'color',
 				'option_name'=> 'shipment_email_settings',
 				'option_type'=> 'array',
-				'default'  => $link_color,
-				'show'     => true,
+				'default'	=> $link_color,
+				'show'		=> true,
 				'class'		=> 'colorset',
 			),
 			// 'heading4'	=> array(
@@ -515,40 +517,40 @@ class TS4WC_Admin_Customizer {
 			// 	'show'	=> true,
 			// ),
 			'track_button_Text' => array(
-				'title'    => esc_html__( 'Track button text', 'trackship-for-woocommerce' ),
-				'default'  => $track_button_Text,
+				'title'		=> esc_html__( 'Track button text', 'trackship-for-woocommerce' ),
+				'default'	=> $track_button_Text,
 				'placeholder' => $track_button_Text,
-				'type'     => 'text',
+				'type'		=> 'text',
 				'option_name'=> 'shipment_email_settings',
 				'option_type'=> 'array',
-				'show'     => true,
+				'show'		=> true,
 				'class' 	=> 'track_button_Text',
 			),
 			'track_button_color' => array(
-				'title'    => esc_html__( 'Button color', 'trackship-for-woocommerce' ),
-				'type'     => 'color',
+				'title'		=> esc_html__( 'Button color', 'trackship-for-woocommerce' ),
+				'type'		=> 'color',
 				'option_name'=> 'shipment_email_settings',
 				'option_type'=> 'array',
-				'default'  => $track_button_color,
-				'show'     => true,
+				'default'	=> $track_button_color,
+				'show'		=> true,
 				'class'		=> 'colorset',
 			),
 			'track_button_text_color' => array(
-				'title'    => esc_html__( 'Button font color', 'trackship-for-woocommerce' ),
-				'type'     => 'color',
+				'title'		=> esc_html__( 'Button font color', 'trackship-for-woocommerce' ),
+				'type'		=> 'color',
 				'option_name'=> 'shipment_email_settings',
 				'option_type'=> 'array',
-				'default'  => $track_button_text_color,
-				'show'     => true,
+				'default'	=> $track_button_text_color,
+				'show'		=> true,
 				'class'		=> 'colorset',
 			),
 			'track_button_border_radius' => array(
-				'title'    => esc_html__( 'Track Button radius', 'trackship-for-woocommerce' ),
-				'type'     => 'range',
+				'title'		=> esc_html__( 'Track Button radius', 'trackship-for-woocommerce' ),
+				'type'		=> 'range',
 				'option_name'=> 'shipment_email_settings',
 				'option_type'=> 'array',
-				'default'  => $track_button_border_radius,
-				'show'     => true,
+				'default'	=> $track_button_border_radius,
+				'show'		=> true,
 				'min'		=> 0,
 				'max'		=> 10,
 			),
@@ -570,51 +572,51 @@ class TS4WC_Admin_Customizer {
 				'parent'=> 'widget_style',
 				'show'	=> true,
 			),
-			'wc_ast_select_bg_color' => array(
-				'title'    => esc_html__( 'Widget Background color', 'trackship-for-woocommerce' ),
-				'type'     => 'color',
-				'default'  => $wc_ast_select_bg_color,
-				'show'     => true,
+			'wc_ts_bg_color' => array(
+				'title'		=> esc_html__( 'Widget Background color', 'trackship-for-woocommerce' ),
+				'type'		=> 'color',
+				'default'	=> $wc_ts_bg_color,
+				'show'		=> true,
 				'class'		=> 'colorset',
-				'option_name'=> 'wc_ast_select_bg_color',
-				'option_type'=> 'key',
+				'option_name'=> 'trackship_settings',
+				'option_type'=> 'array',
 			),
-			'wc_ast_select_font_color' => array(
-				'title'    => esc_html__( 'Font color', 'trackship-for-woocommerce' ),
-				'type'     => 'color',
-				'default'  => $wc_ast_select_font_color,
-				'show'     => true,
+			'wc_ts_font_color' => array(
+				'title'		=> esc_html__( 'Font color', 'trackship-for-woocommerce' ),
+				'type'		=> 'color',
+				'default'	=> $wc_ts_font_color,
+				'show'		=> true,
 				'class'		=> 'colorset',
-				'option_name'=> 'wc_ast_select_font_color',
-				'option_type'=> 'key',
+				'option_name'=> 'trackship_settings',
+				'option_type'=> 'array',
 			),
-			'wc_ast_select_border_color' => array(
-				'title'    => esc_html__( 'Widget Border color', 'trackship-for-woocommerce' ),
-				'type'     => 'color',
-				'default'  => $wc_ast_select_border_color,
-				'show'     => true,
+			'wc_ts_border_color' => array(
+				'title'		=> esc_html__( 'Widget Border color', 'trackship-for-woocommerce' ),
+				'type'		=> 'color',
+				'default'	=> $wc_ts_border_color,
+				'show'		=> true,
 				'class'		=> 'colorset',
-				'option_name'=> 'wc_ast_select_border_color',
-				'option_type'=> 'key',
+				'option_name'=> 'trackship_settings',
+				'option_type'=> 'array',
 			),
-			'wc_ast_select_border_radius' => array(
+			'wc_ts_border_radius' => array(
 				'title'		=> esc_html__( 'Widget Border radius', 'trackship-for-woocommerce' ),
 				'type'		=> 'range',
-				'option_name'=> 'wc_ast_select_border_radius',
-				'option_type'=> 'key',
-				'default'	=> $wc_ast_select_border_radius,
+				'default'	=> $wc_ts_border_radius,
 				'show'		=> true,
 				'min'		=> 0,
 				'max'		=> 10,
+				'option_name'=> 'trackship_settings',
+				'option_type'=> 'array',
 			),
-			'wc_ast_select_link_color' => array(
+			'wc_ts_link_color' => array(
 				'title'		=> esc_html__( 'Links color', 'trackship-for-woocommerce' ),
 				'type'		=> 'color',
-				'default'	=> $wc_ast_select_link_color,
+				'default'	=> $wc_ts_link_color,
 				'show'		=> true,
 				'class'		=> 'colorset',
-				'option_name'=> 'wc_ast_select_link_color',
-				'option_type'=> 'key',
+				'option_name'=> 'trackship_settings',
+				'option_type'=> 'array',
 			),
 			'form_button_color' => array(
 				'title'		=> esc_html__( 'Button color', 'trackship-for-woocommerce' ),
@@ -660,10 +662,10 @@ class TS4WC_Admin_Customizer {
 					'classic' => __( 'Classic', 'trackship-for-woocommerce' ),
 					'modern' => __( 'Modern', 'trackship-for-woocommerce' ),
 				),
-				'option_name'=> 'tracking_page_type',
-				'option_type'=> 'key',
+				'option_name'=> 'trackship_settings',
+				'option_type'=> 'array',
 			),
-			'wc_ast_hide_tracking_events' => array(
+			'ts_tracking_events' => array(
 				'title'		=> esc_html__( 'Tracking event display', 'trackship-for-woocommerce' ),
 				'type'		=> 'select',
 				'default'	=> $tracking_events,
@@ -673,54 +675,54 @@ class TS4WC_Admin_Customizer {
 					1 => __( 'Hide tracking events', 'trackship-for-woocommerce' ),
 					2 => __( 'Show last events & expand', 'trackship-for-woocommerce' ),
 				),
-				'option_name'=> 'wc_ast_hide_tracking_events',
-				'option_type'=> 'key',
+				'option_name'=> 'trackship_settings',
+				'option_type'=> 'array',
 			),
-			'wc_ast_select_tracking_page_layout' => array(
+			'ts_tracking_page_layout' => array(
 				'title'		=> __( 'Tracker type', 'trackship-for-woocommerce' ),
 				'type'		=> 'select',
-				'default'	=> $wc_ast_select_tracking_page_layout,
+				'default'	=> $ts_tracking_page_layout,
 				'show'		=> true,
 				'options'	=> array(
 					't_layout_2' => __( 'Progress bar', 'trackship-for-woocommerce' ),
 					't_layout_1' => __( 'Icons', 'trackship-for-woocommerce' ),
 					't_layout_3' => __( 'Single icon', 'trackship-for-woocommerce' ),
 				),
-				'option_name'=> 'wc_ast_select_tracking_page_layout',
-				'option_type'=> 'key',
+				'option_name'=> 'trackship_settings',
+				'option_type'=> 'array',
 			),
-			'wc_ast_link_to_shipping_provider' => array(
+			'ts_link_to_carrier' => array(
 				'title'		=> __( 'Enable tracking # link to carrier', 'trackship-for-woocommerce' ),
 				'default'	=> $link_to_provider,
 				'type'		=> 'checkbox',
 				'show'		=> true,
-				'option_name'=> 'wc_ast_link_to_shipping_provider',
-				'option_type'=> 'key',
+				'option_name'=> 'trackship_settings',
+				'option_type'=> 'array',
 			),
-			'wc_ast_hide_tracking_provider_image' => array(
+			'hide_provider_image' => array(
 				'title'		=> __( 'Hide the shipping provider logo', 'trackship-for-woocommerce' ),
 				'default'	=> $hide_provider_image,
 				'type'		=> 'checkbox',
 				'show'		=> true,
-				'option_name'=> 'wc_ast_hide_tracking_provider_image',
-				'option_type'=> 'key',
+				'option_name'=> 'trackship_settings',
+				'option_type'=> 'array',
 			),
-			'wc_ast_hide_from_to' => array(
+			'ts_hide_from_to' => array(
 				'title'		=> __( 'Hide shipping from-to', 'trackship-for-woocommerce' ),
 				'default'	=> $hide_shipping_from_to,
 				'type'		=> 'checkbox',
 				'show'		=> true,
-				'option_name'=> 'wc_ast_hide_from_to',
-				'option_type'=> 'key',
+				'option_name'=> 'trackship_settings',
+				'option_type'=> 'array',
 			),
-			'wc_ast_hide_list_mile_tracking' => array(
+			'ts_hide_list_mile_tracking' => array(
 				'title'		=> __( 'Hide delivery tracking number', 'trackship-for-woocommerce' ),
 				'default'	=> $hide_last_mile,
 				'type'		=> 'checkbox',
 				'tip-tip'	=> __( 'The delivery tracking number will display if the shipment is getting a different tracking number at the destination country from the local postal service (i.e 4PX -> USPS)', 'trackship-for-woocommerce' ),
 				'show'		=> true,
-				'option_name'=> 'wc_ast_hide_list_mile_tracking',
-				'option_type'=> 'key',
+				'option_name'=> 'trackship_settings',
+				'option_type'=> 'array',
 			),
 			'show_trackship_branding' => array(
 				'title'		=> __( 'Display TrackShip branding', 'trackship-for-woocommerce' ),
@@ -1043,7 +1045,7 @@ class TS4WC_Admin_Customizer {
 
 			if ( isset($array['type']) && 'sub-panel' == $array['type'] ) {
 				?>
-				<li id="<?php isset($array['id']) ? esc_attr_e($array['id']) : ''; ?>"  data-type="<?php isset($array['parent']) ? esc_html_e($array['parent']) : ''; ?>" data-label="<?php isset($array['title']) ? esc_html_e($array['title']) : ''; ?>" class="zoremmail-sub-panel-title <?php isset($array['class']) ? esc_attr_e($array['class']) : ''; ?> <?php isset($array['parent']) ? esc_attr_e($array['parent']) : ''; ?>">
+				<li id="<?php isset($array['id']) ? esc_attr_e($array['id']) : ''; ?>" data-type="<?php isset($array['parent']) ? esc_html_e($array['parent']) : ''; ?>" data-label="<?php isset($array['title']) ? esc_html_e($array['title']) : ''; ?>" class="zoremmail-sub-panel-title <?php isset($array['class']) ? esc_attr_e($array['class']) : ''; ?> <?php isset($array['parent']) ? esc_attr_e($array['parent']) : ''; ?>">
 					<span><?php isset($array['title']) ? esc_html_e($array['title']) : ''; ?></span>
 					<span class="dashicons dashicons-arrow-right-alt2"></span>
 				</li>
@@ -1122,13 +1124,13 @@ class TS4WC_Admin_Customizer {
 									<br>
 									<span class="menu-sub-tooltip"><?php isset($array['desc']) ? esc_html_e($array['desc']) : ''; ?></span>
 								</div>
-							<?php } else if ( isset($array['type']) &&  'color' == $array['type'] ) { ?>
+							<?php } else if ( isset($array['type']) && 'color' == $array['type'] ) { ?>
 								<div class="menu-sub-field">
 									<input type="text" name="<?php esc_attr_e( $id ); ?>" id="<?php esc_attr_e( $id ); ?>" class="input-text regular-input zoremmail-input <?php esc_html_e($array['type']); ?> <?php isset($array['class']) ? esc_attr_e($array['class']) : ''; ?>" value="<?php echo esc_html( $array_default ); ?>" placeholder="<?php isset($array['placeholder']) ? esc_attr_e($array['placeholder']) : ''; ?>">
 									<br>
 									<span class="menu-sub-tooltip"><?php isset($array['desc']) ? esc_html_e($array['desc']) : ''; ?></span>
 								</div>
-							<?php } else if ( isset($array['type']) &&  'checkbox' == $array['type'] ) { ?>
+							<?php } else if ( isset($array['type']) && 'checkbox' == $array['type'] ) { ?>
 								<?php //echo '<pre>';print_r($array);echo '</pre>'; ?>
 								<div class="menu-sub-field">
 									<label class="menu-sub-title <?php echo ( isset($array['required']) && 'pro' == $array['required'] ) && ( isset($array['plan']) && $array['plan'] ) ? 'free_plan' : ''; ?>">
@@ -1166,7 +1168,7 @@ class TS4WC_Admin_Customizer {
 											<label class="tgl-btn" for="<?php esc_attr_e( $id ); ?>"></label>
 										</span>
 										<?php /* translators: %s: search for a tag */ ?>
-										<label for="<?php esc_attr_e( $id ); ?>" class="shipment_email_label"><?php printf( esc_html__( 'Enable  %1$s email', 'trackship-for-woocommerce' ), esc_html($array['name']) ); ?></label>
+										<label for="<?php esc_attr_e( $id ); ?>" class="shipment_email_label"><?php printf( esc_html__( 'Enable %1$s email', 'trackship-for-woocommerce' ), esc_html($array['name']) ); ?></label>
 									</label>
 								</div>
 							<?php } else if ( isset($array['type']) && 'range' == $array['type'] ) { ?>
@@ -1232,9 +1234,10 @@ class TS4WC_Admin_Customizer {
 	 */
 	public function get_email_preview_url( $status ) {
 		return add_query_arg( array(
-			'shipment-email-customizer-preview' => '1',
-			'status'	=> $status
-		), home_url( '' ) );
+			'action'	=> 'ts_email_preview',
+			'status'	=> $status,
+			'nonce'		=> wp_create_nonce('ts_email')
+		), admin_url( 'admin-ajax.php' ) );
 	}
 
 	/**
@@ -1278,26 +1281,26 @@ class TS4WC_Admin_Customizer {
 			$order = new WC_Order();
 			// Other order properties
 			$order->set_props( array(
-				'id'					=> 1,
-				'status'				=> ( 'processing' ),
-				'shipping_first_name'	=> 'Sherlock',
-				'shipping_last_name'	=> 'Holmes',
-				'shipping_company'		=> 'Detectives Ltd.',
-				'shipping_address_1'	=> '221B Baker Street',
-				'shipping_city'			=> 'London',
-				'shipping_postcode'		=> 'NW1 6XE',
-				'shipping_country'		=> 'GB',
-				'billing_first_name'	=> 'Sherlock',
-				'billing_last_name'		=> 'Holmes',
-				'billing_company'		=> 'Detectives Ltd.',
-				'billing_address_1'		=> '221B Baker Street',
-				'billing_city'			=> 'London',
-				'billing_postcode'		=> 'NW1 6XE',
-				'billing_country'		=> 'GB',
-				'billing_email'			=> 'sherlock@holmes.co.uk',
-				'billing_phone'			=> '02079304832',
-				'date_created'			=> gmdate( 'Y-m-d H:i:s' ),
-				'total'					=> 24.90,
+				'id'				=> 1,
+				'status'			=> ( 'processing' ),
+				'shipping_first_name'=> 'Sherlock',
+				'shipping_last_name'=> 'Holmes',
+				'shipping_company'	=> 'Detectives Ltd.',
+				'shipping_address_1'=> '221B Baker Street',
+				'shipping_city'		=> 'London',
+				'shipping_postcode'	=> 'NW1 6XE',
+				'shipping_country'	=> 'GB',
+				'billing_first_name'=> 'Sherlock',
+				'billing_last_name'	=> 'Holmes',
+				'billing_company'	=> 'Detectives Ltd.',
+				'billing_address_1'	=> '221B Baker Street',
+				'billing_city'		=> 'London',
+				'billing_postcode'	=> 'NW1 6XE',
+				'billing_country'	=> 'GB',
+				'billing_email'		=> 'sherlock@holmes.co.uk',
+				'billing_phone'		=> '02079304832',
+				'date_created'		=> gmdate( 'Y-m-d H:i:s' ),
+				'total'				=> 24.90,
 			) );
 
 			// Item #1
@@ -1385,6 +1388,23 @@ class TS4WC_Admin_Customizer {
 			echo json_encode( array('success' => 'true' ) );
 			die();
 		}
+	}
+
+	public function ts_email_preview_callback() {
+
+		$nonce = isset( $_REQUEST['nonce'] ) ? sanitize_text_field( $_REQUEST['nonce'] ) : '' ;
+		if ( !wp_verify_nonce( $nonce, 'ts_email' ) ) {
+			wp_die('Please refresh the page, nonce verification failed.');
+		}
+
+		$status = isset( $_REQUEST['status'] ) ? $_REQUEST['status'] : false;
+
+		if ( $status && in_array( $status, [ 'in_transit', 'available_for_pickup', 'out_for_delivery', 'failure', 'on_hold', 'exception', 'return_to_sender', 'delivered', 'pickup_reminder' ]) ) {
+			$preview = new TSWC_Email_Customizer_Preview( $status );
+			$preview->set_up_preview();
+		} else {
+		}
+		wp_die();
 	}
 }
 

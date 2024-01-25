@@ -268,15 +268,7 @@ class Trackship_For_Woocommerce {
 		//load customizer
 		if ( $trackship_apikey ) {
 			require_once $this->get_plugin_path() . '/includes/customizer/trackship-customizer.php';
-			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-intransit-email-customizer.php';
-			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-outfordelivery-email-customizer.php';
-			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-availableforpickup-email-customizer.php';
-			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-failure-email-customizer.php';
-			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-onhold-email-customizer.php';
-			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-exception-email-customizer.php';
-			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-returntosender-email-customizer.php';
-			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-delivered-email-customizer.php';
-			require_once $this->get_plugin_path() . '/includes/customizer/class-wc-pickupreminder-email-customizer.php';
+			require_once $this->get_plugin_path() . '/includes/customizer/class-trackship-email-preview.php';
 		}
 		require_once $this->get_plugin_path() . '/includes/trackship-email-manager.php';
 		
