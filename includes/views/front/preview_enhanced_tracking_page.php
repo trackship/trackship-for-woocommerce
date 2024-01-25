@@ -32,7 +32,7 @@
 	<?php } ?>
 	<?php if ( $font_color ) { ?>
 		body .col.enhanced_tracking_detail, body .enhanced_content label {
-			color: <?php echo esc_html( $font_color ); ?> !important;
+			color: <?php echo esc_html( $font_color ); ?>;
 		}				
 		span.accordian-arrow.right {
 			border-color: <?php echo esc_html( $font_color ); ?>;

@@ -20,9 +20,9 @@ class WC_Trackship_Install {
 		$this->shipment_table_meta = $wpdb->prefix . 'trackship_shipment_meta';
 		$this->log_table = $wpdb->prefix . 'zorem_email_sms_log';
 
-		$this->init();			
+		$this->init();
 	}
-	
+
 	/**
 	 * Instance of this class.
 	 *
@@ -47,7 +47,7 @@ class WC_Trackship_Install {
 	/*
 	* init from parent mail class
 	*/
-	public function init() {			
+	public function init() {
 		add_action( 'admin_init', array( $this, 'update_database_check' ) );
 		add_action( 'wp_ajax_update_trackship_providers', array( $this, 'update_trackship_providers' ) );
 	}
@@ -273,6 +273,48 @@ class WC_Trackship_Install {
 			update_trackship_settings( 'trackship_db', '1.24' );
 			update_option( 'trackship_db', '1.24' );
 		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.25', '<' ) ) {
+			$wc_ast_select_bg_color = get_option( 'wc_ast_select_bg_color' );
+			$wc_ast_select_font_color = get_option( 'wc_ast_select_font_color' );
+			$wc_ast_select_border_color = get_option( 'wc_ast_select_border_color' );
+			$wc_ast_select_border_radius = get_option( 'wc_ast_select_border_radius' );
+			$wc_ast_select_link_color = get_option( 'wc_ast_select_link_color' );
+			$tracking_page_type = get_option( 'tracking_page_type' );
+			$wc_ast_hide_tracking_events = get_option( 'wc_ast_hide_tracking_events' );
+			$wc_ast_select_tracking_page_layout = get_option( 'wc_ast_select_tracking_page_layout' );
+			$wc_ast_link_to_shipping_provider = get_option( 'wc_ast_link_to_shipping_provider' );
+			$wc_ast_hide_tracking_provider_image = get_option( 'wc_ast_hide_tracking_provider_image' );
+			$wc_ast_hide_from_to = get_option( 'wc_ast_hide_from_to' );
+			$wc_ast_hide_list_mile_tracking = get_option( 'wc_ast_hide_list_mile_tracking' );
+
+			update_trackship_settings( 'wc_ts_bg_color', $wc_ast_select_bg_color );
+			update_trackship_settings( 'wc_ts_font_color', $wc_ast_select_font_color );
+			update_trackship_settings( 'wc_ts_border_color', $wc_ast_select_border_color );
+			update_trackship_settings( 'wc_ts_border_radius', $wc_ast_select_border_radius );
+			update_trackship_settings( 'wc_ts_link_color', $wc_ast_select_link_color );
+			update_trackship_settings( 'tracking_page_type', $tracking_page_type );
+			update_trackship_settings( 'ts_tracking_events', $wc_ast_hide_tracking_events );
+			update_trackship_settings( 'ts_tracking_page_layout', $wc_ast_select_tracking_page_layout );
+			update_trackship_settings( 'ts_link_to_carrier', $wc_ast_link_to_shipping_provider );
+			update_trackship_settings( 'hide_provider_image', $wc_ast_hide_tracking_provider_image );
+			update_trackship_settings( 'ts_hide_from_to', $wc_ast_hide_from_to );
+			update_trackship_settings( 'ts_hide_list_mile_tracking', $wc_ast_hide_list_mile_tracking );
+
+			delete_option( 'wc_ast_select_bg_color' );
+			delete_option( 'wc_ast_select_font_color' );
+			delete_option( 'wc_ast_select_border_color' );
+			delete_option( 'wc_ast_select_border_radius' );
+			delete_option( 'wc_ast_select_link_color' );
+			delete_option( 'tracking_page_type' );
+			delete_option( 'wc_ast_hide_tracking_events' );
+			delete_option( 'wc_ast_select_tracking_page_layout' );
+			delete_option( 'wc_ast_link_to_shipping_provider' );
+			delete_option( 'wc_ast_hide_tracking_provider_image' );
+			delete_option( 'wc_ast_hide_from_to' );
+			delete_option( 'wc_ast_hide_list_mile_tracking' );
+			update_option( 'trackship_db', '1.25' );
+		}
 	}
 
 	public function update_trackship_providers() {
@@ -295,7 +337,7 @@ class WC_Trackship_Install {
 				id mediumint(9) NOT NULL AUTO_INCREMENT,
 				provider_name varchar(500) DEFAULT '' NOT NULL,
 				ts_slug text NULL DEFAULT NULL,
-				PRIMARY KEY  (id)
+				PRIMARY KEY (id)
 			) $charset_collate;";
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 			dbDelta( $sql );
@@ -339,7 +381,7 @@ class WC_Trackship_Install {
 		global $wpdb;
 		$log_table = $this->log_table;
 		if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $log_table ) ) ) {
-			$charset_collate = $wpdb->get_charset_collate();			
+			$charset_collate = $wpdb->get_charset_collate();
 			$sql = "CREATE TABLE {$wpdb->prefix}zorem_email_sms_log (
 				`id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
 				`order_id` BIGINT(20) ,

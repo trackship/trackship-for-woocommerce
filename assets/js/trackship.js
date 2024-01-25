@@ -117,7 +117,7 @@ jQuery(document).ready(function () {
 	
 	if (jQuery.fn.wpColorPicker) {
 
-		jQuery('#wc_ast_select_border_color').wpColorPicker({
+		jQuery('#wc_ts_border_color').wpColorPicker({
 			change: function (e, ui) {
 				var color = ui.color.toString();
 				jQuery('#tracking_preview_iframe').contents().find('.col.tracking-detail').css('border', '1px solid ' + color);
@@ -138,15 +138,15 @@ jQuery(document).on("change", ".select_t_layout_section .radio-img", function ()
 	jQuery('.tracking_page_preview').prop("disabled", true);
 });
 
-jQuery(document).on("click", "#wc_ast_link_to_shipping_provider", function () {
+jQuery(document).on("click", "#ts_link_to_carrier", function () {
 	jQuery('.tracking_page_preview').prop("disabled", true);
 });
 
-jQuery(document).on("click", "#wc_ast_hide_tracking_provider_image", function () {
+jQuery(document).on("click", "#hide_provider_image", function () {
 	jQuery('.tracking_page_preview').prop("disabled", true);
 });
 
-jQuery(document).on("click", "#wc_ast_hide_tracking_events", function () {
+jQuery(document).on("click", "#ts_tracking_events", function () {
 	jQuery('.tracking_page_preview').prop("disabled", true);
 });
 

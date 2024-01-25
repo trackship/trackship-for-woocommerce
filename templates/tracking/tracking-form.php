@@ -9,12 +9,12 @@ if ( ! defined( 'ABSPATH' ) ) {
  * 
 */
 $tracking_page_defaults = trackship_admin_customizer();
-$link_color = get_option( 'wc_ast_select_link_color', $tracking_page_defaults->defaults['wc_ast_select_link_color'] );
+$link_color = get_trackship_settings( 'wc_ts_link_color', $tracking_page_defaults->defaults['wc_ts_link_color'] );
 
-$bg_color = get_option( 'wc_ast_select_bg_color', $tracking_page_defaults->defaults['wc_ast_select_bg_color'] );
-$font_color = get_option( 'wc_ast_select_font_color', $tracking_page_defaults->defaults['wc_ast_select_font_color'] );
-$border_color = get_option( 'wc_ast_select_border_color', $tracking_page_defaults->defaults['wc_ast_select_border_color'] );
-$border_radius = get_option('wc_ast_select_border_radius', $tracking_page_defaults->defaults['wc_ast_select_border_radius'] );
+$bg_color = get_trackship_settings( 'wc_ts_bg_color', $tracking_page_defaults->defaults['wc_ts_bg_color'] );
+$font_color = get_trackship_settings( 'wc_ts_font_color', $tracking_page_defaults->defaults['wc_ts_font_color'] );
+$border_color = get_trackship_settings( 'wc_ts_border_color', $tracking_page_defaults->defaults['wc_ts_border_color'] );
+$border_radius = get_trackship_settings('wc_ts_border_radius', $tracking_page_defaults->defaults['wc_ts_border_radius'] );
 $show_trackship_branding = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'show_trackship_branding', 1 );
 $form_button_Text = $tracking_page_defaults->get_value( 'tracking_form_settings', 'form_button_Text' );
 $form_button_color = $tracking_page_defaults->get_value( 'tracking_form_settings', 'form_button_color' );

@@ -34,12 +34,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php $this->get_products_detail_in_shipment( $order_id, $row, $row->shipping_provider, $tracking_number ); ?>
 	</div>
 </div>
-<div class="enhanced_notifications_section">
-	<div data-label="enhanced_notifications" class="enhanced_heading ">
-		<span><?php esc_html_e('Notifications', 'trackship-for-woocommerce' ); ?></span>
-		<span class="accordian-arrow right"></span>
+<?php if ( get_trackship_settings( 'enable_email_widget' ) ) { ?>
+	<div class="enhanced_notifications_section">
+		<div data-label="enhanced_notifications" class="enhanced_heading ">
+			<span><?php esc_html_e('Notifications', 'trackship-for-woocommerce' ); ?></span>
+			<span class="accordian-arrow right"></span>
+		</div>
+		<div class="enhanced_content enhanced_notifications">
+			<?php $this->get_notifications_option( $order_id ); ?>
+		</div>
 	</div>
-	<div class="enhanced_content enhanced_notifications">
-		<?php $this->get_notifications_option( $order_id ); ?>
-	</div>
-</div>
+<?php } ?>
