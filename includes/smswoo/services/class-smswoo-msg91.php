@@ -22,6 +22,7 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 	class SMSWOO_Msg91 extends SMSWOO_Sms_Gateway {
 
 		public $new_status;
+		public $_msg91_authkey;
 
 		/**
 		 * Constructor

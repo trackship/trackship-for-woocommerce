@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<div class="tracking_number_wrap <?php echo $url_tracking == str_replace( ' ', '', $tracking_number ) ? 'checked' : ''; ?>">
+<div class="tracking_number_wrap <?php echo str_replace( ' ', '', $tracking_number ) == $url_tracking ? 'checked' : ''; ?>">
 	<div style="display: flex;">
 		<?php if ( ! $hide_tracking_provider_image && $provider_image ) { ?>
 			<div class="provider_image_div" >

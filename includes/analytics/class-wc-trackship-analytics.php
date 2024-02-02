@@ -85,7 +85,7 @@ class WC_Trackship_Analytics {
 		}
 		
 		$script_asset_path = trackship_for_woocommerce()->get_plugin_path() . '/includes/analytics/assets/index.asset.php';
-		$script_asset      = file_exists( $script_asset_path ) ? require( $script_asset_path ) : array( 'dependencies' => array() );		
+		$script_asset = file_exists( $script_asset_path ) ? require( $script_asset_path ) : array( 'dependencies' => array() );		
 	
 		wp_register_script( 'trackship-analytics', trackship_for_woocommerce()->plugin_dir_url() . 'includes/analytics/assets/index.js', $script_asset['dependencies'], trackship_for_woocommerce()->version, true );
 		wp_register_style( 'trackship-analytics', trackship_for_woocommerce()->plugin_dir_url() . 'includes/analytics/assets/index.css', array(), trackship_for_woocommerce()->version );

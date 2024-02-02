@@ -15,7 +15,9 @@ if ( ! class_exists( 'SMSWOO_Clicksend' ) ) {
 
 	class SMSWOO_Clicksend extends SMSWOO_Sms_Gateway {
 		
-		private $_clicksend_authkey;
+		private $_clicksend_username;
+		private $_clicksend_key;
+		public $new_status;
 		
 		/**
 		* Constructor

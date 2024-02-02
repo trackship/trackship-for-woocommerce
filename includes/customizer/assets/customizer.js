@@ -29,7 +29,7 @@ function text_contain (state) {
 };
 
 jQuery(document).ready(function(){
-    jQuery('.zoremmail-input.color').wpColorPicker();
+	jQuery('.zoremmail-input.color').wpColorPicker();
 	jQuery( '#shipmentStatus' ).select2({
 		// templateSelection: text_contain,
 		minimumResultsForSearch: Infinity
@@ -53,7 +53,7 @@ jQuery(document).ready(function(){
 	// 	save_customizer_setting();
 	// });
 	
-    jQuery( ".zoremmail-layout-content-media .dashicons" ).on( "click", function() {
+	jQuery( ".zoremmail-layout-content-media .dashicons" ).on( "click", function() {
 		jQuery(this).parent().siblings().removeClass('last-checked');
 		var width = jQuery(this).parent().data('width');
 		var iframeWidth = jQuery(this).parent().data('iframe-width');
@@ -157,8 +157,8 @@ jQuery( ".zoremmail-input.text, .zoremmail-input.textarea" ).keyup( function( ev
 jQuery(document).on("click", ".zoremmail-menu-submenu-title", function(){
 	change_submenu_item();
 	if (jQuery(this).next('.zoremmail-menu-contain').hasClass('active')) {
-        jQuery(this).next('.zoremmail-menu-contain').removeClass('active');
-    } else {
+		jQuery(this).next('.zoremmail-menu-contain').removeClass('active');
+	} else {
 		jQuery('.zoremmail-menu-submenu-title').find('.dashicons').removeClass('dashicons-arrow-down-alt2').addClass('dashicons-arrow-right-alt2');
 		jQuery('.zoremmail-menu-contain').removeClass('active');
 		jQuery(this).next('.zoremmail-menu-contain').addClass('active');
@@ -382,10 +382,10 @@ jQuery(document).on("change", "#form_tab_view", function () {
 */
 
 jQuery(document).on("click", "#zoremmail_email_options .button-trackship", function(){
-    "use strict";
+	"use strict";
 	var form = jQuery('#zoremmail_email_options');
 	var btn = jQuery('#zoremmail_email_options .button-trackship');
-    jQuery.ajax({
+	jQuery.ajax({
 		url: ajaxurl,//csv_workflow_update,		
 		data: form.serialize(),
 		type: 'POST',
@@ -692,7 +692,7 @@ jQuery(document).on("click", ".zoremmail-panel-title", function(){
 	var shipmentStatus = jQuery('#shipmentStatus').val();
 	//For open section of perticular panel
 	jQuery('.customize-section-title').each(function(index, element) {
-		if ( jQuery(this).data('id') ===  id ) {
+		if ( jQuery(this).data('id') === id ) {
 			jQuery(this).addClass('open');
 		} else {
 			jQuery(this).removeClass('open');
@@ -751,7 +751,7 @@ jQuery(document).on("click", ".zoremmail-sub-panel-title", function(){
 	jQuery( '.zoremmail-sub-panel-heading.'+ type +' .sub_heading' ).html( label );
 
 	jQuery('.zoremmail-menu-submenu-title').each(function(index, element) {
-		if ( jQuery(this).data('id') ===  id ) {
+		if ( jQuery(this).data('id') === id ) {
 			jQuery(this).addClass('open');
 			jQuery(this).next('.zoremmail-menu-contain').addClass('active');
 		} else {

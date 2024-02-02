@@ -18,6 +18,7 @@ if ( ! class_exists( 'SMSWOO_Twilio' ) ) {
 		private $_twilio_sid;
 
 		private $_twilio_auth_token;
+		public $new_status;
 
 		/**
 		 * Constructor

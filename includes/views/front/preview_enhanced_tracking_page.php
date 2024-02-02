@@ -72,7 +72,7 @@
 		<div class="enhanced_tracking_content">
 			<div class="est_delivery_section">
 				<span class="est-delivery-date <?php echo esc_html($status); ?>">
-					<?php echo 'delivered' != $status ? __( 'Est. Delivery Date', 'trackship-for-woocommerce' ) : __( 'Delivered on', 'trackship-for-woocommerce' ); ?> :
+					<?php 'delivered' != $status ? esc_html_e( 'Est. Delivery Date', 'trackship-for-woocommerce' ) : esc_html_e( 'Delivered on', 'trackship-for-woocommerce' ); ?> :
 					<strong>Friday, Oct 02</strong>
 				</span>
 				<span class="tracking_details_switch">
