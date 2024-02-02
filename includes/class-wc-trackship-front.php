@@ -630,7 +630,7 @@ class WC_TrackShip_Front {
 			?>
 			<div class="est_delivery_section">
 				<span class="est-delivery-date <?php echo esc_html($row->shipment_status); ?>">
-					<?php echo 'delivered' != $row->shipment_status ? __( 'Est. Delivery Date', 'trackship-for-woocommerce' ) : __( 'Delivered on', 'trackship-for-woocommerce' ); ?> : 
+					<?php 'delivered' != $row->shipment_status ? esc_html_e( 'Est. Delivery Date', 'trackship-for-woocommerce' ) : esc_html_e( 'Delivered on', 'trackship-for-woocommerce' ); ?> : 
 					<strong><?php esc_html_e( date_i18n( 'l, M d', strtotime( $row->est_delivery_date ) ) ); ?></strong>
 				</span>
 				<?php

@@ -139,7 +139,7 @@ class WC_TrackShip_Exception_Shipments {
 			WHERE 
 				shipment_status LIKE 'exception'
 				AND exception_email = %d
-            LIMIT 10
+			LIMIT 10
 		", 0 ));
 
 		//Send email for exception shipment

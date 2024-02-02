@@ -72,19 +72,19 @@ class TSWC_Email_Customizer_Preview {
 		$preview_id = get_option( 'email_preview', 'mockup' );
 		$order = trackship_admin_customizer()->get_wc_order_for_preview( $preview_id );				
 		// print_r($order);
-		$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_'. $slug_status . '_email_settings', 'wcast_'. $slug_status . '_email_heading', $this->defaults['wcast_'. $slug_status . '_email_heading']);		
+		$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $slug_status . '_email_settings', 'wcast_' . $slug_status . '_email_heading', $this->defaults['wcast_' . $slug_status . '_email_heading']);		
 		$email_heading = str_replace( '{site_title}', $this->get_blogname(), $email_heading );
 		$email_heading = str_replace( '{order_number}', $order->get_order_number(), $email_heading );
 		$email_heading = str_replace( '{shipment_status}', 'In Transit', $email_heading );
 		
-		$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_'. $slug_status . '_email_settings', 'wcast_'. $slug_status . '_email_content', $this->defaults['wcast_'. $slug_status . '_email_content']);
+		$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $slug_status . '_email_settings', 'wcast_' . $slug_status . '_email_content', $this->defaults['wcast_' . $slug_status . '_email_content']);
 		$email_content = html_entity_decode( $email_content );
 		
-		$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_'. $slug_status . '_email_settings', 'wcast_'. $slug_status . '_show_order_details', $this->defaults['wcast_'. $slug_status . '_show_order_details']);
+		$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_' . $slug_status . '_email_settings', 'wcast_' . $slug_status . '_show_order_details', $this->defaults['wcast_' . $slug_status . '_show_order_details']);
 		
-		$wcast_show_product_image = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_'. $slug_status . '_email_settings', 'wcast_'. $slug_status . '_show_product_image', $this->defaults['wcast_'. $slug_status . '_show_product_image']);
+		$wcast_show_product_image = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_' . $slug_status . '_email_settings', 'wcast_' . $slug_status . '_show_product_image', $this->defaults['wcast_' . $slug_status . '_show_product_image']);
 
-		$wcast_show_shipping_address = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_'. $slug_status . '_email_settings', 'wcast_'. $slug_status . '_show_shipping_address', $this->defaults['wcast_'. $slug_status . '_show_shipping_address']);		
+		$wcast_show_shipping_address = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_' . $slug_status . '_email_settings', 'wcast_' . $slug_status . '_show_shipping_address', $this->defaults['wcast_' . $slug_status . '_show_shipping_address']);		
 		
 		$sent_to_admin = false;
 		$plain_text = false;
@@ -96,7 +96,7 @@ class TSWC_Email_Customizer_Preview {
 		
 		$message = wc_trackship_email_manager()->email_content( $email_content, $preview_id, $order );
 		
-		$wcast_analytics_link = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_'. $slug_status . '_email_settings', 'wcast_'. $slug_status . '_analytics_link', '');
+		$wcast_analytics_link = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $slug_status . '_email_settings', 'wcast_' . $slug_status . '_analytics_link', '');
 		
 		if ( $wcast_analytics_link ) {
 			$regex = '#(<a href=")([^"]*)("[^>]*?>)#i';

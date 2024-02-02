@@ -1403,6 +1403,7 @@ class TS4WC_Admin_Customizer {
 			$preview = new TSWC_Email_Customizer_Preview( $status );
 			$preview->set_up_preview();
 		} else {
+			wp_die('Please close this window and reopen TrackShip email customizer.');
 		}
 		wp_die();
 	}

@@ -45,10 +45,10 @@ class WOO_Klaviyo_TS4WC {
 		$timestamp = time() + 3;
 		$hook = 'klaviyo_hoook';
 		$args = array(
-			'order_id'          => $order_id,
-			'old_status'        => $old_status,
-			'new_status'        => $new_status,
-			'tracking_number'   => $tracking_number
+			'order_id'			=> $order_id,
+			'old_status'		=> $old_status,
+			'new_status'		=> $new_status,
+			'tracking_number'	=> $tracking_number
 		);
 		as_schedule_single_action( $timestamp, $hook, $args, 'TrackShip klaviyo' );
 	}

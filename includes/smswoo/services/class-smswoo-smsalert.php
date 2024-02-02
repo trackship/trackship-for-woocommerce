@@ -23,6 +23,7 @@ if ( ! class_exists( 'SMSWOO_SMSAlert' ) ) {
 	class SMSWOO_SMSAlert extends SMSWOO_Sms_Gateway {
 
 		private $_smsalert_api_key;
+		public $new_status;
 
 		/**
 		 * Constructor

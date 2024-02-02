@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				?>
 				<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?></strong>
 				<div>
-					<?php echo $trackind_detail_by_status_rev[0]->message; ?>
+					<?php echo wp_kses_post($trackind_detail_by_status_rev[0]->message); ?>
 				</div>
 				<?php
 			} else {
