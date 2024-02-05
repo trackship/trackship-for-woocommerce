@@ -5,14 +5,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class WC_Trackship_Logs {
 
 	const CRON_HOOK = 'notification_log_clean_cron_hook';
-	public $log_table;
 
 	/**
 	 * Initialize the main plugin function
 	*/
 	public function __construct() {
-		global $wpdb;
-		$this->log_table = $wpdb->prefix . 'zorem_email_sms_log';
+		
 	}
 
 	/**
@@ -71,7 +69,6 @@ class WC_Trackship_Logs {
 		check_ajax_referer( '_trackship_logs', 'ajax_nonce' );
 		
 		global $wpdb;
-		$log_table = $this->log_table;
 		$p_start = isset( $_POST['start'] ) ? sanitize_text_field($_POST['start']) : false;
 		$p_length = isset( $_POST['length'] ) ? sanitize_text_field($_POST['length']) : false;
 		$limit = 'limit ' . sanitize_text_field($p_start) . ', ' . sanitize_text_field($p_length);
@@ -96,13 +93,13 @@ class WC_Trackship_Logs {
 		$where_condition = !empty( $where ) ? 'WHERE ' . implode( ' AND ', $where ) : '';
 
 		$sum = $wpdb->get_var("
-			SELECT COUNT(*) FROM {$log_table} AS row1
+			SELECT COUNT(*) FROM {$wpdb->prefix}zorem_email_sms_log AS row1
 			$where_condition
 		");
 		//echo '<pre>';print_r($wpdb->last_query);echo '</pre>';
 		$order_query = $wpdb->get_results("
 			SELECT * 
-				FROM {$log_table}
+				FROM {$wpdb->prefix}zorem_email_sms_log
 			$where_condition
 			ORDER BY
 				`date` DESC
@@ -160,14 +157,14 @@ class WC_Trackship_Logs {
 	public function log_details_popup() {
 		check_ajax_referer( '_trackship_logs', 'security' );
 		global $wpdb;
-		$log_table = $this->log_table;
+		$log_table = $wpdb->prefix . 'zorem_email_sms_log';
 		$order_id = isset( $_POST['order_id'] ) ? sanitize_text_field($_POST['order_id']) : false;
 		$rowid = isset( $_POST['rowid'] ) ? sanitize_text_field($_POST['rowid']) : false;
 
-		$row = $wpdb->get_row($wpdb->prepare('
-			SELECT * FROM %1s
+		$row = $wpdb->get_row($wpdb->prepare("
+			SELECT * FROM {$wpdb->prefix}zorem_email_sms_log
 			WHERE `id` = %s AND `order_id` = %s
-		', $log_table, $rowid, $order_id ));
+		", $rowid, $order_id ));
 		$row->shipment_status = apply_filters( 'trackship_status_filter', $row->shipment_status );
 		wp_send_json($row);
 	}

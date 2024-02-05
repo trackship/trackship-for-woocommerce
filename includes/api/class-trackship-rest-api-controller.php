@@ -47,10 +47,10 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		//disconnect_from_trackship
 		register_rest_route( $this->namespace, '/disconnect_from_trackship', array(
 			array(
-				'methods'             => WP_REST_Server::CREATABLE,
-				'callback'            => array( $this, 'disconnect_from_trackship_fun' ),
-				'permission_callback' => array( $this, 'get_item_permissions_check' ),
-				'args'                => array_merge( $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ), array(
+				'methods'				=> WP_REST_Server::CREATABLE,
+				'callback'				=> array( $this, 'disconnect_from_trackship_fun' ),
+				'permission_callback'	=> array( $this, 'get_item_permissions_check' ),
+				'args'					=> array_merge( $this->get_endpoint_args_for_item_schema( WP_REST_Server::CREATABLE ), array(
 					'user_key' => array(
 						'required' => true,
 					),
@@ -62,9 +62,9 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		//tracking webhook
 		register_rest_route( $this->namespace, '/tracking-webhook', array(
 			array(
-				'methods'             => 'POST',
-				'callback'            => array( $this, 'tracking_webhook' ),
-				'permission_callback' => array( $this, 'create_item_permissions_check' ),
+				'methods'				=> 'POST',
+				'callback'				=> array( $this, 'tracking_webhook' ),
+				'permission_callback'	=> array( $this, 'create_item_permissions_check' ),
 			),
 			'schema' => array( $this, 'get_public_item_schema' ),
 		) );
@@ -72,9 +72,9 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		//check_ts4wc_installed
 		register_rest_route( $this->namespace, '/check_ts4wc_installed', array(
 			array(
-				'methods'             => 'POST',
-				'callback'            => array( $this, 'check_ts4wc_installed' ),
-				'permission_callback' => array( $this, 'get_item_permissions_check' ),
+				'methods'				=> 'POST',
+				'callback'				=> array( $this, 'check_ts4wc_installed' ),
+				'permission_callback'	=> array( $this, 'get_item_permissions_check' ),
 			),
 			'schema' => array( $this, 'get_public_item_schema' ),
 		) );
@@ -202,21 +202,8 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			}
 			$row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id , $tracking_item['tracking_number'] );
 			$previous_status = isset( $row->shipment_status ) ? $row->shipment_status : '';	
-			
-			/* START -- to be removed in the future */
-			$shipment_status = $order->get_meta( 'shipment_status', true );
-			if ( is_string($shipment_status) ) {
-				$shipment_status = array();			
-			}
-			unset($shipment_status[$key]['pending_status']);
-			$shipment_status[$key]['status'] = $tracking_event_status;
-			$shipment_status[$key]['status_date'] = gmdate( 'Y-m-d H:i:s' );
-			$shipment_status[$key]['last_event_time'] = $last_event_time;
-			$shipment_status[$key]['est_delivery_date'] = $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : null;
-			/* END -- to be removed in the future */
-			
+
 			$order = wc_get_order( $order_id );
-			$order->save();
 			
 			$ts_shipment_status[$key]['status'] = $tracking_event_status;
 			
@@ -260,9 +247,8 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 					as_schedule_single_action( time() + $time, 'trigger_pickup_reminder_email', array( $order_id, $previous_status, $tracking_event_status, $tracking_number ), 'TrackShip' );
 				}
 
-				// hook for send SMS
-				// depricated after version 1.4.8
-				do_action( 'ast_trigger_ts_status_change', $order_id, $previous_status, $tracking_event_status, $tracking_item, $shipment_status[$key] );
+				// hook for send data to paypal in AST PRO
+				do_action( 'ast_trigger_ts_status_change', $order_id, $previous_status, $tracking_event_status, $tracking_item, [] );
 
 				do_action( 'trackship_shipment_status_trigger', $order_id, $previous_status, $tracking_event_status, $tracking_number );
 			}
@@ -306,7 +292,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	/**
 	 * Check if a given request has access create order shipment-tracking.
 	 *
-	 * @param  WP_REST_Request $request Full details about the request.
+	 * @param WP_REST_Request $request Full details about the request.
 	 * @return boolean
 	 */
 	public function create_item_permissions_check( $request ) {
@@ -320,7 +306,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	/**
 	 * Check if a given request has access to read a order shipment-tracking.
 	 *
-	 * @param  WP_REST_Request $request Full details about the request.
+	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|boolean
 	 */
 	public function get_item_permissions_check( $request ) {

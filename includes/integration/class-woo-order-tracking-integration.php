@@ -16,7 +16,7 @@ class WOO_Order_Tracking_TS4WC {
 	 * Initialize the main plugin function
 	*/
 	public function __construct() {
-		$this->init();	
+		$this->init();
 	}
 	
 	/**
@@ -58,7 +58,7 @@ class WOO_Order_Tracking_TS4WC {
 		$i = 0;
 		foreach ( $order->get_items() as $item_id => $item_value ) {
 			$item_data = wc_get_order_item_meta( $item_id, '_vi_wot_order_item_tracking_data', true );
-			$item_data_qty = wc_get_order_item_meta( $item_id, '_vi_wot_order_item_tracking_data_by_quantity', true );			
+			$item_data_qty = wc_get_order_item_meta( $item_id, '_vi_wot_order_item_tracking_data_by_quantity', true );
 			$item_data = json_decode( $item_data );
 			$item_data_qty = json_decode( $item_data_qty );
 

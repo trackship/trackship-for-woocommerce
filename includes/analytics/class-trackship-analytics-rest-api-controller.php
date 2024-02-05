@@ -98,7 +98,7 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 	/**
 	 * Check whether a given request has permission to read order shipment-trackings.
 	 *
-	 * @param  WP_REST_Request $request Full details about the request.
+	 * @param WP_REST_Request $request Full details about the request.
 	 * @return WP_Error|boolean
 	 */
 	public function get_items_permissions_check( $request ) {
@@ -144,14 +144,14 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 
 		$after_date = gmdate( 'Y-m-d', strtotime( $query_args['after'] ) );
 		$before_date = gmdate( 'Y-m-d', strtotime( $query_args['before'] ) );
-		$providers_id = isset( $query_args['providers'] ) &&  '' != $query_args['providers'] ? $query_args['providers'] : [];
+		$providers_id = isset( $query_args['providers'] ) && '' != $query_args['providers'] ? $query_args['providers'] : [];
 		$shipment_status = isset( $query_args['shipment_status'] ) && '' != $query_args['shipment_status'] ? $query_args['shipment_status'] : '';
 		$interval = isset( $query_args['interval'] ) && '' != $query_args['interval'] ? $query_args['interval'] : '';
 
 		// data by date from TrackShip shipments table
 		$intervals = $this->get_data_by_shipments( $after_date, $before_date, $shipment_status, $interval, $providers_id );
 
-		$total_shipments = $this->get_totals_shipment(  'COUNT(*)', $after_date, $before_date, $shipment_status, $providers_id, 'total' ); // totals count
+		$total_shipments = $this->get_totals_shipment( 'COUNT(*)', $after_date, $before_date, $shipment_status, $providers_id, 'total' ); // totals count
 		$active_shipments = $this->get_totals_shipment( 'COUNT(*)', $after_date, $before_date, $shipment_status, $providers_id, 'active' ); // active count
 		$delivered_shipments = $this->get_totals_shipment( 'COUNT(*)', $after_date, $before_date, $shipment_status, $providers_id, 'delivered' ); // delivered count
 		$avg_shipment_length = $this->get_totals_shipment( 'AVG(ts.shipping_length)', $after_date, $before_date, $shipment_status, $providers_id ); // get AVG data
@@ -253,8 +253,7 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 			$where[] = " ts.shipping_date between '$after_date' and '$before_date' ";
 		}
 
-		if ( 'total' == $type ) {
-		} elseif ( 'active' == $type ) {
+		if ( 'active' == $type ) {
 			$where[] = " ts.shipment_status NOT IN ('delivered','return_to_sender') ";
 		} elseif ( 'delivered' == $type ) {
 			$where[] = " ts.shipment_status IN ('delivered','return_to_sender') ";
@@ -278,7 +277,7 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 			SELECT
 				{$select}
 			FROM " . $woo_trackship_shipment . ' ts
-			LEFT JOIN ' . $wpdb->prefix . "trackship_shipping_provider tp  
+			LEFT JOIN ' . $wpdb->prefix . "trackship_shipping_provider tp 
 				ON ts.shipping_provider = tp.ts_slug
 			$where_condition
 		";
@@ -366,8 +365,8 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 		$after_date = gmdate( 'Y-m-d', strtotime( $query_args['after'] ) );
 		$before_date = gmdate( 'Y-m-d', strtotime( $query_args['before'] ) );
 		$shipment_status = ( isset( $query_args['shipment_status'] ) && '' != $query_args['shipment_status'] ? $query_args['shipment_status'] : '' );
-		$providers_id = ( isset( $query_args['providers'] ) &&  '' != $query_args['providers'] ? $query_args['providers'] : null );
-		$shipment_provider = ( isset( $query_args['shipment_provider'] ) &&  '' != $query_args['shipment_provider'] ? $query_args['shipment_provider'] : '' );
+		$providers_id = ( isset( $query_args['providers'] ) && '' != $query_args['providers'] ? $query_args['providers'] : null );
+		$shipment_provider = ( isset( $query_args['shipment_provider'] ) && '' != $query_args['shipment_provider'] ? $query_args['shipment_provider'] : '' );
 		
 		global $wpdb;
 		$woo_trackship_shipment = $this->shipment_table;
@@ -396,7 +395,7 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 			SELECT 
 				ts.shipment_status ,
 				COUNT(1) AS total ,
-				ROUND( COUNT(1) / (SELECT COUNT(1) FROM ' . $woo_trackship_shipment . '  as ts ' . $left_join . $where_condition . ') * 100 ) AS percentage 
+				ROUND( COUNT(1) / (SELECT COUNT(1) FROM ' . $woo_trackship_shipment . ' as ts ' . $left_join . $where_condition . ') * 100 ) AS percentage 
 			FROM ' . $woo_trackship_shipment . " ts
 			$left_join
 			$where_condition
@@ -410,7 +409,7 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 				ts.shipping_provider ,
 				tp.provider_name,
 				COUNT(1) AS total ,
-				ROUND( COUNT(1) / (SELECT COUNT(1) FROM ' . $woo_trackship_shipment . '  as ts ' . $left_join . $where_condition . ') * 100 ) AS percentage ,
+				ROUND( COUNT(1) / (SELECT COUNT(1) FROM ' . $woo_trackship_shipment . ' as ts ' . $left_join . $where_condition . ') * 100 ) AS percentage ,
 				ROUND( AVG(shipping_length) ) as average
 			FROM ' . $woo_trackship_shipment . " ts
 			$left_join

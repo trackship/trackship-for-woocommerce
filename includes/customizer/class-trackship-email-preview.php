@@ -10,23 +10,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Adds the individual sections, settings, and controls to the theme customizer
  */
-class TSWC_Intransit_Customizer_Email {
+class TSWC_Email_Customizer_Preview {
 
 	public $defaults;
+	public $status;
+	public $slug_status;
 
 	// Get our default values	
-	public function __construct() {
-		if ( !self::is_own_preview_request() ) {
-			return;
-		}
-		// Get our Customizer defaults
-		$this->defaults = trackship_admin_customizer()->wcast_shipment_settings_defaults( 'intransit' );
-		
-		add_action( 'parse_request', array( $this, 'set_up_preview' ) );
-	}
+	public function __construct( $status = 'in_transit' ) {
 
-	public static function is_own_preview_request() {
-		return isset( $_REQUEST['shipment-email-customizer-preview'] ) && 'in_transit' === $_REQUEST['status'];
+		$this->status = $status;
+		$slug_status = str_replace( '_', '', $status );
+		$slug_status = 'delivered' == $slug_status ? 'delivered_status' : $slug_status;
+		$this->slug_status = $slug_status;
+
+		// Get our Customizer defaults
+		$this->defaults = trackship_admin_customizer()->wcast_shipment_settings_defaults( $slug_status );
 	}
 
 	/**
@@ -36,7 +35,7 @@ class TSWC_Intransit_Customizer_Email {
 	 */
 	public function get_blogname() {
 		return wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
-	}	
+	}
 
 	/**
 	 * Set up preview
@@ -44,32 +43,48 @@ class TSWC_Intransit_Customizer_Email {
 	 * @return void
 	 */
 	public function set_up_preview() {
-		
-		include trackship_for_woocommerce()->get_plugin_path() . '/includes/customizer/preview/intransit_preview.php';		
-		exit;			
+		?>
+		<head>
+			<meta charset="<?php bloginfo('charset'); ?>" />
+			<meta name="viewport" content="width=device-width" />
+			<style type="text/css" id="ast_designer_custom_css">.woocommerce-store-notice.demo_store, .mfp-hide {display: none;}</style>
+		</head>
+		<body class="ast_preview_body" style="margin:0;">
+			<div id="overlay"></div>
+			<div id="ast_preview_wrapper" style="display: block;">
+				<?php self::preview_email(); ?>
+			</div>
+			<?php do_action( 'woomail_footer' ); ?>
+		</body>
+		<?php
+		exit;
 	}
-	
+
 	/**
 	 * Code for preview of in transit email
 	*/
-	public function preview_intransit_email() {
+	public function preview_email() {
 		// Load WooCommerce emails.
+
+		$status = $this->status;
+		$slug_status = $this->slug_status;
+
 		$preview_id = get_option( 'email_preview', 'mockup' );
 		$order = trackship_admin_customizer()->get_wc_order_for_preview( $preview_id );				
 		// print_r($order);
-		$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_intransit_email_settings', 'wcast_intransit_email_heading', $this->defaults['wcast_intransit_email_heading']);		
+		$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $slug_status . '_email_settings', 'wcast_' . $slug_status . '_email_heading', $this->defaults['wcast_' . $slug_status . '_email_heading']);		
 		$email_heading = str_replace( '{site_title}', $this->get_blogname(), $email_heading );
 		$email_heading = str_replace( '{order_number}', $order->get_order_number(), $email_heading );
 		$email_heading = str_replace( '{shipment_status}', 'In Transit', $email_heading );
 		
-		$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_intransit_email_settings', 'wcast_intransit_email_content', $this->defaults['wcast_intransit_email_content']);
+		$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $slug_status . '_email_settings', 'wcast_' . $slug_status . '_email_content', $this->defaults['wcast_' . $slug_status . '_email_content']);
 		$email_content = html_entity_decode( $email_content );
 		
-		$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_intransit_email_settings', 'wcast_intransit_show_order_details', $this->defaults['wcast_intransit_show_order_details']);
+		$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_' . $slug_status . '_email_settings', 'wcast_' . $slug_status . '_show_order_details', $this->defaults['wcast_' . $slug_status . '_show_order_details']);
 		
-		$wcast_show_product_image = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_intransit_email_settings', 'wcast_intransit_show_product_image', $this->defaults['wcast_intransit_show_product_image']);
+		$wcast_show_product_image = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_' . $slug_status . '_email_settings', 'wcast_' . $slug_status . '_show_product_image', $this->defaults['wcast_' . $slug_status . '_show_product_image']);
 
-		$wcast_show_shipping_address = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_intransit_email_settings', 'wcast_intransit_show_shipping_address', $this->defaults['wcast_intransit_show_shipping_address']);		
+		$wcast_show_shipping_address = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_' . $slug_status . '_email_settings', 'wcast_' . $slug_status . '_show_shipping_address', $this->defaults['wcast_' . $slug_status . '_show_shipping_address']);		
 		
 		$sent_to_admin = false;
 		$plain_text = false;
@@ -81,14 +96,14 @@ class TSWC_Intransit_Customizer_Email {
 		
 		$message = wc_trackship_email_manager()->email_content( $email_content, $preview_id, $order );
 		
-		$wcast_intransit_analytics_link = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_intransit_email_settings', 'wcast_intransit_analytics_link', '');
+		$wcast_analytics_link = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $slug_status . '_email_settings', 'wcast_' . $slug_status . '_analytics_link', '');
 		
-		if ( $wcast_intransit_analytics_link ) {	
+		if ( $wcast_analytics_link ) {
 			$regex = '#(<a href=")([^"]*)("[^>]*?>)#i';
 			$message = preg_replace_callback($regex, array( $this, '_appendCampaignToString'), $email_content);
 		}
 		
-		$shipment_row = trackship_admin_customizer()->get_wc_shipment_row_for_preview( 'in_transit', $preview_id );
+		$shipment_row = trackship_admin_customizer()->get_wc_shipment_row_for_preview( $status, $preview_id );
 		$tracking_items = trackship_admin_customizer()->get_tracking_items_for_preview( $preview_id );
 		
 		$local_template	= get_stylesheet_directory() . '/woocommerce/emails/tracking-info.php';
@@ -98,7 +113,7 @@ class TSWC_Intransit_Customizer_Email {
 				'shipment_row'		=> $shipment_row,
 				'order_id'			=> $preview_id,
 				'show_shipment_status' => true,
-				'new_status'		=> 'in_transit',
+				'new_status'		=> 'pickup_reminder' == $status ? 'available_for_pickup' : $status,
 				'ts4wc_preview'		=> true,
 			), 'woocommerce-advanced-shipment-tracking/', get_stylesheet_directory() . '/woocommerce/' );
 		} else {
@@ -107,7 +122,7 @@ class TSWC_Intransit_Customizer_Email {
 				'shipment_row'		=> $shipment_row,
 				'order_id'			=> $preview_id,
 				'show_shipment_status' => true,
-				'new_status'		=> 'in_transit',
+				'new_status'		=> 'pickup_reminder' == $status ? 'available_for_pickup' : $status,
 				'ts4wc_preview'		=> true,
 			), 'woocommerce-advanced-shipment-tracking/', trackship_for_woocommerce()->get_plugin_path() . '/templates/' );
 		}
@@ -128,17 +143,19 @@ class TSWC_Intransit_Customizer_Email {
 			trackship_for_woocommerce()->get_plugin_path() . '/templates/'
 		);
 		
-		// Shipping Address template
-		$message .= wc_get_template_html(
-			'emails/shipping-email-addresses.php', array(
-				'order'         => $order,
-				'sent_to_admin' => $sent_to_admin,
-				'ts4wc_preview' => true,
-				'wcast_show_shipping_address' => $wcast_show_shipping_address,
-			),
-			'woocommerce-advanced-shipment-tracking/', 
-			trackship_for_woocommerce()->get_plugin_path() . '/templates/'
-		);
+		if ( 'pickup_reminder' != $status ) {
+			// Shipping Address template
+			$message .= wc_get_template_html(
+				'emails/shipping-email-addresses.php', array(
+					'order'         => $order,
+					'sent_to_admin' => $sent_to_admin,
+					'ts4wc_preview' => true,
+					'wcast_show_shipping_address' => $wcast_show_shipping_address,
+				),
+				'woocommerce-advanced-shipment-tracking/', 
+				trackship_for_woocommerce()->get_plugin_path() . '/templates/'
+			);
+		}
 		
 		$mailer = WC()->mailer();
 		// create a new email
@@ -181,7 +198,8 @@ class TSWC_Intransit_Customizer_Email {
 	}
 }
 
+
 /**
  * Initialise our Customizer settings
 */
-new TSWC_Intransit_Customizer_Email();
+new TSWC_Email_Customizer_Preview();

@@ -29,7 +29,7 @@ class WC_TrackShip_Api_Call {
 		
 		if ( $tracking_items ) {
 			
-			foreach ( ( array ) $tracking_items as $key => $val ) {				
+			foreach ( ( array ) $tracking_items as $key => $val ) {
 				
 				$tracking_number = trim( $val['tracking_number'] );
 				if ( ! isset( $tracking_number ) ) {
@@ -146,13 +146,13 @@ class WC_TrackShip_Api_Call {
 		$custom_order_number = $order->get_order_number();
 		
 		if ( $order->get_shipping_country() != null ) {
-			$shipping_country = $order->get_shipping_country();	
+			$shipping_country = $order->get_shipping_country();
 		} else {
-			$shipping_country = $order->get_billing_country();	
+			$shipping_country = $order->get_billing_country();
 		}
 		
 		if ( $order->get_shipping_postcode() != null ) {
-			$shipping_postal_code = $order->get_shipping_postcode();	
+			$shipping_postal_code = $order->get_shipping_postcode();
 		} else {
 			$shipping_postal_code = $order->get_billing_postcode();
 		}
@@ -200,7 +200,7 @@ class WC_TrackShip_Api_Call {
 			'app-name'	=> $domain,
 		);	
 		$args['timeout'] = 10;
-		$response = wp_remote_post( $url, $args );		
+		$response = wp_remote_post( $url, $args );
 		return $response;
 	}
 }
