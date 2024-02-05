@@ -408,8 +408,8 @@ class TSWC_SMSWoo_Admin {
 		foreach ( $data as $key => $val ) {
 			if ( isset( $_POST[ $val['id'] ] ) ) {
 				
-				update_option( $val['id'], stripslashes( wc_clean( $_POST[ $val['id'] ] ) ) );
-
+				update_option( $val['id'], wp_unslash( sanitize_textarea_field( $_POST[ $val['id'] ] ) ) );
+				
 				$enabled_customer = $val['id'] . '_enabled_customer';
 				$templete_id = $val['id'] . '_templete_id';
 				$template_var = $val['id'] . '_template_var';
