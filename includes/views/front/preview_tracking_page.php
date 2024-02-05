@@ -237,7 +237,7 @@
 <?php if ( $hide_tracking_provider_image ) { ?>
 	.provider_image_div{display:none;}
 <?php } ?>
-<?php if ( $wc_ast_link_to_shipping_provider ) { ?>
+<?php if ( $ts_link_to_carrier ) { ?>
 .tracking_number_div ul li > strong{display:none;}
 <?php } else { ?>
 .tracking_number_div ul li > a{display:none;}

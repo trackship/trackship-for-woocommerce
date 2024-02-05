@@ -41,7 +41,7 @@ class WC_Trackship_Shipments {
 	/*
 	* init from parent mail class
 	*/
-	public function init() {	
+	public function init() {
 		
 		add_action( 'wp_ajax_get_trackship_shipments', array($this, 'get_trackship_shipments') );
 		add_action( 'wp_ajax_get_shipment_status_from_shipments', array($this, 'get_shipment_status_from_shipments') );
@@ -150,7 +150,7 @@ class WC_Trackship_Shipments {
 		" );
 
 		$column = isset( $_POST['order'][0]['column'] ) && '1' == wc_clean($_POST['order'][0]['column']) ? 'order_id' : 'shipping_date';
-		$dir =  isset( $_POST['order'][0]['dir'] ) && 'asc' == wc_clean($_POST['order'][0]['dir']) ? ' ASC' : ' DESC';
+		$dir = isset( $_POST['order'][0]['dir'] ) && 'asc' == wc_clean($_POST['order'][0]['dir']) ? ' ASC' : ' DESC';
 		$order_by = $column . $dir;
 		
 		$order_query = $wpdb->get_results( $wpdb->prepare("
@@ -178,7 +178,7 @@ class WC_Trackship_Shipments {
 			$status = $value->pending_status ? $value->pending_status : $value->shipment_status;
 			foreach ( $tracking_items as $key1 => $val1 ) {
 				if ( $val1['tracking_number'] == $value->tracking_number ) {
-					$tracking_url = $val1['tracking_page_link'] ?  $val1['tracking_page_link'] : $val1['formatted_tracking_link'];
+					$tracking_url = $val1['tracking_page_link'] ? $val1['tracking_page_link'] : $val1['formatted_tracking_link'];
 					$provider_name = $value->shipping_provider;
 					// print_r($provider_name);
 					$formatted_provider = trackship_for_woocommerce()->actions->get_provider_name( $provider_name );
@@ -300,7 +300,7 @@ class WC_Trackship_Shipments {
 	*/
 	public function bulk_shipment_status_from_shipments() {
 		check_ajax_referer( '_trackship_shipments', 'security' );
-		$orderids = isset( $_POST['orderids'] ) ? sanitize_text_field($_POST['orderids']) : [];
+		$orderids = isset( $_POST['orderids'] ) ? wc_clean($_POST['orderids']) : [];
 		foreach ( ( array ) $orderids as $order_id ) {
 			trackship_for_woocommerce()->actions->set_temp_pending( $order_id );
 			as_schedule_single_action( time() + 1, 'trackship_tracking_apicall', array( $order_id ) );
