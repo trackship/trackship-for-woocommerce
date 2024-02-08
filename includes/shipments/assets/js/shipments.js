@@ -1,3 +1,26 @@
+function shipment_js_error(response, jqXHR, exception) {
+	console.log(response, jqXHR, exception);
+	var msg = '';
+	if (response.status === 0) {
+		msg = 'Not connect.\n Verify Network.';
+	} else if (response.status == 404) {
+		msg = 'Requested page not found. [404]';
+	} else if (response.status == 500) {
+		msg = 'Internal Server Error [500].';
+	} else if (exception === 'parsererror') {
+		msg = 'Requested JSON parse failed.';
+	} else if (exception === 'timeout') {
+		msg = 'Time out error.';
+	} else if (exception === 'abort') {
+		msg = 'Ajax request aborted.';
+	} else if (response.responseText === '-1') {
+		msg = 'Security check fail, please refresh and try again.';
+	} else {
+		msg = 'Uncaught Error.\n' + response.responseText;
+	}
+	jQuery(document).trackship_snackbar_warning(msg);
+}
+
 /* show_popup jquery */
 (function( $ ){
 	'use strict';
@@ -272,8 +295,8 @@ jQuery(document).ready(function() {
 			success: function(response) {
 				$table.ajax.reload();
 			},
-			error: function(response) {
-				console.log(response);
+			error: function(response, jqXHR, exception) {
+				shipment_js_error(response, jqXHR, exception)
 			}
 		});	
 	});
@@ -301,8 +324,8 @@ jQuery(document).ready(function() {
 						jQuery('.bulk_action_button').attr('disabled','disabled');
 						jQuery('.all_checkboxes').prop("checked", false);
 					},
-					error: function(errorThrown){
-						console.log(errorThrown);
+					error: function(response, jqXHR, exception){
+						shipment_js_error(response, jqXHR, exception)
 					}
 				});
 			}
@@ -430,8 +453,8 @@ jQuery(document).on("click", ".dashboard_input_tab .tab_input", function(){
 			jQuery('.innner_content .tracking_issues').html(response.tracking_issues);
 			jQuery(".fullfillment_dashboard_section_content").unblock();
 		},
-		error: function(response) {
-			console.log(response);
+		error: function(response, jqXHR, exception) {
+			shipment_js_error(response, jqXHR, exception)
 		}
 	});
 });

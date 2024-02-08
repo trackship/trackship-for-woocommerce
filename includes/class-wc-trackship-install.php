@@ -349,7 +349,8 @@ class WC_Trackship_Install {
 	*/
 	public function update_shipping_providers() {
 		global $wpdb;
-		$url = 'https://my.trackship.com/api/WCAST/v1/Provider';
+		// added in version 1.7.6
+		$url = 'https://api.trackship.com/v1/shipping_carriers/supported';
 		$resp = wp_remote_get( $url );
 		
 		if ( is_array( $resp ) && ! is_wp_error( $resp ) ) {
@@ -357,17 +358,10 @@ class WC_Trackship_Install {
 			$providers = json_decode($resp['body'], true );
 			
 			$wpdb->query( "TRUNCATE TABLE {$wpdb->prefix}trackship_shipping_provider" );
-			foreach ( $providers as $provider ) {
-				if ( 1 != $provider[ 'trackship_supported' ] ) {
-					continue;
-				}
-				
-				$provider_name = $provider['shipping_provider'];
-				$ts_slug = $provider['shipping_provider_slug'];
-				
+			foreach ( $providers['data'] as $provider ) {
 				$data_array = array(
-					'provider_name' => $provider_name,
-					'ts_slug' => $ts_slug,
+					'provider_name' => $provider['label'],
+					'ts_slug' => $provider['slug'],
 				);
 				$wpdb->insert( $this->table, $data_array );
 			}
