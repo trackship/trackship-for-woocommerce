@@ -287,7 +287,7 @@ class WC_Trackship_Actions {
 				FROM {$wpdb->prefix}trackship_shipment	
 			WHERE 
 				shipment_status NOT IN ( 'delivered', 'pending_trackship', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'invalid_tracking', '' )
-				AND ( updated_date < %s OR updated_date IS NULL )
+				AND ( ship_length_updated < %s OR ship_length_updated IS NULL )
 				AND shipping_date > NOW() - INTERVAL 60 DAY
 		", $today));
 		$total_cron = ( int ) ( $total_order/300 ) + 1;
@@ -308,7 +308,7 @@ class WC_Trackship_Actions {
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE
 				shipment_status NOT IN ( 'delivered', 'pending_trackship', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'invalid_tracking', '' )
-				AND ( updated_date < %s OR updated_date IS NULL )
+				AND ( ship_length_updated < %s OR ship_length_updated IS NULL )
 				AND shipping_date > NOW() - INTERVAL 60 DAY
 			LIMIT 300
 		", $today));
@@ -323,7 +323,7 @@ class WC_Trackship_Actions {
 				'order_id'			=> $order_id,
 				'tracking_number'	=> $value->tracking_number,
 			);
-			$wpdb->update( $woo_trackship_shipment, array( 'shipping_length' => $shipment_length, 'updated_date' => $today ), $where );
+			$wpdb->update( $woo_trackship_shipment, array( 'shipping_length' => $shipment_length, 'ship_length_updated' => $today ), $where );
 		}
 	}
 	

@@ -122,6 +122,11 @@ jQuery(document).ready(function() {
 				'data': 'et_shipped_at',
 			},
 			{
+				"width": "150px",
+				'orderable': true,
+				'data': 'updated_at',
+			},
+			{
 				"width": "185px",
 				'orderable': false,
 				'data': 'tracking_number_colom',

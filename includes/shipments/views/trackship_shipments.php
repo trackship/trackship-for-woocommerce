@@ -14,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<th id="columnname" class="manage-column column-columnname" scope="col"><input type="checkbox" class="all_checkboxes"></th>
 							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Order', 'woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Shipped date', 'trackship-for-woocommerce'); ?></th>
+							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Updated at', 'trackship-for-woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-destination" scope="col"><?php esc_html_e('Tracking Number', 'trackship-for-woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Shipping carrier', 'trackship-for-woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Shipment status', 'trackship-for-woocommerce'); ?></th>

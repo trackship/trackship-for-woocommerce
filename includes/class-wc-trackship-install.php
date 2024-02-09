@@ -315,6 +315,19 @@ class WC_Trackship_Install {
 			delete_option( 'wc_ast_hide_list_mile_tracking' );
 			update_option( 'trackship_db', '1.25' );
 		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.26', '<' ) ) {
+
+			if ( $wpdb->get_var( "SHOW COLUMNS FROM {$wpdb->prefix}trackship_shipment LIKE 'updated_date';" ) ) {
+				$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment CHANGE COLUMN updated_date ship_length_updated DATE;" );
+			}
+
+			$this->create_shipping_provider_table();
+			$this->update_shipping_providers();
+			$this->check_column_exists();
+			update_trackship_settings( 'trackship_db', '1.26' );
+			update_option( 'trackship_db', '1.26' );
+		}
 	}
 
 	public function update_trackship_providers() {
@@ -423,21 +436,23 @@ class WC_Trackship_Install {
 				`shipping_date` date ,
 				`shipping_country` TEXT ,
 				`shipping_length` VARCHAR(10) ,
-				`updated_date` DATE ,
+				`ship_length_updated` DATE ,
 				`late_shipment_email` TINYINT DEFAULT 0,
 				`exception_email` TINYINT DEFAULT 0,
 				`on_hold_email` TINYINT DEFAULT 0,
 				`est_delivery_date` DATE,
 				`last_event` LONGTEXT ,
 				`last_event_time` DATETIME ,
+				`updated_at` DATETIME ,
 				PRIMARY KEY (`id`),
 				INDEX `shipping_date` (`shipping_date`),
+				INDEX `updated_at` (`updated_at`),
 				INDEX `status` (`shipment_status`),
 				INDEX `tracking_number` (`tracking_number`),
 				INDEX `shipping_length` (`shipping_length`),
 				INDEX `order_id` (`order_id`),
 				INDEX `order_id_tracking_number` (`order_id`,`tracking_number`),
-				INDEX `updated_date` (`updated_date`),
+				INDEX `ship_length_updated` (`ship_length_updated`),
 				INDEX `late_shipment_email` (`late_shipment_email`),
 				INDEX `on_hold_email` (`on_hold_email`),
 				INDEX `exception_email` (`exception_email`),
@@ -492,13 +507,14 @@ class WC_Trackship_Install {
 			'shipping_date'			=> ' DATE NOT NULL CURRENT_TIMESTAMP',
 			'shipping_country'		=> ' TEXT',
 			'shipping_length'		=> ' VARCHAR(10)',
-			'updated_date'			=> ' DATE',
+			'ship_length_updated'	=> ' DATE',
 			'late_shipment_email'	=> ' TINYINT DEFAULT 0',
 			'exception_email'=> ' TINYINT DEFAULT 0',
 			'on_hold_email'=> ' TINYINT DEFAULT 0',
 			'est_delivery_date'		=> ' DATE',
 			'last_event'			=> ' LONGTEXT',
 			'last_event_time'		=> ' DATETIME',
+			'updated_at'			=> ' DATETIME',
 		);
 		foreach ( $shipment_table as $column_name => $type ) {
 			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}trackship_shipment' AND COLUMN_NAME = '%s' ", $column_name ), ARRAY_A );
