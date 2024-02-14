@@ -813,15 +813,15 @@ jQuery(document).on("click", function ( event ) {
 jQuery(document).on("click", ".tracking-detail .heading_panel", function () {
 	if (jQuery(this).hasClass('active')) {
 		jQuery(this).removeClass('active');
-		jQuery(this).children('.accordian-arrow').removeClass('down').addClass('right');
+		jQuery(this).children('.accordian-arrow').removeClass('ts-down').addClass('ts-right');
 		jQuery(this).siblings('.content_panel').slideUp('slow');
 	} else {
 		var parent = jQuery(this).parent('.tracking_event_tab_view');
 		parent.find(".heading_panel").removeClass('active');
 		parent.find(".content_panel").removeClass('active').slideUp('slow');
 		jQuery(this).addClass('active');
-		parent.find('.accordian-arrow').removeClass('down').addClass('right');
-		jQuery(this).children('.accordian-arrow').removeClass('right').addClass('down');
+		parent.find('.accordian-arrow').removeClass('ts-down').addClass('ts-right');
+		jQuery(this).children('.accordian-arrow').removeClass('ts-right').addClass('ts-down');
 		jQuery(this).next('.content_panel').slideDown('slow');
 	}
 });
@@ -829,15 +829,15 @@ jQuery(document).on("click", ".tracking-detail .heading_panel", function () {
 jQuery(document).on("click", ".enhanced_tracking_detail .enhanced_heading", function () {
 	if (jQuery(this).hasClass('active')) {
 		jQuery(this).removeClass('active');
-		jQuery(this).children('.enhanced_tracking_content .accordian-arrow').removeClass('down').addClass('right');
+		jQuery(this).children('.enhanced_tracking_content .accordian-arrow').removeClass('ts-down').addClass('ts-right');
 		jQuery(this).siblings('.enhanced_content').slideUp('slow');
 	} else {
 		var parent = jQuery(this).closest('.enhanced_tracking_detail');
 		parent.find(".enhanced_heading").removeClass('active');
 		parent.find(".enhanced_content").removeClass('active').slideUp('slow');
 		jQuery(this).addClass('active');
-		parent.find('.enhanced_tracking_content .accordian-arrow').removeClass('down').addClass('right');
-		jQuery(this).children('.enhanced_tracking_content .accordian-arrow').removeClass('right').addClass('down');
+		parent.find('.enhanced_tracking_content .accordian-arrow').removeClass('ts-down').addClass('ts-right');
+		jQuery(this).children('.enhanced_tracking_content .accordian-arrow').removeClass('ts-right').addClass('ts-down');
 		jQuery(this).next('.enhanced_content').slideDown('slow');
 	}
 });
@@ -867,14 +867,14 @@ jQuery(document).on("change", ".tracking_details_switch .enhanced_switch_input",
 jQuery(document).on("click", ".enhanced_tracking_detail .tracking_number_wrap", function () {
 	if (jQuery(this).hasClass('active')) {
 		jQuery(this).removeClass('active');
-		jQuery(this).find('.accordian-arrow').removeClass('down').addClass('right');
+		jQuery(this).find('.accordian-arrow').removeClass('ts-down').addClass('ts-right');
 		jQuery(this).siblings('.enhanced_tracking_content').slideUp('slow');
 	} else {
 		jQuery(".enhanced_tracking_detail .tracking_number_wrap").removeClass('active');
 		jQuery(".enhanced_tracking_content").slideUp('slow');
 		jQuery(this).addClass('active');
-		jQuery('.tracking_number_wrap .accordian-arrow').removeClass('down').addClass('right');
-		jQuery(this).find('.accordian-arrow').removeClass('right').addClass('down');
+		jQuery('.tracking_number_wrap .accordian-arrow').removeClass('ts-down').addClass('ts-right');
+		jQuery(this).find('.accordian-arrow').removeClass('ts-right').addClass('ts-down');
 		jQuery(this).siblings('.enhanced_tracking_content').slideDown('slow');
 	}
 });
