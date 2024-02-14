@@ -1374,6 +1374,7 @@ class TS4WC_Admin_Customizer {
 			foreach ( $settings as $key => $val ) {
 				if ( isset( $val['type'] ) && 'textarea' == $val['type'] ) {
 					$option_data = get_option( $val['option_name'], array() );
+					// $option_data[$key] = htmlentities( wp_unslash( $_POST[$key] ) );
 					$option_data[$key] = wp_unslash( sanitize_textarea_field( $_POST[$key] ) );
 					update_option( $val['option_name'], $option_data );
 				} elseif ( isset( $val['option_type'] ) && 'key' == $val['option_type'] ) {

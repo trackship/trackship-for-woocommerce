@@ -132,7 +132,7 @@ class WC_Trackship_Shipments {
 		} elseif ( 'tracking_issues' == $active_shipment_status ) {
 			$where[] = "shipment_status NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' ) OR pending_status IS NOT NULL";
 		} elseif ( 'active' == $active_shipment_status ) {
-			$where[] = "shipment_status != ( 'delivered')";
+			$where[] = " shipment_status != 'delivered' ";
 		} elseif ( 'all_ship' != $active_shipment_status ) {
 			$where[] = "shipment_status = ( '{$active_shipment_status}')";
 		}
@@ -167,7 +167,7 @@ class WC_Trackship_Shipments {
 		", $order_by, $limit ) );
 		
 		$date_format = 'M d';
-			
+
 		$result = array();
 		$i = 0;
 		$total_data = 1;
