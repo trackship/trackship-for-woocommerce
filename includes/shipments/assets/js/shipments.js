@@ -57,7 +57,6 @@ jQuery('.shipping_date').on('cancel.daterangepicker', function(ev, picker) {
 
 jQuery(document).ready(function() {
 	'use strict';
-	localStorage_migraine();
 	var url;
 	var $table = jQuery("#active_shipments_table").DataTable({
 		dom: "i<'shipments_custom_data'>B<'table_scroll't><'datatable_footer'ilp>",
@@ -213,11 +212,6 @@ jQuery(document).ready(function() {
 		}
 		var url = window.location.protocol + "//" + window.location.host + window.location.pathname+"?page=trackship-shipments&status="+active_status+"&provider=" + active_provider;
 		window.history.pushState({path:url},'',url);
-		if ( active_status === 'delivered' ) {
-			$table.columns(8).visible(false);
-		} else {
-			$table.columns(8).visible(true);
-		}
 	});
 	jQuery(document).on("change", "#shipping_provider", function(e){
 		var active_provider = jQuery(this).val();
@@ -366,25 +360,6 @@ jQuery(document).ready(function() {
 		}
 	});
 });
-
-function localStorage_migraine() {
-	var localStorageData = localStorage.getItem('shipments_column');
-	if(localStorageData){
-		var objectNew = {}
-		var data = JSON.parse(localStorageData)
-		Object.keys(data).map((keyName) => {
-			if(keyName == "8") objectNew["10"] = data[keyName];
-			else if(keyName == "9") objectNew["11"] = data[keyName];
-			else if(keyName == "10") objectNew["12"] = data[keyName];
-			else if(keyName == "11") objectNew["13"] = data[keyName];
-			else if(keyName == "12") objectNew["14"] = data[keyName];
-
-			else objectNew[keyName] = data[keyName];
-		})
-		localStorage.setItem('shipment_column',JSON.stringify(objectNew));
-		localStorage.removeItem('shipments_column');
-	}
-}
 
 jQuery(document).on("click", "#bulk_actions", function(){
 	var length = jQuery('.shipment_checkbox:checked').length;
