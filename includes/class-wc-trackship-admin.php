@@ -351,7 +351,7 @@ class WC_Trackship_Admin {
 			SELECT
 				SUM( IF( `shipping_date` BETWEEN %s AND %s, 1, 0 ) ) as total_shipment,
 				SUM( IF( (`shipment_status` NOT LIKE 'delivered' OR `pending_status` IS NOT NULL) AND `shipping_date` BETWEEN %s AND %s, 1, 0 ) ) as active_shipment,
-				SUM( IF( (`shipment_status` LIKE 'delivered' OR `pending_status` IS NOT NULL) AND `shipping_date` BETWEEN %s AND %s, 1, 0 ) ) as delivered_shipment,
+				SUM( IF( (`shipment_status` LIKE 'delivered') AND `shipping_date` BETWEEN %s AND %s, 1, 0 ) ) as delivered_shipment,
 				SUM( IF((`shipment_status` NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' ) OR `pending_status` IS NOT NULL) AND `shipping_date` BETWEEN %s AND %s, 1, 0) ) as tracking_issues
 				FROM {$wpdb->prefix}trackship_shipment AS row1",
 				$start_date, $end_date, $start_date, $end_date, $start_date, $end_date, $start_date, $end_date

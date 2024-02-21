@@ -1,3 +1,26 @@
+function shipment_js_error(response, jqXHR, exception) {
+	console.log(response, jqXHR, exception);
+	var msg = '';
+	if (response.status === 0) {
+		msg = 'Not connect.\n Verify Network.';
+	} else if (response.status == 404) {
+		msg = 'Requested page not found. [404]';
+	} else if (response.status == 500) {
+		msg = 'Internal Server Error [500].';
+	} else if (exception === 'parsererror') {
+		msg = 'Requested JSON parse failed.';
+	} else if (exception === 'timeout') {
+		msg = 'Time out error.';
+	} else if (exception === 'abort') {
+		msg = 'Ajax request aborted.';
+	} else if (response.responseText === '-1') {
+		msg = 'Security check fail, please refresh and try again.';
+	} else {
+		msg = 'Uncaught Error.\n' + response.responseText;
+	}
+	jQuery(document).trackship_snackbar_warning(msg);
+}
+
 /* show_popup jquery */
 (function( $ ){
 	'use strict';
@@ -34,7 +57,6 @@ jQuery('.shipping_date').on('cancel.daterangepicker', function(ev, picker) {
 
 jQuery(document).ready(function() {
 	'use strict';
-	localStorage_migraine();
 	var url;
 	var $table = jQuery("#active_shipments_table").DataTable({
 		dom: "i<'shipments_custom_data'>B<'table_scroll't><'datatable_footer'ilp>",
@@ -97,6 +119,11 @@ jQuery(document).ready(function() {
 				"width": "150px",
 				'orderable': true,
 				'data': 'et_shipped_at',
+			},
+			{
+				"width": "150px",
+				'orderable': true,
+				'data': 'updated_at',
 			},
 			{
 				"width": "185px",
@@ -185,11 +212,6 @@ jQuery(document).ready(function() {
 		}
 		var url = window.location.protocol + "//" + window.location.host + window.location.pathname+"?page=trackship-shipments&status="+active_status+"&provider=" + active_provider;
 		window.history.pushState({path:url},'',url);
-		if ( active_status === 'delivered' ) {
-			$table.columns(8).visible(false);
-		} else {
-			$table.columns(8).visible(true);
-		}
 	});
 	jQuery(document).on("change", "#shipping_provider", function(e){
 		var active_provider = jQuery(this).val();
@@ -272,8 +294,8 @@ jQuery(document).ready(function() {
 			success: function(response) {
 				$table.ajax.reload();
 			},
-			error: function(response) {
-				console.log(response);
+			error: function(response, jqXHR, exception) {
+				shipment_js_error(response, jqXHR, exception)
 			}
 		});	
 	});
@@ -301,8 +323,8 @@ jQuery(document).ready(function() {
 						jQuery('.bulk_action_button').attr('disabled','disabled');
 						jQuery('.all_checkboxes').prop("checked", false);
 					},
-					error: function(errorThrown){
-						console.log(errorThrown);
+					error: function(response, jqXHR, exception){
+						shipment_js_error(response, jqXHR, exception)
 					}
 				});
 			}
@@ -338,25 +360,6 @@ jQuery(document).ready(function() {
 		}
 	});
 });
-
-function localStorage_migraine() {
-	var localStorageData = localStorage.getItem('shipments_column');
-	if(localStorageData){
-		var objectNew = {}
-		var data = JSON.parse(localStorageData)
-		Object.keys(data).map((keyName) => {
-			if(keyName == "8") objectNew["10"] = data[keyName];
-			else if(keyName == "9") objectNew["11"] = data[keyName];
-			else if(keyName == "10") objectNew["12"] = data[keyName];
-			else if(keyName == "11") objectNew["13"] = data[keyName];
-			else if(keyName == "12") objectNew["14"] = data[keyName];
-
-			else objectNew[keyName] = data[keyName];
-		})
-		localStorage.setItem('shipment_column',JSON.stringify(objectNew));
-		localStorage.removeItem('shipments_column');
-	}
-}
 
 jQuery(document).on("click", "#bulk_actions", function(){
 	var length = jQuery('.shipment_checkbox:checked').length;
@@ -430,8 +433,8 @@ jQuery(document).on("click", ".dashboard_input_tab .tab_input", function(){
 			jQuery('.innner_content .tracking_issues').html(response.tracking_issues);
 			jQuery(".fullfillment_dashboard_section_content").unblock();
 		},
-		error: function(response) {
-			console.log(response);
+		error: function(response, jqXHR, exception) {
+			shipment_js_error(response, jqXHR, exception)
 		}
 	});
 });

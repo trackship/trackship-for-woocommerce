@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="enhanced_shipment_details_section">
 	<div data-label="enhanced_details" class="enhanced_heading ">
 		<span><?php esc_html_e('Details', 'trackship-for-woocommerce' ); ?></span>
-		<span class="accordian-arrow right"></span>
+		<span class="accordian-arrow ts-right"></span>
 	</div>
 	<div class="enhanced_content enhanced_details">
 		<?php if ( !$hide_last_mile && isset($row->delivery_number) && $row->delivery_number ) { ?>
@@ -38,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="enhanced_notifications_section">
 		<div data-label="enhanced_notifications" class="enhanced_heading ">
 			<span><?php esc_html_e('Notifications', 'trackship-for-woocommerce' ); ?></span>
-			<span class="accordian-arrow right"></span>
+			<span class="accordian-arrow ts-right"></span>
 		</div>
 		<div class="enhanced_content enhanced_notifications">
 			<?php $this->get_notifications_option( $order_id ); ?>
