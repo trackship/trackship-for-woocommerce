@@ -64,8 +64,6 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 
 			}
 
-			$type = empty( apply_filters( 'smswoo_additional_charsets', get_option( 'smswoo_active_charsets', array() ) ) ) ? 'english' : 'unicode';
-			
 			if ( 'IN' == $country_code ) {
 				$country_dial_code = '91';
 			} else if ( 'US' == $country_code ) {
@@ -82,24 +80,32 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 				$template_var = $template_var ? explode( ',', $template_var) : [];
 
 				$var = [];
+
+				$replace_var = $sms_notification->replace_message_variables( $template_var, '' );
+				// $replace_var = $replace_var ? explode( ',', $replace_var ) : [];
+				// $template_var = $template_var ? explode( ',', $template_var ) : [];
+				$var = array();
 				$i = 1;
-				foreach ( (array) $template_var as $key => $val ) {
+				foreach ($replace_var as $key => $val) {
 					$var[ 'var' . $i] = $val;
 					$i++;
 				}
-
-				$body = array(
-					'template_id'	=> $template_id,
-					'sender'		=> $from,
-					'short_url'		=> '1',
-					'mobiles'		=> $to_phone,
+				
+				// Assuming $to_phone is the recipient's phone number
+				$recipient = array(
+					'mobiles' => $to_phone,
 				);
 
-				$body = array_merge( $body, $var );
-				
+				// Combine $body, $var, and $recipient to form the final structure
+				$body = array(
+					'template_id' => $template_id,
+					'short_url' => '1 (On) or 0 (Off)', // Set to '1' for On, '0' for Off
+					'recipients' => array($recipient + $var),
+				);
+
 				$args = array(
-					'body'		=> wp_json_encode( $body ),
-					'headers'	=> array(
+					'body' => wp_json_encode( $body ),
+					'headers' => array(
 						'authkey' => $this->_msg91_authkey,
 						'Content-Type' => 'application/json',
 					),
@@ -122,7 +128,7 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 				);
 				
 				$args = array(
-					'body'    => wp_json_encode( $body ),
+					'body' => wp_json_encode( $body ),
 					'headers' => array(
 						'authkey' => $this->_msg91_authkey,
 						'Content-Type' => 'application/json',
@@ -160,13 +166,6 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 
 			$this->_log[] = $response;
 
-			// Check for proper response / body
-			if ( ! isset( $response['response'] ) || ! isset( $response['body'] ) ) {
-
-				throw new Exception( __( 'No answer', 'smswoo' ) );
-
-			}
-
 			return;
 
 		}
@@ -178,8 +177,8 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 		 *
 		 * @param $to_phone string
 		 *
-		 * @return  void
-		 * @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
+		 * @return void
+		 * @throws Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
 		 */
 		public function validate_number( $to_phone ) {
 
