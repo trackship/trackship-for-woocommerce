@@ -25,6 +25,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</li>
 			</ul>
 		</div>
-		<span class="accordian-arrow right"></span>
+		<span class="accordian-arrow ts-right"></span>
 	</div>
 </div>

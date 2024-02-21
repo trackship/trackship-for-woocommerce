@@ -48,7 +48,7 @@ class WC_Trackship_Actions {
 		add_action( 'dokan_enqueue_scripts', array( $this, 'dokan_enqueue_scripts' ), 10 );
 		
 		//ajax save admin trackship settings
-		add_action( 'wp_ajax_wc_ast_trackship_form_update', array( $this, 'wc_ast_trackship_form_update_callback' ) );
+		add_action( 'wp_ajax_wc_trackship_form_update', array( $this, 'wc_trackship_form_update_callback' ) );
 		add_action( 'wp_ajax_trackship_tracking_page_form_update', array( $this, 'trackship_tracking_page_form_update_callback' ) );
 		add_action( 'wp_ajax_trackship_delivery_automation_form_update', array( $this, 'trackship_delivery_automation_form_update_callback' ) );
 
@@ -287,7 +287,7 @@ class WC_Trackship_Actions {
 				FROM {$wpdb->prefix}trackship_shipment	
 			WHERE 
 				shipment_status NOT IN ( 'delivered', 'pending_trackship', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'invalid_tracking', '' )
-				AND ( updated_date < %s OR updated_date IS NULL )
+				AND ( ship_length_updated < %s OR ship_length_updated IS NULL )
 				AND shipping_date > NOW() - INTERVAL 60 DAY
 		", $today));
 		$total_cron = ( int ) ( $total_order/300 ) + 1;
@@ -308,7 +308,7 @@ class WC_Trackship_Actions {
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE
 				shipment_status NOT IN ( 'delivered', 'pending_trackship', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'invalid_tracking', '' )
-				AND ( updated_date < %s OR updated_date IS NULL )
+				AND ( ship_length_updated < %s OR ship_length_updated IS NULL )
 				AND shipping_date > NOW() - INTERVAL 60 DAY
 			LIMIT 300
 		", $today));
@@ -323,19 +323,19 @@ class WC_Trackship_Actions {
 				'order_id'			=> $order_id,
 				'tracking_number'	=> $value->tracking_number,
 			);
-			$wpdb->update( $woo_trackship_shipment, array( 'shipping_length' => $shipment_length, 'updated_date' => $today ), $where );
+			$wpdb->update( $woo_trackship_shipment, array( 'shipping_length' => $shipment_length, 'ship_length_updated' => $today ), $where );
 		}
 	}
 	
 	/*
 	* settings form save
 	*/
-	public function wc_ast_trackship_form_update_callback() {
+	public function wc_trackship_form_update_callback() {
 		
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			exit( 'You are not allowed' );
 		}
-		if ( ! empty( $_POST ) && check_admin_referer( 'wc_ast_trackship_form', 'wc_ast_trackship_form_nonce' ) ) {
+		if ( ! empty( $_POST ) && check_admin_referer( 'wc_trackship_form', 'wc_trackship_form_nonce' ) ) {
 			$admin = WC_Trackship_Admin::get_instance();
 
 			$data2 = $admin->get_trackship_general_data();

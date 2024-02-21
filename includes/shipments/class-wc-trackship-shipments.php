@@ -132,7 +132,7 @@ class WC_Trackship_Shipments {
 		} elseif ( 'tracking_issues' == $active_shipment_status ) {
 			$where[] = "shipment_status NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' ) OR pending_status IS NOT NULL";
 		} elseif ( 'active' == $active_shipment_status ) {
-			$where[] = "shipment_status != ( 'delivered')";
+			$where[] = " shipment_status != 'delivered' ";
 		} elseif ( 'all_ship' != $active_shipment_status ) {
 			$where[] = "shipment_status = ( '{$active_shipment_status}')";
 		}
@@ -149,7 +149,9 @@ class WC_Trackship_Shipments {
 			{$where_condition}
 		" );
 
-		$column = isset( $_POST['order'][0]['column'] ) && '1' == wc_clean($_POST['order'][0]['column']) ? 'order_id' : 'shipping_date';
+		$column = isset( $_POST['order'][0]['column'] ) && '1' == wc_clean( $_POST['order'][0]['column'] ) ? 'order_id' : 'shipping_date';
+		$column = isset( $_POST['order'][0]['column'] ) && '3' == wc_clean( $_POST['order'][0]['column'] ) ? 'updated_at' : $column;
+
 		$dir = isset( $_POST['order'][0]['dir'] ) && 'asc' == wc_clean($_POST['order'][0]['dir']) ? ' ASC' : ' DESC';
 		$order_by = $column . $dir;
 		
@@ -165,7 +167,7 @@ class WC_Trackship_Shipments {
 		", $order_by, $limit ) );
 		
 		$date_format = 'M d';
-			
+
 		$result = array();
 		$i = 0;
 		$total_data = 1;
@@ -212,9 +214,13 @@ class WC_Trackship_Shipments {
 			$ori_country = $value->origin_country;
 			$dest_country = $value->destination_country;
 			$checkbox = '<input type="checkbox" class="shipment_checkbox" data-orderid="' . $value->order_id . '" data-tnumber="' . $value->tracking_number . '">';
+
+			$updated_date1 = $value->updated_at ? date_i18n( 'M d, Y', strtotime( $value->updated_at ) ) : '';
+			$updated_date2 = $value->updated_at ? date_i18n( 'M d, Y H:i:s', strtotime( $value->updated_at ) ) : '';
 			
 			$result[$i] = new \stdClass();
 			$result[$i]->et_shipped_at = '<span class="trackship-tip" title="' . date_i18n( 'M d, Y', strtotime( $value->shipping_date ) ) . '">' . date_i18n( 'M d, Y', strtotime( $value->shipping_date ) ) . '</span>';
+			$result[$i]->updated_at = $updated_date1 ? '<span class="trackship-tip" title="' . $updated_date2 . '">' . $updated_date1 . '</span>' : '';
 			$result[$i]->checkbox = $checkbox;
 			$result[$i]->order_id = $value->order_id;
 			$result[$i]->last_event = $last_event;
