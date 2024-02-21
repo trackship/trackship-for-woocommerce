@@ -40,7 +40,7 @@ if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocomme
 $section = isset( $_GET['section'] ) ? sanitize_text_field( $_GET['section'] ) : '';
 ?>
 <div class="accordion_container">
-	<form method="post" id="wc_ast_trackship_form" action="" enctype="multipart/form-data">
+	<form method="post" id="wc_trackship_form" action="" enctype="multipart/form-data">
 		<div class="outer_form_table">
 			<div class="heading_panel section_settings_heading <?php echo 'general' == $section ? 'checked' : ''; ?>">
 				<strong><?php esc_html_e( 'General Settings', 'trackship-for-woocommerce' ); ?></strong>
@@ -50,8 +50,8 @@ $section = isset( $_GET['section'] ) ? sanitize_text_field( $_GET['section'] ) :
 					<button name="save" class="button-primary button-trackship btn_large woocommerce-save-button" type="submit" value="Save & close">
 						<?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?>
 					</button>
-					<?php wp_nonce_field( 'wc_ast_trackship_form', 'wc_ast_trackship_form_nonce' ); ?>
-					<input type="hidden" name="action" value="wc_ast_trackship_form_update">
+					<?php wp_nonce_field( 'wc_trackship_form', 'wc_trackship_form_nonce' ); ?>
+					<input type="hidden" name="action" value="wc_trackship_form_update">
 				</div>
 			</div>
 			<div class="panel_content section_settings_content">

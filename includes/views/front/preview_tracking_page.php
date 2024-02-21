@@ -113,7 +113,7 @@
 		<div class="tracking_event_tab_view">
 			<div data-label="tracking_events_details" class="heading_panel tracking_detail_label <?php echo 1 != $hide_tracking_events ? 'checked' : 'hide'; ?>" style="<?php echo 1 == $hide_tracking_events ? 'display:none' : ''; ?>">
 				Shipment Progress
-				<span class="accordian-arrow right"></span>
+				<span class="accordian-arrow ts-right"></span>
 			</div>
 			<div class="content_panel tracking-details tracking_events_details">
 				<div class="preview_tracking_events <?php echo 0 != $hide_tracking_events ? 'hide' : ''; ?> tracking_events_0">
@@ -175,7 +175,7 @@
 			</div>
 			<div data-label="product_details" class="heading_panel">
 				Items in this shipment
-				<span class="accordian-arrow right"></span>
+				<span class="accordian-arrow ts-right"></span>
 			</div>
 			<div class="content_panel product_details">
 				<ul class="tpi_product_tracking_ul">
@@ -197,7 +197,7 @@
 			</div>
 			<div data-label="shipment_status_notifications" class="heading_panel">
 				Notifications
-				<span class="accordian-arrow right"></span>
+				<span class="accordian-arrow ts-right"></span>
 			</div>
 			<div class="content_panel shipment_status_notifications">
 				<label>

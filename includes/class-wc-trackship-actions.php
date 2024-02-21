@@ -48,7 +48,7 @@ class WC_Trackship_Actions {
 		add_action( 'dokan_enqueue_scripts', array( $this, 'dokan_enqueue_scripts' ), 10 );
 		
 		//ajax save admin trackship settings
-		add_action( 'wp_ajax_wc_ast_trackship_form_update', array( $this, 'wc_ast_trackship_form_update_callback' ) );
+		add_action( 'wp_ajax_wc_trackship_form_update', array( $this, 'wc_trackship_form_update_callback' ) );
 		add_action( 'wp_ajax_trackship_tracking_page_form_update', array( $this, 'trackship_tracking_page_form_update_callback' ) );
 		add_action( 'wp_ajax_trackship_delivery_automation_form_update', array( $this, 'trackship_delivery_automation_form_update_callback' ) );
 
@@ -330,12 +330,12 @@ class WC_Trackship_Actions {
 	/*
 	* settings form save
 	*/
-	public function wc_ast_trackship_form_update_callback() {
+	public function wc_trackship_form_update_callback() {
 		
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			exit( 'You are not allowed' );
 		}
-		if ( ! empty( $_POST ) && check_admin_referer( 'wc_ast_trackship_form', 'wc_ast_trackship_form_nonce' ) ) {
+		if ( ! empty( $_POST ) && check_admin_referer( 'wc_trackship_form', 'wc_trackship_form_nonce' ) ) {
 			$admin = WC_Trackship_Admin::get_instance();
 
 			$data2 = $admin->get_trackship_general_data();
