@@ -305,6 +305,16 @@ class WC_Trackship_Install {
 			update_trackship_settings( 'trackship_db', '1.26' );
 			update_option( 'trackship_db', '1.26' );
 		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.27', '<' ) ) {
+
+			delete_trackship_settings( 'review_notice_ignore' );
+			delete_trackship_settings( 'trackship_upgrade_ignore' );
+			delete_trackship_settings( 'klaviyo_notice_ignore' );
+
+			update_trackship_settings( 'trackship_db', '1.27' );
+			update_option( 'trackship_db', '1.27' );
+		}
 	}
 
 	public function update_trackship_providers() {
