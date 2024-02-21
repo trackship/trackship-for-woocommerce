@@ -58,31 +58,12 @@ class WC_Trackship_Install {
 	public function update_database_check() {
 			
 		if ( version_compare( get_option( 'trackship_db' ), '1.0', '<' ) ) {
-			update_option( 'trackship_trigger_order_statuses', array( 'completed', 'shipped' ) );
 			update_option( 'trackship_db', '1.0' );
 
 			$this->create_shipping_provider_table();
 			$this->create_shipment_table();
 			$this->create_shipment_meta_table();
 			$this->create_email_log_table();
-		}
-
-		if ( version_compare( get_option( 'trackship_db' ), '1.6', '<' ) ) {
-			
-			$border_color = get_option('wc_ast_select_border_color', '#cccccc' );
-			$background_color = get_option('wc_ast_select_bg_color', '#fafafa' );
-			$font_color = get_option('wc_ast_select_font_color', '#333' );
-			$tracking_page_layout = get_option('wc_ast_select_tracking_page_layout', '#333' );
-			
-			$shipment_email_settings = get_option( 'shipment_email_settings', [] );
-			
-			$shipment_email_settings['border_color'] = $border_color;
-			$shipment_email_settings['bg_color'] = $background_color;
-			$shipment_email_settings['font_color'] = $font_color;
-			$shipment_email_settings['tracking_page_layout'] = $tracking_page_layout;
-			
-			update_option( 'shipment_email_settings', $shipment_email_settings );
-			update_option( 'trackship_db', '1.6' );
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.8', '<' ) ) {
@@ -92,10 +73,6 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.8' );
 		}
 
-		if ( version_compare( get_option( 'trackship_db' ), '1.11', '<' ) ) {
-			update_option( 'enable_notification_for_amazon_order', 1 );
-			update_option( 'trackship_db', '1.11' );
-		}
 		if ( wp_next_scheduled( 'ast_late_shipments_cron_hook' ) ) {
 			$Late_Shipments = new WC_TrackShip_Late_Shipments();
 			$Late_Shipments->remove_cron();
@@ -164,7 +141,7 @@ class WC_Trackship_Install {
 				update_trackship_settings( 'enable_email_widget', $enable_email_widget );
 			}
 
-			$enable_notification_for_amazon_order = get_option( 'enable_notification_for_amazon_order', '' );
+			$enable_notification_for_amazon_order = get_option( 'enable_notification_for_amazon_order', 1 );
 			if ( $enable_notification_for_amazon_order ) {
 				update_trackship_settings( 'enable_notification_for_amazon_order', $enable_notification_for_amazon_order );
 			}

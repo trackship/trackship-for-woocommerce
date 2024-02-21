@@ -34,7 +34,7 @@
 		body .col.enhanced_tracking_detail, body .enhanced_content label {
 			color: <?php echo esc_html( $font_color ); ?>;
 		}				
-		span.accordian-arrow.right {
+		span.accordian-arrow.ts-right {
 			border-color: <?php echo esc_html( $font_color ); ?>;
 		}
 	<?php } ?>
@@ -115,7 +115,7 @@
 			<div class="enhanced_shipment_details_section">
 				<div data-label="enhanced_details" class="enhanced_heading">
 					<span>Details</span>
-					<span class="accordian-arrow right"></span>
+					<span class="accordian-arrow ts-right"></span>
 				</div>
 				<div class="enhanced_content enhanced_details" style="display: none;">
 					<div class="last_mile_tracking_number">
@@ -145,7 +145,7 @@
 			<div class="enhanced_notifications_section">
 				<div data-label="enhanced_notifications" class="enhanced_heading">
 					<span>Notifications</span>
-					<span class="accordian-arrow right"></span>
+					<span class="accordian-arrow ts-right"></span>
 				</div>
 				<div class="enhanced_content enhanced_notifications" style="display: none;">
 					<label>

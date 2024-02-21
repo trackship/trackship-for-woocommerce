@@ -4,8 +4,8 @@
 
 		init: function () {
 
-			$("#wc_ast_trackship_form").on('click', '.woocommerce-save-button', this.save_wc_ast_trackship_form);
-			$("#trackship_tracking_page_form").on('click', '.woocommerce-save-button', this.save_trackship_tracking_page_form);
+			$("#wc_trackship_form").on('click', '.woocommerce-save-button', this.save_trackship_form);
+			$("#trackship_tracking_page_form").on('click', '.woocommerce-save-button', this.save_tracking_page_form);
 			$("#trackship_mapping_form").on('click', '.woocommerce-save-button', this.save_trackship_mapping_form);
 			$("#delivery_automation_form").on('click', '.woocommerce-save-button', this.save_delivery_automation_form);
 			$("#trackship_late_shipments_form").on('click', '.woocommerce-save-button', this.save_trackship_late_shipments_form);
@@ -13,36 +13,44 @@
 
 		},
 
-		save_wc_ast_trackship_form: function (event) {
+		save_trackship_form: function (event) {
 			event.preventDefault();
 
-			$("#wc_ast_trackship_form").find(".spinner").addClass("active");
-			var ajax_data = $("#wc_ast_trackship_form").serialize();
+			$("#wc_trackship_form").find(".spinner").addClass("active");
+			var ajax_data = $("#wc_trackship_form").serialize();
 
-			$.post(ajaxurl, ajax_data, function (response) {
-				$("#wc_ast_trackship_form").find(".spinner").removeClass("active");
+			$.post(ajaxurl, ajax_data)
+			.done(function (response) {
+				$("#wc_trackship_form").find(".spinner").removeClass("active");
 				$(document).trackship_snackbar(trackship_script.i18n.data_saved);
 				jQuery('.heading_panel').removeClass('active');
 				jQuery('.heading_panel').siblings('.panel_content').removeClass('active').slideUp('slow');
 				jQuery('.heading_panel').find('span.dashicons').addClass('dashicons-arrow-right-alt2');
 				jQuery('.heading_panel').find('button.button-primary').hide();
+			})
+			.fail(function (response, jqXHR, exception) {
+				trackship_js_error(response, jqXHR, exception);
 			});
 			return false;
 		},
 
-		save_trackship_tracking_page_form: function (event) {
+		save_tracking_page_form: function (event) {
 			event.preventDefault();
 
 			$("#trackship_tracking_page_form").find(".spinner").addClass("active");
 			var ajax_data = $("#trackship_tracking_page_form").serialize();
 
-			$.post(ajaxurl, ajax_data, function (response) {
+			$.post(ajaxurl, ajax_data)
+			.done(function (response) {
 				$("#trackship_tracking_page_form").find(".spinner").removeClass("active");
 				$(document).trackship_snackbar(trackship_script.i18n.data_saved);
 				jQuery('.heading_panel').removeClass('active');
 				jQuery('.heading_panel').siblings('.panel_content').removeClass('active').slideUp('slow');
 				jQuery('.heading_panel').find('span.dashicons').addClass('dashicons-arrow-right-alt2');
 				jQuery('.heading_panel').find('button.button-primary').hide();
+			})
+			.fail(function (response, jqXHR, exception) {
+				trackship_js_error(response, jqXHR, exception);
 			});
 			return false;
 		},
@@ -53,13 +61,17 @@
 			$("#trackship_mapping_form").find(".heading_panel .spinner").addClass("active");
 			var ajax_data = $("#trackship_mapping_form").serialize();
 
-			$.post(ajaxurl, ajax_data, function (response) {
+			$.post(ajaxurl, ajax_data)
+			.done(function (response) {
 				$("#trackship_mapping_form").find(".spinner").removeClass("active");
 				$(document).trackship_snackbar(trackship_script.i18n.data_saved);
 				jQuery('.heading_panel').removeClass('active');
 				jQuery('.heading_panel').siblings('.panel_content').removeClass('active').slideUp('slow');
 				jQuery('.heading_panel').find('span.dashicons').addClass('dashicons-arrow-right-alt2');
 				jQuery('.heading_panel').find('button.button-primary').hide();
+			})
+			.fail(function (response, jqXHR, exception) {
+				trackship_js_error(response, jqXHR, exception);
 			});
 			return false;
 		},
@@ -70,13 +82,17 @@
 			$("#delivery_automation_form").find(".heading_panel .spinner").addClass("active");
 			var ajax_data = $("#delivery_automation_form").serialize();
 
-			$.post(ajaxurl, ajax_data, function (response) {
+			$.post(ajaxurl, ajax_data)
+			.done(function (response) {
 				$("#delivery_automation_form").find(".spinner").removeClass("active");
 				$(document).trackship_snackbar(trackship_script.i18n.data_saved);
 				jQuery('.heading_panel').removeClass('active');
 				jQuery('.heading_panel').siblings('.panel_content').removeClass('active').slideUp('slow');
 				jQuery('.heading_panel').find('span.dashicons').addClass('dashicons-arrow-right-alt2');
 				jQuery('.heading_panel').find('button.button-primary').hide();
+			})
+			.fail(function (response, jqXHR, exception) {
+				trackship_js_error(response, jqXHR, exception);
 			});
 			return false;
 		},
@@ -92,13 +108,17 @@
 
 			$("#trackship_late_shipments_form").find(".spinner").addClass("active").slideDown('slow');
 			var ajax_data = $("#trackship_late_shipments_form").serialize();
-
-			$.post(ajaxurl, ajax_data, function (response) {
+			$.post(ajaxurl, ajax_data)
+			.done(function (response) {
 				$("#trackship_late_shipments_form").find(".spinner").removeClass("active").slideUp('slow');
 				jQuery(document).trackship_snackbar(trackship_script.i18n.data_saved);
 				jQuery('.admin_notifications_tr').removeClass('open');
 				jQuery('.admin_notifiations_content').slideUp('slow');
+			})
+			.fail(function (response, jqXHR, exception) {
+				trackship_js_error(response, jqXHR, exception);
 			});
+
 			return false;
 		},
 	};
@@ -116,15 +136,6 @@ jQuery(document).ready(function () {
 	});
 	
 	if (jQuery.fn.wpColorPicker) {
-
-		jQuery('#wc_ts_border_color').wpColorPicker({
-			change: function (e, ui) {
-				var color = ui.color.toString();
-				jQuery('#tracking_preview_iframe').contents().find('.col.tracking-detail').css('border', '1px solid ' + color);
-				jQuery('.tracking_page_preview').prop("disabled", true);
-			},
-		});
-
 		jQuery('#wc_ast_status_label_color').wpColorPicker({
 			change: function (e, ui) {
 				var color = ui.color.toString();
@@ -132,46 +143,6 @@ jQuery(document).ready(function () {
 			},
 		});
 	}
-});
-
-jQuery(document).on("change", ".select_t_layout_section .radio-img", function () {
-	jQuery('.tracking_page_preview').prop("disabled", true);
-});
-
-jQuery(document).on("click", "#ts_link_to_carrier", function () {
-	jQuery('.tracking_page_preview').prop("disabled", true);
-});
-
-jQuery(document).on("click", "#hide_provider_image", function () {
-	jQuery('.tracking_page_preview').prop("disabled", true);
-});
-
-jQuery(document).on("click", "#ts_tracking_events", function () {
-	jQuery('.tracking_page_preview').prop("disabled", true);
-});
-
-jQuery(document).on("click", "#wc_ast_remove_trackship_branding", function () {
-	jQuery('.tracking_page_preview').prop("disabled", true);
-});
-
-jQuery(document).on("click", ".tracking_page_preview", function () {
-
-	jQuery("#trackship_tracking_page_form").find(".spinner").addClass("active");
-	document.getElementById('tracking_preview_iframe').contentDocument.location.reload(true);
-
-	jQuery('#tracking_preview_iframe').load(function () {
-		jQuery("#trackship_tracking_page_form").find(".spinner").removeClass("active");
-		jQuery('.tracking_page_preview_popup').show();
-		var iframe = document.getElementById("tracking_preview_iframe");
-		iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
-	});
-});
-
-jQuery(document).on("click", ".popupclose", function () {
-	jQuery('.tracking_page_preview_popup').hide();
-});
-jQuery(document).on("click", ".popup_close_icon", function () {
-	jQuery('.tracking_page_preview_popup').hide();
 });
 
 var getUrlParameter = function getUrlParameter(sParam) {
