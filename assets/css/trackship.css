@@ -1409,14 +1409,14 @@ input#late_shipments_email_to, input#exception_shipments_email_to, input#on_hold
 	margin-top: 10px;
 }
 #admin_tracking_widget .popuprow {
-	padding: 0;
-	max-width: 100%;
+	padding: 20px;
 	border: 0;
 	max-height: 100%;
 	background: transparent;
 	vertical-align: top;
-	margin-top: 50px;
-	max-width: 800px;
+	margin-top: 100px;
+	max-width: 840px;
+	box-sizing: border-box;
 }
 span.admin_tracking_page_close {
 	width: 60px;
@@ -1941,6 +1941,9 @@ select#wc_ast_trackship_page_id {
 label.inner_tab_label {
 	padding: 15px 14px;
 	font-size: 13px;
+}
+#admin_tracking_widget .popuprow {
+	margin-top: 50px;
 }
 }
 

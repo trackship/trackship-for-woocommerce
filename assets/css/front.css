@@ -783,6 +783,16 @@ div.last_mile_tracking_number {
 	justify-content: space-between;
 	align-items: center;
 }
+.ts_enhanced_info {
+	margin: 0 0 10px 0;
+	font-size: 14px;
+}
+.ts_enhanced_info span {
+	vertical-align: middle;
+}
+.ts_enhanced_info a {
+	color: #0025ad;
+}
 span.copy_tracking_page.trackship-tip {
 	fill: #3858e9;
 	margin-left: 5px;
@@ -867,5 +877,15 @@ div.search_order_form {
 @media screen and (max-width: 500px) {
 	form.order_track_form input {
 		max-width: 100%;
-	}	
+	}
+	span.tracking_details_switch {
+		float: none;
+		display: inline-block;
+	}
+	div.est_delivery_section {
+		display: block;
+	}
+	.est_delivery_section span.est-delivery-date, .tracking_widget_tracking_events_section .tracking_details_switch {
+		margin-bottom: 15px;
+	}
 }
