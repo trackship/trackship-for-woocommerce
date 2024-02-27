@@ -574,6 +574,28 @@ class WC_TrackShip_Front {
 		$post_tracking = isset( $_POST['order_tracking_number'] ) ? sanitize_text_field($_POST['order_tracking_number']) : $post_tracking;
 		$url_tracking = isset( $_GET['tracking'] ) ? sanitize_text_field($_GET['tracking']) : $post_tracking;
 		$url_tracking = str_replace( ' ', '', $url_tracking );
+		$order = wc_get_order( $order_id );
+
+		$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $url_tracking );
+		if ( $tracking_page_link && is_admin() && isset( $_POST['tnumber'] ) ) {
+			?>
+			<p class="ts_enhanced_info">
+				<span>
+					Order 
+					<?php if ( $order->get_customer_id() ) { ?>
+						<a href="<?php echo esc_url( $order->get_view_order_url() ); ?>" target="_blank"><?php echo esc_html( '#' . $order->get_order_number() ); ?></a>
+					<?php } else { ?>
+						<?php echo esc_html( '#' . $order->get_order_number() ); ?>
+					<?php } ?>
+					|
+				</span>
+				<span ><?php esc_html_e( 'Copy Tracking page link', 'trackship-for-woocommerce' ); ?></span>
+				<span class="copy_tracking_page trackship-tip" title="Copy the secure link to the Tracking page" data-tracking_page_link=<?php echo esc_url( $tracking_page_link ); ?> >
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 20 20" style="enable-background:new 0 0 20 20;" xml:space="preserve"><path d="M19.6,2.8l-2.4-2.4C17,0.1,16.7,0,16.4,0H10C8.6,0,7.5,1.1,7.5,2.5l0,10c0,1.4,1.2,2.5,2.5,2.5h7.5c1.4,0,2.5-1.1,2.5-2.5  V3.6C20,3.3,19.9,3,19.6,2.8z M18.1,12.5c0,0.3-0.3,0.6-0.6,0.6H10c-0.3,0-0.6-0.3-0.6-0.6v-10c0-0.3,0.3-0.6,0.6-0.6h5l0,1.9  C15,4.4,15.6,5,16.3,5h1.8L18.1,12.5L18.1,12.5z M10.6,17.5c0,0.3-0.3,0.6-0.6,0.6H2.5c-0.3,0-0.6-0.3-0.6-0.6l0-10  c0-0.3,0.3-0.6,0.6-0.6h3.8V5H2.5C1.1,5,0,6.1,0,7.5l0,10C0,18.9,1.1,20,2.5,20H10c1.4,0,2.5-1.1,2.5-2.5v-1.2h-1.8L10.6,17.5z"/></svg>
+				</span>
+			</p>
+			<?php
+		}
 
 		$num = 1;
 		foreach ( $tracking_items as $key => $item ) {
