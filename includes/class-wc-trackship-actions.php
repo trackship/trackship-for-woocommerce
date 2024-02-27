@@ -139,26 +139,7 @@ class WC_Trackship_Actions {
 		//Cron for update shipment length 
 		add_action( 'scheduled_cron_shipment_length', array( $this, 'scheduled_cron_shipment_length_callback') );
 		add_action( 'update_shipment_length', array( $this, 'update_shipment_length' ) );
-		//add_action( 'wp_ajax_remove_delete_data', array( $this, 'remove_delete_data' ) );
 		//add_action( 'wp_ajax_update_shipment_length', array( $this, 'update_shipment_length' ) );
-	}
-	
-	/**
-	* Delete trackship_shipment table 
-	*/
-	public function remove_delete_data() {
-		global $wpdb;
-		$total_order = $wpdb->get_results("
-			SELECT *
-				FROM {$wpdb->prefix}trackship_shipment
-		");
-		foreach ( $total_order as $key => $value ) {
-			echo esc_html( $value->order_id ) . '<br>';
-			delete_post_meta( $value->order_id, 'shipment_table_updated' );
-		}
-		update_option( 'trackship_db', '0.7' );
-		$wpdb->query("DROP TABLE {$wpdb->prefix}trackship_shipment");
-		exit;
 	}
 	
 	/**
