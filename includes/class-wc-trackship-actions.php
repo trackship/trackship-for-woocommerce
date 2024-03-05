@@ -481,7 +481,7 @@ class WC_Trackship_Actions {
 
 		if ( count( $tracking_items ) > 0 ) {
 			?>
-				<ul class="wcast-shipment-status-list">
+				<ul class="ts-shipment-status-list">
 					<?php
 					foreach ( $tracking_items as $key => $tracking_item ) {
 						$row = trackship_for_woocommerce()->actions->get_shipment_row($order_id, $tracking_item['tracking_number']);
@@ -508,7 +508,7 @@ class WC_Trackship_Actions {
 								<span style="display:block;">
 									<span class="shipment-icon icon-default icon-<?php esc_html_e( $status ); ?> ast-shipment-tracking-status"> <?php esc_html_e( apply_filters( 'trackship_status_filter', $status ) ); ?></span>
 									<?php if ( $has_est_delivery ) { ?>
-										<span class="wcast-shipment-est-delivery ft12">Est. delivery <?php esc_html_e( $est_delivery_date1 ); ?> <a class="ts4wc_track_button ft12 <?php echo esc_html( $class ); ?>" data-orderid="<?php esc_html_e( $order_id ); ?>" data-page="orders" data-tnumber="<?php echo esc_html( $tracking_item['tracking_number'] ); ?>" data-tracking_id="<?php esc_html_e( $tracking_item['tracking_id'] ); ?>" data-nonce="<?php esc_html_e( wp_create_nonce( 'tswc-' . $order_id ) ); ?>" ><?php esc_html_e( 'Track', 'trackship-for-woocommerce' ); ?></a></span>
+										<span class="ts-shipment-est-delivery ft12">Est. delivery <?php esc_html_e( $est_delivery_date1 ); ?> <a class="ts4wc_track_button ft12 <?php echo esc_html( $class ); ?>" data-orderid="<?php esc_html_e( $order_id ); ?>" data-page="orders" data-tnumber="<?php echo esc_html( $tracking_item['tracking_number'] ); ?>" data-tracking_id="<?php esc_html_e( $tracking_item['tracking_id'] ); ?>" data-nonce="<?php esc_html_e( wp_create_nonce( 'tswc-' . $order_id ) ); ?>" ><?php esc_html_e( 'Track', 'trackship-for-woocommerce' ); ?></a></span>
 									<?php } ?>
 									<?php if ( '' != $last_event_time && !$has_est_delivery ) { ?>
 										<span class="showif_has_est_delivery_0 ft12">
@@ -1038,7 +1038,7 @@ class WC_Trackship_Actions {
 					<?php } ?>
 					<?php if ( !$dokan ) { ?>
 						<?php if ( $has_est_delivery ) { ?>
-							<span class="wcast-shipment-est-delivery ft12" style="display: block; margin-top: 8px;">Est. delivery <?php esc_html_e( $est_delivery_date1 ); ?> <a class="ts4wc_track_button ft12 <?php esc_html_e( $class ); ?>"  data-orderid="<?php esc_html_e( $order_id ); ?>" data-tnumber="<?php echo esc_html( $tracking_number ); ?>" data-tracking_id="<?php echo esc_html( $tracking_id ); ?>" data-nonce="<?php esc_html_e( wp_create_nonce( 'tswc-' . $order_id ) ); ?>"> <?php esc_html_e( 'Track', 'trackship-for-woocommerce' ); ?></a></span>
+							<span class="ts-shipment-est-delivery ft12" style="display: block; margin-top: 8px;">Est. delivery <?php esc_html_e( $est_delivery_date1 ); ?> <a class="ts4wc_track_button ft12 <?php esc_html_e( $class ); ?>"  data-orderid="<?php esc_html_e( $order_id ); ?>" data-tnumber="<?php echo esc_html( $tracking_number ); ?>" data-tracking_id="<?php echo esc_html( $tracking_id ); ?>" data-nonce="<?php esc_html_e( wp_create_nonce( 'tswc-' . $order_id ) ); ?>"> <?php esc_html_e( 'Track', 'trackship-for-woocommerce' ); ?></a></span>
 						<?php } ?>
 						<?php $log_url = add_query_arg( array( 'page' => 'trackship-logs', 's' => $tracking_number ), admin_url('admin.php') ); ?>
 						<span class="view_shipment_log"><a href="<?php echo esc_url($log_url); ?>"><?php esc_html_e( 'View Shipment log', 'trackship-for-woocommerce' ); ?></a></span>
