@@ -49,15 +49,15 @@ class WC_Trackship_Install {
 		if ( version_compare( get_option( 'trackship_db' ), '1.0', '<' ) ) {
 			update_trackship_settings( 'wc_ast_use_tracking_page', 1 );
 
-			$array1 = $array2 = $array3 = [];
-			$array1['wcast_enable_availableforpickup_email'] = 1;
-			update_option( 'wcast_availableforpickup_email_settings', $array1 );
+			$data1 = $data2 = $data3 = [];
+			$data1['wcast_enable_availableforpickup_email'] = 1;
+			update_option( 'wcast_availableforpickup_email_settings', $data1 );
 
-			$array2['wcast_enable_outfordelivery_email'] = 1;
-			update_option( 'wcast_outfordelivery_email_settings', $array2 );
+			$data2['wcast_enable_outfordelivery_email'] = 1;
+			update_option( 'wcast_outfordelivery_email_settings', $data2 );
 
-			$array3['wcast_enable_delivered_status_email'] = 1;
-			update_option( 'wcast_delivered_status_email_settings', $array3 );
+			$data3['wcast_enable_delivered_status_email'] = 1;
+			update_option( 'wcast_delivered_status_email_settings', $data3 );
 
 			update_option( 'wcast_enable_availableforpickup_email', '1.0' );
 			update_option( 'trackship_db', '1.0' );

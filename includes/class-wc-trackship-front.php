@@ -635,6 +635,7 @@ class WC_TrackShip_Front {
 		$provider_image = isset( $item[ 'tracking_provider_image' ] ) ? $item[ 'tracking_provider_image' ] : false ;
 		$tracking_link = isset( $item[ 'formatted_tracking_link' ] )? $item[ 'formatted_tracking_link' ] : false;
 		$provider_name = isset( $item[ 'tracking_provider' ] )? $item[ 'tracking_provider' ] : false;
+		$provider_name = isset( $item[ 'formatted_tracking_provider' ] ) && !empty( $item[ 'formatted_tracking_provider' ] ) ? $item[ 'formatted_tracking_provider' ] : $provider_name;
 
 		include 'views/front/enhanced_tracking_widget_header.php';
 	}
