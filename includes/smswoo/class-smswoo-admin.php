@@ -45,7 +45,7 @@ class TSWC_SMSWoo_Admin {
 		add_action( 'wp_ajax_smswoo_settings_tab_save', array( $this, 'smswoo_settings_tab_save_callback' ) );
 
 		if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocommerce/zorem-sms-for-woocommerce.php' ) ) {
-			//hook into AST for shipment SMS notification
+			//hook into TS4WC for shipment SMS notification
 			add_action( 'shipment_status_sms_section', array( $this, 'shipment_status_notification_tab'), 10, 1 );
 			
 			//Ajax save delivered email
@@ -54,9 +54,6 @@ class TSWC_SMSWoo_Admin {
 	}
 	
 	public function smswoo_settings() {
-		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
-			return;
-		}
 		include( dirname(__FILE__) . '/admin-html/settings_tab.php' );
 	}
 	
@@ -513,7 +510,7 @@ class TSWC_SMSWoo_Admin {
 						</span>
 					</div>
 					<div class="smswoo-bottom">
-						<div class="smswoo-ast-textarea">
+						<div class="smswoo-ts-textarea">
 							<div class="smawoo-textarea-placeholder">
 								<textarea class="smswoo-textarea" name="<?php echo esc_attr($array['id']); ?>" id="<?php echo esc_attr($array['id']); ?>" cols="30" rows="5"><?php echo esc_html(get_option( $array['id'], $array['default'] )); ?></textarea>
 								

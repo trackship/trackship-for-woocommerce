@@ -44,7 +44,7 @@ $form_tab_view = $tracking_page_defaults->get_value( 'tracking_form_settings', '
 	}
 <?php } ?>
 <?php if ( $border_color ) { ?>
-	.order_track_form, .tracking_form_tabs, .trackship_branding {
+	.order_track_form, .tracking_form_tabs {
 		border-color: <?php echo esc_html( $border_color ); ?> !important;
 	}
 <?php } ?>
@@ -117,16 +117,16 @@ $form_tab_view = $tracking_page_defaults->get_value( 'tracking_form_settings', '
 				<p class="form-row" style="margin-bottom:0;"><button type="submit" class="button btn btn-secondary" name="track" value="Track"><?php echo esc_html( $form_button_Text ); ?></button></p>
 			</div>
 			<div class="track_fail_msg" style="display:none;"></div>
-			<div class="trackship_branding">
-				<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></p>
-			</div>
-			<?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
-				<style> .trackship_branding{display:block !important;} </style>
-			<?php } ?>
 		</div>
 		<div class="clear"></div>
 		<input type="hidden" name="action" value="get_tracking_info">
 		<input type="hidden" name="fronted" value="yes">
 		<?php wp_nonce_field( 'tracking_form' ); ?>
 	</form>
+	<div class="trackship_branding">
+		<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></p>
+	</div>
+	<?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
+		<style> .trackship_branding{display:block !important;} </style>
+	<?php } ?>
 </div>

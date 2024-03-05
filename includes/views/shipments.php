@@ -125,8 +125,8 @@ $provider_count = array_combine($provider_array, $provider_count_array);
 			<?php foreach ( $columns as $key => $val) { ?>
 				<div class="column_toogle">
 					<input type="hidden" name="<?php echo 'column_' . esc_attr($key); ?>" value="0"/>
-					<input class="ast-tgl ast-tgl-flat" id="<?php echo 'column_' . esc_attr($key); ?>" name="<?php echo 'column_' . esc_attr($key); ?>" data-number="<?php echo esc_attr($key); ?>" type="checkbox" checked value="1"/>
-					<label class="ast-tgl-btn ast-tgl-btn-green" for="<?php echo 'column_' . esc_attr($key); ?>"></label>
+					<input class="tgl tgl-flat" id="<?php echo 'column_' . esc_attr($key); ?>" name="<?php echo 'column_' . esc_attr($key); ?>" data-number="<?php echo esc_attr($key); ?>" type="checkbox" checked value="1"/>
+					<label class="tgl-btn tgl-btn-green" for="<?php echo 'column_' . esc_attr($key); ?>"></label>
 					<label for="<?php echo 'column_' . esc_attr($key); ?>"><span><?php echo esc_html($val); ?></span></label>
 				</div>
 			<?php } ?>

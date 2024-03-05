@@ -166,9 +166,6 @@ section#content_trackship_settings, section#content_trackship_notifications, sec
 	border: 1px solid #3858e9;
 	color: #3858e9;
 }
-#wc_ast_trackship_automation_form {
-	margin-bottom: 20px;
-}
 .trackship_admin_layout table.form-table {
 	border: 0;
 	margin-top: 0;
@@ -265,20 +262,20 @@ table.form-table.tracking_page_heading td:last-child {
 	padding: .5em;
 	pointer-events: none;
 }
-ul.wcast-shipment-status-list {
+ul.ts-shipment-status-list {
 	margin: 0;
 }
-.wcast-shipment-status-list li {
+.ts-shipment-status-list li {
 	position: relative;
 	min-height: 50px;
 	box-sizing: border-box;
 	padding: 5px;
 	margin: 0;
 }
-.wcast-shipment-status-list li:last-child {
+.ts-shipment-status-list li:last-child {
 	margin-bottom: 0;
 }
-.wcast-shipment-status-list .ast-shipment-status {
+.ts-shipment-status-list .ast-shipment-status {
 	display: grid;
 }
 .ast-shipment-tracking-status {
@@ -299,7 +296,7 @@ ul.wcast-shipment-status-list {
 div#trackship-tracking-items .ts-tracking-item:not(:first-child) {
 	border-top: 1px solid #e0e0e0;
 }
-.has_est_delivery_0 .showif_has_est_delivery_0, .wcast-shipment-status-list .wcast-shipment-est-delivery {
+.has_est_delivery_0 .showif_has_est_delivery_0, .ts-shipment-status-list .ts-shipment-est-delivery {
 	display: block;
 	margin-top: 5px;
 }
@@ -588,7 +585,7 @@ tr.admin_notifications_tr.open td {
 #trackship_late_shipments_form .shipment-status-email-table tr.disable td:last-child .edit_customizer_a {
 	pointer-events: all;
 }
-form#trackship_late_shipments_form.free_user {
+form#trackship_late_shipments_form.free_user, .shipment-status-sms-section.free_user {
     opacity: 0.6;
 }
 .trackship_admin_layout .admin_notifiations_content {
@@ -954,12 +951,6 @@ input[type=checkbox].tgl {
 	left: 55%;
 	background: #09d3ac;
 }
-.rtl .ast-tgl-flat:checked + .rtl .ast-tgl-btn:after {
-	left: 55%;
-}
-.rtl .ast-tgl + .ast-tgl-btn:after {
-	right: 0;
-}
 .rtl .woocommerce-list__item .woocommerce-list__item-before {
 	margin: 0 0 0 20px;
 }
@@ -1183,71 +1174,6 @@ button.tools-ts-button {
 .settings_ul .multiple_select_container .multiple_select_container select[multiple] {
 	width: 100%;
 }
-/** Toggle CSS Start**/
-input[type=checkbox].ast-tgl {
-	display: none;
-}
-.ast-tgl, .ast-tgl:after, .ast-tgl:before, .ast-tgl *, .ast-tgl *:after, .ast-tgl *:before, .ast-tgl + .ast-tgl-btn {
-	box-sizing: border-box;
-}
-.ast-tgl::-moz-selection, .ast-tgl:after::-moz-selection, .ast-tgl:before::-moz-selection, .ast-tgl *::-moz-selection, .ast-tgl *:after::-moz-selection, .ast-tgl *:before::-moz-selection, .ast-tgl + .ast-tgl-btn::-moz-selection {
- background: none;
-}
-.ast-tgl::selection, .ast-tgl:after::selection, .ast-tgl:before::selection, .ast-tgl *::selection, .ast-tgl *:after::selection, .ast-tgl *:before::selection, .ast-tgl + .ast-tgl-btn::selection {
- background: none;
-}
-.ast-tgl + .ast-tgl-btn {
-	outline: 0;
-	display: inline-block;
-	width: 36px;
-	height: 18px;
-	position: relative;
-	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
-.ast-tgl + .ast-tgl-btn:after, .ast-tgl + .ast-tgl-btn:before {
-	position: relative;
-	display: block;
-	content: "";
-	width: 40%;
-	height: 100%;
-}
-.ast-tgl + .ast-tgl-btn:after {
-	left: 0;
-}
-.ast-tgl + .ast-tgl-btn:before {
-	display: none;
-}
-.ast-tgl:checked + .ast-tgl-btn:after {
-	left: 50%;
-}
-.ast-tgl-flat + .ast-tgl-btn {
-	padding: 2px;
-	-webkit-transition: all .3s ease;
-	transition: all .3s ease;
-	background: rgba(0,0,0, 0.26);
-	border: 1px solid #ccc;
-	border-radius: 2em;
-}
-.ast-tgl-flat + .ast-tgl-btn:after {
-	-webkit-transition: all .2s ease;
-	transition: all .2s ease;
-	background: #f2f2f2;
-	content: "";
-	border-radius: 1em;
-}
-.ast-tgl-flat:checked + .ast-tgl-btn {
-	border: 1px solid #ccc;
-	background: #fff;
-}
-.ast-tgl-flat:checked + .ast-tgl-btn:after {
-	left: 55%;
-	background: #09d3ac;
-}
-/** Toggle CSS end **/
 form.zorem_plugin_setting_tab_form tr.title_row {
 	border-bottom: 1px solid #ddd;
 }
@@ -1395,7 +1321,7 @@ input#late_shipments_email_to, input#exception_shipments_email_to, input#on_hold
 .woocommerce.trackship_admin_layout table.form-table td p.description {
 	margin-bottom: 0;
 }
-.outer_form_table.smswoo_active {
+.outer_form_table.smswoo_active, .section_sms_content .outer_form_table.free_user {
 	opacity: 0.7;
 }
 .wp-core-ui .connect-your-store {

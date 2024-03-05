@@ -48,8 +48,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<td class="forminp">
 							<span class="shipment_status_toggle">
 								<input type="hidden" name="<?php echo esc_html( $val['enable_status_name'] ); ?>" value="0"/>
-								<input class="ast-tgl ast-tgl-flat" id="<?php echo esc_html( $val['enable_status_name'] ); ?>" name="<?php echo esc_html( $val['enable_status_name'] ); ?>" data-settings="<?php echo esc_html( $val['option_name'] ); ?>" type="checkbox" <?php echo 1 == $ast_enable_email ? 'checked' : ''; ?> value="yes"/>
-								<label class="ast-tgl-btn ast-tgl-btn-green" for="<?php echo esc_html( $val['enable_status_name'] ); ?>"></label>	
+								<input class="tgl tgl-flat" id="<?php echo esc_html( $val['enable_status_name'] ); ?>" name="<?php echo esc_html( $val['enable_status_name'] ); ?>" data-settings="<?php echo esc_html( $val['option_name'] ); ?>" type="checkbox" <?php echo 1 == $ast_enable_email ? 'checked' : ''; ?> value="yes"/>
+								<label class="tgl-btn tgl-btn-green" for="<?php echo esc_html( $val['enable_status_name'] ); ?>"></label>	
 							</span>
 							<a class="edit_customizer_a dashicons dashicons-admin-generic" href="<?php echo esc_html( $val['customizer_url'] ); ?>"></a>
 						</td>
@@ -148,7 +148,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 		</form>
 	</section>
-	<section class="inner_tab_section shipment-status-sms-section">
+	<section class="inner_tab_section shipment-status-sms-section <?php echo !function_exists( 'SMSWOO' ) && $plan_class ? esc_html($plan_class) : ''; ?>">
 		<?php if ( ! function_exists( 'SMSWOO' ) && in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
 			<input type="hidden" class="disable_pro" name="disable_pro" value="disable_pro">
 		<?php } ?>

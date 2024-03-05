@@ -171,6 +171,9 @@ jQuery(document).ready(function () {
 	if ( 'yes' == auto ) {
 		jQuery('.trackship-update-tracking-info .bulk_migration').trigger('click');
 	}
+	if ( ! jQuery('.map-provider-table tbody').find('tr').length ) {
+		jQuery(".map-provider-table .ptw_provider_border").hide();
+	}
 });
 
 jQuery(document).on("click", ".trackship_admin_content .trackship_nav_div .tab_input", function () {
@@ -491,7 +494,8 @@ jQuery(document).on("click", ".add_custom_mapping_h3", function () {
 		data: ajax_data,
 		type: 'POST',
 		success: function (response) {
-			jQuery('.map-provider-table tr:last').after(response.table_row);
+			jQuery('.map-provider-table tbody').append(response.table_row);
+			jQuery(".map-provider-table .ptw_provider_border").show();
 			jQuery('.map-provider-table .select2').select2();
 			spinner.removeClass("active");
 		},
@@ -504,6 +508,12 @@ jQuery(document).on("click", ".add_custom_mapping_h3", function () {
 
 jQuery(document).on("click", ".remove_custom_maping_row", function () {
 	jQuery(this).closest('tr').remove();
+});
+
+jQuery(document).on("click", ".remove_custom_maping_row, .add_custom_mapping_h3", function () {
+	if ( ! jQuery('.map-provider-table tbody').find('tr').length ) {
+		jQuery(".map-provider-table .ptw_provider_border").hide();
+	}
 });
 
 jQuery(document).on("click", ".metabox_get_shipment_status", function () {
@@ -742,6 +752,9 @@ jQuery(document).on('click', '.inner_tab_section .heading_panel.section_sms_head
 		jQuery('.heading_panel.section_sms_heading').find( 'button' ).attr('disabled', true);
 		jQuery('.panel_content.section_sms_content').find( 'select, input' ).attr('disabled', true);
 		jQuery('.panel_content.section_sms_content .outer_form_table').addClass('smswoo_active');
+	} else if ( jQuery.inArray( shipments_script.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+		jQuery('.panel_content.section_sms_content').find( 'select, input' ).attr('disabled', true);
+		jQuery('.panel_content.section_sms_content .outer_form_table').addClass('free_user');
 	}
 });
 

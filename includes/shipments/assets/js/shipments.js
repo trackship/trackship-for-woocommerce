@@ -21,17 +21,6 @@ function shipment_js_error(response, jqXHR, exception) {
 	jQuery(document).trackship_snackbar_warning(msg);
 }
 
-/* show_popup jquery */
-(function( $ ){
-	'use strict';
-	$.fn.show_popup = function() {
-		if ( jQuery.inArray( shipments_script.user_plan, ["Free Trial", "Free 50", "No active plan"] ) !== -1 ) {
-			jQuery("#free_user_popup").show();
-		}
-		return this;
-	};
-})( jQuery );
-
 /* ajax_loader jquery */
 (function( $ ){
 	'use strict';
@@ -95,7 +84,6 @@ jQuery(document).ready(function() {
 			jQuery(window).resize();
 			jQuery(".trackship-tip").tipTip();
 			jQuery("#active_shipments_table").unblock();
-			jQuery(document).show_popup();
 		},		
 		oLanguage: {
 			sProcessing: '<div id=loader><div class="fa-3x"><i class="fas fa-sync fa-spin"></i></div>',
@@ -198,7 +186,6 @@ jQuery(document).ready(function() {
 
 		var active_status = jQuery(this).val();
 		var active_provider = jQuery( "#shipping_provider" ).val();
-		jQuery(document).show_popup();
 		$table.ajax.reload();
 		if ( active_status != 'all_ship' ) {
 			jQuery('.filter_data.status_filter').show();
@@ -216,7 +203,6 @@ jQuery(document).ready(function() {
 	jQuery(document).on("change", "#shipping_provider", function(e){
 		var active_provider = jQuery(this).val();
 		var active_status = jQuery( "#shipment_status" ).val();
-		jQuery(document).show_popup();
 		$table.ajax.reload();
 		if ( active_provider != 'all' ) {
 			jQuery('.filter_data.provider_filter').show();
@@ -278,7 +264,6 @@ jQuery(document).ready(function() {
 	});
 
 	jQuery(document).on("click", ".shipments_get_shipment_status", function(){
-		jQuery(document).show_popup();
 		jQuery(this).addClass( 'spin' );
 		var order_id = jQuery(this).data('orderid');
 		
@@ -395,24 +380,8 @@ jQuery(document).on("change", ".shipment_checkbox", function(){
 	}
 });
 
-jQuery(document).on("click", ".fullfillment_dashboard_section .fullfillment_table tr", function(){
-	'use strict';
-	var current_plan = jQuery(".dashboard_hidden_field").val();
-	if ( jQuery.inArray( current_plan, ["Free Trial", "Free 50", "No active plan"] ) !== -1 ) {
-		jQuery("#free_user_popup").show();
-	}
-});
-
 jQuery(document).on("click", ".dashboard_input_tab .tab_input", function(){
 	'use strict';
-	var current_plan = jQuery(".dashboard_hidden_field").val();
-	if ( jQuery.inArray( current_plan, ["Free Trial", "Free 50", "No active plan"] ) !== -1 ) {
-		if (jQuery( this ).hasClass('not_show')) {
-			jQuery("#free_user_popup").show();
-			jQuery('.dashboard_input_tab .tab_input.first_label').trigger("click");
-			return;
-		}
-	}
 	jQuery(document).ajax_loader(".fullfillment_dashboard_section_content");
 	
 	var selected_option = jQuery( this ).data('tab');
@@ -439,25 +408,13 @@ jQuery(document).on("click", ".dashboard_input_tab .tab_input", function(){
 	});
 });
 
-jQuery(document).on("click", ".inner_tab_label.inner_sms_tab", function(){
-	'use strict';
-	if ( smswoo_active == 'no' ) {
-		jQuery(document).show_popup();
-	}
-});
-
 jQuery(document).on( "click", ".popupclose", function(){
 	'use strict';
 	jQuery(".popupwrapper").hide();
-	jQuery( "#tab_email_notifications" ).trigger('click');
 });
 
 jQuery( document ).ready(function() {
 	'use strict';
-	var current_plan = jQuery(".dashboard_hidden_field").val();
-	if ( jQuery.inArray( current_plan, ["Free Trial", "Free 50", "No active plan"] ) !== -1 ) {
-		jQuery('.fullfillment_dashboard_section .fullfillment_table tr').removeAttr('onclick');
-	}
 	jQuery('.bulk_action_button').attr('disabled','disabled');
 });
 
