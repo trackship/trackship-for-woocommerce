@@ -20,8 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="outer_form_table">
 			<div class="settings_toogle">
 				<input type="hidden" name="wc_ast_status_delivered" value="0"/>
-				<input class="ast-tgl ast-tgl-flat ts_order_status_toggle" id="wc_ast_status_delivered" name="wc_ast_status_delivered" type="checkbox" <?php echo get_option( 'wc_ast_status_delivered', 1 ) ? 'checked' : ''; ?> value="1"/>
-				<label class="ast-tgl-btn ast-tgl-btn-green" for="wc_ast_status_delivered"></label>
+				<input class="tgl tgl-flat ts_order_status_toggle" id="wc_ast_status_delivered" name="wc_ast_status_delivered" type="checkbox" <?php echo get_option( 'wc_ast_status_delivered', 1 ) ? 'checked' : ''; ?> value="1"/>
+				<label class="tgl-btn tgl-btn-green" for="wc_ast_status_delivered"></label>
 				<label class="setting_ul_tgl_checkbox_label">
 					<span><?php esc_html_e( 'Enable Order Delivery Automation', 'trackship-for-woocommerce' ); ?></span>
 					<span class="woocommerce-help-tip tipTip" title="<?php esc_html_e( 'Enable a Custom Order Status Delivered that will be set automatically when all the order shipments are delivered', 'trackship-for-woocommerce' ); ?>"></span>

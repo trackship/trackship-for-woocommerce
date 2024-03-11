@@ -65,8 +65,8 @@ class WC_Trackship_Html {
 		?>
 		<li>
 			<input type="hidden" name="<?php echo esc_html( $id ); ?>" value="0"/>
-			<input class="ast-tgl ast-tgl-flat" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>" type="checkbox" <?php echo esc_html( $checked ); ?> value="1"/>
-			<label class="ast-tgl-btn" for="<?php echo esc_html( $id ); ?>"></label>
+			<input class="tgl tgl-flat" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>" type="checkbox" <?php echo esc_html( $checked ); ?> value="1"/>
+			<label class="tgl-btn" for="<?php echo esc_html( $id ); ?>"></label>
 								
 			<label class="setting_ul_tgl_checkbox_label" for="<?php echo esc_html( $id ); ?>"><?php echo esc_html( $array['title'] ); ?>
 			<?php if ( isset( $array['tooltip'] ) ) { ?>
@@ -89,8 +89,8 @@ class WC_Trackship_Html {
 		?>
 		<span class="<?php echo isset( $array['class'] ) ? esc_html( $array['class'] ) : ''; ?>">
 			<input type="hidden" name="<?php echo esc_html( $id ); ?>" value="0"/>
-			<input class="ast-tgl ast-tgl-flat" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>" data-settings="<?php echo isset( $array['settings'] ) ? esc_html( $array['settings'] ) : ''; ?>" type="checkbox" <?php echo esc_html( $checked ); ?> value="1"/>
-			<label class="ast-tgl-btn" for="<?php echo esc_html( $id ); ?>"></label>
+			<input class="tgl tgl-flat" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>" data-settings="<?php echo isset( $array['settings'] ) ? esc_html( $array['settings'] ) : ''; ?>" type="checkbox" <?php echo esc_html( $checked ); ?> value="1"/>
+			<label class="tgl-btn" for="<?php echo esc_html( $id ); ?>"></label>
 		</span>
 		<?php
 	}
@@ -144,7 +144,7 @@ class WC_Trackship_Html {
 				</label>
 			<?php } ?>
 			<?php if ( isset($array['customize_link']) ) { ?>
-				<a href="<?php echo esc_url( $array['customize_link'] ); ?>" target="_blank" class="button-primary btn_ts_sidebar ts_customizer_btn"><?php esc_html_e( 'Customize the Tracking Widget', 'trackship-for-woocommerce' ); ?></a>
+				<a href="<?php echo esc_url( $array['customize_link'] ); ?>" class="button-primary btn_ts_sidebar ts_customizer_btn"><?php esc_html_e( 'Customize the Tracking Widget', 'trackship-for-woocommerce' ); ?></a>
 			<?php } ?>
 		</li>
 		<?php

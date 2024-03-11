@@ -171,6 +171,9 @@ jQuery(document).ready(function () {
 	if ( 'yes' == auto ) {
 		jQuery('.trackship-update-tracking-info .bulk_migration').trigger('click');
 	}
+	if ( ! jQuery('.map-provider-table tbody').find('tr').length ) {
+		jQuery(".map-provider-table .ptw_provider_border").hide();
+	}
 });
 
 jQuery(document).on("click", ".trackship_admin_content .trackship_nav_div .tab_input", function () {
@@ -483,6 +486,9 @@ jQuery(document).on("click", ".ts_video_popup .popupclose", function () {
 
 jQuery(document).on("click", ".add_custom_mapping_h3", function () {
 	var spinner = jQuery('#trackship_mapping_form').find(".add-custom-mapping.spinner").addClass("active");
+	
+	jQuery(this).prop('disabled', true);
+
 	var ajax_data = {
 		action: 'add_trackship_mapping_row',
 	};
@@ -491,12 +497,15 @@ jQuery(document).on("click", ".add_custom_mapping_h3", function () {
 		data: ajax_data,
 		type: 'POST',
 		success: function (response) {
-			jQuery('.map-provider-table tr:last').after(response.table_row);
+			jQuery('.map-provider-table tbody').append(response.table_row);
+			jQuery(".map-provider-table .ptw_provider_border").show();
 			jQuery('.map-provider-table .select2').select2();
 			spinner.removeClass("active");
+			jQuery('.add_custom_mapping_h3').prop('disabled', false);
 		},
 		error: function (response, jqXHR, exception) {
-			trackship_js_error(response, jqXHR, exception)
+			trackship_js_error(response, jqXHR, exception);
+			jQuery('.add_custom_mapping_h3').prop('disabled', false);
 		}
 	});
 	return false;
@@ -504,6 +513,12 @@ jQuery(document).on("click", ".add_custom_mapping_h3", function () {
 
 jQuery(document).on("click", ".remove_custom_maping_row", function () {
 	jQuery(this).closest('tr').remove();
+});
+
+jQuery(document).on("click", ".remove_custom_maping_row, .add_custom_mapping_h3", function () {
+	if ( ! jQuery('.map-provider-table tbody').find('tr').length ) {
+		jQuery(".map-provider-table .ptw_provider_border").hide();
+	}
 });
 
 jQuery(document).on("click", ".metabox_get_shipment_status", function () {
@@ -631,15 +646,6 @@ jQuery(document).on("click", ".copied_tracking_numnber", function () {
 	jQuery(document).trackship_snackbar('Tracking number copied to clipboard');
 });
 
-/*
-* click on copy_view_order_page
-*/
-jQuery(document).on("click", ".copy_view_order_page", function () {
-	var text = jQuery(this).data("view_order_link");
-	copyTextToClipboard(text);
-	jQuery(document).trackship_snackbar('View Order page link copied to clipboard');
-});
-
 function copyTextToClipboard(text) {
 	var textArea = document.createElement("textarea");
 	textArea.style.position = 'fixed';
@@ -671,7 +677,7 @@ function copyTextToClipboard(text) {
 jQuery(document).on("click", ".tracking_notification_log_delete .delete_notification", function () {
 	var ajax_data = {
 		action: 'remove_trackship_logs',
-		security: jQuery('#wc_ast_tools').val()
+		security: jQuery('#ts_tools').val()
 	};
 	jQuery.ajax({
 		url: ajaxurl,
@@ -691,7 +697,7 @@ jQuery(document).on("click", ".tracking_notification_log_delete .delete_notifica
 jQuery(document).on("click", ".trackship-verify-table .verify_database_table", function () {
 	var ajax_data = {
 		action: 'verify_database_table',
-		security: jQuery('#wc_ast_tools').val()
+		security: jQuery('#ts_tools').val()
 	};
 	jQuery.ajax({
 		url: ajaxurl,
@@ -711,7 +717,7 @@ jQuery(document).on("click", ".trackship-verify-table .verify_database_table", f
 jQuery(document).on("click", ".trackship-update-tracking-info .bulk_migration", function () {
 	var ajax_data = {
 		action: 'ts_bulk_migration',
-		security: jQuery('#wc_ast_tools').val()
+		security: jQuery('#ts_tools').val()
 	};
 	jQuery.ajax({
 		url: ajaxurl,
@@ -742,6 +748,9 @@ jQuery(document).on('click', '.inner_tab_section .heading_panel.section_sms_head
 		jQuery('.heading_panel.section_sms_heading').find( 'button' ).attr('disabled', true);
 		jQuery('.panel_content.section_sms_content').find( 'select, input' ).attr('disabled', true);
 		jQuery('.panel_content.section_sms_content .outer_form_table').addClass('smswoo_active');
+	} else if ( jQuery.inArray( shipments_script.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+		jQuery('.panel_content.section_sms_content').find( 'select, input' ).attr('disabled', true);
+		jQuery('.panel_content.section_sms_content .outer_form_table').addClass('free_user');
 	}
 });
 

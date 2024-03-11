@@ -340,7 +340,7 @@ class WC_Trackship_Admin {
 	*/
 	public function dashboard_page_count_query() {
 		
-		check_ajax_referer( 'wc_ast_tools', 'security' );
+		check_ajax_referer( 'ts_tools', 'security' );
 		$start_date = isset( $_POST['selected_option'] ) ? wc_clean( $_POST['selected_option'] ) : '';
 		$end_date = gmdate( 'Y-m-d' );
 		
@@ -909,7 +909,7 @@ class WC_Trackship_Admin {
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			exit( 'You are not allowed' );
 		}
-		check_ajax_referer( 'wc_ast_tools', 'security' );
+		check_ajax_referer( 'ts_tools', 'security' );
 		$days = isset( $_POST['days'] ) ? sanitize_text_field($_POST['days']) : false;
 		$args = array(
 			'post_type'	=> 'shop_order',
@@ -966,7 +966,7 @@ class WC_Trackship_Admin {
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			exit( 'You are not allowed' );
 		}
-		check_ajax_referer( 'wc_ast_tools', 'security' );
+		check_ajax_referer( 'ts_tools', 'security' );
 		global $wpdb;
 		$row_query = $wpdb->get_results("
 			DELETE
@@ -977,7 +977,7 @@ class WC_Trackship_Admin {
 	}
 
 	public function verify_database_table() {
-		check_ajax_referer( 'wc_ast_tools', 'security' );
+		check_ajax_referer( 'ts_tools', 'security' );
 
 		$install = trackship_for_woocommerce()->ts_install;
 		$install->create_shipment_table();
@@ -989,7 +989,7 @@ class WC_Trackship_Admin {
 	}
 
 	public function ts_bulk_migration() {
-		check_ajax_referer( 'wc_ast_tools', 'security' );
+		check_ajax_referer( 'ts_tools', 'security' );
 
 		global $wpdb;
 		$orderids = $wpdb->get_col(
