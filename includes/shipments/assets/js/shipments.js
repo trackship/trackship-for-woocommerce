@@ -388,7 +388,7 @@ jQuery(document).on("click", ".dashboard_input_tab .tab_input", function(){
 	var ajax_data = {
 		action: 'dashboard_page_count_query',
 		selected_option: selected_option,
-		security: jQuery( '#wc_ast_dashboard_tab' ).val()
+		security: jQuery( '#ts_tools' ).val()
 	};
 	jQuery.ajax({
 		url: ajaxurl,
@@ -396,10 +396,10 @@ jQuery(document).on("click", ".dashboard_input_tab .tab_input", function(){
 		type: 'POST',
 		dataType:"json",
 		success: function(response) {
-			jQuery('.innner_content .total_shipment').html(response.total_shipment);
-			jQuery('.innner_content .active_shipment').html(response.active_shipment);
-			jQuery('.innner_content .delivered_shipment').html(response.delivered_shipment);
-			jQuery('.innner_content .tracking_issues').html(response.tracking_issues);
+			jQuery('.innner_content .total_shipment').html(response.total_shipment ? response.total_shipment : 0);
+			jQuery('.innner_content .active_shipment').html(response.active_shipment ? response.active_shipment : 0);
+			jQuery('.innner_content .delivered_shipment').html(response.delivered_shipment ? response.delivered_shipment : 0);
+			jQuery('.innner_content .tracking_issues').html(response.tracking_issues ? response.tracking_issues : 0);
 			jQuery(".fullfillment_dashboard_section_content").unblock();
 		},
 		error: function(response, jqXHR, exception) {

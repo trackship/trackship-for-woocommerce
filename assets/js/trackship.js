@@ -486,6 +486,9 @@ jQuery(document).on("click", ".ts_video_popup .popupclose", function () {
 
 jQuery(document).on("click", ".add_custom_mapping_h3", function () {
 	var spinner = jQuery('#trackship_mapping_form').find(".add-custom-mapping.spinner").addClass("active");
+	
+	jQuery(this).prop('disabled', true);
+
 	var ajax_data = {
 		action: 'add_trackship_mapping_row',
 	};
@@ -498,9 +501,11 @@ jQuery(document).on("click", ".add_custom_mapping_h3", function () {
 			jQuery(".map-provider-table .ptw_provider_border").show();
 			jQuery('.map-provider-table .select2').select2();
 			spinner.removeClass("active");
+			jQuery('.add_custom_mapping_h3').prop('disabled', false);
 		},
 		error: function (response, jqXHR, exception) {
-			trackship_js_error(response, jqXHR, exception)
+			trackship_js_error(response, jqXHR, exception);
+			jQuery('.add_custom_mapping_h3').prop('disabled', false);
 		}
 	});
 	return false;
@@ -641,15 +646,6 @@ jQuery(document).on("click", ".copied_tracking_numnber", function () {
 	jQuery(document).trackship_snackbar('Tracking number copied to clipboard');
 });
 
-/*
-* click on copy_view_order_page
-*/
-jQuery(document).on("click", ".copy_view_order_page", function () {
-	var text = jQuery(this).data("view_order_link");
-	copyTextToClipboard(text);
-	jQuery(document).trackship_snackbar('View Order page link copied to clipboard');
-});
-
 function copyTextToClipboard(text) {
 	var textArea = document.createElement("textarea");
 	textArea.style.position = 'fixed';
@@ -681,7 +677,7 @@ function copyTextToClipboard(text) {
 jQuery(document).on("click", ".tracking_notification_log_delete .delete_notification", function () {
 	var ajax_data = {
 		action: 'remove_trackship_logs',
-		security: jQuery('#wc_ast_tools').val()
+		security: jQuery('#ts_tools').val()
 	};
 	jQuery.ajax({
 		url: ajaxurl,
@@ -701,7 +697,7 @@ jQuery(document).on("click", ".tracking_notification_log_delete .delete_notifica
 jQuery(document).on("click", ".trackship-verify-table .verify_database_table", function () {
 	var ajax_data = {
 		action: 'verify_database_table',
-		security: jQuery('#wc_ast_tools').val()
+		security: jQuery('#ts_tools').val()
 	};
 	jQuery.ajax({
 		url: ajaxurl,
@@ -721,7 +717,7 @@ jQuery(document).on("click", ".trackship-verify-table .verify_database_table", f
 jQuery(document).on("click", ".trackship-update-tracking-info .bulk_migration", function () {
 	var ajax_data = {
 		action: 'ts_bulk_migration',
-		security: jQuery('#wc_ast_tools').val()
+		security: jQuery('#ts_tools').val()
 	};
 	jQuery.ajax({
 		url: ajaxurl,

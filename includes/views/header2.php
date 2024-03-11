@@ -52,11 +52,6 @@ $menu_items = array(
 		'image' => 'ts-support.png',
 		'target' => 'target="_blank"'
 	),
-	array(
-		'label' => __( 'Tools', 'trackship-for-woocommerce' ),
-		'link' => admin_url( 'admin.php?page=trackship-for-woocommerce&tab=tools' ),
-		'image' => 'ts-tools.png',
-	),
 );
 ?> 
 <div class="zorem-layout__header">
