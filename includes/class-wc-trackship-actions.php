@@ -1576,7 +1576,7 @@ class WC_Trackship_Actions {
 				);
 				$query['shipment_update'] = $wpdb->update( $shipment_table, $args, $where );
 				if ( false === $query['shipment_update'] ) {
-					$query['shipment_meta_update_error'] = $wpdb->last_error;
+					$query['shipment_update_error'] = $wpdb->last_error;
 					$content = print_r( $wpdb->last_error . ' for the Query ' . $wpdb->last_query, true);
 					$logger->error( "trackship_database_update_error \n" . $content . "\n", $context );
 				}
@@ -1603,7 +1603,7 @@ class WC_Trackship_Actions {
 			$args['shipping_date'] = gmdate('Y-m-d');
 			$query['shipment_insert'] = $wpdb->insert( $shipment_table, $args );
 			if ( false === $query['shipment_insert'] ) {
-				$query['shipment_meta_update_error'] = $wpdb->last_error;
+				$query['shipment_insert_error'] = $wpdb->last_error;
 				$content = print_r( $wpdb->last_error . ' for the Query ' . $wpdb->last_query, true);
 				$logger->error( "trackship_database_update_error \n" . $content . "\n", $context );
 			}
@@ -1616,7 +1616,7 @@ class WC_Trackship_Actions {
 				];
 				$query['shipment_meta_insert'] = $wpdb->insert( $shipment_meta, $data2 );
 				if ( false === $query['shipment_meta_insert'] ) {
-					$query['shipment_meta_update_error'] = $wpdb->last_error;
+					$query['shipment_meta_insert_error'] = $wpdb->last_error;
 					$content = print_r( $wpdb->last_error . ' for the Query ' . $wpdb->last_query, true);
 					$logger->error( "trackship_database_update_error \n" . $content . "\n", $context );
 				}

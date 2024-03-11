@@ -73,8 +73,6 @@ class WC_Trackship_Install {
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.8', '<' ) ) {
-			$delivered_settings = get_option( 'wcast_delivered_email_settings' );
-			update_option( 'wcast_delivered_status_email_settings', $delivered_settings );
 			delete_option( 'wcast_delivered_email_settings' );
 			update_option( 'trackship_db', '1.8' );
 		}

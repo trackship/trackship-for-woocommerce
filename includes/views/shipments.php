@@ -19,9 +19,9 @@ if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipme
 	return;
 }
 
-$nonce = wp_create_nonce( 'wc_ast_tools');
+$nonce = wp_create_nonce( 'ts_tools');
 ?>
-<input type="hidden" id="wc_ast_dashboard_tab" name="wc_ast_dashboard_tab" value="<?php echo esc_attr( $nonce ); ?>" />
+<input type="hidden" id="ts_tools" name="ts_tools" value="<?php echo esc_attr( $nonce ); ?>" />
 <?php
 $ship_status = array(
 	'all_ship'				=> __( 'All Shipments', 'trackship-for-woocommerce' ),
