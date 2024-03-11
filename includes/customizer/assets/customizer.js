@@ -48,11 +48,6 @@ jQuery(document).ready(function(){
 		jQuery( '.zoremmail-panel-title.tracking_page_panel' ).trigger('click');
 	}
 
-	// jQuery( ".zoremmail-input.select" ).change( function( event ) {
-	// 	jQuery('.zoremmail-layout-content-preview').addClass('customizer-unloading');
-	// 	save_customizer_setting();
-	// });
-	
 	jQuery( ".zoremmail-layout-content-media .dashicons" ).on( "click", function() {
 		jQuery(this).parent().siblings().removeClass('last-checked');
 		var width = jQuery(this).parent().data('width');
@@ -125,6 +120,8 @@ jQuery(document).ready(function(){
 			setting_change_trigger();
 		}, 	
 	});
+
+	jQuery('#tracking_page_type').trigger('change');
 });
 
 function setting_change_trigger() {	
@@ -365,7 +362,7 @@ jQuery(document).on("change", "#tracking_page_layout", function () {
 jQuery(document).on("change", "#form_tab_view", function () {
 	var value = jQuery(this).val();
 	if ( 'both' == value ) {
-		jQuery("#tracking_widget_privew").contents().find( '.tracking_form_tabs' ).show();
+		jQuery("#tracking_widget_privew").contents().find( '.tracking_form_tabs' ).css('display', 'flex');
 	} else if ( 'order_details' == value ) {
 		jQuery("#tracking_widget_privew").contents().find( '.tracking_form_tabs' ).hide();
 		jQuery("#tracking_widget_privew").contents().find( '.for_order_number' ).trigger('click');
@@ -510,9 +507,13 @@ jQuery('#tracking_page_type').on("change", function(){
 		if ( jQuery.inArray( trackship_customizer.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
 			jQuery("#tracking_widget_privew").contents().find( '.enhanced_trackship_branding' ).show();
 		}
+		jQuery('.ts_tracking_events').parents('.zoremmail-menu.zoremmail-menu-inline').hide();
+		jQuery('.ts_tracking_page_layout').parents('.zoremmail-menu.zoremmail-menu-inline').hide();
 	} else {
 		jQuery("#tracking_widget_privew").contents().find('body .preview_enhanced_tracking_widget' ).hide();
 		jQuery("#tracking_widget_privew").contents().find('body .tracking-detail.col' ).show();
+		jQuery('.ts_tracking_events').parents('.zoremmail-menu.zoremmail-menu-inline').show();
+		jQuery('.ts_tracking_page_layout').parents('.zoremmail-menu.zoremmail-menu-inline').show();
 	}
 });
 

@@ -19,9 +19,9 @@ if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipme
 	return;
 }
 
-$nonce = wp_create_nonce( 'wc_ast_tools');
+$nonce = wp_create_nonce( 'ts_tools');
 ?>
-<input type="hidden" id="wc_ast_dashboard_tab" name="wc_ast_dashboard_tab" value="<?php echo esc_attr( $nonce ); ?>" />
+<input type="hidden" id="ts_tools" name="ts_tools" value="<?php echo esc_attr( $nonce ); ?>" />
 <?php
 $ship_status = array(
 	'all_ship'				=> __( 'All Shipments', 'trackship-for-woocommerce' ),
@@ -125,8 +125,8 @@ $provider_count = array_combine($provider_array, $provider_count_array);
 			<?php foreach ( $columns as $key => $val) { ?>
 				<div class="column_toogle">
 					<input type="hidden" name="<?php echo 'column_' . esc_attr($key); ?>" value="0"/>
-					<input class="ast-tgl ast-tgl-flat" id="<?php echo 'column_' . esc_attr($key); ?>" name="<?php echo 'column_' . esc_attr($key); ?>" data-number="<?php echo esc_attr($key); ?>" type="checkbox" checked value="1"/>
-					<label class="ast-tgl-btn ast-tgl-btn-green" for="<?php echo 'column_' . esc_attr($key); ?>"></label>
+					<input class="tgl tgl-flat" id="<?php echo 'column_' . esc_attr($key); ?>" name="<?php echo 'column_' . esc_attr($key); ?>" data-number="<?php echo esc_attr($key); ?>" type="checkbox" checked value="1"/>
+					<label class="tgl-btn tgl-btn-green" for="<?php echo 'column_' . esc_attr($key); ?>"></label>
 					<label for="<?php echo 'column_' . esc_attr($key); ?>"><span><?php echo esc_html($val); ?></span></label>
 				</div>
 			<?php } ?>

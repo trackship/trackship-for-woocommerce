@@ -31,6 +31,7 @@ ul.tpi_product_tracking_ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
+	font-size: 14px;
 }
 .h4-heading.tpi_products_heading {
 	margin-bottom: 10px;
@@ -39,21 +40,23 @@ ul.tpi_product_tracking_ul {
 	display: none;
 }
 .order_track_form label.ts_from_label {
-	width: 130px;
-	padding: 15px 0;
+	width: 100%;
+	padding: 20px 0;
 	display: inline-block;
 	line-height: 1;
 	font-weight: 500;
 	text-align: center;
 	cursor: pointer;
 	margin: 0;
+	font-weight: 600;
 }
 .tracking_form_tabs {
-	margin: 5px 20px 0;
+	margin: 0;
 	border-bottom: 1px solid #e0e0e0;
+	display: flex;
 }
 .search_order_form .tracking_form {
-	padding: 15px 20px;
+	padding: 20px;
 }
 .search_order_form .by_tracking_number {
 	display: none;
@@ -86,8 +89,10 @@ ul.tpi_product_tracking_ul {
 }
 .trackship_branding {
 	text-align: center;
-	padding: 10px 0 15px;
-	border-top: 1px solid #ccc;
+	padding: 0 0 15px;
+}
+.tracking-detail .trackship_branding {
+	padding: 15px 0; /* for old tracking page design */
 }
 span.wc_order_id {
 	align-self: center;
@@ -491,7 +496,7 @@ div.shipment-header {
 	border-radius: 5px;
 }
 .enhanced_tracking_detail .provider_image {
-	width: 40px;
+	width: 45px;
 	border-radius: 5px;
 }
 .tracking-detail .tracking-details {
@@ -556,6 +561,7 @@ span.tracking_details_switch {
 	cursor: pointer;
 	margin: 0;
 	border-radius: 5px;
+	font-size: 13px;
 }
 .tracking_details_switch .enhanced_switch_input:checked + label {
 	background: #fff;
@@ -596,8 +602,7 @@ ul.timeline > li > p {
 	font-size: 90%;
 }
 .provider_image_div {
-	display: inline-block;
-	vertical-align: middle;
+	display: flex;
 	margin-right: 10px;
 }
 .tracking_number_div {
@@ -614,7 +619,7 @@ ul.timeline > li > p {
 	margin: 0;
 }
 .tracking_number_div ul li strong{
-	font-size: 13px;
+	font-size: 14px;
 	margin: 0 3px;
 }
 .shipment_status_notifications .unsubscribe_emails_checkbox, .shipment_status_notifications .unsubscribe_sms_checkbox {
@@ -721,7 +726,7 @@ ul.timeline > li > p {
 	-webkit-transform: rotate(-45deg);
 }
 div.last_mile_tracking_number {
-	font-size: 15px;
+	font-size: 14px;
 	padding: 10px 0 30px;
 	border-bottom: 1px dotted #ccc;
 	margin-bottom: 20px;
@@ -783,9 +788,20 @@ div.last_mile_tracking_number {
 	justify-content: space-between;
 	align-items: center;
 }
+.ts_enhanced_info {
+	margin: 0 0 10px 0;
+	font-size: 14px;
+}
+.ts_enhanced_info span {
+	vertical-align: middle;
+}
+.ts_enhanced_info a {
+	color: #0025ad;
+}
 span.copy_tracking_page.trackship-tip {
 	fill: #3858e9;
 	margin-left: 5px;
+	cursor: pointer;
 }
 span.copy_tracking_page.trackship-tip svg {
 	width: 18px;
@@ -867,5 +883,15 @@ div.search_order_form {
 @media screen and (max-width: 500px) {
 	form.order_track_form input {
 		max-width: 100%;
-	}	
+	}
+	span.tracking_details_switch {
+		float: none;
+		display: inline-block;
+	}
+	div.est_delivery_section {
+		display: block;
+	}
+	.est_delivery_section span.est-delivery-date, .tracking_widget_tracking_events_section .tracking_details_switch {
+		margin-bottom: 15px;
+	}
 }

@@ -15,13 +15,13 @@ $total_orders = $completed_order_with_tracking + $completed_order_with_zero_bala
 	<div class="tracking_notification_log_delete p15 inner_div">
 		<p><?php esc_html_e( 'Delete notifications logs more than 30 days', 'trackship-for-woocommerce' ); ?></p>
 		<button class="button-primary button-trackship-red delete_notification tools-ts-button" style="line-height:35px;"><?php esc_html_e( 'Delete notifications logs', 'trackship-for-woocommerce' ); ?></button>
-		<?php $nonce = wp_create_nonce( 'wc_ast_tools'); ?>
-		<input type="hidden" id="wc_ast_tools" name="wc_ast_tools" value="<?php echo esc_attr( $nonce ); ?>" />
+		<?php $nonce = wp_create_nonce( 'ts_tools'); ?>
+		<input type="hidden" id="ts_tools" name="ts_tools" value="<?php echo esc_attr( $nonce ); ?>" />
 	</div>
 	<div class="trackship-verify-table p15 inner_div">
 		<p>
 			<?php esc_html_e( 'Verify if all TrackShip database tables are present.', 'trackship-for-woocommerce' ); ?>
-			<button class="button-primary button-trackship verify_database_table tools-ts-button"><?php esc_html_e( 'Verify tables', 'trackship-for-woocommerce' ); ?></button>
+			<button class="button-primary button-trackship verify_database_table tools-ts-button"><?php esc_html_e( 'Verify DB Structure', 'trackship-for-woocommerce' ); ?></button>
 		</p>
 	</div>
 	<?php if ( get_trackship_settings( 'old_user' ) ) { ?>

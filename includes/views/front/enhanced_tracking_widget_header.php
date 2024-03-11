@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="tracking_number_div">
 			<ul>
 				<li>
-					<span class="tracking_page_provider_name"><?php echo esc_html( trackship_for_woocommerce()->actions->get_provider_name( $provider_name ) ); ?></span>
+					<span class="tracking_page_provider_name"><?php echo esc_html( trackship_for_woocommerce()->actions->get_provider_name( apply_filters( 'ast_provider_title', $provider_name ) ) ); ?></span>
 				</li>
 				<li>
 					<?php if ( $ts_link_to_carrier && $tracking_link ) { ?>

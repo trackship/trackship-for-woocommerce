@@ -27,6 +27,14 @@ jQuery(document).on("change", ".shipment-status-sms-section .tgl-flat", function
 
 function save_sms_settings(){
 	'use strict';
+
+	if ( smswoo_active == 'no' ) {
+		if ( jQuery.inArray( shipments_script.user_plan, ["Free Trial", "Free 50", "No active plan"] ) !== -1 ) {
+			jQuery("#free_user_popup").show();
+			return this; 
+		}
+	}
+
 	var form = jQuery( '.zorem_plugin_setting_tab_form' );
 	form.find(".spinner").addClass("active");
 	jQuery.ajax({
@@ -58,6 +66,13 @@ function save_sms_settings(){
 jQuery(document).on("change", "#all-shipment-status-sms-delivered", function(){
 	"use strict";
 	
+	if ( smswoo_active == 'no' ) {
+		if ( jQuery.inArray( shipments_script.user_plan, ["Free Trial", "Free 50", "No active plan"] ) !== -1 ) {
+			jQuery("#free_user_popup").show();
+			return this;
+		}
+	}
+
 	if(jQuery(this).prop("checked") == true){
 		var checked = 1;
 	} else {
@@ -87,6 +102,14 @@ jQuery(document).on("change", "#all-shipment-status-sms-delivered", function(){
 /** show/ hide event **/
 jQuery(document).on( "click", ".shipment-status-sms-section .smswoo-top-click", function(){
 	'use strict';
+
+	if ( smswoo_active == 'no' ) {
+		if ( jQuery.inArray( shipments_script.user_plan, ["Free Trial", "Free 50", "No active plan"] ) !== -1 ) {
+			jQuery("#free_user_popup").show();
+			return this;
+		}
+	}
+
 	var smswootop = jQuery(this).parents(".smswoo-top");
 	var smswoobottom = smswootop.siblings(".smswoo-bottom");
 	var smssavebtn = smswootop.find(".button-smswoo");
