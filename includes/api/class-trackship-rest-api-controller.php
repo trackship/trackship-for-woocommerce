@@ -103,6 +103,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		$version_info['site_url'] = get_site_url();
 		$version_info['home_url'] = get_home_url();
 		$version_info['trackship_db'] = get_option( 'trackship_db' );
+		$version_info['trackship_key'] = get_trackship_key();
 		
 		if ( is_plugin_active( 'woo-advanced-shipment-tracking/woocommerce-advanced-shipment-tracking.php' ) ) {
 			$plugin.= '-ast-free';
