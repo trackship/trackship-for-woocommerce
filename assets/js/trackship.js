@@ -359,19 +359,19 @@ jQuery(document).on("click", ".admin_notifications_tr", function (event) {
 		return;
 	}
 
-    var $trigger = jQuery(".shipment_status_toggle");
-    if ($trigger !== event.target && !$trigger.has(event.target).length) {
-        var parent = jQuery(this).closest('.admin_notifications_div');
-        if (jQuery(this).hasClass("open")) {
-            parent.find(".admin_notifiations_content").slideUp('slow');
-            jQuery(this).removeClass('open');
-        } else {
-            jQuery('.admin_notifications_tr').removeClass('open');
-            jQuery('.admin_notifiations_content').slideUp('slow');
-            parent.find(".admin_notifiations_content").slideDown('slow');
-            jQuery(this).addClass('open');
-        }
-    }
+	var $trigger = jQuery(".shipment_status_toggle");
+	if ($trigger !== event.target && !$trigger.has(event.target).length) {
+		var parent = jQuery(this).closest('.admin_notifications_div');
+		if (jQuery(this).hasClass("open")) {
+			parent.find(".admin_notifiations_content").slideUp('slow');
+			jQuery(this).removeClass('open');
+		} else {
+			jQuery('.admin_notifications_tr').removeClass('open');
+			jQuery('.admin_notifiations_content').slideUp('slow');
+			parent.find(".admin_notifiations_content").slideDown('slow');
+			jQuery(this).addClass('open');
+		}
+	}
 });
 
 jQuery(document).on("change", ".ts_order_status_toggle", function () {
@@ -542,7 +542,6 @@ jQuery(document).on("click", ".metabox_get_shipment_status", function () {
 			}
 		},
 		error: function (jqXHR, exception) {
-			
 		}
 	});
 });
