@@ -157,23 +157,19 @@ class WC_TrackShip_Api_Call {
 			$shipping_postal_code = $order->get_billing_postcode();
 		}
 		
-		$url = 'https://my.trackship.com/api/create-tracker/ts4wc';
+		$url = 'https://api.trackship.com/v1/shipment/create/ts4wc';
 		
-		$args['body'] = array(
-			'user_key'				=> $user_key, // Deprecated since 19-Aug-2022
-			'domain'				=> $domain, // Deprecated since 19-Aug-2022
+		$body = array(
 			'order_id'				=> $order_id,
 			'custom_order_id'		=> $custom_order_number,
 			'tracking_number'		=> $tracking_number,
 			'tracking_provider'		=> $tracking_provider,
 			'postal_code'			=> $shipping_postal_code,
 			'destination_country'	=> $shipping_country,
+			'user_key'				=> $user_key,
+			'domain'				=> $domain,
 		);
-
-		$args['headers'] = array(
-			'trackship-api-key'	=> $user_key,
-			'store'	=> $domain,
-		);	
+		$args[ 'body' ] = json_encode( $body );
 		$args['timeout'] = 10;
 		$response = wp_remote_post( $url, $args );
 		return $response;
@@ -187,14 +183,14 @@ class WC_TrackShip_Api_Call {
 		$domain = get_site_url();
 		$domain = apply_filters( 'trackship_for_site_url', $domain );
 		$domain = str_replace( 'http://', 'https://', $domain );
-		$url = 'https://my.trackship.com/api/shipment/delete';
+		$url = 'https://api.trackship.com/v1/shipment/delete';
 		
-		$args['body'] = array(
+		$body = array(
 			'order_id'			=> $order_id,
 			'tracking_number'	=> $tracking_number,
 			'tracking_provider'	=> $tracking_provider,
 		);
-
+		$args[ 'body' ] = json_encode( $body );
 		$args['headers'] = array(
 			'trackship-api-key'	=> $user_key,
 			'app-name'	=> $domain,
