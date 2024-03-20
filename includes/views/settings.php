@@ -10,19 +10,11 @@ if ( !get_trackship_settings( 'wc_admin_notice', '') ) {
 	update_trackship_settings( 'wc_admin_notice', 'true');
 }
 
-$url = 'https://my.trackship.com/api/user-plan/get/';
-$args[ 'body' ] = array(
-	'user_key' => get_trackship_key(), // Deprecated since 19-Aug-2022
-);
-$args['headers'] = array(
-	'trackship-api-key' => get_trackship_key()
-);
+$url = 'https://api.trackship.com/v1/user-plan/get';
+$args['body'] = json_encode( [ 'user_key' => get_trackship_key() ] );
 $response = wp_remote_post( $url, $args );
-if ( is_wp_error( $response ) ) {
-	$plan_data = array();
-} else {
-	$plan_data = json_decode( $response[ 'body' ] );
-}
+$plan_data = is_wp_error( $response ) ? [] : json_decode( $response[ 'body' ] );
+
 update_option( 'user_plan', $plan_data->subscription_plan );
 if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocommerce/zorem-sms-for-woocommerce.php' ) ) {
 	?>
