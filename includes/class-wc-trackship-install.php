@@ -312,6 +312,14 @@ class WC_Trackship_Install {
 			update_trackship_settings( 'trackship_db', '1.28' );
 			update_option( 'trackship_db', '1.28' );
 		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.29', '<' ) ) {
+
+			delete_trackship_settings( 'ts_upgrade_ignore' );
+
+			update_trackship_settings( 'trackship_db', '1.29' );
+			update_option( 'trackship_db', '1.29' );
+		}
 	}
 
 	public function update_trackship_providers() {
