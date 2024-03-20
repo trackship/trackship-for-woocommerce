@@ -63,7 +63,7 @@ class WC_TrackShip_Admin_Notice {
 		if (isset($_GET['ts-upgrade-ignore']) && $_GET['ts-upgrade-ignore'] == 'true') {
 			// Verify the nonce
 			if (isset($_GET['nonce']) && wp_verify_nonce( $_GET['nonce'], 'ts_dismiss_notice' )) {
-				update_trackship_settings( 'ts_upgrade_ignore', 'true');
+				update_trackship_settings( 'ts_popup_ignore', 'true');
 			}
 		}
 	}
@@ -107,7 +107,7 @@ class WC_TrackShip_Admin_Notice {
 	*/
 	public function trackship_upgrade_notice () {
 		
-		if ( get_trackship_settings( 'ts_upgrade_ignore', '') || !in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+		if ( get_trackship_settings( 'ts_popup_ignore', '') || !in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
 			return;
 		}
 
