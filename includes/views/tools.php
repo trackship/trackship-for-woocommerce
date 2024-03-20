@@ -14,7 +14,7 @@ $total_orders = $completed_order_with_tracking + $completed_order_with_zero_bala
 	</div>
 	<div class="tracking_notification_log_delete p15 inner_div">
 		<p><?php esc_html_e( 'Delete notifications logs more than 30 days', 'trackship-for-woocommerce' ); ?></p>
-		<button class="button-primary button-trackship-red delete_notification tools-ts-button" style="line-height:35px;"><?php esc_html_e( 'Delete notifications logs', 'trackship-for-woocommerce' ); ?></button>
+		<button class="button-primary button-trackship-red delete_notification tools-ts-button"><?php esc_html_e( 'Delete notifications logs', 'trackship-for-woocommerce' ); ?></button>
 		<?php $nonce = wp_create_nonce( 'ts_tools'); ?>
 		<input type="hidden" id="ts_tools" name="ts_tools" value="<?php echo esc_attr( $nonce ); ?>" />
 	</div>
