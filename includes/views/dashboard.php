@@ -29,13 +29,15 @@ if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipme
 
 $late_ship_day = get_trackship_settings( 'late_shipments_days', 7);
 $days = $late_ship_day - 1 ;
+$from_date = date('Y-m-d', strtotime('-30 days'));
 
 $results = $wpdb->get_row($wpdb->prepare("
 SELECT
 	SUM( IF( shipping_length > %1d, 1, 0 ) ) as late_shipment,
 	SUM( IF(shipment_status NOT IN ( '%2s', '%3s', '%4s', '%5s', '%6s', '%7s', '%8s' ) OR pending_status IS NOT NULL, 1, 0) ) as tracking_issues,
 	SUM( IF( shipment_status LIKE '%9s', 1, 0 ) ) as return_to_sender_shipment
-FROM {$wpdb->prefix}trackship_shipment", $days, 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup', 'return_to_sender' ), ARRAY_A);
+FROM {$wpdb->prefix}trackship_shipment
+WHERE shipping_date >= %s", $days, 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup', 'return_to_sender', $from_date ), ARRAY_A);
 
 $late_shipment = $results['late_shipment'];
 $tracking_issues = $results['tracking_issues'];
