@@ -843,7 +843,15 @@ jQuery(document).on("change", ".tracking_details_switch .enhanced_switch_input",
 	}
 });
 //If we will do change into below jQuery so we need to also change in trackship.js and front.js
+jQuery(document).on("click", ".enhanced_tracking_detail .tracking_number_wrap .tracking_number_div a", function () {
+	jQuery(this).addClass('clicked');
+});
+//If we will do change into below jQuery so we need to also change in trackship.js and front.js
 jQuery(document).on("click", ".enhanced_tracking_detail .tracking_number_wrap", function () {
+	if (jQuery('.enhanced_tracking_detail .tracking_number_wrap .tracking_number_div a').hasClass('clicked')) {
+		jQuery('.enhanced_tracking_detail .tracking_number_wrap .tracking_number_div a').removeClass('clicked');
+		return;
+	}
 	if (jQuery(this).hasClass('active')) {
 		jQuery(this).removeClass('active');
 		jQuery(this).find('.accordian-arrow').removeClass('ts-down').addClass('ts-right');

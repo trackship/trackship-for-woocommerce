@@ -47,6 +47,9 @@ class WC_TrackShip_Admin_Notice {
 		// review notice
 		add_action( 'admin_notices', array( $this, 'trackship_upgrade_notice' ) );
 
+		// review notice
+		add_action( 'admin_notices', array( $this, 'bulk_shipment_sent_notice' ) );
+
 	}
 
 	/*
@@ -110,15 +113,25 @@ class WC_TrackShip_Admin_Notice {
 		if ( get_trackship_settings( 'ts_popup_ignore', '') || !in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
 			return;
 		}
-
+		$target_date = strtotime('2024-04-01');
+		$current_date = current_time('timestamp');
+	
+		// If the current date is after April 1st, 2024, return early
+		if ( $current_date > $target_date ) {
+			return;
+		}
 		$nonce = wp_create_nonce('ts_dismiss_notice');
 		$dismissable_url = esc_url( add_query_arg( [ 'ts-upgrade-ignore' => 'true',  'nonce' => $nonce ] ) );
 		$url = 'https://my.trackship.com/settings/#billing';
 		?>
 		<style>
 		.wp-core-ui .notice.trackship-dismissable-notice {
-			padding: 12px;
+			padding: 20px;
 			text-decoration: none;
+		}
+		.trackship-dismissable-notice h3, .trackship-dismissable-notice p {
+			margin: 0;
+    		padding-bottom: 20px;
 		}
 		.wp-core-ui .notice.trackship-dismissable-notice a.notice-dismiss{
 			padding: 9px;
@@ -127,11 +140,42 @@ class WC_TrackShip_Admin_Notice {
 		</style>
 		<div class="notice notice-success is-dismissible trackship-dismissable-notice">
 			<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
-			<p><strong>Supercharge Customer Experience with TrackShip for WooCommerce</strong></p>
+			<h3>Upgrade Your WooCommerce Shipping Experience with TrackShip Pro!</h3>
 			<p>Upgrade your plan today to unlock premium features and maximize your tracking capabilities. Whether you choose a monthly or yearly subscription, you'll enjoy enhanced tracking benefits. Plus, get up to 2 months FREE with an annual plan! Don't miss out on this opportunity to boost your post-shipping workflow.</p>
+			<p>Plus, as a special limited-time offer, use coupon code <b>TRACKSHIP10</b> at checkout to receive a 10% discount on your subscription. Hurry, this offer is valid until April 1st!</p>
 			<a class="button button-primary" target="_blank" href="<?php echo esc_url($url); ?>" >UPGRADE NOW</a>
 			<a class="button" style="margin: 0 10px;" href="<?php echo esc_url($dismissable_url); ?>" >No thanks</a>
 		</div>
 		<?php
+	}
+
+	public function bulk_shipment_sent_notice () {
+		$completed_order_with_tracking = trackship_for_woocommerce()->admin->completed_order_with_tracking();
+		$completed_order_with_zero_balance = trackship_for_woocommerce()->admin->completed_order_with_zero_balance();
+		$completed_order_with_do_connection = trackship_for_woocommerce()->admin->completed_order_with_do_connection();
+		$total_shipments = $completed_order_with_tracking + $completed_order_with_zero_balance + $completed_order_with_do_connection;
+		$trackers_balance = get_option('trackers_balance');
+
+		if ( $total_shipments > 0 && $trackers_balance > 0 ) {
+			$url = admin_url( 'admin.php?page=trackship-for-woocommerce&tab=tools' );
+			?>
+			<style>
+			.wp-core-ui .notice.bulk_sent_notice {
+				padding: 20px;
+				text-decoration: none;
+			}
+			.bulk_sent_notice h3, .bulk_sent_notice p {
+				margin: 0;
+				padding-bottom: 20px;
+			}
+			</style>
+			<div class="notice notice-warning bulk_sent_notice">
+				<h3>Alert: Action required for <?php echo esc_html($total_shipments); ?> Shipments</h3>
+				<p><?php printf( esc_html__( 'We detected %1$s Shipments from the last 30 days that were not sent to TrackShip, you can bulk send them to TrackShip.', 'trackship-for-woocommerce'), esc_html( $total_shipments ) ) ; ?></p>
+
+				<a class="button button-primary" href="<?php echo esc_url($url); ?>">Send Now</a>
+			</div>
+			<?php
+		}
 	}
 }
