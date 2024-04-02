@@ -130,6 +130,7 @@ class WC_TrackShip_Late_Shipments {
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE 
 				shipment_status NOT LIKE 'delivered'
+				AND shipment_status NOT LIKE 'return_to_sender'
 				AND shipment_status NOT LIKE %s
 				AND late_shipment_email = %d
 				AND shipping_length > %d
@@ -145,6 +146,7 @@ class WC_TrackShip_Late_Shipments {
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE 
 				shipment_status NOT LIKE 'delivered'
+				AND shipment_status NOT LIKE 'return_to_sender'
 				AND shipment_status NOT LIKE %s
 				AND late_shipment_email = %d
 				AND shipping_length > %d

@@ -131,7 +131,7 @@ class WC_TrackShip_Admin_Notice {
 		}
 		.trackship-dismissable-notice h3, .trackship-dismissable-notice p {
 			margin: 0;
-    		padding-bottom: 20px;
+			padding-bottom: 20px;
 		}
 		.wp-core-ui .notice.trackship-dismissable-notice a.notice-dismiss{
 			padding: 9px;
