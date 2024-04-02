@@ -49,20 +49,16 @@ $last_60 = gmdate('Y-m-d 00:00:00', strtotime( 'today - 59 days' ) );
 
 $action_needed = array(
 	'late_shipment' => array(
-		'title' => __( 'Late Shipments', 'trackship-for-woocommerce' ),
+		'title' => __( 'Late Shipments for last 30 days', 'trackship-for-woocommerce' ),
 		'count' => $late_shipment,
 	),
 	'tracking_issues' => array(
-		'title' => __( 'Tracking Issues', 'trackship-for-woocommerce' ),
+		'title' => __( 'Tracking Issues for last 30 days', 'trackship-for-woocommerce' ),
 		'count' => $tracking_issues,
 	),
 	'return_to_sender' => array(
-		'title' => __( 'Return To Sender', 'trackship-for-woocommerce' ),
+		'title' => __( 'Return To Sender for last 30 days', 'trackship-for-woocommerce' ),
 		'count' => $return_to_sender_shipment,
-	),
-	'no_action_needed' => array(
-		'title' => __( 'No action needed for Shipments', 'trackship-for-woocommerce' ),
-		'count' => '',
 	),
 );
 $first_line = array(
@@ -176,7 +172,7 @@ $store_url = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active
 					<?php if ( $value['count'] > 0 ) { ?>
 						<tr onclick="window.location='<?php echo esc_url( admin_url( 'admin.php?page=trackship-shipments&status=' . $key ) ); ?>';">
 							<td>
-								<label><?php echo esc_html( $value['title'] ); ?> (<?php echo esc_html( $value['count'] ); ?>)</label>
+								<label><?php echo esc_html( $value['count'] ); ?> <?php echo esc_html( $value['title'] ); ?></label>
 								<span class="dashicons dashicons-arrow-right-alt2"></span>
 							</td>
 						</tr>

@@ -190,9 +190,9 @@ class WC_Trackship_Admin {
 								<span><?php esc_html_e( $tracking_number ); ?></span>
 							<?php } ?>
 						</div>
-						<?php 
-						do_action(	'ast_after_tracking_number', $order_id, $tracking_item['tracking_id'] );
-						do_action(	'ast_shipment_tracking_end', $order_id, $tracking_item ); 
+						<?php
+						do_action( 'ast_after_tracking_number', $order_id, $tracking_item['tracking_id'] );
+						do_action( 'ast_shipment_tracking_end', $order_id, $tracking_item );
 						?>
 					</div>
 				</div>
@@ -207,18 +207,7 @@ class WC_Trackship_Admin {
 		wp_register_style( 'front_style', trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/front.css', array(), trackship_for_woocommerce()->version );
 		wp_enqueue_style( 'front_style' );
 	}
-	
-	public function build_html( $template, $data = null ) {
-		global $wpdb;
-		$t = new \stdclass();
-		$t->data = $data;
-		ob_start();
-		include(dirname(__FILE__) . '/admin-html/' . $template . '.phtml');
-		$s = ob_get_contents();
-		ob_end_clean();
-		return $s;
-	}
-	
+
 	/*
 	* Admin Menu add function
 	* WC sub menu
@@ -358,7 +347,6 @@ class WC_Trackship_Admin {
 		), ARRAY_A);
 
 		// print_r($wpdb->last_query);
-
 		wp_send_json($result);
 	}
 
@@ -631,7 +619,7 @@ class WC_Trackship_Admin {
 		// Get orders completed.
 		$args = array(
 			'status' => 'wc-completed',
-			'limit'	 => 100,	
+			'limit'	 => 100,
 			'date_created' => '>' . ( time() - 2592000 ),
 		);
 		
@@ -682,7 +670,6 @@ class WC_Trackship_Admin {
 				$new_order_statuses['wc-delivered'] = __( 'Delivered', 'trackship-for-woocommerce' );
 			}
 		}
-		
 		return $new_order_statuses;
 	}
 	
@@ -699,7 +686,7 @@ class WC_Trackship_Admin {
 	/*
 	* mark status as a paid.
 	*/
-	public function delivered_woocommerce_order_is_paid_statuses( $statuses ) { 
+	public function delivered_woocommerce_order_is_paid_statuses( $statuses ) {
 		$statuses[] = 'delivered';
 		return $statuses; 
 	}
@@ -762,7 +749,6 @@ class WC_Trackship_Admin {
 		
 		if ( $wc_ast_status_delivered ) {
 			if ( $order->has_status( array( 'completed' ) ) || $order->has_status( array( 'shipped' ) ) ) {
-				
 				// Get Order ID (compatibility all WC versions)
 				$order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
 				
@@ -841,7 +827,7 @@ class WC_Trackship_Admin {
 					<div class="spinner"></div>
 				</div>
 				<input type="hidden" id="nonce_trackship_provider" value="<?php esc_html_e( wp_create_nonce( 'nonce_trackship_provider' ) ); ?>">
-			</div>	
+			</div>
 			<div class="popupclose"></div>
 		</div>
 		<div class="popupwrapper trackship_logs_details" style="display:none;">
@@ -898,7 +884,7 @@ class WC_Trackship_Admin {
 		</tr>
 		
 		<?php 
-		$html = ob_get_clean();	
+		$html = ob_get_clean();
 		wp_send_json( array( 'table_row' => $html) );
 	}
 	
@@ -1042,7 +1028,7 @@ class WC_Trackship_Admin {
 					}
 				}
 			}
-			update_option( 'trackship_map_provider', $map_provider_array );		
+			update_option( 'trackship_map_provider', $map_provider_array );
 			wp_send_json( array( 'success' => 'true' ) );
 		}
 	}
@@ -1155,10 +1141,10 @@ class WC_Trackship_Admin {
 
 		$form_data = array(
 			'wc_ast_use_tracking_page' => array(
-				'type'		=> 'tgl_checkbox',
-				'title'		=> __( 'Enable Tracking Page', 'trackship-for-woocommerce' ),
-				'show'		=> true,
-				'class'		=> 'wc_ast_use_tracking_page',
+				'type'	=> 'tgl_checkbox',
+				'title'	=> __( 'Enable Tracking Page', 'trackship-for-woocommerce' ),
+				'show'	=> true,
+				'class'	=> 'wc_ast_use_tracking_page',
 			),
 			'wc_ast_trackship_page_id' => array(
 				'type'		=> 'dropdown_tpage',
@@ -1169,10 +1155,10 @@ class WC_Trackship_Admin {
 				'class'		=> '',
 			),
 			'wc_ast_trackship_other_page' => array(
-				'type'		=> 'text',
-				'title'		=> __( 'Other', '' ),
-				'show'		=> false,
-				'class'		=> '',
+				'type'	=> 'text',
+				'title'	=> __( 'Other', '' ),
+				'show'	=> false,
+				'class'	=> '',
 			),
 			'wc_ast_tracking_page_customize_btn' => array(
 				'type'		=> 'button',
@@ -1199,7 +1185,7 @@ class WC_Trackship_Admin {
 				'slug'	=> 'available-for-pickup',
 				'option_name'	=> 'wcast_availableforpickup_email_settings',
 				'enable_status_name' => 'wcast_enable_availableforpickup_email',
-				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=available_for_pickup' ),	
+				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=available_for_pickup' ),
 			),
 			'out_for_delivery' => array(
 				'title'	=> __( 'Out For Delivery', 'trackship-for-woocommerce' ),
