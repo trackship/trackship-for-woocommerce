@@ -109,14 +109,13 @@ class WC_TrackShip_Admin_Notice {
 	* Display admin notice on Upgrade TrackShip plan
 	*/
 	public function trackship_upgrade_notice () {
-		
 		if ( get_trackship_settings( 'ts_popup_ignore', '') || !in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
 			return;
 		}
-		$target_date = strtotime('2024-04-01');
+		$target_date = strtotime('2024-04-15');
 		$current_date = current_time('timestamp');
 	
-		// If the current date is after April 1st, 2024, return early
+		// If the current date is after April 15, 2024, return early
 		if ( $current_date > $target_date ) {
 			return;
 		}
@@ -142,7 +141,7 @@ class WC_TrackShip_Admin_Notice {
 			<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
 			<h3>Upgrade Your WooCommerce Shipping Experience with TrackShip Pro!</h3>
 			<p>Upgrade your plan today to unlock premium features and maximize your tracking capabilities. Whether you choose a monthly or yearly subscription, you'll enjoy enhanced tracking benefits. Plus, get up to 2 months FREE with an annual plan! Don't miss out on this opportunity to boost your post-shipping workflow.</p>
-			<p>Plus, as a special limited-time offer, use coupon code <b>TRACKSHIP10</b> at checkout to receive a 10% discount on your subscription. Hurry, this offer is valid until April 1st!</p>
+			<p>Plus, as a special limited-time offer, use coupon code <b>TRACKSHIP10</b> at checkout to receive a 10% discount on your subscription. Hurry, this offer is valid until April 15th!</p>
 			<a class="button button-primary" target="_blank" href="<?php echo esc_url($url); ?>" >UPGRADE NOW</a>
 			<a class="button" style="margin: 0 10px;" href="<?php echo esc_url($dismissable_url); ?>" >No thanks</a>
 		</div>
