@@ -576,7 +576,7 @@ class WC_TrackShip_Front {
 		$url_tracking = str_replace( ' ', '', $url_tracking );
 		$order = wc_get_order( $order_id );
 
-		$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $url_tracking );
+		$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $post_tracking );
 		if ( $tracking_page_link && is_admin() && isset( $_POST['tnumber'] ) ) {
 			?>
 			<p class="ts_enhanced_info">
