@@ -109,7 +109,7 @@ class WC_TrackShip_Admin_Notice {
 	* Display admin notice on Upgrade TrackShip plan
 	*/
 	public function trackship_upgrade_notice () {
-		if ( get_trackship_settings( 'ts_popup_ignore', '') || !in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+		if ( get_trackship_settings( 'ts_popup_ignore', '') || !in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
 			return;
 		}
 		$target_date = strtotime('2024-04-15');

@@ -87,7 +87,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Check if WooCommerce is active
 	 *
-	 * @since  1.0.0
+	 * @since 1.0.0
 	 * @return bool
 	*/
 	private function is_wc_active() {
@@ -106,7 +106,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Display WC active notice
 	 *
-	 * @since  1.0.0
+	 * @since 1.0.0
 	*/
 	public function notice_activate_wc() {
 		?>
@@ -120,7 +120,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Display AST active notice
 	 *
-	 * @since  1.0.0
+	 * @since 1.0.0
 	*/
 	public function notice_activate_ast() {
 		?>
@@ -293,8 +293,8 @@ class Trackship_For_Woocommerce {
 	*
 	* @since 1.0.0
 	*
-	* @param  array  $links List of existing plugin action links.
-	* @return array         List of modified plugin action links.
+	* @param array $links List of existing plugin action links.
+	* @return array List of modified plugin action links.
 	*/
 	public function tsw_plugin_action_links( $links ) {
 		$admin_url = is_trackship_connected() ? admin_url( '/admin.php?page=trackship-for-woocommerce' ) : admin_url( '/admin.php?page=trackship-dashboard' );
@@ -311,7 +311,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Check if Advanced Shipment Tracking for WooCommerce is active
 	 *
-	 * @since  1.0.0
+	 * @since 1.0.0
 	 * @return bool
 	*/
 	public function is_ast_active() {
@@ -332,7 +332,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Check if Shipment Tracking is active
 	 *
-	 * @since  1.0.0
+	 * @since 1.0.0
 	 * @return bool
 	*/
 	public function is_st_active() {
@@ -353,7 +353,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Check if Woo order Tracking is active
 	 *
-	 * @since  1.5.0
+	 * @since 1.5.0
 	 * @return bool
 	*/
 	public function is_active_woo_order_tracking() {
@@ -374,7 +374,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Check if Klaviyo is active
 	 *
-	 * @since  1.6.3
+	 * @since 1.6.3
 	 * @return bool
 	*/
 	public function is_active_klaviyo() {
@@ -396,7 +396,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Check if Yith order Tracking is active
 	 *
-	 * @since  1.5.0
+	 * @since 1.5.0
 	 * @return bool
 	*/
 	public function is_active_yith_order_tracking() {
@@ -489,7 +489,7 @@ add_action( 'before_woocommerce_init', function() {
 /*
 * check trackship is connected
 *
-* @since   1.0.0
+* @since 1.0.0
 *
 * Return @void
 *
@@ -508,7 +508,7 @@ function is_trackship_connected() {
 /*
 * get trackship key
 *
-* @since   1.0
+* @since 1.0
 *
 * Return @void
 *

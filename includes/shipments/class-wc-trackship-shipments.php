@@ -27,7 +27,7 @@ class WC_Trackship_Shipments {
 	/**
 	 * Get the class instance
 	 *
-	 * @return WC_Advanced_Shipment_Tracking_Admin
+	 * @return WC_Trackship_Shipments
 	*/
 	public static function get_instance() {
 
