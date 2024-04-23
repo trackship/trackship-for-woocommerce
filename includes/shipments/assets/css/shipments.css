@@ -284,6 +284,15 @@ table.dataTable tbody .shipment_status_label.delivered:before {
 }
 table.dataTable tbody .shipment_status_label.pending_trackship:before {
 	background-color: #BD3D84;
+	animation: ts_load 1s ease infinite;
+}
+@keyframes ts_load {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0.5;
+	}
 }
 table.dataTable tbody .shipment_status_label.unknown:before {
 	background: #8a2f1b;
