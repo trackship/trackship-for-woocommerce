@@ -7,7 +7,6 @@
 			$("#wc_trackship_form").on('click', '.woocommerce-save-button', this.save_trackship_form);
 			$("#trackship_tracking_page_form").on('click', '.woocommerce-save-button', this.save_tracking_page_form);
 			$("#trackship_mapping_form").on('click', '.woocommerce-save-button', this.save_trackship_mapping_form);
-			$("#delivery_automation_form").on('click', '.woocommerce-save-button', this.save_delivery_automation_form);
 			$("#trackship_late_shipments_form").on('click', '.woocommerce-save-button', this.save_trackship_late_shipments_form);
 			$(".tipTip").tipTip();
 
@@ -76,27 +75,6 @@
 			return false;
 		},
 
-		save_delivery_automation_form: function (event) {
-			event.preventDefault();
-
-			$("#delivery_automation_form").find(".heading_panel .spinner").addClass("active");
-			var ajax_data = $("#delivery_automation_form").serialize();
-
-			$.post(ajaxurl, ajax_data)
-			.done(function (response) {
-				$("#delivery_automation_form").find(".spinner").removeClass("active");
-				$(document).trackship_snackbar(trackship_script.i18n.data_saved);
-				jQuery('.heading_panel').removeClass('active');
-				jQuery('.heading_panel').siblings('.panel_content').removeClass('active').slideUp('slow');
-				jQuery('.heading_panel').find('span.dashicons').addClass('dashicons-arrow-right-alt2');
-				jQuery('.heading_panel').find('button.button-primary').hide();
-			})
-			.fail(function (response, jqXHR, exception) {
-				trackship_js_error(response, jqXHR, exception);
-			});
-			return false;
-		},
-
 		save_trackship_late_shipments_form: function (event) {
 			event.preventDefault();
 			var email_address = jQuery('#late_shipments_email_to').val();
@@ -129,20 +107,10 @@
 })(jQuery, trackship_script, wp, ajaxurl);
 
 jQuery(document).ready(function () {
-
 	jQuery(".trackship-tip").tipTip();
 	jQuery(".ts-custom-tool-tip").tipTip({
 		defaultPosition: "left",
 	});
-	
-	if (jQuery.fn.wpColorPicker) {
-		jQuery('#wc_ast_status_label_color').wpColorPicker({
-			change: function (e, ui) {
-				var color = ui.color.toString();
-				jQuery('.ts4wc_delivered_color .order-label.wc-delivered').css('background', color);
-			},
-		});
-	}
 });
 
 var getUrlParameter = function getUrlParameter(sParam) {
@@ -200,11 +168,6 @@ jQuery(document).on("click", ".ts_notifications_outer_table .inner_tab_input", f
 	var url = window.location.protocol + "//" + window.location.host + window.location.pathname + "?page=trackship-for-woocommerce&tab=" + tab;
 	window.history.pushState({ path: url }, '', url);
 	jQuery(window).trigger('resize');
-});
-
-jQuery(document).on("click", "#wc_ast_status_label_font_color", function () {
-	var value = jQuery('#wc_ast_status_label_font_color').val();
-	jQuery(".order-label.wc-delivered").css("color", value);
 });
 
 jQuery(document).on("change", ".ts_delivered_order_status_toggle", function () {
@@ -371,14 +334,6 @@ jQuery(document).on("click", ".admin_notifications_tr", function (event) {
 			parent.find(".admin_notifiations_content").slideDown('slow');
 			jQuery(this).addClass('open');
 		}
-	}
-});
-
-jQuery(document).on("change", ".ts_order_status_toggle", function () {
-	if (jQuery(this).prop("checked") == true) {
-		jQuery('.ts4wc_delivered_color').fadeIn();
-	} else {
-		jQuery('.ts4wc_delivered_color').fadeOut();
 	}
 });
 

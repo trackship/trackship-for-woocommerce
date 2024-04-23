@@ -51,7 +51,6 @@ $section = isset( $_GET['section'] ) ? sanitize_text_field( $_GET['section'] ) :
 			</div>
 		</div>
 	</form>
-	<?php include __DIR__ . '/delivery-automation.php'; ?>
 	<?php include __DIR__ . '/tracking-page.php'; ?>
 	<?php do_action( 'after_trackship_settings' ); ?>
 	<?php include __DIR__ . '/map-providers.php'; ?>
