@@ -15,7 +15,7 @@ class WC_TS4WC_Admin_Notices_Under_WC_Admin {
 	/**
 	 * Get the class instance
 	 *
-	 * @return WC_Advanced_Shipment_Tracking_Admin_notice
+	 * @return WC_TS4WC_Admin_Notices_Under_WC_Admin
 	*/
 	public static function get_instance() {
 

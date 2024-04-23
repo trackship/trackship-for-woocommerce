@@ -22,7 +22,7 @@ class WC_TrackShip_Front {
 	/**
 	 * Get the class instance
 	 *
-	 * @return WC_Advanced_Shipment_Tracking_Actions
+	 * @return WC_TrackShip_Front
 	*/
 	public static function get_instance() {
 
@@ -201,7 +201,7 @@ class WC_TrackShip_Front {
 			return;
 		}
 		
-		if ( isset( $_GET['order_id'] ) &&  isset( $_GET['order_key'] ) ) {
+		if ( isset( $_GET['order_id'] ) && isset( $_GET['order_key'] ) ) {
 
 			$order_id = wc_clean($_GET['order_id']);
 			$order = wc_get_order( $order_id );
@@ -556,7 +556,7 @@ class WC_TrackShip_Front {
 					<div class="trackship_branding">
 						<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://trackship.com" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
 					</div>
-					<?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
+					<?php if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) { ?>
 						<style> .trackship_branding{display:block !important;} </style>
 					<?php } ?>
 				</div>
@@ -621,7 +621,7 @@ class WC_TrackShip_Front {
 			<div class="enhanced_trackship_branding">
 				<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://trackship.com/" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
 			</div>
-			<?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
+			<?php if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) { ?>
 				<style> .enhanced_trackship_branding{display:block !important;} </style>
 			<?php } ?>
 			<?php
@@ -700,7 +700,7 @@ class WC_TrackShip_Front {
 			<input id="enhanced_overview_<?php echo esc_html($num); ?>" data-type="overview" data-number="shipment_<?php echo esc_html($num); ?>" type="radio" name="enhanced_switch_<?php echo esc_html($num); ?>" class="enhanced_switch_input" checked >
 			<label for="enhanced_overview_<?php echo esc_html($num); ?>" class="enhanced_switch"><?php esc_html_e('Overview', 'trackship-for-woocommerce' ); ?></label>
 
-			<input id="enhanced_journey_<?php echo esc_html($num); ?>" data-type="journey" data-number="shipment_<?php echo esc_html($num); ?>" type="radio" name="enhanced_switch_<?php echo esc_html($num); ?>" class="enhanced_switch_input"  >
+			<input id="enhanced_journey_<?php echo esc_html($num); ?>" data-type="journey" data-number="shipment_<?php echo esc_html($num); ?>" type="radio" name="enhanced_switch_<?php echo esc_html($num); ?>" class="enhanced_switch_input" >
 			<label for="enhanced_journey_<?php echo esc_html($num); ?>" class="enhanced_switch"><?php esc_html_e('Journey', 'trackship-for-woocommerce' ); ?></label>
 		</span>
 		<?php
