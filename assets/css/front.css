@@ -508,10 +508,10 @@ div.shipment-header {
 }
 .est_delivery_section {
 	padding: 20px;
-	border-top: 1px solid #e0e0e0;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	padding-bottom: 0;
 }
 .est_delivery_section span.est-delivery-date {
 	background: #4caf5080;
@@ -568,7 +568,6 @@ span.tracking_details_switch {
 }
 .tracking_widget_tracking_events_section {
 	padding: 20px 20px 0;
-	border-top: 1px solid #e0e0e0;
 }
 ul.timeline {
 	list-style: none!important;
@@ -683,6 +682,7 @@ ul.timeline > li > p {
 }
 .enhanced_tracking_content {
 	display: none;
+	border-top: 1px solid #e0e0e0;
 }
 .enhanced_tracking_detail .enhanced_heading {
 	padding: 28px 20px;

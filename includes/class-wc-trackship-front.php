@@ -441,7 +441,7 @@ class WC_TrackShip_Front {
 				.trackship_branding, .tracking-detail .heading_panel {
 					border-top: 1px solid <?php echo esc_html( $border_color ); ?> !important;
 				}
-				.col.enhanced_tracking_detail, div.est_delivery_section, div.tracking_widget_tracking_events_section, .enhanced_tracking_detail .enhanced_heading, .enhanced_tracking_detail .enhanced_content, div.last_mile_tracking_number, .enhanced_content .shipping_from_to , .enhanced_content ul.tpi_product_tracking_ul li {
+				.col.enhanced_tracking_detail, .enhanced_tracking_content, .enhanced_tracking_detail .enhanced_heading, .enhanced_tracking_detail .enhanced_content, div.last_mile_tracking_number, .enhanced_content .shipping_from_to , .enhanced_content ul.tpi_product_tracking_ul li {
 					border-color: <?php echo esc_html( $border_color ); ?> !important;
 				}
 			<?php } ?>
@@ -653,7 +653,7 @@ class WC_TrackShip_Front {
 			<div class="est_delivery_section">
 				<span class="est-delivery-date <?php echo esc_html($row->shipment_status); ?>">
 					<?php 'delivered' != $row->shipment_status ? esc_html_e( 'Est. Delivery Date', 'trackship-for-woocommerce' ) : esc_html_e( 'Delivered on', 'trackship-for-woocommerce' ); ?> : 
-					<strong><?php esc_html_e( date_i18n( 'l, M d', strtotime( $row->est_delivery_date ) ) ); ?></strong>
+					<strong><?php esc_html_e( date_i18n( apply_filters( 'est_delivery_date_format', 'l, M d' ), strtotime( $row->est_delivery_date ) ) ); ?></strong>
 				</span>
 				<?php
 				if ( $event_count > 1 ) {
