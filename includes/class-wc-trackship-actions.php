@@ -50,7 +50,6 @@ class WC_Trackship_Actions {
 		//ajax save admin trackship settings
 		add_action( 'wp_ajax_wc_trackship_form_update', array( $this, 'wc_trackship_form_update_callback' ) );
 		add_action( 'wp_ajax_trackship_tracking_page_form_update', array( $this, 'trackship_tracking_page_form_update_callback' ) );
-		add_action( 'wp_ajax_trackship_delivery_automation_form_update', array( $this, 'trackship_delivery_automation_form_update_callback' ) );
 
 		if ( is_trackship_connected() ) {
 			//add Shipment status column after tracking
@@ -105,8 +104,6 @@ class WC_Trackship_Actions {
 			add_action( 'delete_post', array( $this, 'delete_shipment_row_table') );
 			add_action( 'woocommerce_before_delete_order', array( $this, 'delete_shipment_row_table') );
 		} );
-
-		add_action( 'admin_footer', array( $this, 'footer_function'), 1 );
 		
 		// if trackship is connected
 		if ( ! get_option( 'trackship_apikey' ) ) {
@@ -353,75 +350,6 @@ class WC_Trackship_Actions {
 		}
 	}
 
-	/*
-	* Delivery automation form save
-	*/
-	public function trackship_delivery_automation_form_update_callback() {
-		if ( ! empty( $_POST ) && check_admin_referer( 'trackship_delivery_automation_form', 'trackship_delivery_automation_form_nonce' ) ) {
-			$data = $this->get_delivered_data();
-			foreach ( $data as $key => $val ) {
-				if ( 'wcast_enable_delivered_email' == $key ) {
-					if ( isset( $_POST['wcast_enable_delivered_email'] ) ) {
-						if ( 1 == $_POST['wcast_enable_delivered_email'] ) {
-							update_option( 'customizer_delivered_order_settings_enabled', wc_clean( $_POST['wcast_enable_delivered_email'] ) );
-							$enabled = 'yes';
-						} else {
-							update_option( 'customizer_delivered_order_settings_enabled', '');
-							$enabled = 'no';
-						}
-						$wcast_enable_delivered_email = get_option('woocommerce_customer_delivered_order_settings'); 
-						$wcast_enable_delivered_email['enabled'] = $enabled;
-						update_option( 'woocommerce_customer_delivered_order_settings', $wcast_enable_delivered_email );
-					}
-				}
-				if ( isset( $_POST[ $key ] ) ) {
-					update_option( $key, wc_clean($_POST[ $key ]) );
-				}
-			}
-			wp_send_json( array('success' => 'true') );
-		}
-	}
-	
-	/*
-	* get settings tab array data
-	* return array
-	*/
-	public function get_delivered_data() {
-		$form_data = array(
-			'wc_ast_status_delivered' => array(
-				'type'	=> 'checkbox',
-				'title'	=> __( 'Enable custom order status “Delivered"', '' ),
-				'show'	=> true,
-				'class'	=> '',
-			),
-			'wc_ast_status_label_color' => array(
-				'type'	=> 'color',
-				'title'	=> __( 'Delivered Label color', '' ),
-				'class'	=> 'status_label_color_th',
-				'show'	=> true,
-			),
-			'wc_ast_status_label_font_color' => array(
-				'type'		=> 'dropdown',
-				'title'		=> __( 'Delivered Label font color', '' ),
-				'options'	=> array( 
-					'' =>__( 'Select', 'woocommerce' ),
-					'#fff' =>__( 'Light', '' ),
-					'#000' =>__( 'Dark', '' ),
-				),
-				'class'	=> 'status_label_color_th',
-				'show'	=> true,
-			),
-			'wcast_enable_delivered_email' => array(
-				'type'	=> 'checkbox',
-				'title'	=> __( 'Enable the Delivered order status email', '' ),
-				'class'	=> 'status_label_color_th',
-				'show'	=> true,
-			),
-		);
-		return $form_data;
-
-	}
-	
 	/**
 	 * Adds 'shipment_status' column header to 'Orders' page immediately after 'woocommerce-advanced-shipment-tracking' column.
 	 *
@@ -1146,7 +1074,7 @@ class WC_Trackship_Actions {
 	 * Code for check if tracking number in order is delivered or not
 	*/
 	public function check_tracking_delivered( $order_id ) {
-		$delivered_status_enabled = get_option( 'wc_ast_status_delivered', 1 );
+		$delivered_status_enabled = get_trackship_settings( 'ts_delivered_status', 1 );
 		if ( ! $delivered_status_enabled ) {
 			return;
 		}
@@ -1233,24 +1161,6 @@ class WC_Trackship_Actions {
 		return $value;
 	}
 	
-	/*
-	* change style of delivered order label
-	*/	
-	public function footer_function() {
-		if ( !is_plugin_active( 'woocommerce-order-status-manager/woocommerce-order-status-manager.php' ) ) {
-			$bg_color = get_option('wc_ast_status_label_color', '#212c42');
-			$color = get_option('wc_ast_status_label_font_color', '#fff');
-			?>
-			<style>
-			.order-status.status-delivered,.ts4wc_delivered_color .order-label.wc-delivered{
-				background: <?php echo esc_html( $bg_color ); ?>;
-				color: <?php esc_html_e( $color ); ?>;
-			}
-			</style>
-			<?php
-		}
-	}
-
 	/*
 	 * tracking number filter
 	 * if number not found. return false

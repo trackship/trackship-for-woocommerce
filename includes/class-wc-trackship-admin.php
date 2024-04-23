@@ -65,7 +65,7 @@ class WC_Trackship_Admin {
 		
 		add_filter('woocommerce_order_is_download_permitted', array( $this, 'add_onhold_status_to_download_permission' ), 10, 2);
 
-		$newstatus = get_option( 'wc_ast_status_delivered', 1);
+		$newstatus = get_trackship_settings( 'ts_delivered_status', 1 );
 		if ( true == $newstatus ) {
 			//register order status 
 			add_action( 'init', array( $this, 'register_order_status') );
@@ -424,9 +424,16 @@ class WC_Trackship_Admin {
 				'class'		=> '',
 				'tooltip'	=> __( 'Allow users to opt-out of receiving Shipment status notifications on the Tracking page and Shipment status emails.', 'trackship-for-woocommerce' ),
 			),
+			'ts_delivered_status' => array(
+				'type'		=> 'tgl_checkbox',
+				'title'		=> __( 'Enable Order Delivery Automation', 'trackship-for-woocommerce' ),
+				'show'		=> true,
+				'class'		=> '',
+				'tooltip'	=> __( 'Enable a Custom Order Status Delivered that will be set automatically when all the order shipments are delivered', 'trackship-for-woocommerce' ),
+			),
 		);
 
-		if ( ( is_plugin_active( 'wp-lister-for-amazon/wp-lister-amazon.php' ) || is_plugin_active( 'wp-lister-amazon/wp-lister-amazon.php' ) ) && !in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+		if ( ( is_plugin_active( 'wp-lister-for-amazon/wp-lister-amazon.php' ) || is_plugin_active( 'wp-lister-amazon/wp-lister-amazon.php' ) ) && !in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
 			$form_data[ 'enable_notification_for_amazon_order' ] = array(
 				'type'		=> 'tgl_checkbox',
 				'title'		=> __( 'Enable shipment status notification for order created by Amazon', 'trackship-for-woocommerce' ),
@@ -434,6 +441,7 @@ class WC_Trackship_Admin {
 				'class'		=> '',
 			);
 		}
+		
 		return $form_data;
 	}
 
@@ -714,8 +722,8 @@ class WC_Trackship_Admin {
 	*/
 	public function additional_admin_order_preview_buttons_actions( $actions, $order ) {
 		
-		$wc_ast_status_delivered = get_option( 'wc_ast_status_delivered', 1 );
-		if ( $wc_ast_status_delivered ) {
+		$ts_delivered_status = get_trackship_settings( 'ts_delivered_status', 1 );
+		if ( $ts_delivered_status ) {
 			// Below set your custom order statuses (key / label / allowed statuses) that needs a button
 			$custom_statuses = array(
 				'delivered' => array( // The key (slug without "wc-")
@@ -745,9 +753,8 @@ class WC_Trackship_Admin {
 	*/
 	public function add_delivered_order_status_actions_button( $actions, $order ) {
 		
-		$wc_ast_status_delivered = get_option( 'wc_ast_status_delivered', 1 );
-		
-		if ( $wc_ast_status_delivered ) {
+		$ts_delivered_status = get_trackship_settings( 'ts_delivered_status', 1 );
+		if ( $ts_delivered_status ) {
 			if ( $order->has_status( array( 'completed' ) ) || $order->has_status( array( 'shipped' ) ) ) {
 				// Get Order ID (compatibility all WC versions)
 				$order_id = method_exists( $order, 'get_id' ) ? $order->get_id() : $order->id;
@@ -770,13 +777,11 @@ class WC_Trackship_Admin {
 	*/	
 	public function footer_function() {
 		if ( !is_plugin_active( 'woocommerce-order-status-manager/woocommerce-order-status-manager.php' ) ) {
-			$bg_color = get_option('wc_ast_status_label_color', '#09d3ac');
-			$color = get_option('wc_ast_status_label_font_color', '#000');
 			?>
 			<style>
 			.order-status.status-delivered,.status-label-li .order-label.wc-delivered{
-				background: <?php echo esc_html( $bg_color ); ?>;
-				color: <?php echo esc_html( $color ); ?>;
+				background: #09d3ac;
+				color: #fff;
 			}
 			</style>
 		<?php } ?>
