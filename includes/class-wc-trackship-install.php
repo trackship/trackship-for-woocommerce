@@ -317,6 +317,15 @@ class WC_Trackship_Install {
 			update_trackship_settings( 'trackship_db', '1.29' );
 			update_option( 'trackship_db', '1.29' );
 		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.30', '<' ) ) {
+
+			$ts_delivered_status = get_option( 'wc_ast_status_delivered', 1 );
+			update_trackship_settings( 'ts_delivered_status', $ts_delivered_status );
+
+			update_trackship_settings( 'trackship_db', '1.30' );
+			update_option( 'trackship_db', '1.30' );
+		}
 	}
 
 	public function update_trackship_providers() {
