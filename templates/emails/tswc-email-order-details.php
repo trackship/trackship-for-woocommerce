@@ -67,19 +67,21 @@ $class = $ts4wc_preview ? 'hide' : '';
 							$qty = $item->get_quantity();
 							echo wp_kses_post( apply_filters( 'woocommerce_order_item_name', $item->get_name(), $item, false ) );
 							echo ' x ';
-							echo esc_html( $qty ); 
-							// allow other plugins to add additional product information here.
-							do_action( 'woocommerce_order_item_meta_start', $item_id, $item, $order, $plain_text );
-					
-							wc_display_item_meta(
-								$item,
-								array(
-									'label_before' => '<strong class="wc-item-meta-label" style="float: ' . esc_attr( $text_align ) . '; margin-' . esc_attr( $margin_side ) . ': .25em; clear: both">',
-								)
-							);
-					
-							// allow other plugins to add additional product information here.
-							do_action( 'woocommerce_order_item_meta_end', $item_id, $item, $order, $plain_text );
+							echo esc_html( $qty );
+							if ( !$ts4wc_preview ) {
+								// allow other plugins to add additional product information here.
+								do_action( 'woocommerce_order_item_meta_start', $item_id, $item, $order, $plain_text );
+						
+								wc_display_item_meta(
+									$item,
+									array(
+										'label_before' => '<strong class="wc-item-meta-label" style="float: ' . esc_attr( $text_align ) . '; margin-' . esc_attr( $margin_side ) . ': .25em; clear: both">',
+									)
+								);
+						
+								// allow other plugins to add additional product information here.
+								do_action( 'woocommerce_order_item_meta_end', $item_id, $item, $order, $plain_text );
+							}
 							?>
 						</td>	
 					</tr>
