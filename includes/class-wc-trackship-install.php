@@ -47,7 +47,7 @@ class WC_Trackship_Install {
 	public function update_database_check() {
 			
 		if ( version_compare( get_option( 'trackship_db' ), '1.0', '<' ) ) {
-			update_trackship_settings( 'wc_ast_use_tracking_page', 1 );
+			update_trackship_settings( 'ts_tracking_page', 1 );
 
 			$availableforpickup_data = get_option( 'wcast_availableforpickup_email_settings', array() );
 			$availableforpickup_data['wcast_enable_availableforpickup_email'] = 1;
@@ -325,6 +325,25 @@ class WC_Trackship_Install {
 
 			update_trackship_settings( 'trackship_db', '1.30' );
 			update_option( 'trackship_db', '1.30' );
+		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.31', '<' ) ) {
+
+			$ts_tracking_page = get_trackship_settings( 'wc_ast_use_tracking_page');
+			update_trackship_settings( 'ts_tracking_page', $ts_tracking_page );
+
+			$tracking_page_id = get_trackship_settings( 'wc_ast_trackship_page_id');
+			update_trackship_settings( 'tracking_page_id', $tracking_page_id );
+
+			$tracking_other_page = get_trackship_settings( 'wc_ast_trackship_other_page');
+			update_trackship_settings( 'tracking_other_page', $tracking_other_page );
+
+			delete_trackship_settings( 'wc_ast_use_tracking_page' );
+			delete_trackship_settings( 'wc_ast_trackship_page_id' );
+			delete_trackship_settings( 'wc_ast_trackship_other_page' );
+
+			update_trackship_settings( 'trackship_db', '1.31' );
+			update_option( 'trackship_db', '1.31' );
 		}
 	}
 

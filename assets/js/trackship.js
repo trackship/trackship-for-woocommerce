@@ -337,12 +337,12 @@ jQuery(document).on("click", ".admin_notifications_tr", function (event) {
 	}
 });
 
-jQuery(document).on("change", "#wc_ast_use_tracking_page", function () {
+jQuery(document).on("change", "#ts_tracking_page", function () {
 	'use strict';
 	if (jQuery(this).prop("checked") == true) {
-		jQuery('.li_wc_ast_trackship_page_id').fadeIn();
+		jQuery('.li_tracking_page_id').fadeIn();
 	} else {
-		jQuery('.li_wc_ast_trackship_page_id').fadeOut();
+		jQuery('.li_tracking_page_id').fadeOut();
 	}
 });
 
@@ -359,7 +359,7 @@ jQuery(document).on("change", "#smswoo_sms_provider", function () {
 jQuery(document).ready(function () {
 	'use strict';
 	jQuery("#smswoo_sms_provider").trigger("change");
-	jQuery("#wc_ast_use_tracking_page").trigger("change");
+	jQuery("#ts_tracking_page").trigger("change");
 	jQuery(".ts_order_status_toggle").trigger("change");
 });
 
@@ -417,10 +417,10 @@ function trackship_js_error(response, jqXHR, exception) {
 /*
 * save tracking page form
 */
-jQuery(document).on("change", "#wc_ast_trackship_page_id", function () {
+jQuery(document).on("change", "#tracking_page_id", function () {
 	'use strict';
-	var wc_ast_trackship_page_id = jQuery(this).val();
-	if (wc_ast_trackship_page_id === 'other') {
+	var tracking_page_id = jQuery(this).val();
+	if (tracking_page_id === 'other') {
 		jQuery('.trackship_other_page_fieldset').show();
 	} else {
 		jQuery('.trackship_other_page_fieldset').hide();

@@ -18,7 +18,7 @@ class WC_TrackShip_Exception_Shipments {
 	 * Get the class instance
 	 *
 	 * @since  1.0
-	 * @return smswoo_license
+	 * @return WC_TrackShip_Exception_Shipments
 	*/
 	public static function get_instance() {
 		if ( null === self::$instance ) {

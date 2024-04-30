@@ -74,7 +74,7 @@ jQuery(document).on("submit", ".order_track_form", function(){
 				warning_msg = 'Uncaught Error.\n' + jqXHR.responseText;
 			}
 			jQuery(".track_fail_msg ").show();
-            jQuery(".track_fail_msg ").text(warning_msg);
+			jQuery(".track_fail_msg ").text(warning_msg);
 			jQuery(".search_order_form").ts_stop_loader();
 		}
 	});
@@ -128,12 +128,12 @@ function hideerror(element){
 jQuery(document).on("click", ".open_tracking_lightbox", function(){	
 	
 	jQuery(".tracking_info,.my_account_tracking,.fluid_section").block({
-    message: null,
+	message: null,
 		overlayCSS: {
 			background: "#fff",
 			opacity: .6
 		}	
-    });
+	});
 	
 	
 	var order_id = jQuery(this).data('order');

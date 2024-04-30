@@ -383,7 +383,7 @@ class TSWC_SMSWoo_SMS_Notification {
 	 *
 	 * @return  string
 	 */
-	private function get_calling_code( $country_code ) {
+	public function get_calling_code( $country_code ) {
 
 		$calling_codes = array(
 			'AC' => '247',

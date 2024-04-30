@@ -213,7 +213,7 @@ class TS4WC_Admin_Customizer {
 			'in_transit'			=> esc_html__( 'In Transit', 'trackship-for-woocommerce' ),
 			'available_for_pickup'	=> esc_html__( 'Available For Pickup', 'trackship-for-woocommerce' ),
 			'out_for_delivery'		=> esc_html__( 'Out For Delivery', 'trackship-for-woocommerce' ),
-			'failure'				=> esc_html__( 'Failed Attempt', 'trackship-for-woocommerce' ),
+			'failure'				=> esc_html__( 'Delivery Failure', 'trackship-for-woocommerce' ),
 			'on_hold'				=> esc_html__( 'On Hold', 'trackship-for-woocommerce' ),
 			'exception'				=> esc_html__( 'Exception', 'trackship-for-woocommerce' ),
 			'return_to_sender'		=> esc_html__( 'Return To Sender', 'trackship-for-woocommerce' ),
@@ -252,7 +252,7 @@ class TS4WC_Admin_Customizer {
 		$name = 'intransit' == $status ? 'In transit' : $name;
 		$name = 'availableforpickup' == $status ? 'Available For Pickup' : $name;
 		$name = 'outfordelivery' == $status ? 'Out For Delivery' : $name;
-		$name = 'failure' == $status ? 'Failed Attempt' : $name;
+		$name = 'failure' == $status ? 'Delivery Failure' : $name;
 		$name = 'onhold' == $status ? 'On hold' : $name;
 		$name = 'exception' == $status ? 'Exception' : $name;
 		$name = 'returntosender' == $status ? 'Return To Sender' : $name;
@@ -818,7 +818,7 @@ class TS4WC_Admin_Customizer {
 				'in_transit' => __( 'In Transit', 'trackship-for-woocommerce' ),
 				'available_for_pickup' => __( 'Available For Pickup', 'trackship-for-woocommerce' ),
 				'out_for_delivery' => __( 'Out For Delivery', 'trackship-for-woocommerce' ),
-				'failure' => __( 'Failed Attempt', 'trackship-for-woocommerce' ),
+				'failure' => __( 'Delivery Failure', 'trackship-for-woocommerce' ),
 				'on_hold' => __( 'On Hold', 'trackship-for-woocommerce' ),
 				'exception' => __( 'Exception', 'trackship-for-woocommerce' ),
 				'return_to_sender' => __( 'Return To Sender', 'trackship-for-woocommerce' ),

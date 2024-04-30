@@ -526,7 +526,7 @@ class WC_Trackship_Admin {
 			'klaviyo' => array(
 				'title'	=> 'Klaviyo',
 				'value'	=> get_trackship_settings( 'klaviyo', ''),
-				'docs'	=> '',
+				'docs'	=> 'https://docs.trackship.com/docs/trackship-for-woocommerce/integration/klaviyo/',
 				'image' => trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/integrations/klaviyo.png',
 			),
 		);
@@ -1129,37 +1129,22 @@ class WC_Trackship_Admin {
 	*/
 	public function get_tracking_page_data() {
 		$page_list = wp_list_pluck( get_pages(), 'post_title', 'ID' );
-		
-		$slug = '';
-		
-		$wc_ast_trackship_page_id = get_trackship_settings('wc_ast_trackship_page_id');
-		$post = get_post($wc_ast_trackship_page_id); 
-		if ( $post ) {
-			$slug = $post->post_name;
-		}
-		
-		if ( 'ts-shipment-tracking' != $slug ) {
-			$page_desc = '';
-		} else {
-			$page_desc = '';
-		}
-
 		$form_data = array(
-			'wc_ast_use_tracking_page' => array(
+			'ts_tracking_page' => array(
 				'type'	=> 'tgl_checkbox',
 				'title'	=> __( 'Enable Tracking Page', 'trackship-for-woocommerce' ),
 				'show'	=> true,
-				'class'	=> 'wc_ast_use_tracking_page',
+				'class'	=> 'ts_tracking_page',
 			),
-			'wc_ast_trackship_page_id' => array(
+			'tracking_page_id' => array(
 				'type'		=> 'dropdown_tpage',
 				'title'		=> __( 'Select tracking page:', 'trackship-for-woocommerce' ),
 				'options'	=> $page_list,
 				'show'		=> true,
-				'desc'		=> $page_desc,
+				'desc'		=> '',
 				'class'		=> '',
 			),
-			'wc_ast_trackship_other_page' => array(
+			'tracking_other_page' => array(
 				'type'	=> 'text',
 				'title'	=> __( 'Other', '' ),
 				'show'	=> false,
@@ -1180,49 +1165,49 @@ class WC_Trackship_Admin {
 		$notifications_data = array(
 			'in_transit' => array(
 				'title'	=> __( 'In Transit', 'trackship-for-woocommerce' ),
-				'slug' => 'in-transit',
+				'img_slug' => 'in-transit',
 				'option_name'	=> 'wcast_intransit_email_settings',
 				'enable_status_name'	=> 'wcast_enable_intransit_email',
 				'customizer_url'	=> admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=in_transit' ),
 			),
 			'available_for_pickup' => array(
 				'title'	=> __( 'Available For Pickup', 'trackship-for-woocommerce' ),
-				'slug'	=> 'available-for-pickup',
+				'img_slug'	=> 'available-for-pickup',
 				'option_name'	=> 'wcast_availableforpickup_email_settings',
 				'enable_status_name' => 'wcast_enable_availableforpickup_email',
 				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=available_for_pickup' ),
 			),
 			'out_for_delivery' => array(
 				'title'	=> __( 'Out For Delivery', 'trackship-for-woocommerce' ),
-				'slug'	=> 'out-for-delivery',
+				'img_slug'	=> 'out-for-delivery',
 				'option_name'	=> 'wcast_outfordelivery_email_settings',
 				'enable_status_name' => 'wcast_enable_outfordelivery_email',
 				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=out_for_delivery' ),	
 			),
 			'failure' => array(
-				'title'	=> __( 'Failed Attempt', 'trackship-for-woocommerce' ),
-				'slug'	=> 'failed-attempt',
+				'title'	=> __( 'Delivery Failure', 'trackship-for-woocommerce' ),
+				'img_slug'	=> 'failure',
 				'option_name'	=> 'wcast_failure_email_settings',
 				'enable_status_name' => 'wcast_enable_failure_email',
 				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=failure' ),
 			),
 			'on_hold' => array(
 				'title'	=> __( 'On Hold', 'trackship-for-woocommerce' ),
-				'slug'	=> 'on-hold',
+				'img_slug'	=> 'on-hold',
 				'option_name'	=> 'wcast_onhold_email_settings',
 				'enable_status_name' => 'wcast_enable_onhold_email',
 				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=on_hold' ),
 			),
 			'exception' => array(
 				'title'	=> __( 'Exception', 'trackship-for-woocommerce' ),
-				'slug'	=> 'exception',
+				'img_slug'	=> 'failure',
 				'option_name'	=> 'wcast_exception_email_settings',
 				'enable_status_name' => 'wcast_enable_exception_email',
 				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=exception' ),
 			),
 			'return_to_sender' => array(
 				'title'	=> __( 'Return To Sender', 'trackship-for-woocommerce' ),
-				'slug'	=> 'return-to-sender',
+				'img_slug'	=> 'return-to-sender',
 				'option_name'	=> 'wcast_returntosender_email_settings',
 				'enable_status_name' => 'wcast_enable_returntosender_email',
 				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=return_to_sender' ),
@@ -1230,14 +1215,14 @@ class WC_Trackship_Admin {
 			'delivered' => array(
 				'title'	=> __( 'Delivered', 'trackship-for-woocommerce' ),
 				'title2'=> __( 'Send only when all shipments for the order are delivered', 'trackship-for-woocommerce' ),
-				'slug'	=> 'delivered-status',
+				'img_slug'	=> 'delivered',
 				'option_name'	=> 'wcast_delivered_status_email_settings',
 				'enable_status_name' => 'wcast_enable_delivered_status_email',
 				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=delivered' ),
 			),
 			'pickup_reminder' => array(
 				'title'	=> __( 'Pickup reminder', 'trackship-for-woocommerce' ),
-				'slug'	=> 'pickup-reminder',
+				'img_slug'	=> 'available-for-pickup',
 				'option_name'	=> 'wcast_pickupreminder_email_settings',
 				'enable_status_name' => 'wcast_enable_pickupreminder_email',
 				'customizer_url' => admin_url( 'admin.php?page=trackship_customizer&type=shipment_email&status=pickup_reminder' ),
