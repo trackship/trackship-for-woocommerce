@@ -23,7 +23,7 @@ class WC_Trackship_Actions {
 	 * Get the class instance
 	 *
 	 * @since 1.0
-	 * @return smswoo_license
+	 * @return WC_Trackship_Actions
 	*/
 	public static function get_instance() {
 
@@ -641,7 +641,7 @@ class WC_Trackship_Actions {
 			'available_for_pickup' => (object) array( 'term' => __( 'Available For Pickup', 'trackship-for-woocommerce' ) ),
 			'out_for_delivery' => (object) array( 'term' => __( 'Out For Delivery', 'trackship-for-woocommerce' ) ),
 			'delivered' => (object) array( 'term' => __( 'Delivered', 'trackship-for-woocommerce' ) ),
-			'failure' => (object) array( 'term' => __( 'Failed Attempt', 'trackship-for-woocommerce' ) ),
+			'failure' => (object) array( 'term' => __( 'Delivery Failure', 'trackship-for-woocommerce' ) ),
 			'cancelled' => (object) array( 'term' => __( 'Cancelled', 'woocommerce' ) ),
 			'carrier_unsupported' => (object) array( 'term' => __( 'Carrier Unsupported', 'trackship-for-woocommerce' ) ),
 			'return_to_sender' => (object) array( 'term' => __( 'Return To Sender', 'trackship-for-woocommerce' ) ),
@@ -1121,7 +1121,7 @@ class WC_Trackship_Actions {
 					'post_author' => 1,
 				);
 				$new_page_id = wp_insert_post($new_page);	
-				update_trackship_settings( 'wc_ast_trackship_page_id', $new_page_id );
+				update_trackship_settings( 'tracking_page_id', $new_page_id );
 			}
 			update_option( 'wc_advanced_shipment_tracking_ts_page', '1.0');
 		}
@@ -1566,8 +1566,8 @@ class WC_Trackship_Actions {
 	}
 
 	public function get_tracking_page_link( $order_id, $tracking_number = '' ) {
-		$page_id = get_trackship_settings( 'wc_ast_trackship_page_id' );
-		if ( !get_trackship_settings( 'wc_ast_use_tracking_page' ) || !$page_id ) {
+		$page_id = get_trackship_settings( 'tracking_page_id' );
+		if ( !get_trackship_settings( 'ts_tracking_page' ) || !$page_id ) {
 			return false;
 		}
 

@@ -29,11 +29,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php $ast_enable_email = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( $val['option_name'], $val['enable_status_name'], ''); ?>
 					<tr class="<?php echo 1 == $ast_enable_email ? 'enable' : 'disable'; ?> ">
 						<td class="forminp status-label-column">
-							<?php $image_name = in_array( $val['slug'], array( 'failed-attempt', 'exception' ) ) ? 'failure' : $val['slug']; ?>
-							<?php $image_name = 'delivered-status' == $image_name ? 'delivered' : $image_name; ?>
-							<?php $image_name = 'pickup-reminder' == $image_name ? 'available-for-pickup' : $image_name; ?>
-							<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/<?php echo esc_html( $image_name ); ?>.png">
-							<strong class="shipment-status-label <?php echo esc_html( $val['slug'] ); ?>"><?php echo esc_html( $val['title'] ); ?></strong>
+							<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/<?php echo esc_html( $val['img_slug'] ); ?>.png">
+							<strong class="shipment-status-label"><?php echo esc_html( $val['title'] ); ?></strong>
 							<?php if ( 'delivered' == $key ) { ?>
 								<label for="all-shipment-status-<?php echo esc_html( $key ); ?>">
 									<input type="hidden" name="all-shipment-status-<?php echo esc_html( $key ); ?>" value="no">
