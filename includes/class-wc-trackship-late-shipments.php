@@ -18,7 +18,7 @@ class WC_TrackShip_Late_Shipments {
 	 * Get the class instance
 	 *
 	 * @since  1.0
-	 * @return smswoo_license
+	 * @return WC_TrackShip_Late_Shipments
 	*/
 	public static function get_instance() {
 		if ( null === self::$instance ) {
@@ -111,7 +111,7 @@ class WC_TrackShip_Late_Shipments {
 	 */
 	public function send_late_shipments_email() {
 		
-		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
 			$logger = wc_get_logger();
 			$context = array( 'source' => 'trackship_late_shipments_email' );
 			$logger->info( 'Late Shipments email not sent. Upgrade your plan', $context );
@@ -130,12 +130,13 @@ class WC_TrackShip_Late_Shipments {
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE 
 				shipment_status NOT LIKE 'delivered'
+				AND shipment_status NOT LIKE 'return_to_sender'
 				AND shipment_status NOT LIKE %s
 				AND late_shipment_email = %d
 				AND shipping_length > %d
 		", 'available_for_pickup', 0, $day ));
 
-		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) || 0 == $count ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) || 0 == $count ) {
 			return;
 		}
 
@@ -145,6 +146,7 @@ class WC_TrackShip_Late_Shipments {
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE 
 				shipment_status NOT LIKE 'delivered'
+				AND shipment_status NOT LIKE 'return_to_sender'
 				AND shipment_status NOT LIKE %s
 				AND late_shipment_email = %d
 				AND shipping_length > %d
@@ -170,7 +172,7 @@ class WC_TrackShip_Late_Shipments {
 	 * Code for send late shipment status email
 	 */
 	public function late_shippment_email_trigger( $orders, $count ) {
-		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
 			return;
 		}
 		$logger = wc_get_logger();
@@ -203,7 +205,7 @@ class WC_TrackShip_Late_Shipments {
 		$email_to = explode( ',', $email_to );
 		$email_send = array();
 		foreach ( $email_to as $email_addr ) {
-			if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+			if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
 				return;
 			}
 			//string replace for '{admin_email}'

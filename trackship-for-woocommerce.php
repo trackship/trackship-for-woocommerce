@@ -2,7 +2,7 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 1.7.6.3
+ * Version: 1.7.6.8
  * Author: TrackShip
  * Author URI: https://trackship.com/
  * License: GPL-2.0+
@@ -10,6 +10,7 @@
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
  * WC tested up to: 8.2.1
+ * Requires Plugins: woocommerce
 */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -23,7 +24,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.7.6.3';
+	public $version = '1.7.6.8';
 	public $plugin_path;
 	public $ts_install;
 	public $ts_actions;
@@ -87,7 +88,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Check if WooCommerce is active
 	 *
-	 * @since  1.0.0
+	 * @since 1.0.0
 	 * @return bool
 	*/
 	private function is_wc_active() {
@@ -106,7 +107,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Display WC active notice
 	 *
-	 * @since  1.0.0
+	 * @since 1.0.0
 	*/
 	public function notice_activate_wc() {
 		?>
@@ -120,7 +121,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Display AST active notice
 	 *
-	 * @since  1.0.0
+	 * @since 1.0.0
 	*/
 	public function notice_activate_ast() {
 		?>
@@ -293,8 +294,8 @@ class Trackship_For_Woocommerce {
 	*
 	* @since 1.0.0
 	*
-	* @param  array  $links List of existing plugin action links.
-	* @return array         List of modified plugin action links.
+	* @param array $links List of existing plugin action links.
+	* @return array List of modified plugin action links.
 	*/
 	public function tsw_plugin_action_links( $links ) {
 		$admin_url = is_trackship_connected() ? admin_url( '/admin.php?page=trackship-for-woocommerce' ) : admin_url( '/admin.php?page=trackship-dashboard' );
@@ -311,7 +312,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Check if Advanced Shipment Tracking for WooCommerce is active
 	 *
-	 * @since  1.0.0
+	 * @since 1.0.0
 	 * @return bool
 	*/
 	public function is_ast_active() {
@@ -332,7 +333,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Check if Shipment Tracking is active
 	 *
-	 * @since  1.0.0
+	 * @since 1.0.0
 	 * @return bool
 	*/
 	public function is_st_active() {
@@ -353,7 +354,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Check if Woo order Tracking is active
 	 *
-	 * @since  1.5.0
+	 * @since 1.5.0
 	 * @return bool
 	*/
 	public function is_active_woo_order_tracking() {
@@ -374,7 +375,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Check if Klaviyo is active
 	 *
-	 * @since  1.6.3
+	 * @since 1.6.3
 	 * @return bool
 	*/
 	public function is_active_klaviyo() {
@@ -396,7 +397,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Check if Yith order Tracking is active
 	 *
-	 * @since  1.5.0
+	 * @since 1.5.0
 	 * @return bool
 	*/
 	public function is_active_yith_order_tracking() {
@@ -489,7 +490,7 @@ add_action( 'before_woocommerce_init', function() {
 /*
 * check trackship is connected
 *
-* @since   1.0.0
+* @since 1.0.0
 *
 * Return @void
 *
@@ -508,7 +509,7 @@ function is_trackship_connected() {
 /*
 * get trackship key
 *
-* @since   1.0
+* @since 1.0
 *
 * Return @void
 *

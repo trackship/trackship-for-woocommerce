@@ -22,7 +22,7 @@ class WC_TrackShip_Front {
 	/**
 	 * Get the class instance
 	 *
-	 * @return WC_Advanced_Shipment_Tracking_Actions
+	 * @return WC_TrackShip_Front
 	*/
 	public static function get_instance() {
 
@@ -40,7 +40,7 @@ class WC_TrackShip_Front {
 		
 		add_shortcode( 'wcast-track-order', array( $this, 'woo_track_order_function') );
 		add_shortcode( 'trackship-track-order', array( $this, 'woo_track_order_function') );
-		add_action( 'wp_enqueue_scripts', array( $this, 'front_styles' ) );		
+		add_action( 'wp_enqueue_scripts', array( $this, 'front_styles' ) );
 		add_action( 'wp_ajax_nopriv_get_tracking_info', array( $this, 'get_tracking_info_fun') );
 		add_action( 'wp_ajax_get_tracking_info', array( $this, 'get_tracking_info_fun') );
 		
@@ -175,7 +175,7 @@ class WC_TrackShip_Front {
 		wp_register_script( 'front-js', trackship_for_woocommerce()->plugin_dir_url() . 'assets/js/front.js', array( 'jquery' ), trackship_for_woocommerce()->version );
 		wp_localize_script( 'front-js', 'zorem_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 		
-		wp_register_style( 'front_style', trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/front.css', array(), trackship_for_woocommerce()->version );		
+		wp_register_style( 'front_style', trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/front.css', array(), trackship_for_woocommerce()->version );
 		
 		$action = isset( $_REQUEST['action'] ) ? sanitize_text_field( $_REQUEST['action'] ) : '';
 		// echo '<pre>';print_r($_REQUEST);echo '</pre>';
@@ -201,8 +201,8 @@ class WC_TrackShip_Front {
 			return;
 		}
 		
-		if ( isset( $_GET['order_id'] ) &&  isset( $_GET['order_key'] ) ) {
-			
+		if ( isset( $_GET['order_id'] ) && isset( $_GET['order_key'] ) ) {
+
 			$order_id = wc_clean($_GET['order_id']);
 			$order = wc_get_order( $order_id );
 			
@@ -348,7 +348,7 @@ class WC_TrackShip_Front {
 		if ( file_exists( $local_template ) && is_writable( $local_template ) ) {	
 			wc_get_template( 'tracking/tracking-form.php', array(), 'trackship-for-woocommerce/', get_stylesheet_directory() . '/woocommerce/' );
 		} else {
-			wc_get_template( 'tracking/tracking-form.php', array(), 'trackship-for-woocommerce/', trackship_for_woocommerce()->get_plugin_path() . '/templates/' );	
+			wc_get_template( 'tracking/tracking-form.php', array(), 'trackship-for-woocommerce/', trackship_for_woocommerce()->get_plugin_path() . '/templates/' );
 		}
 	}
 
@@ -441,7 +441,7 @@ class WC_TrackShip_Front {
 				.trackship_branding, .tracking-detail .heading_panel {
 					border-top: 1px solid <?php echo esc_html( $border_color ); ?> !important;
 				}
-				.col.enhanced_tracking_detail, div.est_delivery_section, div.tracking_widget_tracking_events_section, .enhanced_tracking_detail .enhanced_heading, .enhanced_tracking_detail .enhanced_content, div.last_mile_tracking_number, .enhanced_content .shipping_from_to , .enhanced_content ul.tpi_product_tracking_ul li {
+				.col.enhanced_tracking_detail, .enhanced_tracking_content, .enhanced_tracking_detail .enhanced_heading, .enhanced_tracking_detail .enhanced_content, div.last_mile_tracking_number, .enhanced_content .shipping_from_to , .enhanced_content ul.tpi_product_tracking_ul li {
 					border-color: <?php echo esc_html( $border_color ); ?> !important;
 				}
 			<?php } ?>
@@ -453,7 +453,7 @@ class WC_TrackShip_Front {
 			<?php if ( $font_color ) { ?>
 				body .tracking-detail .shipment-content, body .tracking-detail .shipment-content h4, .shipment-header label.ts_from_label, .shipment_status_heading, .content_panel.shipment_status_notifications span, body .col.enhanced_tracking_detail, body .enhanced_content label, .enhanced_trackship_branding p {
 					color: <?php echo esc_html( $font_color ); ?> !important;
-				}				
+				}
 				.heading_panel span.accordian-arrow, span.accordian-arrow.right {
 					border-color: <?php echo esc_html( $font_color ); ?>;
 				}
@@ -521,7 +521,7 @@ class WC_TrackShip_Front {
 				}
 			}
 			
-			$tracking_destination_detail_org = '';	
+			$tracking_destination_detail_org = '';
 			$trackind_destination_detail_by_status_rev = '';
 			
 			if ( isset( $tracker->tracking_destination_events ) && 'null' != $tracker->tracking_destination_events ) {
@@ -550,13 +550,13 @@ class WC_TrackShip_Front {
 						esc_html_e( $this->tracking_progress_bar( $tracker ) );
 						
 						esc_html_e( $this->layout1_tracking_details( $trackind_detail_by_status_rev, $tracking_details_by_date, $trackind_destination_detail_by_status_rev, $tracking_destination_details_by_date, $tracker , $order_id, $tracking_provider, $tracking_number ) );
-						
+
 						?>
 					</div>
 					<div class="trackship_branding">
 						<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://trackship.com" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
 					</div>
-					<?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
+					<?php if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) { ?>
 						<style> .trackship_branding{display:block !important;} </style>
 					<?php } ?>
 				</div>
@@ -576,7 +576,7 @@ class WC_TrackShip_Front {
 		$url_tracking = str_replace( ' ', '', $url_tracking );
 		$order = wc_get_order( $order_id );
 
-		$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $url_tracking );
+		$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $post_tracking );
 		if ( $tracking_page_link && is_admin() && isset( $_POST['tnumber'] ) ) {
 			?>
 			<p class="ts_enhanced_info">
@@ -587,7 +587,6 @@ class WC_TrackShip_Front {
 					<?php } else { ?>
 						<?php echo esc_html( '#' . $order->get_order_number() ); ?>
 					<?php } ?>
-					|
 				</span>
 				<span ><?php esc_html_e( 'Copy Tracking page link', 'trackship-for-woocommerce' ); ?></span>
 				<span class="copy_tracking_page trackship-tip" title="Copy the secure link to the Tracking page" data-tracking_page_link=<?php echo esc_url( $tracking_page_link ); ?> >
@@ -622,7 +621,7 @@ class WC_TrackShip_Front {
 			<div class="enhanced_trackship_branding">
 				<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://trackship.com/" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
 			</div>
-			<?php if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
+			<?php if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) { ?>
 				<style> .enhanced_trackship_branding{display:block !important;} </style>
 			<?php } ?>
 			<?php
@@ -654,7 +653,7 @@ class WC_TrackShip_Front {
 			<div class="est_delivery_section">
 				<span class="est-delivery-date <?php echo esc_html($row->shipment_status); ?>">
 					<?php 'delivered' != $row->shipment_status ? esc_html_e( 'Est. Delivery Date', 'trackship-for-woocommerce' ) : esc_html_e( 'Delivered on', 'trackship-for-woocommerce' ); ?> : 
-					<strong><?php esc_html_e( date_i18n( 'l, M d', strtotime( $row->est_delivery_date ) ) ); ?></strong>
+					<strong><?php esc_html_e( date_i18n( apply_filters( 'est_delivery_date_format', 'l, M d' ), strtotime( $row->est_delivery_date ) ) ); ?></strong>
 				</span>
 				<?php
 				if ( $event_count > 1 ) {
@@ -671,7 +670,7 @@ class WC_TrackShip_Front {
 		$trackind_detail_by_status_rev = [];
 		if ( isset( $row->tracking_events ) && 'null' != $row->tracking_events ) {
 			$tracking_detail_org = json_decode($row->tracking_events);
-			$trackind_detail_by_status_rev = is_array($tracking_detail_org) ? array_reverse($tracking_detail_org) : array();	
+			$trackind_detail_by_status_rev = is_array($tracking_detail_org) ? array_reverse($tracking_detail_org) : array();
 		}
 
 		$tracking_destination_detail_org = '';	
@@ -701,7 +700,7 @@ class WC_TrackShip_Front {
 			<input id="enhanced_overview_<?php echo esc_html($num); ?>" data-type="overview" data-number="shipment_<?php echo esc_html($num); ?>" type="radio" name="enhanced_switch_<?php echo esc_html($num); ?>" class="enhanced_switch_input" checked >
 			<label for="enhanced_overview_<?php echo esc_html($num); ?>" class="enhanced_switch"><?php esc_html_e('Overview', 'trackship-for-woocommerce' ); ?></label>
 
-			<input id="enhanced_journey_<?php echo esc_html($num); ?>" data-type="journey" data-number="shipment_<?php echo esc_html($num); ?>" type="radio" name="enhanced_switch_<?php echo esc_html($num); ?>" class="enhanced_switch_input"  >
+			<input id="enhanced_journey_<?php echo esc_html($num); ?>" data-type="journey" data-number="shipment_<?php echo esc_html($num); ?>" type="radio" name="enhanced_switch_<?php echo esc_html($num); ?>" class="enhanced_switch_input" >
 			<label for="enhanced_journey_<?php echo esc_html($num); ?>" class="enhanced_switch"><?php esc_html_e('Journey', 'trackship-for-woocommerce' ); ?></label>
 		</span>
 		<?php

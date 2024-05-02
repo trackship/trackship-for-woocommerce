@@ -74,7 +74,7 @@ jQuery(document).on("submit", ".order_track_form", function(){
 				warning_msg = 'Uncaught Error.\n' + jqXHR.responseText;
 			}
 			jQuery(".track_fail_msg ").show();
-            jQuery(".track_fail_msg ").text(warning_msg);
+			jQuery(".track_fail_msg ").text(warning_msg);
 			jQuery(".search_order_form").ts_stop_loader();
 		}
 	});
@@ -128,12 +128,12 @@ function hideerror(element){
 jQuery(document).on("click", ".open_tracking_lightbox", function(){	
 	
 	jQuery(".tracking_info,.my_account_tracking,.fluid_section").block({
-    message: null,
+	message: null,
 		overlayCSS: {
 			background: "#fff",
 			opacity: .6
 		}	
-    });
+	});
 	
 	
 	var order_id = jQuery(this).data('order');
@@ -233,7 +233,15 @@ jQuery(document).on("change", ".tracking_details_switch .enhanced_switch_input",
 	}
 });
 //If we will do change into below jQuery so we need to also change in trackship.js and front.js
+jQuery(document).on("click", ".enhanced_tracking_detail .tracking_number_wrap .tracking_number_div a", function () {
+	jQuery(this).addClass('clicked');
+});
+//If we will do change into below jQuery so we need to also change in trackship.js and front.js
 jQuery(document).on("click", ".enhanced_tracking_detail .tracking_number_wrap", function () {
+	if (jQuery('.enhanced_tracking_detail .tracking_number_wrap .tracking_number_div a').hasClass('clicked')) {
+		jQuery('.enhanced_tracking_detail .tracking_number_wrap .tracking_number_div a').removeClass('clicked');
+		return;
+	}
 	if (jQuery(this).hasClass('active')) {
 		jQuery(this).removeClass('active');
 		jQuery(this).find('.accordian-arrow').removeClass('ts-down').addClass('ts-right');

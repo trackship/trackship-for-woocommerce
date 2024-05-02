@@ -7,7 +7,6 @@
 			$("#wc_trackship_form").on('click', '.woocommerce-save-button', this.save_trackship_form);
 			$("#trackship_tracking_page_form").on('click', '.woocommerce-save-button', this.save_tracking_page_form);
 			$("#trackship_mapping_form").on('click', '.woocommerce-save-button', this.save_trackship_mapping_form);
-			$("#delivery_automation_form").on('click', '.woocommerce-save-button', this.save_delivery_automation_form);
 			$("#trackship_late_shipments_form").on('click', '.woocommerce-save-button', this.save_trackship_late_shipments_form);
 			$(".tipTip").tipTip();
 
@@ -76,27 +75,6 @@
 			return false;
 		},
 
-		save_delivery_automation_form: function (event) {
-			event.preventDefault();
-
-			$("#delivery_automation_form").find(".heading_panel .spinner").addClass("active");
-			var ajax_data = $("#delivery_automation_form").serialize();
-
-			$.post(ajaxurl, ajax_data)
-			.done(function (response) {
-				$("#delivery_automation_form").find(".spinner").removeClass("active");
-				$(document).trackship_snackbar(trackship_script.i18n.data_saved);
-				jQuery('.heading_panel').removeClass('active');
-				jQuery('.heading_panel').siblings('.panel_content').removeClass('active').slideUp('slow');
-				jQuery('.heading_panel').find('span.dashicons').addClass('dashicons-arrow-right-alt2');
-				jQuery('.heading_panel').find('button.button-primary').hide();
-			})
-			.fail(function (response, jqXHR, exception) {
-				trackship_js_error(response, jqXHR, exception);
-			});
-			return false;
-		},
-
 		save_trackship_late_shipments_form: function (event) {
 			event.preventDefault();
 			var email_address = jQuery('#late_shipments_email_to').val();
@@ -129,20 +107,10 @@
 })(jQuery, trackship_script, wp, ajaxurl);
 
 jQuery(document).ready(function () {
-
 	jQuery(".trackship-tip").tipTip();
 	jQuery(".ts-custom-tool-tip").tipTip({
 		defaultPosition: "left",
 	});
-	
-	if (jQuery.fn.wpColorPicker) {
-		jQuery('#wc_ast_status_label_color').wpColorPicker({
-			change: function (e, ui) {
-				var color = ui.color.toString();
-				jQuery('.ts4wc_delivered_color .order-label.wc-delivered').css('background', color);
-			},
-		});
-	}
 });
 
 var getUrlParameter = function getUrlParameter(sParam) {
@@ -202,11 +170,6 @@ jQuery(document).on("click", ".ts_notifications_outer_table .inner_tab_input", f
 	jQuery(window).trigger('resize');
 });
 
-jQuery(document).on("click", "#wc_ast_status_label_font_color", function () {
-	var value = jQuery('#wc_ast_status_label_font_color').val();
-	jQuery(".order-label.wc-delivered").css("color", value);
-});
-
 jQuery(document).on("change", ".ts_delivered_order_status_toggle", function () {
 	if (jQuery(this).prop("checked") == true) {
 		jQuery('.status-label-li').show();
@@ -259,7 +222,7 @@ jQuery(document).on("change", ".shipment_status_toggle input", function () {
 
 	var settings_data = jQuery(this).data("settings");
 	if ( jQuery.inArray( settings_data, [ "late_shipments_email_settings", "exception_admin_email", "on_hold_admin_email" ] ) !== -1 ) {
-		if ( jQuery.inArray( shipments_script.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+		if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan"] ) !== -1 ) {
 			jQuery("#free_user_popup").show();
 			return;
 		}
@@ -354,40 +317,32 @@ jQuery(document).on("change", ".ts_integration_checkbox input", function () {
 
 jQuery(document).on("click", ".admin_notifications_tr", function (event) {
 
-	if ( jQuery.inArray( shipments_script.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+	if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan"] ) !== -1 ) {
 		jQuery("#free_user_popup").show();
 		return;
 	}
 
-    var $trigger = jQuery(".shipment_status_toggle");
-    if ($trigger !== event.target && !$trigger.has(event.target).length) {
-        var parent = jQuery(this).closest('.admin_notifications_div');
-        if (jQuery(this).hasClass("open")) {
-            parent.find(".admin_notifiations_content").slideUp('slow');
-            jQuery(this).removeClass('open');
-        } else {
-            jQuery('.admin_notifications_tr').removeClass('open');
-            jQuery('.admin_notifiations_content').slideUp('slow');
-            parent.find(".admin_notifiations_content").slideDown('slow');
-            jQuery(this).addClass('open');
-        }
-    }
-});
-
-jQuery(document).on("change", ".ts_order_status_toggle", function () {
-	if (jQuery(this).prop("checked") == true) {
-		jQuery('.ts4wc_delivered_color').fadeIn();
-	} else {
-		jQuery('.ts4wc_delivered_color').fadeOut();
+	var $trigger = jQuery(".shipment_status_toggle");
+	if ($trigger !== event.target && !$trigger.has(event.target).length) {
+		var parent = jQuery(this).closest('.admin_notifications_div');
+		if (jQuery(this).hasClass("open")) {
+			parent.find(".admin_notifiations_content").slideUp('slow');
+			jQuery(this).removeClass('open');
+		} else {
+			jQuery('.admin_notifications_tr').removeClass('open');
+			jQuery('.admin_notifiations_content').slideUp('slow');
+			parent.find(".admin_notifiations_content").slideDown('slow');
+			jQuery(this).addClass('open');
+		}
 	}
 });
 
-jQuery(document).on("change", "#wc_ast_use_tracking_page", function () {
+jQuery(document).on("change", "#ts_tracking_page", function () {
 	'use strict';
 	if (jQuery(this).prop("checked") == true) {
-		jQuery('.li_wc_ast_trackship_page_id').fadeIn();
+		jQuery('.li_tracking_page_id').fadeIn();
 	} else {
-		jQuery('.li_wc_ast_trackship_page_id').fadeOut();
+		jQuery('.li_tracking_page_id').fadeOut();
 	}
 });
 
@@ -404,7 +359,7 @@ jQuery(document).on("change", "#smswoo_sms_provider", function () {
 jQuery(document).ready(function () {
 	'use strict';
 	jQuery("#smswoo_sms_provider").trigger("change");
-	jQuery("#wc_ast_use_tracking_page").trigger("change");
+	jQuery("#ts_tracking_page").trigger("change");
 	jQuery(".ts_order_status_toggle").trigger("change");
 });
 
@@ -462,10 +417,10 @@ function trackship_js_error(response, jqXHR, exception) {
 /*
 * save tracking page form
 */
-jQuery(document).on("change", "#wc_ast_trackship_page_id", function () {
+jQuery(document).on("change", "#tracking_page_id", function () {
 	'use strict';
-	var wc_ast_trackship_page_id = jQuery(this).val();
-	if (wc_ast_trackship_page_id === 'other') {
+	var tracking_page_id = jQuery(this).val();
+	if (tracking_page_id === 'other') {
 		jQuery('.trackship_other_page_fieldset').show();
 	} else {
 		jQuery('.trackship_other_page_fieldset').hide();
@@ -542,7 +497,6 @@ jQuery(document).on("click", ".metabox_get_shipment_status", function () {
 			}
 		},
 		error: function (jqXHR, exception) {
-			
 		}
 	});
 });
@@ -748,9 +702,8 @@ jQuery(document).on('click', '.inner_tab_section .heading_panel.section_sms_head
 		jQuery('.heading_panel.section_sms_heading').find( 'button' ).attr('disabled', true);
 		jQuery('.panel_content.section_sms_content').find( 'select, input' ).attr('disabled', true);
 		jQuery('.panel_content.section_sms_content .outer_form_table').addClass('smswoo_active');
-	} else if ( jQuery.inArray( shipments_script.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+	} else if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan"] ) !== -1) {
 		jQuery('.panel_content.section_sms_content').find( 'select, input' ).attr('disabled', true);
-		jQuery('.panel_content.section_sms_content .outer_form_table').addClass('free_user');
 	}
 });
 
@@ -844,7 +797,15 @@ jQuery(document).on("change", ".tracking_details_switch .enhanced_switch_input",
 	}
 });
 //If we will do change into below jQuery so we need to also change in trackship.js and front.js
+jQuery(document).on("click", ".enhanced_tracking_detail .tracking_number_wrap .tracking_number_div a", function () {
+	jQuery(this).addClass('clicked');
+});
+//If we will do change into below jQuery so we need to also change in trackship.js and front.js
 jQuery(document).on("click", ".enhanced_tracking_detail .tracking_number_wrap", function () {
+	if (jQuery('.enhanced_tracking_detail .tracking_number_wrap .tracking_number_div a').hasClass('clicked')) {
+		jQuery('.enhanced_tracking_detail .tracking_number_wrap .tracking_number_div a').removeClass('clicked');
+		return;
+	}
 	if (jQuery(this).hasClass('active')) {
 		jQuery(this).removeClass('active');
 		jQuery(this).find('.accordian-arrow').removeClass('ts-down').addClass('ts-right');

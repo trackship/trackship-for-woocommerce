@@ -52,7 +52,7 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 	/**
 	 * Set namespace
 	 *
-	 * @return WC_Advanced_Shipment_Tracking_REST_API_Controller
+	 * @return wc/v3
 	 */
 	public function set_namespace( $namespace ) {
 		$this->namespace = $namespace;

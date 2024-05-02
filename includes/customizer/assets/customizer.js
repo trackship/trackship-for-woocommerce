@@ -238,7 +238,7 @@ jQuery(document).on("change", "#email_trackship_branding, #show_trackship_brandi
 		jQuery("#tracking_widget_privew").contents().find( '.trackship_branding, .enhanced_trackship_branding' ).show();
 		jQuery("#email_trackship_branding, #show_trackship_branding").prop('checked', true);
 	} else {
-		if ( jQuery.inArray( trackship_customizer.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+		if ( jQuery.inArray( trackship_customizer.user_plan, ["Free 50", "No active plan"] ) !== -1 ) {
 			jQuery("#tracking_widget_privew").contents().find( '.trackship_branding, .enhanced_trackship_branding' ).show();
 		} else {
 			jQuery("#tracking_widget_privew").contents().find( '.trackship_branding, .enhanced_trackship_branding' ).hide();
@@ -504,7 +504,7 @@ jQuery('#tracking_page_type').on("change", function(){
 	if ( 'modern' == type ) {
 		jQuery("#tracking_widget_privew").contents().find('body .preview_enhanced_tracking_widget' ).show();
 		jQuery("#tracking_widget_privew").contents().find('body .tracking-detail.col' ).hide();
-		if ( jQuery.inArray( trackship_customizer.user_plan, ["Free Trial", "Free 50", "No active plan"] ) == 1 ) {
+		if ( jQuery.inArray( trackship_customizer.user_plan, ["Free 50", "No active plan"] ) !== -1 ) {
 			jQuery("#tracking_widget_privew").contents().find( '.enhanced_trackship_branding' ).show();
 		}
 		jQuery('.ts_tracking_events').parents('.zoremmail-menu.zoremmail-menu-inline').hide();

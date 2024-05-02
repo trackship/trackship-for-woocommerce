@@ -540,7 +540,7 @@ class TSWC_SMSWoo_Admin {
 			'in_transit'			=> __( 'In Transit', 'trackship-for-woocommerce' ),
 			'available_for_pickup'	=> __( 'Available For Pickup', 'trackship-for-woocommerce' ),
 			'out_for_delivery'		=> __( 'Out For Delivery', 'trackship-for-woocommerce' ),
-			'failure'				=> __( 'Failed Attempt', 'trackship-for-woocommerce' ),
+			'failure'				=> __( 'Delivery Failure', 'trackship-for-woocommerce' ),
 			'on_hold'				=> __( 'On Hold', 'trackship-for-woocommerce' ),
 			'exception'				=> __( 'Exception', 'trackship-for-woocommerce' ),
 			'return_to_sender'		=> __( 'Return To Sender', 'trackship-for-woocommerce' ),
