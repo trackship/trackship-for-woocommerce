@@ -18,7 +18,7 @@ class WC_TrackShip_Exception_Shipments {
 	 * Get the class instance
 	 *
 	 * @since  1.0
-	 * @return smswoo_license
+	 * @return WC_TrackShip_Exception_Shipments
 	*/
 	public static function get_instance() {
 		if ( null === self::$instance ) {
@@ -110,7 +110,7 @@ class WC_TrackShip_Exception_Shipments {
 	 */
 	public function send_exception_shipments_email() {
 		
-		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
 			$logger = wc_get_logger();
 			$context = array( 'source' => 'trackship' );
 			$logger->info( 'Exception Shipments email not sent. Upgrade your plan', $context );
@@ -128,7 +128,7 @@ class WC_TrackShip_Exception_Shipments {
 				AND exception_email = %d
 		", 0 ));
 
-		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) || 0 == $count ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) || 0 == $count ) {
 			return;
 		}
 
@@ -161,7 +161,7 @@ class WC_TrackShip_Exception_Shipments {
 	 * Code for send exception shipment status email
 	 */
 	public function exception_shippment_email_trigger( $orders, $count ) {
-		if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
 			return;
 		}
 		$logger = wc_get_logger();
@@ -194,7 +194,7 @@ class WC_TrackShip_Exception_Shipments {
 		$email_to = explode( ',', $email_to );
 		$email_send = array();
 		foreach ( $email_to as $email_addr ) {
-			if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+			if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
 				return;
 			}
 			//string replace for '{admin_email}'

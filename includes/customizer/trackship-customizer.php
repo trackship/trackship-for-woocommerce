@@ -213,7 +213,7 @@ class TS4WC_Admin_Customizer {
 			'in_transit'			=> esc_html__( 'In Transit', 'trackship-for-woocommerce' ),
 			'available_for_pickup'	=> esc_html__( 'Available For Pickup', 'trackship-for-woocommerce' ),
 			'out_for_delivery'		=> esc_html__( 'Out For Delivery', 'trackship-for-woocommerce' ),
-			'failure'				=> esc_html__( 'Failed Attempt', 'trackship-for-woocommerce' ),
+			'failure'				=> esc_html__( 'Delivery Failure', 'trackship-for-woocommerce' ),
 			'on_hold'				=> esc_html__( 'On Hold', 'trackship-for-woocommerce' ),
 			'exception'				=> esc_html__( 'Exception', 'trackship-for-woocommerce' ),
 			'return_to_sender'		=> esc_html__( 'Return To Sender', 'trackship-for-woocommerce' ),
@@ -252,7 +252,7 @@ class TS4WC_Admin_Customizer {
 		$name = 'intransit' == $status ? 'In transit' : $name;
 		$name = 'availableforpickup' == $status ? 'Available For Pickup' : $name;
 		$name = 'outfordelivery' == $status ? 'Out For Delivery' : $name;
-		$name = 'failure' == $status ? 'Failed Attempt' : $name;
+		$name = 'failure' == $status ? 'Delivery Failure' : $name;
 		$name = 'onhold' == $status ? 'On hold' : $name;
 		$name = 'exception' == $status ? 'Exception' : $name;
 		$name = 'returntosender' == $status ? 'Return To Sender' : $name;
@@ -732,7 +732,7 @@ class TS4WC_Admin_Customizer {
 				'option_name'=> 'shipment_email_settings',
 				'option_type'=> 'array',
 				'required' 	=> 'pro',
-				'plan'		=> in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ),
+				'plan'		=> in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ),
 			),
 			// Tracking widget form sections from below
 			'heading7'	=> array(
@@ -818,7 +818,7 @@ class TS4WC_Admin_Customizer {
 				'in_transit' => __( 'In Transit', 'trackship-for-woocommerce' ),
 				'available_for_pickup' => __( 'Available For Pickup', 'trackship-for-woocommerce' ),
 				'out_for_delivery' => __( 'Out For Delivery', 'trackship-for-woocommerce' ),
-				'failure' => __( 'Failed Attempt', 'trackship-for-woocommerce' ),
+				'failure' => __( 'Delivery Failure', 'trackship-for-woocommerce' ),
 				'on_hold' => __( 'On Hold', 'trackship-for-woocommerce' ),
 				'exception' => __( 'Exception', 'trackship-for-woocommerce' ),
 				'return_to_sender' => __( 'Return To Sender', 'trackship-for-woocommerce' ),
@@ -969,7 +969,7 @@ class TS4WC_Admin_Customizer {
 			'show'		=> true,
 			'class'		=> '',
 			'required' 	=> 'pro',
-			'plan'		=> in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ),
+			'plan'		=> in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ),
 		);
 		// $settings[ 'shipping_provider_logo' ] = array(
 		// 	'title'		=> esc_html__( 'Display Shipping provider logo', 'trackship-for-woocommerce' ),
@@ -1374,8 +1374,8 @@ class TS4WC_Admin_Customizer {
 			foreach ( $settings as $key => $val ) {
 				if ( isset( $val['type'] ) && 'textarea' == $val['type'] ) {
 					$option_data = get_option( $val['option_name'], array() );
-					// $option_data[$key] = htmlentities( wp_unslash( $_POST[$key] ) );
-					$option_data[$key] = wp_unslash( sanitize_textarea_field( $_POST[$key] ) );
+					$option_data[$key] = htmlentities( wp_unslash( $_POST[$key] ) );
+					// $option_data[$key] = wp_unslash( sanitize_textarea_field( $_POST[$key] ) );
 					update_option( $val['option_name'], $option_data );
 				} elseif ( isset( $val['option_type'] ) && 'key' == $val['option_type'] ) {
 					update_option( $val['option_name'], wc_clean( $_POST[ $val['option_name'] ] ) );

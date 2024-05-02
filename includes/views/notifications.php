@@ -9,7 +9,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	$tab_type = isset( $_GET['tab'] ) ? sanitize_text_field($_GET['tab']) : '';	
 	
 	$ts_notifications = $this->trackship_shipment_status_notifications_data();
-	$plan_class = in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? 'free_user' : '' ;
 	?>
 	<div class="trackship_tab_name" style="margin-top: -10px;">
 		<input id="tab_email_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-tab="email-notification" data-type="email" <?php echo 'checked'; ?> >
@@ -30,11 +29,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php $ast_enable_email = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( $val['option_name'], $val['enable_status_name'], ''); ?>
 					<tr class="<?php echo 1 == $ast_enable_email ? 'enable' : 'disable'; ?> ">
 						<td class="forminp status-label-column">
-							<?php $image_name = in_array( $val['slug'], array( 'failed-attempt', 'exception' ) ) ? 'failure' : $val['slug']; ?>
-							<?php $image_name = 'delivered-status' == $image_name ? 'delivered' : $image_name; ?>
-							<?php $image_name = 'pickup-reminder' == $image_name ? 'available-for-pickup' : $image_name; ?>
-							<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/<?php echo esc_html( $image_name ); ?>.png">
-							<strong class="shipment-status-label <?php echo esc_html( $val['slug'] ); ?>"><?php echo esc_html( $val['title'] ); ?></strong>
+							<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/<?php echo esc_html( $val['img_slug'] ); ?>.png">
+							<strong class="shipment-status-label"><?php echo esc_html( $val['title'] ); ?></strong>
 							<?php if ( 'delivered' == $key ) { ?>
 								<label for="all-shipment-status-<?php echo esc_html( $key ); ?>">
 									<input type="hidden" name="all-shipment-status-<?php echo esc_html( $key ); ?>" value="no">
@@ -60,7 +56,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php do_action( 'after_shipment_status_email_notifications' ); ?>
 	</section>
 	<section class="inner_tab_section shipment-status-late-email-section">
-		<form method="post" id="trackship_late_shipments_form" class="<?php echo esc_html($plan_class); ?>" action="" enctype="multipart/form-data">
+		<form method="post" id="trackship_late_shipments_form" action="" enctype="multipart/form-data">
 			<?php wp_nonce_field( 'ts_late_shipments_email_form', 'ts_late_shipments_email_form_nonce' ); ?>
 			<input type="hidden" name="action" value="ts_late_shipments_email_form_update">
 			<div class="admin_notifications_div">
@@ -148,8 +144,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 		</form>
 	</section>
-	<section class="inner_tab_section shipment-status-sms-section <?php echo !function_exists( 'SMSWOO' ) && $plan_class ? esc_html($plan_class) : ''; ?>">
-		<?php if ( ! function_exists( 'SMSWOO' ) && in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
+	<section class="inner_tab_section shipment-status-sms-section">
+		<?php if ( ! function_exists( 'SMSWOO' ) && in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) { ?>
 			<input type="hidden" class="disable_pro" name="disable_pro" value="disable_pro">
 		<?php } ?>
 		<?php do_action( 'shipment_status_sms_section' ); ?>

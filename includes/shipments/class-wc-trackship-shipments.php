@@ -27,7 +27,7 @@ class WC_Trackship_Shipments {
 	/**
 	 * Get the class instance
 	 *
-	 * @return WC_Advanced_Shipment_Tracking_Admin
+	 * @return WC_Trackship_Shipments
 	*/
 	public static function get_instance() {
 
@@ -251,9 +251,13 @@ class WC_Trackship_Shipments {
 		exit;
 	}
 
+	/*
+	* get flag icon
+	* return flag icon HTML
+	*/
 	public function get_flag_icon( $country_code ) {
 		$country_name = WC()->countries->countries[ $country_code ] ? WC()->countries->countries[ $country_code ] : $country_code;
-		return '<div class="shipment_country"><img class="country_flag" src="http://purecatamphetamine.github.io/country-flag-icons/3x2/' . $country_code . '.svg"><span class="trackship-tip" title="' . $country_name . '">' . $country_name . '</span></div>';
+		return '<div class="shipment_country"><img class="country_flag" src="https://trackship.github.io/country-flag/3x2/' . $country_code . '.svg"><span class="trackship-tip" title="' . $country_name . '">' . $country_name . '</span></div>';
 	}
 
 	/*

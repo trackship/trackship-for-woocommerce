@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( !get_trackship_settings( 'wc_admin_notice', '') ) {
-	if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+	if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
 		trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_pro();
 	}
 	trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_review();
@@ -29,13 +29,15 @@ if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipme
 
 $late_ship_day = get_trackship_settings( 'late_shipments_days', 7);
 $days = $late_ship_day - 1 ;
+$from_date = date('Y-m-d', strtotime('-30 days'));
 
 $results = $wpdb->get_row($wpdb->prepare("
 SELECT
 	SUM( IF( shipping_length > %1d, 1, 0 ) ) as late_shipment,
 	SUM( IF(shipment_status NOT IN ( '%2s', '%3s', '%4s', '%5s', '%6s', '%7s', '%8s' ) OR pending_status IS NOT NULL, 1, 0) ) as tracking_issues,
 	SUM( IF( shipment_status LIKE '%9s', 1, 0 ) ) as return_to_sender_shipment
-FROM {$wpdb->prefix}trackship_shipment", $days, 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup', 'return_to_sender' ), ARRAY_A);
+FROM {$wpdb->prefix}trackship_shipment
+WHERE shipping_date >= %s", $days, 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup', 'return_to_sender', $from_date ), ARRAY_A);
 
 $late_shipment = $results['late_shipment'];
 $tracking_issues = $results['tracking_issues'];
@@ -47,20 +49,16 @@ $last_60 = gmdate('Y-m-d 00:00:00', strtotime( 'today - 59 days' ) );
 
 $action_needed = array(
 	'late_shipment' => array(
-		'title' => __( 'Late Shipments', 'trackship-for-woocommerce' ),
+		'title' => __( 'Late Shipments for last 30 days', 'trackship-for-woocommerce' ),
 		'count' => $late_shipment,
 	),
 	'tracking_issues' => array(
-		'title' => __( 'Tracking Issues', 'trackship-for-woocommerce' ),
+		'title' => __( 'Tracking Issues for last 30 days', 'trackship-for-woocommerce' ),
 		'count' => $tracking_issues,
 	),
 	'return_to_sender' => array(
-		'title' => __( 'Return To Sender', 'trackship-for-woocommerce' ),
+		'title' => __( 'Return To Sender for last 30 days', 'trackship-for-woocommerce' ),
 		'count' => $return_to_sender_shipment,
-	),
-	'no_action_needed' => array(
-		'title' => __( 'No action needed for Shipments', 'trackship-for-woocommerce' ),
-		'count' => '',
 	),
 );
 $first_line = array(
@@ -98,30 +96,21 @@ $array = array(
 		'class' => 'not_show',
 	),
 );
-$url = 'https://my.trackship.com/api/user-plan/get/';
-$args[ 'body' ] = array(
-	'user_key' => get_trackship_key(), // Deprecated since 19-Aug-2022
-);
-$args['headers'] = array(
-	'trackship-api-key' => get_trackship_key()
-);
+$url = 'https://api.trackship.com/v1/user-plan/get';
+$args['body'] = json_encode( [ 'user_key' => get_trackship_key() ] );
 $response = wp_remote_post( $url, $args );
-if ( is_wp_error( $response ) ) {
-	$plan_data = array();
-} else {
-	$plan_data = json_decode( $response[ 'body' ] );
-}
+$plan_data = is_wp_error( $response ) ? [] : json_decode( $response[ 'body' ] );
 $current_plan = $plan_data->subscription_plan;
 $current_balance = $plan_data->tracker_balance;
 update_option( 'user_plan', $current_plan );
 update_option( 'trackers_balance', $current_balance );
 $nonce = wp_create_nonce( 'ts_tools');
-$store_text = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? __( 'Upgrade to Pro', 'trackship-for-woocommerce' ) : __( 'Account Dashboard', 'trackship-for-woocommerce' );
-$store_url = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? 'https://my.trackship.com/settings/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=upgrade#billing' : 'https://my.trackship.com/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=dashboard';
+$store_text = in_array( $current_plan, array( 'Free 50', 'No active plan' ) ) ? __( 'Upgrade to Pro', 'trackship-for-woocommerce' ) : __( 'Account Dashboard', 'trackship-for-woocommerce' );
+$store_url = in_array( $current_plan, array( 'Free 50', 'No active plan' ) ) ? 'https://my.trackship.com/settings/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=upgrade#billing' : 'https://my.trackship.com/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=dashboard';
 ?>
 <input type="hidden" id="ts_tools" name="ts_tools" value="<?php echo esc_attr( $nonce ); ?>" />
 <input class="dashboard_hidden_field" type="hidden" value="<?php echo esc_html($current_plan); ?>">
-<?php if ( in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) { ?>
+<?php if ( in_array( $current_plan, array( 'Free 50', 'No active plan' ) ) ) { ?>
 	<div class="ts_upgrade_notice">
 		<div>
 			<span class="ts_upgrade_msg"><?php esc_html_e( 'Access the PRO benefits of TrackShip: monitor TrackShip shipments, receive SMS notifications, enjoy priority support, utilize the Shipments Dashboard, and experience much more.', 'trackship-for-woocommerce' ); ?></span>
@@ -183,7 +172,7 @@ $store_url = in_array( $current_plan, array( 'Free Trial', 'Free 50', 'No active
 					<?php if ( $value['count'] > 0 ) { ?>
 						<tr onclick="window.location='<?php echo esc_url( admin_url( 'admin.php?page=trackship-shipments&status=' . $key ) ); ?>';">
 							<td>
-								<label><?php echo esc_html( $value['title'] ); ?> (<?php echo esc_html( $value['count'] ); ?>)</label>
+								<label><?php echo esc_html( $value['count'] ); ?> <?php echo esc_html( $value['title'] ); ?></label>
 								<span class="dashicons dashicons-arrow-right-alt2"></span>
 							</td>
 						</tr>

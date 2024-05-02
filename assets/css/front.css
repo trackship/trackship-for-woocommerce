@@ -216,7 +216,7 @@ div.shipment-header {
 	background: #c1c1c1;
 	display: inline-block;
 	position: absolute;
-	left: -37px;
+	left: -36px;
 	width: 9px;
 	height: 100%;
 	z-index: 0;
@@ -294,7 +294,7 @@ div.shipment-header {
 .heading_shipment_status.return_to_sender:before {
 	background-image: url(icons/return-to-sender.png);
 }
-/* Exception, Failed Attempt(failure) */
+/* Exception, Delivery Failure(failure) */
 .heading_shipment_status.exception, .heading_shipment_status.failure {
 	color: #cd2128;
 }
@@ -508,10 +508,10 @@ div.shipment-header {
 }
 .est_delivery_section {
 	padding: 20px;
-	border-top: 1px solid #e0e0e0;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	padding-bottom: 0;
 }
 .est_delivery_section span.est-delivery-date {
 	background: #4caf5080;
@@ -544,9 +544,9 @@ div.shipment-header {
 }
 span.tracking_details_switch {
 	background: #e0e0e0;
-	padding: 7px 10px;
+	padding: 3px;
 	font-size: 15px;
-	border-radius: 5px;
+	border-radius: 6px;
 	float: right;
 	z-index: 2;
 	position: relative;
@@ -555,20 +555,21 @@ span.tracking_details_switch {
 	display: none;
 }
 .tracking_details_switch label.enhanced_switch {
-	padding: 2px 11px;
+	padding: 6px 16px;
 	display: inline-block;
 	font-weight: 600;
 	cursor: pointer;
 	margin: 0;
 	border-radius: 5px;
 	font-size: 13px;
+	background-color: transparent;
+	transition: background-color 0.75s ease;
 }
 .tracking_details_switch .enhanced_switch_input:checked + label {
 	background: #fff;
 }
 .tracking_widget_tracking_events_section {
 	padding: 20px 20px 0;
-	border-top: 1px solid #e0e0e0;
 }
 ul.timeline {
 	list-style: none!important;
@@ -683,6 +684,7 @@ ul.timeline > li > p {
 }
 .enhanced_tracking_content {
 	display: none;
+	border-top: 1px solid #e0e0e0;
 }
 .enhanced_tracking_detail .enhanced_heading {
 	padding: 28px 20px;
@@ -764,6 +766,27 @@ div.last_mile_tracking_number {
 .rtl ul.timeline > li {
 	padding-right: 30px;
 	padding-left: 0;
+}
+.rtl .enhanced_tracking_detail .provider_image_div {
+	margin: 0 0 0 10px;
+}
+.rtl .tracking_number_wrap .accordian-arrow {
+	margin-right: auto;
+	margin-left: 0;
+}
+.rtl .tracking_widget_tracking_events_section .tracking_detail {
+	margin-left: 0;
+	margin-right: 50px;
+}
+.rtl .tracking_widget_tracking_events_section .tracking_detail::before {
+	right: -36px;
+}
+.rtl .enhanced_tracking_detail .accordian-arrow {
+	float: left;
+}
+.rtl .heading_shipment_status:before {
+	margin-right: 0;
+	margin-left: 5px;
 }
 /*** END OF RTL CSS ***/
 .tracking-detail .est-delivery-date {

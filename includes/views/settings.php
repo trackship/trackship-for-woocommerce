@@ -3,26 +3,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( !get_trackship_settings( 'wc_admin_notice', '') ) {
-	if ( in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) {
+	if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
 		trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_pro();
 	}
 	trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_review();
 	update_trackship_settings( 'wc_admin_notice', 'true');
 }
 
-$url = 'https://my.trackship.com/api/user-plan/get/';
-$args[ 'body' ] = array(
-	'user_key' => get_trackship_key(), // Deprecated since 19-Aug-2022
-);
-$args['headers'] = array(
-	'trackship-api-key' => get_trackship_key()
-);
+$url = 'https://api.trackship.com/v1/user-plan/get';
+$args['body'] = json_encode( [ 'user_key' => get_trackship_key() ] );
 $response = wp_remote_post( $url, $args );
-if ( is_wp_error( $response ) ) {
-	$plan_data = array();
-} else {
-	$plan_data = json_decode( $response[ 'body' ] );
-}
+$plan_data = is_wp_error( $response ) ? [] : json_decode( $response[ 'body' ] );
+
 update_option( 'user_plan', $plan_data->subscription_plan );
 if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocommerce/zorem-sms-for-woocommerce.php' ) ) {
 	?>
@@ -59,7 +51,6 @@ $section = isset( $_GET['section'] ) ? sanitize_text_field( $_GET['section'] ) :
 			</div>
 		</div>
 	</form>
-	<?php include __DIR__ . '/delivery-automation.php'; ?>
 	<?php include __DIR__ . '/tracking-page.php'; ?>
 	<?php do_action( 'after_trackship_settings' ); ?>
 	<?php include __DIR__ . '/map-providers.php'; ?>

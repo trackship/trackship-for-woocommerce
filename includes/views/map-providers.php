@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="d_table">		
 	<form method="post" id="trackship_mapping_form" action="" enctype="multipart/form-data">
 		<div class="heading_panel section_mapping_heading">
-			<strong><?php esc_html_e( 'Map Shipping Providers', 'trackship-for-woocommerce' ); ?></strong>
+			<strong><?php esc_html_e( 'Map Shipping Carriers', 'trackship-for-woocommerce' ); ?></strong>
 			<div class="heading_panel_save">
 				<span class="dashicons dashicons-arrow-right-alt2"></span>
 				<div class="spinner"></div>
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php if ( !is_plugin_active( 'ast-pro/ast-pro.php' ) ) { ?>
 					<table class="form-table fixed map-provider-table">
 						<thead>
-							<p class="map_providers_note"><?php esc_html_e( 'If you get different names from your shipping service, you can map the Shipping Providers names to the ones on TrackShip.', 'trackship-for-woocommerce' ); ?></p>
+							<p class="map_providers_note"><?php esc_html_e( 'This feature lets you align shipping providers from external shipping services with those on TrackShip. You can match the names of the Shipping Providers you receive from your shipping company with TrackShip’s provider names.', 'trackship-for-woocommerce' ); ?></p>
 							<tr class="ptw_provider_border">
 								<th><?php esc_html_e( 'Shipping provider', 'trackship-for-woocommerce' ); ?></th>
 								<th><?php esc_html_e( 'TrackShip Provider', 'trackship-for-woocommerce' ); ?></th>
