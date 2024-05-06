@@ -1628,7 +1628,7 @@ span.fullfillment_status {
 	font-size: 20px;
 	margin: 15px 0;
 }
-.ts_upgrade_notice, .ts_ast_notice {
+.ts_ast_notice {
 	background: #fff;
 	padding: 20px;
 	border: 1px solid #e0e0e0;
@@ -1636,20 +1636,12 @@ span.fullfillment_status {
 	display: grid;
 	grid-template-columns: auto auto;
 }
-.ts_upgrade_notice a, .ts_ast_notice a {
+.ts_ast_notice a {
 	text-decoration: none;
 	color: #fff;
 }
 .ts_ast_notice p {
 	margin: 0 0 15px 0;
-}
-.ts_upgrade_notice .ts_upgrade_msg{
-	font-size: 15px;
-	display: block;
-	margin-bottom: 25px;
-}
-.upgrade_pro_img {
-	float: right;
 }
 span.ts_plan_details_bottom {
 	font-size: 16px;
@@ -1874,13 +1866,6 @@ label.inner_tab_label {
 	table-layout: auto;
 }
 }
-
-@media screen and (max-width: 1280px) {
-	.ts_upgrade_notice button{
-		float: none;
-	}
-}
-
 @media screen and (min-width: 600px) {
 .select2-selection.select2-selection--multiple {
 	width: 500px !important;
