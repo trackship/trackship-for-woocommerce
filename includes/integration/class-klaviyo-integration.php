@@ -155,9 +155,9 @@ class WOO_Klaviyo_TS4WC {
 			$customer_country = ! empty( $order ) ? $order->get_billing_country() : '';
 			$shop_country = substr( get_option( 'woocommerce_default_country' ), 0, 2 );
 			$country_code = $customer_country ?? $shop_country;
-			
-			$sms_notification = TSWC_SMSWoo_SMS_Notification::get_instance();
-			$calling_code = $sms_notification->get_calling_code( $country_code );
+
+			$WC_Countries = new WC_Countries();
+			$calling_code = $WC_Countries->get_country_calling_code( $country_code );
 
 			// remove leading zero
 			$phone = preg_replace( '/^0/', '', $phone );
@@ -165,10 +165,9 @@ class WOO_Klaviyo_TS4WC {
 			$phone = $this->country_special_cases( $phone, $country_code, $calling_code );
 
 			// Check if number has country code
-			if ( substr( $phone, 0, strlen( $calling_code ) ) != $calling_code ) {
+			if ( substr( $phone, 0, strlen( substr($calling_code, 1) ) ) != $calling_code ) {
 				$phone = $calling_code . $phone;
 			}
-			$phone = '+' . $phone;
 		}
 		return $phone;
 	}
