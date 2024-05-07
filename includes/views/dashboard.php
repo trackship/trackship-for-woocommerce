@@ -110,22 +110,6 @@ $store_url = in_array( $current_plan, array( 'Free 50', 'No active plan' ) ) ? '
 ?>
 <input type="hidden" id="ts_tools" name="ts_tools" value="<?php echo esc_attr( $nonce ); ?>" />
 <input class="dashboard_hidden_field" type="hidden" value="<?php echo esc_html($current_plan); ?>">
-<?php if ( in_array( $current_plan, array( 'Free 50', 'No active plan' ) ) ) { ?>
-	<div class="ts_upgrade_notice">
-		<div>
-			<span class="ts_upgrade_msg"><?php esc_html_e( 'Access the PRO benefits of TrackShip: monitor TrackShip shipments, receive SMS notifications, enjoy priority support, utilize the Shipments Dashboard, and experience much more.', 'trackship-for-woocommerce' ); ?></span>
-			<button class="button-primary button-trackship btn_large">
-				<a href="<?php echo esc_url($store_url); ?>" class="" target="_blank">
-					<span><?php esc_html_e( $store_text ); ?></span>
-					<span class="dashicons dashicons-arrow-right-alt2"></span>
-				</a>
-			</button>
-		</div>
-		<div>
-			<img class="upgrade_pro_img" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/upgrade_pro.png">
-		</div>
-	</div>
-<?php } ?>
 <?php if ( ! trackship_for_woocommerce()->is_ast_active() ) { ?>
 	<div class="ts_ast_notice">
 		<div>

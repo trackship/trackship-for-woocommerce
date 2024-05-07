@@ -2,9 +2,9 @@
 Contributors: TrackShip
 Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 6.2
-Tested up to: 6.4.3
+Tested up to: 6.5.2
 Requires PHP: 7.4
-Stable tag: 1.7.6
+Stable tag: 1.7.7
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ TrackShip is a great solution for e-commerce merchants looking to improve their 
 
 [Start for Free, 50 free shipment trackers / month](https://trackship.com/) 
 
-https://www.youtube.com/watch?v=PhnqDorKN_c
+https://www.youtube.com/watch?v=QDKV2Irqz9M
 
 = Why use TrackShip? = 
 TrackShip is a shipment tracking and post-purchase experience platform that helps e-commerce businesses take control of their post-shipping workflow.
@@ -111,6 +111,21 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended.
 
 == Changelog ==
+= 1.7.7 - 2024-05-07 =
+* Dev - Added a button to copy tracking page link on the modern Tracking page.
+* Improved - Enhanced responsive design on the Tracking page.
+* Improved - Improved Tracking form design.
+* Improved - Enhanced Shipment status email design for better responsive.
+* Dev - Removed the upgrade to PRO popup from TrackShip Dashboard and Shipments.
+* Dev - Added time to Tracking events.
+* Dev - Updated German translation.
+* Dev - Updated translations.
+* Dev - Added a filter to update the format of Estimated Delivery Date (est_delivery_date_format).
+* Improved - Improved Right-to-Left (RTL) design.
+* Dev - Updated Klaviyo API version.
+* Dev - Tested compatibility with WordPress version 6.5.2.
+* Dev - Tested compatibility with WooCommerce version 8.8.3.
+
 = 1.7.6 - 2024-02-20 =
 * Dev - Improved code for displaying Email customizer preview.
 * Dev - Improved code to allow saving SMS templates with normal line breaks.
@@ -539,4 +554,3 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 
 = 1.0 =
 * Initial version.
-
