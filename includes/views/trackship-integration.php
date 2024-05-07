@@ -35,7 +35,7 @@ $url = add_query_arg( array(
 <div id="" class="popupwrapper ts_video_popup" style="display:none;">
 	<div class="popuprow">
 		<div class="videoWrapper">
-		<iframe id="ts_video" src="https://www.youtube.com/embed/PhnqDorKN_c" frameborder="0"  allowfullscreen></iframe>
+		<iframe id="ts_video" src="https://www.youtube.com/embed/QDKV2Irqz9M" frameborder="0"  allowfullscreen></iframe>
 		</div>
 	</div>
 	<div class="popupclose"></div>
