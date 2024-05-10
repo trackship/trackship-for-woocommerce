@@ -193,7 +193,7 @@ class WC_Trackship_Actions {
 			wp_enqueue_style( 'front_style' );
 		}
 
-		if ( !in_array( $page, array( 'trackship-for-woocommerce', 'trackship-shipments', 'trackship-dashboard', 'trackship_customizer', 'wcpv-vendor-order', 'trackship-logs', 'trackship-tools' ) ) ) {
+		if ( !in_array( $page, array( 'trackship-for-woocommerce', 'trackship-shipments', 'trackship-dashboard', 'trackship_customizer', 'wcpv-vendor-order', 'trackship-logs' ) ) ) {
 			return;
 		}
 		// remove code in future, added by hitesh
