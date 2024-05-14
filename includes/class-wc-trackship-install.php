@@ -341,6 +341,24 @@ class WC_Trackship_Install {
 			delete_trackship_settings( 'wc_ast_trackship_page_id' );
 			delete_trackship_settings( 'wc_ast_trackship_other_page' );
 		}
+		
+		if ( version_compare( get_option( 'trackship_db' ), '1.32', '<' ) ) {
+			update_trackship_settings( 'trackship_db', '1.32' );
+			update_option( 'trackship_db', '1.32' );
+
+			delete_trackship_settings( 'ts_review_ignore' );
+		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.33', '<' ) ) {
+			update_trackship_settings( 'trackship_db', '1.33' );
+			update_option( 'trackship_db', '1.33' );
+
+			delete_trackship_settings( 'ts_bulk_send_ignore' );
+			$status = get_trackship_settings( 'trackship_trigger_order_statuses' );
+			if ( !$status ) {
+				update_trackship_settings( 'trackship_trigger_order_statuses', ['completed', 'partial-shipped', 'shipped'] );
+			}
+		}
 	}
 
 	public function update_trackship_providers() {
