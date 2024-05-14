@@ -3,12 +3,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Database upgrade notice
+$db_status = trackship_for_woocommerce()->ts_install->check_tsdb_status();
+
+if ( $db_status['missing_tables'] || $db_status['missing_columns'] ) {
+	$url = admin_url( 'admin.php?page=trackship-for-woocommerce&tab=tools' );
+	?>
+	<style>
+		.wp-core-ui .notice.db_upgrade {
+			padding: 20px;
+			text-decoration: none;
+		}
+		.db_upgrade h3, .db_upgrade p {
+			margin: 0;
+			padding-bottom: 20px;
+		}
+		</style>
+	<div class="notice notice-warning db_upgrade">
+		<h3>Alert: TrackShip database upgrade required</h3>
+		<p>Some database tables or columns are missing:</p>
+		<?php echo $db_status['missing_tables'] ? '<p><strong>Missing tables:-</strong> ' . implode(', ', $db_status['missing_tables'] ) . '.</p>' : ''; ?>
+		<?php echo $db_status['missing_columns'] ? '<p><strong>Missing columns:-</strong> ' . implode(', ', $db_status['missing_columns'] ) . '.</p>' : ''; ?>
+		<a class="button button-primary" href="<?php echo esc_url($url); ?>">Upgrade Database</a>
+	</div>
+	<?php
+}
+
 $page_slug = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
 $tittle = 'trackship-shipments' == $page_slug ? __( 'Shipments', 'trackship-for-woocommerce' ) : '';
 $tittle = 'trackship-dashboard' == $page_slug ? __( 'Dashboard', 'trackship-for-woocommerce' ) : $tittle;
 $tittle = 'trackship-for-woocommerce' == $page_slug ? __( 'Settings', 'trackship-for-woocommerce' ) : $tittle;
 $tittle = 'trackship-logs' == $page_slug ? __( 'Logs', 'trackship-for-woocommerce' ) : $tittle;
-$tittle = 'trackship-tools' == $page_slug ? __( 'Tools', 'trackship-for-woocommerce' ) : $tittle;
 $tittle = ! is_trackship_connected() ? __( 'Connect your store', 'trackship-for-woocommerce' ) : $tittle;
 
 $page_link = 'trackship-dashboard' != $page_slug ? admin_url( 'admin.php?page=trackship-dashboard' ) : '#';
@@ -66,7 +91,7 @@ $menu_items = array(
 		<h1 class="zorem-layout__header-breadcrumbs"><img class="ts4wc_logo_header" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></h1>
 	</div>
 </div>
-<?php if ( in_array( $page_slug, array( 'trackship-shipments', 'trackship-dashboard', 'trackship-logs', 'trackship-tools' ) ) && is_trackship_connected() ) { ?>
+<?php if ( in_array( $page_slug, array( 'trackship-shipments', 'trackship-dashboard', 'trackship-logs' ) ) && is_trackship_connected() ) { ?>
 	<div class="fullfillment_header">
 		<h2 class="fullfillment_header_h2"><?php echo esc_html($tittle); ?></h2>
 		<span class="woocommerce-layout__activity-panel">

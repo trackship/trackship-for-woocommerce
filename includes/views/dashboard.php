@@ -43,11 +43,21 @@ $late_shipment = $results['late_shipment'];
 $tracking_issues = $results['tracking_issues'];
 $return_to_sender_shipment = $results['return_to_sender_shipment'];
 
+$completed_order_with_tracking = trackship_for_woocommerce()->admin->completed_order_with_tracking();
+$completed_order_with_zero_balance = trackship_for_woocommerce()->admin->completed_order_with_zero_balance();
+$completed_order_with_do_connection = trackship_for_woocommerce()->admin->completed_order_with_do_connection();
+$unsent_shipments = $completed_order_with_tracking + $completed_order_with_zero_balance + $completed_order_with_do_connection;
+
 $this_month = gmdate('Y-m-01 00:00:00' );
 $last_30 = gmdate('Y-m-d 00:00:00', strtotime( 'today - 29 days' ) );
 $last_60 = gmdate('Y-m-d 00:00:00', strtotime( 'today - 59 days' ) );
 
 $action_needed = array(
+	'unsent_shipments' => array(
+		'title' => __( "shipments from the last 30 days that haven't been automatically tracked. To start tracking these past orders, simply click here", 'trackship-for-woocommerce' ),
+		'count' => $unsent_shipments,
+		'link' => admin_url( 'admin.php?page=trackship-for-woocommerce&tab=tools' ),
+	),
 	'late_shipment' => array(
 		'title' => __( 'Late Shipments for last 30 days', 'trackship-for-woocommerce' ),
 		'count' => $late_shipment,
@@ -154,15 +164,18 @@ $store_url = in_array( $current_plan, array( 'Free 50', 'No active plan' ) ) ? '
 			<tbody>
 				<?php foreach ( $action_needed as $key => $value ) { ?>
 					<?php if ( $value['count'] > 0 ) { ?>
-						<tr onclick="window.location='<?php echo esc_url( admin_url( 'admin.php?page=trackship-shipments&status=' . $key ) ); ?>';">
+						<?php $link = $value['link'] ?? admin_url( 'admin.php?page=trackship-shipments&status=' . $key ); ?>
+						<tr onclick="window.location='<?php echo esc_url( $link ); ?>';">
 							<td>
 								<label><?php echo esc_html( $value['count'] ); ?> <?php echo esc_html( $value['title'] ); ?></label>
+							</td>
+							<td>
 								<span class="dashicons dashicons-arrow-right-alt2"></span>
 							</td>
 						</tr>
 					<?php } ?>
 				<?php } ?>
-				<?php if ( ( $late_shipment + $tracking_issues + $return_to_sender_shipment ) == 0 ) { ?>
+				<?php if ( ( $late_shipment + $tracking_issues + $return_to_sender_shipment + $unsent_shipments ) == 0 ) { ?>
 					<tr>
 						<td>
 							<label><?php esc_html_e( 'No action needed for Shipments', 'trackship-for-woocommerce' ); ?></label>

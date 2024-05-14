@@ -2,31 +2,33 @@
 Contributors: TrackShip
 Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
 Requires at least: 6.2
-Tested up to: 6.5.2
+Tested up to: 6.5.3
 Requires PHP: 7.4
-Stable tag: 1.7.7
+Stable tag: 1.8.0
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-TrackShip is a shipment tracking and post-purchase experience platform that helps eCommerce businesses take control of their post-shipping workflow and to provide an exceptional shipping journey experience to their customers, helping WooCommerce businesses to fulfill their promise and gain loyalty and trust.
+TrackShip auto-tracks orders, adds a branded tracking experience to your store and handles all customer touchpoints from shipping to delivery
 
-TrackShip auto-tracks shipments with 700+ shipping carriers, it's easy to set up and it seamlessly integrates into the WooCommerce workflows and most of its features are managed inside the WordPress admin. 
+== Description ==
 
-TrackShip is a great solution for e-commerce merchants looking to improve their shipping process and customer experience, which is crucial for any eCommerce business to grow and succeed in the long run.
+TrackShip is a shipment tracking and post-purchase experience platform that helps WooCommerce businesses to provide an exceptional post-shipping experience to their customers, it helps to gain loyalty and trust and increase the repeat purchases, which is crucial for any eCommerce business to grow and succeed in the long run.
 
-[Start for Free, 50 free shipment trackers / month](https://trackship.com/) 
+Free plan available: Get 50 shipment trackers per month [Start for Free](https://trackship.com/) 
 
 https://www.youtube.com/watch?v=QDKV2Irqz9M
 
-= Why use TrackShip? = 
-TrackShip is a shipment tracking and post-purchase experience platform that helps e-commerce businesses take control of their post-shipping workflow.
-= Automatic Shipment Tracking = 
-TrackShip auto-tracks your orders from shipping to delivery with 700+ shipping providers and carriers around the world. After you fulfill an order, TrackShip auto-tracks the shipments with the shipping providers APIs and updates your store whenever there is an update to the shipment status.
+== Why use TrackShip? ==
+
+= Automatic Shipment Tracking with 770+ Shipping carriers =
+TrackShip auto-tracks your orders from shipping to delivery with 770+ shipping providers and carriers around the world. Our supported providers includes USPS, ePacket, Delhivery, Yun Express Tracking, UPS, Australia Post, FedEx, Aramex, DHL eCommerce, ELTA Courier, Colissimo, DHL Express, La Poste, DHLParcel NL, Purolator, 4px, Brazil Correios, Deutsche Post, Bpost, DHL, EMS, DPD.de, GLS, China Post, Loomis Express, DHL Express, PostNL International 3S, Royal Mail and more…
+Check out the complete list of supported [shipping carriers](https://trackship.com/shipping-providers/).
+
 = Take control of the post-purchase workflow = 
-TrackShip allows merchants to take control of their post-shipping operations, further engage customers after shipping and not rely on 3rd parties to control the customer experience post-purchase.
+TrackShip allows merchants to take control of their post-shipping operations, further engage customers after shipping and do not rely on 3rd parties to provide service to your customers. The service is great for merchants and drop shippers that want to improve their customer service and provide superior shipping experience to their customers
 = Improves customer experience =
 TrackShip provides an easy way for customers to track their orders and receive real-time updates on their shipment status.
-= Increases customer loyalty =
+= Increases customer loyalty & Trust =
 By providing customers with a seamless tracking experience, TrackShip helps to increase customer loyalty and repeat business.
 = Reduce time spent on customer service =
 TrackShip automates the tracking process, allowing merchants to spend less time on manual tracking and more time on other important aspects of their business.
@@ -36,17 +38,19 @@ TrackShip provides merchants with valuable shipping & delivery insights such as 
 TrackShip is a cost-effective solution for merchants looking to improve their shipping process and customer experience without a large investment in time or money.
 
 == What's included? ==
+
 * Shipments dashboard
-* Tracking page on your store
+* Fully Customized Tracking page on your store
 * Shipment status & delivery notifications (email/SMS)
-* Delivery confirmation (custom order status “Delivered”)
-* Shipping & delivery analytics 
+* Delivery Confirmation (custom order status “Delivered”)
+* Shipping & delivery Analytics
+* Notifications Log
 
 == How does it work? ==
-1. Signup for a [TrackShip](https://trackship.com/) account 
-2. Connect your WooCommerce store with TrackShip
-3. Setup TrackShip on your store, enable a tracking page and shipment status & Delivery notifications by email and SMS.
-4. TrackShip will auto-track your shipped orders and proactively update your orders whenever there is an update in the shipment status until the shipments are delivered to your customers.
+Once you add tracking information to Orders using a Shipment tracking plugin, the shipment details will be sent to track on TrackShip that will auto-track the shipments and proactively update your orders whenever there is an update in the shipment status until the shipments are delivered to your customers.
+
+== Why TrackShip is the best Order Tracking Solution for WooCommerce? ==
+TrackShip is easy to set up, it seamlessly integrates into the WordPress admin and most of its features are managed inside the WordPress admin. Unlike its alternatives like AfterShip, 17track, ParcelPanell and other shipment tracking platforms, TrackShip provide a fully customizerble tracking iexperience, more accurate tracking data and it does not require you to go to a different dashboard to monitor shipments and manage your tracking operations.
 
 == Documentation ==
 For more information, check out our [Documentation](https://docs.trackship.com/docs/trackship-for-woocommerce/)
@@ -55,49 +59,67 @@ For more information, check out our [Documentation](https://docs.trackship.com/d
 
 * [TrackShip](https://trackship.com/) account
 * WooCommerce REST API enabled
-* SSL Certificate - you must have a secured site (HTTPS) to connect TrackShip to your store
-* Pretty permalinks - navigate to Settings > Permalinks and make sure that the permalink structure is based on Post Name (TrackShip can’t work with the Plain option)
-* Shipment Tracking Pugin (see compatibility)
+* SSL Certificate
+* Pretty permalinks - navigate to Settings > Permalinks and make sure that the permalink structure is based on Post Name.
+* Shipment Tracking Plugin
+
+= Supported shipment tracking plugins for WooCommerce: =
+* [Advanced Shipment Tracking AST]()
+* [Advanced Shipment Tracking Pro (AST PRO)](https://www.zorem.com/products/woocommerce-advanced-shipment-tracking/)
+* WooCommerce Shipment Tracking
+* Orders Tracking for WooCommerce by VillaTheme
+* YITH WooCommerce Order & Shipment Tracking by Yith
 
 == Compatibility ==
-
-TrackShip will track orders when you add tracking numbers using one of the following shipment tracking extensions for WooCommerce:
-
-* [Advanced Shipment Tracking (AST)](https://wordpress.org/plugins/woo-advanced-shipment-tracking/)
-* [Advanced Shipment Tracking Pro (AST PRO)](https://www.zorem.com/products/woocommerce-advanced-shipment-tracking/)
-* [WooCommerce Shipment Tracking](https://woocommerce.com/products/shipment-tracking/?aff=4780)
-* [Orders Tracking for WooCommerce by VillaTheme](https://docs.trackship.com/docs/trackship-for-woocommerce/compatibility/orders-tracking-for-woocommerce/)
-* [YITH WooCommerce Order & Shipment Tracking by Yith](https://docs.trackship.com/docs/trackship-for-woocommerce/compatibility/yith-woocommerce-order-shipment-tracking/)
-
-= Compatibility with other WooCommerce plugins: =
-
-* [SMS for WooCommerce](https://docs.trackship.com/docs/trackship-for-woocommerce/compatibility/sms-for-woocommerce/) - Send automatic SMS updates for shipment status & delivery via Twilio, Nexmo or ClickSend
-* [Checkout for WooCommerce (CheckoutWC)](https://docs.trackship.com/docs/trackship-for-woocommerce/compatibility/checkoutwc/) - Add Tracking Page widget to the Order received page when its set to be the view order page
-* [AutomateWoo](https://docs.trackship.com/docs/trackship-for-woocommerce/compatibility/automatewoo/) - use the "Delivered" custom order status to trigger marketing automation based on the order delivery date.
+We tested and added compatibility to the following plugins:
+* [SMS for WooCommerce](https://www.zorem.com/product/sms-for-woocommerce/)
+* Checkout for WooCommerce (CheckoutWC)
+* AutomateWoo
+* Dokan
+* JWT Auth
+* Kadence WooCommerce Email Designer
+* YayMail – WooCommerce Email Customizer
+* WooCommerce Email Template Customizer (Free)
+* WooCommerce Email Template Customizer (Pro)
+* WP HTML Mail – Email Template Designer
+* Custom Order Numbers for WooCommerce
+* Custom Order Numbers for WooCommerce Pro
+* WooCommerce Sequential Order Numbers
+* Sequential Order Numbers for WooCommerce
+* Booster for WooCommerce
+* Booster for WooCommerce Pro
+* WP-Lister Lite for Amazon
+* WP-Lister Pro for Amazon
 
 == Documentation ==
 Check out TrackShip for WooCommerce [documentation](https://docs.trackship.com/docs/trackship-for-woocommerce/) for more details on how to set up and work with TrackShip
 
 == Frequently Asked Questions ==
+
 = What is a Shipment Tracker?
 A shipment tracks one tracking number from the time it's shipped until it has been delivered, no matter how many status events were created during its life cycle.
-= What if I have multiple stores?
-You can add each one to TrackShip and you'll pay one price based on the combined monthly order volume of all your stores. One subscription for all your WooCommerce and Shopify stores.
+
 = Will TrackShip affect my site’s performance?
 Not at all. When you fulfill an order, the shipping information is sent to TrackShip and it does all the heavy-lifting for you, we check the status of the shipment with the shipping provider every few hours and we update your store whenever there is an update in the status, and it does not impact your load time in any way.
+
 = Do I need a developer to connect TrackShip to my store?
 Absolutely not! You can easily connect your store with TrackShip in a few simple steps and start enjoying a branded tracking experience in less than 10 minutes..
+
 = I connected my store but the shipment status is not showing for my orders
 The trigger to auto-track shipments by TrackShip is to add tracking to the order and change the order status from Processing to Shipped (Completed). TrackShip will not automatically track orders that were Shipped before you connected your store.
 You can trigger these orders to TrackShip by using the [Get Shipment Status](https://docs.trackship.com/docs/trackship-for-woocommerce/manage-orders/#get-shipment-status) option on the WooCommerce orders admin in the bulk actions menu.
+
 = My store is connected but many of my orders still show a “Connection error” shipment status
 These messages are from before you connected your store, TrackShip auto-track shipments when you change the order status from Processing to Shipped (Completed). 
 TrackShip will not automatically track orders that were shipped when you had a connection issue.
 You can trigger these orders to TrackShip by using the [Get Shipment Status](https://docs.trackship.com/docs/trackship-for-woocommerce/manage-orders/#get-shipment-status) option on the WooCommerce orders admin in the bulk actions menu.
+
 = How often do you check for tracking status updates?
 TrackShip checks the shipment status with the shipping providers APIs every 2-4 hours. We check for updates more often once the package is in the "unknown" status, until the first tracking event is received from the providers API and when the shipment is out for delivery.
+
 = Which shipping providers (carriers) do you support?
-TrackShip supports 700+ [shipping providers](https://trackship.com/shipping-providers/) around the globe ,if you can find your carrier on our supported shipping providers list, you can suggest a shipping provider [here](https://feedback.zorem.com/trackship)
+TrackShip supports 770+ [shipping providers](https://trackship.com/shipping-providers/) around the globe ,if you can find your carrier on our supported shipping providers list, you can suggest a shipping provider [here](https://feedback.zorem.com/trackship)
+
 = Do you show the shipment status for orders on WooCommerce admin?
 Yes, TrackShip adds a Shipment Status column on your orders admin and displays the shipment tracking status, last update date, and the Est Delivery Date for every order that you shipped after connecting your store.
 
@@ -111,6 +133,11 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended.
 
 == Changelog ==
+= 1.8.0 - 2024-05-14 =
+* Dev - Database upgrade improvement.
+* Dev - SMS notifications for Shipment statuses code improved.
+* Dev - Tested compatibility with WordPress version 6.5.3.
+
 = 1.7.7 - 2024-05-07 =
 * Dev - Added a button to copy tracking page link on the modern Tracking page.
 * Improved - Enhanced responsive design on the Tracking page.
