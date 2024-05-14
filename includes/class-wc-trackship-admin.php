@@ -291,9 +291,6 @@ class WC_Trackship_Admin {
 		<div class="zorem-layout">
 			<?php
 			include 'views/header2.php';
-			if ( is_trackship_connected() ) {
-				$this->get_trackship_notice_msg();
-			}
 			?>
 			<div class="trackship_admin_content">
 				<section id="content_trackship_fullfill_dashboard" class="">
