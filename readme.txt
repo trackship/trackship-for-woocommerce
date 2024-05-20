@@ -1,6 +1,6 @@
 === TrackShip for WooCommerce  ===
 Contributors: TrackShip
-Tags: WooCommerce, delivery, shipment tracking, order tracking, tracking
+Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order tracking, tracking
 Requires at least: 6.2
 Tested up to: 6.5.3
 Requires PHP: 7.4
@@ -49,8 +49,8 @@ TrackShip is a cost-effective solution for merchants looking to improve their sh
 == How does it work? ==
 Once you add tracking information to Orders using a Shipment tracking plugin, the shipment details will be sent to track on TrackShip that will auto-track the shipments and proactively update your orders whenever there is an update in the shipment status until the shipments are delivered to your customers.
 
-== Why TrackShip is the best Order Tracking Solution for WooCommerce? ==
-TrackShip is easy to set up, it seamlessly integrates into the WordPress admin and most of its features are managed inside the WordPress admin. Unlike its alternatives like AfterShip, 17track, ParcelPanell and other shipment tracking platforms, TrackShip provide a fully customizerble tracking iexperience, more accurate tracking data and it does not require you to go to a different dashboard to monitor shipments and manage your tracking operations.
+== Why is TrackShip the best Order Tracking Solution for WooCommerce? ==
+TrackShip is easy to set up and seamlessly integrates into the WordPress admin. Unlike its alternatives like AfterShip, 17track, ParcelPanel, ShipStation, and other shipment tracking platforms, TrackShip provides a fully customizable tracking experience, more accurate tracking data, and it does not require you to go to a different dashboard to monitor shipments and manage your tracking operations. Most of its features are managed within the WordPress admin.
 
 == Documentation ==
 For more information, check out our [Documentation](https://docs.trackship.com/docs/trackship-for-woocommerce/)
