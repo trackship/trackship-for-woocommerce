@@ -60,7 +60,6 @@ ul.zoremmail-panels,ul.zoremmail-sub-panels {
 	display: inline-block;
 }
 .customize-section-back {
-	display: block;
 	float: left;
 	width: 46px;
 	height: 72px;
@@ -81,7 +80,6 @@ ul.zoremmail-panels,ul.zoremmail-sub-panels {
 	outline-offset: -2px;
 }
 .zoremmail-menu-submenu-title.open .customize-section-back, .zoremmail-sub-panel-heading.open .customize-section-back {
-	display: inline-block;
 	line-height: 55px;
 	background: #fff;
 	border-right: 1px solid #e0e0e0;
@@ -96,6 +94,9 @@ ul.zoremmail-panels,ul.zoremmail-sub-panels {
 	font-size: 22px;
 	font-weight: bold;
 	margin: 0 5px 0 0;
+}
+.zoremmail-panels .customize-section-title {
+	border-bottom: 1px solid #e0e0e0;
 }
 .customize-section-title {
 	background: #fff;

@@ -29,7 +29,6 @@ if ( $tracking_items ) :
 				$ship_status = $new_status;
 				$tracking_link = $tracking_item['tracking_page_link'] ?  $tracking_item['tracking_page_link'] : $tracking_item['formatted_tracking_link'];
 				$show_trackship_branding = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'show_trackship_branding', 1 );
-				$trackship_branding_class = $show_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ? '' : 'hide';
 				do_action( 'before_tracking_widget_email', $tracking_item, $order_id );
 				?>
 				<div class="tracking_index display-table">
@@ -103,11 +102,6 @@ if ( $tracking_items ) :
 							<div style="clear: both;display: block;"></div>
 						<?php } ?>
 					</div>
-				</div>
-				<div class="tracking_widget_email trackship_branding <?php echo esc_attr($trackship_branding_class); ?>">
-					<p style="margin: 0;">
-						<span style="vertical-align:middle;font-size: 14px;">Powered by <a href="https://trackship.com" title="TrackShip" target="blank">TrackShip</a></span>
-					</p>
 				</div>
 			<?php } ?>
 		</div>
