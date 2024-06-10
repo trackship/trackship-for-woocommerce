@@ -78,7 +78,7 @@ class TS4WC_Admin_Customizer {
 			return;
 		}
 
-		$type = isset( $_GET['type'] ) ? sanitize_text_field($_GET['type']) : 'tracking_page' ;
+		$type = isset( $_GET['type'] ) ? sanitize_text_field($_GET['type']) : 'tracking_page';
 		$shipmentStatus = isset( $_GET['status'] ) ? sanitize_text_field($_GET['status']) : 'in_transit' ;
 		$iframe_url = 'shipment_email' == $type ? $this->get_email_preview_url( $shipmentStatus ) : $this->get_tracking_preview_url( $shipmentStatus ) ;
 		$shipment_status = $this->shipment_status();
@@ -188,7 +188,7 @@ class TS4WC_Admin_Customizer {
 		wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
 		
 		// Add tiptip js and css file		
-		wp_enqueue_style( 'trackship-customizer', plugin_dir_url(__FILE__) . 'assets/customizer.css', array(), trackship_for_woocommerce()->version );
+		wp_enqueue_style( 'trackship-customizer', plugin_dir_url(__FILE__) . 'assets/customizer.css', array(), time() );
 		wp_enqueue_script( 'trackship-customizer', plugin_dir_url(__FILE__) . 'assets/customizer.js', array( 'jquery', 'wp-util', 'wp-color-picker','jquery-tiptip' ), time(), true );
 
 		wp_localize_script('trackship-customizer', 'trackship_customizer', array(
@@ -303,6 +303,8 @@ class TS4WC_Admin_Customizer {
 	}
 
 	public function shipment_statuses_settings( $status ) {
+		$type = isset( $_GET['type'] ) ? sanitize_text_field($_GET['type']) : 'tracking_page';
+
 		$email_iframe_url = $this->get_email_preview_url( $status );
 		$tracking_pageiframe_url = $this->get_tracking_preview_url( $status );
 		$status = 'in_transit' == $status ? 'intransit' : $status;
@@ -971,15 +973,13 @@ class TS4WC_Admin_Customizer {
 			'required' 	=> 'pro',
 			'plan'		=> in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ),
 		);
-		// $settings[ 'shipping_provider_logo' ] = array(
-		// 	'title'		=> esc_html__( 'Display Shipping provider logo', 'trackship-for-woocommerce' ),
-		// 	'default'	=> $shipping_provider_logo,
-		// 	'type'		=> 'checkbox',
-		// 	'option_name'=> 'shipment_email_settings',
-		// 	'option_type'=> 'array',
-		// 	'show'		=> true,
-		// 	'class'		=> 'ts4wc_provider_logo',
-		// );
+
+		if ( 'tracking_page' == $type ) {
+			unset( $settings['email_notifications'] );
+		} else {
+			unset( $settings['tracking_page'] );
+		}
+
 		return $settings;
 	}
 
@@ -1007,7 +1007,7 @@ class TS4WC_Admin_Customizer {
 
 			if ( isset($array['type']) && 'panel' == $array['type'] ) {
 				?>
-				<li id="<?php isset($array['id']) ? esc_attr_e($array['id']) : ''; ?>" data-label="<?php isset($array['label']) ? esc_attr_e($array['label']) : ''; ?>" data-iframe_url="<?php isset($array['iframe_url']) ? esc_attr_e($array['iframe_url']) : ''; ?>" class="zoremmail-panel-title <?php isset($array['class']) ? esc_attr_e($array['class']) : ''; ?>">
+				<li id="<?php isset($array['id']) ? esc_attr_e($array['id']) : ''; ?>" data-label="<?php isset($array['label']) ? esc_attr_e($array['label']) : ''; ?>" data-iframe_url="<?php isset($array['iframe_url']) ? esc_attr_e($array['iframe_url']) : ''; ?>" class="zoremmail-panel-title <?php isset($array['class']) ? esc_attr_e($array['class']) : ''; ?>" style="display:none;">
 					<span><?php isset($array['title']) ? esc_html_e($array['title']) : ''; ?></span>
 					<span class="dashicons dashicons-arrow-right-alt2"></span>
 				</li>
