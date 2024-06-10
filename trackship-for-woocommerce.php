@@ -2,14 +2,14 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 1.8.0
+ * Version: 1.8.1
  * Author: TrackShip
  * Author URI: https://trackship.com/
  * License: GPL-2.0+
  * License URI: 
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
- * WC tested up to: 8.8.3
+ * WC tested up to: 8.9.1
  * Requires Plugins: woocommerce
 */
 
@@ -24,7 +24,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.8.0';
+	public $version = '1.8.1';
 	public $plugin_path;
 	public $ts_install;
 	public $ts_actions;
@@ -96,12 +96,8 @@ class Trackship_For_Woocommerce {
 		if ( ! function_exists( 'is_plugin_active' ) ) {
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		}
-		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-			$is_active = true;
-		} else {
-			$is_active = false;
-		}
-		return $is_active;
+
+		return is_plugin_active( 'woocommerce/woocommerce.php' ) ? true : false;
 	}
 	
 	/**
@@ -160,13 +156,7 @@ class Trackship_For_Woocommerce {
 	 * @return string plugin path
 	 */
 	public function get_plugin_path() {
-		if ( isset( $this->plugin_path ) ) {
-			return $this->plugin_path;
-		}
-
-		$this->plugin_path = untrailingslashit( plugin_dir_path( __FILE__ ) );
-
-		return $this->plugin_path;
+		return $this->plugin_path ?? untrailingslashit( plugin_dir_path( __FILE__ ) );
 	}
 	
 	/*
@@ -321,13 +311,7 @@ class Trackship_For_Woocommerce {
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		}
 
-		if ( is_plugin_active( 'woo-advanced-shipment-tracking/woocommerce-advanced-shipment-tracking.php' ) || is_plugin_active( 'ast-pro/ast-pro.php' ) || is_plugin_active( 'advanced-shipment-tracking-pro/advanced-shipment-tracking-pro.php' ) ) {
-			$is_active = true;
-		} else {
-			$is_active = false;
-		}		
-
-		return $is_active;
+		return is_plugin_active( 'woo-advanced-shipment-tracking/woocommerce-advanced-shipment-tracking.php' ) || is_plugin_active( 'ast-pro/ast-pro.php' ) || is_plugin_active( 'advanced-shipment-tracking-pro/advanced-shipment-tracking-pro.php' ) ? true : false;
 	}
 	
 	/**
@@ -342,13 +326,7 @@ class Trackship_For_Woocommerce {
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		}
 
-		if ( is_plugin_active( 'woocommerce-shipment-tracking/woocommerce-shipment-tracking.php' ) ) {
-			$is_active = true;
-		} else {
-			$is_active = false;
-		}
-	
-		return $is_active;
+		return is_plugin_active( 'woocommerce-shipment-tracking/woocommerce-shipment-tracking.php' ) ? true : false;
 	}
 	
 	/**
@@ -363,13 +341,7 @@ class Trackship_For_Woocommerce {
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		}
 
-		if ( is_plugin_active( 'woo-orders-tracking/woo-orders-tracking.php' ) || is_plugin_active( 'woocommerce-orders-tracking/woocommerce-orders-tracking.php' ) ) {
-			$is_active = true;
-		} else {
-			$is_active = false;
-		}
-
-		return $is_active;
+		return is_plugin_active( 'woo-orders-tracking/woo-orders-tracking.php' ) || is_plugin_active( 'woocommerce-orders-tracking/woocommerce-orders-tracking.php' ) ? true : false;
 	}
 
 	/**
@@ -384,13 +356,7 @@ class Trackship_For_Woocommerce {
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		}
 
-		if ( is_plugin_active( 'klaviyo/klaviyo.php' ) ) {
-			$is_active = true;
-		} else {
-			$is_active = false;
-		}
-
-		return $is_active;
+		return is_plugin_active( 'klaviyo/klaviyo.php' ) ? true : false;
 	}
 	
 
@@ -406,13 +372,7 @@ class Trackship_For_Woocommerce {
 			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
 		}
 
-		if ( is_plugin_active( 'yith-woocommerce-order-tracking/init.php' ) || is_plugin_active( 'yith-woocommerce-order-tracking-premium/init.php' ) ) {
-			$is_active = true;
-		} else {
-			$is_active = false;
-		}
-	
-		return $is_active;
+		return is_plugin_active( 'yith-woocommerce-order-tracking/init.php' ) || is_plugin_active( 'yith-woocommerce-order-tracking-premium/init.php' ) ? true : false;
 	}
 
 	public function get_tracking_items( $order_id ) {
@@ -521,15 +481,7 @@ function get_trackship_key() {
 
 function get_trackship_settings( $key, $default_value = '' ) {
 	$data_array = get_option( 'trackship_settings', array() );
-	$value = '';
-	if ( isset( $data_array[$key] ) ) {
-		$value = $data_array[$key];
-	}
-	
-	if ( '' == $value ) {
-		$value = $default_value;
-	}
-	return $value;
+	return $data_array[$key] ?? $default_value;
 }
 
 function update_trackship_settings( $key, $value ) {
