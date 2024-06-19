@@ -14,13 +14,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class TrackShip_REST_API_Controller extends WC_REST_Controller {
 
 	/**
-	 * Endpoint namespace.
-	 *
-	 * @var string
-	 */
-	protected $namespace = 'wc/v1';
-
-	/**
 	 * Post type.
 	 *
 	 * @var string
@@ -28,24 +21,12 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	protected $post_type = 'shop_order';
 	
 	/**
-	 * Name Space function
-	 *
-	 * @param $namespace
-	 *
-	 * @return TrackShip_REST_API_Controller
-	 */
-	public function set_namespace( $namespace ) {
-		$this->namespace = $namespace;
-		return $this;
-	}
-
-	/**
 	 * Register the routes for trackings.
 	 */
 	public function register_routes() {
 		
 		//disconnect_from_trackship
-		register_rest_route( $this->namespace, '/disconnect_from_trackship', array(
+		register_rest_route( 'wc/v1', '/disconnect_from_trackship', array(
 			array(
 				'methods'				=> WP_REST_Server::CREATABLE,
 				'callback'				=> array( $this, 'disconnect_from_trackship_fun' ),
@@ -60,7 +41,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		) );
 		
 		//tracking webhook
-		register_rest_route( $this->namespace, '/tracking-webhook', array(
+		register_rest_route( 'wc/v1', '/tracking-webhook', array(
 			array(
 				'methods'				=> 'POST',
 				'callback'				=> array( $this, 'tracking_webhook' ),
@@ -70,7 +51,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		) );
 		
 		//check_ts4wc_installed
-		register_rest_route( $this->namespace, '/check_ts4wc_installed', array(
+		register_rest_route( 'wc/v1', '/check_ts4wc_installed', array(
 			array(
 				'methods'				=> 'POST',
 				'callback'				=> array( $this, 'check_ts4wc_installed' ),
@@ -301,7 +282,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	public function create_item_permissions_check( $request ) {
 		
 		if ( ! wc_rest_check_post_permissions( $this->post_type, 'create' ) ) {
-			return new WP_Error( 'woocommerce_rest_cannot_create', __( 'Sorry, you are not allowed to create resources.', 'woocommerce-shipment-tracking' ), array( 'status' => rest_authorization_required_code() ) );
+			return new WP_Error( 'woocommerce_rest_cannot_create', __( 'Sorry, you are not allowed to create resources.', 'woocommerce' ), array( 'status' => rest_authorization_required_code() ) );
 		}
 		return true;
 	}
@@ -314,7 +295,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	 */
 	public function get_item_permissions_check( $request ) {
 		if ( ! wc_rest_check_post_permissions( $this->post_type, 'read', (int) $request['order_id'] ) ) {
-			return new WP_Error( 'woocommerce_rest_cannot_view', __( 'Sorry, you cannot view this resource.', 'woocommerce-shipment-tracking' ), array( 'status' => rest_authorization_required_code() ) );
+			return new WP_Error( 'woocommerce_rest_cannot_view', __( 'Sorry, you cannot view this resource.', 'woocommerce' ), array( 'status' => rest_authorization_required_code() ) );
 		}
 		return true;
 	}
