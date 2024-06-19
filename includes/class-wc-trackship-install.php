@@ -359,6 +359,15 @@ class WC_Trackship_Install {
 				update_trackship_settings( 'trackship_trigger_order_statuses', ['completed', 'partial-shipped', 'shipped'] );
 			}
 		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.34', '<' ) ) {
+			update_trackship_settings( 'trackship_db', '1.34' );
+			update_option( 'trackship_db', '1.34' );
+
+			if ( $wpdb->get_var( "SHOW COLUMNS FROM {$wpdb->prefix}trackship_shipment LIKE 'shipping_date';" ) ) {
+				$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment MODIFY `shipping_date` DATE DEFAULT NULL;" );
+			}
+		}
 	}
 
 	public function update_trackship_providers() {
@@ -535,7 +544,7 @@ class WC_Trackship_Install {
 			'shipping_provider'		=> ' VARCHAR(50)',
 			'shipment_status'		=> ' VARCHAR(30)',
 			'pending_status'		=> ' VARCHAR(30)',
-			'shipping_date'			=> ' DATE NOT NULL CURRENT_TIMESTAMP',
+			'shipping_date'			=> ' DATE ',
 			'shipping_country'		=> ' TEXT',
 			'shipping_length'		=> ' VARCHAR(10)',
 			'ship_length_updated'	=> ' DATE',
