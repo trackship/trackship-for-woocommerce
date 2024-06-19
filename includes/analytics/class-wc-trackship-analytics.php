@@ -60,11 +60,6 @@ class WC_Trackship_Analytics {
 	* Register TrackShip Analytics Routes
 	*/
 	public function ts_analytics_rest_api_register_routes() {
-		
-		if ( ! is_a( WC()->api, 'WC_API' ) ) {
-			return;
-		}
-
 		require_once trackship_for_woocommerce()->get_plugin_path() . '/includes/analytics/class-trackship-analytics-rest-api-controller.php';
 
 		// Register route with default namespace wc/v3.

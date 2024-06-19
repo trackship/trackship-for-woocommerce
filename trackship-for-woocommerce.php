@@ -2,14 +2,14 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 1.8.1
+ * Version: 1.8.2
  * Author: TrackShip
  * Author URI: https://trackship.com/
  * License: GPL-2.0+
  * License URI: 
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
- * WC tested up to: 8.9.1
+ * WC tested up to: 9.0.0
  * Requires Plugins: woocommerce
 */
 
@@ -24,7 +24,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.8.1';
+	public $version = '1.8.2';
 	public $plugin_path;
 	public $ts_install;
 	public $ts_actions;
@@ -235,22 +235,12 @@ class Trackship_For_Woocommerce {
 	 *
 	 */
 	public function rest_api_register_routes() {
-		if ( ! is_a( WC()->api, 'WC_API' ) ) {
-			return;
-		}
+
 		require_once $this->get_plugin_path() . '/includes/api/class-trackship-rest-api-controller.php';
 
 		$trackship_controller_v1 = new TrackShip_REST_API_Controller();
 		$trackship_controller_v1->register_routes();
 
-		$trackship_controller_v2 = new TrackShip_REST_API_Controller();
-		$trackship_controller_v2->set_namespace( 'wc/v2' );
-		$trackship_controller_v2->register_routes();
-
-		$trackship_controller_v3 = new TrackShip_REST_API_Controller();
-		$trackship_controller_v3->set_namespace( 'wc/v3' );
-		$trackship_controller_v3->register_routes();
-		
 	}
 	
 	/*
