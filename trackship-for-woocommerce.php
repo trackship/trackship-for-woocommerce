@@ -235,22 +235,12 @@ class Trackship_For_Woocommerce {
 	 *
 	 */
 	public function rest_api_register_routes() {
-		if ( ! is_a( WC()->api, 'WC_API' ) ) {
-			return;
-		}
+
 		require_once $this->get_plugin_path() . '/includes/api/class-trackship-rest-api-controller.php';
 
 		$trackship_controller_v1 = new TrackShip_REST_API_Controller();
 		$trackship_controller_v1->register_routes();
 
-		$trackship_controller_v2 = new TrackShip_REST_API_Controller();
-		$trackship_controller_v2->set_namespace( 'wc/v2' );
-		$trackship_controller_v2->register_routes();
-
-		$trackship_controller_v3 = new TrackShip_REST_API_Controller();
-		$trackship_controller_v3->set_namespace( 'wc/v3' );
-		$trackship_controller_v3->register_routes();
-		
 	}
 	
 	/*
