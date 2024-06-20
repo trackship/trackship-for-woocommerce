@@ -58,7 +58,6 @@ class WC_TrackShip_Email_Manager {
 		);
 
 		$logger = wc_get_logger();
-		
 		if ( ! $enable || ! $for_amazon_order || '0' == $receive_email ) {
 			$logger->info( print_r($arg, true), array( 'source' => 'trackship_email_log' ) );
 			return;
@@ -118,9 +117,9 @@ class WC_TrackShip_Email_Manager {
 		$tpi_order = trackship_for_woocommerce()->front->check_if_tpi_order( $tracking_items, $order );
 		
 		if ( $tpi_order ) {
-			$message .= $this->get_order_details_template( 'emails/tswc-tpi-email-order-details.php', $order, $sent_to_admin, $plain_text, $tracking_item, $wcast_show_product_image, $wcast_show_order_details );
+			$message .= $this->get_order_details_template( 'emails/tswc-tpi-email-order-details.php', $order, $sent_to_admin, $plain_text, $tracking_item, $wcast_show_product_image, $wcast_show_order_details, $new_status );
 		} else {
-			$message .= $this->get_order_details_template( 'emails/tswc-email-order-details.php', $order, $sent_to_admin, $plain_text, $tracking_item, $wcast_show_product_image, $wcast_show_order_details );
+			$message .= $this->get_order_details_template( 'emails/tswc-email-order-details.php', $order, $sent_to_admin, $plain_text, $tracking_item, $wcast_show_product_image, $wcast_show_order_details, $new_status );
 		}
 
 		$message.= wc_get_template_html(
@@ -240,9 +239,9 @@ class WC_TrackShip_Email_Manager {
 			$tpi_order = trackship_for_woocommerce()->front->check_if_tpi_order( $tracking_items, $order );
 			
 			if ( $tpi_order ) {
-				$message .= $this->get_order_details_template( 'emails/tswc-tpi-email-order-details.php', $order, $sent_to_admin, $plain_text, $tracking_item, $wcast_show_product_image, $wcast_show_order_details );
+				$message .= $this->get_order_details_template( 'emails/tswc-tpi-email-order-details.php', $order, $sent_to_admin, $plain_text, $tracking_item, $wcast_show_product_image, $wcast_show_order_details, $new_status );
 			} else {
-				$message .= $this->get_order_details_template( 'emails/tswc-email-order-details.php', $order, $sent_to_admin, $plain_text, $tracking_item, $wcast_show_product_image, $wcast_show_order_details );
+				$message .= $this->get_order_details_template( 'emails/tswc-email-order-details.php', $order, $sent_to_admin, $plain_text, $tracking_item, $wcast_show_product_image, $wcast_show_order_details, $new_status );
 			}
 	
 			// create a new email
@@ -290,7 +289,7 @@ class WC_TrackShip_Email_Manager {
 		return $message;
 	}
 
-	public function get_order_details_template( $template_path, $order, $sent_to_admin, $plain_text, $tracking_item, $wcast_show_product_image, $wcast_show_order_details ) {
+	public function get_order_details_template( $template_path, $order, $sent_to_admin, $plain_text, $tracking_item, $wcast_show_product_image, $wcast_show_order_details, $new_status ) {
 		$message = wc_get_template_html(
 			$template_path,
 			array(
@@ -302,6 +301,7 @@ class WC_TrackShip_Email_Manager {
 				'wcast_show_product_image' => $wcast_show_product_image,
 				'wcast_show_order_details' => $wcast_show_order_details,
 				'ts4wc_preview' => false,
+				'new_status'	=> $new_status
 			),
 			'woocommerce-advanced-shipment-tracking/', 
 			trackship_for_woocommerce()->get_plugin_path() . '/templates/'
