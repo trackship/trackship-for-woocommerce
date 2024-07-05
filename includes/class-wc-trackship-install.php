@@ -74,11 +74,6 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.8' );
 		}
 
-		if ( wp_next_scheduled( 'trackship_late_shipments_hook' ) ) {
-			$Late_Shipments = new WC_TrackShip_Late_Shipments();
-			$Late_Shipments->remove_cron();
-			$Late_Shipments->setup_cron();
-		}
 		if ( version_compare( get_option( 'trackship_db' ), '1.13', '<' ) ) {
 			// migration to change api key name 
 			$trackship_apikey = get_option( 'wc_ast_api_key' );			
@@ -342,22 +337,12 @@ class WC_Trackship_Install {
 			delete_trackship_settings( 'wc_ast_trackship_other_page' );
 		}
 		
-		if ( version_compare( get_option( 'trackship_db' ), '1.32', '<' ) ) {
-			update_trackship_settings( 'trackship_db', '1.32' );
-			update_option( 'trackship_db', '1.32' );
-
-			delete_trackship_settings( 'ts_review_ignore' );
-		}
-
 		if ( version_compare( get_option( 'trackship_db' ), '1.33', '<' ) ) {
 			update_trackship_settings( 'trackship_db', '1.33' );
 			update_option( 'trackship_db', '1.33' );
-
+			
+			delete_trackship_settings( 'ts_review_ignore' );
 			delete_trackship_settings( 'ts_bulk_send_ignore' );
-			$status = get_trackship_settings( 'trackship_trigger_order_statuses' );
-			if ( !$status ) {
-				update_trackship_settings( 'trackship_trigger_order_statuses', ['completed', 'partial-shipped', 'shipped'] );
-			}
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.34', '<' ) ) {
@@ -366,6 +351,16 @@ class WC_Trackship_Install {
 
 			if ( $wpdb->get_var( "SHOW COLUMNS FROM {$wpdb->prefix}trackship_shipment LIKE 'shipping_date';" ) ) {
 				$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment MODIFY `shipping_date` DATE DEFAULT NULL;" );
+			}
+		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.35', '<' ) ) {
+			update_trackship_settings( 'trackship_db', '1.35' );
+			update_option( 'trackship_db', '1.35' );
+
+			$valid_order_statuses = get_trackship_settings( 'trackship_trigger_order_statuses' );
+			if ( empty( $valid_order_statuses ) ) {
+				update_trackship_settings( 'trackship_trigger_order_statuses', ['completed', 'partial-shipped', 'shipped'] );
 			}
 		}
 	}
