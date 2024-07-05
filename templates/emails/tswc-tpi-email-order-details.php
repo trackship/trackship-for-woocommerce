@@ -33,12 +33,13 @@ if ( !empty($kt_woomail) && isset( $kt_woomail['font_size'] ) ) {
 	$table_font_size = 'font-size:' . $kt_woomail['font_size'] . 'px';
 }
 $shipped_product_label = get_option( 'shipped_product_label', __( 'Items in this shipment', 'trackship-for-woocommerce' ) );
+$shipped_product_label = apply_filters( 'ts_shipped_product_label', $shipped_product_label, $new_status );
 $class = $ts4wc_preview ? 'hide' : '';
 ?>
 <div class="ts4wc_shipped_products <?php echo !$wcast_show_order_details ? esc_attr($class) : ''; ?>">
 	<h2 class="shipment_email_shipped_product_label"><?php esc_html_e( $shipped_product_label ); ?></h2>
 	<?php foreach ( $tracking_items as $tracking_item ) { ?>
-		<div style="margin-bottom: 20px;">			
+		<div style="margin-bottom: 20px;">
 			<table class="td" cellspacing="0" cellpadding="6" style="background-color: transparent;width: 100%; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;border:0;<?php echo esc_html( $table_font_size ); ?>" border="0">
 				<tbody>
 					<?php 
