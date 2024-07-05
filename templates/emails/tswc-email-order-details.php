@@ -33,6 +33,7 @@ if ( !empty($kt_woomail) && isset( $kt_woomail['font_size'] ) ) {
 	$table_font_size = 'font-size:' . $kt_woomail['font_size'] . 'px';
 }
 $shipped_product_label = get_option( 'shipped_product_label', __( 'Items in this shipment', 'trackship-for-woocommerce' ) );
+$shipped_product_label = apply_filters( 'ts_shipped_product_label', $shipped_product_label, $new_status );
 $class = $ts4wc_preview ? 'hide' : '';
 ?>
 <br>

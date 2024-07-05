@@ -137,6 +137,7 @@ class TSWC_Email_Customizer_Preview {
 				'email'         => $email,
 				'wcast_show_product_image' => $wcast_show_product_image,
 				'wcast_show_order_details' => $wcast_show_order_details,
+				'new_status'	=> 'pickup_reminder' == $status ? 'available_for_pickup' : $status,
 				'ts4wc_preview' => true,
 			),
 			'woocommerce-advanced-shipment-tracking/', 

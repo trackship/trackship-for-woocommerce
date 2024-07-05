@@ -249,6 +249,27 @@ class WC_Trackship_Actions {
 		if ( ! wp_next_scheduled( 'scheduled_cron_shipment_length' ) ) {
 			wp_schedule_event( time(), 'daily', 'scheduled_cron_shipment_length' );
 		}
+		
+		$hooks = array(
+			'late_shipments_digest_time'		=> 'trackship_late_shipments_hook',
+			'exception_shipments_digest_time'	=> 'trackship_exception_shipments_hook',
+			'on_hold_shipments_digest_time'		=> 'trackship_on_hold_shipments_hook',
+		);
+
+		foreach ( $hooks as $key => $hook ) {
+			$daily_digest_time = get_trackship_settings( $key, '10' );
+
+			$first_cron = new DateTime( gmdate( 'Y-m-d' ) . ' ' . $daily_digest_time . ':00', new DateTimeZone( wc_timezone_string() ) );
+			$first_cron->setTimeZone(new DateTimeZone('GMT'));
+			$time = new DateTime( gmdate( 'Y-m-d H:i:s' ), new DateTimeZone( wc_timezone_string() ) );
+			if ( $time->getTimestamp() >  $first_cron->getTimestamp() ) {
+				$first_cron->modify( '+1 day' );
+			}
+
+			if ( ! wp_next_scheduled( $hook ) ) {
+				wp_schedule_event( $first_cron->format( 'U' ) + $first_cron->getOffset(), 'daily', $hook );
+			}
+		}
 	}
 	
 	/*

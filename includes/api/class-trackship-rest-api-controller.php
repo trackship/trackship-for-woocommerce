@@ -76,11 +76,31 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		
 		$trackship = new WC_Trackship_Actions();
 		$trackship->create_tracking_page();
+
+		$hooks = array(
+			'trackship_late_shipments_hook',
+			'trackship_exception_shipments_hook',
+			'trackship_on_hold_shipments_hook',
+			'scheduled_cron_shipment_length'
+		);
+		
+		$ts_cron = array();
+		
+		foreach ($hooks as $hook) {
+			$timestamp = wp_next_scheduled($hook);
+			if ($timestamp) {
+				$next_run = date('Y-m-d H:i:s', $timestamp + wc_timezone_offset());
+				$ts_cron[$hook] = $next_run;
+			} else {
+				$ts_cron[$hook] = 'Not scheduled';
+			}
+		}
 		
 		//check which shipment tracking plugin active
 		$plugin = 'tswc';
 		$version_info = [];
 		$version_info['ts4wc'] = trackship_for_woocommerce()->version;
+		$version_info['wc'] = WC_VERSION;
 		$version_info['site_url'] = get_site_url();
 		$version_info['home_url'] = get_home_url();
 		$version_info['trackship_db'] = get_option( 'trackship_db' );
@@ -142,6 +162,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		$data = array(
 			'status'		=> 'installed',
 			'plugin'		=> $plugin,
+			'ts_cron'		=> $ts_cron,
 			'execution_time'=> microtime(true) - $REQUEST_TIME_FLOAT,
 			'version_info'	=> $version_info,
 			'server_info'	=> $server_info,
