@@ -4,7 +4,7 @@ Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order trackin
 Requires at least: 6.2
 Tested up to: 6.5.4
 Requires PHP: 7.4
-Stable tag: 1.8.2
+Stable tag: 1.8.3
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -133,6 +133,13 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended.
 
 == Changelog ==
+= 1.8.3 - 2024-07-05 =
+* Dev - Implemented a filter to update the text of items in shipments for specific statuses (ts_shipped_product_label).
+* Dev - Updated and improved the Swedish language translation.
+* Dev - Enhanced cron job processes for sending emails related to late shipments, exceptions, and on-hold shipments.
+* Dev - Tested compatibility with WooCommerce version 6.5.5.
+* Dev - Tested compatibility with WooCommerce version 9.0.2.
+
 = 1.8.2 - 2024-06-19 =
 * Dev - Prioritized the font color for the TrackShip email track button.
 * Dev - Set the default value for shipping_date to null in the TrackShip shipment table.
