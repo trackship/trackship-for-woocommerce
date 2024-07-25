@@ -5,16 +5,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WC_Trackship_Shipments {
 
-	public $shipment_table;
-	public $shipment_meta;
-
 	/**
 	 * Initialize the main plugin function
 	*/
 	public function __construct() {
 		global $wpdb;
-		$this->shipment_table = $wpdb->prefix . 'trackship_shipment';
-		$this->shipment_meta = $wpdb->prefix . 'trackship_shipment_meta';
 	}
 	
 	/**
@@ -62,7 +57,7 @@ class WC_Trackship_Shipments {
 			return;
 		}
 		
-		$user_plan = get_option( 'user_plan' );
+		// $user_plan = get_option( 'user_plan' );
 		
 		// Rubik font
 		wp_enqueue_style( 'custom-google-fonts', 'https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap', array(), time() );
@@ -98,7 +93,7 @@ class WC_Trackship_Shipments {
 		wp_enqueue_script( 'shipments_script', trackship_for_woocommerce()->plugin_dir_url() . '/includes/shipments/assets/js/shipments.js', array( 'jquery' ), trackship_for_woocommerce()->version, true );
 		wp_localize_script('shipments_script', 'shipments_script', array(
 			'admin_url'	=> admin_url(),
-			'user_plan'	=> $user_plan,
+			// 'user_plan'	=> $user_plan,
 		));
 	}
 	
@@ -107,8 +102,6 @@ class WC_Trackship_Shipments {
 		check_ajax_referer( '_trackship_shipments', 'ajax_nonce' );
 		
 		global $wpdb;
-		$woo_trackship_shipment = $this->shipment_table;
-		$meta_table = $this->shipment_meta;
 
 		$p_start = isset( $_POST['start'] ) ? sanitize_text_field( $_POST['start'] ) : '';
 		$p_length = isset( $_POST['length'] ) ? sanitize_text_field( $_POST['length'] ) : '';
@@ -170,24 +163,17 @@ class WC_Trackship_Shipments {
 
 		$result = array();
 		$i = 0;
-		$total_data = 1;
 		
 		foreach ( $order_query as $key => $value ) {
 			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $value->order_id );
-			if ( !$tracking_items ) {
-				continue;
-			}
+			// if ( !$tracking_items ) {
+			// 	continue;
+			// }
 			$status = $value->pending_status ? $value->pending_status : $value->shipment_status;
-			foreach ( $tracking_items as $key1 => $val1 ) {
-				if ( $val1['tracking_number'] == $value->tracking_number ) {
-					$tracking_url = $val1['tracking_page_link'] ? $val1['tracking_page_link'] : $val1['formatted_tracking_link'];
-					$provider_name = $value->shipping_provider;
-					// print_r($provider_name);
-					$formatted_provider = trackship_for_woocommerce()->actions->get_provider_name( $provider_name );
-					$tracking_provider = isset($formatted_provider) && $formatted_provider ? $formatted_provider : $provider_name;
-					$tracking_number_colom = '<span class="copied_tracking_numnber dashicons dashicons-admin-page" data-number="' . $value->tracking_number . '"></span><a class="open_tracking_details shipment_tracking_number" data-tracking_id="' . $val1['tracking_id'] . '" data-orderid="' . $value->order_id . '" data-tnumber="' . $value->tracking_number . '" data-nonce="' . wp_create_nonce( 'tswc-' . $value->order_id ) . '">' . $value->tracking_number . '</a>';
-				}
-			}
+			
+			$tracking_number_colom = '<span class="copied_tracking_numnber dashicons dashicons-admin-page" data-number="' . $value->tracking_number . '"></span><a class="open_tracking_details shipment_tracking_number" data-orderid="' . $value->order_id . '" data-tnumber="' . $value->tracking_number . '" data-nonce="' . wp_create_nonce( 'tswc-' . $value->order_id ) . '">' . $value->tracking_number . '</a>';
+			$provider_name = $value->shipping_provider;
+			$tracking_provider = trackship_for_woocommerce()->actions->get_provider_name( $provider_name );
 			
 			$last_event = '';
 			if ( $value->last_event ) {
@@ -230,7 +216,6 @@ class WC_Trackship_Shipments {
 			$result[$i]->shipment_length = '<span class="shipment_length ' . $late_class . '">' . $late_shipment . $shipping_length . '</span>';
 			$result[$i]->formated_tracking_provider = $tracking_provider;
 			$result[$i]->tracking_number_colom = $tracking_number_colom;
-			$result[$i]->tracking_url = $tracking_url;
 			$result[$i]->est_delivery_date = $value->est_delivery_date ? date_i18n( $date_format, strtotime( $value->est_delivery_date ) ) : '';
 			$result[$i]->ship_from = $ori_country ? $this->get_flag_icon( $ori_country ) : '';
 			$result[$i]->ship_to = $dest_country ? $this->get_flag_icon( $dest_country ) : '';
