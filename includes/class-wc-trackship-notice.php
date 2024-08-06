@@ -81,7 +81,7 @@ class WC_TrackShip_Admin_Notice {
 		}
 
 		$nonce = wp_create_nonce('ts_dismiss_notice');
-		$dismissable_url = esc_url( add_query_arg( [ 'ts-review-ignore' => 'true',  'nonce' => $nonce ] ) );
+		$dismissable_url = esc_url( add_query_arg( [ 'ts-review-ignore' => 'true', 'nonce' => $nonce ] ) );
 		$url = 'https://wordpress.org/support/plugin/trackship-for-woocommerce/reviews/#new-post';
 		?>
 		<style>
@@ -126,7 +126,7 @@ class WC_TrackShip_Admin_Notice {
 			return;
 		}
 		$nonce = wp_create_nonce('ts_dismiss_notice');
-		$dismissable_url = esc_url( add_query_arg( [ 'ts-upgrade-ignore' => 'true',  'nonce' => $nonce ] ) );
+		$dismissable_url = esc_url( add_query_arg( [ 'ts-upgrade-ignore' => 'true', 'nonce' => $nonce ] ) );
 		$url = 'https://my.trackship.com/settings/#billing';
 		?>
 		<style>

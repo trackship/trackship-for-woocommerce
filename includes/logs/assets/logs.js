@@ -7,10 +7,10 @@
 			overlayCSS: {
 				background: "#fff",
 				opacity: 0.6
-			}	
+			}
 		});
 		return this;
-	}; 
+	};
 })( jQuery );
 
 jQuery(document).ready(function() {
@@ -40,7 +40,7 @@ jQuery(document).ready(function() {
 		"drawCallback": function(settings) {
 			jQuery(window).resize();
 			jQuery("#trackship_notifications_logs").unblock();
-		},		
+		},
 		oLanguage: {
 			sProcessing: '<div id=loader><div class="fa-3x"><i class="fas fa-sync fa-spin"></i></div>',
 			"sEmptyTable": "No data is available for this status",
@@ -49,28 +49,40 @@ jQuery(document).ready(function() {
 		"columns":[
 			{
 				"width": "100px",
-				'orderable': false,		
-				'data': 'order_id',
-			},			
+				'orderable': false,
+				"mRender":function(data,type,full) {
+					return '<a href="'+shipments_script.admin_url+'post.php?post='+full.order_id+'&action=edit" target="_blank">' + full.order_number + '</a>';
+				},
+			},
 			{
 				"width": "160px",
-				'orderable': false,	
-				'data': 'shipment_status',									
-			},	
+				'orderable': false,
+				'data': 'shipment_status',
+			},
 			{
 				"width": "185px",
-				'orderable': false,	
-				'data': 'date',				
-			},	
+				'orderable': false,
+				"mRender":function(data,type,full) {
+					var condi_time = '<time title="' + full.date.time1 + '">' + full.date.time2 + '</time>';
+					if ( 60 > full.date.time_diff ) {
+						var condi_time = '<time title="' + full.date.time1 + '">' + full.date.time_diff + ' seconds ago</time>';
+					} else if ( 3600 > full.date.time_diff ) {
+						var condi_time = '<time title="' + full.date.time1 + '">' + Math.floor( full.date.time_diff/60 ) + ' mins ago</time>';
+					} else if ( 60*60*24 > full.date.time_diff ) {
+						var condi_time = '<time title="' + full.date.time1 + '">' + Math.floor( full.date.time_diff/( 60*60 ) ) + ' hours ago</time>';
+					}
+					return condi_time;
+				},
+			},
 			{
 				"width": "185px",
-				'orderable': false,		
+				'orderable': false,
 				'data': 'to',
-			},	
+			},
 			{
 				"width": "100px",
-				'orderable': false,		
-				'data': 'type',				
+				'orderable': false,
+				'data': 'type',
 			},
 			{
 				"width": "100px",
@@ -81,25 +93,28 @@ jQuery(document).ready(function() {
 				"width": "70px",
 				'orderable': false,
 				'data': 'action_button',
+				"mRender":function(data,type,full) {
+					return '<span class="get_log_detail dashicons dashicons-visibility" data-rowid="' + full.id + '" data-orderid="' + full.order_id + '"></span>';
+				},
 			},
 		],
 	});
 
 	jQuery(document).on("click", ".serch_button", function(){
 		jQuery(document).ajax_loader("#trackship_notifications_logs");
-		$table.ajax.reload();		
+		$table.ajax.reload();
 	});
 	jQuery(document).on("change", "#log_shipment_status", function(){
 		jQuery(document).ajax_loader("#trackship_notifications_logs");
-		$table.ajax.reload();		
+		$table.ajax.reload();
 	});
 	jQuery(document).on("change", "#log_type", function(){
 		jQuery(document).ajax_loader("#trackship_notifications_logs");
-		$table.ajax.reload();		
+		$table.ajax.reload();
 	});
 	jQuery(document).on("change", "#tab_trackship_logs", function(){
 		jQuery(document).ajax_loader("#trackship_notifications_logs");
-		$table.ajax.reload();		
+		$table.ajax.reload();
 	});
 	jQuery("#search_bar").keyup(function(event) {
 		if ( jQuery(this).val() ) {
@@ -124,8 +139,8 @@ jQuery(document).on("click", ".trackship_logs .get_log_detail", function(){
 		security: jQuery("#nonce_trackship_logs").val(),
 	};
 	jQuery.ajax({
-		url: ajaxurl,		
-		data: ajax_data,		
+		url: ajaxurl,
+		data: ajax_data,
 		type: 'POST',
 		success: function(response) {
 			jQuery('.trackship_logs_details .order_id span').html(response.order_number);

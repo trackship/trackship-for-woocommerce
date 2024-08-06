@@ -19,9 +19,9 @@ if ( ! class_exists( 'SMSWOO_Sms_Gateway' ) ) {
 	/**
 	 * Smswoo SMS Gateway abstract class
 	 *
-	 * @class   SMSWOO_Sms_Gateway
+	 * @class SMSWOO_Sms_Gateway
 	 * @package zorem
-	 * @since   1.0.0
+	 * @since 1.0.0
 	 *
 	 */
 	abstract class SMSWOO_Sms_Gateway {
@@ -37,30 +37,30 @@ if ( ! class_exists( 'SMSWOO_Sms_Gateway' ) ) {
 		/**
 		 * Constructor
 		 *
-		 * @since   1.0
-		 * @return  void
+		 * @since 1.0
+		 * @return void
 		 */
 		public function __construct() {
 
-			$this->_from_asid   = substr( get_option( 'smswoo_from_asid' ), 0, 11 );
+			$this->_from_asid = substr( get_option( 'smswoo_from_asid' ), 0, 11 );
 			//$this->_from_number = preg_replace( '[\D]', '', get_option( 'smswoo_sender_phone_number' ) );
 			$this->_from_number = get_option( 'smswoo_sender_phone_number' );
 			
-			$this->_logger      = wc_get_logger();
+			$this->_logger	= wc_get_logger();
 
 		}
 
 		/**
 		 * Send SMS
 		 *
-		 * @since   1.0
+		 * @since 1.0
 		 *
-		 * @param   $to_phone     string
-		 * @param   $message      string
-		 * @param   $country_code string
+		 * @param $to_phone string
+		 * @param $message string
+		 * @param $country_code string
 		 *
-		 * @return  void
-		 * @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
+		 * @return void
+		 * @throws Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
 		 */
 		public function send( $to_phone, $message, $country_code ) {
 
@@ -71,12 +71,12 @@ if ( ! class_exists( 'SMSWOO_Sms_Gateway' ) ) {
 		/**
 		 * Validate number
 		 *
-		 * @since   1.0
+		 * @since 1.0
 		 *
-		 * @param   $to_phone     string
+		 * @param $to_phone string
 		 *
-		 * @return  void
-		 * @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
+		 * @return void
+		 * @throws Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
 		 */
 		public function validate_number( $to_phone ) {
 
@@ -87,11 +87,11 @@ if ( ! class_exists( 'SMSWOO_Sms_Gateway' ) ) {
 		/**
 		 * Add log send log
 		 *
-		 * @since   1.0.0
+		 * @since 1.0.0
 		 *
-		 * @param   $args
+		 * @param $args
 		 *
-		 * @return  void
+		 * @return void
 		 */
 		public function write_log( $args ) {
 
