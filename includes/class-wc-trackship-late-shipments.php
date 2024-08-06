@@ -17,7 +17,7 @@ class WC_TrackShip_Late_Shipments {
 	/**
 	 * Get the class instance
 	 *
-	 * @since  1.0
+	 * @since 1.0
 	 * @return WC_TrackShip_Late_Shipments
 	*/
 	public static function get_instance() {
@@ -31,8 +31,8 @@ class WC_TrackShip_Late_Shipments {
 	/**
 	 * Initialize the main plugin function
 	 * 
-	 * @since  1.0
-	 * @return  void
+	 * @since 1.0
+	 * @return void
 	*/
 	public function __construct() {
 		$this->init();
@@ -41,7 +41,7 @@ class WC_TrackShip_Late_Shipments {
 	/*
 	 * init function
 	 *
-	 * @since  1.0
+	 * @since 1.0
 	*/
 	public function init() {
 		
@@ -64,7 +64,7 @@ class WC_TrackShip_Late_Shipments {
 	/**
 	 * Remove the Cron
 	 *
-	 * @since  1.0.0
+	 * @since 1.0.0
 	 */
 	public function remove_cron() {
 		wp_clear_scheduled_hook( 'ast_late_shipments_cron_hook' );
@@ -74,7 +74,7 @@ class WC_TrackShip_Late_Shipments {
 	/**
 	 * Setup the Cron
 	 * 
-	 * @since  1.0.0
+	 * @since 1.0.0
 	 */
 	public function setup_cron() {
 
@@ -91,7 +91,7 @@ class WC_TrackShip_Late_Shipments {
 			$first_cron->setTimeZone(new DateTimeZone('GMT'));
 			$time = new DateTime( gmdate( 'Y-m-d H:i:s' ), new DateTimeZone( wc_timezone_string() ) );
 			
-			if ( $time->getTimestamp() >  $first_cron->getTimestamp() ) {
+			if ( $time->getTimestamp() > $first_cron->getTimestamp() ) {
 				$first_cron->modify( '+1 day' );
 			}
 
@@ -180,7 +180,7 @@ class WC_TrackShip_Late_Shipments {
 		$plain_text = false;
 
 		//Email Subject
-		$subject =  __( 'Late shipment', 'trackship-for-woocommerce' );
+		$subject = __( 'Late shipment', 'trackship-for-woocommerce' );
 		// Email heading
 		/* translators: %s: search for a count */
 		$email_heading = sprintf( __( 'We detected %d late shipments:', 'trackship-for-woocommerce' ) , $count );

@@ -24,7 +24,7 @@ class TSWC_SMSWoo_SMS_Notification {
 	/**
 	 * Initialize the main plugin function
 	 * 
-	 * @since  1.0
+	 * @since 1.0
 	*/
 	public function __construct() {
 		$this->init();
@@ -33,7 +33,7 @@ class TSWC_SMSWoo_SMS_Notification {
 	/**
 	 * Get the class instance
 	 *
-	 * @since  1.0
+	 * @since 1.0
 	 * @return TSWC_SMSWoo_SMS_Notification
 	*/
 	public static function get_instance() {
@@ -48,7 +48,7 @@ class TSWC_SMSWoo_SMS_Notification {
 	/*
 	 * init function
 	 *
-	 * @since  1.0
+	 * @since 1.0
 	*/
 	public function init() {
 		
@@ -70,28 +70,28 @@ class TSWC_SMSWoo_SMS_Notification {
 	public function replace_message_variables( $message ) {
 
 		$replacements = array(
-			'%shop_name%'       => get_bloginfo( 'name' ),
-			'%order_id%'        => $this->order->get_order_number(),
-			'%order_count%'     => $this->order->get_item_count(),
-			'%order_amount%'    => $this->order->get_total(),
-			'%order_status%'    => wc_get_order_status_name( $this->order->get_status() ),
-			'%billing_name%'    => $this->order->get_formatted_billing_full_name(),
-			'%shipping_name%'   => $this->order->get_formatted_shipping_full_name(),
-			'%shipping_method%' => $this->order->get_shipping_method(),
-			'%billing_first%'   => $this->order->get_billing_first_name( 'edit' ),
-			'%billing_last%'    => $this->order->get_billing_last_name( 'edit' ),
-			'{shop_name}'       => get_bloginfo( 'name' ),
-			'{order_id}'        => $this->order->get_order_number(),
-			'{order_count}'     => $this->order->get_item_count(),
-			'{order_amount}'    => $this->order->get_total(),
-			'{order_status}'    => wc_get_order_status_name( $this->order->get_status() ),
-			'{billing_name}'    => $this->order->get_formatted_billing_full_name(),
-			'{shipping_name}'   => $this->order->get_formatted_shipping_full_name(),
+			'%shop_name%'		=> get_bloginfo( 'name' ),
+			'%order_id%'		=> $this->order->get_order_number(),
+			'%order_count%'		=> $this->order->get_item_count(),
+			'%order_amount%'	=> $this->order->get_total(),
+			'%order_status%'	=> wc_get_order_status_name( $this->order->get_status() ),
+			'%billing_name%'	=> $this->order->get_formatted_billing_full_name(),
+			'%shipping_name%'	=> $this->order->get_formatted_shipping_full_name(),
+			'%shipping_method%'	=> $this->order->get_shipping_method(),
+			'%billing_first%'	=> $this->order->get_billing_first_name( 'edit' ),
+			'%billing_last%'	=> $this->order->get_billing_last_name( 'edit' ),
+			'{shop_name}'		=> get_bloginfo( 'name' ),
+			'{order_id}'		=> $this->order->get_order_number(),
+			'{order_count}'		=> $this->order->get_item_count(),
+			'{order_amount}'	=> $this->order->get_total(),
+			'{order_status}'	=> wc_get_order_status_name( $this->order->get_status() ),
+			'{billing_name}'	=> $this->order->get_formatted_billing_full_name(),
+			'{shipping_name}'	=> $this->order->get_formatted_shipping_full_name(),
 			'{shipping_method}' => $this->order->get_shipping_method(),
-			'{billing_first}'   => $this->order->get_billing_first_name( 'edit' ),
-			'{billing_last}'    => $this->order->get_billing_last_name( 'edit' ),
-			'{shipping_first}'   => $this->order->get_shipping_first_name( 'edit' ),
-			'{shipping_last}'    => $this->order->get_shipping_last_name( 'edit' ),
+			'{billing_first}'	=> $this->order->get_billing_first_name( 'edit' ),
+			'{billing_last}'	=> $this->order->get_billing_last_name( 'edit' ),
+			'{shipping_first}'	=> $this->order->get_shipping_first_name( 'edit' ),
+			'{shipping_last}'	=> $this->order->get_shipping_last_name( 'edit' ),
 		);
 
 		/**
@@ -99,16 +99,16 @@ class TSWC_SMSWoo_SMS_Notification {
 		 *
 		 * @since 1.0
 		 * @param array $replacements {
-		 *     The replacements in 'placeholder' => 'replacement' format.
+		 * The replacements in 'placeholder' => 'replacement' format.
 		 *
-		 *     @type string %shop_name%       The site name.
-		 *     @type int    %order_id%        The order ID.
-		 *     @type int    %order_count%     The total number of items ordered.
-		 *     @type string %order_amount%    The order total.
-		 *     @type string %order_status%    The order status.
-		 *     @type string %billing_name%    The billing first and last name.
-		 *     @type string %shipping_name%   The shipping first and last name.
-		 *     @type string %shipping_method% The shipping method name.
+		 * @type string %shop_name% The site name.
+		 * @type int %order_id% The order ID.
+		 * @type int %order_count% The total number of items ordered.
+		 * @type string %order_amount% The order total.
+		 * @type string %order_status% The order status.
+		 * @type string %billing_name% The billing first and last name.
+		 * @type string %shipping_name% The shipping first and last name.
+		 * @type string %shipping_method% The shipping method name.
 		 * }
 		 */
 		$replacements = apply_filters( 'smswoo_sms_message_replacements', $replacements, $this );
@@ -135,7 +135,7 @@ class TSWC_SMSWoo_SMS_Notification {
 			$replacements[ '%shipping_provider%' ] = $tracking_provider;
 			$replacements[ '{shipping_provider}' ] = $tracking_provider;
 			
-			$tracking_link = $tracking_item['tracking_page_link'] ?  $tracking_item['tracking_page_link'] : $tracking_item['formatted_tracking_link'];
+			$tracking_link = $tracking_item['tracking_page_link'] ? $tracking_item['tracking_page_link'] : $tracking_item['formatted_tracking_link'];
 			$replacements[ '%tracking_link%' ] = $tracking_link;
 			$replacements[ '{tracking_link}' ] = $tracking_link;
 		}
@@ -178,12 +178,12 @@ class TSWC_SMSWoo_SMS_Notification {
 	/**
 	 * Send SMS
 	 *
-	 * @since   1.0.0
+	 * @since 1.0.0
 	 *
-	 * @param   $phone   string
-	 * @param   $message string
+	 * @param $phone string
+	 * @param $message string
 	 *
-	 * @return  boolean
+	 * @return boolean
 	 */
 	private function send_sms( $phone, $message ) {
 		
@@ -207,7 +207,7 @@ class TSWC_SMSWoo_SMS_Notification {
 		$sms_gateway = new $sms_provider();
 
 		$sms_gateway->new_status = $this->new_status;
-		$order_id    = ! empty( $this->order ) ? $this->order->get_id() : '';
+		$order_id = ! empty( $this->order ) ? $this->order->get_id() : '';
 
 		$this->_sms_length = 160;
 
@@ -231,7 +231,7 @@ class TSWC_SMSWoo_SMS_Notification {
 		} catch ( Exception $e ) {
 
 			$status_message = $e->getMessage();
-			$success        = false;
+			$success = false;
 
 		}
 
@@ -269,9 +269,9 @@ class TSWC_SMSWoo_SMS_Notification {
 	/**
 	 * SMS provider
 	 *
-	 * @since   1.0
+	 * @since 1.0
 	 *
-	 * @return  string provider class
+	 * @return string provider class
 	 */
 	public function get_sms_provider() {
 		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
@@ -279,7 +279,7 @@ class TSWC_SMSWoo_SMS_Notification {
 		}
 		
 		if ( empty( $this->_sms_gateway ) ) {
-			$this->_sms_gateway  = get_option( 'smswoo_sms_provider' );
+			$this->_sms_gateway = get_option( 'smswoo_sms_provider' );
 		}
 		
 		return $this->_sms_gateway;
@@ -289,7 +289,7 @@ class TSWC_SMSWoo_SMS_Notification {
 	 * Trigger sms on shipment status change
 	 * send shipment status notificaion 
 	 *
-	 * @since   1.0
+	 * @since 1.0
 	 *
 	 *
 	 */
@@ -364,11 +364,11 @@ class TSWC_SMSWoo_SMS_Notification {
 	/**
 	 * Check if customer opt-in for SMS
 	 *
-	 * @since   1.0.0
+	 * @since 1.0.0
 	 *
-	 * @param   $order_id integer
+	 * @param $order_id integer
 	 *
-	 * @return  boolean
+	 * @return boolean
 	 */
 	public function user_subscribed_sms( $order_id ) {
 
@@ -379,11 +379,11 @@ class TSWC_SMSWoo_SMS_Notification {
 	/**
 	 * Format a number to E.164 format
 	 *
-	 * @since   1.0.0
+	 * @since 1.0.0
 	 *
-	 * @param   $phone string
+	 * @param $phone string
 	 *
-	 * @return  string
+	 * @return string
 	 */
 	private function format_phone_number( $phone ) {
 
@@ -421,11 +421,11 @@ class TSWC_SMSWoo_SMS_Notification {
 	/**
 	 * Check if some country has special cases
 	 *
-	 * @since   1.0.6
+	 * @since 1.0.6
 	 *
-	 * @param   $phone string
+	 * @param $phone string
 	 *
-	 * @return  string
+	 * @return string
 	 */
 	private function country_special_cases( $phone ) {
 

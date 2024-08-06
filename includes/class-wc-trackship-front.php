@@ -945,7 +945,7 @@ class WC_TrackShip_Front {
 	 * Function for check if order is Shipped and order has only 1 Shipment
 	 */
 	public function shipped_order_has_one_shipment( $tracking_items, $order ) {
-		$order_status  = $order->get_status();
+		$order_status = $order->get_status();
 		if ( 1 == count( $tracking_items ) && in_array( $order_status, apply_filters( 'allowed_order_status_for_delivered', array( 'completed', 'updated-tracking', 'shipped', 'delivered' ) ) ) ) {
 			return true;
 		}

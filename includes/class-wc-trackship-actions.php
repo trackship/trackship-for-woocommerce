@@ -262,7 +262,7 @@ class WC_Trackship_Actions {
 			$first_cron = new DateTime( gmdate( 'Y-m-d' ) . ' ' . $daily_digest_time . ':00', new DateTimeZone( wc_timezone_string() ) );
 			$first_cron->setTimeZone(new DateTimeZone('GMT'));
 			$time = new DateTime( gmdate( 'Y-m-d H:i:s' ), new DateTimeZone( wc_timezone_string() ) );
-			if ( $time->getTimestamp() >  $first_cron->getTimestamp() ) {
+			if ( $time->getTimestamp() > $first_cron->getTimestamp() ) {
 				$first_cron->modify( '+1 day' );
 			}
 
@@ -1609,7 +1609,7 @@ class WC_Trackship_Actions {
 	}
 
 	public function ast_tracking_link( $formatted_tracking_link, $tracking_number, $order_id, $trackship_supported ) {
-		if ( $trackship_supported && is_trackship_connected() ) {
+		if ( is_trackship_connected() ) {
 			$tracking_page_link = $this->get_tracking_page_link( $order_id, $tracking_number );
 			$formatted_tracking_link = $tracking_page_link ? $tracking_page_link : $formatted_tracking_link;
 		}

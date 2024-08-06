@@ -87,7 +87,7 @@ class WC_Trackship_Install {
 		if ( version_compare( get_option( 'trackship_db' ), '1.16', '<' ) ) {
 			$result = $wpdb->get_col(
 				"SELECT t.order_id FROM {$wpdb->prefix}trackship_shipment t
-				LEFT JOIN {$wpdb->prefix}trackship_shipment_meta m  
+				LEFT JOIN {$wpdb->prefix}trackship_shipment_meta m
 				ON t.id = m.meta_id
 				WHERE (m.tracking_events IS NULL OR m.tracking_events = '')
 					AND t.shipping_date >= DATE_SUB(NOW(), INTERVAL 60 DAY)
