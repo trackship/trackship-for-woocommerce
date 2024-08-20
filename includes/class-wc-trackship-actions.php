@@ -1609,7 +1609,7 @@ class WC_Trackship_Actions {
 	}
 
 	public function ast_tracking_link( $formatted_tracking_link, $tracking_number, $order_id, $trackship_supported ) {
-		if ( is_trackship_connected() ) {
+		if ( $trackship_supported && is_trackship_connected() ) {
 			$tracking_page_link = $this->get_tracking_page_link( $order_id, $tracking_number );
 			$formatted_tracking_link = $tracking_page_link ? $tracking_page_link : $formatted_tracking_link;
 		}
