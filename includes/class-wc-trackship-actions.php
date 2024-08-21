@@ -305,7 +305,7 @@ class WC_Trackship_Actions {
 			SELECT *
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE
-				shipment_status NOT IN ( 'delivered', 'pending_trackship', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'invalid_tracking', '' )
+				shipment_status NOT IN ( 'delivered', 'pending_trackship', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'label_cancelled', 'invalid_tracking', '' )
 				AND ( ship_length_updated < %s OR ship_length_updated IS NULL )
 				AND shipping_date > NOW() - INTERVAL 60 DAY
 			LIMIT 300

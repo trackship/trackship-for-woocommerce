@@ -129,12 +129,11 @@ class WC_TrackShip_Late_Shipments {
 				COUNT(*)
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE 
-				shipment_status NOT LIKE 'delivered'
-				AND shipment_status NOT LIKE 'return_to_sender'
-				AND shipment_status NOT LIKE %s
+				shipment_status NOT IN ('delivered', 'return_to_sender', 'label_cancelled', 'available_for_pickup')
 				AND late_shipment_email = %d
 				AND shipping_length > %d
-		", 'available_for_pickup', 0, $day ));
+				AND shipping_date > NOW() - INTERVAL 60 DAY
+		", 0, $day ));
 
 		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) || 0 == $count ) {
 			return;
@@ -145,13 +144,12 @@ class WC_TrackShip_Late_Shipments {
 			SELECT *
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE 
-				shipment_status NOT LIKE 'delivered'
-				AND shipment_status NOT LIKE 'return_to_sender'
-				AND shipment_status NOT LIKE %s
+				shipment_status NOT IN ('delivered', 'return_to_sender', 'label_cancelled', 'available_for_pickup')
 				AND late_shipment_email = %d
 				AND shipping_length > %d
+				AND shipping_date > NOW() - INTERVAL 60 DAY
 			LIMIT 10
-		", 'available_for_pickup', 0, $day ));
+		", 0, $day ));
 
 		//Send email for late shipment
 		$email_send = $this->late_shippment_email_trigger( $total_order, $count );
@@ -175,9 +173,6 @@ class WC_TrackShip_Late_Shipments {
 		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
 			return;
 		}
-		$logger = wc_get_logger();
-		$sent_to_admin = false;
-		$plain_text = false;
 
 		//Email Subject
 		$subject = __( 'Late shipment', 'trackship-for-woocommerce' );
