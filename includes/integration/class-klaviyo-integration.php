@@ -116,7 +116,7 @@ class WOO_Klaviyo_TS4WC {
 						'delivery_provider'				=> $row->delivery_provider,
 						'shipping_service'				=> $row->shipping_service,
 						'last_event_time'				=> $row->last_event_time,
-						'products'						=> $products_array,
+						'products'						=> array_values($products_array),
 					),
 					'metric' => array(
 						'data' => array(
