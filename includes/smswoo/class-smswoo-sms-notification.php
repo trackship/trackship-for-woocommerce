@@ -58,6 +58,8 @@ class TSWC_SMSWoo_SMS_Notification {
 		//AST support for order status sms
 		add_filter( 'smswoo_sms_message_replacements', array( $this, 'ast_order_variable_support' ), 10, 2 );
 		
+		// Replace billing phone with shipping phone
+		add_filter( 'smswoo_sms_customer_phone', array( $this, 'replace_shipping_number' ), 1, 2 );
 	}
 
 	/**
@@ -360,6 +362,11 @@ class TSWC_SMSWoo_SMS_Notification {
 			}
 		}
 	}
+
+	public function replace_shipping_number( $billing_phone, $order ) {
+        $shipping_phone = $order->get_shipping_phone( 'edit' );
+        return $shipping_phone ? $shipping_phone : $billing_phone;
+    }
 	
 	/**
 	 * Check if customer opt-in for SMS
