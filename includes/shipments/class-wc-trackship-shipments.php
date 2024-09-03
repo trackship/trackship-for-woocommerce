@@ -56,6 +56,8 @@ class WC_Trackship_Shipments {
 		if ( !in_array( $page, array( 'trackship-for-woocommerce', 'trackship-shipments', 'trackship-dashboard', 'trackship-logs' ) ) ) {
 			return;
 		}
+
+		$user_plan = get_option( 'user_plan' );
 		
 		// Rubik font
 		wp_enqueue_style( 'custom-google-fonts', 'https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap', array(), time() );
@@ -91,6 +93,7 @@ class WC_Trackship_Shipments {
 		wp_enqueue_script( 'shipments_script', trackship_for_woocommerce()->plugin_dir_url() . '/includes/shipments/assets/js/shipments.js', array( 'jquery' ), trackship_for_woocommerce()->version, true );
 		wp_localize_script('shipments_script', 'shipments_script', array(
 			'admin_url'	=> admin_url(),
+			'user_plan'	=> $user_plan,
 		));
 	}
 	
