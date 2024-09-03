@@ -2,9 +2,9 @@
 Contributors: TrackShip
 Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order tracking, tracking
 Requires at least: 6.2
-Tested up to: 6.5.4
+Tested up to: 6.6.1
 Requires PHP: 7.4
-Stable tag: 1.8.3
+Stable tag: 1.8.4
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -133,6 +133,13 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended.
 
 == Changelog ==
+= 1.8.4 - 2024-09-01 =
+* Dev - Added product details to Klaviyo Webhook for better integration.
+* Dev - Prevented Late Shipment emails from sending for canceled labels.
+* Dev - Enhanced TrackShip Shipments and Logs code for improved performance.
+* Dev - Verified compatibility with WooCommerce version 6.6.1.
+* Dev - Verified compatibility with WooCommerce version 9.2.3.
+
 = 1.8.3 - 2024-07-05 =
 * Dev - Implemented a filter to update the text of items in shipments for specific statuses (ts_shipped_product_label).
 * Dev - Updated and improved the Swedish language translation.
