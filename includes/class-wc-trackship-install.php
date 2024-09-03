@@ -363,6 +363,13 @@ class WC_Trackship_Install {
 				update_trackship_settings( 'trackship_trigger_order_statuses', ['completed', 'partial-shipped', 'shipped'] );
 			}
 		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.36', '<' ) ) {
+			update_trackship_settings( 'trackship_db', '1.36' );
+			update_option( 'trackship_db', '1.36' );
+			delete_trackship_settings( 'ts_review_ignore_132' );
+			delete_trackship_settings( 'ts_popup_ignore' );
+		}
 	}
 
 	public function update_trackship_providers() {
