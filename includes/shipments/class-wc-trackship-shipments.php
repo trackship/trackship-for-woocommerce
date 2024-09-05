@@ -5,16 +5,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class WC_Trackship_Shipments {
 
-	public $shipment_table;
-	public $shipment_meta;
-
 	/**
 	 * Initialize the main plugin function
 	*/
 	public function __construct() {
 		global $wpdb;
-		$this->shipment_table = $wpdb->prefix . 'trackship_shipment';
-		$this->shipment_meta = $wpdb->prefix . 'trackship_shipment_meta';
 	}
 	
 	/**
@@ -56,12 +51,12 @@ class WC_Trackship_Shipments {
 	*/
 	public function shipments_styles( $hook ) {
 		
-		$page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
+		$page = sanitize_text_field( $_GET['page'] ?? '' );
 			
 		if ( !in_array( $page, array( 'trackship-for-woocommerce', 'trackship-shipments', 'trackship-dashboard', 'trackship-logs' ) ) ) {
 			return;
 		}
-		
+
 		$user_plan = get_option( 'user_plan' );
 		
 		// Rubik font
@@ -107,51 +102,60 @@ class WC_Trackship_Shipments {
 		check_ajax_referer( '_trackship_shipments', 'ajax_nonce' );
 		
 		global $wpdb;
-		$woo_trackship_shipment = $this->shipment_table;
-		$meta_table = $this->shipment_meta;
 
-		$p_start = isset( $_POST['start'] ) ? sanitize_text_field( $_POST['start'] ) : '';
-		$p_length = isset( $_POST['length'] ) ? sanitize_text_field( $_POST['length'] ) : '';
-
-		$limit = 'limit ' . sanitize_text_field($p_start) . ', ' . sanitize_text_field($p_length);
+		// Sanitize and assign input variables
+		$p_start = sanitize_text_field( $_POST['start'] ?? '' );
+		$p_length = sanitize_text_field( $_POST['length'] ?? '' );
+		$limit = 'LIMIT ' . $p_start . ', ' . $p_length;
 		
-		$where = array();
-		$search_bar = isset( $_POST['search_bar'] ) ? sanitize_text_field($_POST['search_bar']) : false;
+		$where = [];
+		$search_bar = sanitize_text_field( $_POST['search_bar'] ?? '' );
 		if ( $search_bar ) {
 			$where[] = "( `order_id` = '{$search_bar}' OR `order_number` = '{$search_bar}' OR `shipping_provider` LIKE ( '%{$search_bar}%' ) OR `tracking_number` = '{$search_bar}' OR `shipping_country` LIKE ( '%{$search_bar}%' ) )";
 		}
-		
+
+		// Get late shipments setting
 		$late_ship_day = get_trackship_settings( 'late_shipments_days', 7);
 		$days = $late_ship_day - 1 ;
-		$active_shipment_status = isset( $_POST['active_shipment'] ) ? sanitize_text_field( $_POST['active_shipment'] ) : '';
-		
-		if ( 'delivered' == $active_shipment_status ) {
-			$where[] = "shipment_status = ( 'delivered')";
-		} elseif ( 'late_shipment' == $active_shipment_status ) {
-			$where[] = "shipping_length > {$days}";
-		} elseif ( 'tracking_issues' == $active_shipment_status ) {
-			$where[] = "shipment_status NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' ) OR pending_status IS NOT NULL";
-		} elseif ( 'active' == $active_shipment_status ) {
-			$where[] = " shipment_status != 'delivered' ";
-		} elseif ( 'all_ship' != $active_shipment_status ) {
-			$where[] = "shipment_status = ( '{$active_shipment_status}')";
+
+		// Filter shipments by status
+		$active_shipment_status = sanitize_text_field($_POST['active_shipment'] ?? '');
+		switch ($active_shipment_status) {
+			case 'delivered':
+				$where[] = "shipment_status = 'delivered'";
+				break;
+			case 'late_shipment':
+				$where[] = "shipping_length > {$days}";
+				break;
+			case 'tracking_issues':
+				$where[] = "shipment_status NOT IN ('delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup') OR pending_status IS NOT NULL";
+				break;
+			case 'active':
+				$where[] = "shipment_status != 'delivered'";
+				break;
+			default:
+				if ($active_shipment_status !== 'all_ship') {
+					$where[] = $wpdb->prepare("shipment_status = %s", $active_shipment_status);
+				}
+				break;
 		}
 
-		$shipping_provider = isset( $_POST['shipping_provider'] ) ? sanitize_text_field( $_POST['shipping_provider'] ) : false;
+		// Filter by shipping provider
+		$shipping_provider = sanitize_text_field( $_POST['shipping_provider'] ?? '' );
 		if ( 'all' != $shipping_provider ) {
 			$where[] = "`shipping_provider` = '{$shipping_provider}'";
 		}
-		
+
 		$where_condition = !empty( $where ) ? 'WHERE ' . implode( ' AND ', $where ) : '';
 
-		$sum = $wpdb->get_var( "
-			SELECT COUNT(*) FROM {$wpdb->prefix}trackship_shipment AS row1
-			{$where_condition}
-		" );
+		// Count total records
+		$sum = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}trackship_shipment $where_condition");
 
+		// Determine the order direction
 		$column = isset( $_POST['order'][0]['column'] ) && '1' == wc_clean( $_POST['order'][0]['column'] ) ? 'order_id' : 'shipping_date';
 		$column = isset( $_POST['order'][0]['column'] ) && '3' == wc_clean( $_POST['order'][0]['column'] ) ? 'updated_at' : $column;
 
+		// Determine the order direction
 		$dir = isset( $_POST['order'][0]['dir'] ) && 'asc' == wc_clean($_POST['order'][0]['dir']) ? ' ASC' : ' DESC';
 		$order_by = $column . $dir;
 		
@@ -170,40 +174,12 @@ class WC_Trackship_Shipments {
 
 		$result = array();
 		$i = 0;
-		$total_data = 1;
 		
 		foreach ( $order_query as $key => $value ) {
-			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $value->order_id );
-			if ( !$tracking_items ) {
-				continue;
-			}
 			$status = $value->pending_status ? $value->pending_status : $value->shipment_status;
-			foreach ( $tracking_items as $key1 => $val1 ) {
-				if ( $val1['tracking_number'] == $value->tracking_number ) {
-					$tracking_url = $val1['tracking_page_link'] ? $val1['tracking_page_link'] : $val1['formatted_tracking_link'];
-					$provider_name = $value->shipping_provider;
-					// print_r($provider_name);
-					$formatted_provider = trackship_for_woocommerce()->actions->get_provider_name( $provider_name );
-					$tracking_provider = isset($formatted_provider) && $formatted_provider ? $formatted_provider : $provider_name;
-					$tracking_number_colom = '<span class="copied_tracking_numnber dashicons dashicons-admin-page" data-number="' . $value->tracking_number . '"></span><a class="open_tracking_details shipment_tracking_number" data-tracking_id="' . $val1['tracking_id'] . '" data-orderid="' . $value->order_id . '" data-tnumber="' . $value->tracking_number . '" data-nonce="' . wp_create_nonce( 'tswc-' . $value->order_id ) . '">' . $value->tracking_number . '</a>';
-				}
-			}
-			
-			$last_event = '';
-			if ( $value->last_event ) {
-				$last_event = gmdate( $date_format, strtotime( $value->last_event_time ) ) . ': ' . $value->last_event;
-				$last_event = '<span class="last_event trackship-tip" title="' . $last_event . '">' . $last_event . '</span>';
-			} else {
-				$last_event = 'N/A';
-			}
 
 			$shipping_length = in_array( $value->shipping_length, array( 0, 1 ) ) ? 'Today' : (int) $value->shipping_length . ' days';
 			$shipping_length = $value->shipping_length ? $shipping_length : '';
-			
-			$late_class = 'delivered' == $status ? '' : 'not_delivered' ;
-			$late_shipment = $late_ship_day <= $value->shipping_length ? '<span class="dashicons dashicons-info trackship-tip ' . $late_class . ' late_shipment" title="late shipment"></span>' : '';
-			
-			$active_shipment = '<a href="javascript:void(0);" class="shipments_get_shipment_status" data-orderid="' . $value->order_id . '" data-tnumber="' . $value->tracking_number . '"><span class="dashicons dashicons-update"></span></a>';
 
 			$customer = '';
 			$order = wc_get_order( $value->order_id );
@@ -211,33 +187,24 @@ class WC_Trackship_Shipments {
 				$customer = trim($order->get_formatted_shipping_full_name()) ? $order->get_formatted_shipping_full_name() : $order->get_formatted_billing_full_name();
 			}
 
-			$ori_country = $value->origin_country;
-			$dest_country = $value->destination_country;
-			$checkbox = '<input type="checkbox" class="shipment_checkbox" data-orderid="' . $value->order_id . '" data-tnumber="' . $value->tracking_number . '">';
-
-			$updated_date1 = $value->updated_at ? date_i18n( 'M d, Y', strtotime( $value->updated_at ) ) : '';
-			$updated_date2 = $value->updated_at ? date_i18n( 'M d, Y H:i:s', strtotime( $value->updated_at ) ) : '';
-			
 			$result[$i] = new \stdClass();
-			$result[$i]->et_shipped_at = '<span class="trackship-tip" title="' . date_i18n( 'M d, Y', strtotime( $value->shipping_date ) ) . '">' . date_i18n( 'M d, Y', strtotime( $value->shipping_date ) ) . '</span>';
-			$result[$i]->updated_at = $updated_date1 ? '<span class="trackship-tip" title="' . $updated_date2 . '">' . $updated_date1 . '</span>' : '';
-			$result[$i]->checkbox = $checkbox;
+			$result[$i]->et_shipped_at = date_i18n( 'M d, Y', strtotime( $value->shipping_date ) );
+			$result[$i]->updated_at = [ 'updated_date1' => $value->updated_at ? date_i18n( 'M d, Y', strtotime( $value->updated_at ) ) : '', 'updated_date2' => $value->updated_at ? date_i18n( 'M d, Y H:i:s', strtotime( $value->updated_at ) ) : '' ];
 			$result[$i]->order_id = $value->order_id;
-			$result[$i]->last_event = $last_event;
+			$result[$i]->last_event = $value->last_event ? gmdate( $date_format, strtotime( $value->last_event_time ) ) . ': ' . $value->last_event : '';
 			$result[$i]->order_number = wc_get_order( $value->order_id ) ? wc_get_order( $value->order_id )->get_order_number() : $value->order_id;
 			$result[$i]->shipment_status = apply_filters('trackship_status_filter', $status );
 			$result[$i]->shipment_status_id = $status;
-			$result[$i]->shipment_length = '<span class="shipment_length ' . $late_class . '">' . $late_shipment . $shipping_length . '</span>';
-			$result[$i]->formated_tracking_provider = $tracking_provider;
-			$result[$i]->tracking_number_colom = $tracking_number_colom;
-			$result[$i]->tracking_url = $tracking_url;
+			$result[$i]->shipment_length = [ 'late_class' => 'delivered' == $status ? '' : 'not_delivered', 'shipping_length' => $shipping_length, 'cond' => $late_ship_day <= $value->shipping_length ];
+			$result[$i]->formated_tracking_provider = trackship_for_woocommerce()->actions->get_provider_name( $value->shipping_provider );
+			$result[$i]->tracking_number = $value->tracking_number;
 			$result[$i]->est_delivery_date = $value->est_delivery_date ? date_i18n( $date_format, strtotime( $value->est_delivery_date ) ) : '';
-			$result[$i]->ship_from = $ori_country ? $this->get_flag_icon( $ori_country ) : '';
-			$result[$i]->ship_to = $dest_country ? $this->get_flag_icon( $dest_country ) : '';
-			$result[$i]->ship_state = isset($value->destination_state) ? $value->destination_state : '';
-			$result[$i]->ship_city = isset($value->destination_city) ? $value->destination_city : '';
+			$result[$i]->ship_from = $value->origin_country ? [ 'country_code' => $value->origin_country, 'country_name' => $this->get_country_name( $value->origin_country ) ] : ['country_code' => ''];
+			$result[$i]->ship_to = $value->destination_country ? [ 'country_code' => $value->destination_country, 'country_name' => $this->get_country_name( $value->destination_country ) ] : ['country_code' => ''];
+			$result[$i]->ship_state = $value->destination_state ?? '';
+			$result[$i]->ship_city = $value->destination_city ?? '';
+			$result[$i]->nonce = wp_create_nonce( 'tswc-' . $value->order_id );
 			$result[$i]->customer = $customer;
-			$result[$i]->refresh_button = 'delivered' == $status ? '' : $active_shipment;
 			$i++;
 		}
 
@@ -255,9 +222,8 @@ class WC_Trackship_Shipments {
 	* get flag icon
 	* return flag icon HTML
 	*/
-	public function get_flag_icon( $country_code ) {
-		$country_name = WC()->countries->countries[ $country_code ] ? WC()->countries->countries[ $country_code ] : $country_code;
-		return '<div class="shipment_country"><img class="country_flag" src="https://trackship.github.io/country-flag/3x2/' . $country_code . '.svg"><span class="trackship-tip" title="' . $country_name . '">' . $country_name . '</span></div>';
+	public function get_country_name( $country_code ) {
+		return WC()->countries->countries[ $country_code ] ? WC()->countries->countries[ $country_code ] : $country_code;
 	}
 
 	/*

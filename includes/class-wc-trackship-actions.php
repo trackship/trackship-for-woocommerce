@@ -262,7 +262,7 @@ class WC_Trackship_Actions {
 			$first_cron = new DateTime( gmdate( 'Y-m-d' ) . ' ' . $daily_digest_time . ':00', new DateTimeZone( wc_timezone_string() ) );
 			$first_cron->setTimeZone(new DateTimeZone('GMT'));
 			$time = new DateTime( gmdate( 'Y-m-d H:i:s' ), new DateTimeZone( wc_timezone_string() ) );
-			if ( $time->getTimestamp() >  $first_cron->getTimestamp() ) {
+			if ( $time->getTimestamp() > $first_cron->getTimestamp() ) {
 				$first_cron->modify( '+1 day' );
 			}
 
@@ -305,7 +305,7 @@ class WC_Trackship_Actions {
 			SELECT *
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE
-				shipment_status NOT IN ( 'delivered', 'pending_trackship', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'invalid_tracking', '' )
+				shipment_status NOT IN ( 'delivered', 'pending_trackship', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'label_cancelled', 'invalid_tracking', '' )
 				AND ( ship_length_updated < %s OR ship_length_updated IS NULL )
 				AND shipping_date > NOW() - INTERVAL 60 DAY
 			LIMIT 300

@@ -85,11 +85,12 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		);
 		
 		$ts_cron = array();
+		$ts_cron['current_time'] = gmdate('Y-m-d H:i:s', time() + wc_timezone_offset());
 		
 		foreach ($hooks as $hook) {
 			$timestamp = wp_next_scheduled($hook);
 			if ($timestamp) {
-				$next_run = date('Y-m-d H:i:s', $timestamp + wc_timezone_offset());
+				$next_run = gmdate('Y-m-d H:i:s', $timestamp + wc_timezone_offset());
 				$ts_cron[$hook] = $next_run;
 			} else {
 				$ts_cron[$hook] = 'Not scheduled';
@@ -153,6 +154,9 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			'phpversion' => PHP_VERSION,
 			'SERVER_SOFTWARE' => isset($_SERVER['SERVER_SOFTWARE']) ? sanitize_text_field($_SERVER['SERVER_SOFTWARE']) : '',
 			'mysql_version' => $database_version['number'],
+			'shipment_count' => $shipment_structure ? count($shipment_structure) : 0,
+			'shipment_meta_count' => $shipment_meta_structure ? count($shipment_meta_structure) : 0,
+			'shipping_provider_count' => $shipping_provider_structure ? count($shipping_provider_structure) : 0,
 			'trackship_shipment' => $shipment_structure ? $shipment_structure : 'Table does not exist',
 			'trackship_shipment_meta' => $shipment_meta_structure ? $shipment_meta_structure : 'Table does not exist',
 			'trackship_shipping_provider' => $shipping_provider_structure ? $shipping_provider_structure : 'Table does not exist',

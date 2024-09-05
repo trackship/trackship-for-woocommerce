@@ -27,7 +27,7 @@ if ( $tracking_items ) :
 			<?php foreach ( $tracking_items as $key => $tracking_item ) { ?>
 				<?php
 				$ship_status = $new_status;
-				$tracking_link = $tracking_item['tracking_page_link'] ?  $tracking_item['tracking_page_link'] : $tracking_item['formatted_tracking_link'];
+				$tracking_link = $tracking_item['tracking_page_link'] ? $tracking_item['tracking_page_link'] : $tracking_item['formatted_tracking_link'];
 				$show_trackship_branding = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'show_trackship_branding', 1 );
 				do_action( 'before_tracking_widget_email', $tracking_item, $order_id );
 				?>
@@ -110,7 +110,7 @@ if ( $tracking_items ) :
 	<?php if ( $link_color ) { ?>
 		div.tracking_index.display-table .tracking_info a { color: <?php echo esc_html( $link_color ); ?>!important; }
 	<?php } ?>
-	<?php if ( !$ts4wc_preview  ) { ?>
+	<?php if ( !$ts4wc_preview ) { ?>
 		.ts4wc_provider_logo {
 			display: <?php echo $shipping_provider_logo ? 'inline-block' : 'none'; ?>;
 		}
