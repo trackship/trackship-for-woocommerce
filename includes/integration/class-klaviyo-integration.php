@@ -76,6 +76,26 @@ class WOO_Klaviyo_TS4WC {
 
 		$order = wc_get_order( $order_id );
 		$phone = $order ? $order->get_billing_phone() : '';
+		$items = $order ? $order->get_items() : [];
+
+		$products = array();
+		foreach ( $items as $item_id => $item ) {
+			
+			$variation_id = $item->get_variation_id();
+			$product_id = $item->get_product_id();
+			
+			if ( 0 != $variation_id ) {
+				$product_id = $variation_id;
+			}
+			
+			$products[$item_id] = array(
+				'item_id' => $item_id,
+				'product_id' => $product_id,
+				'product_name' => $item->get_name(),
+				'product_qty' => $item->get_quantity(),
+			);
+		}
+		$products_array = trackship_for_woocommerce()->front->tracking_widget_product_array_callback ( $products, $order_id, [], '', $tracking_number );
 
 		$body = array(
 			'data' => array(
@@ -96,6 +116,8 @@ class WOO_Klaviyo_TS4WC {
 						'delivery_provider'				=> $row->delivery_provider,
 						'shipping_service'				=> $row->shipping_service,
 						'last_event_time'				=> $row->last_event_time,
+						'products'						=> array_values($products_array),
+						'order_status'					=> $order->get_status(),
 					),
 					'metric' => array(
 						'data' => array(

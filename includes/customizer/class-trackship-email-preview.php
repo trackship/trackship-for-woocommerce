@@ -131,14 +131,14 @@ class TSWC_Email_Customizer_Preview {
 		$message .= wc_get_template_html(
 			'emails/tswc-email-order-details.php',
 			array(
-				'order'         => $order,
-				'sent_to_admin' => $sent_to_admin,
-				'plain_text'    => $plain_text,
-				'email'         => $email,
+				'order'			=> $order,
+				'sent_to_admin'	=> $sent_to_admin,
+				'plain_text'	=> $plain_text,
+				'email'			=> $email,
 				'wcast_show_product_image' => $wcast_show_product_image,
 				'wcast_show_order_details' => $wcast_show_order_details,
 				'new_status'	=> 'pickup_reminder' == $status ? 'available_for_pickup' : $status,
-				'ts4wc_preview' => true,
+				'ts4wc_preview'	=> true,
 			),
 			'woocommerce-advanced-shipment-tracking/', 
 			trackship_for_woocommerce()->get_plugin_path() . '/templates/'
@@ -148,9 +148,9 @@ class TSWC_Email_Customizer_Preview {
 			// Shipping Address template
 			$message .= wc_get_template_html(
 				'emails/shipping-email-addresses.php', array(
-					'order'         => $order,
-					'sent_to_admin' => $sent_to_admin,
-					'ts4wc_preview' => true,
+					'order'			=> $order,
+					'sent_to_admin'	=> $sent_to_admin,
+					'ts4wc_preview'	=> true,
 					'wcast_show_shipping_address' => $wcast_show_shipping_address,
 				),
 				'woocommerce-advanced-shipment-tracking/', 

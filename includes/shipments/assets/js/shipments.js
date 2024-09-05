@@ -94,7 +94,9 @@ jQuery(document).ready(function() {
 			{
 				"width": "50px",
 				'orderable': false,
-				'data': 'checkbox',
+				"mRender":function(data,type,full) {
+					return '<input type="checkbox" class="shipment_checkbox" data-orderid="' +full.order_id+ '" data-tnumber="' + full.tracking_number + '">';
+				},
 			},
 			{
 				"width": "105px",
@@ -107,16 +109,24 @@ jQuery(document).ready(function() {
 				"width": "150px",
 				'orderable': true,
 				'data': 'et_shipped_at',
+				"mRender":function(data,type,full) {
+					return '<span class="trackship-tip" title="'+full.et_shipped_at+'">'+full.et_shipped_at+'</span>';
+				},
 			},
 			{
 				"width": "150px",
 				'orderable': true,
-				'data': 'updated_at',
+				"mRender":function(data,type,full) {
+					return full.updated_at.updated_date1 ? '<span class="trackship-tip" title="' + full.updated_at.updated_date2 + '">' + full.updated_at.updated_date1 + '</span>' : '';
+				},
 			},
 			{
 				"width": "185px",
 				'orderable': false,
-				'data': 'tracking_number_colom',
+				// 'data': 'tracking_number_colom',
+				"mRender":function(data,type,full) {
+					return '<span class="copied_tracking_numnber dashicons dashicons-admin-page" data-number="' + full.tracking_number + '"></span><a class="open_tracking_details shipment_tracking_number" data-orderid="' + full.order_id + '" data-tnumber="' + full.tracking_number + '" data-nonce="' + full.nonce + '">' + full.tracking_number + '</a>';
+				},
 			},
 			{
 				"width": "180px",
@@ -133,12 +143,18 @@ jQuery(document).ready(function() {
 			{
 				"width": "140px",
 				'orderable': false,
-				'data': 'ship_from',
+				// 'data': 'ship_from',
+				"mRender": function(data, type, full) {
+					return full.ship_from.country_code ? '<div class="shipment_country"><img class="country_flag" src="https://trackship.github.io/country-flag/3x2/' + full.ship_from.country_code + '.svg"><span class="trackship-tip" title="' + full.ship_from.country_name + '">' + full.ship_from.country_name + '</span></div>' : '';
+				},
 			},
 			{
 				"width": "140px",
 				'orderable': false,
-				'data': 'ship_to',
+				// 'data': 'ship_to',
+				"mRender": function(data, type, full) {
+					return full.ship_to.country_code ? '<div class="shipment_country"><img class="country_flag" src="https://trackship.github.io/country-flag/3x2/' + full.ship_to.country_code + '.svg"><span class="trackship-tip" title="' + full.ship_to.country_name + '">' + full.ship_to.country_name + '</span></div>' : '';
+				},
 			},
 			{
 				"width": "140px",
@@ -154,6 +170,9 @@ jQuery(document).ready(function() {
 				"width": "200px",
 				'orderable': false,
 				'data': 'last_event',
+				"mRender": function(data, type, full) {
+					return full.last_event ? '<span class="last_event trackship-tip" title="' + full.last_event + '">' + full.last_event + '</span>' : 'N/A';
+				},
 			},
 			{
 				"width": "170px",
@@ -164,6 +183,10 @@ jQuery(document).ready(function() {
 				"width": "120px",
 				'orderable': false,
 				'data': 'shipment_length',
+				"mRender": function(data, type, full) {
+					var late_shipment = full.shipment_length.cond ? '<span class="dashicons dashicons-info trackship-tip ' + full.shipment_length.late_class + ' late_shipment" title="late shipment"></span>' : '';
+					return '<span class="shipment_length ' + full.shipment_length.late_class + '">' + late_shipment + full.shipment_length.shipping_length + '</span>';
+				},
 			},	
 			{
 				"width": "115px",
@@ -173,7 +196,9 @@ jQuery(document).ready(function() {
 			{
 				"width": "100px",
 				'orderable': false,
-				'data': 'refresh_button',
+				"mRender": function(data, type, full) {
+					return 'delivered' == full.shipment_status_id ? '' : '<a href="javascript:void(0);" class="shipments_get_shipment_status" data-orderid="' + full.order_id + '" data-tnumber="' + full.tracking_number + '"><span class="dashicons dashicons-update"></span></a>';
+				},
 			},
 		],
 	});	

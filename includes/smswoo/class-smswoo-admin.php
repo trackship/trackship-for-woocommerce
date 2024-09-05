@@ -395,7 +395,7 @@ class TSWC_SMSWoo_Admin {
 	* settings form save
 	* save settings of all tab
 	*
-	* @since   1.0
+	* @since 1.0
 	*/
 	public function smswoo_settings_tab_save_callback() {
 		
@@ -532,7 +532,7 @@ class TSWC_SMSWoo_Admin {
 	/*
 	* get customer tracking status settings
 	*
-	* @since   1.0
+	* @since 1.0
 	*/
 	public function get_customer_tracking_status_settings() {
 		
