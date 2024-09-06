@@ -150,7 +150,7 @@ class WOO_Klaviyo_TS4WC {
 			)
 		);
 
-		if ( apply_filters( 'disable_klaviyo_phone', false ) ) {
+		if ( apply_filters( 'exclude_klaviyo_phone', false ) ) {
 			unset( $body['data']['attributes']['profile']['data']['attributes']['phone_number'] );
 		}
 
