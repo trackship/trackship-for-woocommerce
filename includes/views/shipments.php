@@ -52,7 +52,8 @@ $columns = array(
 	12 => 'Customer',
 	13 => 'Shipping time',
 	14 => 'Delivery date',
-	15 => 'Actions',
+	15 => 'Delivery number',
+	16 => 'Actions',
 );
 $url_status = isset( $_GET['status'] ) ? sanitize_text_field( $_GET['status'] ) : '';
 $url_provider = isset( $_GET['provider'] ) ? sanitize_text_field( $_GET['provider'] ) : '';
