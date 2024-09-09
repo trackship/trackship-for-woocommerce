@@ -26,6 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Customer', 'trackship-for-woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Shipping time', 'trackship-for-woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-destination" scope="col"><?php esc_html_e('Delivery date', 'trackship-for-woocommerce'); ?></th>
+							<th id="columnname" class="manage-column column-destination" scope="col"><?php esc_html_e('Delivery number', 'trackship-for-woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Actions', 'trackship-for-woocommerce'); ?></th>
 						</tr>
 					</thead>

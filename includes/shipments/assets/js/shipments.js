@@ -194,6 +194,11 @@ jQuery(document).ready(function() {
 				'data': 'est_delivery_date',
 			},
 			{
+				"width": "115px",
+				'orderable': false,
+				'data': 'delivery_number',
+			},
+			{
 				"width": "100px",
 				'orderable': false,
 				"mRender": function(data, type, full) {
