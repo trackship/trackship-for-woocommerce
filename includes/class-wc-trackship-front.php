@@ -283,7 +283,7 @@ class WC_TrackShip_Front {
 			ob_start();
 			$this->track_form_template();
 			$form = ob_get_clean();
-			echo json_encode( array('success' => 'false', 'message' => __( 'Unable to locate the order.', 'trackship-for-woocommerce' ), 'html' => $form ));
+			echo json_encode( array('success' => 'false', 'message' => __( "The order/shipment you're trying to track has not been shipped yet or the order number entered is incorrect.", 'trackship-for-woocommerce' ), 'html' => $form ));
 			die();
 		}
 		
@@ -293,7 +293,7 @@ class WC_TrackShip_Front {
 				ob_start();
 				$this->track_form_template();
 				$form = ob_get_clean();	
-				echo json_encode( array('success' => 'false', 'message' => __( 'Unable to locate the order.', 'trackship-for-woocommerce' ), 'html' => $form ));
+				echo json_encode( array('success' => 'false', 'message' => __( "The order/shipment you're trying to track has not been shipped yet or the order number entered is incorrect.", 'trackship-for-woocommerce' ), 'html' => $form ));
 				die();
 			}
 		}
