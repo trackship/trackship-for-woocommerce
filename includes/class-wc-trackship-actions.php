@@ -1326,6 +1326,27 @@ class WC_Trackship_Actions {
 				} // end if
 				$order_id;
 				wp_reset_postdata();
+
+				$args = array(
+					'meta_query' => array(
+						'relation'	=> 'OR',
+						array(
+							'key'	=> '_alg_wc_custom_order_number',
+							'value'	=> $order_id
+						),
+						array(
+							'key'	=> '_alg_wc_full_custom_order_number',
+							'value'	=> $order_id
+						),
+					),
+					'return' => 'ids',
+					'limit' => 1
+				);
+				
+				$orders = wc_get_orders($args);
+				if ( !empty($orders) ) {
+					list( $order_id ) = $orders;
+				}
 			}
 		}
 
@@ -1469,6 +1490,22 @@ class WC_Trackship_Actions {
 			$posts = get_posts( $query_args );
 			if ( !empty( $posts ) ) {
 				list( $order_id ) = $posts;
+			}
+
+			$args = array(
+				'meta_query' => array(
+					array(
+						'key'     => '_order_number',
+						'value'	=> $order_id,
+					),
+				),
+				'return' => 'ids',
+				'limit' => 1
+			);
+			
+			$orders = wc_get_orders($args);
+			if ( !empty($orders) ) {
+				list( $order_id ) = $orders;
 			}
 		}
 
