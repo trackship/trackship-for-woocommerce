@@ -175,32 +175,21 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	}
 	
 	public function tracking_webhook( $request ) {
-		$content = print_r($request, true);
-		$logger = wc_get_logger();
-		$context = array( 'source' => 'trackship_tracking_update' );
-		$logger->info( "trackship_tracking_update \n" . $content . "\n", $context );
 		
-		//validation
-		$user_key = $request['user_key'];
 		$order_id = $request['order_id'];
 		$tracking_number = $request['tracking_number'];
-		$tracking_provider = $request['tracking_provider'];
 		$tracking_event_status = $request['tracking_event_status'];
 		$last_event_time = $request['last_event_time'];
 		$tracking_est_delivery_date = $request['tracking_est_delivery_date'];
 		$tracking_events = $request['events'];
 		$tracking_destination_events = $request['destination_events'];
-		$updated_at = $request['updated_at'];
 		
 		$trackship = WC_Trackship_Actions::get_instance();
 		
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 		$order = wc_get_order( $order_id );
 		if ( !$order ) {
-			$data = array(
-				'status' => 'success'
-			);
-			return rest_ensure_response( $data );
+			return rest_ensure_response( ['status' => 'success'] );
 		}
 		$query = [];
 		
@@ -208,7 +197,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			if ( trim( $tracking_item['tracking_number'] ) != trim($tracking_number) ) {
 				continue;
 			}
-			$row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id , $tracking_item['tracking_number'] );
+			$row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id , $tracking_number );
 			$previous_status = isset( $row->shipment_status ) ? $row->shipment_status : '';	
 
 			$order = wc_get_order( $order_id );
@@ -222,7 +211,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 				'pending_status'		=> null,
 				'shipment_status'		=> $tracking_event_status,
 				'last_event'			=> $last_event,
-				'updated_at'			=> $updated_at,
+				'updated_at'			=> $request['updated_at'],
 				'last_event_time'		=> $last_event_time ? $last_event_time : gmdate( 'Y-m-d H:i:s' ),
 			);
 			$args2 = array(
@@ -237,7 +226,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 				'destination_events'	=> json_encode($tracking_destination_events),
 			);
 			$args['est_delivery_date'] = $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : null;
-			$query = trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_item['tracking_number'], $args, $args2 );
+			$query = trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_number, $args, $args2 );
 			
 			$order->update_meta_data( 'ts_shipment_status', $ts_shipment_status );
 			$order->save();
