@@ -4,14 +4,11 @@ body.toplevel_page_trackship-shipments, body.trackship_page_trackship-for-woocom
 body.trackship_admin_settings {
 	background: #fafafa;
 }
-#wpcontent {
-	padding-left: 0 !important;
-}
-.rtl #wpcontent {
-	padding-right: 0 !important;
-}
-.trackship_page_trackship-analytics #wpcontent, .trackship_admin_settings #wpcontent, .trackship_page_trackship-shipments #wpcontent {
+.toplevel_page_trackship-dashboard #wpcontent, .trackship_page_trackship-shipments #wpcontent, .trackship_page_trackship-logs #wpcontent, .trackship_page_trackship-for-woocommerce #wpcontent {
 	padding-left: 0;
+}
+.rtl .toplevel_page_trackship-dashboard #wpcontent, .rtl .trackship_page_trackship-shipments #wpcontent, .rtl .trackship_page_trackship-logs #wpcontent, .rtl .trackship_page_trackship-for-woocommerce #wpcontent {
+	padding-right: 0;
 }
 .tab_inner_container .trackship_admin_content {
 	margin: 0 !important;
