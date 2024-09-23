@@ -43,6 +43,9 @@ class WC_Trackship_Admin {
 		add_action( 'admin_menu', array( $this, 'register_woocommerce_menu' ), 110 );
 
 		add_action( 'admin_footer', array( $this, 'footer_function'), 1 );
+		add_action( 'admin_footer', array( $this, 'uninstall_notice') );
+
+		add_action( 'wp_ajax_ts_reassign_order_status', array( $this, 'ts_reassign_order_status' ) );	
 		add_action( 'wp_ajax_add_trackship_mapping_row', array( $this, 'add_trackship_mapping_row' ) );
 		add_action( 'wp_ajax_remove_tracking_event', array( $this, 'remove_tracking_event' ) );
 		add_action( 'wp_ajax_remove_trackship_logs', array( $this, 'remove_trackship_logs' ) );
@@ -86,7 +89,7 @@ class WC_Trackship_Admin {
 		}
 
 	}
-	
+
 	public function add_onhold_status_to_download_permission( $data, $order ) {
 		if ( $order->has_status( 'delivered' ) ) {
 			return true;
@@ -851,6 +854,120 @@ class WC_Trackship_Admin {
 			<div class="popupclose"></div>
 		</div>
 	<?php
+	}
+
+	public function uninstall_notice () {
+		$screen = get_current_screen();
+		
+		if ( 'plugins.php' == $screen->parent_file ) {
+			wp_enqueue_style( 'trackshipcss', trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/trackship.css', array(), trackship_for_woocommerce()->version, time() );
+			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
+			wp_enqueue_script( 'jquery-blockui', WC()->plugin_url() . '/assets/js/jquery-blockui/jquery.blockUI' . $suffix . '.js', array( 'jquery' ), '2.70', true );
+		}
+		
+		$delivered_count = wc_orders_count( 'delivered' );
+		$order_statuses = wc_get_order_statuses();
+
+		if ( $delivered_count > 0 ) {
+			?>
+		
+			<script>
+			jQuery(document).on("click","[data-slug='trackship-for-woocommerce'] .deactivate a",function(e){
+				e.preventDefault();
+				jQuery('.ts_uninstall_popup').show();
+				var theHREF = jQuery(this).attr("href");
+				jQuery(document).on("click",".uninstall_plugin",function(e){
+					jQuery("body").block({
+						message: null,
+						overlayCSS: {
+							background: "#fff",
+							opacity: .6
+						}
+					});
+					var form = jQuery('#ts_reassign_form');
+					jQuery.ajax({
+						url: ajaxurl,
+						data: form.serialize(),
+						type: 'POST',
+						success: function(response) {
+							jQuery("body").unblock();
+							window.location.href = theHREF;
+						},
+						error: function(response) {
+							console.log(response);
+						}
+					});
+				});
+			});
+			jQuery(document).on("click",".popupclose",function(e){
+				jQuery('.ts_uninstall_popup').hide();
+			});
+
+			jQuery(document).on("click",".uninstall_close",function(e){
+				jQuery('.ts_uninstall_popup').hide();
+			});
+
+			jQuery(document).on("click",".popup_close_icon",function(e){
+				jQuery('.ts_uninstall_popup').hide();
+			});
+			</script>
+			<style> .popuprow{ border: 1px solid #e0e0e0;} </style>
+			<div id="" class="popupwrapper ts_uninstall_popup" style="display:none;">
+				<div class="popuprow">
+					<div class="popup_header">
+						<h3 class="popup_title">TrackShip for WooCommerce</h3>
+						<span class="dashicons dashicons-no-alt popup_close_icon"></span>
+					</div>
+					<div class="popup_body">
+						<form method="post" id="ts_reassign_form">
+							<?php
+							if ( $delivered_count > 0 ) { 
+								?>
+								<p>
+								<?php 
+									/* translators: %s: replace with Partially Shipped order count */
+									printf( esc_html__('We detected %s orders that use the Delivered order status, You can reassign these orders to a different status', 'trackship-for-woocommerce'), esc_html__( $delivered_count ) );
+								?>
+								</p>
+								<select id="ts_reassign_delivered_order" name="ts_reassign_delivered_order" class="reassign_select">
+									<option value=""><?php esc_html_e('Select', 'woocommerce'); ?></option>
+									<?php foreach ( $order_statuses as $key => $status ) { ?>
+										<option value="<?php esc_html_e( $key ); ?>"><?php esc_html_e( $status ); ?></option>
+									<?php } ?>
+								</select>
+							<?php } ?>
+							<p>
+								<?php wp_nonce_field( 'ts_reassign_order_status', 'ts_reassign_order_status_nonce' ); ?>
+								<input type="hidden" name="action" value="ts_reassign_order_status">
+								<input type="button" value="<?php esc_html_e( 'Deactivate' ); ?>" class="uninstall_plugin button-primary button-trackship">
+								<input type="button" value="<?php esc_html_e( 'Close', 'woocommerce' ); ?>" class="uninstall_close button-primary btn_red">
+							</p>
+						</form>
+					</div>
+				</div>
+				<div class="popupclose"></div>
+			</div>
+			<?php
+		}
+	}
+
+	public function ts_reassign_order_status () {
+		check_ajax_referer( 'ts_reassign_order_status', 'ts_reassign_order_status_nonce' );
+		$ts_reassign_delivered_order = isset( $_POST['ts_reassign_delivered_order'] ) ? wc_clean( $_POST['ts_reassign_delivered_order'] ) : '';
+		if ( '' != $ts_reassign_delivered_order ) {
+			$args = array(
+				'status' => 'delivered',
+				'limit' => '-1',
+			);
+			$delivered_orders = wc_get_orders( $args );
+
+			foreach ( $delivered_orders as $order ) {
+				$order_id = $order->get_id();
+				$order = new WC_Order( $order_id );
+				$order->update_status( $ts_reassign_delivered_order );
+			}
+		}
+		wp_send_json(true);
 	}
 	
 	public function get_trackship_provider() {
