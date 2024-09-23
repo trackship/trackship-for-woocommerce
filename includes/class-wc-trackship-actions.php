@@ -1297,36 +1297,8 @@ class WC_Trackship_Actions {
 		
 		if ( is_plugin_active( 'custom-order-numbers-for-woocommerce/custom-order-numbers-for-woocommerce.php' ) ) {
 			$alg_wc_custom_order_numbers_enabled = get_option( 'alg_wc_custom_order_numbers_enabled' );
-			$alg_wc_custom_order_numbers_prefix = get_option( 'alg_wc_custom_order_numbers_prefix' );
-			$new_order_id = str_replace( $alg_wc_custom_order_numbers_prefix, '', $order_id );
 
 			if ( 'yes' == $alg_wc_custom_order_numbers_enabled ) {
-				$args = array(
-					'post_type'		=>	'shop_order',
-					'posts_per_page'=> '1',
-					'meta_query'	=> array(
-						'relation'	=> 'AND', 
-						array(
-							'key'	=> '_alg_wc_custom_order_number',
-							'value'	=> $new_order_id,
-						),
-					),
-					'post_status' => array_keys( wc_get_order_statuses() ) ,
-				);
-				$posts = get_posts( $args );
-				$my_query = new WP_Query( $args );
-
-				if ( $my_query->have_posts() ) {
-					while ( $my_query->have_posts()) {
-						$my_query->the_post();
-						if ( get_the_ID() ) {
-							$order_id = get_the_ID();
-						}
-					} // end while
-				} // end if
-				$order_id;
-				wp_reset_postdata();
-
 				$args = array(
 					'meta_query' => array(
 						'relation'	=> 'OR',
@@ -1342,7 +1314,6 @@ class WC_Trackship_Actions {
 					'return' => 'ids',
 					'limit' => 1
 				);
-				
 				$orders = wc_get_orders($args);
 				if ( !empty($orders) ) {
 					list( $order_id ) = $orders;
@@ -1360,18 +1331,19 @@ class WC_Trackship_Actions {
 		if ( is_plugin_active( 'woocommerce-sequential-order-numbers-pro/woocommerce-sequential-order-numbers-pro.php' ) ) {
 
 			// search for the order by custom order number
-			$query_args = array(
-				'numberposts'	=> 1,
-				'meta_key'		=> '_order_number_formatted',
-				'meta_value'	=> $order_id,
-				'post_type'		=> 'shop_order',
-				'post_status'	=> 'any',
-				'fields'		=> 'ids',
+			$args = array(
+				'meta_query' => array(
+					array(
+						'key'	=> '_order_number_formatted',
+						'value'	=> $order_id
+					),
+				),
+				'return' => 'ids',
+				'limit' => 1
 			);
-
-			$posts = get_posts( $query_args );
-			if ( !empty( $posts ) ) {
-				list( $order_id ) = $posts;
+			$orders = wc_get_orders($args);
+			if ( !empty($orders) ) {
+				list( $order_id ) = $orders;
 			}
 		}
 		
@@ -1393,18 +1365,19 @@ class WC_Trackship_Actions {
 				if ( 'no' == get_option( 'wcj_order_number_sequential_enabled' ) ) {
 					$order_id = $final_search;
 				} else {
-					$query_args = array(
-						'numberposts'	=> 1,
-						'meta_key'		=> '_wcj_order_number',
-						'meta_value'	=> $final_search,
-						'post_type'		=> 'shop_order',
-						'post_status'	=> 'any',
-						'fields'		=> 'ids',
+					$args = array(
+						'meta_query' => array(
+							array(
+								'key'	=> '_wcj_order_number',
+								'value'	=> $final_search
+							),
+						),
+						'return' => 'ids',
+						'limit' => 1
 					);
-					$posts = get_posts( $query_args );
-					//print_r( $posts );
-					if ( !empty( $posts ) ) {
-						list( $order_id ) = $posts;
+					$orders = wc_get_orders($args);
+					if ( !empty($orders) ) {
+						list( $order_id ) = $orders;
 					}
 				}
 			}
@@ -1413,28 +1386,27 @@ class WC_Trackship_Actions {
 		if ( is_plugin_active( 'wp-lister-amazon/wp-lister-amazon.php' ) ) {
 			$wpla_use_amazon_order_number = get_option( 'wpla_use_amazon_order_number' );
 			if ( 1 == $wpla_use_amazon_order_number ) {
-				$query_args = array(
-					'numberposts'	=> 1,
-					'meta_key'		=> '_wpla_amazon_order_id',
-					'meta_value'	=> $order_id,
-					'post_type'		=> 'shop_order',
-					'post_status'	=> 'any',
-					'fields'		=> 'ids',
+				$args = array(
+					'meta_query' => array(
+						array(
+							'key'	=> '_wpla_amazon_order_id',
+							'value'	=> $order_id
+						),
+					),
+					'return' => 'ids',
+					'limit' => 1
 				);
-
-				$posts = get_posts( $query_args );
-				if ( !empty( $posts ) ) {
-					list( $order_id ) = $posts;
+				$orders = wc_get_orders($args);
+				if ( !empty($orders) ) {
+					list( $order_id ) = $orders;
 				}
 			}
 		}
 
 		if ( is_plugin_active( 'wp-lister/wp-lister.php' ) || is_plugin_active( 'wp-lister-for-ebay/wp-lister.php' ) ) {
 			$args = array(
-				'post_type'		=>	'shop_order',
-				'posts_per_page'=> '1',
-				'meta_query'	=> array(
-					'relation'	=> 'OR', 
+				'meta_query' => array(
+					'relation'	=> 'OR',
 					array(
 						'key'	=> '_ebay_extended_order_id',
 						'value'	=> $order_id
@@ -1444,54 +1416,33 @@ class WC_Trackship_Actions {
 						'value'	=> $order_id
 					),
 				),
-				'post_status' => 'any',	
+				'return' => 'ids',
+				'limit' => 1
 			);
-			
-			$posts = get_posts( $args );
-			$my_query = new WP_Query( $args );
-			
-			if ( $my_query->have_posts() ) {
-				while ( $my_query->have_posts() ) {
-					$my_query->the_post();
-					if ( get_the_ID() ) {
-						$order_id = get_the_ID();
-					}
-				} // end while
-			} // end if
-			wp_reset_postdata();
+			$orders = wc_get_orders($args);
+			if ( !empty($orders) ) {
+				list( $order_id ) = $orders;
+			}
 		}
 
 		if ( is_plugin_active( 'yith-woocommerce-sequential-order-number-premium/init.php' ) ) {
-			$query_args = array(
-				'numberposts'	=> 1,
-				'meta_key'		=> '_ywson_custom_number_order_complete',
-				'meta_value'	=> $order_id,
-				'post_type'		=> 'shop_order',
-				'post_status'	=> 'any',
-				'fields'		=> 'ids',
+			$args = array(
+				'meta_query' => array(
+					array(
+						'key'	=> '_ywson_custom_number_order_complete',
+						'value'	=> $order_id
+					),
+				),
+				'return' => 'ids',
+				'limit' => 1
 			);
-
-			$posts = get_posts( $query_args );
-			if ( !empty( $posts ) ) {
-				list( $order_id ) = $posts;
+			$orders = wc_get_orders($args);
+			if ( !empty($orders) ) {
+				list( $order_id ) = $orders;
 			}
 		}
 
 		if ( is_plugin_active( 'wt-woocommerce-sequential-order-numbers/wt-advanced-order-number.php' ) ) {
-			$query_args = array(
-				'numberposts'	=> 1,
-				'meta_key'		=> '_order_number',
-				'meta_value'	=> $order_id,
-				'post_type'		=> 'shop_order',
-				'post_status'	=> 'any',
-				'fields'		=> 'ids',
-			);
-
-			$posts = get_posts( $query_args );
-			if ( !empty( $posts ) ) {
-				list( $order_id ) = $posts;
-			}
-
 			$args = array(
 				'meta_query' => array(
 					array(
@@ -1502,7 +1453,6 @@ class WC_Trackship_Actions {
 				'return' => 'ids',
 				'limit' => 1
 			);
-			
 			$orders = wc_get_orders($args);
 			if ( !empty($orders) ) {
 				list( $order_id ) = $orders;
