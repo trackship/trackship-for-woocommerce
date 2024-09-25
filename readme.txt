@@ -2,9 +2,9 @@
 Contributors: TrackShip
 Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order tracking, tracking
 Requires at least: 6.2
-Tested up to: 6.6.1
+Tested up to: 6.6.2
 Requires PHP: 7.4
-Stable tag: 1.8.4
+Stable tag: 1.8.5
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,11 @@ TrackShip auto-tracks orders, adds a branded tracking experience to your store a
 
 TrackShip is a shipment tracking and post-purchase experience platform that helps WooCommerce businesses to provide an exceptional post-shipping experience to their customers, it helps to gain loyalty and trust and increase the repeat purchases, which is crucial for any eCommerce business to grow and succeed in the long run.
 
-Free plan available: Get 50 shipment trackers per month [Start for Free](https://trackship.com/) 
+== TrackShip Pricing ==
+
+TrackShip offers a **14-day free trial** that allows you to track up to **100 shipments** with access to all premium features. During the trial period, you can experience everything TrackShip has to offer.
+After the trial, if you choose not to go with a paid plan, you can continue using TrackShip on our **Free Plan**. The free plan allows you to track up to **50 shipments per month**, but with access to basic features only. For users who need to track more shipments or want advanced features such as SMS notifications, branded tracking pages, or enhanced analytics, we offer paid plans that scale according to your business needs.
+For more details on pricing and features, please visit our [TrackShip Pricing Page](https://trackship.com/pricing/).
 
 https://www.youtube.com/watch?v=QDKV2Irqz9M
 
@@ -133,6 +137,17 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended.
 
 == Changelog ==
+= 1.8.5 - 2024-09-25 =
+* Enhancement - Added a notice when the plugin is deactivated for delivered orders
+* Tweak - Implemented a filter to don't send Phone number to Klaviyo Webhook (exclude_klaviyo_phone)
+* Tweak - Added a column to display the Delivery number in TrackShip Shipment
+* Update - Enhanced validation messages on the tracking page
+* Dev - Improved compatibility with all custom order number plugins
+* Dev - Stopped WooCommerce log creation for tracking webhooks
+* Localization - Updated translations.
+* Update - tested up to WP versions for the WordPress 6.6.2 release
+* Update - tested up to WC versions for the WooCommerce 9.3.2 release
+
 = 1.8.4 - 2024-09-01 =
 * Dev - Added product details to Klaviyo Webhook for better integration.
 * Dev - Prevented Late Shipment emails from sending for canceled labels.
