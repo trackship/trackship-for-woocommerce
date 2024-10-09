@@ -624,48 +624,52 @@ class WC_Trackship_Install {
 		}
 
 		// Check for columns in trackship_shipment table
-		$shipment_columns = array(
-			'id',
-			'order_id',
-			'order_number',
-			'tracking_number',
-			'shipping_provider',
-			'shipment_status',
-			'pending_status',
-			'shipping_date',
-			'shipping_country',
-			'shipping_length',
-			'ship_length_updated',
-			'late_shipment_email',
-			'exception_email',
-			'on_hold_email',
-			'est_delivery_date',
-			'last_event',
-			'last_event_time',
-			'updated_at'
-		);
-		foreach ($shipment_columns as $column) {
-			if ( $wpdb->get_var( "SHOW COLUMNS FROM {$wpdb->prefix}trackship_shipment LIKE '{$column}'" ) != $column ) {
-				$missing_columns[] = 'Shipment table: ' . $column;
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->prefix}trackship_shipment'" ) ) {
+			$shipment_columns = array(
+				'id',
+				'order_id',
+				'order_number',
+				'tracking_number',
+				'shipping_provider',
+				'shipment_status',
+				'pending_status',
+				'shipping_date',
+				'shipping_country',
+				'shipping_length',
+				'ship_length_updated',
+				'late_shipment_email',
+				'exception_email',
+				'on_hold_email',
+				'est_delivery_date',
+				'last_event',
+				'last_event_time',
+				'updated_at'
+			);
+			foreach ($shipment_columns as $column) {
+				if ( $wpdb->get_var( "SHOW COLUMNS FROM {$wpdb->prefix}trackship_shipment LIKE '{$column}'" ) != $column ) {
+					$missing_columns[] = 'Shipment table: ' . $column;
+				}
 			}
 		}
 
-		// Check for columns in trackship_shipment_meta table
-		$meta_columns = array(
-			'meta_id',
-			'origin_country',
-			'destination_country',
-			'delivery_number',
-			'delivery_provider',
-			'shipping_service',
-			'tracking_events',
-			'destination_events',
-			'destination_state',
-			'destination_city',
-		);
-		foreach ($meta_columns as $column) {
-			if ( $wpdb->get_var( "SHOW COLUMNS FROM {$wpdb->prefix}trackship_shipment_meta LIKE '{$column}'" ) != $column ) {
-				$missing_columns[] = 'Shipment meta table: ' . $column;
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->prefix}trackship_shipment_meta'" ) ) {
+			// Check for columns in trackship_shipment_meta table
+			$meta_columns = array(
+				'meta_id',
+				'origin_country',
+				'destination_country',
+				'delivery_number',
+				'delivery_provider',
+				'shipping_service',
+				'tracking_events',
+				'destination_events',
+				'destination_state',
+				'destination_city',
+			);
+			foreach ($meta_columns as $column) {
+				if ( $wpdb->get_var( "SHOW COLUMNS FROM {$wpdb->prefix}trackship_shipment_meta LIKE '{$column}'" ) != $column ) {
+					$missing_columns[] = 'Shipment meta table: ' . $column;
+				}
 			}
 		}
 

@@ -12,18 +12,13 @@ if ( !get_trackship_settings( 'wc_admin_notice', '') ) {
 }
 
 global $wpdb;
-$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
-
-if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipment ) ) ) {
-	trackship_for_woocommerce()->ts_install->create_shipment_table();
+if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $wpdb->prefix . 'trackship_shipment' ) ) ) {
+	esc_html_e( 'TrackShip Shipments database table does not exist.', 'trackship-for-woocommerce' );
+	return;
 }
 
 if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $wpdb->prefix . 'trackship_shipment_meta' ) ) ) {
-	trackship_for_woocommerce()->ts_install->create_shipment_meta_table();
-}
-
-if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipment ) ) ) {
-	esc_html_e( 'TrackShip Shipments table does not exist, Please try after few minutes', 'trackship-for-woocommerce' );
+	esc_html_e( 'TrackShip Shipments meta database table does not exist.', 'trackship-for-woocommerce' );
 	return;
 }
 

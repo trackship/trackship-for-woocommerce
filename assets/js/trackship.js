@@ -135,6 +135,7 @@ jQuery(document).ready(function () {
 	jQuery('.tab_input:checked').trigger('click');
 	jQuery('.map-provider-table .select2').select2();
 	jQuery('.accordion_container .heading_panel.checked').trigger('click');
+	jQuery('.verify_database_table.checked').trigger('click');
 
 	if ( 'yes' == auto ) {
 		jQuery('.trackship-update-tracking-info .bulk_migration').trigger('click');
@@ -145,19 +146,31 @@ jQuery(document).ready(function () {
 });
 
 jQuery(document).on("click", ".trackship_admin_content .trackship_nav_div .tab_input", function () {
-	"use strict";
-	var tab = jQuery(this).data('tab');
-	var label = jQuery(this).data('label');
-	jQuery('.zorem-layout__header .header-breadcrumbs-last').text(label);
-	var url = window.location.protocol + "//" + window.location.host + window.location.pathname + "?page=trackship-for-woocommerce&tab=" + tab;
-	window.history.pushState({ path: url }, '', url);
-	jQuery('.trackship_nav_div .inner_tab_section').hide();
-	jQuery('.trackship_nav_div #content_trackship_' + tab).show();
-	jQuery(window).trigger('resize');
-	if (jQuery('.tab_input#tab_trackship_notifications').is(':checked')) {
-		jQuery('.inner_tab_input:checked').trigger('click');
-	}
+    "use strict";
+    var tab = jQuery(this).data('tab');
+    var label = jQuery(this).data('label');
+    jQuery('.zorem-layout__header .header-breadcrumbs-last').text(label);
+
+    // Get the current URL parameters
+    var urlParams = new URLSearchParams(window.location.search);
+    // Set or update the 'tab' parameter
+    urlParams.set('tab', tab);
+    // Construct the new URL with the updated parameters
+    var url = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + urlParams.toString();
+    // Update the browser's URL without reloading the page
+    window.history.pushState({ path: url }, '', url);
+
+    // Hide/show content based on the selected tab
+    jQuery('.trackship_nav_div .inner_tab_section').hide();
+    jQuery('.trackship_nav_div #content_trackship_' + tab).show();
+    jQuery(window).trigger('resize');
+
+    // Handle the notifications tab specifically
+    if (jQuery('.tab_input#tab_trackship_notifications').is(':checked')) {
+        jQuery('.inner_tab_input:checked').trigger('click');
+    }
 });
+
 
 jQuery(document).on("click", ".ts_notifications_outer_table .inner_tab_input", function () {
 	'use strict';
@@ -165,7 +178,13 @@ jQuery(document).on("click", ".ts_notifications_outer_table .inner_tab_input", f
 	var tab = jQuery(this).data('tab');
 	jQuery('.tab_inner_container .inner_tab_section').hide();
 	jQuery('.outer_form_table.ts_notifications_outer_table .shipment-status-' + type + '-section').show();
-	var url = window.location.protocol + "//" + window.location.host + window.location.pathname + "?page=trackship-for-woocommerce&tab=" + tab;
+	// Get the current URL parameters
+	var urlParams = new URLSearchParams(window.location.search);
+	// Set or update the 'tab' parameter
+    urlParams.set('tab', tab);
+	// Construct the new URL with the updated parameters
+    var url = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + urlParams.toString();
+	// Update the browser's URL without reloading the page
 	window.history.pushState({ path: url }, '', url);
 	jQuery(window).trigger('resize');
 });
@@ -660,6 +679,11 @@ jQuery(document).on("click", ".trackship-verify-table .verify_database_table", f
 		dataType: "json",
 		success: function (response) {
 			jQuery(document).trackship_snackbar('Database table verified successfully');
+			jQuery('.db_upgrade').hide();
+            var urlParams = new URLSearchParams(window.location.search); //// Get the current URL parameters
+            urlParams.delete('verify-db'); // Remove the 'verify-db' parameter
+            var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + urlParams.toString(); // Construct the new URL without 'verify-db'
+			window.history.pushState({ path: newUrl }, '', newUrl);
 		},
 		error: function (response, jqXHR, exception) {
 			trackship_js_error(response, jqXHR, exception)
