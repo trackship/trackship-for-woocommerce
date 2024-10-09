@@ -334,8 +334,6 @@ class WC_Trackship_Admin {
 		$end_date = gmdate( 'Y-m-d' );
 		
 		global $wpdb;
-		$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
-
 		$result = $wpdb->get_row( $wpdb->prepare("
 			SELECT
 				SUM( IF( `shipping_date` BETWEEN %s AND %s, 1, 0 ) ) as total_shipment,
@@ -727,7 +725,7 @@ class WC_Trackship_Admin {
 			// Below set your custom order statuses (key / label / allowed statuses) that needs a button
 			$custom_statuses = array(
 				'delivered' => array( // The key (slug without "wc-")
-					'label'		=> __( 'Delivered', 'ast-pro' ), // Label name
+					'label'		=> __( 'Delivered', 'trackship-for-woocommerce' ), // Label name
 					'allowed'	=> array( 'completed'), // Button displayed for this statuses (slugs without "wc-")
 				),
 			);
@@ -739,7 +737,7 @@ class WC_Trackship_Admin {
 					$actions[ 'status' ][ 'actions' ][ $status_slug ] = array(
 						'url'	=> wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=' . $status_slug . '&order_id=' . $order->get_id() ), 'woocommerce-mark-order-status' ),
 						'name'	=> $values['label'],
-						'title'	=> __( 'Change order status to', 'ast-pro' ) . ' ' . strtolower( $values['label'] ),
+						'title'	=> __( 'Change order status to', 'trackship-for-woocommerce' ) . ' ' . strtolower( $values['label'] ),
 						'action'=> $status_slug,
 					);
 				}
@@ -762,7 +760,7 @@ class WC_Trackship_Admin {
 				// Set the action button
 				$actions['delivered'] = array(
 					'url'	=> wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=delivered&order_id=' . $order_id ), 'woocommerce-mark-order-status' ),
-					'name'	=> __( 'Mark order as delivered', 'ast-pro' ),
+					'name'	=> __( 'Mark order as delivered', 'trackship-for-woocommerce' ),
 					'icon'	=> '<i class="fa fa-truck">&nbsp;</i>',
 					'action'=> 'delivered_icon', // keep "view" class for a clean button CSS
 				);
@@ -1087,6 +1085,8 @@ class WC_Trackship_Admin {
 		$install = trackship_for_woocommerce()->ts_install;
 		$install->create_shipment_table();
 		$install->create_shipment_meta_table();
+		$install->create_shipping_provider_table();
+		$install->update_shipping_providers();
 		$install->create_email_log_table();
 		$install->check_column_exists();
 

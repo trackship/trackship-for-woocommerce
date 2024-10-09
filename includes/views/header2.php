@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $db_status = trackship_for_woocommerce()->ts_install->check_tsdb_status();
 
 if ( $db_status['missing_tables'] || $db_status['missing_columns'] ) {
-	$url = admin_url( 'admin.php?page=trackship-for-woocommerce&tab=tools' );
+	$url = admin_url( 'admin.php?page=trackship-for-woocommerce&tab=tools&verify-db=true' );
 	?>
 	<style>
 		.wp-core-ui .notice.db_upgrade {

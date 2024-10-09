@@ -6,6 +6,7 @@ $completed_order_with_tracking = $this->completed_order_with_tracking();
 $completed_order_with_zero_balance = $this->completed_order_with_zero_balance();
 $completed_order_with_do_connection = $this->completed_order_with_do_connection();
 $total_orders = $completed_order_with_tracking + $completed_order_with_zero_balance + $completed_order_with_do_connection;
+$check_class = isset( $_GET['verify-db'] ) ? sanitize_text_field( $_GET['verify-db'] ) : '';
 ?>
 <div class="tools_tab_ts4wc tools_tab">
 	<div class="trackship-notice p15 inner_div">
@@ -21,7 +22,7 @@ $total_orders = $completed_order_with_tracking + $completed_order_with_zero_bala
 	<div class="trackship-verify-table p15 inner_div">
 		<p>
 			<?php esc_html_e( 'Verify if all TrackShip database tables are present.', 'trackship-for-woocommerce' ); ?>
-			<button class="button-primary button-trackship verify_database_table tools-ts-button"><?php esc_html_e( 'Verify DB Structure', 'trackship-for-woocommerce' ); ?></button>
+			<button class="button-primary button-trackship verify_database_table tools-ts-button <?php echo 'true' == $check_class ? 'checked' : ''; ?>"><?php esc_html_e( 'Verify DB Structure', 'trackship-for-woocommerce' ); ?></button>
 		</p>
 	</div>
 	<?php if ( get_trackship_settings( 'old_user' ) ) { ?>
