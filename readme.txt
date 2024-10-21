@@ -14,13 +14,13 @@ TrackShip auto-tracks orders, adds a branded tracking experience to your store a
 
 TrackShip is a shipment tracking and post-purchase experience platform that helps WooCommerce businesses to provide an exceptional post-shipping experience to their customers, it helps to gain loyalty and trust and increase the repeat purchases, which is crucial for any eCommerce business to grow and succeed in the long run.
 
+https://www.youtube.com/watch?v=QDKV2Irqz9M
+
 == TrackShip Pricing ==
 
-TrackShip offers a **14-day free trial** that allows you to track up to **100 shipments** with access to all premium features. During the trial period, you can experience everything TrackShip has to offer.
+TrackShip offers a **15-day free trial** that allows you to track up to **100 shipments** with access to all premium features. During the trial period, you can experience everything TrackShip has to offer.
 After the trial, if you choose not to go with a paid plan, you can continue using TrackShip on our **Free Plan**. The free plan allows you to track up to **50 shipments per month**, but with access to basic features only. For users who need to track more shipments or want advanced features such as SMS notifications, branded tracking pages, or enhanced analytics, we offer paid plans that scale according to your business needs.
 For more details on pricing and features, please visit our [TrackShip Pricing Page](https://trackship.com/pricing/).
-
-https://www.youtube.com/watch?v=QDKV2Irqz9M
 
 == Why use TrackShip? ==
 
