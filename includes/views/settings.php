@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 if ( !get_trackship_settings( 'wc_admin_notice', '') ) {
-	if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
+	if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 		trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_pro();
 	}
 	trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_review();

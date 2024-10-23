@@ -29,7 +29,7 @@ function save_sms_settings(){
 	'use strict';
 
 	if ( smswoo_active == 'no' ) {
-		if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan"] ) !== -1 ) {
+		if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan", "Trial Ended"] ) !== -1 ) {
 			jQuery("#free_user_popup").show();
 			return this; 
 		}
@@ -67,7 +67,7 @@ jQuery(document).on("change", "#all-shipment-status-sms-delivered", function(){
 	"use strict";
 	
 	if ( smswoo_active == 'no' ) {
-		if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan"] ) !== -1 ) {
+		if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan", "Trial Ended"] ) !== -1 ) {
 			jQuery("#free_user_popup").show();
 			return this;
 		}
@@ -104,7 +104,7 @@ jQuery(document).on( "click", ".shipment-status-sms-section .smswoo-top-click", 
 	'use strict';
 
 	if ( smswoo_active == 'no' ) {
-		if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan"] ) !== -1 ) {
+		if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan", "Trial Ended"] ) !== -1 ) {
 			jQuery("#free_user_popup").show();
 			return this;
 		}

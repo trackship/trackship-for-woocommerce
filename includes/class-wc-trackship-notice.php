@@ -76,7 +76,7 @@ class WC_TrackShip_Admin_Notice {
 			return;
 		}
 
-		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) && !get_trackship_settings( 'ts_popup_ignore136', '') ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) && !get_trackship_settings( 'ts_popup_ignore136', '') ) {
 			return;
 		}
 
@@ -113,7 +113,7 @@ class WC_TrackShip_Admin_Notice {
 	* Display admin notice on Upgrade TrackShip plan
 	*/
 	public function trackship_upgrade_notice () {
-		if ( get_trackship_settings( 'ts_popup_ignore136', '') || !in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
+		if ( get_trackship_settings( 'ts_popup_ignore136', '') || !in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 			return;
 		}
 		$target_date = strtotime('2024-09-15');

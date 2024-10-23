@@ -241,7 +241,7 @@ jQuery(document).on("change", ".shipment_status_toggle input", function () {
 
 	var settings_data = jQuery(this).data("settings");
 	if ( jQuery.inArray( settings_data, [ "late_shipments_email_settings", "exception_admin_email", "on_hold_admin_email" ] ) !== -1 ) {
-		if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan"] ) !== -1 ) {
+		if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan", "Trial Ended"] ) !== -1 ) {
 			jQuery("#free_user_popup").show();
 			return;
 		}
@@ -336,7 +336,7 @@ jQuery(document).on("change", ".ts_integration_checkbox input", function () {
 
 jQuery(document).on("click", ".admin_notifications_tr", function (event) {
 
-	if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan"] ) !== -1 ) {
+	if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan", "Trial Ended"] ) !== -1 ) {
 		jQuery("#free_user_popup").show();
 		return;
 	}
@@ -726,7 +726,7 @@ jQuery(document).on('click', '.inner_tab_section .heading_panel.section_sms_head
 		jQuery('.heading_panel.section_sms_heading').find( 'button' ).attr('disabled', true);
 		jQuery('.panel_content.section_sms_content').find( 'select, input' ).attr('disabled', true);
 		jQuery('.panel_content.section_sms_content .outer_form_table').addClass('smswoo_active');
-	} else if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan"] ) !== -1) {
+	} else if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan", "Trial Ended"] ) !== -1) {
 		jQuery('.panel_content.section_sms_content').find( 'select, input' ).attr('disabled', true);
 	}
 });

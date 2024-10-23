@@ -145,7 +145,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</form>
 	</section>
 	<section class="inner_tab_section shipment-status-sms-section">
-		<?php if ( ! function_exists( 'SMSWOO' ) && in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) { ?>
+		<?php if ( ! function_exists( 'SMSWOO' ) && in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) { ?>
 			<input type="hidden" class="disable_pro" name="disable_pro" value="disable_pro">
 		<?php } ?>
 		<?php do_action( 'shipment_status_sms_section' ); ?>

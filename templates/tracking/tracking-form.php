@@ -126,7 +126,7 @@ $form_tab_view = $tracking_page_defaults->get_value( 'tracking_form_settings', '
 	<div class="trackship_branding">
 		<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></p>
 	</div>
-	<?php if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) { ?>
+	<?php if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) { ?>
 		<style> .trackship_branding{display:block !important;} </style>
 	<?php } ?>
 </div>

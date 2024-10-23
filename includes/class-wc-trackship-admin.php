@@ -431,7 +431,7 @@ class WC_Trackship_Admin {
 			),
 		);
 
-		if ( ( is_plugin_active( 'wp-lister-for-amazon/wp-lister-amazon.php' ) || is_plugin_active( 'wp-lister-amazon/wp-lister-amazon.php' ) ) && !in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
+		if ( ( is_plugin_active( 'wp-lister-for-amazon/wp-lister-amazon.php' ) || is_plugin_active( 'wp-lister-amazon/wp-lister-amazon.php' ) ) && !in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 			$form_data[ 'enable_notification_for_amazon_order' ] = array(
 				'type'		=> 'tgl_checkbox',
 				'title'		=> __( 'Enable shipment status notification for order created by Amazon', 'trackship-for-woocommerce' ),

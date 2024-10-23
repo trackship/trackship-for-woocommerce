@@ -231,7 +231,7 @@
 <?php if ( !$show_trackship_branding ) { ?>
 	.trackship_branding{display:none;}
 <?php } ?>
-<?php if (in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) { ?>
+<?php if (in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) { ?>
 	.trackship_branding{display:block !important;}
 <?php } ?>
 <?php if ( $hide_tracking_provider_image ) { ?>
