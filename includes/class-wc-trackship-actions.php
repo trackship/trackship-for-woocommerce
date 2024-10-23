@@ -1608,7 +1608,7 @@ class WC_Trackship_Actions {
 
 	public function is_notification_on_for_amazon( $order_id ) {
 		if ( is_plugin_active( 'wp-lister-for-amazon/wp-lister-amazon.php' ) || is_plugin_active( 'wp-lister-amazon/wp-lister-amazon.php' ) ) {
-			if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
+			if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 				$bool = true;
 			} else {
 				$order = wc_get_order( $order_id );
