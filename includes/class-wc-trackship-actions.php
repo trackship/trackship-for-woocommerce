@@ -277,14 +277,13 @@ class WC_Trackship_Actions {
 	*/
 	public function scheduled_cron_shipment_length_callback() {
 		global $wpdb;
-		$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
 		$today = gmdate('Y-m-d');
 		$total_order = $wpdb->get_var($wpdb->prepare("
 			SELECT
 				COUNT(*)
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE 
-				shipment_status NOT IN ( 'delivered', 'pending_trackship', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'invalid_tracking', '' )
+				shipment_status NOT IN ( 'delivered', 'pending_trackship', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'label_cancelled', 'invalid_tracking', 'return_to_sender', '' )
 				AND ( ship_length_updated < %s OR ship_length_updated IS NULL )
 				AND shipping_date > NOW() - INTERVAL 60 DAY
 		", $today));
@@ -299,13 +298,12 @@ class WC_Trackship_Actions {
 	*/
 	public function update_shipment_length() {
 		global $wpdb;
-		$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
 		$today = gmdate('Y-m-d');
 		$total_order = $wpdb->get_results($wpdb->prepare("
 			SELECT *
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE
-				shipment_status NOT IN ( 'delivered', 'pending_trackship', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'label_cancelled', 'invalid_tracking', '' )
+				shipment_status NOT IN ( 'delivered', 'pending_trackship', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'label_cancelled', 'invalid_tracking', 'return_to_sender', '' )
 				AND ( ship_length_updated < %s OR ship_length_updated IS NULL )
 				AND shipping_date > NOW() - INTERVAL 60 DAY
 			LIMIT 300
@@ -321,7 +319,7 @@ class WC_Trackship_Actions {
 				'order_id'			=> $order_id,
 				'tracking_number'	=> $value->tracking_number,
 			);
-			$wpdb->update( $woo_trackship_shipment, array( 'shipping_length' => $shipment_length, 'ship_length_updated' => $today ), $where );
+			$wpdb->update( $wpdb->prefix . 'trackship_shipment', array( 'shipping_length' => $shipment_length, 'ship_length_updated' => $today ), $where );
 		}
 	}
 	

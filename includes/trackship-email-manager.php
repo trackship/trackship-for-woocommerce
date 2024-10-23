@@ -37,6 +37,9 @@ class WC_TrackShip_Email_Manager {
 	 */
 	public function shippment_email_trigger( $order_id, $old_status, $new_status, $tracking_item, $shipment_row ) {
 		$order = wc_get_order( $order_id );
+		if ( !$order ) {
+			return;
+		}
 		$this->order = $order;
 		$this->shipment_row = $shipment_row;
 		$this->tracking_item = $tracking_item;
@@ -57,8 +60,15 @@ class WC_TrackShip_Email_Manager {
 			'status_msg'		=> 'Settings disabled',
 		);
 
+		$email_to = [];
+		if ( $enable && $for_amazon_order && '0' != $receive_email ) {
+			$email_to[] = $order->get_billing_email();
+		}
+		$original_email_to = $email_to;
+		$email_to = apply_filters( 'add_multiple_emails_to_shipment_email', $email_to, $new_status );
+
 		$logger = wc_get_logger();
-		if ( ! $enable || ! $for_amazon_order || '0' == $receive_email ) {
+		if ( empty($email_to) && $email_to == $original_email_to ) {
 			$logger->info( print_r($arg, true), array( 'source' => 'trackship_email_log' ) );
 			return;
 		}
@@ -81,10 +91,6 @@ class WC_TrackShip_Email_Manager {
 		}
 
 		$default = trackship_admin_customizer()->wcast_shipment_settings_defaults( $status );
-
-		$email_to = [];
-		$email_to[] = $order ? $order->get_billing_email() : '';
-		$email_to = apply_filters( 'add_multiple_emails_to_shipment_email', $email_to, $new_status );
 
 		$email_subject = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'wcast_' . $status . '_email_settings', 'wcast_' . $status . '_email_subject', $default['wcast_' . $status . '_email_subject']);
 		$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_email_heading', $default['wcast_' . $status . '_email_heading']);
