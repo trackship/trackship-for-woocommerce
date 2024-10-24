@@ -127,11 +127,14 @@ class WC_Trackship_Shipments {
 			case 'late_shipment':
 				$where[] = "shipping_length > {$days}";
 				break;
+			case 'active_late':
+				$where[] = "(shipping_length > {$days} AND shipment_status NOT IN ('delivered', 'return_to_sender'))";
+				break;
 			case 'tracking_issues':
 				$where[] = "shipment_status NOT IN ('delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup') OR pending_status IS NOT NULL";
 				break;
 			case 'active':
-				$where[] = "shipment_status != 'delivered'";
+				$where[] = "shipment_status NOT IN ('delivered', 'return_to_sender')";
 				break;
 			default:
 				if ($active_shipment_status !== 'all_ship') {

@@ -30,6 +30,7 @@ $ship_status = array(
 	'return_to_sender'		=> __( 'Return To Sender', 'trackship-for-woocommerce' ),
 	'available_for_pickup'	=> __( 'Available For Pickup', 'trackship-for-woocommerce' ),
 	'late_shipment'			=> __( 'Late Shipments', 'trackship-for-woocommerce' ),
+	'active_late'			=> __( 'Active Late Shipments', 'trackship-for-woocommerce' ),
 	'tracking_issues'		=> __( 'Tracking Issues', 'trackship-for-woocommerce' ),
 );
 $columns = array(
@@ -63,8 +64,9 @@ $issues_count = $wpdb->get_row( $wpdb->prepare( "SELECT
 	COUNT(*) AS all_ship,
 	SUM( IF( shipment_status != ( 'delivered'), 1, 0 ) ) as active,
 	SUM( IF(shipment_status NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' ) OR pending_status IS NOT NULL, 1, 0) ) as tracking_issues,
-	SUM( IF(shipping_length > %d, 1, 0) ) as late_shipment
-FROM {$wpdb->prefix}trackship_shipment", $days), ARRAY_A);
+	SUM( IF(shipping_length > %d, 1, 0) ) as late_shipment,
+	SUM( IF(shipping_length > %d AND shipment_status NOT IN ('delivered', 'return_to_sender'), 1, 0) ) as active_late
+FROM {$wpdb->prefix}trackship_shipment", $days, $days), ARRAY_A);
 
 $shipment_count = array_merge($shipment_count, $issues_count);
 
