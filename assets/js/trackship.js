@@ -146,29 +146,29 @@ jQuery(document).ready(function () {
 });
 
 jQuery(document).on("click", ".trackship_admin_content .trackship_nav_div .tab_input", function () {
-    "use strict";
-    var tab = jQuery(this).data('tab');
-    var label = jQuery(this).data('label');
-    jQuery('.zorem-layout__header .header-breadcrumbs-last').text(label);
+	"use strict";
+	var tab = jQuery(this).data('tab');
+	var label = jQuery(this).data('label');
+	jQuery('.zorem-layout__header .header-breadcrumbs-last').text(label);
 
-    // Get the current URL parameters
-    var urlParams = new URLSearchParams(window.location.search);
-    // Set or update the 'tab' parameter
-    urlParams.set('tab', tab);
-    // Construct the new URL with the updated parameters
-    var url = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + urlParams.toString();
-    // Update the browser's URL without reloading the page
-    window.history.pushState({ path: url }, '', url);
+	// Get the current URL parameters
+	var urlParams = new URLSearchParams(window.location.search);
+	// Set or update the 'tab' parameter
+	urlParams.set('tab', tab);
+	// Construct the new URL with the updated parameters
+	var url = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + urlParams.toString();
+	// Update the browser's URL without reloading the page
+	window.history.pushState({ path: url }, '', url);
 
-    // Hide/show content based on the selected tab
-    jQuery('.trackship_nav_div .inner_tab_section').hide();
-    jQuery('.trackship_nav_div #content_trackship_' + tab).show();
-    jQuery(window).trigger('resize');
+	// Hide/show content based on the selected tab
+	jQuery('.trackship_nav_div .inner_tab_section').hide();
+	jQuery('.trackship_nav_div #content_trackship_' + tab).show();
+	jQuery(window).trigger('resize');
 
-    // Handle the notifications tab specifically
-    if (jQuery('.tab_input#tab_trackship_notifications').is(':checked')) {
-        jQuery('.inner_tab_input:checked').trigger('click');
-    }
+	// Handle the notifications tab specifically
+	if (jQuery('.tab_input#tab_trackship_notifications').is(':checked')) {
+		jQuery('.inner_tab_input:checked').trigger('click');
+	}
 });
 
 
@@ -181,9 +181,9 @@ jQuery(document).on("click", ".ts_notifications_outer_table .inner_tab_input", f
 	// Get the current URL parameters
 	var urlParams = new URLSearchParams(window.location.search);
 	// Set or update the 'tab' parameter
-    urlParams.set('tab', tab);
+	urlParams.set('tab', tab);
 	// Construct the new URL with the updated parameters
-    var url = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + urlParams.toString();
+	var url = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + urlParams.toString();
 	// Update the browser's URL without reloading the page
 	window.history.pushState({ path: url }, '', url);
 	jQuery(window).trigger('resize');
@@ -680,9 +680,9 @@ jQuery(document).on("click", ".trackship-verify-table .verify_database_table", f
 		success: function (response) {
 			jQuery(document).trackship_snackbar('Database table verified successfully');
 			jQuery('.db_upgrade').hide();
-            var urlParams = new URLSearchParams(window.location.search); //// Get the current URL parameters
-            urlParams.delete('verify-db'); // Remove the 'verify-db' parameter
-            var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + urlParams.toString(); // Construct the new URL without 'verify-db'
+			var urlParams = new URLSearchParams(window.location.search); //// Get the current URL parameters
+			urlParams.delete('verify-db'); // Remove the 'verify-db' parameter
+			var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + urlParams.toString(); // Construct the new URL without 'verify-db'
 			window.history.pushState({ path: newUrl }, '', newUrl);
 		},
 		error: function (response, jqXHR, exception) {
