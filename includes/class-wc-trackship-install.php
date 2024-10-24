@@ -369,6 +369,14 @@ class WC_Trackship_Install {
 			$this->create_shipping_provider_table();
 			$this->update_shipping_providers();
 
+			// Execute the query
+			$wpdb->query("ALTER TABLE {$wpdb->prefix}trackship_shipment 
+				ADD INDEX `first_event_time` (`first_event_time`),
+				ADD INDEX `shipment_status_first_event_time` (`shipment_status`, `first_event_time`);"
+			);
+
+			delete_trackship_settings( 'ts_review_ignore_136' );
+			delete_trackship_settings( 'ts_popup_ignore136' );
 		}
 	}
 
@@ -499,7 +507,9 @@ class WC_Trackship_Install {
 				INDEX `late_shipment_email` (`late_shipment_email`),
 				INDEX `on_hold_email` (`on_hold_email`),
 				INDEX `exception_email` (`exception_email`),
-				INDEX `est_delivery_date` (`est_delivery_date`)
+				INDEX `est_delivery_date` (`est_delivery_date`),
+				INDEX `first_event_time` (`first_event_time`),
+				INDEX `shipment_status_first_event_time` (`shipment_status`,`first_event_time`)
 			) $charset_collate;";
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 			dbDelta( $sql );

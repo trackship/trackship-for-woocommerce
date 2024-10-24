@@ -4,7 +4,7 @@ Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order trackin
 Requires at least: 6.2
 Tested up to: 6.6.2
 Requires PHP: 7.4
-Stable tag: 1.8.5
+Stable tag: 1.8.6
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -137,6 +137,12 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended.
 
 == Changelog ==
+= 1.8.6 - 2024-10-24 =
+* Enhancement - Added an "Active Late Shipments" filter in TrackShip Shipments.
+* Tweak - Added first_event_time column to the trackship_shipment table.
+* Dev - Not required to enable shipment status notifications for customer, if notification is also sent to admin using code snippet
+* Update - tested up to WC versions for the WooCommerce 9.3.3 release
+
 = 1.8.5 - 2024-09-25 =
 * Enhancement - Added a notice when the plugin is deactivated for delivered orders
 * Tweak - Implemented a filter to don't send Phone number to Klaviyo Webhook (exclude_klaviyo_phone)
