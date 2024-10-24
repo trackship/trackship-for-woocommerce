@@ -150,6 +150,10 @@ class WOO_Klaviyo_TS4WC {
 			)
 		);
 
+		if ( apply_filters( 'exclude_klaviyo_phone', false ) ) {
+			unset( $body['data']['attributes']['profile']['data']['attributes']['phone_number'] );
+		}
+
 		// Add requirements header parameters in below array
 		$args = array(
 			'body'		=> wp_json_encode($body),

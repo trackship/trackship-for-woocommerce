@@ -119,7 +119,7 @@ class TSWC_SMSWoo_SMS_Notification {
 	}
 	
 	public function ast_order_variable_support( $replacements, $object ) {
-		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 			return $replacements;
 		}
 		
@@ -189,7 +189,7 @@ class TSWC_SMSWoo_SMS_Notification {
 	 */
 	private function send_sms( $phone, $message ) {
 		
-		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 			return ;
 		}
 		
@@ -276,7 +276,7 @@ class TSWC_SMSWoo_SMS_Notification {
 	 * @return string provider class
 	 */
 	public function get_sms_provider() {
-		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 			return;
 		}
 		
@@ -353,7 +353,7 @@ class TSWC_SMSWoo_SMS_Notification {
 			$message = apply_filters( 'smswoo_customer_sms_send', $message, $this->order );
 			
 			// send the SMS to customer!
-			if ( !in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) && get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_customer' ) ) {
+			if ( !in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) && get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_customer' ) ) {
 				
 				// allow modification of the "to" phone number
 				$phone = apply_filters( 'smswoo_sms_customer_phone', $this->order->get_billing_phone( 'edit' ), $this->order );

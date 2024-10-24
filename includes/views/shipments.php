@@ -4,18 +4,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $wpdb;
-$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
-
-if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipment ) ) ) {
-	trackship_for_woocommerce()->ts_install->create_shipment_table();
+if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $wpdb->prefix . 'trackship_shipment' ) ) ) {
+	esc_html_e( 'TrackShip Shipments database table does not exist.', 'trackship-for-woocommerce' );
+	return;
 }
 
 if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $wpdb->prefix . 'trackship_shipment_meta' ) ) ) {
-	trackship_for_woocommerce()->ts_install->create_shipment_meta_table();
-}
-
-if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipment ) ) ) {
-	esc_html_e( 'TrackShip Shipments table does not exist, Please try after few minutes', 'trackship-for-woocommerce' );
+	esc_html_e( 'TrackShip Shipments meta database table does not exist.', 'trackship-for-woocommerce' );
 	return;
 }
 
@@ -35,6 +30,7 @@ $ship_status = array(
 	'return_to_sender'		=> __( 'Return To Sender', 'trackship-for-woocommerce' ),
 	'available_for_pickup'	=> __( 'Available For Pickup', 'trackship-for-woocommerce' ),
 	'late_shipment'			=> __( 'Late Shipments', 'trackship-for-woocommerce' ),
+	'active_late'			=> __( 'Active Late Shipments', 'trackship-for-woocommerce' ),
 	'tracking_issues'		=> __( 'Tracking Issues', 'trackship-for-woocommerce' ),
 );
 $columns = array(
@@ -52,7 +48,8 @@ $columns = array(
 	12 => 'Customer',
 	13 => 'Shipping time',
 	14 => 'Delivery date',
-	15 => 'Actions',
+	15 => 'Delivery number',
+	16 => 'Actions',
 );
 $url_status = isset( $_GET['status'] ) ? sanitize_text_field( $_GET['status'] ) : '';
 $url_provider = isset( $_GET['provider'] ) ? sanitize_text_field( $_GET['provider'] ) : '';
@@ -67,8 +64,9 @@ $issues_count = $wpdb->get_row( $wpdb->prepare( "SELECT
 	COUNT(*) AS all_ship,
 	SUM( IF( shipment_status != ( 'delivered'), 1, 0 ) ) as active,
 	SUM( IF(shipment_status NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' ) OR pending_status IS NOT NULL, 1, 0) ) as tracking_issues,
-	SUM( IF(shipping_length > %d, 1, 0) ) as late_shipment
-FROM {$wpdb->prefix}trackship_shipment", $days), ARRAY_A);
+	SUM( IF(shipping_length > %d, 1, 0) ) as late_shipment,
+	SUM( IF(shipping_length > %d AND shipment_status NOT IN ('delivered', 'return_to_sender'), 1, 0) ) as active_late
+FROM {$wpdb->prefix}trackship_shipment", $days, $days), ARRAY_A);
 
 $shipment_count = array_merge($shipment_count, $issues_count);
 

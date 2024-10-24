@@ -111,7 +111,7 @@ class WC_TrackShip_Late_Shipments {
 	 */
 	public function send_late_shipments_email() {
 		
-		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 			$logger = wc_get_logger();
 			$context = array( 'source' => 'trackship_late_shipments_email' );
 			$logger->info( 'Late Shipments email not sent. Upgrade your plan', $context );
@@ -135,7 +135,7 @@ class WC_TrackShip_Late_Shipments {
 				AND shipping_date > NOW() - INTERVAL 60 DAY
 		", 0, $day ));
 
-		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) || 0 == $count ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) || 0 == $count ) {
 			return;
 		}
 
@@ -170,7 +170,7 @@ class WC_TrackShip_Late_Shipments {
 	 * Code for send late shipment status email
 	 */
 	public function late_shippment_email_trigger( $orders, $count ) {
-		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 			return;
 		}
 
@@ -200,7 +200,7 @@ class WC_TrackShip_Late_Shipments {
 		$email_to = explode( ',', $email_to );
 		$email_send = array();
 		foreach ( $email_to as $email_addr ) {
-			if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
+			if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 				return;
 			}
 			//string replace for '{admin_email}'

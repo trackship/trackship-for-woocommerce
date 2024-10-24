@@ -179,13 +179,13 @@ class TSWC_Email_Customizer_Preview {
 	*/
 	public function email_footer_text( $footer_text ) {
 		$show_trackship_branding = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'show_trackship_branding', 1 );
-		$class = !( $show_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ) ? 'hide' : '';
+		$class = !( $show_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan', 'Trial Ended' ) ) ) ? 'hide' : '';
 
 		$trackship_branding_text = $trackship_branding_text = '<div class="tracking_widget_email trackship_branding ' . $class . '"><p style="margin: 0;"><span style="vertical-align:middle;font-size: 14px;">Powered by <a href="https://trackship.com" title="TrackShip" target="blank">TrackShip</a></span></p></div>';
 
 		$unsubscribe = get_trackship_settings( 'enable_email_widget' ) ? '<div style="text-align:center;"><a href="#">' . esc_html__( 'Unsubscribe', 'trackship-for-woocommerce' ) . '</a></div>' : '';
 
-		$class1 = $show_trackship_branding || $unsubscribe || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan' ) ) ? 'hide' : '';
+		$class1 = $show_trackship_branding || $unsubscribe || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan', 'Trial Ended' ) ) ? 'hide' : '';
 		$default_footer = '<div class="default_footer ' . $class1 . '">' . $footer_text . '</div>';
 
 		return $trackship_branding_text . $unsubscribe . $default_footer;

@@ -734,7 +734,7 @@ class TS4WC_Admin_Customizer {
 				'option_name'=> 'shipment_email_settings',
 				'option_type'=> 'array',
 				'required' 	=> 'pro',
-				'plan'		=> in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ),
+				'plan'		=> in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ),
 			),
 			// Tracking widget form sections from below
 			'heading7'	=> array(
@@ -971,7 +971,7 @@ class TS4WC_Admin_Customizer {
 			'show'		=> true,
 			'class'		=> '',
 			'required' 	=> 'pro',
-			'plan'		=> in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ),
+			'plan'		=> in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ),
 		);
 
 		if ( 'tracking_page' == $type ) {

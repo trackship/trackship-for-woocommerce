@@ -291,19 +291,6 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.27' );
 		}
 
-		if ( version_compare( get_option( 'trackship_db' ), '1.28', '<' ) ) {
-			update_trackship_settings( 'trackship_db', '1.28' );
-			update_option( 'trackship_db', '1.28' );
-
-			$this->create_shipment_table();
-			$this->create_shipment_meta_table();
-			$this->check_column_exists();
-
-			$this->create_shipping_provider_table();
-			$this->update_shipping_providers();
-
-		}
-
 		if ( version_compare( get_option( 'trackship_db' ), '1.29', '<' ) ) {
 			update_trackship_settings( 'trackship_db', '1.29' );
 			update_option( 'trackship_db', '1.29' );
@@ -369,6 +356,27 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.36' );
 			delete_trackship_settings( 'ts_review_ignore_132' );
 			delete_trackship_settings( 'ts_popup_ignore' );
+		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.37', '<' ) ) {
+			update_trackship_settings( 'trackship_db', '1.37' );
+			update_option( 'trackship_db', '1.37' );
+			// create first_event_time column in trackship_shipment table
+			$this->create_shipment_table();
+			$this->create_shipment_meta_table();
+			$this->check_column_exists();
+
+			$this->create_shipping_provider_table();
+			$this->update_shipping_providers();
+
+			// Execute the query
+			$wpdb->query("ALTER TABLE {$wpdb->prefix}trackship_shipment 
+				ADD INDEX `first_event_time` (`first_event_time`),
+				ADD INDEX `shipment_status_first_event_time` (`shipment_status`, `first_event_time`);"
+			);
+
+			delete_trackship_settings( 'ts_review_ignore_136' );
+			delete_trackship_settings( 'ts_popup_ignore136' );
 		}
 	}
 
@@ -485,6 +493,7 @@ class WC_Trackship_Install {
 				`est_delivery_date` DATE,
 				`last_event` LONGTEXT ,
 				`last_event_time` DATETIME ,
+				`first_event_time` DATETIME ,
 				`updated_at` DATETIME ,
 				PRIMARY KEY (`id`),
 				INDEX `shipping_date` (`shipping_date`),
@@ -498,7 +507,9 @@ class WC_Trackship_Install {
 				INDEX `late_shipment_email` (`late_shipment_email`),
 				INDEX `on_hold_email` (`on_hold_email`),
 				INDEX `exception_email` (`exception_email`),
-				INDEX `est_delivery_date` (`est_delivery_date`)
+				INDEX `est_delivery_date` (`est_delivery_date`),
+				INDEX `first_event_time` (`first_event_time`),
+				INDEX `shipment_status_first_event_time` (`shipment_status`,`first_event_time`)
 			) $charset_collate;";
 			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 			dbDelta( $sql );
@@ -556,6 +567,7 @@ class WC_Trackship_Install {
 			'est_delivery_date'		=> ' DATE',
 			'last_event'			=> ' LONGTEXT',
 			'last_event_time'		=> ' DATETIME',
+			'first_event_time'		=> ' DATETIME',
 			'updated_at'			=> ' DATETIME',
 		);
 		foreach ( $shipment_table as $column_name => $type ) {
@@ -624,48 +636,53 @@ class WC_Trackship_Install {
 		}
 
 		// Check for columns in trackship_shipment table
-		$shipment_columns = array(
-			'id',
-			'order_id',
-			'order_number',
-			'tracking_number',
-			'shipping_provider',
-			'shipment_status',
-			'pending_status',
-			'shipping_date',
-			'shipping_country',
-			'shipping_length',
-			'ship_length_updated',
-			'late_shipment_email',
-			'exception_email',
-			'on_hold_email',
-			'est_delivery_date',
-			'last_event',
-			'last_event_time',
-			'updated_at'
-		);
-		foreach ($shipment_columns as $column) {
-			if ( $wpdb->get_var( "SHOW COLUMNS FROM {$wpdb->prefix}trackship_shipment LIKE '{$column}'" ) != $column ) {
-				$missing_columns[] = 'Shipment table: ' . $column;
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->prefix}trackship_shipment'" ) ) {
+			$shipment_columns = array(
+				'id',
+				'order_id',
+				'order_number',
+				'tracking_number',
+				'shipping_provider',
+				'shipment_status',
+				'pending_status',
+				'shipping_date',
+				'shipping_country',
+				'shipping_length',
+				'ship_length_updated',
+				'late_shipment_email',
+				'exception_email',
+				'on_hold_email',
+				'est_delivery_date',
+				'last_event',
+				'last_event_time',
+				'first_event_time',
+				'updated_at'
+			);
+			foreach ($shipment_columns as $column) {
+				if ( $wpdb->get_var( "SHOW COLUMNS FROM {$wpdb->prefix}trackship_shipment LIKE '{$column}'" ) != $column ) {
+					$missing_columns[] = 'Shipment table: ' . $column;
+				}
 			}
 		}
 
-		// Check for columns in trackship_shipment_meta table
-		$meta_columns = array(
-			'meta_id',
-			'origin_country',
-			'destination_country',
-			'delivery_number',
-			'delivery_provider',
-			'shipping_service',
-			'tracking_events',
-			'destination_events',
-			'destination_state',
-			'destination_city',
-		);
-		foreach ($meta_columns as $column) {
-			if ( $wpdb->get_var( "SHOW COLUMNS FROM {$wpdb->prefix}trackship_shipment_meta LIKE '{$column}'" ) != $column ) {
-				$missing_columns[] = 'Shipment meta table: ' . $column;
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->prefix}trackship_shipment_meta'" ) ) {
+			// Check for columns in trackship_shipment_meta table
+			$meta_columns = array(
+				'meta_id',
+				'origin_country',
+				'destination_country',
+				'delivery_number',
+				'delivery_provider',
+				'shipping_service',
+				'tracking_events',
+				'destination_events',
+				'destination_state',
+				'destination_city',
+			);
+			foreach ($meta_columns as $column) {
+				if ( $wpdb->get_var( "SHOW COLUMNS FROM {$wpdb->prefix}trackship_shipment_meta LIKE '{$column}'" ) != $column ) {
+					$missing_columns[] = 'Shipment meta table: ' . $column;
+				}
 			}
 		}
 
