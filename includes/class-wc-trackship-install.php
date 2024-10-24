@@ -291,19 +291,6 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.27' );
 		}
 
-		if ( version_compare( get_option( 'trackship_db' ), '1.28', '<' ) ) {
-			update_trackship_settings( 'trackship_db', '1.28' );
-			update_option( 'trackship_db', '1.28' );
-
-			$this->create_shipment_table();
-			$this->create_shipment_meta_table();
-			$this->check_column_exists();
-
-			$this->create_shipping_provider_table();
-			$this->update_shipping_providers();
-
-		}
-
 		if ( version_compare( get_option( 'trackship_db' ), '1.29', '<' ) ) {
 			update_trackship_settings( 'trackship_db', '1.29' );
 			update_option( 'trackship_db', '1.29' );
@@ -369,6 +356,19 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.36' );
 			delete_trackship_settings( 'ts_review_ignore_132' );
 			delete_trackship_settings( 'ts_popup_ignore' );
+		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.37', '<' ) ) {
+			update_trackship_settings( 'trackship_db', '1.37' );
+			update_option( 'trackship_db', '1.37' );
+			// create first_event_time column in trackship_shipment table
+			$this->create_shipment_table();
+			$this->create_shipment_meta_table();
+			$this->check_column_exists();
+
+			$this->create_shipping_provider_table();
+			$this->update_shipping_providers();
+
 		}
 	}
 
@@ -485,6 +485,7 @@ class WC_Trackship_Install {
 				`est_delivery_date` DATE,
 				`last_event` LONGTEXT ,
 				`last_event_time` DATETIME ,
+				`first_event_time` DATETIME ,
 				`updated_at` DATETIME ,
 				PRIMARY KEY (`id`),
 				INDEX `shipping_date` (`shipping_date`),
@@ -556,6 +557,7 @@ class WC_Trackship_Install {
 			'est_delivery_date'		=> ' DATE',
 			'last_event'			=> ' LONGTEXT',
 			'last_event_time'		=> ' DATETIME',
+			'first_event_time'		=> ' DATETIME',
 			'updated_at'			=> ' DATETIME',
 		);
 		foreach ( $shipment_table as $column_name => $type ) {
@@ -643,6 +645,7 @@ class WC_Trackship_Install {
 				'est_delivery_date',
 				'last_event',
 				'last_event_time',
+				'first_event_time',
 				'updated_at'
 			);
 			foreach ($shipment_columns as $column) {

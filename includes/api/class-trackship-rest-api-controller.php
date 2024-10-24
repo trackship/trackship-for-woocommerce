@@ -180,6 +180,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		$tracking_number = $request['tracking_number'];
 		$tracking_event_status = $request['tracking_event_status'];
 		$last_event_time = $request['last_event_time'];
+		$first_event_time = $request['first_event_time'] ?? null;
 		$tracking_est_delivery_date = $request['tracking_est_delivery_date'];
 		$tracking_events = $request['events'];
 		$tracking_destination_events = $request['destination_events'];
@@ -213,6 +214,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 				'last_event'			=> $last_event,
 				'updated_at'			=> $request['updated_at'],
 				'last_event_time'		=> $last_event_time ? $last_event_time : gmdate( 'Y-m-d H:i:s' ),
+				'first_event_time'		=> $first_event_time,
 			);
 			$args2 = array(
 				'origin_country'		=> $request['origin_country'],
