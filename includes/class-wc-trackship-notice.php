@@ -56,13 +56,13 @@ class WC_TrackShip_Admin_Notice {
 		if (isset($_GET['ts-review-ignore']) && $_GET['ts-review-ignore'] == 'true') {
 			// Verify the nonce
 			if (isset($_GET['nonce']) && wp_verify_nonce( $_GET['nonce'], 'ts_dismiss_notice' )) {
-				update_trackship_settings( 'ts_review_ignore_136', 'true' );
+				update_trackship_settings( 'ts_review_ignore_137', 'true' );
 			}
 		}
 		if (isset($_GET['ts-upgrade-ignore']) && $_GET['ts-upgrade-ignore'] == 'true') {
 			// Verify the nonce
 			if (isset($_GET['nonce']) && wp_verify_nonce( $_GET['nonce'], 'ts_dismiss_notice' )) {
-				update_trackship_settings( 'ts_popup_ignore136', 'true');
+				update_trackship_settings( 'ts_popup_ignore137', 'true');
 			}
 		}
 	}
@@ -72,11 +72,11 @@ class WC_TrackShip_Admin_Notice {
 	*/
 	public function trackship_review_notice() {
 		
-		if ( get_trackship_settings( 'ts_review_ignore_136', '') ) {
+		if ( get_trackship_settings( 'ts_review_ignore_137', '') ) {
 			return;
 		}
 
-		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) && !get_trackship_settings( 'ts_popup_ignore136', '') ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) && !get_trackship_settings( 'ts_popup_ignore137', '') ) {
 			return;
 		}
 
@@ -113,7 +113,7 @@ class WC_TrackShip_Admin_Notice {
 	* Display admin notice on Upgrade TrackShip plan
 	*/
 	public function trackship_upgrade_notice () {
-		if ( get_trackship_settings( 'ts_popup_ignore136', '') || !in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
+		if ( get_trackship_settings( 'ts_popup_ignore137', '') || !in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 			return;
 		}
 		$target_date = strtotime('2024-09-15');
