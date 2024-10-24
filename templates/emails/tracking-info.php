@@ -115,7 +115,7 @@ if ( $tracking_items ) :
 			display: <?php echo $shipping_provider_logo ? 'inline-block' : 'none'; ?>;
 		}
 		.tracking_widget_email.trackship_branding {
-			display: <?php echo $show_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ? 'block' : 'none'; ?>;
+			display: <?php echo $show_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ? 'block' : 'none'; ?>;
 		}
 	<?php } ?>
 	#ts-email-widget-wrapper{max-width: 500px;margin: 50px auto;font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;font-size: 14px;line-height: 150%;}

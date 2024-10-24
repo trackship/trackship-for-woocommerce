@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: TrackShip for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-28 04:53+0000\n"
-"PO-Revision-Date: 2024-05-27 14:06+0000\n"
+"PO-Revision-Date: 2024-09-24 11:52+0000\n"
 "Last-Translator: \n"
 "Language-Team: Croatian\n"
 "Language: hr\n"
@@ -29,7 +29,7 @@ msgid "Action Needed"
 msgstr "Potrebna akcija"
 
 #: includes/views/logs.php:56
-#: includes/shipments/views/trackship_shipments.php:29
+#: includes/shipments/views/trackship_shipments.php:30
 msgid "Actions"
 msgstr "Radnje"
 
@@ -77,7 +77,7 @@ msgstr "Sve obavijesti"
 msgid "All Shipments"
 msgstr "Sve pošiljke"
 
-#: includes/views/shipments.php:94
+#: includes/views/shipments.php:95
 msgid "All shipping providers"
 msgstr "Svi pružatelji usluga dostave"
 
@@ -85,7 +85,7 @@ msgstr "Svi pružatelji usluga dostave"
 msgid "All Types"
 msgstr "Svi tipovi"
 
-#: includes/class-wc-trackship-admin.php:422
+#: includes/class-wc-trackship-admin.php:425
 msgid ""
 "Allow users to opt-out of receiving Shipment status notifications on the "
 "Tracking page and Shipment status emails."
@@ -116,7 +116,7 @@ msgstr ""
 "Došlo je do pogreške: Clicksend nije podržan za provjeru telefonskog broja "
 "prilikom naplate, obratite se podršci"
 
-#: includes/class-wc-trackship-admin.php:226 includes/views/header2.php:59
+#: includes/class-wc-trackship-admin.php:229 includes/views/header2.php:59
 msgid "Analytics"
 msgstr "Analitika"
 
@@ -133,7 +133,7 @@ msgstr "API ključ"
 msgid "API Username"
 msgstr "API korisničko ime"
 
-#: includes/views/shipments.php:109
+#: includes/views/shipments.php:110
 msgid "Apply"
 msgstr "primijeniti"
 
@@ -145,9 +145,9 @@ msgstr "Auth Token"
 msgid "Available Balance"
 msgstr "Dostupno Stanje"
 
-#: includes/class-wc-trackship-actions.php:641
-#: includes/class-wc-trackship-actions.php:692
-#: includes/class-wc-trackship-admin.php:1171
+#: includes/class-wc-trackship-actions.php:662
+#: includes/class-wc-trackship-actions.php:713
+#: includes/class-wc-trackship-admin.php:1288
 #: includes/smswoo/class-smswoo-admin.php:541
 #: includes/customizer/trackship-customizer.php:214
 #: includes/customizer/trackship-customizer.php:821
@@ -172,7 +172,7 @@ msgstr "Dostupna rezervirana mjesta:"
 msgid "Available variables:"
 msgstr "Dostupne varijable:"
 
-#: includes/views/shipments.php:106
+#: includes/views/shipments.php:107
 msgid "Bulk actions"
 msgstr "Skupne akcije"
 
@@ -194,12 +194,12 @@ msgstr "Radijus gumba"
 msgid "Button text"
 msgstr "Tekst gumba"
 
-#: includes/class-wc-trackship-actions.php:646
-#: includes/class-wc-trackship-actions.php:725
+#: includes/class-wc-trackship-actions.php:667
+#: includes/class-wc-trackship-actions.php:746
 msgid "Carrier Unsupported"
 msgstr "Prijenosnik nije podržan"
 
-#: includes/class-wc-trackship-admin.php:406
+#: includes/class-wc-trackship-admin.php:409
 msgid "Choose on which order emails to include the shipment tracking info"
 msgstr ""
 "Odaberite u kojoj e-poruci narudžbe želite uključiti podatke o praćenju "
@@ -209,7 +209,7 @@ msgstr ""
 msgid "Classic"
 msgstr "klasična"
 
-#: trackship-for-woocommerce.php:292
+#: trackship-for-woocommerce.php:282
 msgid "Connect a Store"
 msgstr "Povežite trgovinu"
 
@@ -242,7 +242,7 @@ msgstr "Prilagodite"
 msgid "Customize the Tracking Widget"
 msgstr "Prilagodite Widget za praćenje"
 
-#: includes/class-wc-trackship-admin.php:220 includes/views/header2.php:34
+#: includes/class-wc-trackship-admin.php:223 includes/views/header2.php:34
 #: includes/views/header2.php:44
 msgid "Dashboard"
 msgstr "Nadzorna ploča"
@@ -255,11 +255,11 @@ msgstr "Brisanje zapisa obavijesti"
 msgid "Delete notifications logs more than 30 days"
 msgstr "Izbrišite zapise obavijesti više od 30 dana"
 
-#: includes/class-wc-trackship-actions.php:643
-#: includes/class-wc-trackship-actions.php:686
-#: includes/class-wc-trackship-admin.php:657
-#: includes/class-wc-trackship-admin.php:675
-#: includes/class-wc-trackship-admin.php:1213
+#: includes/class-wc-trackship-actions.php:664
+#: includes/class-wc-trackship-actions.php:707
+#: includes/class-wc-trackship-admin.php:660
+#: includes/class-wc-trackship-admin.php:678
+#: includes/class-wc-trackship-admin.php:1330
 #: includes/smswoo/class-smswoo-admin.php:547
 #: includes/customizer/trackship-customizer.php:220
 #: includes/customizer/trackship-customizer.php:827
@@ -268,7 +268,7 @@ msgid "Delivered"
 msgstr "Isporučeno"
 
 #. %s: search number of order
-#: includes/class-wc-trackship-admin.php:663
+#: includes/class-wc-trackship-admin.php:666
 #, php-format
 msgid "Delivered <span class=\"count\">(%s)</span>"
 msgid_plural "Delivered <span class=\"count\">(%s)</span>"
@@ -289,14 +289,18 @@ msgstr "Datum dostave"
 msgid "Delivery date"
 msgstr "Datum dostave"
 
-#: includes/class-wc-trackship-actions.php:644
-#: includes/class-wc-trackship-actions.php:701
-#: includes/class-wc-trackship-admin.php:1185
+#: includes/class-wc-trackship-actions.php:665
+#: includes/class-wc-trackship-actions.php:722
+#: includes/class-wc-trackship-admin.php:1302
 #: includes/smswoo/class-smswoo-admin.php:543
 #: includes/customizer/trackship-customizer.php:216
 #: includes/customizer/trackship-customizer.php:823
 msgid "Delivery Failure"
 msgstr "Neuspješna isporuka"
+
+#: includes/shipments/views/trackship_shipments.php:29
+msgid "Delivery number"
+msgstr "Broj za dostavu"
 
 #: includes/views/front/enhanced_shipment_details_notifications.php:14
 #: includes/views/front/tracking_page_header.php:35
@@ -385,7 +389,7 @@ msgstr "E-pošta"
 msgid "Enable %1$s email"
 msgstr "Omogući %1$s e-poštu"
 
-#: includes/class-wc-trackship-admin.php:429
+#: includes/class-wc-trackship-admin.php:432
 msgid ""
 "Enable a Custom Order Status Delivered that will be set automatically when "
 "all the order shipments are delivered"
@@ -393,7 +397,7 @@ msgstr ""
 "Omogućite prilagođeni status narudžbe Isporučeno koji će se automatski "
 "postaviti kada sve pošiljke narudžbe budu isporučene"
 
-#: includes/class-wc-trackship-admin.php:413
+#: includes/class-wc-trackship-admin.php:416
 msgid "Enable a shipment status filter on orders admin"
 msgstr "Omogućite filtar statusa pošiljke u administratoru narudžbi"
 
@@ -401,11 +405,11 @@ msgstr "Omogućite filtar statusa pošiljke u administratoru narudžbi"
 msgid "Enable email"
 msgstr "Omogući e-poštu"
 
-#: includes/class-wc-trackship-admin.php:426
+#: includes/class-wc-trackship-admin.php:429
 msgid "Enable Order Delivery Automation"
 msgstr "Omogućite automatizaciju isporuke narudžbi"
 
-#: includes/class-wc-trackship-admin.php:436
+#: includes/class-wc-trackship-admin.php:439
 msgid "Enable shipment status notification for order created by Amazon"
 msgstr ""
 "Omogućite obavijest o statusu pošiljke za narudžbu koju je izradio Amazon"
@@ -414,11 +418,11 @@ msgstr ""
 msgid "Enable tracking # link to carrier"
 msgstr "Omogući praćenje # veze do operatera"
 
-#: includes/class-wc-trackship-admin.php:1132
+#: includes/class-wc-trackship-admin.php:1249
 msgid "Enable Tracking Page"
 msgstr "Omogući stranicu za praćenje"
 
-#: includes/class-wc-trackship-admin.php:419
+#: includes/class-wc-trackship-admin.php:422
 msgid "Enable unsubscribe (opt-out) from Shipment status notifications"
 msgstr "Omogućite odjavu (isključivanje) od obavijesti o statusu pošiljke"
 
@@ -434,8 +438,8 @@ msgstr "Unesite telefonski broj administratora s pozivnim brojem zemlje."
 msgid "Est. Delivery Date"
 msgstr "procjena Datum dostave"
 
-#: includes/class-wc-trackship-actions.php:648
-#: includes/class-wc-trackship-admin.php:1199
+#: includes/class-wc-trackship-actions.php:669
+#: includes/class-wc-trackship-admin.php:1316
 #: includes/smswoo/class-smswoo-admin.php:545
 #: includes/customizer/trackship-customizer.php:218
 #: includes/customizer/trackship-customizer.php:825
@@ -451,15 +455,15 @@ msgstr "Iznimna pošiljka"
 msgid "Exception Shipments"
 msgstr "Iznimne pošiljke"
 
-#: includes/class-wc-trackship-admin.php:798
+#: includes/class-wc-trackship-admin.php:801
 msgid "Exception Shipments Notifications"
 msgstr "Obavijesti o iznimnim pošiljkama"
 
-#: includes/class-wc-trackship-actions.php:743
+#: includes/class-wc-trackship-actions.php:764
 msgid "Expired"
 msgstr "Istekao"
 
-#: includes/class-wc-trackship-actions.php:654
+#: includes/class-wc-trackship-actions.php:675
 msgid "Filter by shipment status"
 msgstr "Filtrirajte prema statusu pošiljke"
 
@@ -475,13 +479,13 @@ msgstr "Opće opcije"
 msgid "General Settings"
 msgstr "Opće postavke"
 
-#: includes/class-wc-trackship-actions.php:571
-#: includes/class-wc-trackship-actions.php:997
-#: includes/class-wc-trackship-admin.php:545 includes/views/tools.php:13
+#: includes/class-wc-trackship-actions.php:592
+#: includes/class-wc-trackship-actions.php:1018
+#: includes/class-wc-trackship-admin.php:548 includes/views/tools.php:13
 msgid "Get Shipment Status"
 msgstr "Dobijte status pošiljke"
 
-#: includes/views/shipments.php:107
+#: includes/views/shipments.php:108
 msgid "Get shipment status"
 msgstr "Dobijte status pošiljke"
 
@@ -533,9 +537,9 @@ msgstr "Kako pronaći svoju %s vjerodajnicu"
 msgid "Icons"
 msgstr "Ikone"
 
-#: includes/class-wc-trackship-actions.php:640
-#: includes/class-wc-trackship-actions.php:677
-#: includes/class-wc-trackship-admin.php:1164
+#: includes/class-wc-trackship-actions.php:661
+#: includes/class-wc-trackship-actions.php:698
+#: includes/class-wc-trackship-admin.php:1281
 #: includes/smswoo/class-smswoo-admin.php:540
 #: includes/customizer/trackship-customizer.php:213
 #: includes/customizer/trackship-customizer.php:820
@@ -565,7 +569,7 @@ msgstr "Instalirajte dodatak za praćenje pošiljke"
 msgid "Integrations"
 msgstr "Integracije"
 
-#: includes/class-wc-trackship-actions.php:649
+#: includes/class-wc-trackship-actions.php:670
 msgid "Invalid Tracking"
 msgstr "Nevažeće praćenje"
 
@@ -584,7 +588,7 @@ msgstr "Putovanje"
 msgid "Key"
 msgstr "Ključ"
 
-#: includes/class-wc-trackship-actions.php:710
+#: includes/class-wc-trackship-actions.php:731
 msgid "Label Cancelled"
 msgstr "Oznaka otkazana"
 
@@ -596,11 +600,11 @@ msgstr "Zadnjih 30 dana"
 msgid "Last 60 days"
 msgstr "Zadnjih 60 dana"
 
-#: includes/class-wc-trackship-actions.php:944
+#: includes/class-wc-trackship-actions.php:965
 msgid "Last event date: "
 msgstr "Datum zadnjeg događaja:"
 
-#: includes/class-wc-trackship-late-shipments.php:183
+#: includes/class-wc-trackship-late-shipments.php:178
 msgid "Late shipment"
 msgstr "Kasna isporuka"
 
@@ -612,7 +616,7 @@ msgstr "Kasne isporuke"
 msgid "Late Shipments for last 30 days"
 msgstr "Kasne isporuke u zadnjih 30 dana"
 
-#: includes/class-wc-trackship-admin.php:797
+#: includes/class-wc-trackship-admin.php:800
 msgid "Late Shipments Notifications"
 msgstr "Obavijesti o kasnim isporukama"
 
@@ -625,7 +629,7 @@ msgstr "Najnoviji događaj"
 msgid "Links color"
 msgstr "Boja linkova"
 
-#: includes/class-wc-trackship-admin.php:224 includes/views/header2.php:36
+#: includes/class-wc-trackship-admin.php:227 includes/views/header2.php:36
 #: includes/views/header2.php:54
 msgid "Logs"
 msgstr "Dnevnici"
@@ -655,8 +659,8 @@ msgstr "Za mjesec dana"
 msgid "More info"
 msgstr "Više informacija"
 
-#: includes/class-wc-trackship-actions.php:444
-#: includes/class-wc-trackship-actions.php:953
+#: includes/class-wc-trackship-actions.php:465
+#: includes/class-wc-trackship-actions.php:974
 #: includes/html/class-wc-trackship-html.php:130
 msgid "more info"
 msgstr "više informacija"
@@ -688,7 +692,7 @@ msgstr "Nema koda odgovora"
 msgid "Notifications"
 msgstr "Obavijesti"
 
-#: includes/class-wc-trackship-admin.php:838
+#: includes/class-wc-trackship-admin.php:841
 msgid "Notifications detail"
 msgstr "Detalji obavijesti"
 
@@ -696,12 +700,12 @@ msgstr "Detalji obavijesti"
 msgid "Notifications Type (SMS/WhatsApp)"
 msgstr "Vrsta obavijesti (SMS/WhatsApp)"
 
-#: includes/class-wc-trackship-admin.php:453
+#: includes/class-wc-trackship-admin.php:456
 msgid "Number of days for late shipments"
 msgstr "Broj dana zakašnjele pošiljke"
 
-#: includes/class-wc-trackship-actions.php:680
-#: includes/class-wc-trackship-admin.php:1192
+#: includes/class-wc-trackship-actions.php:701
+#: includes/class-wc-trackship-admin.php:1309
 #: includes/smswoo/class-smswoo-admin.php:544
 #: includes/customizer/trackship-customizer.php:217
 #: includes/customizer/trackship-customizer.php:824
@@ -717,7 +721,7 @@ msgstr "Pošiljka na čekanju"
 msgid "On Hold Shipments"
 msgstr "Pošiljke na čekanju"
 
-#: includes/class-wc-trackship-admin.php:799
+#: includes/class-wc-trackship-admin.php:802
 msgid "On Hold Shipments Notifications"
 msgstr "Obavijesti o otpremama na čekanju"
 
@@ -741,11 +745,11 @@ msgstr "Naručite e-poštom"
 msgid "Order ID"
 msgstr "ID narudžbe"
 
-#: includes/class-wc-trackship-actions.php:746
+#: includes/class-wc-trackship-actions.php:767
 msgid "Order id not found"
 msgstr "Narudžba nije pronađena"
 
-#: includes/class-wc-trackship-admin.php:842
+#: includes/class-wc-trackship-admin.php:845
 #: templates/tracking/tracking-form.php:110
 #: templates/emails/exception-shipment-email.php:16
 #: templates/emails/late-shipment-email.php:16
@@ -757,7 +761,7 @@ msgstr "Broj narudžbe"
 msgid "Order Processing"
 msgstr "Obrada narudžbe"
 
-#: includes/class-wc-trackship-admin.php:405
+#: includes/class-wc-trackship-admin.php:408
 msgid "Order statuses to trigger TrackShip "
 msgstr "Statusi naloga za pokretanje TrackShip-a"
 
@@ -775,9 +779,9 @@ msgstr "Pojedinosti o podrijetlu"
 msgid "Other"
 msgstr "ostalo"
 
-#: includes/class-wc-trackship-actions.php:642
-#: includes/class-wc-trackship-actions.php:689
-#: includes/class-wc-trackship-admin.php:1178
+#: includes/class-wc-trackship-actions.php:663
+#: includes/class-wc-trackship-actions.php:710
+#: includes/class-wc-trackship-admin.php:1295
 #: includes/smswoo/class-smswoo-admin.php:542
 #: includes/customizer/trackship-customizer.php:215
 #: includes/customizer/trackship-customizer.php:822
@@ -789,13 +793,13 @@ msgstr "Van za dostavu"
 msgid "Overview"
 msgstr "Pregled"
 
-#: includes/class-wc-trackship-actions.php:637
-#: includes/class-wc-trackship-actions.php:719
+#: includes/class-wc-trackship-actions.php:658
+#: includes/class-wc-trackship-actions.php:740
 msgid "Pending Update"
 msgstr "Ažuriranje na čekanju"
 
-#: includes/class-wc-trackship-actions.php:443
-#: includes/class-wc-trackship-actions.php:951
+#: includes/class-wc-trackship-actions.php:464
+#: includes/class-wc-trackship-actions.php:972
 #| msgid ""
 #| "Pending TrackShip is a temporary status that will display for a few "
 #| "minutes until we update the order with the first tracking event from the "
@@ -813,7 +817,7 @@ msgstr ""
 msgid "Pickup Reminder"
 msgstr "Podsjetnik za preuzimanje"
 
-#: includes/class-wc-trackship-admin.php:1221
+#: includes/class-wc-trackship-admin.php:1338
 msgid "Pickup reminder"
 msgstr "Podsjetnik za preuzimanje"
 
@@ -822,7 +826,7 @@ msgstr "Podsjetnik za preuzimanje"
 msgid "Please choose SMS gateway from Dropown."
 msgstr "Odaberite davatelja usluga SMS-a iz Dropowna."
 
-#: includes/class-wc-trackship-admin.php:119
+#: includes/class-wc-trackship-admin.php:122
 msgid "Please connect your store with trackship.com."
 msgstr "Povežite svoju trgovinu s trackship.com."
 
@@ -841,7 +845,7 @@ msgstr ""
 msgid "Please note: "
 msgstr "Molim Zabilježite:"
 
-#: includes/class-wc-trackship-admin.php:123
+#: includes/class-wc-trackship-admin.php:126
 msgid "Please refresh the page and try again."
 msgstr "Molimo osvježite stranicu i pokušajte ponovno."
 
@@ -857,12 +861,12 @@ msgstr "Pokušajte ponovno nakon što primite e-poruku s potvrdom o otpremi."
 msgid "Powered by "
 msgstr "Powered by"
 
-#: includes/class-wc-trackship-actions.php:639
-#: includes/class-wc-trackship-actions.php:683 includes/views/shipments.php:31
+#: includes/class-wc-trackship-actions.php:660
+#: includes/class-wc-trackship-actions.php:704 includes/views/shipments.php:31
 msgid "Pre Transit"
 msgstr "Prije tranzita"
 
-#: includes/class-wc-trackship-admin.php:793
+#: includes/class-wc-trackship-admin.php:796
 msgid "Priority Support"
 msgstr "Prioritetna podrška"
 
@@ -871,23 +875,23 @@ msgstr "Prioritetna podrška"
 msgid "Progress bar"
 msgstr "Traka za napredak"
 
-#: includes/class-wc-trackship-admin.php:826
+#: includes/class-wc-trackship-admin.php:829
 msgid "Providers list Updated"
 msgstr "Popis pružatelja usluga ažuriran"
 
-#: includes/class-wc-trackship-admin.php:458
-#: includes/class-wc-trackship-admin.php:480
-#: includes/class-wc-trackship-admin.php:502
+#: includes/class-wc-trackship-admin.php:461
+#: includes/class-wc-trackship-admin.php:483
+#: includes/class-wc-trackship-admin.php:505
 msgid "Recipient(s)"
 msgstr "Primatelj(i)"
 
-#: includes/class-wc-trackship-admin.php:795
+#: includes/class-wc-trackship-admin.php:798
 msgid "Remove TrackShip’s branding"
 msgstr "Uklonite robnu marku TrackShipa"
 
-#: includes/class-wc-trackship-actions.php:647
-#: includes/class-wc-trackship-actions.php:695
-#: includes/class-wc-trackship-admin.php:1206
+#: includes/class-wc-trackship-actions.php:668
+#: includes/class-wc-trackship-actions.php:716
+#: includes/class-wc-trackship-admin.php:1323
 #: includes/smswoo/class-smswoo-admin.php:546
 #: includes/customizer/trackship-customizer.php:219
 #: includes/customizer/trackship-customizer.php:826
@@ -919,7 +923,7 @@ msgstr "Spremljeno"
 msgid "Search"
 msgstr "traži"
 
-#: includes/views/shipments.php:117
+#: includes/views/shipments.php:118
 msgid "Search by Tracking Number, Shipping carrier, Order number"
 msgstr "Pretraživanje prema broju za praćenje, prijevozniku, broju narudžbe"
 
@@ -932,17 +936,17 @@ msgid "Security verification failed, please refresh page and try again."
 msgstr ""
 "Sigurnosna provjera nije uspjela, osvježite stranicu i pokušajte ponovno."
 
-#: includes/class-wc-trackship-admin.php:1138
+#: includes/class-wc-trackship-admin.php:1255
 msgid "Select tracking page:"
 msgstr "Odaberite stranicu za praćenje:"
 
-#: includes/class-wc-trackship-admin.php:464
-#: includes/class-wc-trackship-admin.php:486
-#: includes/class-wc-trackship-admin.php:508
+#: includes/class-wc-trackship-admin.php:467
+#: includes/class-wc-trackship-admin.php:489
+#: includes/class-wc-trackship-admin.php:511
 msgid "Send email at"
 msgstr "Pošalji e-poštu na"
 
-#: includes/class-wc-trackship-admin.php:1214
+#: includes/class-wc-trackship-admin.php:1331
 #: includes/smswoo/class-smswoo-admin.php:495
 msgid "Send only when all shipments for the order are delivered"
 msgstr "Šalje tek kada su sve pošiljke za narudžbu isporučene"
@@ -951,7 +955,7 @@ msgstr "Šalje tek kada su sve pošiljke za narudžbu isporučene"
 msgid "Sender phone number / Sender ID"
 msgstr "Broj telefona pošiljatelja / ID pošiljatelja"
 
-#: includes/smswoo/class-smswoo-sms-notification.php:227
+#: includes/smswoo/class-smswoo-sms-notification.php:229
 msgid "Sent"
 msgstr "Poslano"
 
@@ -959,7 +963,7 @@ msgstr "Poslano"
 msgid "Set Pickup reminder notifications(in days)"
 msgstr "Postavi obavijesti o podsjetniku za preuzimanje (u danima)"
 
-#: trackship-for-woocommerce.php:292 includes/class-wc-trackship-admin.php:228
+#: trackship-for-woocommerce.php:282 includes/class-wc-trackship-admin.php:231
 #: includes/views/content.php:14 includes/views/header2.php:35
 #: includes/views/header2.php:64
 msgid "Settings"
@@ -991,19 +995,19 @@ msgstr "Pošiljka %1$s"
 msgid "Shipment Progress"
 msgstr "Tijek isporuke"
 
-#: includes/class-wc-trackship-actions.php:367
-#: includes/class-wc-trackship-admin.php:843
+#: includes/class-wc-trackship-actions.php:388
+#: includes/class-wc-trackship-admin.php:846
 #: templates/emails/late-shipment-email.php:17 includes/views/logs.php:51
 #: includes/shipments/views/trackship_shipments.php:20
 msgid "Shipment status"
 msgstr "Status pošiljke"
 
-#: includes/class-wc-trackship-admin.php:222 includes/views/header2.php:33
+#: includes/class-wc-trackship-admin.php:225 includes/views/header2.php:33
 #: includes/views/header2.php:49
 msgid "Shipments"
 msgstr "Pošiljke"
 
-#: includes/class-wc-trackship-admin.php:796
+#: includes/class-wc-trackship-admin.php:799
 msgid "Shipments Dashboard"
 msgstr "Nadzorna ploča za pošiljke"
 
@@ -1015,8 +1019,8 @@ msgstr ""
 "pošiljke u zadnjih 30 dana koje nisu automatski praćene. Za početak praćenja "
 "ovih prošlih narudžbi jednostavno kliknite ovdje"
 
-#: includes/class-wc-trackship-actions.php:707
-#: includes/class-wc-trackship-actions.php:722
+#: includes/class-wc-trackship-actions.php:728
+#: includes/class-wc-trackship-actions.php:743
 #: templates/emails/tracking-info.php:81
 #: includes/views/front/enhanced_tracking_events.php:16
 #: includes/views/front/tracking_page_header.php:66
@@ -1035,7 +1039,7 @@ msgstr "Tekst zaglavlja otpremljenih proizvoda"
 msgid "Shipping & Delivery"
 msgstr "Slanje i dostava"
 
-#: includes/class-wc-trackship-admin.php:800
+#: includes/class-wc-trackship-admin.php:803
 msgid "Shipping & Delivery Analytics"
 msgstr "Analitika otpreme i isporuke"
 
@@ -1069,7 +1073,7 @@ msgstr "Dani dostave"
 msgid "Shipping provider"
 msgstr "Pružatelj usluge dostave"
 
-#: includes/class-wc-trackship-actions.php:752
+#: includes/class-wc-trackship-actions.php:773
 msgid "Shipping provider not found"
 msgstr "Dobavljač nije pronađen"
 
@@ -1123,7 +1127,7 @@ msgstr "SMS"
 msgid "SMS gateways"
 msgstr "SMS pristupnici"
 
-#: includes/class-wc-trackship-admin.php:794
+#: includes/class-wc-trackship-admin.php:797
 #: includes/views/notifications.php:18
 msgid "SMS Notifications"
 msgstr "SMS obavijesti"
@@ -1132,25 +1136,25 @@ msgstr "SMS obavijesti"
 msgid "SMS notifications"
 msgstr "SMS obavijesti"
 
-#: includes/class-wc-trackship-admin.php:1245
+#: includes/class-wc-trackship-admin.php:1362
 #: includes/smswoo/admin-html/settings_tab.php:8
 msgid "SMS Settings"
 msgstr "SMS postavke"
 
-#: includes/class-wc-trackship-admin.php:801
+#: includes/class-wc-trackship-admin.php:804
 #| msgid "Starting from $9 a month"
 msgid "Starting from $11 a month"
 msgstr "Već od 11 dolara mjesečno"
 
-#: includes/class-wc-trackship-admin.php:848 includes/views/logs.php:55
+#: includes/class-wc-trackship-admin.php:851 includes/views/logs.php:55
 msgid "Status"
 msgstr "Status"
 
-#: includes/class-wc-trackship-actions.php:761
+#: includes/class-wc-trackship-actions.php:782
 msgid "Store is conneted with different account"
 msgstr "Trgovina je povezana s drugim računom"
 
-#: includes/class-wc-trackship-actions.php:758
+#: includes/class-wc-trackship-actions.php:779
 msgid "Store is not Connected to TrackShip"
 msgstr "Trgovina nije povezana s TrackShipom"
 
@@ -1158,12 +1162,12 @@ msgstr "Trgovina nije povezana s TrackShipom"
 msgid "Style & Colors"
 msgstr "Stil i boje"
 
-#: includes/class-wc-trackship-admin.php:820
-#: includes/class-wc-trackship-admin.php:828
+#: includes/class-wc-trackship-admin.php:823
+#: includes/class-wc-trackship-admin.php:831
 msgid "Sync TrackShip Providers"
 msgstr "Sinkronizacija TrackShip pružatelja usluga"
 
-#: includes/class-wc-trackship-admin.php:824
+#: includes/class-wc-trackship-admin.php:827
 msgid ""
 "Syncing the TrackShip providers list add or updates the pre-set TrackShip "
 "providers and will not effect custom shipping providers."
@@ -1197,7 +1201,7 @@ msgstr ""
 msgid "The following shipments are exception:"
 msgstr "Izuzetak su sljedeće pošiljke:"
 
-#: includes/class-wc-trackship-late-shipments.php:189
+#: includes/class-wc-trackship-late-shipments.php:184
 msgid "The following shipments are late:"
 msgstr "Sljedeće pošiljke kasne:"
 
@@ -1205,7 +1209,16 @@ msgstr "Sljedeće pošiljke kasne:"
 msgid "The following shipments are On Hold:"
 msgstr "Sljedeće pošiljke su na čekanju:"
 
-#: includes/class-wc-trackship-actions.php:558
+#: includes/class-wc-trackship-front.php:286
+#: includes/class-wc-trackship-front.php:296
+msgid ""
+"The order/shipment you're trying to track has not been shipped yet or the "
+"order number entered is incorrect."
+msgstr ""
+"Narudžba/pošiljka koju pokušavate pratiti još nije otpremljena ili je "
+"uneseni broj narudžbe netočan."
+
+#: includes/class-wc-trackship-actions.php:579
 msgid ""
 "The shipment status updates will run in the background, please refresh the "
 "page in a few minutes."
@@ -1233,11 +1246,11 @@ msgstr "Ovo polje se pojavljuje kao pošiljatelj ili ID pošiljatelja"
 msgid "This will be appended to URL in the email content"
 msgstr "Ovo će biti pridodano URL-u u sadržaju e-pošte"
 
-#: includes/class-wc-trackship-admin.php:845 includes/views/logs.php:52
+#: includes/class-wc-trackship-admin.php:848 includes/views/logs.php:52
 msgid "Time"
 msgstr "Vrijeme"
 
-#: includes/class-wc-trackship-admin.php:846 includes/views/logs.php:53
+#: includes/class-wc-trackship-admin.php:849 includes/views/logs.php:53
 msgid "To"
 msgstr "Do"
 
@@ -1262,10 +1275,10 @@ msgstr "Alati"
 msgid "Total Shipments"
 msgstr "Ukupne pošiljke"
 
-#: includes/class-wc-trackship-actions.php:435
-#: includes/class-wc-trackship-actions.php:441
-#: includes/class-wc-trackship-actions.php:949
-#: includes/class-wc-trackship-actions.php:960
+#: includes/class-wc-trackship-actions.php:456
+#: includes/class-wc-trackship-actions.php:462
+#: includes/class-wc-trackship-actions.php:970
+#: includes/class-wc-trackship-actions.php:981
 msgid "Track"
 msgstr "Staza"
 
@@ -1281,7 +1294,7 @@ msgstr "Tekst gumba za praćenje"
 msgid "Track Order"
 msgstr "Prati narudžbu"
 
-#: includes/class-wc-trackship-admin.php:188
+#: includes/class-wc-trackship-admin.php:191
 msgid "Track Shipment"
 msgstr "Pratite pošiljku"
 
@@ -1294,7 +1307,7 @@ msgstr "Pratite svoju narudžbu"
 msgid "Tracker type"
 msgstr "Vrsta tragača"
 
-#: includes/class-wc-trackship-admin.php:1244
+#: includes/class-wc-trackship-admin.php:1361
 msgid "Tracking Analytics"
 msgstr "Praćenje analitike"
 
@@ -1321,7 +1334,7 @@ msgstr "Problemi s praćenjem"
 msgid "Tracking Issues for last 30 days"
 msgstr "Praćenje problema u zadnjih 30 dana"
 
-#: includes/class-wc-trackship-admin.php:844
+#: includes/class-wc-trackship-admin.php:847
 #: templates/tracking/tracking-form.php:106
 #: templates/tracking/tracking-form.php:116
 #: templates/emails/exception-shipment-email.php:18
@@ -1331,7 +1344,7 @@ msgstr "Praćenje problema u zadnjih 30 dana"
 msgid "Tracking Number"
 msgstr "Broj za pračenje"
 
-#: includes/class-wc-trackship-actions.php:749
+#: includes/class-wc-trackship-actions.php:770
 msgid "Tracking number not found"
 msgstr "Broj za praćenje nije pronađen"
 
@@ -1375,14 +1388,12 @@ msgid "TrackShip Shipments table does not exist, Please try after few minutes"
 msgstr ""
 "TrackShip tablica pošiljaka ne postoji, pokušajte nakon nekoliko minuta"
 
-#: includes/class-wc-trackship-admin.php:847 includes/views/logs.php:54
+#: includes/class-wc-trackship-admin.php:850 includes/views/logs.php:54
 msgid "Type"
 msgstr "Tip"
 
 #: includes/class-wc-trackship-front.php:210
 #: includes/class-wc-trackship-front.php:228
-#: includes/class-wc-trackship-front.php:286
-#: includes/class-wc-trackship-front.php:296
 msgid "Unable to locate the order."
 msgstr "Nije moguće pronaći narudžbu."
 
@@ -1390,17 +1401,17 @@ msgstr "Nije moguće pronaći narudžbu."
 msgid "Unable to locate the order. or Invalid order key"
 msgstr "Nije moguće pronaći narudžbu. ili Nevažeći ključ narudžbe"
 
-#: includes/class-wc-trackship-actions.php:728
+#: includes/class-wc-trackship-actions.php:749
 msgid "Unauthorized"
 msgstr "Neovlašteno"
 
-#: includes/class-wc-trackship-actions.php:638
-#: includes/class-wc-trackship-actions.php:704
+#: includes/class-wc-trackship-actions.php:659
+#: includes/class-wc-trackship-actions.php:725
 msgid "Unknown"
 msgstr "Nepoznato"
 
 #: includes/trackship-email-manager.php:330
-#: includes/customizer/class-trackship-email-preview.php:185
+#: includes/customizer/class-trackship-email-preview.php:186
 msgid "Unsubscribe"
 msgstr "Odjavi pretplatu"
 
@@ -1413,7 +1424,7 @@ msgid "Updating tracking details during migration from older to newer version."
 msgstr ""
 "Ažuriranje detalja praćenja tijekom migracije sa starije na noviju verziju."
 
-#: includes/class-wc-trackship-admin.php:804
+#: includes/class-wc-trackship-admin.php:807
 msgid "UPGRADE TO PRO"
 msgstr "NADOGRADI NA PRO"
 
@@ -1421,11 +1432,11 @@ msgstr "NADOGRADI NA PRO"
 msgid "Upgrade to Pro"
 msgstr "Nadogradi na pro"
 
-#: includes/class-wc-trackship-admin.php:789
+#: includes/class-wc-trackship-admin.php:792
 msgid "Upgrade to TrackShip Pro"
 msgstr "Nadogradite na TrackShip Pro"
 
-#: includes/class-wc-trackship-actions.php:755
+#: includes/class-wc-trackship-actions.php:776
 msgid "User not found for this key"
 msgstr "Korisnik nije pronađen za ovaj ključ"
 
@@ -1451,7 +1462,7 @@ msgstr "pogledajte manje"
 msgid "view more"
 msgstr "vidi više"
 
-#: includes/class-wc-trackship-actions.php:963
+#: includes/class-wc-trackship-actions.php:984
 msgid "View Shipment log"
 msgstr "Pregledajte dnevnik pošiljki"
 
@@ -1479,7 +1490,7 @@ msgid "We detected %d Exception shipments:"
 msgstr "Otkrili smo %d pošiljke iznimke:"
 
 #. %s: search for a count
-#: includes/class-wc-trackship-late-shipments.php:186
+#: includes/class-wc-trackship-late-shipments.php:181
 msgid "We detected %d late shipments:"
 msgstr "Otkrili smo %d kasne isporuke:"
 
@@ -1488,8 +1499,18 @@ msgstr "Otkrili smo %d kasne isporuke:"
 msgid "We detected %d On Hold shipments:"
 msgstr "Otkrili smo %d pošiljke na čekanju:"
 
+#. %s: replace with Partially Shipped order count
+#: includes/class-wc-trackship-admin.php:929
+#, php-format
+msgid ""
+"We detected %s orders that use the Delivered order status, You can reassign "
+"these orders to a different status"
+msgstr ""
+"Otkrili smo %s narudžbi koje koriste status isporučene narudžbe. Ovim "
+"narudžbama možete dodijeliti drugi status"
+
 #. %s: search for a total_orders
-#: includes/class-wc-trackship-admin.php:544
+#: includes/class-wc-trackship-admin.php:547
 #, php-format
 #| msgid ""
 #| "We detected %s Shipped orders from the last 30 days that were not sent to "

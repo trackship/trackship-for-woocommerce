@@ -283,7 +283,7 @@ class WC_TrackShip_Front {
 			ob_start();
 			$this->track_form_template();
 			$form = ob_get_clean();
-			echo json_encode( array('success' => 'false', 'message' => __( 'Unable to locate the order.', 'trackship-for-woocommerce' ), 'html' => $form ));
+			echo json_encode( array('success' => 'false', 'message' => __( "The order/shipment you're trying to track has not been shipped yet or the order number entered is incorrect.", 'trackship-for-woocommerce' ), 'html' => $form ));
 			die();
 		}
 		
@@ -293,7 +293,7 @@ class WC_TrackShip_Front {
 				ob_start();
 				$this->track_form_template();
 				$form = ob_get_clean();	
-				echo json_encode( array('success' => 'false', 'message' => __( 'Unable to locate the order.', 'trackship-for-woocommerce' ), 'html' => $form ));
+				echo json_encode( array('success' => 'false', 'message' => __( "The order/shipment you're trying to track has not been shipped yet or the order number entered is incorrect.", 'trackship-for-woocommerce' ), 'html' => $form ));
 				die();
 			}
 		}
@@ -556,7 +556,7 @@ class WC_TrackShip_Front {
 					<div class="trackship_branding">
 						<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://trackship.com" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
 					</div>
-					<?php if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) { ?>
+					<?php if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) { ?>
 						<style> .trackship_branding{display:block !important;} </style>
 					<?php } ?>
 				</div>
@@ -621,7 +621,7 @@ class WC_TrackShip_Front {
 			<div class="enhanced_trackship_branding">
 				<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://trackship.com/" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
 			</div>
-			<?php if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) { ?>
+			<?php if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) { ?>
 				<style> .enhanced_trackship_branding{display:block !important;} </style>
 			<?php } ?>
 			<?php

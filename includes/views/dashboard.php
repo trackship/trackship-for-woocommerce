@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( !get_trackship_settings( 'wc_admin_notice', '') ) {
-	if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan' ) ) ) {
+	if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 		trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_pro();
 	}
 	trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_review();
@@ -12,18 +12,13 @@ if ( !get_trackship_settings( 'wc_admin_notice', '') ) {
 }
 
 global $wpdb;
-$woo_trackship_shipment = $wpdb->prefix . 'trackship_shipment';
-
-if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipment ) ) ) {
-	trackship_for_woocommerce()->ts_install->create_shipment_table();
+if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $wpdb->prefix . 'trackship_shipment' ) ) ) {
+	esc_html_e( 'TrackShip Shipments database table does not exist.', 'trackship-for-woocommerce' );
+	return;
 }
 
 if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $wpdb->prefix . 'trackship_shipment_meta' ) ) ) {
-	trackship_for_woocommerce()->ts_install->create_shipment_meta_table();
-}
-
-if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $woo_trackship_shipment ) ) ) {
-	esc_html_e( 'TrackShip Shipments table does not exist, Please try after few minutes', 'trackship-for-woocommerce' );
+	esc_html_e( 'TrackShip Shipments meta database table does not exist.', 'trackship-for-woocommerce' );
 	return;
 }
 
@@ -115,8 +110,8 @@ $current_balance = $plan_data->tracker_balance;
 update_option( 'user_plan', $current_plan );
 update_option( 'trackers_balance', $current_balance );
 $nonce = wp_create_nonce( 'ts_tools');
-$store_text = in_array( $current_plan, array( 'Free 50', 'No active plan' ) ) ? __( 'Upgrade to Pro', 'trackship-for-woocommerce' ) : __( 'Account Dashboard', 'trackship-for-woocommerce' );
-$store_url = in_array( $current_plan, array( 'Free 50', 'No active plan' ) ) ? 'https://my.trackship.com/settings/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=upgrade#billing' : 'https://my.trackship.com/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=dashboard';
+$store_text = in_array( $current_plan, array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ? __( 'Upgrade to Pro', 'trackship-for-woocommerce' ) : __( 'Account Dashboard', 'trackship-for-woocommerce' );
+$store_url = in_array( $current_plan, array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ? 'https://my.trackship.com/settings/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=upgrade#billing' : 'https://my.trackship.com/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=dashboard';
 ?>
 <input type="hidden" id="ts_tools" name="ts_tools" value="<?php echo esc_attr( $nonce ); ?>" />
 <input class="dashboard_hidden_field" type="hidden" value="<?php echo esc_html($current_plan); ?>">

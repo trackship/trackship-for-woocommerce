@@ -2,9 +2,9 @@
 Contributors: TrackShip
 Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order tracking, tracking
 Requires at least: 6.2
-Tested up to: 6.6.1
+Tested up to: 6.6.2
 Requires PHP: 7.4
-Stable tag: 1.8.4
+Stable tag: 1.8.6
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,14 +14,18 @@ TrackShip auto-tracks orders, adds a branded tracking experience to your store a
 
 TrackShip is a shipment tracking and post-purchase experience platform that helps WooCommerce businesses to provide an exceptional post-shipping experience to their customers, it helps to gain loyalty and trust and increase the repeat purchases, which is crucial for any eCommerce business to grow and succeed in the long run.
 
-Free plan available: Get 50 shipment trackers per month [Start for Free](https://trackship.com/) 
-
 https://www.youtube.com/watch?v=QDKV2Irqz9M
+
+== TrackShip Pricing ==
+
+TrackShip offers a **15-day free trial** that allows you to track up to **100 shipments** with access to all premium features. During the trial period, you can experience everything TrackShip has to offer.
+After the trial, if you choose not to go with a paid plan, you can continue using TrackShip on our **Free Plan**. The free plan allows you to track up to **50 shipments per month**, but with access to basic features only. For users who need to track more shipments or want advanced features such as SMS notifications, branded tracking pages, or enhanced analytics, we offer paid plans that scale according to your business needs.
+For more details on pricing and features, please visit our [TrackShip Pricing Page](https://trackship.com/pricing/).
 
 == Why use TrackShip? ==
 
-= Automatic Shipment Tracking with 770+ Shipping carriers =
-TrackShip auto-tracks your orders from shipping to delivery with 770+ shipping providers and carriers around the world. Our supported providers includes USPS, ePacket, Delhivery, Yun Express Tracking, UPS, Australia Post, FedEx, Aramex, DHL eCommerce, ELTA Courier, Colissimo, DHL Express, La Poste, DHLParcel NL, Purolator, 4px, Brazil Correios, Deutsche Post, Bpost, DHL, EMS, DPD.de, GLS, China Post, Loomis Express, DHL Express, PostNL International 3S, Royal Mail and more…
+= Automatic Shipment Tracking with 810+ Shipping carriers =
+TrackShip auto-tracks your orders from shipping to delivery with 810+ shipping providers and carriers around the world. Our supported providers includes USPS, ePacket, Delhivery, Yun Express Tracking, UPS, Australia Post, FedEx, Aramex, DHL eCommerce, ELTA Courier, Colissimo, DHL Express, La Poste, DHLParcel NL, Purolator, 4px, Brazil Correios, Deutsche Post, Bpost, DHL, EMS, DPD.de, GLS, China Post, Loomis Express, DHL Express, PostNL International 3S, Royal Mail and more…
 Check out the complete list of supported [shipping carriers](https://trackship.com/shipping-providers/).
 
 = Take control of the post-purchase workflow = 
@@ -118,7 +122,7 @@ You can trigger these orders to TrackShip by using the [Get Shipment Status](htt
 TrackShip checks the shipment status with the shipping providers APIs every 2-4 hours. We check for updates more often once the package is in the "unknown" status, until the first tracking event is received from the providers API and when the shipment is out for delivery.
 
 = Which shipping providers (carriers) do you support?
-TrackShip supports 770+ [shipping providers](https://trackship.com/shipping-providers/) around the globe ,if you can find your carrier on our supported shipping providers list, you can suggest a shipping provider [here](https://feedback.zorem.com/trackship)
+TrackShip supports 810+ [shipping providers](https://trackship.com/shipping-providers/) around the globe ,if you can find your carrier on our supported shipping providers list, you can suggest a shipping provider [here](https://feedback.zorem.com/trackship)
 
 = Do you show the shipment status for orders on WooCommerce admin?
 Yes, TrackShip adds a Shipment Status column on your orders admin and displays the shipment tracking status, last update date, and the Est Delivery Date for every order that you shipped after connecting your store.
@@ -133,6 +137,23 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended.
 
 == Changelog ==
+= 1.8.6 - 2024-10-24 =
+* Enhancement - Added an "Active Late Shipments" filter in TrackShip Shipments.
+* Tweak - Added first_event_time column to the trackship_shipment table.
+* Dev - Not required to enable shipment status notifications for customer, if notification is also sent to admin using code snippet
+* Update - tested up to WC versions for the WooCommerce 9.3.3 release
+
+= 1.8.5 - 2024-09-25 =
+* Enhancement - Added a notice when the plugin is deactivated for delivered orders
+* Tweak - Implemented a filter to don't send Phone number to Klaviyo Webhook (exclude_klaviyo_phone)
+* Tweak - Added a column to display the Delivery number in TrackShip Shipment
+* Update - Enhanced validation messages on the tracking page
+* Dev - Improved compatibility with all custom order number plugins
+* Dev - Stopped WooCommerce log creation for tracking webhooks
+* Localization - Updated translations.
+* Update - tested up to WP versions for the WordPress 6.6.2 release
+* Update - tested up to WC versions for the WooCommerce 9.3.2 release
+
 = 1.8.4 - 2024-09-01 =
 * Dev - Added product details to Klaviyo Webhook for better integration.
 * Dev - Prevented Late Shipment emails from sending for canceled labels.
