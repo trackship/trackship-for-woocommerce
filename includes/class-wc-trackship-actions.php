@@ -1328,20 +1328,9 @@ class WC_Trackship_Actions {
 
 		if ( is_plugin_active( 'woocommerce-sequential-order-numbers-pro/woocommerce-sequential-order-numbers-pro.php' ) ) {
 
-			// search for the order by custom order number
-			$args = array(
-				'meta_query' => array(
-					array(
-						'key'	=> '_order_number_formatted',
-						'value'	=> $order_id
-					),
-				),
-				'return' => 'ids',
-				'limit' => 1
-			);
-			$orders = wc_get_orders($args);
-			if ( !empty($orders) ) {
-				list( $order_id ) = $orders;
+			$s_order_id = wc_seq_order_number_pro()->find_order_by_order_number( $order_id );
+			if ( $s_order_id ) {
+				$order_id = $s_order_id;
 			}
 		}
 		
