@@ -1293,7 +1293,7 @@ class WC_Trackship_Actions {
 	*/
 	public function get_formated_order_id( $order_id ) {
 		
-		if ( is_plugin_active( 'custom-order-numbers-for-woocommerce/custom-order-numbers-for-woocommerce.php' ) ) {
+		if ( is_plugin_active( 'custom-order-numbers-for-woocommerce/custom-order-numbers-for-woocommerce.php' ) || is_plugin_active( 'custom-order-numbers-for-woocommerce-pro/custom-order-numbers-for-woocommerce-pro.php' ) ) {
 			$alg_wc_custom_order_numbers_enabled = get_option( 'alg_wc_custom_order_numbers_enabled' );
 
 			if ( 'yes' == $alg_wc_custom_order_numbers_enabled ) {
