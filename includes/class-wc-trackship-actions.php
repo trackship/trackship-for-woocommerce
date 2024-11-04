@@ -1309,6 +1309,8 @@ class WC_Trackship_Actions {
 							'value'	=> $order_id
 						),
 					),
+					'meta_key' => '_alg_wc_full_custom_order_number',
+					'meta_value' => $order_id,
 					'return' => 'ids',
 					'limit' => 1
 				);
