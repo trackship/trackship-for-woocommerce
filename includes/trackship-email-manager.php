@@ -149,7 +149,7 @@ class WC_TrackShip_Email_Manager {
 
 		// wrap the content with the email template and then add styles
 		$message = $mailer->wrap_message( $email_heading, $message );
-		$message = apply_filters( 'trackship_mail_content', $message, $email_heading );
+		$message = apply_filters( 'trackship_mail_content', $message, $email_heading, $order_id, $email_class->id, $new_status );
 
 		foreach ( $recipients as $recipient ) {
 			$email_send = $email_class->send( $recipient, $subject, $message, $email_class->get_headers(), [] );
