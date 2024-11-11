@@ -1361,6 +1361,8 @@ class WC_Trackship_Actions {
 								'value'	=> $final_search
 							),
 						),
+						'meta_key' => '_wcj_order_number',
+						'meta_value' => $final_search,
 						'return' => 'ids',
 						'limit' => 1
 					);
@@ -1382,6 +1384,8 @@ class WC_Trackship_Actions {
 							'value'	=> $order_id
 						),
 					),
+					'meta_key' => '_wpla_amazon_order_id',
+					'meta_value' => $order_id,
 					'return' => 'ids',
 					'limit' => 1
 				);
@@ -1422,6 +1426,8 @@ class WC_Trackship_Actions {
 						'value'	=> $order_id
 					),
 				),
+				'meta_key' => '_ywson_custom_number_order_complete',
+				'meta_value' => $order_id,
 				'return' => 'ids',
 				'limit' => 1
 			);
@@ -1439,6 +1445,8 @@ class WC_Trackship_Actions {
 						'value'	=> $order_id,
 					),
 				),
+				'meta_key' => '_order_number',
+				'meta_value' => $order_id,
 				'return' => 'ids',
 				'limit' => 1
 			);
