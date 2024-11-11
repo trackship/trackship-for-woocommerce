@@ -2,6 +2,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+$date_format = get_option( 'date_format' ) ? get_option( 'date_format' ) :  'F j, Y';
+$time_format = get_option( 'time_format' ) ? get_option( 'time_format' ) :  'g:i a';
 ?>
 <div class="tracking_widget_tracking_events_section">
 	<?php
@@ -26,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			if ( isset( $trackind_detail_by_status_rev[0] ) && $trackind_detail_by_status_rev[0] ) {
 				$date = $trackind_detail_by_status_rev[0]->datetime;
 				?>
-				<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($date) ) ); ?></strong>
+				<strong><?php echo esc_html( date_i18n( $date_format, strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( $time_format, strtotime($date) ) ); ?></strong>
 				<div>
 					<?php echo wp_kses_post($trackind_detail_by_status_rev[0]->message); ?>
 				</div>
@@ -34,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			} else {
 				$date = $row->shipping_date;
 				?>
-				<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?></strong>
+				<strong><?php echo esc_html( date_i18n( $date_format, strtotime($date) ) ); ?></strong>
 				<div>
 					<?php
 					$pending_message = __( 'Tracking is still not yet available for this shipment, please try again later.', 'trackship-for-woocommerce' );
@@ -49,7 +51,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php if ( !empty( $trackind_destination_detail_by_status_rev ) ) { ?>
 				<?php foreach ( $trackind_destination_detail_by_status_rev as $key => $value ) { ?>
 					<div class="tracking_detail">
-						<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($value->datetime) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
+						<strong><?php echo esc_html( date_i18n( $date_format, strtotime($value->datetime) ) ); ?> <?php echo esc_html( date_i18n( $time_format, strtotime($value->datetime) ) ); ?></strong>
 						<div>
 							<?php
 							$tracking_description = apply_filters( 'trackship_tracking_event_description', $value->message );
@@ -78,7 +80,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				}
 				?>
 				<div class="tracking_detail">
-					<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($value->datetime) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
+					<strong><?php echo esc_html( date_i18n( $date_format, strtotime($value->datetime) ) ); ?> <?php echo esc_html( date_i18n( $time_format, strtotime($value->datetime) ) ); ?></strong>
 					<div>
 						<?php
 						$tracking_description = apply_filters( 'trackship_tracking_event_description', $value->message );
