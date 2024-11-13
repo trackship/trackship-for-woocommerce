@@ -149,7 +149,7 @@ class WC_TrackShip_Email_Manager {
 
 		// wrap the content with the email template and then add styles
 		$message = $mailer->wrap_message( $email_heading, $message );
-		$message = apply_filters( 'trackship_mail_content', $message, $email_heading );
+		$message = apply_filters( 'trackship_mail_content', $message, $email_heading, $order_id, $email_class->id, $new_status );
 
 		foreach ( $recipients as $recipient ) {
 			$email_send = $email_class->send( $recipient, $subject, $message, $email_class->get_headers(), [] );
@@ -258,7 +258,7 @@ class WC_TrackShip_Email_Manager {
 			add_filter( 'safe_style_css', array( $this, 'safe_style_css' ), 10, 1 );
 			// wrap the content with the email template and then add styles
 			$message = $mailer->wrap_message( $email_heading, $message );
-			$message = apply_filters( 'trackship_mail_content', $message, $email_heading );
+			$message = apply_filters( 'trackship_mail_content', $message, $email_heading, $order_id, $email_class->id, $new_status );
 	
 			$email_send = $email_class->send( implode(', ', $recipients), $subject, $message, $email_class->get_headers(), [] );
 			$arg = array(

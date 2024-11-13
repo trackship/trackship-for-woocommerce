@@ -1293,7 +1293,7 @@ class WC_Trackship_Actions {
 	*/
 	public function get_formated_order_id( $order_id ) {
 		
-		if ( is_plugin_active( 'custom-order-numbers-for-woocommerce/custom-order-numbers-for-woocommerce.php' ) ) {
+		if ( is_plugin_active( 'custom-order-numbers-for-woocommerce/custom-order-numbers-for-woocommerce.php' ) || is_plugin_active( 'custom-order-numbers-for-woocommerce-pro/custom-order-numbers-for-woocommerce-pro.php' ) ) {
 			$alg_wc_custom_order_numbers_enabled = get_option( 'alg_wc_custom_order_numbers_enabled' );
 
 			if ( 'yes' == $alg_wc_custom_order_numbers_enabled ) {
@@ -1309,6 +1309,8 @@ class WC_Trackship_Actions {
 							'value'	=> $order_id
 						),
 					),
+					'meta_key' => '_alg_wc_full_custom_order_number',
+					'meta_value' => $order_id,
 					'return' => 'ids',
 					'limit' => 1
 				);
@@ -1328,20 +1330,9 @@ class WC_Trackship_Actions {
 
 		if ( is_plugin_active( 'woocommerce-sequential-order-numbers-pro/woocommerce-sequential-order-numbers-pro.php' ) ) {
 
-			// search for the order by custom order number
-			$args = array(
-				'meta_query' => array(
-					array(
-						'key'	=> '_order_number_formatted',
-						'value'	=> $order_id
-					),
-				),
-				'return' => 'ids',
-				'limit' => 1
-			);
-			$orders = wc_get_orders($args);
-			if ( !empty($orders) ) {
-				list( $order_id ) = $orders;
+			$s_order_id = wc_seq_order_number_pro()->find_order_by_order_number( $order_id );
+			if ( $s_order_id ) {
+				$order_id = $s_order_id;
 			}
 		}
 		
@@ -1370,6 +1361,8 @@ class WC_Trackship_Actions {
 								'value'	=> $final_search
 							),
 						),
+						'meta_key' => '_wcj_order_number',
+						'meta_value' => $final_search,
 						'return' => 'ids',
 						'limit' => 1
 					);
@@ -1391,6 +1384,8 @@ class WC_Trackship_Actions {
 							'value'	=> $order_id
 						),
 					),
+					'meta_key' => '_wpla_amazon_order_id',
+					'meta_value' => $order_id,
 					'return' => 'ids',
 					'limit' => 1
 				);
@@ -1431,6 +1426,8 @@ class WC_Trackship_Actions {
 						'value'	=> $order_id
 					),
 				),
+				'meta_key' => '_ywson_custom_number_order_complete',
+				'meta_value' => $order_id,
 				'return' => 'ids',
 				'limit' => 1
 			);
@@ -1448,6 +1445,8 @@ class WC_Trackship_Actions {
 						'value'	=> $order_id,
 					),
 				),
+				'meta_key' => '_order_number',
+				'meta_value' => $order_id,
 				'return' => 'ids',
 				'limit' => 1
 			);

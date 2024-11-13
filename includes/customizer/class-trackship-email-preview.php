@@ -170,7 +170,7 @@ class TSWC_Email_Customizer_Preview {
 		
 		// wrap the content with the email template and then add styles
 		$email_html = apply_filters( 'woocommerce_mail_content', $email->style_inline( $mailer->wrap_message( $email_heading, $message ) ) );
-		$email_html = apply_filters( 'trackship_mail_content', $email_html, $email_heading );
+		$email_html = apply_filters( 'trackship_mail_content', $email_html, $email_heading, $preview_id, 'shipment_email', $status );
 		echo wp_kses_post($email_html);
 	}
 
