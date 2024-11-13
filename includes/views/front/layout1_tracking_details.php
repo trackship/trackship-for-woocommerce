@@ -2,6 +2,9 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+$date_format = get_option( 'date_format' ) ? get_option( 'date_format' ) :  'F j, Y';
+$time_format = get_option( 'time_format' ) ? get_option( 'time_format' ) :  'g:i a';
+
 $class = 1 == $hide_tracking_events ? 'checked' : '';
 $fronted = isset( $_POST['fronted'] ) ? sanitize_text_field($_POST['fronted']) : '';
 $tab_array = [];
@@ -60,7 +63,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 									$date = gmdate( 'Y-m-d', strtotime( $value->datetime ) );
 									?>
 									<li>
-										<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
+										<strong><?php echo esc_html( date_i18n( $date_format, strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( $time_format, strtotime($value->datetime) ) ); ?></strong>
 										<p>
 											<?php
 											$tracking_description = apply_filters( 'trackship_tracking_event_description', $value->message );
@@ -86,7 +89,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 									$date = gmdate('Y-m-d', strtotime( $value->datetime ) );
 									?>
 									<li>
-										<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
+										<strong><?php echo esc_html( date_i18n( $date_format, strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( $time_format, strtotime($value->datetime) ) ); ?></strong>
 										<p>
 											<?php
 											$tracking_description = apply_filters( 'trackship_tracking_event_description', $value->message );
@@ -118,7 +121,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 								$date = gmdate('Y-m-d', strtotime($value->datetime));
 								?>
 								<li>
-									<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
+									<strong><?php echo esc_html( date_i18n( $date_format, strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( $time_format, strtotime($value->datetime) ) ); ?></strong>
 									<p>
 										<?php
 										$tracking_description = apply_filters( 'trackship_tracking_event_description', $value->message );
@@ -144,7 +147,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 								$date = gmdate( 'Y-m-d', strtotime($value->datetime ) );
 								?>
 								<li>
-									<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
+									<strong><?php echo esc_html( date_i18n( $date_format, strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( $time_format, strtotime($value->datetime) ) ); ?></strong>
 									<p>
 										<?php
 										$tracking_description = apply_filters( 'trackship_tracking_event_description', $value->message );
@@ -175,7 +178,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 								$date = gmdate('Y-m-d', strtotime($value->datetime));
 								?>
 								<li>
-									<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
+									<strong><?php echo esc_html( date_i18n( $date_format, strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( $time_format, strtotime($value->datetime) ) ); ?></strong>
 									<p>
 										<?php
 										$tracking_description = apply_filters( 'trackship_tracking_event_description', $value->message );
@@ -201,7 +204,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 							$date = gmdate( 'Y-m-d', strtotime( $value->datetime ) );
 							?>
 							<li>
-								<strong><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( get_option( 'time_format' ), strtotime($value->datetime) ) ); ?></strong>
+								<strong><?php echo esc_html( date_i18n( $date_format, strtotime($date) ) ); ?> <?php echo esc_html( date_i18n( $time_format, strtotime($value->datetime) ) ); ?></strong>
 								<p>
 									<?php
 									$tracking_description = apply_filters( 'trackship_tracking_event_description', $value->message );

@@ -2,9 +2,9 @@
 Contributors: TrackShip
 Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order tracking, tracking
 Requires at least: 6.2
-Tested up to: 6.6.2
+Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.8.6
+Stable tag: 1.8.7
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -137,6 +137,13 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended.
 
 == Changelog ==
+= 1.8.7 - 2024-11-13 =
+* Update - Improved query for custom order number plugins.
+* Enhancement - Refined date and time format handling for tracking events on the tracking widget when blank date or time format is saved in WordPress settings.
+* Dev - Added a new parameter to the trackship_mail_content hook: ($order_id, $email_class->id, $shipment_status).
+* Update - tested up to WP versions for the WordPress 6.7.0 release
+* Update - tested up to WC versions for the WooCommerce 9.4.1 release
+
 = 1.8.6 - 2024-10-24 =
 * Enhancement - Added an "Active Late Shipments" filter in TrackShip Shipments.
 * Tweak - Added first_event_time column to the trackship_shipment table.
