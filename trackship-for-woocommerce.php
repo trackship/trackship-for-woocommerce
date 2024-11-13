@@ -247,6 +247,9 @@ class Trackship_For_Woocommerce {
 	* include file on plugin load
 	*/
 	public function on_plugins_loaded() {
+		//load plugin textdomain
+		load_plugin_textdomain( 'trackship-for-woocommerce', false, dirname( plugin_basename(__FILE__) ) . '/language/' );
+		
 		$trackship_apikey = is_trackship_connected();
 
 		//load customizer
@@ -255,9 +258,6 @@ class Trackship_For_Woocommerce {
 			require_once $this->get_plugin_path() . '/includes/customizer/class-trackship-email-preview.php';
 		}
 		require_once $this->get_plugin_path() . '/includes/trackship-email-manager.php';
-		
-		//load plugin textdomain
-		load_plugin_textdomain( 'trackship-for-woocommerce', false, dirname( plugin_basename(__FILE__) ) . '/language/' );
 	}
 
 	/*
