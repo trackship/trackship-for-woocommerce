@@ -24,7 +24,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.8.8.1;
+	public $version = '1.8.8.1';
 	public $plugin_path;
 	public $ts_install;
 	public $ts_actions;
