@@ -2,7 +2,7 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 1.8.8
+ * Version: 1.8.9
  * Author: TrackShip
  * Author URI: https://trackship.com/
  * License: GPL-2.0+
@@ -24,7 +24,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.8.8';
+	public $version = '1.8.9';
 	public $plugin_path;
 	public $ts_install;
 	public $ts_actions;
@@ -247,17 +247,17 @@ class Trackship_For_Woocommerce {
 	* include file on plugin load
 	*/
 	public function on_plugins_loaded() {
-		//load plugin textdomain
-		load_plugin_textdomain( 'trackship-for-woocommerce', false, dirname( plugin_basename(__FILE__) ) . '/language/' );
-		
 		$trackship_apikey = is_trackship_connected();
-
+		
 		//load customizer
 		if ( $trackship_apikey ) {
 			require_once $this->get_plugin_path() . '/includes/customizer/trackship-customizer.php';
 			require_once $this->get_plugin_path() . '/includes/customizer/class-trackship-email-preview.php';
 		}
 		require_once $this->get_plugin_path() . '/includes/trackship-email-manager.php';
+		
+		//load plugin textdomain
+		load_plugin_textdomain( 'trackship-for-woocommerce', false, dirname( plugin_basename(__FILE__) ) . '/language/' );
 	}
 
 	/*
