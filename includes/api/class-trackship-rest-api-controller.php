@@ -112,7 +112,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			$version_info['ast-free'] = wc_advanced_shipment_tracking()->version;
 		}
 
-		if ( is_plugin_active( 'ast-pro/ast-pro.php' ) ) {
+		if ( is_plugin_active( 'ast-pro/ast-pro.php' ) || is_plugin_active( 'advanced-shipment-tracking-pro/advanced-shipment-tracking-pro.php' ) ) {
 			$plugin.= '-ast-pro';
 			$version_info['ast-pro'] = ast_pro()->version;
 		}
