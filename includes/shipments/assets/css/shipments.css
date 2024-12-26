@@ -10,17 +10,11 @@
 .woocommerce.trackship_admin_layout table.form-table.heading-table td h3 {
 	margin: 0 0 10px;
 }
-.dataTables_wrapper .dataTables_info {
+#active_shipments_table_wrapper .dt-info {
 	font-size: 12px;
-	margin: 15px 0 10px;
-	padding-top: 0;
-	line-height: 15px;
 }
-.dataTables_info#active_shipments_table_info {
-	display: block;
-	line-height: 40px;
-	margin: 0 10px;
-	width: 100%;
+#active_shipments_table_info.dt-info, #trackship_notifications_logs_info.dt-info {
+	margin: 15px 0;
 }
 .shipment_search_bar #search_bar{
 	width: 100%;
@@ -63,6 +57,9 @@ span.shipment_search_bar span.dashicons-no {
 	border-width: 0 2px 2px 0;
 	bottom: 35%;
 	transform: rotate(225deg);
+}
+table.dataTable th.dt-type-numeric, table.dataTable.fullfilments_table td.dt-type-numeric {
+	text-align: left;
 }
 div.bulk_action_div button.bulk_action_button {
 	height: 50px;
@@ -128,22 +125,29 @@ table.dataTable tbody td span.get_log_detail {
 .more_info_shipment .dashicons {
 	rotate: 90deg;
 }
-.dataTables_wrapper .dataTables_paginate {
-	margin-bottom: 10px;
+.dt-container .datatable_footer .dt-paging .dt-paging-button {
+	border-radius: 23px;
+	width: 40px;
+	height: 40px;
+	text-align: center;
+	vertical-align: middle;
+	margin-left: 4px;
 }
-.dataTables_wrapper .dataTables_paginate .paginate_button {
-	border: 1px solid #ccc;
-	font-size: 12px;
+.dt-container .datatable_footer .dt-paging .dt-paging-button.current, .dt-container .datatable_footer .dt-paging .dt-paging-button.current:hover {
+	background: #09d3ac !important;
+	border-color: #09d3ac !important;
+	color: #fff !important;
 }
-.dataTables_wrapper .dataTables_paginate .paginate_button.current, .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-	background: #09d3ac;
+div.dt-container .datatable_footer .dt-paging .dt-paging-button:hover {
+	background: #3858e9 !important;
+	border-color: #3858e9 !important;
 	color: #fff !important;
 }
 span.date_placeholder {
 	padding-right: 20px;
 }
 table.dataTable thead th, table.dataTable thead td {
-	border-bottom: 1px solid #e0e0e0;
+	border-bottom: 1px solid #e0e0e0 !important;
 	font-weight: 500;
 	padding: 10px 8px;
 	box-sizing: border-box;
@@ -154,7 +158,7 @@ table.dataTable tbody tr {
 	background: none;
 }
 table.dataTable tbody tr:last-child td {
-	border-bottom: 0;
+	border-bottom: 0 !important;
 }
 .manage-column .select_all_checkbox {
 	margin-left: 0;
@@ -163,9 +167,6 @@ table.dataTable tbody td {
 	border-bottom: 1px solid #e0e0e0;
 	vertical-align: middle;
 	padding: 10px;
-}
-table.dataTable.fullfilments_table td:last-child {
-	text-align: right;
 }
 table.dataTable.fullfilments_table td.dataTables_empty {
 	text-align: left;
@@ -176,10 +177,6 @@ table.dataTable.fullfilments_table td.dataTables_empty {
 table.dataTable {
 	border: 1px solid #e0e0e0;
 	box-sizing: border-box;
-	border-radius: 5px;
-}
-table.dataTable.fullfilments_table {
-	border-radius: 0 0 5px 5px;
 }
 table.dataTable tbody a {
 	color: #3858e9;
@@ -211,12 +208,13 @@ table.dataTable tbody td span {
 }
 table.dataTable tbody td .shipments_get_shipment_status span {
 	color: #09d3ac;
-	display: block;
 	line-height: 20px;
-	float: right;
 	font-size: 24px;
 	padding-right: 25px;
 	cursor: pointer;
+}
+table.dataTable tbody tr td.dtfc-fixed-end {
+	text-align: center;
 }
 span.dashicons.dashicons-info {
 	line-height: 21px;
@@ -233,8 +231,8 @@ span.not_delivered.late_shipment {
 table.dataTable tbody tr.hover, table.dataTable tbody tr.focus {
 	background: #fafafa !important;
 }
-table.dataTable.no-footer {
-	border-bottom: 1px solid #e0e0e0;
+div.dt-container.dt-empty-footer .table_scroll .dt-scroll-body {
+	border-bottom: 0 !important;
 }
 table.dataTable tbody .shipment_status_label {
 	display: block;
@@ -311,61 +309,28 @@ table.dataTable tbody .shipment_status_label.unknown:before {
 }
 .datatable_footer {
 	margin: 10px 0 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
 }
-.dataTables_wrapper .datatable_footer .dataTables_paginate {
-	float: right;
+.datatable_footer .dt-info {
 	text-align: left;
-	display: inline-block;
-	margin: 0 15px;
-	line-height: 25px;
+	flex: 1;
 }
-.dataTables_wrapper .datatable_footer .dataTables_length {
-	float: right;
-	text-align: left;
-	display: inline-block;
-	margin: 0;
-	line-height: 30px;
-	vertical-align: top;
+.dt-length {
+	text-align: right;
+	flex: 1;
 }
-.datatable_footer .dataTables_paginate .paginate_button {
-	background: #f5f5f5 !important;
-	border: 1px solid #bdbdbd !important;
-	width: 30px;
-	height: 30px;
-	margin-left: 0;
-	font-size: 0;
+.dt-paging {
+	text-align: center;
+	flex: 1;
 }
-.datatable_footer .dataTables_paginate#shipments_table_paginate .paginate_button.disabled::after {
-	color: #bdbdbd;
-}
-.datatable_footer .dataTables_paginate .paginate_button.previous::after {
-	font-family: Dashicons;
-	content: "\f341";
-	font-size: 20px;
-	line-height: 29px;
-	color: #444444;
-}
-.datatable_footer .dataTables_paginate .paginate_button {
-	background: #f5f5f5 !important;
-	border: 1px solid #bdbdbd !important;
-	width: 30px;
-	height: 30px;
-	margin-left: 0;
-	font-size: 0;
-	vertical-align: middle;
-}
-.datatable_footer .dataTables_paginate .paginate_button.next::after {
-	font-family: Dashicons;
-	content: "\f345";
-	font-size: 20px;
-	line-height: 29px;
-	color: #444444;
-}
-.dataTables_wrapper .datatable_footer .dataTables_length label {
+.dt-container .datatable_footer .dt-length label {
 	color: #757575;
 	line-height: 35px;
 }
-.datatable_footer .dataTables_length select {
+.datatable_footer .dt-length select {
 	height: 35px;
 	width: 60px;
 	line-height: 14px;
@@ -406,9 +371,6 @@ table.dataTable span.dashicons.dashicons-admin-page {
 .paginate_input {
 	width: 30px;
 }
-span.shipments_go_to_page {
-	margin: 0 5px 0 15px;
-}
 .shipment_country {
 	display: flex;
 	align-items: center;
@@ -419,9 +381,6 @@ span.shipments_go_to_page {
 	text-overflow: ellipsis;
 	max-width: 170px;
 	cursor: pointer;
-}
-.rtl span.shipments_go_to_page {
-	margin: 0 15px 0 5px;
 }
 .rtl .popover__content {
 	left: 20px;
@@ -440,4 +399,7 @@ span.shipments_go_to_page {
  100% {
  transform: rotate( 360deg );
 }
+}
+table.dataTable tbody tr td.dtfc-fixed-end {
+	text-align: center;
 }

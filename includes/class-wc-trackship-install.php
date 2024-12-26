@@ -69,11 +69,6 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.0' );
 		}
 
-		if ( version_compare( get_option( 'trackship_db' ), '1.8', '<' ) ) {
-			delete_option( 'wcast_delivered_email_settings' );
-			update_option( 'trackship_db', '1.8' );
-		}
-
 		if ( version_compare( get_option( 'trackship_db' ), '1.13', '<' ) ) {
 			// migration to change api key name 
 			$trackship_apikey = get_option( 'wc_ast_api_key' );			
