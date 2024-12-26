@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: TrackShip for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-22 10:40+0000\n"
-"PO-Revision-Date: 2024-09-24 11:49+0000\n"
+"PO-Revision-Date: 2024-12-26 10:49+0000\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -12,10 +12,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.9; wp-6.5.3\n"
+"X-Loco-Version: 2.6.14; wp-6.7.1\n"
 "X-Domain: trackship-for-woocommerce"
 
-#: includes/views/dashboard.php:118
+#: includes/views/dashboard.php:113
 msgid "Account Dashboard"
 msgstr "מרכז השליטה של החשבון"
 
@@ -23,7 +23,7 @@ msgstr "מרכז השליטה של החשבון"
 msgid "Account SID"
 msgstr "SID חשבון"
 
-#: includes/views/dashboard.php:162
+#: includes/views/dashboard.php:157
 msgid "Action Needed"
 msgstr "נדרשת פעולה"
 
@@ -32,11 +32,15 @@ msgstr "נדרשת פעולה"
 msgid "Actions"
 msgstr "פעולות"
 
-#: includes/views/dashboard.php:80
+#: includes/views/dashboard.php:75
 msgid "Active"
 msgstr "פָּעִיל"
 
-#: includes/views/shipments.php:28
+#: includes/views/shipments.php:33
+msgid "Active Late Shipments"
+msgstr "משלוחים מאוחרים פעילים"
+
+#: includes/views/shipments.php:23
 msgid "Active Shipments"
 msgstr "משלוחים פעילים"
 
@@ -72,11 +76,11 @@ msgstr "מספר טלפון של מנהל מערכת"
 msgid "All Notifications"
 msgstr "כל ההתראות"
 
-#: includes/views/shipments.php:27
+#: includes/views/shipments.php:22
 msgid "All Shipments"
 msgstr "כל המשלוחים"
 
-#: includes/views/shipments.php:95
+#: includes/views/shipments.php:92
 msgid "All shipping providers"
 msgstr "כל ספקי המשלוחים"
 
@@ -84,7 +88,7 @@ msgstr "כל ספקי המשלוחים"
 msgid "All Types"
 msgstr "כל הסוגים"
 
-#: includes/class-wc-trackship-admin.php:425
+#: includes/class-wc-trackship-admin.php:423
 msgid ""
 "Allow users to opt-out of receiving Shipment status notifications on the "
 "Tracking page and Shipment status emails."
@@ -132,7 +136,7 @@ msgstr "מפתח API"
 msgid "API Username"
 msgstr "שם משתמש API"
 
-#: includes/views/shipments.php:110
+#: includes/views/shipments.php:107
 msgid "Apply"
 msgstr "להגיש מועמדות"
 
@@ -140,17 +144,17 @@ msgstr "להגיש מועמדות"
 msgid "Auth Token"
 msgstr "Auth Token"
 
-#: includes/views/dashboard.php:148
+#: includes/views/dashboard.php:143
 msgid "Available Balance"
 msgstr "יתרה זמינה"
 
-#: includes/class-wc-trackship-actions.php:662
-#: includes/class-wc-trackship-actions.php:713
+#: includes/class-wc-trackship-actions.php:660
+#: includes/class-wc-trackship-actions.php:711
 #: includes/class-wc-trackship-admin.php:1288
 #: includes/smswoo/class-smswoo-admin.php:541
 #: includes/customizer/trackship-customizer.php:214
 #: includes/customizer/trackship-customizer.php:821
-#: includes/views/shipments.php:36
+#: includes/views/shipments.php:31
 msgid "Available For Pickup"
 msgstr "זמין לאיסוף"
 
@@ -171,7 +175,7 @@ msgstr "מצייני מיקום זמינים:"
 msgid "Available variables:"
 msgstr "משתנים זמינים:"
 
-#: includes/views/shipments.php:107
+#: includes/views/shipments.php:104
 msgid "Bulk actions"
 msgstr "פעולות בכמות גדולה"
 
@@ -193,12 +197,16 @@ msgstr "רדיוס כפתור"
 msgid "Button text"
 msgstr "טקסט לחצן"
 
-#: includes/class-wc-trackship-actions.php:667
-#: includes/class-wc-trackship-actions.php:746
+#: includes/class-wc-trackship-actions.php:665
+#: includes/class-wc-trackship-actions.php:744
 msgid "Carrier Unsupported"
 msgstr "הספק אינו נתמך"
 
-#: includes/class-wc-trackship-admin.php:409
+#: includes/class-wc-trackship-admin.php:740
+msgid "Change order status to"
+msgstr "שנה את סטטוס ההזמנה ל"
+
+#: includes/class-wc-trackship-admin.php:407
 msgid "Choose on which order emails to include the shipment tracking info"
 msgstr "בחר באילו הזמנה הודעות דוא\"ל לכלול את פרטי מעקב המשלוחים"
 
@@ -244,28 +252,29 @@ msgstr "התאם אישית את ווידג'ט המעקב"
 msgid "Dashboard"
 msgstr "לוּחַ מַחווָנִים"
 
-#: includes/views/tools.php:17
+#: includes/views/tools.php:18
 msgid "Delete notifications logs"
 msgstr "מחק יומני הודעות"
 
-#: includes/views/tools.php:16
+#: includes/views/tools.php:17
 msgid "Delete notifications logs more than 30 days"
 msgstr "מחק יומני הודעות יותר מ-30 יום"
 
-#: includes/class-wc-trackship-actions.php:664
-#: includes/class-wc-trackship-actions.php:707
-#: includes/class-wc-trackship-admin.php:660
-#: includes/class-wc-trackship-admin.php:678
+#: includes/class-wc-trackship-actions.php:662
+#: includes/class-wc-trackship-actions.php:705
+#: includes/class-wc-trackship-admin.php:658
+#: includes/class-wc-trackship-admin.php:676
+#: includes/class-wc-trackship-admin.php:728
 #: includes/class-wc-trackship-admin.php:1330
 #: includes/smswoo/class-smswoo-admin.php:547
 #: includes/customizer/trackship-customizer.php:220
 #: includes/customizer/trackship-customizer.php:827
-#: includes/views/shipments.php:34 includes/views/dashboard.php:84
+#: includes/views/shipments.php:29 includes/views/dashboard.php:79
 msgid "Delivered"
 msgstr "נמסר"
 
 #. %s: search number of order
-#: includes/class-wc-trackship-admin.php:666
+#: includes/class-wc-trackship-admin.php:664
 #, php-format
 msgid "Delivered <span class=\"count\">(%s)</span>"
 msgid_plural "Delivered <span class=\"count\">(%s)</span>"
@@ -285,8 +294,8 @@ msgstr "תאריך משלוח"
 msgid "Delivery date"
 msgstr "תאריך משלוח"
 
-#: includes/class-wc-trackship-actions.php:665
-#: includes/class-wc-trackship-actions.php:722
+#: includes/class-wc-trackship-actions.php:663
+#: includes/class-wc-trackship-actions.php:720
 #: includes/class-wc-trackship-admin.php:1302
 #: includes/smswoo/class-smswoo-admin.php:543
 #: includes/customizer/trackship-customizer.php:216
@@ -303,8 +312,8 @@ msgstr "מספר משלוח"
 msgid "Delivery tracking Number"
 msgstr "מספר מעקב למשלוח"
 
-#: includes/views/front/layout1_tracking_details.php:52
-#: includes/views/front/layout1_tracking_details.php:171
+#: includes/views/front/layout1_tracking_details.php:55
+#: includes/views/front/layout1_tracking_details.php:174
 msgid "Destination Details"
 msgstr "פרטי יעד"
 
@@ -385,7 +394,7 @@ msgstr "אימיילים"
 msgid "Enable %1$s email"
 msgstr "הפעל את האימייל של %1$s"
 
-#: includes/class-wc-trackship-admin.php:432
+#: includes/class-wc-trackship-admin.php:430
 msgid ""
 "Enable a Custom Order Status Delivered that will be set automatically when "
 "all the order shipments are delivered"
@@ -393,7 +402,7 @@ msgstr ""
 "אפשר סטטוס הזמנה מותאמת אישית מסירה שיוגדר אוטומטית כאשר כל משלוחי ההזמנה "
 "יימסרו"
 
-#: includes/class-wc-trackship-admin.php:416
+#: includes/class-wc-trackship-admin.php:414
 msgid "Enable a shipment status filter on orders admin"
 msgstr "אפשר מסנן סטטוס משלוח במנהל ההזמנות"
 
@@ -401,11 +410,11 @@ msgstr "אפשר מסנן סטטוס משלוח במנהל ההזמנות"
 msgid "Enable email"
 msgstr "אפשר אימייל"
 
-#: includes/class-wc-trackship-admin.php:429
+#: includes/class-wc-trackship-admin.php:427
 msgid "Enable Order Delivery Automation"
 msgstr "הפעל אוטומציה של מסירת הזמנות"
 
-#: includes/class-wc-trackship-admin.php:439
+#: includes/class-wc-trackship-admin.php:437
 msgid "Enable shipment status notification for order created by Amazon"
 msgstr "אפשר הודעת סטטוס משלוח עבור הזמנה שנוצרה על ידי אמזון"
 
@@ -417,7 +426,7 @@ msgstr "הפעל קישור # מעקב לספק"
 msgid "Enable Tracking Page"
 msgstr "אפשר דף מעקב"
 
-#: includes/class-wc-trackship-admin.php:422
+#: includes/class-wc-trackship-admin.php:420
 msgid "Enable unsubscribe (opt-out) from Shipment status notifications"
 msgstr "אפשר ביטול הרשמה (ביטול הסכמה) להודעות סטטוס משלוח"
 
@@ -433,12 +442,12 @@ msgstr "הזן מספר טלפון של מנהל מערכת עם קידומת מ
 msgid "Est. Delivery Date"
 msgstr "הערכה תאריך משלוח"
 
-#: includes/class-wc-trackship-actions.php:669
+#: includes/class-wc-trackship-actions.php:667
 #: includes/class-wc-trackship-admin.php:1316
 #: includes/smswoo/class-smswoo-admin.php:545
 #: includes/customizer/trackship-customizer.php:218
 #: includes/customizer/trackship-customizer.php:825
-#: includes/views/shipments.php:32
+#: includes/views/shipments.php:27
 msgid "Exception"
 msgstr "יוצא מן הכלל"
 
@@ -450,15 +459,15 @@ msgstr "משלוח חריג"
 msgid "Exception Shipments"
 msgstr "משלוחים חריגים"
 
-#: includes/class-wc-trackship-admin.php:801
+#: includes/class-wc-trackship-admin.php:799
 msgid "Exception Shipments Notifications"
 msgstr "הודעות על משלוחים חריגים"
 
-#: includes/class-wc-trackship-actions.php:764
+#: includes/class-wc-trackship-actions.php:762
 msgid "Expired"
 msgstr "לא בתוקף"
 
-#: includes/class-wc-trackship-actions.php:675
+#: includes/class-wc-trackship-actions.php:673
 msgid "Filter by shipment status"
 msgstr "סנן לפי מצב המשלוח"
 
@@ -474,13 +483,13 @@ msgstr "אפשרויות כלליות"
 msgid "General Settings"
 msgstr "הגדרות כלליות"
 
-#: includes/class-wc-trackship-actions.php:592
-#: includes/class-wc-trackship-actions.php:1018
-#: includes/class-wc-trackship-admin.php:548 includes/views/tools.php:13
+#: includes/class-wc-trackship-actions.php:590
+#: includes/class-wc-trackship-actions.php:1012
+#: includes/class-wc-trackship-admin.php:546 includes/views/tools.php:14
 msgid "Get Shipment Status"
 msgstr "קבל סטטוס משלוח"
 
-#: includes/views/shipments.php:108
+#: includes/views/shipments.php:105
 msgid "Get shipment status"
 msgstr "קבל סטטוס משלוח"
 
@@ -531,17 +540,17 @@ msgstr "כיצד למצוא את פרטי הכניסה שלך ל-%s"
 msgid "Icons"
 msgstr "אייקונים"
 
-#: includes/class-wc-trackship-actions.php:661
-#: includes/class-wc-trackship-actions.php:698
+#: includes/class-wc-trackship-actions.php:659
+#: includes/class-wc-trackship-actions.php:696
 #: includes/class-wc-trackship-admin.php:1281
 #: includes/smswoo/class-smswoo-admin.php:540
 #: includes/customizer/trackship-customizer.php:213
 #: includes/customizer/trackship-customizer.php:820
-#: includes/views/shipments.php:29
+#: includes/views/shipments.php:24
 msgid "In Transit"
 msgstr "במסלול משלוח"
 
-#: includes/views/dashboard.php:130
+#: includes/views/dashboard.php:125
 msgid ""
 "Include shipment tracking details in your WooCommerce orders, enabling "
 "customers to effortlessly monitor their orders. Shipment tracking "
@@ -554,7 +563,7 @@ msgstr ""
 "הלקוחות, הממוקמים בסעיף ההזמנה, וייכלל גם בדוא\"ל השלמת ההזמנה של "
 "WooCommerce."
 
-#: includes/views/dashboard.php:134
+#: includes/views/dashboard.php:129
 msgid "Install Shipment Tracking plugin"
 msgstr "התקן תוסף מעקב משלוחים"
 
@@ -562,14 +571,14 @@ msgstr "התקן תוסף מעקב משלוחים"
 msgid "Integrations"
 msgstr "אינטגרציות"
 
-#: includes/class-wc-trackship-actions.php:670
+#: includes/class-wc-trackship-actions.php:668
 msgid "Invalid Tracking"
 msgstr "מעקב לא חוקי"
 
 #: templates/emails/tswc-tpi-email-order-details.php:35
 #: templates/emails/tswc-email-order-details.php:35
 #: includes/customizer/trackship-customizer.php:345
-#: includes/views/front/layout1_tracking_details.php:10
+#: includes/views/front/layout1_tracking_details.php:13
 msgid "Items in this shipment"
 msgstr "פריטים במשלוח זה"
 
@@ -581,19 +590,19 @@ msgstr "מסע"
 msgid "Key"
 msgstr "מַפְתֵחַ"
 
-#: includes/class-wc-trackship-actions.php:731
+#: includes/class-wc-trackship-actions.php:729
 msgid "Label Cancelled"
 msgstr "התווית בוטלה"
 
-#: includes/views/dashboard.php:99
+#: includes/views/dashboard.php:94
 msgid "Last 30 days"
 msgstr "30 הימים האחרונים"
 
-#: includes/views/dashboard.php:104
+#: includes/views/dashboard.php:99
 msgid "Last 60 days"
 msgstr "60 הימים האחרונים"
 
-#: includes/class-wc-trackship-actions.php:965
+#: includes/class-wc-trackship-actions.php:963
 msgid "Last event date: "
 msgstr "תאריך האירוע האחרון:"
 
@@ -601,15 +610,15 @@ msgstr "תאריך האירוע האחרון:"
 msgid "Late shipment"
 msgstr "משלוח מאוחר"
 
-#: includes/views/shipments.php:37 includes/views/notifications.php:68
+#: includes/views/shipments.php:32 includes/views/notifications.php:68
 msgid "Late Shipments"
 msgstr "משלוחים מאוחרים"
 
-#: includes/views/dashboard.php:62
+#: includes/views/dashboard.php:57
 msgid "Late Shipments for last 30 days"
 msgstr "משלוחים מאוחרים ב-30 הימים האחרונים"
 
-#: includes/class-wc-trackship-admin.php:800
+#: includes/class-wc-trackship-admin.php:798
 msgid "Late Shipments Notifications"
 msgstr "הודעות על משלוחים מאוחרים"
 
@@ -632,7 +641,11 @@ msgstr "יומנים"
 msgid "Map Shipping Carriers"
 msgstr "מפה ספקי משלוחים"
 
-#: includes/views/tools.php:32
+#: includes/class-wc-trackship-admin.php:763
+msgid "Mark order as delivered"
+msgstr "סמן את ההזמנה כמסופקת"
+
+#: includes/views/tools.php:33
 msgid "Migration"
 msgstr "הֲגִירָה"
 
@@ -644,7 +657,7 @@ msgstr "סדר מודלים"
 msgid "Modern"
 msgstr "מוֹדֶרנִי"
 
-#: includes/views/dashboard.php:94
+#: includes/views/dashboard.php:89
 msgid "Month to date"
 msgstr "חודש עד היום"
 
@@ -652,13 +665,13 @@ msgstr "חודש עד היום"
 msgid "More info"
 msgstr "עוד מידע"
 
-#: includes/class-wc-trackship-actions.php:465
-#: includes/class-wc-trackship-actions.php:974
+#: includes/class-wc-trackship-actions.php:463
+#: includes/class-wc-trackship-actions.php:972
 #: includes/html/class-wc-trackship-html.php:130
 msgid "more info"
 msgstr "עוד מידע"
 
-#: includes/views/dashboard.php:181
+#: includes/views/dashboard.php:176
 msgid "No action needed for Shipments"
 msgstr "אין צורך בפעולה עבור משלוחים"
 
@@ -681,11 +694,11 @@ msgstr "אין קוד תגובה"
 
 #: includes/views/content.php:19
 #: includes/views/front/enhanced_shipment_details_notifications.php:40
-#: includes/views/front/layout1_tracking_details.php:11
+#: includes/views/front/layout1_tracking_details.php:14
 msgid "Notifications"
 msgstr "התראות"
 
-#: includes/class-wc-trackship-admin.php:841
+#: includes/class-wc-trackship-admin.php:839
 msgid "Notifications detail"
 msgstr "פירוט הודעות"
 
@@ -693,16 +706,16 @@ msgstr "פירוט הודעות"
 msgid "Notifications Type (SMS/WhatsApp)"
 msgstr "סוג הודעות (SMS/WhatsApp)"
 
-#: includes/class-wc-trackship-admin.php:456
+#: includes/class-wc-trackship-admin.php:454
 msgid "Number of days for late shipments"
 msgstr "מספר ימים לאיחור במשלוחים"
 
-#: includes/class-wc-trackship-actions.php:701
+#: includes/class-wc-trackship-actions.php:699
 #: includes/class-wc-trackship-admin.php:1309
 #: includes/smswoo/class-smswoo-admin.php:544
 #: includes/customizer/trackship-customizer.php:217
 #: includes/customizer/trackship-customizer.php:824
-#: includes/views/shipments.php:33
+#: includes/views/shipments.php:28
 msgid "On Hold"
 msgstr "בהמתנה"
 
@@ -714,7 +727,7 @@ msgstr "משלוח בהמתנה"
 msgid "On Hold Shipments"
 msgstr "משלוחים בהמתנה"
 
-#: includes/class-wc-trackship-admin.php:802
+#: includes/class-wc-trackship-admin.php:800
 msgid "On Hold Shipments Notifications"
 msgstr "הודעות על משלוחים בהמתנה"
 
@@ -738,11 +751,11 @@ msgstr "הזמנה באימייל"
 msgid "Order ID"
 msgstr "מספר הזמנה"
 
-#: includes/class-wc-trackship-actions.php:767
+#: includes/class-wc-trackship-actions.php:765
 msgid "Order id not found"
 msgstr "מזהה הזמנה לא נמצא"
 
-#: includes/class-wc-trackship-admin.php:845
+#: includes/class-wc-trackship-admin.php:843
 #: templates/tracking/tracking-form.php:110
 #: templates/emails/exception-shipment-email.php:16
 #: templates/emails/late-shipment-email.php:16
@@ -754,7 +767,7 @@ msgstr "מספר הזמנה"
 msgid "Order Processing"
 msgstr "עיבוד הזמנה"
 
-#: includes/class-wc-trackship-admin.php:408
+#: includes/class-wc-trackship-admin.php:406
 msgid "Order statuses to trigger TrackShip "
 msgstr "סטטוסי הזמנה כדי להפעיל את TrackShip"
 
@@ -762,9 +775,9 @@ msgstr "סטטוסי הזמנה כדי להפעיל את TrackShip"
 msgid "Order tracking number."
 msgstr "מספר מעקב הזמנה."
 
-#: includes/views/front/layout1_tracking_details.php:108
-#: includes/views/front/layout1_tracking_details.php:196
-#: includes/views/front/enhanced_tracking_events.php:70
+#: includes/views/front/layout1_tracking_details.php:111
+#: includes/views/front/layout1_tracking_details.php:199
+#: includes/views/front/enhanced_tracking_events.php:72
 msgid "Origin Details"
 msgstr "פרטי מוצא"
 
@@ -772,13 +785,13 @@ msgstr "פרטי מוצא"
 msgid "Other"
 msgstr "אַחֵר"
 
-#: includes/class-wc-trackship-actions.php:663
-#: includes/class-wc-trackship-actions.php:710
+#: includes/class-wc-trackship-actions.php:661
+#: includes/class-wc-trackship-actions.php:708
 #: includes/class-wc-trackship-admin.php:1295
 #: includes/smswoo/class-smswoo-admin.php:542
 #: includes/customizer/trackship-customizer.php:215
 #: includes/customizer/trackship-customizer.php:822
-#: includes/views/shipments.php:30
+#: includes/views/shipments.php:25
 msgid "Out For Delivery"
 msgstr "נשלח"
 
@@ -786,13 +799,13 @@ msgstr "נשלח"
 msgid "Overview"
 msgstr "סקירה כללית"
 
-#: includes/class-wc-trackship-actions.php:658
-#: includes/class-wc-trackship-actions.php:740
+#: includes/class-wc-trackship-actions.php:656
+#: includes/class-wc-trackship-actions.php:738
 msgid "Pending Update"
 msgstr "ממתין לעדכון"
 
-#: includes/class-wc-trackship-actions.php:464
-#: includes/class-wc-trackship-actions.php:972
+#: includes/class-wc-trackship-actions.php:462
+#: includes/class-wc-trackship-actions.php:970
 #| msgid ""
 #| "Pending TrackShip is a temporary status that will display for a few "
 #| "minutes until we update the order with the first tracking event from the "
@@ -851,12 +864,12 @@ msgstr "אנא נסה שוב לאחר שתקבל את האימייל לאישו�
 msgid "Powered by "
 msgstr "נתמך על ידי"
 
-#: includes/class-wc-trackship-actions.php:660
-#: includes/class-wc-trackship-actions.php:704 includes/views/shipments.php:31
+#: includes/class-wc-trackship-actions.php:658
+#: includes/class-wc-trackship-actions.php:702 includes/views/shipments.php:26
 msgid "Pre Transit"
 msgstr "טרום טרנזיט"
 
-#: includes/class-wc-trackship-admin.php:796
+#: includes/class-wc-trackship-admin.php:794
 msgid "Priority Support"
 msgstr "תמיכה בעדיפות"
 
@@ -865,31 +878,31 @@ msgstr "תמיכה בעדיפות"
 msgid "Progress bar"
 msgstr "סרגל התקדמות"
 
-#: includes/class-wc-trackship-admin.php:829
+#: includes/class-wc-trackship-admin.php:827
 msgid "Providers list Updated"
 msgstr "רשימת הספקים עודכנה"
 
-#: includes/class-wc-trackship-admin.php:461
-#: includes/class-wc-trackship-admin.php:483
-#: includes/class-wc-trackship-admin.php:505
+#: includes/class-wc-trackship-admin.php:459
+#: includes/class-wc-trackship-admin.php:481
+#: includes/class-wc-trackship-admin.php:503
 msgid "Recipient(s)"
 msgstr "נמענים"
 
-#: includes/class-wc-trackship-admin.php:798
+#: includes/class-wc-trackship-admin.php:796
 msgid "Remove TrackShip’s branding"
 msgstr "הסר את המיתוג של TrackShip"
 
-#: includes/class-wc-trackship-actions.php:668
-#: includes/class-wc-trackship-actions.php:716
+#: includes/class-wc-trackship-actions.php:666
+#: includes/class-wc-trackship-actions.php:714
 #: includes/class-wc-trackship-admin.php:1323
 #: includes/smswoo/class-smswoo-admin.php:546
 #: includes/customizer/trackship-customizer.php:219
 #: includes/customizer/trackship-customizer.php:826
-#: includes/views/shipments.php:35
+#: includes/views/shipments.php:30
 msgid "Return To Sender"
 msgstr "החזר לשולח"
 
-#: includes/views/dashboard.php:70
+#: includes/views/dashboard.php:65
 msgid "Return To Sender for last 30 days"
 msgstr "חזור אל השולח עבור 30 הימים האחרונים"
 
@@ -913,7 +926,7 @@ msgstr "שמור"
 msgid "Search"
 msgstr "לחפש"
 
-#: includes/views/shipments.php:118
+#: includes/views/shipments.php:115
 msgid "Search by Tracking Number, Shipping carrier, Order number"
 msgstr "חפש לפי מספר מעקב, מוביל משלוח, מספר הזמנה"
 
@@ -929,9 +942,9 @@ msgstr "אימות האבטחה נכשל, אנא רענן את הדף ונסה �
 msgid "Select tracking page:"
 msgstr "בחר דף מעקב:"
 
-#: includes/class-wc-trackship-admin.php:467
-#: includes/class-wc-trackship-admin.php:489
-#: includes/class-wc-trackship-admin.php:511
+#: includes/class-wc-trackship-admin.php:465
+#: includes/class-wc-trackship-admin.php:487
+#: includes/class-wc-trackship-admin.php:509
 msgid "Send email at"
 msgstr "שלח אימייל ב"
 
@@ -980,12 +993,12 @@ msgstr "לשלוח ל"
 msgid "Shipment %1$s"
 msgstr "משלוח %1$s"
 
-#: includes/views/front/layout1_tracking_details.php:9
+#: includes/views/front/layout1_tracking_details.php:12
 msgid "Shipment Progress"
 msgstr "התקדמות המשלוח"
 
-#: includes/class-wc-trackship-actions.php:388
-#: includes/class-wc-trackship-admin.php:846
+#: includes/class-wc-trackship-actions.php:386
+#: includes/class-wc-trackship-admin.php:844
 #: templates/emails/late-shipment-email.php:17 includes/views/logs.php:51
 #: includes/shipments/views/trackship_shipments.php:20
 msgid "Shipment status"
@@ -996,11 +1009,11 @@ msgstr "מצב המשלוח"
 msgid "Shipments"
 msgstr "משלוחים"
 
-#: includes/class-wc-trackship-admin.php:799
+#: includes/class-wc-trackship-admin.php:797
 msgid "Shipments Dashboard"
 msgstr "לוח המחוונים למשלוחים"
 
-#: includes/views/dashboard.php:57
+#: includes/views/dashboard.php:52
 msgid ""
 "shipments from the last 30 days that haven't been automatically tracked. To "
 "start tracking these past orders, simply click here"
@@ -1008,10 +1021,10 @@ msgstr ""
 "משלוחים מ-30 הימים האחרונים שלא עוקבים אחריהם אוטומטית. כדי להתחיל לעקוב אחר "
 "הזמנות קודמות אלה, פשוט לחץ כאן"
 
-#: includes/class-wc-trackship-actions.php:728
-#: includes/class-wc-trackship-actions.php:743
+#: includes/class-wc-trackship-actions.php:726
+#: includes/class-wc-trackship-actions.php:741
 #: templates/emails/tracking-info.php:81
-#: includes/views/front/enhanced_tracking_events.php:16
+#: includes/views/front/enhanced_tracking_events.php:18
 #: includes/views/front/tracking_page_header.php:66
 msgid "Shipped"
 msgstr "נשלח"
@@ -1028,11 +1041,11 @@ msgstr "טקסט כותרת של מוצרים שנשלחו"
 msgid "Shipping & Delivery"
 msgstr "משלוח ומסירה"
 
-#: includes/class-wc-trackship-admin.php:803
+#: includes/class-wc-trackship-admin.php:801
 msgid "Shipping & Delivery Analytics"
 msgstr "ניתוח משלוחים ומשלוחים"
 
-#: includes/views/dashboard.php:189
+#: includes/views/dashboard.php:184
 msgid "Shipping & Delivery Overview"
 msgstr "סקירה כללית על משלוח ומשלוח"
 
@@ -1062,7 +1075,7 @@ msgstr "ימי משלוח"
 msgid "Shipping provider"
 msgstr "ספק משלוחים"
 
-#: includes/class-wc-trackship-actions.php:773
+#: includes/class-wc-trackship-actions.php:771
 msgid "Shipping provider not found"
 msgstr "ספק משלוחים לא נמצא"
 
@@ -1115,7 +1128,7 @@ msgstr "סמס"
 msgid "SMS gateways"
 msgstr "שערי SMS"
 
-#: includes/class-wc-trackship-admin.php:797
+#: includes/class-wc-trackship-admin.php:795
 #: includes/views/notifications.php:18
 msgid "SMS Notifications"
 msgstr "הודעות SMS"
@@ -1129,20 +1142,20 @@ msgstr "התראות SMS"
 msgid "SMS Settings"
 msgstr "הגדרות SMS"
 
-#: includes/class-wc-trackship-admin.php:804
+#: includes/class-wc-trackship-admin.php:802
 #| msgid "Starting from $9 a month"
 msgid "Starting from $11 a month"
 msgstr "החל מ-$11 לחודש"
 
-#: includes/class-wc-trackship-admin.php:851 includes/views/logs.php:55
+#: includes/class-wc-trackship-admin.php:849 includes/views/logs.php:55
 msgid "Status"
 msgstr "סטָטוּס"
 
-#: includes/class-wc-trackship-actions.php:782
+#: includes/class-wc-trackship-actions.php:780
 msgid "Store is conneted with different account"
 msgstr "החנות מחוברת לחשבון אחר"
 
-#: includes/class-wc-trackship-actions.php:779
+#: includes/class-wc-trackship-actions.php:777
 msgid "Store is not Connected to TrackShip"
 msgstr "החנות אינה מחוברת ל-TrackShip"
 
@@ -1150,12 +1163,12 @@ msgstr "החנות אינה מחוברת ל-TrackShip"
 msgid "Style & Colors"
 msgstr "סגנון וצבעים"
 
-#: includes/class-wc-trackship-admin.php:823
-#: includes/class-wc-trackship-admin.php:831
+#: includes/class-wc-trackship-admin.php:821
+#: includes/class-wc-trackship-admin.php:829
 msgid "Sync TrackShip Providers"
 msgstr "סנכרון ספקי TrackShip"
 
-#: includes/class-wc-trackship-admin.php:827
+#: includes/class-wc-trackship-admin.php:825
 msgid ""
 "Syncing the TrackShip providers list add or updates the pre-set TrackShip "
 "providers and will not effect custom shipping providers."
@@ -1204,7 +1217,7 @@ msgid ""
 msgstr ""
 "ההזמנה/המשלוח שאתה מנסה לעקוב אחר לא נשלח עדיין או שמספר ההזמנה שהוזן שגוי."
 
-#: includes/class-wc-trackship-actions.php:579
+#: includes/class-wc-trackship-actions.php:577
 msgid ""
 "The shipment status updates will run in the background, please refresh the "
 "page in a few minutes."
@@ -1229,11 +1242,11 @@ msgstr "שדה זה מופיע כמזהה מאת או שולח"
 msgid "This will be appended to URL in the email content"
 msgstr "זה יצורף לכתובת ה-URL בתוכן האימייל"
 
-#: includes/class-wc-trackship-admin.php:848 includes/views/logs.php:52
+#: includes/class-wc-trackship-admin.php:846 includes/views/logs.php:52
 msgid "Time"
 msgstr "זְמַן"
 
-#: includes/class-wc-trackship-admin.php:849 includes/views/logs.php:53
+#: includes/class-wc-trackship-admin.php:847 includes/views/logs.php:53
 msgid "To"
 msgstr "ל"
 
@@ -1252,14 +1265,14 @@ msgstr ""
 msgid "Tools"
 msgstr "כלים"
 
-#: includes/views/dashboard.php:76
+#: includes/views/dashboard.php:71
 msgid "Total Shipments"
 msgstr "סך משלוחים"
 
-#: includes/class-wc-trackship-actions.php:456
-#: includes/class-wc-trackship-actions.php:462
-#: includes/class-wc-trackship-actions.php:970
-#: includes/class-wc-trackship-actions.php:981
+#: includes/class-wc-trackship-actions.php:454
+#: includes/class-wc-trackship-actions.php:460
+#: includes/class-wc-trackship-actions.php:968
+#: includes/class-wc-trackship-actions.php:979
 msgid "Track"
 msgstr "מַסלוּל"
 
@@ -1296,25 +1309,25 @@ msgstr "מעקב אנליטיקס"
 msgid "Tracking event display"
 msgstr "תצוגת אירוע מעקב"
 
-#: includes/views/front/layout1_tracking_details.php:44
+#: includes/views/front/layout1_tracking_details.php:47
 msgid "Tracking information is not available, please try again later."
 msgstr "מידע מעקב אינו זמין, אנא נסה שוב מאוחר יותר."
 
-#: includes/views/front/enhanced_tracking_events.php:40
+#: includes/views/front/enhanced_tracking_events.php:42
 msgid ""
 "Tracking is still not yet available for this shipment, please try again "
 "later."
 msgstr "מעקב עדיין לא זמין עבור משלוח זה, אנא נסה שוב מאוחר יותר."
 
-#: includes/views/shipments.php:38 includes/views/dashboard.php:88
+#: includes/views/shipments.php:34 includes/views/dashboard.php:83
 msgid "Tracking Issues"
 msgstr "בעיות מעקב"
 
-#: includes/views/dashboard.php:66
+#: includes/views/dashboard.php:61
 msgid "Tracking Issues for last 30 days"
 msgstr "מעקב אחר בעיות ב-30 הימים האחרונים"
 
-#: includes/class-wc-trackship-admin.php:847
+#: includes/class-wc-trackship-admin.php:845
 #: templates/tracking/tracking-form.php:106
 #: templates/tracking/tracking-form.php:116
 #: templates/emails/exception-shipment-email.php:18
@@ -1324,7 +1337,7 @@ msgstr "מעקב אחר בעיות ב-30 הימים האחרונים"
 msgid "Tracking Number"
 msgstr "מספר מעקב"
 
-#: includes/class-wc-trackship-actions.php:770
+#: includes/class-wc-trackship-actions.php:768
 msgid "Tracking number not found"
 msgstr "מספר מעקב לא נמצא"
 
@@ -1362,11 +1375,15 @@ msgstr "טבלת יומני TrackShip אינה קיימת, אנא נסה לאח�
 msgid "TrackShip Provider"
 msgstr "ספק TrackShip"
 
-#: includes/views/shipments.php:18 includes/views/dashboard.php:26
-msgid "TrackShip Shipments table does not exist, Please try after few minutes"
-msgstr "טבלת המשלוחים של TrackShip לא קיימת, אנא נסה לאחר מספר דקות"
+#: includes/views/shipments.php:8 includes/views/dashboard.php:16
+msgid "TrackShip Shipments database table does not exist."
+msgstr "טבלת מסד הנתונים של TrackShip Shipments אינה קיימת."
 
-#: includes/class-wc-trackship-admin.php:850 includes/views/logs.php:54
+#: includes/views/shipments.php:13 includes/views/dashboard.php:21
+msgid "TrackShip Shipments meta database table does not exist."
+msgstr "טבלת מטא מסד נתונים של TrackShip Shipments אינה קיימת."
+
+#: includes/class-wc-trackship-admin.php:848 includes/views/logs.php:54
 msgid "Type"
 msgstr "סוּג"
 
@@ -1379,16 +1396,16 @@ msgstr "לא ניתן לאתר את ההזמנה."
 msgid "Unable to locate the order. or Invalid order key"
 msgstr "לא ניתן לאתר את ההזמנה. או מפתח הזמנה לא חוקי"
 
-#: includes/class-wc-trackship-actions.php:749
+#: includes/class-wc-trackship-actions.php:747
 msgid "Unauthorized"
 msgstr "לא מורשה"
 
-#: includes/class-wc-trackship-actions.php:659
-#: includes/class-wc-trackship-actions.php:725
+#: includes/class-wc-trackship-actions.php:657
+#: includes/class-wc-trackship-actions.php:723
 msgid "Unknown"
 msgstr "לא ידוע"
 
-#: includes/trackship-email-manager.php:330
+#: includes/trackship-email-manager.php:336
 #: includes/customizer/class-trackship-email-preview.php:186
 msgid "Unsubscribe"
 msgstr "בטל את המנוי"
@@ -1397,49 +1414,49 @@ msgstr "בטל את המנוי"
 msgid "Updated at"
 msgstr "עודכן ב-"
 
-#: includes/views/tools.php:31
+#: includes/views/tools.php:32
 msgid "Updating tracking details during migration from older to newer version."
 msgstr "עדכון פרטי מעקב במהלך העברה מגרסה ישנה לגרסה חדשה יותר."
 
-#: includes/class-wc-trackship-admin.php:807
+#: includes/class-wc-trackship-admin.php:805
 msgid "UPGRADE TO PRO"
 msgstr "שדרוג לפרו"
 
-#: includes/views/dashboard.php:118
+#: includes/views/dashboard.php:113
 msgid "Upgrade to Pro"
 msgstr "שדרוג לפרו"
 
-#: includes/class-wc-trackship-admin.php:792
+#: includes/class-wc-trackship-admin.php:790
 msgid "Upgrade to TrackShip Pro"
 msgstr "שדרג ל-TrackShip Pro"
 
-#: includes/class-wc-trackship-actions.php:776
+#: includes/class-wc-trackship-actions.php:774
 msgid "User not found for this key"
 msgstr "משתמש לא נמצא עבור מפתח זה"
 
-#: includes/views/tools.php:24
+#: includes/views/tools.php:25
 msgid "Verify DB Structure"
 msgstr "אמת את מבנה DB"
 
-#: includes/views/tools.php:23
+#: includes/views/tools.php:24
 msgid "Verify if all TrackShip database tables are present."
 msgstr "ודא אם כל טבלאות מסד הנתונים של TrackShip קיימות."
 
-#: includes/views/dashboard.php:209
+#: includes/views/dashboard.php:204
 msgid "View detailed stats"
 msgstr "צפה בסטטיסטיקה מפורטת"
 
 #: includes/views/front/preview_tracking_page.php:173
-#: includes/views/front/layout1_tracking_details.php:165
+#: includes/views/front/layout1_tracking_details.php:168
 msgid "view less"
 msgstr "לראות פחות"
 
 #: includes/views/front/preview_tracking_page.php:172
-#: includes/views/front/layout1_tracking_details.php:164
+#: includes/views/front/layout1_tracking_details.php:167
 msgid "view more"
 msgstr "ראה עוד"
 
-#: includes/class-wc-trackship-actions.php:984
+#: includes/class-wc-trackship-actions.php:982
 msgid "View Shipment log"
 msgstr "הצג יומן משלוחים"
 
@@ -1449,7 +1466,7 @@ msgid "View your order details"
 msgstr "הצג את פרטי ההזמנה שלך"
 
 #. %s: search for a orders
-#: includes/views/tools.php:13
+#: includes/views/tools.php:14
 #, php-format
 #| msgid ""
 #| "We detected %1$s Shipped orders from the last 30 days that were not sent "
@@ -1477,7 +1494,7 @@ msgid "We detected %d On Hold shipments:"
 msgstr "זיהינו %d משלוחים בהמתנה:"
 
 #. %s: replace with Partially Shipped order count
-#: includes/class-wc-trackship-admin.php:929
+#: includes/class-wc-trackship-admin.php:927
 #, php-format
 msgid ""
 "We detected %s orders that use the Delivered order status, You can reassign "
@@ -1487,7 +1504,7 @@ msgstr ""
 "לסטטוס אחר"
 
 #. %s: search for a total_orders
-#: includes/class-wc-trackship-admin.php:547
+#: includes/class-wc-trackship-admin.php:545
 #, php-format
 #| msgid ""
 #| "We detected %s Shipped orders from the last 30 days that were not sent to "
@@ -1564,7 +1581,7 @@ msgstr ""
 "עליך להתקין תוסף %1$sShipment Tracking%2$s כדי להשתמש ב-TrackShip עבור "
 "WooCommerce."
 
-#: includes/views/dashboard.php:128
+#: includes/views/dashboard.php:123
 msgid ""
 "You must have a Shipment Tracking plugin installed to use TrackShip for "
 "WooCommerce."

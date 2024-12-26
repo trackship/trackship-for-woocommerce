@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: TrackShip for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-19 09:42+0000\n"
-"PO-Revision-Date: 2024-09-24 11:46+0000\n"
+"PO-Revision-Date: 2024-12-26 10:46+0000\n"
 "Last-Translator: \n"
 "Language-Team: Latvian\n"
 "Language: lv\n"
@@ -13,10 +13,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.11; wp-6.6.2\n"
+"X-Loco-Version: 2.6.14; wp-6.7.1\n"
 "X-Domain: trackship-for-woocommerce"
 
-#: includes/views/dashboard.php:118
+#: includes/views/dashboard.php:113
 msgid "Account Dashboard"
 msgstr "Konta informācijas panelis"
 
@@ -24,7 +24,7 @@ msgstr "Konta informācijas panelis"
 msgid "Account SID"
 msgstr "Konta SID"
 
-#: includes/views/dashboard.php:162
+#: includes/views/dashboard.php:157
 msgid "Action Needed"
 msgstr "Nepieciešama darbība"
 
@@ -33,11 +33,15 @@ msgstr "Nepieciešama darbība"
 msgid "Actions"
 msgstr "Darbības"
 
-#: includes/views/dashboard.php:80
+#: includes/views/dashboard.php:75
 msgid "Active"
 msgstr "Aktīvs"
 
-#: includes/views/shipments.php:28
+#: includes/views/shipments.php:33
+msgid "Active Late Shipments"
+msgstr "Aktīvi novēloti sūtījumi"
+
+#: includes/views/shipments.php:23
 msgid "Active Shipments"
 msgstr "Aktīvie sūtījumi"
 
@@ -73,11 +77,11 @@ msgstr "Administratora tālruņa numurs"
 msgid "All Notifications"
 msgstr "Visi paziņojumi"
 
-#: includes/views/shipments.php:27
+#: includes/views/shipments.php:22
 msgid "All Shipments"
 msgstr "Visi sūtījumi"
 
-#: includes/views/shipments.php:95
+#: includes/views/shipments.php:92
 msgid "All shipping providers"
 msgstr "Visi piegādes pakalpojumu sniedzēji"
 
@@ -85,7 +89,7 @@ msgstr "Visi piegādes pakalpojumu sniedzēji"
 msgid "All Types"
 msgstr "Visi veidi"
 
-#: includes/class-wc-trackship-admin.php:425
+#: includes/class-wc-trackship-admin.php:423
 msgid ""
 "Allow users to opt-out of receiving Shipment status notifications on the "
 "Tracking page and Shipment status emails."
@@ -133,7 +137,7 @@ msgstr "API atslēga"
 msgid "API Username"
 msgstr "API lietotājvārds"
 
-#: includes/views/shipments.php:110
+#: includes/views/shipments.php:107
 msgid "Apply"
 msgstr "Pieteikties"
 
@@ -141,17 +145,17 @@ msgstr "Pieteikties"
 msgid "Auth Token"
 msgstr "Auth Token"
 
-#: includes/views/dashboard.php:148
+#: includes/views/dashboard.php:143
 msgid "Available Balance"
 msgstr "Pieejamais atlikums"
 
-#: includes/class-wc-trackship-actions.php:662
-#: includes/class-wc-trackship-actions.php:713
+#: includes/class-wc-trackship-actions.php:660
+#: includes/class-wc-trackship-actions.php:711
 #: includes/class-wc-trackship-admin.php:1288
 #: includes/smswoo/class-smswoo-admin.php:541
 #: includes/customizer/trackship-customizer.php:214
 #: includes/customizer/trackship-customizer.php:821
-#: includes/views/shipments.php:36
+#: includes/views/shipments.php:31
 msgid "Available For Pickup"
 msgstr "Pieejams Saņemšanai"
 
@@ -172,7 +176,7 @@ msgstr "Pieejamie vietturi:"
 msgid "Available variables:"
 msgstr "Pieejamie mainīgie:"
 
-#: includes/views/shipments.php:107
+#: includes/views/shipments.php:104
 msgid "Bulk actions"
 msgstr "Lielapjoma darbības"
 
@@ -194,12 +198,16 @@ msgstr "Pogas rādiuss"
 msgid "Button text"
 msgstr "Pogas teksts"
 
-#: includes/class-wc-trackship-actions.php:667
-#: includes/class-wc-trackship-actions.php:746
+#: includes/class-wc-trackship-actions.php:665
+#: includes/class-wc-trackship-actions.php:744
 msgid "Carrier Unsupported"
 msgstr "Mobilo sakaru operators netiek atbalstīts"
 
-#: includes/class-wc-trackship-admin.php:409
+#: includes/class-wc-trackship-admin.php:740
+msgid "Change order status to"
+msgstr "Mainīt pasūtījuma statusu uz"
+
+#: includes/class-wc-trackship-admin.php:407
 msgid "Choose on which order emails to include the shipment tracking info"
 msgstr ""
 "Izvēlieties, kuros pasūtījuma e-pastos iekļaut sūtījuma izsekošanas "
@@ -247,28 +255,29 @@ msgstr "Pielāgojiet izsekošanas logrīku"
 msgid "Dashboard"
 msgstr "Mērinstrumentu panelis"
 
-#: includes/views/tools.php:17
+#: includes/views/tools.php:18
 msgid "Delete notifications logs"
 msgstr "Dzēst paziņojumu žurnālus"
 
-#: includes/views/tools.php:16
+#: includes/views/tools.php:17
 msgid "Delete notifications logs more than 30 days"
 msgstr "Dzēsiet paziņojumu žurnālus vairāk nekā 30 dienu laikā"
 
-#: includes/class-wc-trackship-actions.php:664
-#: includes/class-wc-trackship-actions.php:707
-#: includes/class-wc-trackship-admin.php:660
-#: includes/class-wc-trackship-admin.php:678
+#: includes/class-wc-trackship-actions.php:662
+#: includes/class-wc-trackship-actions.php:705
+#: includes/class-wc-trackship-admin.php:658
+#: includes/class-wc-trackship-admin.php:676
+#: includes/class-wc-trackship-admin.php:728
 #: includes/class-wc-trackship-admin.php:1330
 #: includes/smswoo/class-smswoo-admin.php:547
 #: includes/customizer/trackship-customizer.php:220
 #: includes/customizer/trackship-customizer.php:827
-#: includes/views/shipments.php:34 includes/views/dashboard.php:84
+#: includes/views/shipments.php:29 includes/views/dashboard.php:79
 msgid "Delivered"
 msgstr "Piegādāts"
 
 #. %s: search number of order
-#: includes/class-wc-trackship-admin.php:666
+#: includes/class-wc-trackship-admin.php:664
 #, php-format
 msgid "Delivered <span class=\"count\">(%s)</span>"
 msgid_plural "Delivered <span class=\"count\">(%s)</span>"
@@ -289,8 +298,8 @@ msgstr "Piegādes datums"
 msgid "Delivery date"
 msgstr "Piegādes datums"
 
-#: includes/class-wc-trackship-actions.php:665
-#: includes/class-wc-trackship-actions.php:722
+#: includes/class-wc-trackship-actions.php:663
+#: includes/class-wc-trackship-actions.php:720
 #: includes/class-wc-trackship-admin.php:1302
 #: includes/smswoo/class-smswoo-admin.php:543
 #: includes/customizer/trackship-customizer.php:216
@@ -307,8 +316,8 @@ msgstr "Piegādes numurs"
 msgid "Delivery tracking Number"
 msgstr "Piegādes izsekošanas numurs"
 
-#: includes/views/front/layout1_tracking_details.php:52
-#: includes/views/front/layout1_tracking_details.php:171
+#: includes/views/front/layout1_tracking_details.php:55
+#: includes/views/front/layout1_tracking_details.php:174
 msgid "Destination Details"
 msgstr "Sīkāka informācija par galamērķi"
 
@@ -389,7 +398,7 @@ msgstr "E-pasti"
 msgid "Enable %1$s email"
 msgstr "Iespējot %1$s e-pastu"
 
-#: includes/class-wc-trackship-admin.php:432
+#: includes/class-wc-trackship-admin.php:430
 msgid ""
 "Enable a Custom Order Status Delivered that will be set automatically when "
 "all the order shipments are delivered"
@@ -397,7 +406,7 @@ msgstr ""
 "Iespējojiet pielāgotā pasūtījuma statusu Piegādāts, kas tiks iestatīts "
 "automātiski, kad tiks piegādāti visi pasūtījuma sūtījumi"
 
-#: includes/class-wc-trackship-admin.php:416
+#: includes/class-wc-trackship-admin.php:414
 msgid "Enable a shipment status filter on orders admin"
 msgstr "Iespējot sūtījuma statusa filtru pasūtījumu administratoram"
 
@@ -405,11 +414,11 @@ msgstr "Iespējot sūtījuma statusa filtru pasūtījumu administratoram"
 msgid "Enable email"
 msgstr "Iespējot e-pastu"
 
-#: includes/class-wc-trackship-admin.php:429
+#: includes/class-wc-trackship-admin.php:427
 msgid "Enable Order Delivery Automation"
 msgstr "Iespējot pasūtījumu piegādes automatizāciju"
 
-#: includes/class-wc-trackship-admin.php:439
+#: includes/class-wc-trackship-admin.php:437
 msgid "Enable shipment status notification for order created by Amazon"
 msgstr "Iespējot sūtījuma statusa paziņojumu Amazon izveidotajam pasūtījumam"
 
@@ -421,7 +430,7 @@ msgstr "Iespējot izsekošanas # saiti uz mobilo sakaru operatoru"
 msgid "Enable Tracking Page"
 msgstr "Iespējot izsekošanas lapu"
 
-#: includes/class-wc-trackship-admin.php:422
+#: includes/class-wc-trackship-admin.php:420
 msgid "Enable unsubscribe (opt-out) from Shipment status notifications"
 msgstr "Iespējot sūtījuma statusa paziņojumu anulēšanu (atteikšanos)."
 
@@ -437,12 +446,12 @@ msgstr "Ievadiet administratora tālruņa numuru ar valsts kodu."
 msgid "Est. Delivery Date"
 msgstr "Apt. Piegādes datums"
 
-#: includes/class-wc-trackship-actions.php:669
+#: includes/class-wc-trackship-actions.php:667
 #: includes/class-wc-trackship-admin.php:1316
 #: includes/smswoo/class-smswoo-admin.php:545
 #: includes/customizer/trackship-customizer.php:218
 #: includes/customizer/trackship-customizer.php:825
-#: includes/views/shipments.php:32
+#: includes/views/shipments.php:27
 msgid "Exception"
 msgstr "Izņēmums"
 
@@ -454,15 +463,15 @@ msgstr "Izņēmuma sūtījums"
 msgid "Exception Shipments"
 msgstr "Izņēmuma sūtījumi"
 
-#: includes/class-wc-trackship-admin.php:801
+#: includes/class-wc-trackship-admin.php:799
 msgid "Exception Shipments Notifications"
 msgstr "Izņēmuma sūtījumu paziņojumi"
 
-#: includes/class-wc-trackship-actions.php:764
+#: includes/class-wc-trackship-actions.php:762
 msgid "Expired"
 msgstr "Beidzies derīguma termiņš"
 
-#: includes/class-wc-trackship-actions.php:675
+#: includes/class-wc-trackship-actions.php:673
 msgid "Filter by shipment status"
 msgstr "Filtrēt pēc sūtījuma statusa"
 
@@ -478,13 +487,13 @@ msgstr "Vispārīgas iespējas"
 msgid "General Settings"
 msgstr "Vispārīgie iestatījumi"
 
-#: includes/class-wc-trackship-actions.php:592
-#: includes/class-wc-trackship-actions.php:1018
-#: includes/class-wc-trackship-admin.php:548 includes/views/tools.php:13
+#: includes/class-wc-trackship-actions.php:590
+#: includes/class-wc-trackship-actions.php:1012
+#: includes/class-wc-trackship-admin.php:546 includes/views/tools.php:14
 msgid "Get Shipment Status"
 msgstr "Saņemiet sūtījuma statusu"
 
-#: includes/views/shipments.php:108
+#: includes/views/shipments.php:105
 msgid "Get shipment status"
 msgstr "Iegūstiet sūtījuma statusu"
 
@@ -536,17 +545,17 @@ msgstr "Kā atrast savus %s akreditācijas datus"
 msgid "Icons"
 msgstr "Ikonas"
 
-#: includes/class-wc-trackship-actions.php:661
-#: includes/class-wc-trackship-actions.php:698
+#: includes/class-wc-trackship-actions.php:659
+#: includes/class-wc-trackship-actions.php:696
 #: includes/class-wc-trackship-admin.php:1281
 #: includes/smswoo/class-smswoo-admin.php:540
 #: includes/customizer/trackship-customizer.php:213
 #: includes/customizer/trackship-customizer.php:820
-#: includes/views/shipments.php:29
+#: includes/views/shipments.php:24
 msgid "In Transit"
 msgstr "Tranzītā"
 
-#: includes/views/dashboard.php:130
+#: includes/views/dashboard.php:125
 msgid ""
 "Include shipment tracking details in your WooCommerce orders, enabling "
 "customers to effortlessly monitor their orders. Shipment tracking "
@@ -559,7 +568,7 @@ msgstr ""
 "izsekošanas informācija būs pieejama klientu kontos, kas atrodas pasūtījumu "
 "sadaļā, kā arī tiks iekļauta WooCommerce pasūtījuma pabeigšanas e-pastā."
 
-#: includes/views/dashboard.php:134
+#: includes/views/dashboard.php:129
 msgid "Install Shipment Tracking plugin"
 msgstr "Instalējiet Shipment Tracking spraudni"
 
@@ -567,14 +576,14 @@ msgstr "Instalējiet Shipment Tracking spraudni"
 msgid "Integrations"
 msgstr "Integrācijas"
 
-#: includes/class-wc-trackship-actions.php:670
+#: includes/class-wc-trackship-actions.php:668
 msgid "Invalid Tracking"
 msgstr "Nederīga izsekošana"
 
 #: templates/emails/tswc-tpi-email-order-details.php:35
 #: templates/emails/tswc-email-order-details.php:35
 #: includes/customizer/trackship-customizer.php:345
-#: includes/views/front/layout1_tracking_details.php:10
+#: includes/views/front/layout1_tracking_details.php:13
 msgid "Items in this shipment"
 msgstr "Preces šajā sūtījumā"
 
@@ -586,19 +595,19 @@ msgstr "Ceļojums"
 msgid "Key"
 msgstr "Atslēga"
 
-#: includes/class-wc-trackship-actions.php:731
+#: includes/class-wc-trackship-actions.php:729
 msgid "Label Cancelled"
 msgstr "Etiķete atcelta"
 
-#: includes/views/dashboard.php:99
+#: includes/views/dashboard.php:94
 msgid "Last 30 days"
 msgstr "Pēdējās 30 dienas"
 
-#: includes/views/dashboard.php:104
+#: includes/views/dashboard.php:99
 msgid "Last 60 days"
 msgstr "Pēdējās 60 dienas"
 
-#: includes/class-wc-trackship-actions.php:965
+#: includes/class-wc-trackship-actions.php:963
 msgid "Last event date: "
 msgstr "Pēdējā pasākuma datums:"
 
@@ -606,15 +615,15 @@ msgstr "Pēdējā pasākuma datums:"
 msgid "Late shipment"
 msgstr "Novēlota sūtīšana"
 
-#: includes/views/shipments.php:37 includes/views/notifications.php:68
+#: includes/views/shipments.php:32 includes/views/notifications.php:68
 msgid "Late Shipments"
 msgstr "Novēloti sūtījumi"
 
-#: includes/views/dashboard.php:62
+#: includes/views/dashboard.php:57
 msgid "Late Shipments for last 30 days"
 msgstr "Novēloti sūtījumi par pēdējām 30 dienām"
 
-#: includes/class-wc-trackship-admin.php:800
+#: includes/class-wc-trackship-admin.php:798
 msgid "Late Shipments Notifications"
 msgstr "Paziņojumi par novēlotiem sūtījumiem"
 
@@ -637,7 +646,11 @@ msgstr "Baļķi"
 msgid "Map Shipping Carriers"
 msgstr "Karšu piegādes pakalpojumu sniedzēji"
 
-#: includes/views/tools.php:32
+#: includes/class-wc-trackship-admin.php:763
+msgid "Mark order as delivered"
+msgstr "Atzīmējiet pasūtījumu kā piegādātu"
+
+#: includes/views/tools.php:33
 msgid "Migration"
 msgstr "Migrācija"
 
@@ -649,7 +662,7 @@ msgstr "Maketu pasūtījums"
 msgid "Modern"
 msgstr "Mūsdienīgs"
 
-#: includes/views/dashboard.php:94
+#: includes/views/dashboard.php:89
 msgid "Month to date"
 msgstr "Mēnesis līdz šim brīdim"
 
@@ -657,13 +670,13 @@ msgstr "Mēnesis līdz šim brīdim"
 msgid "More info"
 msgstr "Vairāk informācijas"
 
-#: includes/class-wc-trackship-actions.php:465
-#: includes/class-wc-trackship-actions.php:974
+#: includes/class-wc-trackship-actions.php:463
+#: includes/class-wc-trackship-actions.php:972
 #: includes/html/class-wc-trackship-html.php:130
 msgid "more info"
 msgstr "vairāk informācijas"
 
-#: includes/views/dashboard.php:181
+#: includes/views/dashboard.php:176
 msgid "No action needed for Shipments"
 msgstr "Sūtījumiem nav jāveic nekādas darbības"
 
@@ -686,11 +699,11 @@ msgstr "Nav atbildes koda"
 
 #: includes/views/content.php:19
 #: includes/views/front/enhanced_shipment_details_notifications.php:40
-#: includes/views/front/layout1_tracking_details.php:11
+#: includes/views/front/layout1_tracking_details.php:14
 msgid "Notifications"
 msgstr "Paziņojumi"
 
-#: includes/class-wc-trackship-admin.php:841
+#: includes/class-wc-trackship-admin.php:839
 msgid "Notifications detail"
 msgstr "Paziņojumu informācija"
 
@@ -698,16 +711,16 @@ msgstr "Paziņojumu informācija"
 msgid "Notifications Type (SMS/WhatsApp)"
 msgstr "Paziņojumu veids (SMS/WhatsApp)"
 
-#: includes/class-wc-trackship-admin.php:456
+#: includes/class-wc-trackship-admin.php:454
 msgid "Number of days for late shipments"
 msgstr "Dienu skaits novēlotiem sūtījumiem"
 
-#: includes/class-wc-trackship-actions.php:701
+#: includes/class-wc-trackship-actions.php:699
 #: includes/class-wc-trackship-admin.php:1309
 #: includes/smswoo/class-smswoo-admin.php:544
 #: includes/customizer/trackship-customizer.php:217
 #: includes/customizer/trackship-customizer.php:824
-#: includes/views/shipments.php:33
+#: includes/views/shipments.php:28
 msgid "On Hold"
 msgstr "Aizturēts"
 
@@ -719,7 +732,7 @@ msgstr "Aizturēts sūtījums"
 msgid "On Hold Shipments"
 msgstr "Aizturētie sūtījumi"
 
-#: includes/class-wc-trackship-admin.php:802
+#: includes/class-wc-trackship-admin.php:800
 msgid "On Hold Shipments Notifications"
 msgstr "Paziņojumi par aizturētiem sūtījumiem"
 
@@ -743,11 +756,11 @@ msgstr "Pasūtījuma e-pasts"
 msgid "Order ID"
 msgstr "Pasūtījuma ID"
 
-#: includes/class-wc-trackship-actions.php:767
+#: includes/class-wc-trackship-actions.php:765
 msgid "Order id not found"
 msgstr "Pasūtījuma ID nav atrasts"
 
-#: includes/class-wc-trackship-admin.php:845
+#: includes/class-wc-trackship-admin.php:843
 #: templates/tracking/tracking-form.php:110
 #: templates/emails/exception-shipment-email.php:16
 #: templates/emails/late-shipment-email.php:16
@@ -759,7 +772,7 @@ msgstr "Pasūtījuma numurs"
 msgid "Order Processing"
 msgstr "Pasūtījumu apstrāde"
 
-#: includes/class-wc-trackship-admin.php:408
+#: includes/class-wc-trackship-admin.php:406
 msgid "Order statuses to trigger TrackShip "
 msgstr "Pasūtījuma statusi, lai aktivizētu TrackShip"
 
@@ -767,9 +780,9 @@ msgstr "Pasūtījuma statusi, lai aktivizētu TrackShip"
 msgid "Order tracking number."
 msgstr "Pasūtījuma izsekošanas numurs."
 
-#: includes/views/front/layout1_tracking_details.php:108
-#: includes/views/front/layout1_tracking_details.php:196
-#: includes/views/front/enhanced_tracking_events.php:70
+#: includes/views/front/layout1_tracking_details.php:111
+#: includes/views/front/layout1_tracking_details.php:199
+#: includes/views/front/enhanced_tracking_events.php:72
 msgid "Origin Details"
 msgstr "Sīkāka informācija par izcelsmi"
 
@@ -777,13 +790,13 @@ msgstr "Sīkāka informācija par izcelsmi"
 msgid "Other"
 msgstr "Cits"
 
-#: includes/class-wc-trackship-actions.php:663
-#: includes/class-wc-trackship-actions.php:710
+#: includes/class-wc-trackship-actions.php:661
+#: includes/class-wc-trackship-actions.php:708
 #: includes/class-wc-trackship-admin.php:1295
 #: includes/smswoo/class-smswoo-admin.php:542
 #: includes/customizer/trackship-customizer.php:215
 #: includes/customizer/trackship-customizer.php:822
-#: includes/views/shipments.php:30
+#: includes/views/shipments.php:25
 msgid "Out For Delivery"
 msgstr "Nodots piegādei"
 
@@ -791,13 +804,13 @@ msgstr "Nodots piegādei"
 msgid "Overview"
 msgstr "Pārskats"
 
-#: includes/class-wc-trackship-actions.php:658
-#: includes/class-wc-trackship-actions.php:740
+#: includes/class-wc-trackship-actions.php:656
+#: includes/class-wc-trackship-actions.php:738
 msgid "Pending Update"
 msgstr "Gaida atjauninājumu"
 
-#: includes/class-wc-trackship-actions.php:464
-#: includes/class-wc-trackship-actions.php:972
+#: includes/class-wc-trackship-actions.php:462
+#: includes/class-wc-trackship-actions.php:970
 #| msgid ""
 #| "Pending TrackShip is a temporary status that will display for a few "
 #| "minutes until we update the order with the first tracking event from the "
@@ -861,12 +874,12 @@ msgstr ""
 msgid "Powered by "
 msgstr "Nodrošina"
 
-#: includes/class-wc-trackship-actions.php:660
-#: includes/class-wc-trackship-actions.php:704 includes/views/shipments.php:31
+#: includes/class-wc-trackship-actions.php:658
+#: includes/class-wc-trackship-actions.php:702 includes/views/shipments.php:26
 msgid "Pre Transit"
 msgstr "Pirms tranzīta"
 
-#: includes/class-wc-trackship-admin.php:796
+#: includes/class-wc-trackship-admin.php:794
 msgid "Priority Support"
 msgstr "Prioritārais atbalsts"
 
@@ -875,31 +888,31 @@ msgstr "Prioritārais atbalsts"
 msgid "Progress bar"
 msgstr "Progresa josla"
 
-#: includes/class-wc-trackship-admin.php:829
+#: includes/class-wc-trackship-admin.php:827
 msgid "Providers list Updated"
 msgstr "Pakalpojumu sniedzēju saraksts atjaunināts"
 
-#: includes/class-wc-trackship-admin.php:461
-#: includes/class-wc-trackship-admin.php:483
-#: includes/class-wc-trackship-admin.php:505
+#: includes/class-wc-trackship-admin.php:459
+#: includes/class-wc-trackship-admin.php:481
+#: includes/class-wc-trackship-admin.php:503
 msgid "Recipient(s)"
 msgstr "Saņēmējs(-i)"
 
-#: includes/class-wc-trackship-admin.php:798
+#: includes/class-wc-trackship-admin.php:796
 msgid "Remove TrackShip’s branding"
 msgstr "Noņemiet TrackShip zīmolu"
 
-#: includes/class-wc-trackship-actions.php:668
-#: includes/class-wc-trackship-actions.php:716
+#: includes/class-wc-trackship-actions.php:666
+#: includes/class-wc-trackship-actions.php:714
 #: includes/class-wc-trackship-admin.php:1323
 #: includes/smswoo/class-smswoo-admin.php:546
 #: includes/customizer/trackship-customizer.php:219
 #: includes/customizer/trackship-customizer.php:826
-#: includes/views/shipments.php:35
+#: includes/views/shipments.php:30
 msgid "Return To Sender"
 msgstr "Atgriezt sūtītājam"
 
-#: includes/views/dashboard.php:70
+#: includes/views/dashboard.php:65
 msgid "Return To Sender for last 30 days"
 msgstr "Atgriezties sūtītājam par pēdējām 30 dienām"
 
@@ -923,7 +936,7 @@ msgstr "Saglabāts"
 msgid "Search"
 msgstr "Meklēt"
 
-#: includes/views/shipments.php:118
+#: includes/views/shipments.php:115
 msgid "Search by Tracking Number, Shipping carrier, Order number"
 msgstr "Meklēt pēc izsekošanas numura, piegādes pārvadātāja, pasūtījuma numura"
 
@@ -940,9 +953,9 @@ msgstr ""
 msgid "Select tracking page:"
 msgstr "Izvēlieties izsekošanas lapu:"
 
-#: includes/class-wc-trackship-admin.php:467
-#: includes/class-wc-trackship-admin.php:489
-#: includes/class-wc-trackship-admin.php:511
+#: includes/class-wc-trackship-admin.php:465
+#: includes/class-wc-trackship-admin.php:487
+#: includes/class-wc-trackship-admin.php:509
 msgid "Send email at"
 msgstr "Sūtīt e-pastu uz"
 
@@ -991,12 +1004,12 @@ msgstr "Nosūtīt uz"
 msgid "Shipment %1$s"
 msgstr "Sūtījums %1$s"
 
-#: includes/views/front/layout1_tracking_details.php:9
+#: includes/views/front/layout1_tracking_details.php:12
 msgid "Shipment Progress"
 msgstr "Sūtījuma norise"
 
-#: includes/class-wc-trackship-actions.php:388
-#: includes/class-wc-trackship-admin.php:846
+#: includes/class-wc-trackship-actions.php:386
+#: includes/class-wc-trackship-admin.php:844
 #: templates/emails/late-shipment-email.php:17 includes/views/logs.php:51
 #: includes/shipments/views/trackship_shipments.php:20
 msgid "Shipment status"
@@ -1007,11 +1020,11 @@ msgstr "Sūtījuma statuss"
 msgid "Shipments"
 msgstr "Sūtījumi"
 
-#: includes/class-wc-trackship-admin.php:799
+#: includes/class-wc-trackship-admin.php:797
 msgid "Shipments Dashboard"
 msgstr "Sūtījumu informācijas panelis"
 
-#: includes/views/dashboard.php:57
+#: includes/views/dashboard.php:52
 msgid ""
 "shipments from the last 30 days that haven't been automatically tracked. To "
 "start tracking these past orders, simply click here"
@@ -1019,10 +1032,10 @@ msgstr ""
 "pēdējo 30 dienu sūtījumi, kas nav automātiski izsekoti. Lai sāktu izsekot "
 "šiem iepriekšējiem pasūtījumiem, vienkārši noklikšķiniet šeit"
 
-#: includes/class-wc-trackship-actions.php:728
-#: includes/class-wc-trackship-actions.php:743
+#: includes/class-wc-trackship-actions.php:726
+#: includes/class-wc-trackship-actions.php:741
 #: templates/emails/tracking-info.php:81
-#: includes/views/front/enhanced_tracking_events.php:16
+#: includes/views/front/enhanced_tracking_events.php:18
 #: includes/views/front/tracking_page_header.php:66
 msgid "Shipped"
 msgstr "Nosūtīts"
@@ -1039,11 +1052,11 @@ msgstr "Nosūtīto produktu galvenes teksts"
 msgid "Shipping & Delivery"
 msgstr "Piegāde un piegāde"
 
-#: includes/class-wc-trackship-admin.php:803
+#: includes/class-wc-trackship-admin.php:801
 msgid "Shipping & Delivery Analytics"
 msgstr "Piegādes un piegādes analīze"
 
-#: includes/views/dashboard.php:189
+#: includes/views/dashboard.php:184
 msgid "Shipping & Delivery Overview"
 msgstr "Piegādes un piegādes pārskats"
 
@@ -1073,7 +1086,7 @@ msgstr "Piegādes dienas"
 msgid "Shipping provider"
 msgstr "Piegādes nodrošinātājs"
 
-#: includes/class-wc-trackship-actions.php:773
+#: includes/class-wc-trackship-actions.php:771
 msgid "Shipping provider not found"
 msgstr "Piegādes nodrošinātājs nav atrasts"
 
@@ -1127,7 +1140,7 @@ msgstr "īsziņa"
 msgid "SMS gateways"
 msgstr "SMS vārtejas"
 
-#: includes/class-wc-trackship-admin.php:797
+#: includes/class-wc-trackship-admin.php:795
 #: includes/views/notifications.php:18
 msgid "SMS Notifications"
 msgstr "SMS paziņojumi"
@@ -1141,20 +1154,20 @@ msgstr "SMS paziņojumi"
 msgid "SMS Settings"
 msgstr "SMS iestatījumi"
 
-#: includes/class-wc-trackship-admin.php:804
+#: includes/class-wc-trackship-admin.php:802
 #| msgid "Starting from $9 a month"
 msgid "Starting from $11 a month"
 msgstr "Sākot no USD 11 mēnesī"
 
-#: includes/class-wc-trackship-admin.php:851 includes/views/logs.php:55
+#: includes/class-wc-trackship-admin.php:849 includes/views/logs.php:55
 msgid "Status"
 msgstr "Statuss"
 
-#: includes/class-wc-trackship-actions.php:782
+#: includes/class-wc-trackship-actions.php:780
 msgid "Store is conneted with different account"
 msgstr "Veikals ir saistīts ar citu kontu"
 
-#: includes/class-wc-trackship-actions.php:779
+#: includes/class-wc-trackship-actions.php:777
 msgid "Store is not Connected to TrackShip"
 msgstr "Veikals nav savienots ar TrackShip"
 
@@ -1162,12 +1175,12 @@ msgstr "Veikals nav savienots ar TrackShip"
 msgid "Style & Colors"
 msgstr "Stils un krāsas"
 
-#: includes/class-wc-trackship-admin.php:823
-#: includes/class-wc-trackship-admin.php:831
+#: includes/class-wc-trackship-admin.php:821
+#: includes/class-wc-trackship-admin.php:829
 msgid "Sync TrackShip Providers"
 msgstr "Sinhronizējiet TrackShip pakalpojumu sniedzējus"
 
-#: includes/class-wc-trackship-admin.php:827
+#: includes/class-wc-trackship-admin.php:825
 msgid ""
 "Syncing the TrackShip providers list add or updates the pre-set TrackShip "
 "providers and will not effect custom shipping providers."
@@ -1219,7 +1232,7 @@ msgstr ""
 "Pasūtījums/sūtījums, kuru mēģināt izsekot, vēl nav nosūtīts vai ievadītais "
 "pasūtījuma numurs ir nepareizs."
 
-#: includes/class-wc-trackship-actions.php:579
+#: includes/class-wc-trackship-actions.php:577
 msgid ""
 "The shipment status updates will run in the background, please refresh the "
 "page in a few minutes."
@@ -1247,11 +1260,11 @@ msgstr "Šis lauks tiek parādīts kā sūtītāja vai sūtītāja ID"
 msgid "This will be appended to URL in the email content"
 msgstr "Tas tiks pievienots URL e-pasta saturā"
 
-#: includes/class-wc-trackship-admin.php:848 includes/views/logs.php:52
+#: includes/class-wc-trackship-admin.php:846 includes/views/logs.php:52
 msgid "Time"
 msgstr "Laiks"
 
-#: includes/class-wc-trackship-admin.php:849 includes/views/logs.php:53
+#: includes/class-wc-trackship-admin.php:847 includes/views/logs.php:53
 msgid "To"
 msgstr "Uz"
 
@@ -1272,14 +1285,14 @@ msgstr ""
 msgid "Tools"
 msgstr "Rīki"
 
-#: includes/views/dashboard.php:76
+#: includes/views/dashboard.php:71
 msgid "Total Shipments"
 msgstr "Kopējais sūtījumu skaits"
 
-#: includes/class-wc-trackship-actions.php:456
-#: includes/class-wc-trackship-actions.php:462
-#: includes/class-wc-trackship-actions.php:970
-#: includes/class-wc-trackship-actions.php:981
+#: includes/class-wc-trackship-actions.php:454
+#: includes/class-wc-trackship-actions.php:460
+#: includes/class-wc-trackship-actions.php:968
+#: includes/class-wc-trackship-actions.php:979
 msgid "Track"
 msgstr "Trase"
 
@@ -1316,11 +1329,11 @@ msgstr "Izsekošanas analīze"
 msgid "Tracking event display"
 msgstr "Izsekošanas notikumu displejs"
 
-#: includes/views/front/layout1_tracking_details.php:44
+#: includes/views/front/layout1_tracking_details.php:47
 msgid "Tracking information is not available, please try again later."
 msgstr "Izsekošanas informācija nav pieejama. Lūdzu, vēlāk mēģiniet vēlreiz."
 
-#: includes/views/front/enhanced_tracking_events.php:40
+#: includes/views/front/enhanced_tracking_events.php:42
 msgid ""
 "Tracking is still not yet available for this shipment, please try again "
 "later."
@@ -1328,15 +1341,15 @@ msgstr ""
 "Šim sūtījumam joprojām nav pieejama izsekošana. Lūdzu, vēlāk mēģiniet "
 "vēlreiz."
 
-#: includes/views/shipments.php:38 includes/views/dashboard.php:88
+#: includes/views/shipments.php:34 includes/views/dashboard.php:83
 msgid "Tracking Issues"
 msgstr "Izsekošanas problēmas"
 
-#: includes/views/dashboard.php:66
+#: includes/views/dashboard.php:61
 msgid "Tracking Issues for last 30 days"
 msgstr "Izsekošanas problēmas pēdējo 30 dienu laikā"
 
-#: includes/class-wc-trackship-admin.php:847
+#: includes/class-wc-trackship-admin.php:845
 #: templates/tracking/tracking-form.php:106
 #: templates/tracking/tracking-form.php:116
 #: templates/emails/exception-shipment-email.php:18
@@ -1346,7 +1359,7 @@ msgstr "Izsekošanas problēmas pēdējo 30 dienu laikā"
 msgid "Tracking Number"
 msgstr "Izsekošanas numurs"
 
-#: includes/class-wc-trackship-actions.php:770
+#: includes/class-wc-trackship-actions.php:768
 msgid "Tracking number not found"
 msgstr "Izsekošanas numurs nav atrasts"
 
@@ -1384,11 +1397,15 @@ msgstr "TrackShip žurnālu tabula neeksistē. Lūdzu, mēģiniet pēc dažām m
 msgid "TrackShip Provider"
 msgstr "TrackShip nodrošinātājs"
 
-#: includes/views/shipments.php:18 includes/views/dashboard.php:26
-msgid "TrackShip Shipments table does not exist, Please try after few minutes"
-msgstr "TrackShip Shipments tabula nepastāv. Lūdzu, mēģiniet pēc dažām minūtēm"
+#: includes/views/shipments.php:8 includes/views/dashboard.php:16
+msgid "TrackShip Shipments database table does not exist."
+msgstr "TrackShip Shipments datu bāzes tabula nepastāv."
 
-#: includes/class-wc-trackship-admin.php:850 includes/views/logs.php:54
+#: includes/views/shipments.php:13 includes/views/dashboard.php:21
+msgid "TrackShip Shipments meta database table does not exist."
+msgstr "TrackShip Shipments meta datu bāzes tabula nepastāv."
+
+#: includes/class-wc-trackship-admin.php:848 includes/views/logs.php:54
 msgid "Type"
 msgstr "Tips"
 
@@ -1401,16 +1418,16 @@ msgstr "Nevar atrast pasūtījumu."
 msgid "Unable to locate the order. or Invalid order key"
 msgstr "Nevar atrast pasūtījumu. vai Nederīga pasūtījuma atslēga"
 
-#: includes/class-wc-trackship-actions.php:749
+#: includes/class-wc-trackship-actions.php:747
 msgid "Unauthorized"
 msgstr "Nesankcionēti"
 
-#: includes/class-wc-trackship-actions.php:659
-#: includes/class-wc-trackship-actions.php:725
+#: includes/class-wc-trackship-actions.php:657
+#: includes/class-wc-trackship-actions.php:723
 msgid "Unknown"
 msgstr "Nezināms"
 
-#: includes/trackship-email-manager.php:330
+#: includes/trackship-email-manager.php:336
 #: includes/customizer/class-trackship-email-preview.php:186
 msgid "Unsubscribe"
 msgstr "Anulēt abonementu"
@@ -1419,51 +1436,51 @@ msgstr "Anulēt abonementu"
 msgid "Updated at"
 msgstr "Atjaunināts plkst"
 
-#: includes/views/tools.php:31
+#: includes/views/tools.php:32
 msgid "Updating tracking details during migration from older to newer version."
 msgstr ""
 "Izsekošanas informācijas atjaunināšana migrēšanas laikā no vecākas uz "
 "jaunāku versiju."
 
-#: includes/class-wc-trackship-admin.php:807
+#: includes/class-wc-trackship-admin.php:805
 msgid "UPGRADE TO PRO"
 msgstr "JAUNINĀT UZ PRO"
 
-#: includes/views/dashboard.php:118
+#: includes/views/dashboard.php:113
 msgid "Upgrade to Pro"
 msgstr "Jauniniet uz Pro"
 
-#: includes/class-wc-trackship-admin.php:792
+#: includes/class-wc-trackship-admin.php:790
 msgid "Upgrade to TrackShip Pro"
 msgstr "Jauniniet uz TrackShip Pro"
 
-#: includes/class-wc-trackship-actions.php:776
+#: includes/class-wc-trackship-actions.php:774
 msgid "User not found for this key"
 msgstr "Lietotājs šai atslēgai nav atrasts"
 
-#: includes/views/tools.php:24
+#: includes/views/tools.php:25
 msgid "Verify DB Structure"
 msgstr "Pārbaudiet DB struktūru"
 
-#: includes/views/tools.php:23
+#: includes/views/tools.php:24
 msgid "Verify if all TrackShip database tables are present."
 msgstr "Pārbaudiet, vai ir visas TrackShip datu bāzes tabulas."
 
-#: includes/views/dashboard.php:209
+#: includes/views/dashboard.php:204
 msgid "View detailed stats"
 msgstr "Skatīt detalizētu statistiku"
 
 #: includes/views/front/preview_tracking_page.php:173
-#: includes/views/front/layout1_tracking_details.php:165
+#: includes/views/front/layout1_tracking_details.php:168
 msgid "view less"
 msgstr "skatīt mazāk"
 
 #: includes/views/front/preview_tracking_page.php:172
-#: includes/views/front/layout1_tracking_details.php:164
+#: includes/views/front/layout1_tracking_details.php:167
 msgid "view more"
 msgstr "skatīt vairāk"
 
-#: includes/class-wc-trackship-actions.php:984
+#: includes/class-wc-trackship-actions.php:982
 msgid "View Shipment log"
 msgstr "Skatīt sūtījumu žurnālu"
 
@@ -1473,7 +1490,7 @@ msgid "View your order details"
 msgstr "Skatiet pasūtījuma informāciju"
 
 #. %s: search for a orders
-#: includes/views/tools.php:13
+#: includes/views/tools.php:14
 #, php-format
 #| msgid ""
 #| "We detected %1$s Shipped orders from the last 30 days that were not sent "
@@ -1501,7 +1518,7 @@ msgid "We detected %d On Hold shipments:"
 msgstr "Mēs atklājām %d aizturētu sūtījumu:"
 
 #. %s: replace with Partially Shipped order count
-#: includes/class-wc-trackship-admin.php:929
+#: includes/class-wc-trackship-admin.php:927
 #, php-format
 msgid ""
 "We detected %s orders that use the Delivered order status, You can reassign "
@@ -1511,7 +1528,7 @@ msgstr ""
 "šiem pasūtījumiem citu statusu"
 
 #. %s: search for a total_orders
-#: includes/class-wc-trackship-admin.php:547
+#: includes/class-wc-trackship-admin.php:545
 #, php-format
 #| msgid ""
 #| "We detected %s Shipped orders from the last 30 days that were not sent to "
@@ -1590,7 +1607,7 @@ msgstr ""
 "Lai izmantotu pakalpojumu TrackShip for WooCommerce, ir jābūt instalētam "
 "%1$sShipment Tracking spraudnim%2$s."
 
-#: includes/views/dashboard.php:128
+#: includes/views/dashboard.php:123
 msgid ""
 "You must have a Shipment Tracking plugin installed to use TrackShip for "
 "WooCommerce."
