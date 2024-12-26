@@ -493,7 +493,7 @@ class WC_TrackShip_Front {
 		}
 		foreach ( $tracking_items as $key => $item ) {
 			$tracking_number = $item['tracking_number'];
-			$tracking_provider = $item['tracking_provider'];
+			$tracking_provider = ! empty( $item['formatted_tracking_provider'] ) ? $item['formatted_tracking_provider'] : ( !empty( $item['tracking_provider'] ) ? $item['tracking_provider'] : $item['custom_tracking_provider'] ) ;
 
 			$tracker = new \stdClass();
 			$row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id , $tracking_number );
@@ -633,8 +633,7 @@ class WC_TrackShip_Front {
 		$ts_link_to_carrier = get_trackship_settings( 'ts_link_to_carrier' );
 		$provider_image = isset( $item[ 'tracking_provider_image' ] ) ? $item[ 'tracking_provider_image' ] : false ;
 		$tracking_link = isset( $item[ 'formatted_tracking_link' ] )? $item[ 'formatted_tracking_link' ] : false;
-		$provider_name = isset( $item[ 'tracking_provider' ] )? $item[ 'tracking_provider' ] : false;
-		$provider_name = isset( $item[ 'formatted_tracking_provider' ] ) && !empty( $item[ 'formatted_tracking_provider' ] ) ? $item[ 'formatted_tracking_provider' ] : $provider_name;
+		$provider_name = ! empty( $item['formatted_tracking_provider'] ) ? $item['formatted_tracking_provider'] : ( !empty( $item['tracking_provider'] ) ? $item['tracking_provider'] : $item['custom_tracking_provider'] ) ;
 
 		include 'views/front/enhanced_tracking_widget_header.php';
 	}
@@ -713,7 +712,6 @@ class WC_TrackShip_Front {
 		$hide_tracking_provider_image = get_trackship_settings('hide_provider_image');
 		$hide_from_to = get_trackship_settings('ts_hide_from_to', trackship_admin_customizer()->defaults['ts_hide_from_to'] );
 		$hide_last_mile = get_trackship_settings( 'ts_hide_list_mile_tracking', trackship_admin_customizer()->defaults['ts_hide_list_mile_tracking'] );
-		$provider_name = isset( $item[ 'formatted_tracking_provider' ] ) && !empty( $item[ 'formatted_tracking_provider' ] ) ? $item[ 'formatted_tracking_provider' ] : $item[ 'tracking_provider' ] ;
 		$provider_image = isset( $item[ 'tracking_provider_image' ] ) ? $item[ 'tracking_provider_image' ] : false ;
 		$tracking_link = isset( $item[ 'formatted_tracking_link' ] )? $item[ 'formatted_tracking_link' ] : false;
 		$ts_link_to_carrier = get_trackship_settings( 'ts_link_to_carrier' );

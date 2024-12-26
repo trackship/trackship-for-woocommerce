@@ -86,7 +86,7 @@ if ( $tracking_items ) :
 									<img class="ts4wc_provider_logo <?php echo !$shipping_provider_logo ? esc_attr($class) : ''; ?>" style="height:45px;width:45px;vertical-align:middle;margin-right: 10px;" src="<?php echo esc_url( $tracking_item['tracking_provider_image'] ); ?>">
 								<?php } ?>
 								<div class="tracking_info" style="margin:10px 0;">
-									<?php echo esc_html( $tracking_item['formatted_tracking_provider'] ); ?>
+									<?php echo esc_html( ! empty( $tracking_item['formatted_tracking_provider'] ) ? $tracking_item['formatted_tracking_provider'] : ( !empty( $tracking_item['tracking_provider'] ) ? $tracking_item['tracking_provider'] : $tracking_item['custom_tracking_provider'] ) ); ?>
 									<?php if ( 'delivered' == $ship_status ) { ?>
 										<?php echo esc_html( $tracking_item['tracking_number'] ); ?>
 									<?php } else { ?>
