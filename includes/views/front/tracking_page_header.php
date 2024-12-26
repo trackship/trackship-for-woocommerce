@@ -5,8 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <div class="tracking-header">
 	<?php
-	// to be removed after 2-3 version - action has been added in 1.3.4 -- action trackship_tracking_header_before
-	do_action( 'trackship_tracking_header_before', $order->get_id(), $tracker, $provider_name, $tracking_number );
 	$row = trackship_for_woocommerce()->actions->get_shipment_row( $order->get_id(), $tracking_number );
 	$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order->get_id(), $tracking_number );
 	?>
@@ -23,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="tracking_number_div">
 				<ul>
 					<li>
-						<span class="tracking_page_provider_name"><?php echo esc_html( apply_filters( 'ast_provider_title', $provider_name ) ); ?></span>
+						<span class="tracking_page_provider_name"><?php echo esc_html( apply_filters( 'ast_provider_title', $tracking_provider ) ); ?></span>
 						<?php if ( $ts_link_to_carrier && $tracking_link ) { ?>
 							<a href="<?php echo esc_url( $tracking_link ); ?>" target="blank"><strong><?php esc_html_e( $tracking_number ); ?></strong></a>	
 						<?php } else { ?>

@@ -55,9 +55,9 @@ jQuery(document).ready(function() {
 		buttons: [
 			'csvHtml5'
 		],
-		"processing": true,
-		"ordering": true,
-		"serverSide": true,	
+		processing: true,
+		ordering: true,
+		serverSide: true,
 		"order": [[ 1, 'desc' ]],
 		"ajax": {
 			'type': 'POST',
