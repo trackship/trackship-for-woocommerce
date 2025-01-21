@@ -61,14 +61,14 @@ class WC_TrackShip_Email_Manager {
 		);
 
 		$email_to = [];
-		if ( $enable && $for_amazon_order && '0' != $receive_email ) {
+		if ( $enable && $for_amazon_order && '0' != $receive_email && $order->get_billing_email() ) {
 			$email_to[] = $order->get_billing_email();
 		}
-		$original_email_to = $email_to;
 		$email_to = apply_filters( 'add_multiple_emails_to_shipment_email', $email_to, $new_status );
 
 		$logger = wc_get_logger();
-		if ( empty($email_to) && $email_to == $original_email_to ) {
+		if ( !$email_to ) {
+			$arg['status_msg'] = 'Empty recipient';
 			$logger->info( print_r($arg, true), array( 'source' => 'trackship_email_log' ) );
 			return;
 		}
