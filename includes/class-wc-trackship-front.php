@@ -44,8 +44,7 @@ class WC_TrackShip_Front {
 		add_action( 'wp_ajax_nopriv_get_tracking_info', array( $this, 'get_tracking_info_fun') );
 		add_action( 'wp_ajax_get_tracking_info', array( $this, 'get_tracking_info_fun') );
 		
-		add_action( 'plugins_loaded', array( $this, 'on_plugin_loaded' ) );
-		add_action( 'plugins_loaded', array( $this, 'on_plugin_loaded2' ), 12 );
+		add_action( 'plugins_loaded', array( $this, 'on_plugin_loaded' ), 12 );
 		
 		add_action( 'woocommerce_view_order', array( $this, 'show_tracking_page_widget' ), 5, 1 );
 
@@ -60,7 +59,7 @@ class WC_TrackShip_Front {
 	
 	public function on_plugin_loaded() {
 		
-		if ( function_exists( 'wc_advanced_shipment_tracking' ) && !function_exists( 'ast_pro' ) ) {
+		if ( function_exists( 'wc_advanced_shipment_tracking' ) ) {
 			remove_action( 'woocommerce_view_order', array( wc_advanced_shipment_tracking()->actions, 'show_tracking_info_order' ) );
 		}
 		
@@ -71,15 +70,10 @@ class WC_TrackShip_Front {
 		if ( function_exists( 'wc_shipment_tracking' ) && !function_exists( 'ast_pro' ) ) {
 			// View Order Page.
 			remove_action( 'woocommerce_view_order', array( wc_shipment_tracking()->actions, 'display_tracking_info' ) );
+			// Email hook for WC Shipment tracking plugin
 			remove_action( 'woocommerce_email_before_order_table', array( wc_shipment_tracking()->actions, 'email_display' ), 0, 4 );
-			
-			// View Order Page.
-			add_action( 'woocommerce_email_before_order_table', array( $this, 'wc_shipment_tracking_email_display' ), 0, 4 );
 		}
 
-	}
-	
-	public function on_plugin_loaded2() {
 		if ( trackship_for_woocommerce()->is_active_yith_order_tracking() && !function_exists( 'ast_pro' ) ) {
 			global $YWOT_Instance;
 			// View Order Page.
@@ -92,7 +86,9 @@ class WC_TrackShip_Front {
 				remove_action( 'woocommerce_email_before_order_table', array( $YWOT_Instance, 'add_email_shipping_details' ), 10, 4 );
 				remove_action( 'woocommerce_email_after_order_table', array( $YWOT_Instance, 'add_email_shipping_details' ), 10, 4 );
 			}
-			// View Order Page.
+		}
+		// email hook for non AST plugin
+		if ( !function_exists( 'wc_advanced_shipment_tracking' ) && !function_exists( 'ast_pro' ) ) {
 			add_action( 'woocommerce_email_before_order_table', array( $this, 'wc_shipment_tracking_email_display' ), 10, 4 );
 		}
 	}
