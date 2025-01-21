@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<?php foreach ( $ts_notifications as $key => $val ) { ?>
 					<?php $ast_enable_email = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( $val['option_name'], $val['enable_status_name'], ''); ?>
 					<tr class="<?php echo 1 == $ast_enable_email ? 'enable' : 'disable'; ?> ">
-						<td class="forminp status-label-column">
+						<td class="status-label-column">
 							<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/<?php echo esc_html( $val['img_slug'] ); ?>.png">
 							<strong class="shipment-status-label"><?php echo esc_html( $val['title'] ); ?></strong>
 							<?php if ( 'delivered' == $key ) { ?>
@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								</label>
 							<?php } ?>
 						</td>
-						<td class="forminp">
+						<td>
 							<span class="shipment_status_toggle">
 								<input type="hidden" name="<?php echo esc_html( $val['enable_status_name'] ); ?>" value="0"/>
 								<input class="tgl tgl-flat" id="<?php echo esc_html( $val['enable_status_name'] ); ?>" name="<?php echo esc_html( $val['enable_status_name'] ); ?>" data-settings="<?php echo esc_html( $val['option_name'] ); ?>" type="checkbox" <?php echo 1 == $ast_enable_email ? 'checked' : ''; ?> value="yes"/>
@@ -63,11 +63,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<table class="form-table heading-table shipment-status-email-table">
 					<tbody>
 						<tr class="admin_notifications_tr late-shipment-tr <?php echo 1 == $late_shipments_email_enable ? 'enable' : 'disable'; ?> ">
-							<td class="forminp status-label-column">
+							<td class="status-label-column">
 								<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/late-shipment.png">
 								<strong><?php esc_html_e('Late Shipments', 'trackship-for-woocommerce'); ?></strong>
 							</td>
-							<td class="forminp">
+							<td>
 								<button name="save" class="button-primary woocommerce-save-button btn_green2 btn_large" type="submit" value="Save & close"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
 								<?php
 								$array_data = array(
@@ -91,11 +91,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<table class="form-table heading-table shipment-status-email-table">
 					<tbody>
 						<tr class="admin_notifications_tr exception-shipment-tr <?php echo 1 == get_trackship_settings( 'exception_admin_email_enable' ) ? 'enable' : 'disable'; ?> ">
-							<td class="forminp status-label-column">
+							<td class="status-label-column">
 								<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/failure.png">
 								<strong><?php esc_html_e('Exception Shipments', 'trackship-for-woocommerce'); ?></strong>
 							</td>
-							<td class="forminp">
+							<td>
 								<button name="save" class="button-primary woocommerce-save-button btn_green2 btn_large" type="submit" value="Save & close"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
 								<?php
 								$array_data = array(
@@ -119,11 +119,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<table class="form-table heading-table shipment-status-email-table">
 					<tbody>
 						<tr class="admin_notifications_tr on-hold-shipment-tr <?php echo 1 == get_trackship_settings( 'on_hold_admin_email_enable' ) ? 'enable' : 'disable'; ?> ">
-							<td class="forminp status-label-column">
+							<td class="status-label-column">
 								<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/on-hold.png">
 								<strong><?php esc_html_e('On Hold Shipments', 'trackship-for-woocommerce'); ?></strong>
 							</td>
-							<td class="forminp">
+							<td>
 								<button name="save" class="button-primary woocommerce-save-button btn_green2 btn_large" type="submit" value="Save & close"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
 								<?php
 								$array_data = array(
