@@ -169,16 +169,16 @@ class WC_Trackship_Shipments {
 		$dir = isset( $_POST['order'][0]['dir'] ) && 'asc' == wc_clean($_POST['order'][0]['dir']) ? ' ASC' : ' DESC';
 		$order_by = $column . $dir;
 		
-		$order_query = $wpdb->get_results( $wpdb->prepare("
+		$order_query = $wpdb->get_results( "
 			SELECT * 
 				FROM {$wpdb->prefix}trackship_shipment t
 				LEFT JOIN {$wpdb->prefix}trackship_shipment_meta m
 				ON t.id = m.meta_id
 				{$where_condition}
 			ORDER BY
-				%1s
-			%2s
-		", $order_by, $limit ) );
+				{$order_by}
+			{$limit}
+		" );
 		
 		$date_format = 'M d';
 
