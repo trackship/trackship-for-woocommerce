@@ -43,7 +43,6 @@ class WC_Trackship_Admin {
 		add_action( 'admin_menu', array( $this, 'register_woocommerce_menu' ), 110 );
 
 		add_action( 'admin_footer', array( $this, 'footer_function'), 1 );
-		// add_action( 'admin_footer', array( $this, 'uninstall_notice') );
 
 		add_action( 'wp_ajax_ts_reassign_order_status', array( $this, 'ts_reassign_order_status' ) );	
 		add_action( 'wp_ajax_add_trackship_mapping_row', array( $this, 'add_trackship_mapping_row' ) );

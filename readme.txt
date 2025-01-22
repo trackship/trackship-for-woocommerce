@@ -4,7 +4,7 @@ Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order trackin
 Requires at least: 6.2
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.8.9
+Stable tag: 1.9.0
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -137,6 +137,16 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended.
 
 == Changelog ==
+= 1.9.0 - 2025-01-22 =
+* Update - Save the estimated delivery date if it is null in the tracking webhook.
+* Enhancement - Enhanced the design and usability of the TrackShip Shipments page.
+* Enhancement - Improved the layout TrackShip Logs page.
+* Compatibility - Added compatibility with WooCommerce AST Pro.
+* Fix - Resolved an issue where the provider name appeared blank on the tracking page.
+* Update - Translation updated
+* Fix - Addressed a design conflict with WooCommerce version 9.6.0.
+* Update - Verified compatibility with WooCommerce version 9.6.0.
+
 = 1.8.9 - 2024-12-09 =
 * Fix - Translation warning with WordPress 6.7.1 fixed
 * Update - tested up to WP versions for the WordPress 6.7.1 release
