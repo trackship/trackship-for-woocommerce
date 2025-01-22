@@ -112,7 +112,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			$version_info['ast-free'] = wc_advanced_shipment_tracking()->version;
 		}
 
-		if ( is_plugin_active( 'ast-pro/ast-pro.php' ) ) {
+		if ( is_plugin_active( 'ast-pro/ast-pro.php' ) || is_plugin_active( 'advanced-shipment-tracking-pro/advanced-shipment-tracking-pro.php' ) ) {
 			$plugin.= '-ast-pro';
 			$version_info['ast-pro'] = ast_pro()->version;
 		}
@@ -215,6 +215,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 				'updated_at'			=> $request['updated_at'],
 				'last_event_time'		=> $last_event_time ? $last_event_time : gmdate( 'Y-m-d H:i:s' ),
 				'first_event_time'		=> $first_event_time,
+				'est_delivery_date'		=> $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : NULL,
 			);
 			$args2 = array(
 				'origin_country'		=> $request['origin_country'],
@@ -227,7 +228,6 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 				'tracking_events'		=> json_encode($tracking_events),
 				'destination_events'	=> json_encode($tracking_destination_events),
 			);
-			$args['est_delivery_date'] = $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : null;
 			$query = trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_number, $args, $args2 );
 			
 			$order->update_meta_data( 'ts_shipment_status', $ts_shipment_status );

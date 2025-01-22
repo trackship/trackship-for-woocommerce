@@ -44,8 +44,7 @@ class WC_TrackShip_Front {
 		add_action( 'wp_ajax_nopriv_get_tracking_info', array( $this, 'get_tracking_info_fun') );
 		add_action( 'wp_ajax_get_tracking_info', array( $this, 'get_tracking_info_fun') );
 		
-		add_action( 'plugins_loaded', array( $this, 'on_plugin_loaded' ) );
-		add_action( 'plugins_loaded', array( $this, 'on_plugin_loaded2' ), 12 );
+		add_action( 'plugins_loaded', array( $this, 'on_plugin_loaded' ), 12 );
 		
 		add_action( 'woocommerce_view_order', array( $this, 'show_tracking_page_widget' ), 5, 1 );
 
@@ -60,7 +59,7 @@ class WC_TrackShip_Front {
 	
 	public function on_plugin_loaded() {
 		
-		if ( function_exists( 'wc_advanced_shipment_tracking' ) && !function_exists( 'ast_pro' ) ) {
+		if ( function_exists( 'wc_advanced_shipment_tracking' ) ) {
 			remove_action( 'woocommerce_view_order', array( wc_advanced_shipment_tracking()->actions, 'show_tracking_info_order' ) );
 		}
 		
@@ -71,15 +70,10 @@ class WC_TrackShip_Front {
 		if ( function_exists( 'wc_shipment_tracking' ) && !function_exists( 'ast_pro' ) ) {
 			// View Order Page.
 			remove_action( 'woocommerce_view_order', array( wc_shipment_tracking()->actions, 'display_tracking_info' ) );
+			// Email hook for WC Shipment tracking plugin
 			remove_action( 'woocommerce_email_before_order_table', array( wc_shipment_tracking()->actions, 'email_display' ), 0, 4 );
-			
-			// View Order Page.
-			add_action( 'woocommerce_email_before_order_table', array( $this, 'wc_shipment_tracking_email_display' ), 0, 4 );
 		}
 
-	}
-	
-	public function on_plugin_loaded2() {
 		if ( trackship_for_woocommerce()->is_active_yith_order_tracking() && !function_exists( 'ast_pro' ) ) {
 			global $YWOT_Instance;
 			// View Order Page.
@@ -92,7 +86,9 @@ class WC_TrackShip_Front {
 				remove_action( 'woocommerce_email_before_order_table', array( $YWOT_Instance, 'add_email_shipping_details' ), 10, 4 );
 				remove_action( 'woocommerce_email_after_order_table', array( $YWOT_Instance, 'add_email_shipping_details' ), 10, 4 );
 			}
-			// View Order Page.
+		}
+		// email hook for non AST plugin
+		if ( !function_exists( 'wc_advanced_shipment_tracking' ) && !function_exists( 'ast_pro' ) ) {
 			add_action( 'woocommerce_email_before_order_table', array( $this, 'wc_shipment_tracking_email_display' ), 10, 4 );
 		}
 	}
@@ -493,7 +489,7 @@ class WC_TrackShip_Front {
 		}
 		foreach ( $tracking_items as $key => $item ) {
 			$tracking_number = $item['tracking_number'];
-			$tracking_provider = $item['tracking_provider'];
+			$tracking_provider = ! empty( $item['formatted_tracking_provider'] ) ? $item['formatted_tracking_provider'] : ( !empty( $item['tracking_provider'] ) ? $item['tracking_provider'] : $item['custom_tracking_provider'] ) ;
 
 			$tracker = new \stdClass();
 			$row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id , $tracking_number );
@@ -633,8 +629,7 @@ class WC_TrackShip_Front {
 		$ts_link_to_carrier = get_trackship_settings( 'ts_link_to_carrier' );
 		$provider_image = isset( $item[ 'tracking_provider_image' ] ) ? $item[ 'tracking_provider_image' ] : false ;
 		$tracking_link = isset( $item[ 'formatted_tracking_link' ] )? $item[ 'formatted_tracking_link' ] : false;
-		$provider_name = isset( $item[ 'tracking_provider' ] )? $item[ 'tracking_provider' ] : false;
-		$provider_name = isset( $item[ 'formatted_tracking_provider' ] ) && !empty( $item[ 'formatted_tracking_provider' ] ) ? $item[ 'formatted_tracking_provider' ] : $provider_name;
+		$provider_name = ! empty( $item['formatted_tracking_provider'] ) ? $item['formatted_tracking_provider'] : ( !empty( $item['tracking_provider'] ) ? $item['tracking_provider'] : $item['custom_tracking_provider'] ) ;
 
 		include 'views/front/enhanced_tracking_widget_header.php';
 	}
@@ -713,7 +708,6 @@ class WC_TrackShip_Front {
 		$hide_tracking_provider_image = get_trackship_settings('hide_provider_image');
 		$hide_from_to = get_trackship_settings('ts_hide_from_to', trackship_admin_customizer()->defaults['ts_hide_from_to'] );
 		$hide_last_mile = get_trackship_settings( 'ts_hide_list_mile_tracking', trackship_admin_customizer()->defaults['ts_hide_list_mile_tracking'] );
-		$provider_name = isset( $item[ 'formatted_tracking_provider' ] ) && !empty( $item[ 'formatted_tracking_provider' ] ) ? $item[ 'formatted_tracking_provider' ] : $item[ 'tracking_provider' ] ;
 		$provider_image = isset( $item[ 'tracking_provider_image' ] ) ? $item[ 'tracking_provider_image' ] : false ;
 		$tracking_link = isset( $item[ 'formatted_tracking_link' ] )? $item[ 'formatted_tracking_link' ] : false;
 		$ts_link_to_carrier = get_trackship_settings( 'ts_link_to_carrier' );

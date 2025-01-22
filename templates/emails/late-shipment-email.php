@@ -26,7 +26,7 @@ if ( $orders ) :
 			foreach ( $tracking_items as $key2 => $val2 ) {
 				if ( $val2['tracking_number'] == $val1->tracking_number ) {
 					$tracking_url = $val2['tracking_page_link'] ?  $val2['tracking_page_link'] : $val2['formatted_tracking_link'];
-					$shipping_provider = $val2['formatted_tracking_provider'] ? $val2['formatted_tracking_provider'] : $val2['tracking_provider'];
+					$shipping_provider = ! empty( $val2['formatted_tracking_provider'] ) ? $val2['formatted_tracking_provider'] : ( !empty( $val2['tracking_provider'] ) ? $val2['tracking_provider'] : $val2['custom_tracking_provider'] ) ;
 				}
 			}
 			$shipment_status = apply_filters( 'trackship_status_filter', $val1->shipment_status );

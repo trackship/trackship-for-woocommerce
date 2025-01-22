@@ -63,24 +63,29 @@ class WC_Trackship_Shipments {
 		wp_enqueue_style( 'custom-google-fonts', 'https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap', array(), time() );
 
 		//dataTables library
-		wp_enqueue_script( 'TS-DataTable', 'https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js', array ( 'jquery' ), '1.13.4', true);
-		wp_enqueue_script( 'DataTable_input', trackship_for_woocommerce()->plugin_dir_url() . '/includes/shipments/assets/js/input.js', array ( 'jquery' ), '1.10.7', true);
-		wp_enqueue_style( 'TS-DataTable', 'https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css', array(), '1.10.18', 'all');
+		wp_enqueue_script( 'TS-DataTable', 'https://cdn.datatables.net/2.1.8/js/dataTables.js', array ( 'jquery' ), '2.1.8', true);
+		wp_enqueue_script( 'DataTable_input', '//cdn.datatables.net/plug-ins/2.1.8/pagination/input.js', array ( 'jquery' ), '2.1.8', true);
+		wp_enqueue_style( 'TS-DataTable', 'https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css', array(), '2.1.8', 'all');
 
 		// Register DataTables buttons
-		wp_register_script( 'TS-buttons', 'https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js', array('jquery'), '2.3.6', true );
+		wp_register_script( 'TS-buttons', 'https://cdn.datatables.net/buttons/3.2.0/js/dataTables.buttons.js', array('jquery'), '3.2.0', true );
 	
 		// Register pdfmake
-		wp_register_script( 'TS-pdfMake', 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js', array(), '0.1.53', true );
+		wp_register_script( 'TS-pdfMake', 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js', array(), '0.2.7', true );
 	
 		// Register pdfmake vfs_fonts
-		wp_register_script( 'TS-pdfMake-vfsFonts', 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js', array(), '0.1.53', true );
+		wp_register_script( 'TS-pdfMake-vfsFonts', 'https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js', array(), '0.2.7', true );
 	
 		// Register DataTables buttons HTML5
-		wp_register_script( 'TS-buttons-html5', 'https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js', array( 'jquery' ), '2.3.6', true );
+		wp_register_script( 'TS-buttons-html5', 'https://cdn.datatables.net/buttons/3.2.0/js/buttons.html5.min.js', array( 'jquery' ), '3.2.0', true );
 
 		// Register DataTables buttons HTML5
-		wp_register_script( 'TS-colVis', 'https://cdn.datatables.net/buttons/2.3.6/js/buttons.colVis.min.js', array( 'jquery' ), '2.3.6', true );
+		wp_register_script( 'TS-colVis', 'https://cdn.datatables.net/buttons/3.2.0/js/buttons.colVis.min.js', array( 'jquery' ), '3.2.0', true );
+
+		// Register DataTables Fix Column
+		wp_register_script( 'TS-FixColumn1', 'https://cdn.datatables.net/fixedcolumns/5.0.4/js/dataTables.fixedColumns.js', array( 'jquery' ), '5.0.4', true );
+		wp_register_script( 'TS-FixColumn2', 'https://cdn.datatables.net/fixedcolumns/5.0.4/js/fixedColumns.dataTables.js', array( 'jquery' ), '5.0.4', true );
+		wp_enqueue_style( 'TS-FixColumnCss', 'https://cdn.datatables.net/fixedcolumns/5.0.4/css/fixedColumns.dataTables.css', array(), '5.0.4', 'all');
 	
 		// Enqueue all scripts
 		wp_enqueue_script( 'TS-buttons' );
@@ -88,9 +93,11 @@ class WC_Trackship_Shipments {
 		wp_enqueue_script( 'TS-pdfMake-vfsFonts' );
 		wp_enqueue_script( 'TS-buttons-html5' );
 		wp_enqueue_script( 'TS-colVis' );
+		wp_enqueue_script( 'TS-FixColumn1' );
+		wp_enqueue_script( 'TS-FixColumn2' );
 
-		wp_enqueue_style( 'shipments_styles', trackship_for_woocommerce()->plugin_dir_url() . '/includes/shipments/assets/css/shipments.css', array(), trackship_for_woocommerce()->version );
-		wp_enqueue_script( 'shipments_script', trackship_for_woocommerce()->plugin_dir_url() . '/includes/shipments/assets/js/shipments.js', array( 'jquery' ), trackship_for_woocommerce()->version, true );
+		wp_enqueue_style( 'shipments_styles', trackship_for_woocommerce()->plugin_dir_url() . 'includes/shipments/assets/css/shipments.css', array(), trackship_for_woocommerce()->version );
+		wp_enqueue_script( 'shipments_script', trackship_for_woocommerce()->plugin_dir_url() . 'includes/shipments/assets/js/shipments.js', array( 'jquery' ), trackship_for_woocommerce()->version, true );
 		wp_localize_script('shipments_script', 'shipments_script', array(
 			'admin_url'	=> admin_url(),
 			'user_plan'	=> $user_plan,
@@ -162,16 +169,16 @@ class WC_Trackship_Shipments {
 		$dir = isset( $_POST['order'][0]['dir'] ) && 'asc' == wc_clean($_POST['order'][0]['dir']) ? ' ASC' : ' DESC';
 		$order_by = $column . $dir;
 		
-		$order_query = $wpdb->get_results( $wpdb->prepare("
+		$order_query = $wpdb->get_results( "
 			SELECT * 
 				FROM {$wpdb->prefix}trackship_shipment t
 				LEFT JOIN {$wpdb->prefix}trackship_shipment_meta m
 				ON t.id = m.meta_id
 				{$where_condition}
 			ORDER BY
-				%1s
-			%2s
-		", $order_by, $limit ) );
+				{$order_by}
+			{$limit}
+		" );
 		
 		$date_format = 'M d';
 

@@ -48,15 +48,16 @@ jQuery(document).ready(function() {
 	'use strict';
 	var url;
 	var $table = jQuery("#active_shipments_table").DataTable({
-		dom: "i<'shipments_custom_data'>B<'table_scroll't><'datatable_footer'ilp>",
+		dom: "i<'shipments_custom_data'>B<'table_scroll't><'datatable_footer'ipl>",
 		searching: false,
+		fixedColumns: { end: 1 },
+		scrollX: true,
 		buttons: [
-			'csvHtml5'		
+			'csvHtml5'
 		],
-		"processing": true,
-		"ordering": true,
-		"serverSide": true,
-		"sPaginationType": "input",
+		processing: true,
+		ordering: true,
+		serverSide: true,
 		"order": [[ 1, 'desc' ]],
 		"ajax": {
 			'type': 'POST',
@@ -84,7 +85,7 @@ jQuery(document).ready(function() {
 			jQuery(window).resize();
 			jQuery(".trackship-tip").tipTip();
 			jQuery("#active_shipments_table").unblock();
-		},		
+		},
 		oLanguage: {
 			sProcessing: '<div id=loader><div class="fa-3x"><i class="fas fa-sync fa-spin"></i></div>',
 			"sEmptyTable": "No data is available for this status",
@@ -92,21 +93,21 @@ jQuery(document).ready(function() {
 		
 		"columns":[
 			{
-				"width": "50px",
+				"width": "35px",
 				'orderable': false,
 				"mRender":function(data,type,full) {
 					return '<input type="checkbox" class="shipment_checkbox" data-orderid="' +full.order_id+ '" data-tnumber="' + full.tracking_number + '">';
 				},
 			},
 			{
-				"width": "105px",
+				"width": "100px",
 				'orderable': true,
 				"mRender":function(data,type,full) {
 					return '<a href="'+shipments_script.admin_url+'post.php?post='+full.order_id+'&action=edit">' + full.order_number + '</a>';
 				},
 			},
 			{
-				"width": "150px",
+				"width": "130px",
 				'orderable': true,
 				'data': 'et_shipped_at',
 				"mRender":function(data,type,full) {
@@ -114,14 +115,14 @@ jQuery(document).ready(function() {
 				},
 			},
 			{
-				"width": "150px",
+				"width": "130px",
 				'orderable': true,
 				"mRender":function(data,type,full) {
 					return full.updated_at.updated_date1 ? '<span class="trackship-tip" title="' + full.updated_at.updated_date2 + '">' + full.updated_at.updated_date1 + '</span>' : '';
 				},
 			},
 			{
-				"width": "185px",
+				"width": "150px",
 				'orderable': false,
 				// 'data': 'tracking_number_colom',
 				"mRender":function(data,type,full) {
@@ -199,7 +200,7 @@ jQuery(document).ready(function() {
 				'data': 'delivery_number',
 			},
 			{
-				"width": "100px",
+				"width": "55px",
 				'orderable': false,
 				"mRender": function(data, type, full) {
 					return 'delivered' == full.shipment_status_id ? '' : '<a href="javascript:void(0);" class="shipments_get_shipment_status" data-orderid="' + full.order_id + '" data-tnumber="' + full.tracking_number + '"><span class="dashicons dashicons-update"></span></a>';
@@ -348,10 +349,10 @@ jQuery(document).ready(function() {
 
 	var localStorageData = localStorage.getItem('shipment_column');
 	if(localStorageData){
-		var data = JSON.parse(localStorageData)
+		var data = JSON.parse(localStorageData);
 		Object.keys(data).map((keyName) => {
 			jQuery(`#column_${keyName}`).prop("checked",data[keyName]);
-			$table.columns(keyName).visible(data[keyName]);
+			$table.columns(keyName).visible(keyName == 16 ? true : data[keyName]);
 		})
 	}
 

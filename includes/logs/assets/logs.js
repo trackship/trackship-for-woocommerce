@@ -17,12 +17,11 @@ jQuery(document).ready(function() {
 	'use strict';
 	var url;
 	var $table = jQuery("#trackship_notifications_logs").DataTable({
-		dom: "i<'table_scroll't><'datatable_footer'ilp>",
+		dom: "i<'table_scroll't><'datatable_footer'ipl>",
 		searching: false,
-		"ordering": false,
-		"processing": true,
-		"serverSide": true,
-		"sPaginationType": "input",
+		ordering: false,
+		processing: true,
+		serverSide: true,
 		"order": [[ 5, "desc" ]],
 		"ajax": {
 			'type': 'POST',

@@ -43,7 +43,6 @@ class WC_Trackship_Admin {
 		add_action( 'admin_menu', array( $this, 'register_woocommerce_menu' ), 110 );
 
 		add_action( 'admin_footer', array( $this, 'footer_function'), 1 );
-		add_action( 'admin_footer', array( $this, 'uninstall_notice') );
 
 		add_action( 'wp_ajax_ts_reassign_order_status', array( $this, 'ts_reassign_order_status' ) );	
 		add_action( 'wp_ajax_add_trackship_mapping_row', array( $this, 'add_trackship_mapping_row' ) );
@@ -783,7 +782,22 @@ class WC_Trackship_Admin {
 			}
 			</style>
 		<?php } ?>
-		<style> #toplevel_page_trackship_customizer { display: none !important; } </style>
+		<style>
+		#toplevel_page_trackship_customizer { display: none !important; }
+		trackship-icon {
+			content: "";
+			display: inline-block;
+			height: 15px;
+			width: 18px;
+			background-image: url( <?php echo esc_url(trackship_for_woocommerce()->plugin_dir_url() . 'includes/analytics/assets/ts.svg'); ?> );
+			background-size: contain;
+			background-repeat: no-repeat;
+			background-position: center;
+			filter: invert(100%);
+			margin-right: 0.5em;
+			vertical-align: text-bottom;
+		}
+		</style>
 		<?php echo '<div id=admin_tracking_widget class=popupwrapper style="display:none;"><span class="admin_tracking_page_close popupclose"><span class="dashicons dashicons-no-alt"></span></span><div class=popuprow></div><div class=popupclose></div></div>'; ?>
 		<div id="free_user_popup" class="popupwrapper" style="display:none;">
 			<div class="free_user_popup popuprow" style="padding:20px">
@@ -851,22 +865,16 @@ class WC_Trackship_Admin {
 			</div>
 			<div class="popupclose"></div>
 		</div>
-	<?php
-	}
-
-	public function uninstall_notice () {
+		<?php
+		// uninstall_notice
 		$screen = get_current_screen();
+		$delivered_count = wc_orders_count( 'delivered' );
+		$order_statuses = wc_get_order_statuses();
 		
-		if ( 'plugins.php' == $screen->parent_file ) {
+		if ( 'plugins.php' == $screen->parent_file && $delivered_count > 0 ) {
 			wp_enqueue_style( 'trackshipcss', trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/trackship.css', array(), trackship_for_woocommerce()->version, time() );
 			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 			wp_enqueue_script( 'jquery-blockui', WC()->plugin_url() . '/assets/js/jquery-blockui/jquery.blockUI' . $suffix . '.js', array( 'jquery' ), '2.70', true );
-		}
-		
-		$delivered_count = wc_orders_count( 'delivered' );
-		$order_statuses = wc_get_order_statuses();
-
-		if ( $delivered_count > 0 ) {
 			?>
 		
 			<script>
