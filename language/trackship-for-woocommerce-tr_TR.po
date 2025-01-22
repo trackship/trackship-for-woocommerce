@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: TrackShip for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-19 09:42+0000\n"
-"PO-Revision-Date: 2024-09-24 11:50+0000\n"
+"PO-Revision-Date: 2024-12-26 10:49+0000\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -12,10 +12,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.9; wp-6.5.3\n"
+"X-Loco-Version: 2.6.14; wp-6.7.1\n"
 "X-Domain: trackship-for-woocommerce"
 
-#: includes/views/dashboard.php:118
+#: includes/views/dashboard.php:113
 msgid "Account Dashboard"
 msgstr "Hesap Gösterge Tablosu"
 
@@ -23,7 +23,7 @@ msgstr "Hesap Gösterge Tablosu"
 msgid "Account SID"
 msgstr "Hesap SID'si"
 
-#: includes/views/dashboard.php:162
+#: includes/views/dashboard.php:157
 msgid "Action Needed"
 msgstr "Ihtiyaç duyulan eylem"
 
@@ -32,11 +32,15 @@ msgstr "Ihtiyaç duyulan eylem"
 msgid "Actions"
 msgstr "Hareketler"
 
-#: includes/views/dashboard.php:80
+#: includes/views/dashboard.php:75
 msgid "Active"
 msgstr "Aktif"
 
-#: includes/views/shipments.php:28
+#: includes/views/shipments.php:33
+msgid "Active Late Shipments"
+msgstr "Aktif Geç Gönderiler"
+
+#: includes/views/shipments.php:23
 msgid "Active Shipments"
 msgstr "Aktif Gönderiler"
 
@@ -72,11 +76,11 @@ msgstr "Yönetici Telefon Numarası"
 msgid "All Notifications"
 msgstr "Tüm Bildirimler"
 
-#: includes/views/shipments.php:27
+#: includes/views/shipments.php:22
 msgid "All Shipments"
 msgstr "Tüm Gönderiler"
 
-#: includes/views/shipments.php:95
+#: includes/views/shipments.php:92
 msgid "All shipping providers"
 msgstr "Tüm nakliye sağlayıcıları"
 
@@ -84,7 +88,7 @@ msgstr "Tüm nakliye sağlayıcıları"
 msgid "All Types"
 msgstr "Her türlü"
 
-#: includes/class-wc-trackship-admin.php:425
+#: includes/class-wc-trackship-admin.php:423
 msgid ""
 "Allow users to opt-out of receiving Shipment status notifications on the "
 "Tracking page and Shipment status emails."
@@ -132,7 +136,7 @@ msgstr "API anahtarı"
 msgid "API Username"
 msgstr "API Kullanıcı Adı"
 
-#: includes/views/shipments.php:110
+#: includes/views/shipments.php:107
 msgid "Apply"
 msgstr "Uygula"
 
@@ -140,17 +144,17 @@ msgstr "Uygula"
 msgid "Auth Token"
 msgstr "Kimlik Doğrulama Jetonu"
 
-#: includes/views/dashboard.php:148
+#: includes/views/dashboard.php:143
 msgid "Available Balance"
 msgstr "Kalan bakiye"
 
-#: includes/class-wc-trackship-actions.php:662
-#: includes/class-wc-trackship-actions.php:713
+#: includes/class-wc-trackship-actions.php:660
+#: includes/class-wc-trackship-actions.php:711
 #: includes/class-wc-trackship-admin.php:1288
 #: includes/smswoo/class-smswoo-admin.php:541
 #: includes/customizer/trackship-customizer.php:214
 #: includes/customizer/trackship-customizer.php:821
-#: includes/views/shipments.php:36
+#: includes/views/shipments.php:31
 msgid "Available For Pickup"
 msgstr "Pickup için Mevcut"
 
@@ -171,7 +175,7 @@ msgstr "Mevcut Yer Tutucular:"
 msgid "Available variables:"
 msgstr "Kullanılabilir değişkenler:"
 
-#: includes/views/shipments.php:107
+#: includes/views/shipments.php:104
 msgid "Bulk actions"
 msgstr "Toplu eylemler"
 
@@ -193,12 +197,16 @@ msgstr "Düğme yarıçapı"
 msgid "Button text"
 msgstr "düğme metni"
 
-#: includes/class-wc-trackship-actions.php:667
-#: includes/class-wc-trackship-actions.php:746
+#: includes/class-wc-trackship-actions.php:665
+#: includes/class-wc-trackship-actions.php:744
 msgid "Carrier Unsupported"
 msgstr "Taşıyıcı Desteklenmiyor"
 
-#: includes/class-wc-trackship-admin.php:409
+#: includes/class-wc-trackship-admin.php:740
+msgid "Change order status to"
+msgstr "Sipariş durumunu değiştir"
+
+#: includes/class-wc-trackship-admin.php:407
 msgid "Choose on which order emails to include the shipment tracking info"
 msgstr ""
 "Gönderi takip bilgilerinin hangi sipariş e-postalarına ekleneceğini seçin"
@@ -245,28 +253,29 @@ msgstr "İzleme Widget'ını Özelleştirin"
 msgid "Dashboard"
 msgstr "Gösterge Paneli"
 
-#: includes/views/tools.php:17
+#: includes/views/tools.php:18
 msgid "Delete notifications logs"
 msgstr "Bildirim günlüklerini sil"
 
-#: includes/views/tools.php:16
+#: includes/views/tools.php:17
 msgid "Delete notifications logs more than 30 days"
 msgstr "30 günden fazla bildirim günlüklerini silin"
 
-#: includes/class-wc-trackship-actions.php:664
-#: includes/class-wc-trackship-actions.php:707
-#: includes/class-wc-trackship-admin.php:660
-#: includes/class-wc-trackship-admin.php:678
+#: includes/class-wc-trackship-actions.php:662
+#: includes/class-wc-trackship-actions.php:705
+#: includes/class-wc-trackship-admin.php:658
+#: includes/class-wc-trackship-admin.php:676
+#: includes/class-wc-trackship-admin.php:728
 #: includes/class-wc-trackship-admin.php:1330
 #: includes/smswoo/class-smswoo-admin.php:547
 #: includes/customizer/trackship-customizer.php:220
 #: includes/customizer/trackship-customizer.php:827
-#: includes/views/shipments.php:34 includes/views/dashboard.php:84
+#: includes/views/shipments.php:29 includes/views/dashboard.php:79
 msgid "Delivered"
 msgstr "Teslim edilmiş"
 
 #. %s: search number of order
-#: includes/class-wc-trackship-admin.php:666
+#: includes/class-wc-trackship-admin.php:664
 #, php-format
 msgid "Delivered <span class=\"count\">(%s)</span>"
 msgid_plural "Delivered <span class=\"count\">(%s)</span>"
@@ -286,8 +295,8 @@ msgstr "Teslim tarihi"
 msgid "Delivery date"
 msgstr "Teslim tarihi"
 
-#: includes/class-wc-trackship-actions.php:665
-#: includes/class-wc-trackship-actions.php:722
+#: includes/class-wc-trackship-actions.php:663
+#: includes/class-wc-trackship-actions.php:720
 #: includes/class-wc-trackship-admin.php:1302
 #: includes/smswoo/class-smswoo-admin.php:543
 #: includes/customizer/trackship-customizer.php:216
@@ -304,8 +313,8 @@ msgstr "Teslimat numarası"
 msgid "Delivery tracking Number"
 msgstr "Teslimat takip numarası"
 
-#: includes/views/front/layout1_tracking_details.php:52
-#: includes/views/front/layout1_tracking_details.php:171
+#: includes/views/front/layout1_tracking_details.php:55
+#: includes/views/front/layout1_tracking_details.php:174
 msgid "Destination Details"
 msgstr "Hedef Ayrıntıları"
 
@@ -386,7 +395,7 @@ msgstr "e-postalar"
 msgid "Enable %1$s email"
 msgstr "%1$s e-postasını etkinleştir"
 
-#: includes/class-wc-trackship-admin.php:432
+#: includes/class-wc-trackship-admin.php:430
 msgid ""
 "Enable a Custom Order Status Delivered that will be set automatically when "
 "all the order shipments are delivered"
@@ -394,7 +403,7 @@ msgstr ""
 "Tüm sipariş gönderileri teslim edildiğinde otomatik olarak ayarlanacak Özel "
 "Sipariş Durumu Teslim Edildi'yi etkinleştirin"
 
-#: includes/class-wc-trackship-admin.php:416
+#: includes/class-wc-trackship-admin.php:414
 msgid "Enable a shipment status filter on orders admin"
 msgstr "Sipariş yöneticisinde gönderi durumu filtresini etkinleştir"
 
@@ -402,11 +411,11 @@ msgstr "Sipariş yöneticisinde gönderi durumu filtresini etkinleştir"
 msgid "Enable email"
 msgstr "E-postayı etkinleştir"
 
-#: includes/class-wc-trackship-admin.php:429
+#: includes/class-wc-trackship-admin.php:427
 msgid "Enable Order Delivery Automation"
 msgstr "Sipariş Teslimat Otomasyonunu Etkinleştir"
 
-#: includes/class-wc-trackship-admin.php:439
+#: includes/class-wc-trackship-admin.php:437
 msgid "Enable shipment status notification for order created by Amazon"
 msgstr ""
 "Amazon tarafından oluşturulan sipariş için gönderi durumu bildirimini "
@@ -420,7 +429,7 @@ msgstr "Taşıyıcıya Takip # bağlantısını etkinleştir"
 msgid "Enable Tracking Page"
 msgstr "İzleme Sayfasını Etkinleştir"
 
-#: includes/class-wc-trackship-admin.php:422
+#: includes/class-wc-trackship-admin.php:420
 msgid "Enable unsubscribe (opt-out) from Shipment status notifications"
 msgstr ""
 "Gönderi durumu bildirimlerinden abonelikten çıkmayı (opt-out) etkinleştirin"
@@ -439,12 +448,12 @@ msgstr ""
 "Avustralya, Brezilya ve Kuzey Amerika ülkelerinin kullandığı saat uygulaması."
 " Teslim tarihi"
 
-#: includes/class-wc-trackship-actions.php:669
+#: includes/class-wc-trackship-actions.php:667
 #: includes/class-wc-trackship-admin.php:1316
 #: includes/smswoo/class-smswoo-admin.php:545
 #: includes/customizer/trackship-customizer.php:218
 #: includes/customizer/trackship-customizer.php:825
-#: includes/views/shipments.php:32
+#: includes/views/shipments.php:27
 msgid "Exception"
 msgstr "İstisna"
 
@@ -456,15 +465,15 @@ msgstr "İstisna gönderi"
 msgid "Exception Shipments"
 msgstr "İstisna Gönderiler"
 
-#: includes/class-wc-trackship-admin.php:801
+#: includes/class-wc-trackship-admin.php:799
 msgid "Exception Shipments Notifications"
 msgstr "İstisna Gönderi Bildirimleri"
 
-#: includes/class-wc-trackship-actions.php:764
+#: includes/class-wc-trackship-actions.php:762
 msgid "Expired"
 msgstr "Günü geçmiş"
 
-#: includes/class-wc-trackship-actions.php:675
+#: includes/class-wc-trackship-actions.php:673
 msgid "Filter by shipment status"
 msgstr "Gönderi durumuna göre filtrele"
 
@@ -480,13 +489,13 @@ msgstr "Genel seçenekler"
 msgid "General Settings"
 msgstr "Genel Ayarlar"
 
-#: includes/class-wc-trackship-actions.php:592
-#: includes/class-wc-trackship-actions.php:1018
-#: includes/class-wc-trackship-admin.php:548 includes/views/tools.php:13
+#: includes/class-wc-trackship-actions.php:590
+#: includes/class-wc-trackship-actions.php:1012
+#: includes/class-wc-trackship-admin.php:546 includes/views/tools.php:14
 msgid "Get Shipment Status"
 msgstr "Gönderi Durumunu Al"
 
-#: includes/views/shipments.php:108
+#: includes/views/shipments.php:105
 msgid "Get shipment status"
 msgstr "Gönderi durumunu al"
 
@@ -538,17 +547,17 @@ msgstr "%s kimlik bilgilerinizi nasıl bulabilirsiniz?"
 msgid "Icons"
 msgstr "Simgeler"
 
-#: includes/class-wc-trackship-actions.php:661
-#: includes/class-wc-trackship-actions.php:698
+#: includes/class-wc-trackship-actions.php:659
+#: includes/class-wc-trackship-actions.php:696
 #: includes/class-wc-trackship-admin.php:1281
 #: includes/smswoo/class-smswoo-admin.php:540
 #: includes/customizer/trackship-customizer.php:213
 #: includes/customizer/trackship-customizer.php:820
-#: includes/views/shipments.php:29
+#: includes/views/shipments.php:24
 msgid "In Transit"
 msgstr "Transit olarak"
 
-#: includes/views/dashboard.php:130
+#: includes/views/dashboard.php:125
 msgid ""
 "Include shipment tracking details in your WooCommerce orders, enabling "
 "customers to effortlessly monitor their orders. Shipment tracking "
@@ -562,7 +571,7 @@ msgstr ""
 "erişilebilecek ve ayrıca WooCommerce sipariş tamamlama e-postasına da "
 "eklenecek."
 
-#: includes/views/dashboard.php:134
+#: includes/views/dashboard.php:129
 msgid "Install Shipment Tracking plugin"
 msgstr "Gönderi Takibi eklentisini yükleyin"
 
@@ -570,14 +579,14 @@ msgstr "Gönderi Takibi eklentisini yükleyin"
 msgid "Integrations"
 msgstr "Entegrasyonlar"
 
-#: includes/class-wc-trackship-actions.php:670
+#: includes/class-wc-trackship-actions.php:668
 msgid "Invalid Tracking"
 msgstr "Geçersiz İzleme"
 
 #: templates/emails/tswc-tpi-email-order-details.php:35
 #: templates/emails/tswc-email-order-details.php:35
 #: includes/customizer/trackship-customizer.php:345
-#: includes/views/front/layout1_tracking_details.php:10
+#: includes/views/front/layout1_tracking_details.php:13
 msgid "Items in this shipment"
 msgstr "Bu gönderideki ürünler"
 
@@ -589,19 +598,19 @@ msgstr "Seyahat"
 msgid "Key"
 msgstr "Anahtar"
 
-#: includes/class-wc-trackship-actions.php:731
+#: includes/class-wc-trackship-actions.php:729
 msgid "Label Cancelled"
 msgstr "Etiket İptal Edildi"
 
-#: includes/views/dashboard.php:99
+#: includes/views/dashboard.php:94
 msgid "Last 30 days"
 msgstr "Son 30 gün"
 
-#: includes/views/dashboard.php:104
+#: includes/views/dashboard.php:99
 msgid "Last 60 days"
 msgstr "son 60 gün"
 
-#: includes/class-wc-trackship-actions.php:965
+#: includes/class-wc-trackship-actions.php:963
 msgid "Last event date: "
 msgstr "Son etkinlik tarihi:"
 
@@ -609,15 +618,15 @@ msgstr "Son etkinlik tarihi:"
 msgid "Late shipment"
 msgstr "Geç sevkiyat"
 
-#: includes/views/shipments.php:37 includes/views/notifications.php:68
+#: includes/views/shipments.php:32 includes/views/notifications.php:68
 msgid "Late Shipments"
 msgstr "Geç Gönderiler"
 
-#: includes/views/dashboard.php:62
+#: includes/views/dashboard.php:57
 msgid "Late Shipments for last 30 days"
 msgstr "Son 30 gündeki gecikmeli gönderiler"
 
-#: includes/class-wc-trackship-admin.php:800
+#: includes/class-wc-trackship-admin.php:798
 msgid "Late Shipments Notifications"
 msgstr "Geç Gönderim Bildirimleri"
 
@@ -640,7 +649,11 @@ msgstr "Kütükler"
 msgid "Map Shipping Carriers"
 msgstr "Harita Gönderim Sağlayıcıları"
 
-#: includes/views/tools.php:32
+#: includes/class-wc-trackship-admin.php:763
+msgid "Mark order as delivered"
+msgstr "Siparişi teslim edilmiş olarak işaretle"
+
+#: includes/views/tools.php:33
 msgid "Migration"
 msgstr "Göç"
 
@@ -652,7 +665,7 @@ msgstr "Maket Siparişi"
 msgid "Modern"
 msgstr "Modern"
 
-#: includes/views/dashboard.php:94
+#: includes/views/dashboard.php:89
 msgid "Month to date"
 msgstr "Ayın başından beri"
 
@@ -660,13 +673,13 @@ msgstr "Ayın başından beri"
 msgid "More info"
 msgstr "Daha fazla bilgi"
 
-#: includes/class-wc-trackship-actions.php:465
-#: includes/class-wc-trackship-actions.php:974
+#: includes/class-wc-trackship-actions.php:463
+#: includes/class-wc-trackship-actions.php:972
 #: includes/html/class-wc-trackship-html.php:130
 msgid "more info"
 msgstr "Daha fazla bilgi"
 
-#: includes/views/dashboard.php:181
+#: includes/views/dashboard.php:176
 msgid "No action needed for Shipments"
 msgstr "Gönderiler için herhangi bir işlem gerekmez"
 
@@ -689,11 +702,11 @@ msgstr "Yanıt kodu yok"
 
 #: includes/views/content.php:19
 #: includes/views/front/enhanced_shipment_details_notifications.php:40
-#: includes/views/front/layout1_tracking_details.php:11
+#: includes/views/front/layout1_tracking_details.php:14
 msgid "Notifications"
 msgstr "Bildirimler"
 
-#: includes/class-wc-trackship-admin.php:841
+#: includes/class-wc-trackship-admin.php:839
 msgid "Notifications detail"
 msgstr "Bildirimler ayrıntısı"
 
@@ -701,16 +714,16 @@ msgstr "Bildirimler ayrıntısı"
 msgid "Notifications Type (SMS/WhatsApp)"
 msgstr "Bildirim Türü (SMS/WhatsApp)"
 
-#: includes/class-wc-trackship-admin.php:456
+#: includes/class-wc-trackship-admin.php:454
 msgid "Number of days for late shipments"
 msgstr "Geç gönderiler için gün sayısı"
 
-#: includes/class-wc-trackship-actions.php:701
+#: includes/class-wc-trackship-actions.php:699
 #: includes/class-wc-trackship-admin.php:1309
 #: includes/smswoo/class-smswoo-admin.php:544
 #: includes/customizer/trackship-customizer.php:217
 #: includes/customizer/trackship-customizer.php:824
-#: includes/views/shipments.php:33
+#: includes/views/shipments.php:28
 msgid "On Hold"
 msgstr "Beklemede"
 
@@ -722,7 +735,7 @@ msgstr "Bekletilen gönderi"
 msgid "On Hold Shipments"
 msgstr "Bekletilen Gönderiler"
 
-#: includes/class-wc-trackship-admin.php:802
+#: includes/class-wc-trackship-admin.php:800
 msgid "On Hold Shipments Notifications"
 msgstr "Bekletilen Gönderi Bildirimleri"
 
@@ -746,11 +759,11 @@ msgstr "Sipariş E-postası"
 msgid "Order ID"
 msgstr "Sipariş Kimliği"
 
-#: includes/class-wc-trackship-actions.php:767
+#: includes/class-wc-trackship-actions.php:765
 msgid "Order id not found"
 msgstr "Sipariş kimliği bulunamadı"
 
-#: includes/class-wc-trackship-admin.php:845
+#: includes/class-wc-trackship-admin.php:843
 #: templates/tracking/tracking-form.php:110
 #: templates/emails/exception-shipment-email.php:16
 #: templates/emails/late-shipment-email.php:16
@@ -762,7 +775,7 @@ msgstr "Sipariş numarası"
 msgid "Order Processing"
 msgstr "sipariş düzenleniyor"
 
-#: includes/class-wc-trackship-admin.php:408
+#: includes/class-wc-trackship-admin.php:406
 msgid "Order statuses to trigger TrackShip "
 msgstr "TrackShip'i tetiklemek için sipariş durumları"
 
@@ -770,9 +783,9 @@ msgstr "TrackShip'i tetiklemek için sipariş durumları"
 msgid "Order tracking number."
 msgstr "Sipariş takip numarası."
 
-#: includes/views/front/layout1_tracking_details.php:108
-#: includes/views/front/layout1_tracking_details.php:196
-#: includes/views/front/enhanced_tracking_events.php:70
+#: includes/views/front/layout1_tracking_details.php:111
+#: includes/views/front/layout1_tracking_details.php:199
+#: includes/views/front/enhanced_tracking_events.php:72
 msgid "Origin Details"
 msgstr "Menşe Detayları"
 
@@ -780,13 +793,13 @@ msgstr "Menşe Detayları"
 msgid "Other"
 msgstr "Diğer"
 
-#: includes/class-wc-trackship-actions.php:663
-#: includes/class-wc-trackship-actions.php:710
+#: includes/class-wc-trackship-actions.php:661
+#: includes/class-wc-trackship-actions.php:708
 #: includes/class-wc-trackship-admin.php:1295
 #: includes/smswoo/class-smswoo-admin.php:542
 #: includes/customizer/trackship-customizer.php:215
 #: includes/customizer/trackship-customizer.php:822
-#: includes/views/shipments.php:30
+#: includes/views/shipments.php:25
 msgid "Out For Delivery"
 msgstr "Dağıtıma çıkmış"
 
@@ -794,13 +807,13 @@ msgstr "Dağıtıma çıkmış"
 msgid "Overview"
 msgstr "Genel Bakış"
 
-#: includes/class-wc-trackship-actions.php:658
-#: includes/class-wc-trackship-actions.php:740
+#: includes/class-wc-trackship-actions.php:656
+#: includes/class-wc-trackship-actions.php:738
 msgid "Pending Update"
 msgstr "Bekleyen Güncelleme"
 
-#: includes/class-wc-trackship-actions.php:464
-#: includes/class-wc-trackship-actions.php:972
+#: includes/class-wc-trackship-actions.php:462
+#: includes/class-wc-trackship-actions.php:970
 #| msgid ""
 #| "Pending TrackShip is a temporary status that will display for a few "
 #| "minutes until we update the order with the first tracking event from the "
@@ -862,12 +875,12 @@ msgstr "Gönderi onay e-postasını aldıktan sonra lütfen tekrar deneyin."
 msgid "Powered by "
 msgstr "Tarafından desteklenmektedir"
 
-#: includes/class-wc-trackship-actions.php:660
-#: includes/class-wc-trackship-actions.php:704 includes/views/shipments.php:31
+#: includes/class-wc-trackship-actions.php:658
+#: includes/class-wc-trackship-actions.php:702 includes/views/shipments.php:26
 msgid "Pre Transit"
 msgstr "Ön Transit"
 
-#: includes/class-wc-trackship-admin.php:796
+#: includes/class-wc-trackship-admin.php:794
 msgid "Priority Support"
 msgstr "Öncelikli Destek"
 
@@ -876,31 +889,31 @@ msgstr "Öncelikli Destek"
 msgid "Progress bar"
 msgstr "İlerleme çubuğu"
 
-#: includes/class-wc-trackship-admin.php:829
+#: includes/class-wc-trackship-admin.php:827
 msgid "Providers list Updated"
 msgstr "Sağlayıcı listesi Güncellendi"
 
-#: includes/class-wc-trackship-admin.php:461
-#: includes/class-wc-trackship-admin.php:483
-#: includes/class-wc-trackship-admin.php:505
+#: includes/class-wc-trackship-admin.php:459
+#: includes/class-wc-trackship-admin.php:481
+#: includes/class-wc-trackship-admin.php:503
 msgid "Recipient(s)"
 msgstr "alıcı(lar)"
 
-#: includes/class-wc-trackship-admin.php:798
+#: includes/class-wc-trackship-admin.php:796
 msgid "Remove TrackShip’s branding"
 msgstr "TrackShip'in markasını kaldırın"
 
-#: includes/class-wc-trackship-actions.php:668
-#: includes/class-wc-trackship-actions.php:716
+#: includes/class-wc-trackship-actions.php:666
+#: includes/class-wc-trackship-actions.php:714
 #: includes/class-wc-trackship-admin.php:1323
 #: includes/smswoo/class-smswoo-admin.php:546
 #: includes/customizer/trackship-customizer.php:219
 #: includes/customizer/trackship-customizer.php:826
-#: includes/views/shipments.php:35
+#: includes/views/shipments.php:30
 msgid "Return To Sender"
 msgstr "Gönderene iade"
 
-#: includes/views/dashboard.php:70
+#: includes/views/dashboard.php:65
 msgid "Return To Sender for last 30 days"
 msgstr "Son 30 gün boyunca Gönderene İade Et"
 
@@ -924,7 +937,7 @@ msgstr "kaydedildi"
 msgid "Search"
 msgstr "Arama"
 
-#: includes/views/shipments.php:118
+#: includes/views/shipments.php:115
 msgid "Search by Tracking Number, Shipping carrier, Order number"
 msgstr "Takip Numarası, Nakliye şirketi, Sipariş numarasına göre arayın"
 
@@ -942,9 +955,9 @@ msgstr ""
 msgid "Select tracking page:"
 msgstr "İzleme sayfasını seçin:"
 
-#: includes/class-wc-trackship-admin.php:467
-#: includes/class-wc-trackship-admin.php:489
-#: includes/class-wc-trackship-admin.php:511
+#: includes/class-wc-trackship-admin.php:465
+#: includes/class-wc-trackship-admin.php:487
+#: includes/class-wc-trackship-admin.php:509
 msgid "Send email at"
 msgstr "adresine e-posta gönder"
 
@@ -993,12 +1006,12 @@ msgstr "Alıcı"
 msgid "Shipment %1$s"
 msgstr "%1$s gönderi"
 
-#: includes/views/front/layout1_tracking_details.php:9
+#: includes/views/front/layout1_tracking_details.php:12
 msgid "Shipment Progress"
 msgstr "Sevkiyat İlerlemesi"
 
-#: includes/class-wc-trackship-actions.php:388
-#: includes/class-wc-trackship-admin.php:846
+#: includes/class-wc-trackship-actions.php:386
+#: includes/class-wc-trackship-admin.php:844
 #: templates/emails/late-shipment-email.php:17 includes/views/logs.php:51
 #: includes/shipments/views/trackship_shipments.php:20
 msgid "Shipment status"
@@ -1009,11 +1022,11 @@ msgstr "Sipariş durumu"
 msgid "Shipments"
 msgstr "gönderiler"
 
-#: includes/class-wc-trackship-admin.php:799
+#: includes/class-wc-trackship-admin.php:797
 msgid "Shipments Dashboard"
 msgstr "Gönderiler Panosu"
 
-#: includes/views/dashboard.php:57
+#: includes/views/dashboard.php:52
 msgid ""
 "shipments from the last 30 days that haven't been automatically tracked. To "
 "start tracking these past orders, simply click here"
@@ -1021,10 +1034,10 @@ msgstr ""
 "Son 30 güne ait olup otomatik olarak takip edilmeyen gönderiler. Bu geçmiş "
 "siparişleri takip etmeye başlamak için burayı tıklamanız yeterlidir"
 
-#: includes/class-wc-trackship-actions.php:728
-#: includes/class-wc-trackship-actions.php:743
+#: includes/class-wc-trackship-actions.php:726
+#: includes/class-wc-trackship-actions.php:741
 #: templates/emails/tracking-info.php:81
-#: includes/views/front/enhanced_tracking_events.php:16
+#: includes/views/front/enhanced_tracking_events.php:18
 #: includes/views/front/tracking_page_header.php:66
 msgid "Shipped"
 msgstr "sevk edildi"
@@ -1041,11 +1054,11 @@ msgstr "Sevk edilen ürünler başlık metni"
 msgid "Shipping & Delivery"
 msgstr "Nakliye ve Teslimat"
 
-#: includes/class-wc-trackship-admin.php:803
+#: includes/class-wc-trackship-admin.php:801
 msgid "Shipping & Delivery Analytics"
 msgstr "Sevkiyat ve Teslimat Analitiği"
 
-#: includes/views/dashboard.php:189
+#: includes/views/dashboard.php:184
 msgid "Shipping & Delivery Overview"
 msgstr "Nakliye ve Teslimata Genel Bakış"
 
@@ -1075,7 +1088,7 @@ msgstr "nakliye günleri"
 msgid "Shipping provider"
 msgstr "Nakliye sağlayıcısı"
 
-#: includes/class-wc-trackship-actions.php:773
+#: includes/class-wc-trackship-actions.php:771
 msgid "Shipping provider not found"
 msgstr "Nakliye sağlayıcı bulunamadı"
 
@@ -1129,7 +1142,7 @@ msgstr "SMS"
 msgid "SMS gateways"
 msgstr "SMS ağ geçitleri"
 
-#: includes/class-wc-trackship-admin.php:797
+#: includes/class-wc-trackship-admin.php:795
 #: includes/views/notifications.php:18
 msgid "SMS Notifications"
 msgstr "SMS Bildirimleri"
@@ -1143,20 +1156,20 @@ msgstr "SMS bildirimleri"
 msgid "SMS Settings"
 msgstr "SMS Ayarları"
 
-#: includes/class-wc-trackship-admin.php:804
+#: includes/class-wc-trackship-admin.php:802
 #| msgid "Starting from $9 a month"
 msgid "Starting from $11 a month"
 msgstr "Aylık 11$'dan başlayan fiyatlarla"
 
-#: includes/class-wc-trackship-admin.php:851 includes/views/logs.php:55
+#: includes/class-wc-trackship-admin.php:849 includes/views/logs.php:55
 msgid "Status"
 msgstr "Durum"
 
-#: includes/class-wc-trackship-actions.php:782
+#: includes/class-wc-trackship-actions.php:780
 msgid "Store is conneted with different account"
 msgstr "Mağaza farklı bir hesapla bağlı"
 
-#: includes/class-wc-trackship-actions.php:779
+#: includes/class-wc-trackship-actions.php:777
 msgid "Store is not Connected to TrackShip"
 msgstr "Mağaza TrackShip'e Bağlı Değil"
 
@@ -1164,12 +1177,12 @@ msgstr "Mağaza TrackShip'e Bağlı Değil"
 msgid "Style & Colors"
 msgstr "Stil ve Renkler"
 
-#: includes/class-wc-trackship-admin.php:823
-#: includes/class-wc-trackship-admin.php:831
+#: includes/class-wc-trackship-admin.php:821
+#: includes/class-wc-trackship-admin.php:829
 msgid "Sync TrackShip Providers"
 msgstr "TrackShip Sağlayıcılarını Senkronize Et"
 
-#: includes/class-wc-trackship-admin.php:827
+#: includes/class-wc-trackship-admin.php:825
 msgid ""
 "Syncing the TrackShip providers list add or updates the pre-set TrackShip "
 "providers and will not effect custom shipping providers."
@@ -1220,7 +1233,7 @@ msgstr ""
 "Takip etmeye çalıştığınız sipariş/gönderi henüz kargoya verilmedi veya "
 "girilen sipariş numarası hatalı."
 
-#: includes/class-wc-trackship-actions.php:579
+#: includes/class-wc-trackship-actions.php:577
 msgid ""
 "The shipment status updates will run in the background, please refresh the "
 "page in a few minutes."
@@ -1248,11 +1261,11 @@ msgstr "Bu alan, gönderen veya Gönderen Kimliği olarak görünür"
 msgid "This will be appended to URL in the email content"
 msgstr "Bu, e-posta içeriğindeki URL'ye eklenecek"
 
-#: includes/class-wc-trackship-admin.php:848 includes/views/logs.php:52
+#: includes/class-wc-trackship-admin.php:846 includes/views/logs.php:52
 msgid "Time"
 msgstr "Zaman"
 
-#: includes/class-wc-trackship-admin.php:849 includes/views/logs.php:53
+#: includes/class-wc-trackship-admin.php:847 includes/views/logs.php:53
 msgid "To"
 msgstr "İle"
 
@@ -1273,14 +1286,14 @@ msgstr ""
 msgid "Tools"
 msgstr "Araçlar"
 
-#: includes/views/dashboard.php:76
+#: includes/views/dashboard.php:71
 msgid "Total Shipments"
 msgstr "Toplam Sevkiyat"
 
-#: includes/class-wc-trackship-actions.php:456
-#: includes/class-wc-trackship-actions.php:462
-#: includes/class-wc-trackship-actions.php:970
-#: includes/class-wc-trackship-actions.php:981
+#: includes/class-wc-trackship-actions.php:454
+#: includes/class-wc-trackship-actions.php:460
+#: includes/class-wc-trackship-actions.php:968
+#: includes/class-wc-trackship-actions.php:979
 msgid "Track"
 msgstr "Izlemek"
 
@@ -1317,26 +1330,26 @@ msgstr "Analizleri İzleme"
 msgid "Tracking event display"
 msgstr "İzleme etkinliği ekranı"
 
-#: includes/views/front/layout1_tracking_details.php:44
+#: includes/views/front/layout1_tracking_details.php:47
 msgid "Tracking information is not available, please try again later."
 msgstr "Takip bilgisi mevcut değil, lütfen daha sonra tekrar deneyin."
 
-#: includes/views/front/enhanced_tracking_events.php:40
+#: includes/views/front/enhanced_tracking_events.php:42
 msgid ""
 "Tracking is still not yet available for this shipment, please try again "
 "later."
 msgstr ""
 "Bu gönderi için takip henüz mevcut değil, lütfen daha sonra tekrar deneyin."
 
-#: includes/views/shipments.php:38 includes/views/dashboard.php:88
+#: includes/views/shipments.php:34 includes/views/dashboard.php:83
 msgid "Tracking Issues"
 msgstr "İzleme Sorunları"
 
-#: includes/views/dashboard.php:66
+#: includes/views/dashboard.php:61
 msgid "Tracking Issues for last 30 days"
 msgstr "Son 30 güne ait Takip Sorunları"
 
-#: includes/class-wc-trackship-admin.php:847
+#: includes/class-wc-trackship-admin.php:845
 #: templates/tracking/tracking-form.php:106
 #: templates/tracking/tracking-form.php:116
 #: templates/emails/exception-shipment-email.php:18
@@ -1346,7 +1359,7 @@ msgstr "Son 30 güne ait Takip Sorunları"
 msgid "Tracking Number"
 msgstr "Takip numarası"
 
-#: includes/class-wc-trackship-actions.php:770
+#: includes/class-wc-trackship-actions.php:768
 msgid "Tracking number not found"
 msgstr "Takip numarası bulunamadı"
 
@@ -1386,13 +1399,15 @@ msgstr ""
 msgid "TrackShip Provider"
 msgstr "TrackShip Sağlayıcı"
 
-#: includes/views/shipments.php:18 includes/views/dashboard.php:26
-msgid "TrackShip Shipments table does not exist, Please try after few minutes"
-msgstr ""
-"TrackShip Gönderileri tablosu mevcut değil, lütfen birkaç dakika sonra "
-"deneyin"
+#: includes/views/shipments.php:8 includes/views/dashboard.php:16
+msgid "TrackShip Shipments database table does not exist."
+msgstr "TrackShip Gönderileri veritabanı tablosu mevcut değil."
 
-#: includes/class-wc-trackship-admin.php:850 includes/views/logs.php:54
+#: includes/views/shipments.php:13 includes/views/dashboard.php:21
+msgid "TrackShip Shipments meta database table does not exist."
+msgstr "TrackShip Gönderileri meta veritabanı tablosu mevcut değil."
+
+#: includes/class-wc-trackship-admin.php:848 includes/views/logs.php:54
 msgid "Type"
 msgstr "Tip"
 
@@ -1405,16 +1420,16 @@ msgstr "Sipariş bulunamadı."
 msgid "Unable to locate the order. or Invalid order key"
 msgstr "Sipariş bulunamadı. veya Geçersiz sipariş anahtarı"
 
-#: includes/class-wc-trackship-actions.php:749
+#: includes/class-wc-trackship-actions.php:747
 msgid "Unauthorized"
 msgstr "Yetkisiz"
 
-#: includes/class-wc-trackship-actions.php:659
-#: includes/class-wc-trackship-actions.php:725
+#: includes/class-wc-trackship-actions.php:657
+#: includes/class-wc-trackship-actions.php:723
 msgid "Unknown"
 msgstr "Bilinmeyen"
 
-#: includes/trackship-email-manager.php:330
+#: includes/trackship-email-manager.php:336
 #: includes/customizer/class-trackship-email-preview.php:186
 msgid "Unsubscribe"
 msgstr "abonelikten çık"
@@ -1423,51 +1438,51 @@ msgstr "abonelikten çık"
 msgid "Updated at"
 msgstr "Güncelleme tarihi:"
 
-#: includes/views/tools.php:31
+#: includes/views/tools.php:32
 msgid "Updating tracking details during migration from older to newer version."
 msgstr ""
 "Eski sürümden yeni sürüme geçiş sırasında izleme ayrıntıları güncelleniyor."
 
-#: includes/class-wc-trackship-admin.php:807
+#: includes/class-wc-trackship-admin.php:805
 msgid "UPGRADE TO PRO"
 msgstr "PRO'YA YÜKSELT"
 
-#: includes/views/dashboard.php:118
+#: includes/views/dashboard.php:113
 msgid "Upgrade to Pro"
 msgstr "Pro'ya yükselt"
 
-#: includes/class-wc-trackship-admin.php:792
+#: includes/class-wc-trackship-admin.php:790
 msgid "Upgrade to TrackShip Pro"
 msgstr "TrackShip Pro'ya yükseltin"
 
-#: includes/class-wc-trackship-actions.php:776
+#: includes/class-wc-trackship-actions.php:774
 msgid "User not found for this key"
 msgstr "Bu anahtar için kullanıcı bulunamadı"
 
-#: includes/views/tools.php:24
+#: includes/views/tools.php:25
 msgid "Verify DB Structure"
 msgstr "Veritabanı Yapısını Doğrulayın"
 
-#: includes/views/tools.php:23
+#: includes/views/tools.php:24
 msgid "Verify if all TrackShip database tables are present."
 msgstr ""
 "Tüm TrackShip veritabanı tablolarının mevcut olup olmadığını doğrulayın."
 
-#: includes/views/dashboard.php:209
+#: includes/views/dashboard.php:204
 msgid "View detailed stats"
 msgstr "Ayrıntılı istatistikleri görüntüleyin"
 
 #: includes/views/front/preview_tracking_page.php:173
-#: includes/views/front/layout1_tracking_details.php:165
+#: includes/views/front/layout1_tracking_details.php:168
 msgid "view less"
 msgstr "daha az görüntüle"
 
 #: includes/views/front/preview_tracking_page.php:172
-#: includes/views/front/layout1_tracking_details.php:164
+#: includes/views/front/layout1_tracking_details.php:167
 msgid "view more"
 msgstr "daha fazla göster"
 
-#: includes/class-wc-trackship-actions.php:984
+#: includes/class-wc-trackship-actions.php:982
 msgid "View Shipment log"
 msgstr "Gönderi günlüğünü görüntüle"
 
@@ -1477,7 +1492,7 @@ msgid "View your order details"
 msgstr "Sipariş ayrıntılarınızı görüntüleyin"
 
 #. %s: search for a orders
-#: includes/views/tools.php:13
+#: includes/views/tools.php:14
 #, php-format
 #| msgid ""
 #| "We detected %1$s Shipped orders from the last 30 days that were not sent "
@@ -1505,7 +1520,7 @@ msgid "We detected %d On Hold shipments:"
 msgstr "%d Bekletilen gönderi tespit ettik:"
 
 #. %s: replace with Partially Shipped order count
-#: includes/class-wc-trackship-admin.php:929
+#: includes/class-wc-trackship-admin.php:927
 #, php-format
 msgid ""
 "We detected %s orders that use the Delivered order status, You can reassign "
@@ -1515,7 +1530,7 @@ msgstr ""
 "siparişleri farklı bir duruma yeniden atayabilirsiniz"
 
 #. %s: search for a total_orders
-#: includes/class-wc-trackship-admin.php:547
+#: includes/class-wc-trackship-admin.php:545
 #, php-format
 #| msgid ""
 #| "We detected %s Shipped orders from the last 30 days that were not sent to "
@@ -1594,7 +1609,7 @@ msgstr ""
 "WooCommerce için TrackShip'i kullanmak için %1$sGönderi İzleme eklentisi%2$s "
 "kurulu olmalıdır."
 
-#: includes/views/dashboard.php:128
+#: includes/views/dashboard.php:123
 msgid ""
 "You must have a Shipment Tracking plugin installed to use TrackShip for "
 "WooCommerce."

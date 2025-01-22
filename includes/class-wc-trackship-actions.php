@@ -143,24 +143,6 @@ class WC_Trackship_Actions {
 	* Load trackship styles.
 	*/
 	public function trackship_styles( $hook ) {
-		?>
-		<style>
-			trackship-icon {
-				content: "";
-				display: inline-block;
-				height: 15px;
-				width: 18px;
-				background-image: url( <?php echo esc_url(trackship_for_woocommerce()->plugin_dir_url() . 'includes/analytics/assets/ts.svg'); ?> );
-				background-size: contain;
-				background-repeat: no-repeat;
-				background-position: center;
-				filter: invert(100%);
-				margin-right: 0.5em;
-				vertical-align: text-bottom;
-			}
-		</style>
-		<?php
-
 		$screen = get_current_screen(); 
 
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
@@ -985,11 +967,7 @@ class WC_Trackship_Actions {
 			</div>
 		<?php } else { ?>
 			<?php
-			if ( isset( $item['tracking_provider'] ) && '' != $item['tracking_provider'] ) {
-				$tracking_provider = $item['tracking_provider'];
-			} else {
-				$tracking_provider = isset( $item['custom_tracking_provider'] ) ? $item['custom_tracking_provider'] : '';
-			}
+			$tracking_provider = ! empty( $item['formatted_tracking_provider'] ) ? $item['formatted_tracking_provider'] : ( !empty( $item['tracking_provider'] ) ? $item['tracking_provider'] : $item['custom_tracking_provider'] ) ;
 			$tracking_provider = apply_filters( 'convert_provider_name_to_slug', $tracking_provider );
 			
 			$bool = apply_filters( 'exclude_to_send_data_for_provider', true, $tracking_provider );
