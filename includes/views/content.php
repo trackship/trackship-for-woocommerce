@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 'settings';
 ?>
 <div class="woocommerce trackship_admin_layout">
-	<span class="woocommerce-layout__activity-panel"><?php include 'header-sidebar.php'; ?></span>
+	<span class="ts_activity-panel"><?php include 'header-sidebar.php'; ?></span>
 	<div class="trackship_admin_content" >
 		<div class="trackship_nav_div">
 			<?php
