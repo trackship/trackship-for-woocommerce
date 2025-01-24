@@ -755,14 +755,14 @@ jQuery(document).on("click", ".inner_tab_section .heading_panel", function () {
 
 jQuery(document).on("click", "#activity-panel-tab-help", function () {
 	jQuery(this).addClass('is-active');
-	jQuery('.woocommerce-layout__activity-panel-wrapper').addClass('is-open is-switching');
+	jQuery('.ts_activity-panel-wrapper').addClass('is-open is-switching');
 });
 
 jQuery(document).on("click", function ( event ) {
-	var $trigger = jQuery(".woocommerce-layout__activity-panel");
+	var $trigger = jQuery(".ts_activity-panel");
 	if ($trigger !== event.target && !$trigger.has(event.target).length) {
 		jQuery('#activity-panel-tab-help').removeClass('is-active');
-		jQuery('.woocommerce-layout__activity-panel-wrapper').removeClass('is-open is-switching');
+		jQuery('.ts_activity-panel-wrapper').removeClass('is-open is-switching');
 	}
 });
 

@@ -94,7 +94,7 @@ $menu_items = array(
 <?php if ( in_array( $page_slug, array( 'trackship-shipments', 'trackship-dashboard', 'trackship-logs' ) ) && is_trackship_connected() ) { ?>
 	<div class="fullfillment_header">
 		<h2 class="fullfillment_header_h2"><?php echo esc_html($tittle); ?></h2>
-		<span class="woocommerce-layout__activity-panel">
+		<span class="ts_activity-panel">
 			<?php include 'header-sidebar.php'; ?>
 		</span>
 	</div>
