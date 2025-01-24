@@ -168,7 +168,7 @@ class WC_Trackship_Actions {
 		$page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
 
 		if ( 'shop_order' === $screen->post_type || 'wc-orders' == $page ) {
-			wp_enqueue_style( 'trackshipcss' );
+			// wp_enqueue_style( 'trackshipcss' );
 			wp_enqueue_script( 'trackship_script' );
 			
 			//front_style for tracking widget
