@@ -16,7 +16,7 @@ class WOO_Order_Tracking_TS4WC {
 	 * Initialize the main plugin function
 	*/
 	public function __construct() {
-		$this->init();
+		
 	}
 	
 	/**
@@ -31,18 +31,6 @@ class WOO_Order_Tracking_TS4WC {
 		}
 
 		return self::$instance;
-	}
-
-	/*
-	* init from parent mail class
-	*/
-	public function init() {
-		add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ) );
-	}
-
-	public function on_plugins_loaded () {
-		// View Order Page.
-		add_action( 'woocommerce_email_before_order_table', array( trackship_for_woocommerce()->front, 'wc_shipment_tracking_email_display' ), 0, 4 );
 	}
 
 	public function woo_orders_tracking_items( $order_id ) {
@@ -94,7 +82,7 @@ class WOO_Order_Tracking_TS4WC {
 							'formatted_tracking_link'		=> $value->carrier_url,
 							'tracking_id'					=> '',
 							'date_shipped'					=> $value->time,
-							'tracking_page_link'				=> trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $value->tracking_number ),
+							'tracking_page_link'			=> trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $value->tracking_number ),
 							'products_list'					=> $product_array,
 						);
 						$i++;
@@ -123,7 +111,7 @@ class WOO_Order_Tracking_TS4WC {
 						'formatted_tracking_link'		=> $tracking_data->carrier_url,
 						'tracking_id'					=> '',
 						'date_shipped'					=> $tracking_data->time,
-						'tracking_page_link'			=> trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $value->tracking_number ),
+						'tracking_page_link'			=> trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $tracking_data->tracking_number ),
 						'products_list'					=> $product_array,
 					);
 					$i++;
@@ -142,7 +130,7 @@ class WOO_Order_Tracking_TS4WC {
 			'formatted_tracking_link'		=> '',
 			'tracking_number'				=> $_wot_tracking_number,
 			'tracking_id'					=> '',
-			'tracking_page_link'			=> trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $value->tracking_number ),
+			'tracking_page_link'			=> trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $_wot_tracking_number ),
 			'date_shipped'					=> time(),
 		);
 		return $tracking_items;
