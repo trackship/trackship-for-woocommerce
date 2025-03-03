@@ -234,6 +234,16 @@ jQuery(document).on("change", ".zoremmail-checkbox.ts4wc_provider_logo", functio
 	jQuery('.pending_change_event').append(pend_change.includes('&#shipping_provider_logo') ? '' : '&#shipping_provider_logo');
 });
 
+jQuery(document).on("change", ".zoremmail-checkbox.ts_last_event", function () {
+	if (jQuery(this).prop("checked") == true) {
+		jQuery("#tracking_widget_privew").contents().find( '.tracking_widget_last_event' ).show();
+	} else {
+		jQuery("#tracking_widget_privew").contents().find( '.tracking_widget_last_event' ).hide();
+	}
+	var pend_change = jQuery(".pending_change_event").text();
+	jQuery('.pending_change_event').append(pend_change.includes('&#ts_last_event') ? '' : '&#ts_last_event');
+});
+
 // TrackShip branding for Tracking page and Email
 jQuery(document).on("change", "#email_trackship_branding, #show_trackship_branding", function () {
 	if (jQuery(this).prop("checked") == true) {
@@ -620,7 +630,7 @@ if ( jQuery.fn.wpColorPicker ) {
 	jQuery('#border_color').wpColorPicker({
 		change: function(e, ui) {
 			var color = ui.color.toString();
-			jQuery("#tracking_widget_privew").contents().find('div.tracking_index.display-table, div.tracking_index .tracking_widget_bottom' ).css( 'border-color', color );
+			jQuery("#tracking_widget_privew").contents().find('div.tracking_index.display-table, div.tracking_index .tracking_widget_bottom, .tracking_widget_last_event' ).css( 'border-color', color );
 			var pend_color = jQuery(".pending_color_event").text();
 			jQuery('.pending_color_event').append(pend_color.includes('&#border_color') ? '' : '&#border_color');
 			setting_change_trigger();
