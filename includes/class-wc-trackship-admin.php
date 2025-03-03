@@ -526,6 +526,12 @@ class WC_Trackship_Admin {
 				'docs'	=> 'https://docs.trackship.com/docs/trackship-for-woocommerce/integration/klaviyo/',
 				'image' => trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/integrations/klaviyo.png',
 			),
+			'omnisend' => array(
+				'title'	=> 'Omnisend',
+				'value'	=> get_trackship_settings( 'omnisend', ''),
+				'docs'	=> '',
+				'image' => trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/integrations/omnisend.png',
+			),
 		);
 		return $integrations;
 	}
