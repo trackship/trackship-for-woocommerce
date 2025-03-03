@@ -132,7 +132,7 @@ class WOO_Klaviyo_TS4WC {
 							'type' => 'profile',
 							'attributes' => array(
 								'email'			=> $order ? $order->get_billing_email() : '',
-								'phone_number'	=> $this->get_formated_number($phone, $order),
+								'phone_number'	=> trackship_for_woocommerce()->actions->get_formated_number($phone, $order),
 								'first_name'	=> $order ? $order->get_billing_first_name() : '',
 								'last_name'		=> $order ? $order->get_billing_last_name() : '',
 								'location'		=> array(
@@ -172,52 +172,5 @@ class WOO_Klaviyo_TS4WC {
 		$context = array( 'source' => 'trackship-klaviyo-response' );
 		$logger->info( "Response \n" . $content . "\n", $context );
 
-	}
-
-	public function get_formated_number($phone, $order) {
-		
-		// Check if number do not starts with '+'
-		if ( '+' != substr( $phone, 0, 1 ) ) {
-			$customer_country = ! empty( $order ) ? $order->get_billing_country() : '';
-			$shop_country = substr( get_option( 'woocommerce_default_country' ), 0, 2 );
-			$country_code = $customer_country ?? $shop_country;
-
-			$WC_Countries = new WC_Countries();
-			$calling_code = $WC_Countries->get_country_calling_code( $country_code );
-
-			// remove leading zero
-			$phone = preg_replace( '/^0/', '', $phone );
-
-			$phone = $this->country_special_cases( $phone, $country_code, $calling_code );
-
-			// Check if number has country code
-			if ( substr( $phone, 0, strlen( substr($calling_code, 1) ) ) != $calling_code ) {
-				$phone = $calling_code . $phone;
-			}
-		}
-		return $phone;
-	}
-
-	public function country_special_cases( $phone, $country_code, $calling_code ) {
-
-		switch ( $country_code ) {
-			case 'IT':
-				if ( strlen( $phone ) <= apply_filters( 'smswoo_italian_numbers_length', 10 ) ) {
-					$mobile_prefixes = apply_filters( 'smswoo_italian_prefixes', array( '390', '391', '392', '393', '397' ) );
-					if ( in_array( substr( $phone, 0, 3 ), $mobile_prefixes ) ) {
-						$phone = $calling_code . $phone;
-					}
-				}
-				break;
-			case 'NO':
-				if ( strlen( $phone ) <= apply_filters( 'smswoo_norwegian_numbers_length', 8 ) ) {
-					$mobile_prefixes = apply_filters( 'smswoo_norwegian_prefixes', array( '47' ) );
-					if ( in_array( substr( $phone, 0, 2 ), $mobile_prefixes ) ) {
-						$phone = $calling_code . $phone;
-					}
-				}
-				break;
-		}
-		return $phone;
 	}
 }

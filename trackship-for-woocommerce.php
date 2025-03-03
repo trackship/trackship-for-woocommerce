@@ -44,6 +44,7 @@ class Trackship_For_Woocommerce {
 	public $smswoo_init;
 	public $wot_ts;
 	public $kly_ts;
+	public $omn_ts;
 
 	/**
 	 * Initialize the main plugin function
@@ -228,6 +229,11 @@ class Trackship_For_Woocommerce {
 			require_once plugin_dir_path( __FILE__ ) . '/includes/integration/class-klaviyo-integration.php';
 			$this->kly_ts = WOO_Klaviyo_TS4WC::get_instance();
 		}
+
+		if ( $this->is_active_omnisend() ) {
+			require_once plugin_dir_path( __FILE__ ) . '/includes/integration/class-omnisend-integration.php';
+			$this->omn_ts = WOO_Omnisend_TS4WC::get_instance();
+		}
 	}
 	
 	/**
@@ -349,6 +355,20 @@ class Trackship_For_Woocommerce {
 		return is_plugin_active( 'klaviyo/klaviyo.php' ) ? true : false;
 	}
 	
+	/**
+	 * Check if Omnisend is active
+	 *
+	 * @since 1.6.3
+	 * @return bool
+	*/
+	public function is_active_omnisend() {
+		
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		}
+
+		return is_plugin_active( 'omnisend-connect/omnisend-woocommerce.php' ) ? true : false;
+	}
 
 	/**
 	 * Check if Yith order Tracking is active
