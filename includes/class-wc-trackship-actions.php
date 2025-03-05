@@ -1455,6 +1455,7 @@ class WC_Trackship_Actions {
 					'order_id'			=> $order_id,
 					'tracking_number'	=> $tracking_number,
 				);
+				
 				$query['shipment_update'] = $wpdb->update( $shipment_table, $args, $where );
 				if ( false === $query['shipment_update'] ) {
 					$query['shipment_update_error'] = $wpdb->last_error;
