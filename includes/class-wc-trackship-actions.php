@@ -1455,7 +1455,6 @@ class WC_Trackship_Actions {
 					'order_id'			=> $order_id,
 					'tracking_number'	=> $tracking_number,
 				);
-
 				if ( isset($args2['tracking_events']) && $args2['tracking_events'] && isset($args['last_event_time']) && $args['last_event_time'] ) {
 					$row->tracking_events = $args2['tracking_events'];
 					$row->last_event_time = $args['last_event_time'];
@@ -1465,7 +1464,6 @@ class WC_Trackship_Actions {
 						$args['ship_length_updated'] = gmdate('Y-m-d');
 					}
 				}
-				
 				$query['shipment_update'] = $wpdb->update( $shipment_table, $args, $where );
 				if ( false === $query['shipment_update'] ) {
 					$query['shipment_update_error'] = $wpdb->last_error;
