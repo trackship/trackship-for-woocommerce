@@ -51,10 +51,10 @@ class WC_Trackship_Admin {
 		add_action( 'wp_ajax_verify_database_table', array( $this, 'verify_database_table' ) );
 		add_action( 'wp_ajax_ts_bulk_migration', array( $this, 'ts_bulk_migration' ) );
 		add_action( 'wp_ajax_trackship_mapping_form_update', array( $this, 'trackship_custom_mapping_form_update') );
-		add_action( 'wp_ajax_trackship_integration_form_update', array( $this, 'trackship_integration_form_update_callback') );
+		add_action( 'wp_ajax_trackship_integration_form_update', array( $this, 'trackship_integration_form_update_cb') );
 
 		add_filter( 'convert_provider_name_to_slug', array( $this, 'detect_custom_mapping_provider') );	
-		add_action( 'wp_ajax_ts_late_shipments_email_form_update', array( $this, 'ts_late_shipments_email_form_update_callback' ) );
+		add_action( 'wp_ajax_ts_late_shipments_email_form_update', array( $this, 'ts_late_shipments_email_form_update_cb' ) );
 		add_action( 'wp_ajax_dashboard_page_count_query', array( $this, 'dashboard_page_count_query' ) );
 		
 		add_action( 'add_meta_boxes', array( $this, 'register_metabox') );
@@ -565,6 +565,7 @@ class WC_Trackship_Admin {
 			'status' => 'wc-completed',
 			'limit'	 => 100,
 			'date_created' => '>' . ( time() - 2592000 ),
+			'type' => 'shop_order',
 		);
 		$orders = wc_get_orders( $args );
 		
@@ -572,7 +573,6 @@ class WC_Trackship_Admin {
 		
 		foreach ( $orders as $order ) {
 			$order_id = $order->get_id();
-			$order = wc_get_order( $order_id );
 			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 			
 			if ( $tracking_items ) {
@@ -592,33 +592,17 @@ class WC_Trackship_Admin {
 	* return number
 	*/
 	public function completed_order_with_zero_balance() {
-		
-		// Get orders completed.
-		$args = array(
-			'status' => 'wc-completed',
-			'limit'	 => 100,	
-			'date_created' => '>' . ( time() - 2592000 ),
-		);
-		
-		$orders = wc_get_orders( $args );
-		
-		$completed_order_with_zero_balance = 0;
-		
-		foreach ( $orders as $order ) {
-			$order_id = $order->get_id();
-			$order = wc_get_order( $order_id );
-			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
-			
-			if ( $tracking_items ) {
-				foreach ( $tracking_items as $key => $tracking_item ) {
-					$row = trackship_for_woocommerce()->actions->get_shipment_row($order_id, $tracking_item['tracking_number']);
-					if ( isset( $row->pending_status ) && 'insufficient_balance' == $row->pending_status ) {
-						$completed_order_with_zero_balance++;
-					}
-				}
-			}
-		}
-		return $completed_order_with_zero_balance;
+		global $wpdb;
+		//total insufficient_balance shipment count
+		$shipments_count = $wpdb->get_var("
+			SELECT
+				COUNT(*)
+				FROM {$wpdb->prefix}trackship_shipment
+			WHERE 
+				pending_status LIKE 'insufficient_balance'
+				AND shipping_date > NOW() - INTERVAL 30 DAY
+		", 0 );
+		return $shipments_count;
 	}
 	
 	/*
@@ -626,33 +610,17 @@ class WC_Trackship_Admin {
 	* return number
 	*/
 	public function completed_order_with_do_connection() {
-		
-		// Get orders completed.
-		$args = array(
-			'status' => 'wc-completed',
-			'limit'	 => 100,
-			'date_created' => '>' . ( time() - 2592000 ),
-		);
-		
-		$orders = wc_get_orders( $args );
-		
-		$completed_order_with_do_connection = 0;
-		
-		foreach ( $orders as $order ) {
-			$order_id = $order->get_id();
-			$order = wc_get_order( $order_id );
-			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
-			
-			if ( $tracking_items ) {
-				foreach ( $tracking_items as $key => $tracking_item ) {
-					$row = trackship_for_woocommerce()->actions->get_shipment_row($order_id, $tracking_item['tracking_number']);
-					if ( isset( $row->pending_status ) && in_array( $row->pending_status, array( 'connection_issue', 'unauthorized' ) ) ) {
-						$completed_order_with_do_connection++;
-					}
-				}
-			}
-		}
-		return $completed_order_with_do_connection;
+		global $wpdb;
+		//total insufficient_balance shipment count
+		$shipments_count = $wpdb->get_var("
+			SELECT
+				COUNT(*)
+				FROM {$wpdb->prefix}trackship_shipment
+			WHERE 
+				pending_status IN ( 'connection_issue', 'unauthorized', 'unauthorized_api_key', 'unauthorized_store', 'unauthorized_store_api_key' )
+				AND shipping_date > NOW() - INTERVAL 30 DAY
+		", 0 );
+		return $shipments_count;
 	}
 	
 	/** 
@@ -1134,7 +1102,7 @@ class WC_Trackship_Admin {
 		wp_send_json( array( 'success' => 'true' ) );
 	}
 
-	public function trackship_integration_form_update_callback() {
+	public function trackship_integration_form_update_cb() {
 		check_ajax_referer( 'ts_integrations', 'integrations_nonce' );
 		$integrations = $this->get_trackship_integrations_data();
 		foreach ( $integrations as $key => $value ) {
@@ -1184,21 +1152,11 @@ class WC_Trackship_Admin {
 		}
 		return $tracking_provider;
 	}
-
-	/*
-	* number of days
-	*/
-	public function get_num_of_days( $first_date, $last_date ) {
-		$date1 = strtotime($first_date);
-		$date2 = strtotime($last_date);
-		$diff = abs($date2 - $date1);
-		return gmdate( 'd', $diff );
-	}
 	
 	/*
 	* late shipments form save
 	*/
-	public function ts_late_shipments_email_form_update_callback() {
+	public function ts_late_shipments_email_form_update_cb() {
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			exit( 'You are not allowed' );
 		}
@@ -1357,14 +1315,6 @@ class WC_Trackship_Admin {
 			),
 		);
 		return $notifications_data;
-	}
-	
-	public function calculate_percent( $first, $second ) {
-		if ( 0 == $second ) {
-			return '';
-		}
-		$percent = $first * 100 / $second;
-		return '(' . round( $percent, 2 ) . '%)';
 	}
 
 	/*
