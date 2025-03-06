@@ -131,6 +131,12 @@ class WC_Trackship_Shipments {
 			case 'delivered':
 				$where[] = "shipment_status = 'delivered'";
 				break;
+			case 'pending_trackship':
+				$where[] = "pending_status = 'pending_trackship'";
+				break;
+			case 'carrier_unsupported':
+				$where[] = "pending_status = 'carrier_unsupported'";
+				break;
 			case 'late_shipment':
 				$where[] = "shipping_length > {$days}";
 				break;
@@ -138,7 +144,7 @@ class WC_Trackship_Shipments {
 				$where[] = "(shipping_length > {$days} AND shipment_status NOT IN ('delivered', 'return_to_sender'))";
 				break;
 			case 'tracking_issues':
-				$where[] = "shipment_status NOT IN ('delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup') OR pending_status IS NOT NULL";
+				$where[] = "( shipment_status NOT IN ('delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup') OR pending_status IS NOT NULL )";
 				break;
 			case 'active':
 				$where[] = "shipment_status NOT IN ('delivered', 'return_to_sender')";
@@ -243,6 +249,11 @@ class WC_Trackship_Shipments {
 	*/
 	public function get_shipment_length( $row ) {
 
+		$status = $row->shipment_status;
+		if ( in_array($status, ['pending_trackship', 'carrier_unsupported', 'unknown', 'insufficient_balance', 'label_cancelled', 'invalid_tracking', 'invalid_carrier', 'pending', 'unauthorized', 'deleted', 'connection_issue', 'ssl_error', 'expired', 'missing_order_id', 'missing_tracking', 'missing_carrier', 'unauthorized_api_key', 'unauthorized_store', 'unauthorized_store_api_key', 'shipped', '']) ) {
+			return;
+		}
+
 		$tracking_events = $row->tracking_events ? json_decode($row->tracking_events) : $row->tracking_events;
 		if ( empty($tracking_events ) || 0 == count( $tracking_events ) ) {
 			return 0;
@@ -254,8 +265,7 @@ class WC_Trackship_Shipments {
 		$first_date = $first['datetime'];
 		$last_date = $row->last_event_time ? $row->last_event_time : gmdate('Y-m-d H:i:s');
 		
-		$status = $row->shipment_status;
-		if ( 'delivered' != $status ) {
+		if ( !in_array( $status, ['delivered', 'return_to_sender'] ) ) {
 			$last_date = gmdate('Y-m-d H:i:s');
 		}
 		$days = $this->get_num_of_days( $first_date, $last_date );
