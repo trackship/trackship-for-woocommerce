@@ -29,9 +29,17 @@ $ship_status = array(
 	'delivered'				=> __( 'Delivered', 'trackship-for-woocommerce' ),
 	'return_to_sender'		=> __( 'Return To Sender', 'trackship-for-woocommerce' ),
 	'available_for_pickup'	=> __( 'Available For Pickup', 'trackship-for-woocommerce' ),
+	'failure'				=> __( 'Delivery Failure', 'trackship-for-woocommerce' ),
+	'expired'				=> __( 'Expired', 'trackship-for-woocommerce' ),
 	'late_shipment'			=> __( 'Late Shipments', 'trackship-for-woocommerce' ),
 	'active_late'			=> __( 'Active Late Shipments', 'trackship-for-woocommerce' ),
+	'unknown'				=> __( 'Unknown', 'trackship-for-woocommerce' ),
+	'label_cancelled'		=> __( 'Label Cancelled', 'trackship-for-woocommerce' ),
+	'invalid_tracking'		=> __( 'Invalid Tracking', 'trackship-for-woocommerce' ),
+	'invalid_carrier'		=> __( 'Invalid Carrier', 'trackship-for-woocommerce' ),
+	'carrier_unsupported'	=> __( 'Carrier Unsupported', 'trackship-for-woocommerce' ),
 	'tracking_issues'		=> __( 'Tracking Issues', 'trackship-for-woocommerce' ),
+	'pending_trackship'		=> __( 'Pending Update', 'trackship-for-woocommerce' ),
 );
 $columns = array(
 	1 => 'Order',
@@ -64,7 +72,9 @@ $issues_count = $wpdb->get_row( $wpdb->prepare( "SELECT
 	SUM( IF( shipment_status != ( 'delivered'), 1, 0 ) ) as active,
 	SUM( IF(shipment_status NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' ) OR pending_status IS NOT NULL, 1, 0) ) as tracking_issues,
 	SUM( IF(shipping_length > %d, 1, 0) ) as late_shipment,
-	SUM( IF(shipping_length > %d AND shipment_status NOT IN ('delivered', 'return_to_sender'), 1, 0) ) as active_late
+	SUM( IF(shipping_length > %d AND shipment_status NOT IN ('delivered', 'return_to_sender'), 1, 0) ) as active_late,
+	SUM( IF(pending_status LIKE 'pending_trackship', 1, 0) ) as pending_trackship,
+	SUM( IF(pending_status LIKE 'carrier_unsupported', 1, 0) ) as carrier_unsupported
 FROM {$wpdb->prefix}trackship_shipment", $days, $days), ARRAY_A);
 
 $shipment_count = array_merge($shipment_count, $issues_count);
