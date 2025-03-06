@@ -2,7 +2,7 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 1.9.0
+ * Version: 1.9.0.3
  * Author: TrackShip
  * Author URI: https://trackship.com/
  * License: GPL-2.0+
@@ -24,7 +24,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.9.0';
+	public $version = '1.9.0.3';
 	public $plugin_path;
 	public $ts_install;
 	public $ts_actions;
@@ -44,6 +44,7 @@ class Trackship_For_Woocommerce {
 	public $smswoo_init;
 	public $wot_ts;
 	public $kly_ts;
+	public $omn_ts;
 
 	/**
 	 * Initialize the main plugin function
@@ -228,6 +229,11 @@ class Trackship_For_Woocommerce {
 			require_once plugin_dir_path( __FILE__ ) . '/includes/integration/class-klaviyo-integration.php';
 			$this->kly_ts = WOO_Klaviyo_TS4WC::get_instance();
 		}
+
+		if ( $this->is_active_omnisend() ) {
+			require_once plugin_dir_path( __FILE__ ) . '/includes/integration/class-omnisend-integration.php';
+			$this->omn_ts = WOO_Omnisend_TS4WC::get_instance();
+		}
 	}
 	
 	/**
@@ -282,9 +288,9 @@ class Trackship_For_Woocommerce {
 		$name = is_trackship_connected() ? __( 'Settings', 'trackship-for-woocommerce' ) : __( 'Connect a Store', 'trackship-for-woocommerce' );
 		$links = array_merge( array(
 			'<a href="' . esc_url( $admin_url ) . '">' . esc_html__( $name ) . '</a>',
-			'<a href="https://docs.trackship.com/docs/trackship-for-woocommerce/">' . __( 'Docs' ) . '</a>',
+			'<a href="https://docs.trackship.com/docs/trackship-for-woocommerce/">' . __( 'Docs', 'trackship-for-woocommerce' ) . '</a>',
 			'<a href="https://wordpress.org/support/plugin/trackship-for-woocommerce/#new-topic-0">' . __( 'Support' ) . '</a>',
-			'<a href="https://wordpress.org/support/plugin/trackship-for-woocommerce/reviews/#new-post">' . __( 'Review' ) . '</a>'
+			'<a href="https://wordpress.org/support/plugin/trackship-for-woocommerce/reviews/#new-post">' . __( 'Review', 'trackship-for-woocommerce' ) . '</a>'
 		), $links );
 		return $links;
 	}
@@ -349,6 +355,20 @@ class Trackship_For_Woocommerce {
 		return is_plugin_active( 'klaviyo/klaviyo.php' ) ? true : false;
 	}
 	
+	/**
+	 * Check if Omnisend is active
+	 *
+	 * @since 1.6.3
+	 * @return bool
+	*/
+	public function is_active_omnisend() {
+		
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		}
+
+		return is_plugin_active( 'omnisend-connect/omnisend-woocommerce.php' ) ? true : false;
+	}
 
 	/**
 	 * Check if Yith order Tracking is active

@@ -249,20 +249,20 @@ class TS4WC_Admin_Customizer {
 	*/
 	public function wcast_shipment_settings_defaults( $status ) {
 		$name = $status;
-		$name = 'intransit' == $status ? 'In transit' : $name;
-		$name = 'availableforpickup' == $status ? 'Available For Pickup' : $name;
-		$name = 'outfordelivery' == $status ? 'Out For Delivery' : $name;
-		$name = 'failure' == $status ? 'Delivery Failure' : $name;
-		$name = 'onhold' == $status ? 'On hold' : $name;
-		$name = 'exception' == $status ? 'Exception' : $name;
-		$name = 'returntosender' == $status ? 'Return To Sender' : $name;
-		$name = 'delivered_status' == $status ? 'Delivered' : $name;
-		$name = 'pickupreminder' == $status ? 'Available for Pickup Reminder' : $name;
+		$name = 'intransit' == $status ? __( 'In Transit', 'trackship-for-woocommerce' ) : $name;
+		$name = 'availableforpickup' == $status ? __( 'Available For Pickup', 'trackship-for-woocommerce' ) : $name;
+		$name = 'outfordelivery' == $status ? __( 'Out For Delivery', 'trackship-for-woocommerce' ) : $name;
+		$name = 'failure' == $status ? __( 'Delivery Failure', 'trackship-for-woocommerce' ) : $name;
+		$name = 'onhold' == $status ? __( 'On Hold', 'trackship-for-woocommerce' ) : $name;
+		$name = 'exception' == $status ? __( 'Exception', 'trackship-for-woocommerce' ) : $name;
+		$name = 'returntosender' == $status ? __( 'Return To Sender', 'trackship-for-woocommerce' ) : $name;
+		$name = 'delivered_status' == $status ? __( 'Delivered', 'trackship-for-woocommerce' ) : $name;
+		$name = 'pickupreminder' == $status ? __( 'Available for Pickup Reminder', 'trackship-for-woocommerce' ) : $name;
 		
-		$customizer_defaults = array(			
-			'wcast_' . $status . '_email_subject' => __( 'Your order #{order_number} is ' . $name, 'trackship-for-woocommerce' ),
-			'wcast_' . $status . '_email_heading' => __( $name, 'trackship-for-woocommerce' ),
-			'wcast_' . $status . '_email_content' => __( "Hi there. we thought you'd like to know that your recent order from {site_title} is {$name}", 'trackship-for-woocommerce' ),
+		$customizer_defaults = array(
+			'wcast_' . $status . '_email_subject' => sprintf( __( 'Your order #%s is %s', 'trackship-for-woocommerce' ), '{order_number}', $name ),
+			'wcast_' . $status . '_email_heading' => $name,
+			'wcast_' . $status . '_email_content' => sprintf( __( "Hi there. We thought you'd like to know that your recent order from %s is %s", 'trackship-for-woocommerce' ), '{site_title}', $name ),
 			'wcast_pickupreminder_email_content' => __( "Hi there. we thought you'd like to know that your recent order from {site_title} is pending for pickup", 'trackship-for-woocommerce' ),
 			'wcast_enable_' . $status . '_email' => '',
 			'wcast_' . $status . '_show_order_details' => 1,
@@ -283,9 +283,10 @@ class TS4WC_Admin_Customizer {
 			'track_button_border_radius'	=> 0,
 			'show_trackship_branding'		=> 1,
 			'shipping_provider_logo'		=> 1,
+			'ts_last_event'					=> 0,
 			// Tracking form's defauls
 			'form_tab_view' 				=> 'both',
-			'form_button_Text'				=> __( 'Track Order', 'trackship-for-woocommerce' ),
+			'form_button_Text'				=> __( 'Track your order', 'trackship-for-woocommerce' ),
 			'form_button_color'				=> '#3c4858',
 			'form_button_text_color'		=> '#fff',
 			'form_button_border_radius'		=> 0,
@@ -327,6 +328,7 @@ class TS4WC_Admin_Customizer {
 		$track_button_border_radius = $this->get_value( 'shipment_email_settings', 'track_button_border_radius', $status );
 		$show_trackship_branding = $this->get_value( 'shipment_email_settings', 'show_trackship_branding', $status );
 		$shipping_provider_logo = $this->get_value( 'shipment_email_settings', 'shipping_provider_logo', $status );
+		$ts_last_event = $this->get_value( 'shipment_email_settings', 'ts_last_event', $status );
 		$reminder_days = $this->get_value( 'shipment_email_settings', 'pickupreminder_days', $status );
 
 		//Tracking page saved/default vaule
@@ -564,6 +566,15 @@ class TS4WC_Admin_Customizer {
 				'option_type'=> 'array',
 				'show'		=> true,
 				'class'		=> 'ts4wc_provider_logo',
+			),
+			'ts_last_event' => array(
+				'title'		=> esc_html__( 'Display latest event', 'trackship-for-woocommerce' ),
+				'default'	=> $ts_last_event,
+				'type'		=> 'checkbox',
+				'option_name'=> 'shipment_email_settings',
+				'option_type'=> 'array',
+				'show'		=> true,
+				'class'		=> 'ts_last_event',
 			),
 			// Tracking Page Settings
 			'heading5'	=> array(
@@ -1336,6 +1347,8 @@ class TS4WC_Admin_Customizer {
 			$row = (object) array(
 				'est_delivery_date'	=> '2021-07-30 15:28:02',
 				'shipment_status'	=> $status,
+				'last_event' => 'A shipping label has been prepared for your item. A delivery date will be provided when USPS receives the package; contact the shipper or shipping partner with any inquiries.',
+				'last_event_time' => '2021-07-28 18:18:56'
 			);
 		}
 		return $row;

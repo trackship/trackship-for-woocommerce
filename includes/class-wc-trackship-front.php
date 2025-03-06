@@ -784,8 +784,7 @@ class WC_TrackShip_Front {
 				$product_id = $variation_id;
 			}
 			
-			$products[$item_id] = array(
-				'item_id' => $item_id,
+			$products[] = array(
 				'product_id' => $product_id,
 				'product_name' => $item->get_name(),
 				'product_qty' => $item->get_quantity(),
@@ -798,7 +797,7 @@ class WC_TrackShip_Front {
 		
 		<ul class="tpi_product_tracking_ul">
 			<?php
-			foreach ( $products as $item_id => $product ) {
+			foreach ( $products as $id => $product ) {
 				$_product = wc_get_product( $product['product_id'] );
 				if ( $_product ) {
 					$image_size = array( 50, 50 );
@@ -878,7 +877,7 @@ class WC_TrackShip_Front {
 					if ( $product_list->product ) {
 						$product = wc_get_product( $product_list->product );
 						if ( $product ) {
-							$tpi_products[$product_list->item_id] = array(
+							$tpi_products[] = array(
 								'product_id' => $product_list->product,
 								'product_name' => $product->get_name(),
 								'product_qty' => $product_list->qty,

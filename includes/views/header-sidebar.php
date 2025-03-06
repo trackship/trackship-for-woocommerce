@@ -3,11 +3,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<div class="woocommerce-layout__activity-panel-tabs">
-	<button type="button" id="activity-panel-tab-help" class="components-button woocommerce-layout__activity-panel-tab"><span class="dashicons dashicons-menu"></span></button>
+<div class="ts_activity-panel-tabs">
+	<button type="button" id="activity-panel-tab-help" class="components-button ts_activity-panel-tab"><span class="dashicons dashicons-menu"></span></button>
 </div>
-<div class="woocommerce-layout__activity-panel-wrapper">
-	<div class="woocommerce-layout__activity-panel-content" id="activity-panel-true">
+<div class="ts_activity-panel-wrapper">
+	<div class="ts_activity-panel-content" id="activity-panel-true">
 		<div>
 			<ul class="woocommerce-list woocommerce-quick-links__list">
 				<?php foreach ( $menu_items as $item ) { ?>

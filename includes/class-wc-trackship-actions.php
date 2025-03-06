@@ -48,8 +48,8 @@ class WC_Trackship_Actions {
 		add_action( 'dokan_enqueue_scripts', array( $this, 'dokan_enqueue_scripts' ), 10 );
 		
 		//ajax save admin trackship settings
-		add_action( 'wp_ajax_wc_trackship_form_update', array( $this, 'wc_trackship_form_update_callback' ) );
-		add_action( 'wp_ajax_trackship_tracking_page_form_update', array( $this, 'trackship_tracking_page_form_update_callback' ) );
+		add_action( 'wp_ajax_wc_trackship_form_update', array( $this, 'wc_trackship_form_update_cb' ) );
+		add_action( 'wp_ajax_trackship_tracking_page_form_update', array( $this, 'trackship_tracking_page_form_update_cb' ) );
 
 		if ( is_trackship_connected() ) {
 			//add Shipment status column after tracking
@@ -94,8 +94,8 @@ class WC_Trackship_Actions {
 		// filter for shipment status icon
 		add_filter( 'trackship_status_icon_filter', array( $this, 'trackship_status_icon_filter_func' ), 10 , 2 );
 		
-		add_action( 'wp_ajax_update_shipment_status_email_status', array( $this, 'update_shipment_status_email_status_fun') );
-		add_action( 'wp_ajax_update_all_shipment_status_delivered', array( $this, 'update_all_shipment_status_delivered_fun') );
+		add_action( 'wp_ajax_update_shipment_status_email_status', array( $this, 'update_shipment_status_email_status_cb') );
+		add_action( 'wp_ajax_update_all_shipment_status_delivered', array( $this, 'update_all_shipment_status_delivered_cb') );
 
 		add_action( 'ast_shipment_tracking_end', array( $this, 'display_shipment_tracking_info'), 10, 2 );
 		
@@ -168,7 +168,7 @@ class WC_Trackship_Actions {
 		$page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
 
 		if ( 'shop_order' === $screen->post_type || 'wc-orders' == $page ) {
-			wp_enqueue_style( 'trackshipcss' );
+			// wp_enqueue_style( 'trackshipcss' );
 			wp_enqueue_script( 'trackship_script' );
 			
 			//front_style for tracking widget
@@ -308,7 +308,7 @@ class WC_Trackship_Actions {
 	/*
 	* settings form save
 	*/
-	public function wc_trackship_form_update_callback() {
+	public function wc_trackship_form_update_cb() {
 		
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			exit( 'You are not allowed' );
@@ -334,7 +334,7 @@ class WC_Trackship_Actions {
 	/*
 	* tracking page form save
 	*/
-	public function trackship_tracking_page_form_update_callback() {
+	public function trackship_tracking_page_form_update_cb() {
 		if ( ! empty( $_POST ) && check_admin_referer( 'trackship_tracking_page_form', 'trackship_tracking_page_form_nonce' ) ) {
 			
 			$admin = WC_Trackship_Admin::get_instance();
@@ -513,6 +513,7 @@ class WC_Trackship_Actions {
 			'status' => 'wc-completed',
 			'limit'	 => 100,
 			'date_created' => '>' . ( time() - 2592000 ),
+			'type' => 'shop_order',
 		);
 		$orders = wc_get_orders( $args );
 		foreach ( $orders as $order ) {
@@ -823,7 +824,7 @@ class WC_Trackship_Actions {
 	/*
 	* update all shipment status email status
 	*/
-	public function update_shipment_status_email_status_fun() {
+	public function update_shipment_status_email_status_cb() {
 		check_ajax_referer( 'tswc_shipment_status_email', 'security' );
 		$settings_data = isset( $_POST['settings_data'] ) ? wc_clean( $_POST['settings_data'] ) : '';
 
@@ -854,7 +855,7 @@ class WC_Trackship_Actions {
 	/*
 	* update all shipment status email status
 	*/
-	public function update_all_shipment_status_delivered_fun() {
+	public function update_all_shipment_status_delivered_cb() {
 		check_ajax_referer( 'all_status_delivered', 'security' );
 		$all_status = isset( $_POST['shipment_status_delivered'] ) ? wc_clean( $_POST['shipment_status_delivered'] ) : '';
 		update_option( 'all-shipment-status-delivered', $all_status );
@@ -916,7 +917,6 @@ class WC_Trackship_Actions {
 			return;
 		}
 
-		$date_format = $this->get_date_format();
 		$date_time_format = get_option( 'date_format' ) . ' ' . $this->get_time_format();
 		
 		if ( $row ) {
@@ -1019,7 +1019,7 @@ class WC_Trackship_Actions {
 					$tracking_number = $tracking_item['tracking_number'];
 					$tracking_provider = $tracking_item['tracking_provider'];
 					$api = new WC_TrackShip_Api_Call();
-					$array = $api->delete_tracking_number_from_trackship( $order_id, $tracking_number, $tracking_provider );
+					$api->delete_tracking_number_from_trackship( $order_id, $tracking_number, $tracking_provider );
 					$id = $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$wpdb->prefix}trackship_shipment WHERE order_id = %d", $order_id ) );
 
 					$wpdb->delete( $shipment_table, array( 'order_id' => $order_id, 'tracking_number' => $tracking_number ) );
@@ -1441,7 +1441,7 @@ class WC_Trackship_Actions {
 		global $wpdb;
 		$shipment_table = $wpdb->prefix . 'trackship_shipment';
 		$shipment_meta = $wpdb->prefix . 'trackship_shipment_meta';
-		$row = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->prefix}trackship_shipment WHERE order_id = %d AND tracking_number = %s", $order_id, $tracking_number ) );
+		$row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id, $tracking_number );
 		$query = [];
 		
 		$logger = wc_get_logger();
@@ -1455,6 +1455,16 @@ class WC_Trackship_Actions {
 					'order_id'			=> $order_id,
 					'tracking_number'	=> $tracking_number,
 				);
+
+				if ( isset($args2['tracking_events']) && $args2['tracking_events'] && isset($args['last_event_time']) && $args['last_event_time'] ) {
+					$row->tracking_events = $args2['tracking_events'];
+					$row->last_event_time = $args['last_event_time'];
+					$shipment_length = trackship_for_woocommerce()->shipments->get_shipment_length( $row );
+					if ($shipment_length) {
+						$args['shipping_length'] = $shipment_length;
+						$args['ship_length_updated'] = gmdate('Y-m-d');
+					}
+				}
 				
 				$query['shipment_update'] = $wpdb->update( $shipment_table, $args, $where );
 				if ( false === $query['shipment_update'] ) {
@@ -1597,6 +1607,53 @@ class WC_Trackship_Actions {
 			$bool = true;
 		}
 		return $bool;
+	}
+
+	public function get_formated_number($phone, $order) {
+		
+		// Check if number do not starts with '+'
+		if ( '+' != substr( $phone, 0, 1 ) ) {
+			$customer_country = ! empty( $order ) ? $order->get_billing_country() : '';
+			$shop_country = substr( get_option( 'woocommerce_default_country' ), 0, 2 );
+			$country_code = $customer_country ?? $shop_country;
+
+			$WC_Countries = new WC_Countries();
+			$calling_code = $WC_Countries->get_country_calling_code( $country_code );
+
+			// remove leading zero
+			$phone = preg_replace( '/^0/', '', $phone );
+
+			$phone = $this->country_special_cases( $phone, $country_code, $calling_code );
+
+			// Check if number has country code
+			if ( substr( $phone, 0, strlen( substr($calling_code, 1) ) ) != $calling_code ) {
+				$phone = $calling_code . $phone;
+			}
+		}
+		return $phone;
+	}
+
+	public function country_special_cases( $phone, $country_code, $calling_code ) {
+
+		switch ( $country_code ) {
+			case 'IT':
+				if ( strlen( $phone ) <= apply_filters( 'smswoo_italian_numbers_length', 10 ) ) {
+					$mobile_prefixes = apply_filters( 'smswoo_italian_prefixes', array( '390', '391', '392', '393', '397' ) );
+					if ( in_array( substr( $phone, 0, 3 ), $mobile_prefixes ) ) {
+						$phone = $calling_code . $phone;
+					}
+				}
+				break;
+			case 'NO':
+				if ( strlen( $phone ) <= apply_filters( 'smswoo_norwegian_numbers_length', 8 ) ) {
+					$mobile_prefixes = apply_filters( 'smswoo_norwegian_prefixes', array( '47' ) );
+					if ( in_array( substr( $phone, 0, 2 ), $mobile_prefixes ) ) {
+						$phone = $calling_code . $phone;
+					}
+				}
+				break;
+		}
+		return $phone;
 	}
 }
 
