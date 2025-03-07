@@ -529,7 +529,7 @@ class WC_Trackship_Admin {
 			'omnisend' => array(
 				'title'	=> 'Omnisend',
 				'value'	=> get_trackship_settings( 'omnisend', ''),
-				'docs'	=> '',
+				'docs'	=> 'https://docs.trackship.com/docs/trackship-for-woocommerce/integration/omnisend/',
 				'image' => trackship_for_woocommerce()->plugin_dir_url() . 'assets/images/integrations/omnisend.png',
 			),
 		);
