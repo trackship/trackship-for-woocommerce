@@ -76,7 +76,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<span class="shipping_to"><?php echo esc_html( WC()->countries->countries[ $row->destination_country ] ); ?></span>
 		</div>
 	<?php } ?>
-	<?php $show_est_delivery_date = apply_filters( 'show_est_delivery_date', true, $provider_name ); ?>
+	<?php $show_est_delivery_date = apply_filters( 'show_est_delivery_date', true, $tracking_provider ); ?>
 	<?php if ( $tracker->est_delivery_date && $show_est_delivery_date ) { ?>
 		<span class="est-delivery-date tracking-number">
 			<?php echo 'delivered' != $tracker->ep_status ? esc_html_e( 'Est. Delivery Date', 'trackship-for-woocommerce' ) : esc_html_e( 'Delivery Date', 'trackship-for-woocommerce' ); ?> : 
