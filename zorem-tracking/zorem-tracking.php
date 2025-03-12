@@ -23,6 +23,7 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 		public $menu_slug;
 		public $plugin_id;
 		public $plugin_slug_with_hyphens;
+		public $option_prefix;
 		/**
 		 * Initialize the main plugin function
 		*/
@@ -37,7 +38,7 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 			$this->plugin_id = $plugin_id;
 			$this->plugin_slug_with_hyphens = str_replace('-', '_', $this->plugin_slug);
 			add_action('admin_enqueue_scripts', array($this, 'enqueue_plugin_styles'));
-			$this->init();			
+			$this->init();
 		}
 		
 		/**
@@ -71,7 +72,6 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 		*/
 		public function init() {
 			
-			//add_action( 'before_plugin_settings', array( $this, 'usage_data_signup_box' ) );
 			add_action( 'wp_ajax_' . $this->plugin_slug_with_hyphens . '_activate_usage_data', array( $this, 'ast_activate_usage_data_fun') );
 			add_action( 'wp_ajax_' . $this->plugin_slug_with_hyphens . '_skip_usage_data', array( $this, 'ast_skip_usage_data_fun') );	
 			add_action( 'zorem_usage_data_' . $this->plugin_slug_with_hyphens, array( $this, 'send_tracking_data' ) );	
@@ -106,11 +106,6 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 		}
 	
 		public function ast_activate_usage_data_fun() {
-			
-			if ( ! current_user_can( 'manage_woocommerce' ) ) {
-				exit( 'You are not allowed' );
-			}
-			
 			check_ajax_referer( $this->plugin_slug_with_hyphens . '_usage_data_form', $this->plugin_slug_with_hyphens . '_usage_data_form_nonce' );
 		
 			if ( isset( $_POST[ $this->plugin_slug_with_hyphens . '_optin_email_notification' ] ) && 0 == $_POST[ $this->plugin_slug_with_hyphens . '_optin_email_notification' ] && isset( $_POST[ 	$this->plugin_slug_with_hyphens . '_enable_usage_data' ] ) && 0 == $_POST[ $this->plugin_slug_with_hyphens . '_enable_usage_data' ] ) {
@@ -118,12 +113,12 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 				die();
 			}
 		
-			if ( isset( $_POST[ $this->plugin_slug_with_hyphens . '_optin_email_notification' ] ) ) {						
+			if ( isset( $_POST[ $this->plugin_slug_with_hyphens . '_optin_email_notification' ] ) ) {
 				update_option( $this->plugin_slug_with_hyphens . '_optin_email_notification', wc_clean( $_POST[ $this->plugin_slug_with_hyphens . '_optin_email_notification' ] ) );
 			}
 		
-			if ( isset( $_POST[ $this->plugin_slug_with_hyphens . '_enable_usage_data' ] ) ) {						
-				update_option( $this->plugin_slug_with_hyphens . '_enable_usage_data', wc_clean( $_POST[ $this->plugin_slug_with_hyphens . '_enable_usage_data' ] ) );			
+			if ( isset( $_POST[ $this->plugin_slug_with_hyphens . '_enable_usage_data' ] ) ) {
+				update_option( $this->plugin_slug_with_hyphens . '_enable_usage_data', wc_clean( $_POST[ $this->plugin_slug_with_hyphens . '_enable_usage_data' ] ) );
 			}
 		
 			$this->set_unset_usage_data_cron();
@@ -132,11 +127,6 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 		}
 	
 		public function ast_skip_usage_data_fun() {
-		
-			if ( ! current_user_can( 'manage_woocommerce' ) ) {
-				exit( 'You are not allowed' );
-			}
-		
 			check_ajax_referer( $this->plugin_slug_with_hyphens . '_usage_skip_form', $this->plugin_slug_with_hyphens . '_usage_skip_form_nonce' );
 		
 			update_option( $this->plugin_slug_with_hyphens . '_usage_data_selector', true );
@@ -174,18 +164,17 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 			update_option( $this->plugin_slug_with_hyphens . '_usage_tracker_last_send', time() );
 		
 			$params = $this->get_tracking_data();
-			
 			wp_safe_remote_post(
 				self::$api_url,
 				array(
-					'method'      => 'POST',
-					'timeout'     => 45,
-					'redirection' => 5,
-					'httpversion' => '1.0',
-					'blocking'    => false,
-					'headers'     => array( 'user-agent' => 'zoremTracker/' . md5( esc_url_raw( home_url( '/' ) ) ) . ';' ),
-					'body'        => wp_json_encode( $params ),
-					'cookies'     => array(),
+					'method'		=> 'POST',
+					'timeout'		=> 45,
+					'redirection'	=> 5,
+					'httpversion'	=> '1.0',
+					'blocking'		=> false,
+					'headers'		=> array( 'user-agent' => 'zoremTracker/' . md5( esc_url_raw( home_url( '/' ) ) ) . ';' ),
+					'body'			=> wp_json_encode( $params ),
+					'cookies'		=> array(),
 				)
 			);
 		}
@@ -209,7 +198,7 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 			$data['parent_menu_type'] = $this->parent_menu_type;
 			$data['menu_slug'] = $this->menu_slug;
 			$data['user_id'] = $this->user_id;
-			$data['url']   = home_url();
+			$data['url'] = home_url();
 			$data['email'] = get_option( 'admin_email' );
 			$data['opt_in'] = $ast_optin_email_notification;
 			
@@ -224,26 +213,21 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 				$data['server'] = $this->get_server_info();
 			
 				// Plugin info.
-				$all_plugins              = $this->get_all_plugins();
-				$data['active_plugins']   = $all_plugins['active_plugins'];		
+				$all_plugins = $this->get_all_plugins();
+				$data['active_plugins'] = $all_plugins['active_plugins'];
 			
 				// Shipping method info.
-				$data['shipping_methods'] = $this->get_active_shipping_methods();	
+				$data['shipping_methods'] = $this->get_active_shipping_methods();
 				// get_order_counts
-				$data['get_order_counts'] = $this->get_order_counts();
-				
+
 				$data['currency'] = get_woocommerce_currency();
-			
 				$data['country'] = WC()->countries->get_base_country();
-			
-				$data['get_order_value'] = $this->get_order_value();
-				
-				$data['order_value_three_month'] = $this->get_order_value_three_month();
-			
-				$data['order_counts_three_month'] = $this->get_order_counts_three_month();
+
+				$data['order'] = $this->get_order_revenue();
+				$data['settings'] = apply_filters( 'get_settings_data', $this->option_prefix);
 				
 			}
-		
+			$data = apply_filters( 'zorem_tracking_data', $data);
 			return $data;
 		}
 	
@@ -253,16 +237,16 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 		 * @return array
 		 */
 		public function get_theme_info() {
-			$theme_data           = wp_get_theme();
-			$theme_child_theme    = wc_bool_to_string( is_child_theme() );
-			$theme_wc_support     = wc_bool_to_string( current_theme_supports( 'woocommerce' ) );
+			$theme_data = wp_get_theme();
+			$theme_child_theme = wc_bool_to_string( is_child_theme() );
+			$theme_wc_support = wc_bool_to_string( current_theme_supports( 'woocommerce' ) );
 			$theme_is_block_theme = wc_bool_to_string( wc_current_theme_is_fse_theme() );
 		
 			return array(
-				'name'        => $theme_data->Name, // @phpcs:ignore
-				'version'     => $theme_data->Version, // @phpcs:ignore
+				'name' => $theme_data->Name, // @phpcs:ignore
+				'version' => $theme_data->Version, // @phpcs:ignore
 				'child_theme' => $theme_child_theme,
-				'wc_support'  => $theme_wc_support,
+				'wc_support' => $theme_wc_support,
 				'block_theme' => $theme_is_block_theme,
 			);
 		}
@@ -279,7 +263,7 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 		
 			if ( function_exists( 'memory_get_usage' ) ) {
 				$system_memory = wc_let_to_num( @ini_get( 'memory_limit' ) );
-				$memory        = max( $memory, $system_memory );
+				$memory = max( $memory, $system_memory );
 			}
 		
 			// WordPress 5.5+ environment type specification.
@@ -290,12 +274,12 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 			}
 		
 			$wp_data['memory_limit'] = size_format( $memory );
-			$wp_data['debug_mode']   = ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? 'Yes' : 'No';
-			$wp_data['locale']       = get_locale();
-			$wp_data['version']      = get_bloginfo( 'version' );
-			$wp_data['multisite']    = is_multisite() ? 'Yes' : 'No';
-			$wp_data['env_type']     = $environment_type;
-			$wp_data['dropins']      = array_keys( get_dropins() );
+			$wp_data['debug_mode'] = ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ? 'Yes' : 'No';
+			$wp_data['locale'] = get_locale();
+			$wp_data['version'] = get_bloginfo( 'version' );
+			$wp_data['multisite'] = is_multisite() ? 'Yes' : 'No';
+			$wp_data['env_type'] = $environment_type;
+			$wp_data['dropins'] = array_keys( get_dropins() );
 		
 			return $wp_data;
 		}
@@ -317,20 +301,20 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 			}
 		
 			if ( function_exists( 'ini_get' ) ) {
-				$server_data['php_post_max_size']  = size_format( wc_let_to_num( ini_get( 'post_max_size' ) ) );
-				$server_data['php_time_limt']      = ini_get( 'max_execution_time' );
+				$server_data['php_post_max_size'] = size_format( wc_let_to_num( ini_get( 'post_max_size' ) ) );
+				$server_data['php_time_limt'] = ini_get( 'max_execution_time' );
 				$server_data['php_max_input_vars'] = ini_get( 'max_input_vars' );
-				$server_data['php_suhosin']        = extension_loaded( 'suhosin' ) ? 'Yes' : 'No';
+				$server_data['php_suhosin'] = extension_loaded( 'suhosin' ) ? 'Yes' : 'No';
 			}
 		
-			$database_version             = wc_get_server_database_version();
+			$database_version = wc_get_server_database_version();
 			$server_data['mysql_version'] = $database_version['number'];
 		
-			$server_data['php_max_upload_size']  = size_format( wp_max_upload_size() );
-			$server_data['php_default_timezone'] = date_default_timezone_get();
-			$server_data['php_soap']             = class_exists( 'SoapClient' ) ? 'Yes' : 'No';
-			$server_data['php_fsockopen']        = function_exists( 'fsockopen' ) ? 'Yes' : 'No';
-			$server_data['php_curl']             = function_exists( 'curl_init' ) ? 'Yes' : 'No';
+			$server_data['php_max_upload_size']	= size_format( wp_max_upload_size() );
+			$server_data['php_default_timezone']= date_default_timezone_get();
+			$server_data['php_soap']			= class_exists( 'SoapClient' ) ? 'Yes' : 'No';
+			$server_data['php_fsockopen']		= function_exists( 'fsockopen' ) ? 'Yes' : 'No';
+			$server_data['php_curl']			= function_exists( 'curl_init' ) ? 'Yes' : 'No';
 		
 			return $server_data;
 		}
@@ -346,9 +330,9 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 				include ABSPATH . '/wp-admin/includes/plugin.php';
 			}
 		
-			$plugins             = get_plugins();
+			$plugins = get_plugins();
 			$active_plugins_keys = get_option( 'active_plugins', array() );
-			$active_plugins      = array();
+			$active_plugins = array();
 		
 			foreach ( $plugins as $k => $v ) {
 				// Take care of formatting the data how we want it.
@@ -376,7 +360,7 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 			}
 		
 			return array(
-				'active_plugins'   => $active_plugins,
+				'active_plugins' => $active_plugins,
 				'inactive_plugins' => $plugins,
 			);
 		}	
@@ -387,7 +371,7 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 		 * @return array
 		 */
 		public function get_active_shipping_methods() {
-			$active_methods   = array();
+			$active_methods = array();
 			$shipping_methods = WC()->shipping()->get_shipping_methods();
 			global $wpdb;
 			
@@ -409,245 +393,36 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 			return $active_methods;
 		}
 		/**
-		 * Get a list one year average order count
+		 * Get a list Order and revenue and Averag order value
 		 *
 		 * @return array
 		 */
-		public function get_order_counts() {
-			global $wpdb;
-			$min_max = $wpdb->get_row(
-				"
-				SELECT
-					MIN( date_created_gmt ) as 'first', MAX( date_created_gmt ) as 'last' 
-				FROM {$wpdb->prefix}wc_order_stats
-			",
-				ARRAY_A
+		public function get_order_revenue() {
+			$data = [];
+			$current_date = gmdate('Y-m-d H:i:s');
+			$three_months_ago = gmdate('Y-m-d H:i:s', strtotime('-3 months'));
+			$args = array(
+				'before' => $current_date,
+				'after' => $three_months_ago,
 			);
-			if ( is_null( $min_max ) ) {
-				$min_max = array(
-					'first' => '-',
-					'last'  => '-',
-				);
-			} else {
-				$first = $min_max['first'];
-				$last = $min_max['last'];
-			}
-			$firstDate = strtotime('-12 months');
-			$countQuery = $wpdb->get_var(
-				$wpdb->prepare(
-					"
-					SELECT COUNT(*) 
-					FROM {$wpdb->prefix}wc_order_stats 
-					WHERE date_created_gmt >= %s 
-					AND date_created_gmt <= %s
-					AND status NOT IN ('wc-trash','wc-pending','wc-failed','wc-cancelled','wc-on-hold','wc-refund-requested')
-					",
-					$first,
-					$last
-				)
+			$report_three_month = new \Automattic\WooCommerce\Admin\API\Reports\Orders\Stats\Query( $args );
+			$three_month_data = $report_three_month->get_data();
+			$data['net_revenue_three'] = $three_month_data->totals->net_revenue;
+			$data['avg_order_value_three'] = $three_month_data->totals->avg_order_value;
+			$data['orders_count_three'] = $three_month_data->totals->orders_count;
+
+			$twelve_months_ago = gmdate('Y-m-d H:i:s', strtotime('-12 months'));
+			$args1 = array(
+				'before' => $current_date,
+				'after' => $twelve_months_ago,
 			);
-		
-			$total_orders = $countQuery;
-		
-			if (strtotime($first) > $firstDate) {
-				$today = new DateTime();
-				$firstDateObj = new DateTime($first);
-				$interval = $today->diff($firstDateObj);
-				$months = $interval->format('%m');
-				$days = $interval->days;
-				// Check if $months is zero before division
-				if ($months > 0) {
-					$monthly_average = round( $total_orders / $months, 2 );
-				} else {
-					$monthly_average = '0' !== $days ? round($total_orders / $days, 2) : 0; // Set a default value or handle this case accordingly
-				}
-			} else {
-				$monthly_average = round( $total_orders / 12, 2 );
-			}
-			
-		
-			return $monthly_average;
+			$report_twelve_months = new \Automattic\WooCommerce\Admin\API\Reports\Orders\Stats\Query( $args1 );
+			$twelve_month_data = $report_twelve_months->get_data();
+			$data['net_revenue_twelve'] = $twelve_month_data->totals->net_revenue;
+			$data['avg_order_value_twelve'] = $twelve_month_data->totals->avg_order_value;
+			$data['orders_count_twelve'] = $twelve_month_data->totals->orders_count;
+
+			return $data;
 		}
-		/**
-		 * Get a list Three Month average order count
-		 *
-		 * @return array
-		 */
-		public function get_order_counts_three_month() {
-			global $wpdb;
-			$min_max = $wpdb->get_row(
-				"
-				SELECT
-					MIN( date_created_gmt ) as 'first', MAX( date_created_gmt ) as 'last' 
-				FROM {$wpdb->prefix}wc_order_stats
-			",
-				ARRAY_A
-			);
-			if ( is_null( $min_max ) ) {
-				$min_max = array(
-					'first' => '-',
-					'last'  => '-',
-				);
-			} else {
-				$first = $min_max['first'];
-				$last = $min_max['last'];
-			}
-			$firstDate = strtotime('-3 months');
-			$countQuery = $wpdb->get_var(
-				$wpdb->prepare(
-					"
-					SELECT COUNT(*) 
-					FROM {$wpdb->prefix}wc_order_stats 
-					WHERE date_created_gmt >= %s 
-					AND date_created_gmt <= %s
-					AND status NOT IN ('wc-trash','wc-pending','wc-failed','wc-cancelled','wc-on-hold','wc-refund-requested')
-					",
-					$first,
-					$last
-				)
-			);
-		
-			$total_orders = $countQuery;
-		
-			if (strtotime($first) > $firstDate) {
-				$today = new DateTime();
-				$firstDateObj = new DateTime($first);
-				$interval = $today->diff($firstDateObj);
-				$months = $interval->format('%m');
-				$days = $interval->days;
-				if ($months > 0) {
-					$monthly_average = round( $total_orders / $months, 2 );
-				} else {
-					$monthly_average = '0' !== $days ? round($total_orders / $days, 2) : 0;
-				}
-			} else {
-				$monthly_average = round( $total_orders / 3, 2 );
-			} 
-			
-		
-			return $monthly_average;
-		}
-		
-		/**
-		 * Get a list one year average order value count
-		 *
-		 * @return array
-		 */
-		public function get_order_value() {
-			global $wpdb;
-			$min_max = $wpdb->get_row(
-				"
-				SELECT
-					MIN(date_created_gmt) as 'first', MAX(date_created_gmt) as 'last' 
-				FROM {$wpdb->prefix}wc_order_stats
-				",
-				ARRAY_A
-			);
-			
-			if (is_null($min_max)) {
-				$min_max = array(
-					'first' => '-',
-					'last'  => '-',
-				);
-			} else {
-				$first = $min_max['first'];
-				$last = $min_max['last'];
-			}
-			$net_total = $wpdb->get_var(
-				$wpdb->prepare(
-					"
-					SELECT SUM(net_total) 
-					FROM {$wpdb->prefix}wc_order_stats 
-					WHERE date_created_gmt >= %s 
-					AND date_created_gmt <= %s
-					AND status NOT IN ('wc-trash','wc-pending','wc-failed','wc-cancelled','wc-on-hold','wc-refund-requested')
-					",
-					$first,
-					$last
-					
-				)
-			);
-			$firstDate = strtotime('-12 months');
-			if (strtotime($first) > $firstDate) {
-				// Calculate monthly average based on $month_count
-				$today = new DateTime();
-				$firstDateObj = new DateTime($first);
-				$interval = $today->diff($firstDateObj);
-				$months = $interval->format('%m');
-				$days = $interval->days;
-				if ($months > 0) {
-					$monthly_average = $net_total / $months;
-				} else {
-					$monthly_average = '0' !== $days ? round($net_total / $days, 2) : 0;
-				}
-				
-			} else {
-				// Calculate monthly average based on the last 12 months
-				$monthly_average = $net_total / 12;
-			}
-			
-			return $monthly_average;
-			
-		}
-		/**
-		 * Get a list one year average order value count
-		 *
-		 * @return array
-		 */
-		public function get_order_value_three_month() {
-			global $wpdb;
-			$min_max = $wpdb->get_row(
-				"
-				SELECT
-					MIN(date_created_gmt) as 'first', MAX(date_created_gmt) as 'last' 
-				FROM {$wpdb->prefix}wc_order_stats
-				",
-				ARRAY_A
-			);
-			
-			if (is_null($min_max)) {
-				$min_max = array(
-					'first' => '-',
-					'last'  => '-',
-				);
-			} else {
-				$first = $min_max['first'];
-				$last = $min_max['last'];
-			}
-			$net_total = $wpdb->get_var(
-				$wpdb->prepare(
-					"
-					SELECT SUM(net_total) 
-					FROM {$wpdb->prefix}wc_order_stats 
-					WHERE date_created_gmt >= %s 
-					AND date_created_gmt <= %s
-					AND status NOT IN ('wc-trash','wc-pending','wc-failed','wc-cancelled','wc-on-hold','wc-refund-requested')
-					",
-					$first,
-					$last
-				)
-			);
-			$firstDate = strtotime('-3 months');
-			if (strtotime($first) > $firstDate) {
-				// Calculate monthly average based on $month_count
-				$today = new DateTime();
-				$firstDateObj = new DateTime($first);
-				$interval = $today->diff($firstDateObj);
-				$months = $interval->format('%m');
-				$days = $interval->days;
-				if ($months > 0) {
-					$monthly_average = $net_total / $months;
-				} else {
-					$monthly_average = '0' !== $days ? round($net_total / $days, 2) : 0;
-				}
-			} else {
-				// Calculate monthly average based on the last 12 months
-				$monthly_average = $net_total / 3;
-			}
-			
-			return $monthly_average;
-			
-		}
-		
 	}
 }
