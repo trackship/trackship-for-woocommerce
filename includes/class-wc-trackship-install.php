@@ -566,9 +566,9 @@ class WC_Trackship_Install {
 			'updated_at'			=> ' DATETIME',
 		);
 		foreach ( $shipment_table as $column_name => $type ) {
-			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}trackship_shipment' AND COLUMN_NAME = '%s' ", $column_name ), ARRAY_A );
+			$columns = $wpdb->get_var( $wpdb->prepare( "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}trackship_shipment' AND COLUMN_NAME = %s", $column_name ));
 			if ( ! $columns ) {
-				$wpdb->query( $wpdb->prepare( "ALTER TABLE {$wpdb->prefix}trackship_shipment ADD %1s %2s", $column_name, $type ) );
+				$wpdb->query("ALTER TABLE `{$wpdb->prefix}trackship_shipment` ADD `$column_name` $type");
 			}
 		}
 
@@ -585,9 +585,9 @@ class WC_Trackship_Install {
 			'destination_city'		=> ' VARCHAR(40)',
 		);
 		foreach ( $shipment_table_meta as $column_name => $type ) {
-			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}trackship_shipment_meta' AND COLUMN_NAME = '%s' ", $column_name ), ARRAY_A );
+			$columns = $wpdb->get_var( $wpdb->prepare( "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}trackship_shipment_meta' AND COLUMN_NAME = %s", $column_name ));
 			if ( ! $columns ) {
-				$wpdb->query( $wpdb->prepare( "ALTER TABLE {$wpdb->prefix}trackship_shipment_meta ADD %1s %2s", $column_name, $type ) );
+				$wpdb->query("ALTER TABLE `{$wpdb->prefix}trackship_shipment_meta` ADD `$column_name` $type");
 			}
 		}
 
@@ -606,9 +606,9 @@ class WC_Trackship_Install {
 			'sms_type' => ' VARCHAR(30)',
 		);
 		foreach ( $log_table as $column_name => $type ) {
-			$columns = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}zorem_email_sms_log' AND COLUMN_NAME = '%s' ", $column_name ), ARRAY_A );
+			$columns = $wpdb->get_var( $wpdb->prepare( "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}zorem_email_sms_log' AND COLUMN_NAME = %s", $column_name ));
 			if ( ! $columns ) {
-				$wpdb->query( $wpdb->prepare( "ALTER TABLE {$wpdb->prefix}zorem_email_sms_log ADD %1s %2s", $column_name, $type ) );
+				$wpdb->query("ALTER TABLE `{$wpdb->prefix}zorem_email_sms_log` ADD `$column_name` $type");
 			}
 		}
 	}
