@@ -283,7 +283,6 @@ class TS4WC_Admin_Customizer {
 			'track_button_border_radius'	=> 0,
 			'show_trackship_branding'		=> 1,
 			'shipping_provider_logo'		=> 1,
-			'ts_last_event'					=> 0,
 			// Tracking form's defauls
 			'form_tab_view' 				=> 'both',
 			'form_button_Text'				=> __( 'Track your order', 'trackship-for-woocommerce' ),
@@ -328,7 +327,6 @@ class TS4WC_Admin_Customizer {
 		$track_button_border_radius = $this->get_value( 'shipment_email_settings', 'track_button_border_radius', $status );
 		$show_trackship_branding = $this->get_value( 'shipment_email_settings', 'show_trackship_branding', $status );
 		$shipping_provider_logo = $this->get_value( 'shipment_email_settings', 'shipping_provider_logo', $status );
-		$ts_last_event = $this->get_value( 'shipment_email_settings', 'ts_last_event', $status );
 		$reminder_days = $this->get_value( 'shipment_email_settings', 'pickupreminder_days', $status );
 
 		//Tracking page saved/default vaule
@@ -566,15 +564,6 @@ class TS4WC_Admin_Customizer {
 				'option_type'=> 'array',
 				'show'		=> true,
 				'class'		=> 'ts4wc_provider_logo',
-			),
-			'ts_last_event' => array(
-				'title'		=> esc_html__( 'Display latest event', 'trackship-for-woocommerce' ),
-				'default'	=> $ts_last_event,
-				'type'		=> 'checkbox',
-				'option_name'=> 'shipment_email_settings',
-				'option_type'=> 'array',
-				'show'		=> true,
-				'class'		=> 'ts_last_event',
 			),
 			// Tracking Page Settings
 			'heading5'	=> array(
@@ -1347,8 +1336,6 @@ class TS4WC_Admin_Customizer {
 			$row = (object) array(
 				'est_delivery_date'	=> '2021-07-30 15:28:02',
 				'shipment_status'	=> $status,
-				'last_event' => 'A shipping label has been prepared for your item. A delivery date will be provided when USPS receives the package; contact the shipper or shipping partner with any inquiries.',
-				'last_event_time' => '2021-07-28 18:18:56'
 			);
 		}
 		return $row;
