@@ -63,10 +63,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 
 	public function check_ts4wc_installed( $request ) {
 
-		// check TS4WC installed 
-		$trackship_apikey = get_trackship_key();
-		if ( empty( $trackship_apikey ) ) {
-			update_option('wc_ast_api_key', $request['user_key']); // Will be deprecated, added new key in version 1.5.0
+		if ( $request['user_key'] ) {
 			update_option('trackship_apikey', $request['user_key']);
 		}
 		
@@ -284,7 +281,6 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	* disconnect store from TS
 	*/
 	public function disconnect_from_trackship_fun( $request ) {
-		update_option( 'wc_ast_api_key', '' ); // Will be deprecated, added new key in version 1.5.0
 		update_option( 'trackship_apikey', '' );
 		delete_option( 'trackers_balance' );
 	}

@@ -71,10 +71,8 @@ class WC_Trackship_Install {
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.13', '<' ) ) {
 			// migration to change api key name 
-			$trackship_apikey = get_option( 'wc_ast_api_key' );			
+			$trackship_apikey = get_option( 'wc_ast_api_key' );
 			update_option( 'trackship_apikey', $trackship_apikey );
-			delete_option( 'wc_ast_api_enabled' );
-			
 			update_option( 'trackship_db', '1.13' );
 		}
 
@@ -276,20 +274,13 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.26' );
 		}
 
-		if ( version_compare( get_option( 'trackship_db' ), '1.27', '<' ) ) {
-
-			delete_trackship_settings( 'review_notice_ignore' );
-			delete_trackship_settings( 'trackship_upgrade_ignore' );
-			delete_trackship_settings( 'klaviyo_notice_ignore' );
-
-			update_trackship_settings( 'trackship_db', '1.27' );
-			update_option( 'trackship_db', '1.27' );
-		}
-
 		if ( version_compare( get_option( 'trackship_db' ), '1.29', '<' ) ) {
 			update_trackship_settings( 'trackship_db', '1.29' );
 			update_option( 'trackship_db', '1.29' );
 
+			delete_trackship_settings( 'review_notice_ignore' );
+			delete_trackship_settings( 'trackship_upgrade_ignore' );
+			delete_trackship_settings( 'klaviyo_notice_ignore' );
 			delete_trackship_settings( 'ts_upgrade_ignore' );
 		}
 
@@ -372,6 +363,15 @@ class WC_Trackship_Install {
 
 			delete_trackship_settings( 'ts_review_ignore_136' );
 			delete_trackship_settings( 'ts_popup_ignore136' );
+		}
+
+		// TS4WC version 1.9.1
+		if ( version_compare( get_option( 'trackship_db' ), '1.38', '<' ) ) {
+			update_trackship_settings( 'trackship_db', '1.38' );
+			update_option( 'trackship_db', '1.38' );
+
+			delete_option( 'wc_ast_api_key' );
+			delete_option( 'wc_ast_api_enabled' );
 		}
 	}
 
