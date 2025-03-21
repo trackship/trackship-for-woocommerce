@@ -44,8 +44,6 @@ class WC_TrackShip_Late_Shipments {
 	 * @since 1.0
 	*/
 	public function init() {
-		
-		$ts_actions = new WC_Trackship_Actions();
 
 		$late_shipments_email_enable = get_trackship_settings( 'late_shipments_email_enable' );
 		
@@ -129,7 +127,7 @@ class WC_TrackShip_Late_Shipments {
 				COUNT(*)
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE 
-				shipment_status NOT IN ('delivered', 'return_to_sender', 'label_cancelled', 'available_for_pickup')
+				shipment_status NOT IN ('delivered', 'return_to_sender', 'label_cancelled')
 				AND late_shipment_email = %d
 				AND shipping_length > %d
 				AND shipping_date > NOW() - INTERVAL 60 DAY
@@ -144,7 +142,7 @@ class WC_TrackShip_Late_Shipments {
 			SELECT *
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE 
-				shipment_status NOT IN ('delivered', 'return_to_sender', 'label_cancelled', 'available_for_pickup')
+				shipment_status NOT IN ('delivered', 'return_to_sender', 'label_cancelled')
 				AND late_shipment_email = %d
 				AND shipping_length > %d
 				AND shipping_date > NOW() - INTERVAL 60 DAY
