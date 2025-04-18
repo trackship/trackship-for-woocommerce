@@ -134,7 +134,7 @@ class Trackship_For_Woocommerce {
 	*/
 	public function init() {
 		
-		add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ) );
+		add_action( 'init', array( $this, 'on_plugins_loaded' ) );
 		
 		add_action( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'tsw_plugin_action_links' ) );
 
