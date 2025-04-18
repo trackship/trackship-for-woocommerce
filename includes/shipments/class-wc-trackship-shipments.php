@@ -150,8 +150,8 @@ class WC_Trackship_Shipments {
 				$where[] = "shipment_status NOT IN ('delivered', 'return_to_sender')";
 				break;
 			default:
-				if ($active_shipment_status !== 'all_ship') {
-					$where[] = $wpdb->prepare("shipment_status = %s", $active_shipment_status);
+				if ( 'all_ship' !== $active_shipment_status ) {
+					$where[] = $wpdb->prepare('shipment_status = %s', $active_shipment_status);
 				}
 				break;
 		}

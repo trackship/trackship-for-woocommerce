@@ -24,7 +24,7 @@ if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $wpdb->prefix . 'trac
 
 $late_ship_day = get_trackship_settings( 'late_shipments_days', 7);
 $days = $late_ship_day - 1 ;
-$from_date = date('Y-m-d', strtotime('-30 days'));
+$from_date = gmdate('Y-m-d', strtotime('-30 days'));
 
 $results = $wpdb->get_row($wpdb->prepare("
 SELECT
@@ -159,8 +159,8 @@ $store_url = in_array( $current_plan, array( 'Free 50', 'No active plan', 'Trial
 			<tbody>
 				<?php foreach ( $action_needed as $key => $value ) { ?>
 					<?php if ( $value['count'] > 0 ) { ?>
-						<?php $link = $value['link'] ?? admin_url( 'admin.php?page=trackship-shipments&status=' . $key ); ?>
-						<tr onclick="window.location='<?php echo esc_url( $link ); ?>';">
+						<?php $shipment_link = $value['link'] ?? admin_url( 'admin.php?page=trackship-shipments&status=' . $key ); ?>
+						<tr onclick="window.location='<?php echo esc_url( $shipment_link ); ?>';">
 							<td>
 								<label><?php echo esc_html( $value['count'] ); ?> <?php echo esc_html( $value['title'] ); ?></label>
 							</td>
