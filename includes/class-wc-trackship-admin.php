@@ -706,7 +706,7 @@ class WC_Trackship_Admin {
 			// Loop through your custom orders Statuses
 			foreach ( $custom_statuses as $status_slug => $values ) {
 				if ( $order->has_status( $values['allowed'] ) ) {
-					$actions[ 'status' ][ 'group' ] = __( 'Change status: ', 'woocommerce' );
+					$actions[ 'status' ][ 'group' ] = __( 'Change status: ', 'trackship-for-woocommerce' );
 					$actions[ 'status' ][ 'actions' ][ $status_slug ] = array(
 						'url'	=> wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=' . $status_slug . '&order_id=' . $order->get_id() ), 'woocommerce-mark-order-status' ),
 						'name'	=> $values['label'],
@@ -910,7 +910,7 @@ class WC_Trackship_Admin {
 								?>
 								</p>
 								<select id="ts_reassign_delivered_order" name="ts_reassign_delivered_order" class="reassign_select">
-									<option value=""><?php esc_html_e('Select', 'woocommerce'); ?></option>
+									<option value=""><?php esc_html_e('Select', 'trackship-for-woocommerce'); ?></option>
 									<?php foreach ( $order_statuses as $key => $status ) { ?>
 										<option value="<?php esc_html_e( $key ); ?>"><?php esc_html_e( $status ); ?></option>
 									<?php } ?>
@@ -920,7 +920,7 @@ class WC_Trackship_Admin {
 								<?php wp_nonce_field( 'ts_reassign_order_status', 'ts_reassign_order_status_nonce' ); ?>
 								<input type="hidden" name="action" value="ts_reassign_order_status">
 								<input type="button" value="<?php esc_html_e( 'Deactivate' ); ?>" class="uninstall_plugin button-primary button-trackship">
-								<input type="button" value="<?php esc_html_e( 'Close', 'woocommerce' ); ?>" class="uninstall_close button-primary btn_red">
+								<input type="button" value="<?php esc_html_e( 'Close', 'trackship-for-woocommerce' ); ?>" class="uninstall_close button-primary btn_red">
 							</p>
 						</form>
 					</div>
@@ -973,7 +973,7 @@ class WC_Trackship_Admin {
 			<td><input type="text" class="map_shipping_provider_text" name="detected_provider[]"></td>
 			<td>
 				<select name="ts_provider[]" class="select2">
-					<option value=""><?php esc_html_e( 'Select', 'woocommerce' ); ?></option>
+					<option value=""><?php esc_html_e( 'Select', 'trackship-for-woocommerce' ); ?></option>
 					<?php foreach ( $ts_shippment_providers as $ts_provider ) { ?>
 						<option value="<?php echo esc_html( $ts_provider->ts_slug ); ?>"><?php echo esc_html( $ts_provider->provider_name ); ?></option>
 					<?php } ?>

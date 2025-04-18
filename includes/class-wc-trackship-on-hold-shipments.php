@@ -124,7 +124,7 @@ class WC_TrackShip_On_Hold_Shipments {
 				COUNT(*)
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE
-				shipment_status LIKE 'on_hold'
+				shipment_status = 'on_hold'
 				AND on_hold_email = %d
 		", 0 ));
 
@@ -137,7 +137,7 @@ class WC_TrackShip_On_Hold_Shipments {
 			SELECT *
 				FROM {$wpdb->prefix}trackship_shipment
 			WHERE
-				shipment_status LIKE 'on_hold'
+				shipment_status = 'on_hold'
 				AND on_hold_email = %d
 			LIMIT 10
 		", 0 ));

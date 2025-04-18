@@ -47,7 +47,7 @@ $url_search = isset( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
 				<table class="widefat dataTable fixed trackship_logs hover" cellspacing="0" id="trackship_notifications_logs" style="width: 100%;">
 					<thead>
 						<tr class="tabel_heading_th">
-							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Order', 'woocommerce'); ?></th>
+							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Order', 'trackship-for-woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Shipment status', 'trackship-for-woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Time', 'trackship-for-woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-destination" scope="col"><?php esc_html_e('To', 'trackship-for-woocommerce'); ?></th>

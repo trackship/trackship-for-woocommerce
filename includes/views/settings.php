@@ -33,7 +33,7 @@ $section = isset( $_GET['section'] ) ? sanitize_text_field( $_GET['section'] ) :
 ?>
 <div class="accordion_container">
 	<form method="post" id="wc_trackship_form" action="" enctype="multipart/form-data">
-		<div class="outer_form_table">
+		<div class="">
 			<div class="heading_panel section_settings_heading <?php echo 'general' == $section ? 'checked' : ''; ?>">
 				<strong><?php esc_html_e( 'General Settings', 'trackship-for-woocommerce' ); ?></strong>
 				<div class="heading_panel_save">
