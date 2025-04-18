@@ -21,7 +21,7 @@
 		}
 	<?php } ?>
 	<?php if ( $border_color ) { ?>
-		.col.enhanced_tracking_detail, div.est_delivery_section, div.tracking_widget_tracking_events_section, .enhanced_tracking_detail .enhanced_heading, .enhanced_tracking_detail .enhanced_content, div.last_mile_tracking_number, .enhanced_content .shipping_from_to , .enhanced_content ul.tpi_product_tracking_ul li {
+		.col.enhanced_tracking_detail, div.est_delivery_section, div.tracking_widget_tracking_events_section, .enhanced_tracking_detail .enhanced_heading, .enhanced_tracking_detail .enhanced_content, div.last_mile_tracking_number, .enhanced_content .shipping_from_to , .enhanced_content ul.tpi_product_tracking_ul li, .enhanced_tracking_content {
 			border-color: <?php echo esc_html( $border_color ); ?>;
 		}
 	<?php }	?>
@@ -77,10 +77,10 @@
 				</span>
 				<span class="tracking_details_switch">
 					<input id="enhanced_overview_1" data-type="overview" data-number="shipment_1" type="radio" name="enhanced_switch_1" class="enhanced_switch_input" checked="">
-					<label for="enhanced_overview_1" class="enhanced_switch">Overview</label>
+					<label for="enhanced_overview_1" class="enhanced_switch"><?php esc_html_e('Overview', 'trackship-for-woocommerce' ); ?></label>
 
 					<input id="enhanced_journey_1" data-type="journey" data-number="shipment_1" type="radio" name="enhanced_switch_1" class="enhanced_switch_input">
-					<label for="enhanced_journey_1" class="enhanced_switch">Journey</label>
+					<label for="enhanced_journey_1" class="enhanced_switch"><?php esc_html_e('Journey', 'trackship-for-woocommerce' ); ?></label>
 				</span>
 			</div>
 			<div class="tracking_widget_tracking_events_section">
@@ -114,12 +114,12 @@
 			</div>
 			<div class="enhanced_shipment_details_section">
 				<div data-label="enhanced_details" class="enhanced_heading">
-					<span>Details</span>
+					<span><?php esc_html_e('Details', 'trackship-for-woocommerce' ); ?></span>
 					<span class="accordian-arrow ts-right"></span>
 				</div>
 				<div class="enhanced_content enhanced_details" style="display: none;">
 					<div class="last_mile_tracking_number">
-						<span>Delivery tracking Number </span> 
+						<span><?php esc_html_e( 'Delivery tracking Number', 'trackship-for-woocommerce' ); ?> </span> 
 						<strong>5333452683184862313</strong>
 					</div>
 					<div class="shipping_from_to">
@@ -144,7 +144,7 @@
 			</div>
 			<div class="enhanced_notifications_section">
 				<div data-label="enhanced_notifications" class="enhanced_heading">
-					<span>Notifications</span>
+					<span><?php esc_html_e( 'Notifications', 'trackship-for-woocommerce' ); ?></span>
 					<span class="accordian-arrow ts-right"></span>
 				</div>
 				<div class="enhanced_content enhanced_notifications" style="display: none;">

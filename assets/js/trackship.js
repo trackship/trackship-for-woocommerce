@@ -240,6 +240,7 @@ jQuery(document).on("change", ".shipment_status_toggle input", function () {
 	});
 
 	var settings_data = jQuery(this).data("settings");
+	var status = jQuery(this).data('status');
 	if ( jQuery.inArray( settings_data, [ "late_shipments_email_settings", "exception_admin_email", "on_hold_admin_email" ] ) !== -1 ) {
 		if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan", "Trial Ended"] ) !== -1 ) {
 			jQuery("#free_user_popup").show();
@@ -247,15 +248,14 @@ jQuery(document).on("change", ".shipment_status_toggle input", function () {
 		}
 	}
 
-	var wcast_enable_status_email;
-
+	var enable_status_email;
 	if (jQuery(this).prop("checked") == true) {
-		wcast_enable_status_email = 1;
+		enable_status_email = 1;
 		jQuery(this).closest('tr').addClass('enable');
 		jQuery(this).closest('tr').removeClass('disable');
 		if (settings_data === 'late_shipments_email_settings') jQuery('.late-shipment-tr').removeClass('disable').addClass('enable');
 	} else {
-		wcast_enable_status_email = 0;
+		enable_status_email = 0;
 		jQuery(this).closest('tr').addClass('disable');
 		jQuery(this).closest('tr').removeClass('enable');
 		if (settings_data === 'late_shipments_email_settings') jQuery('.late-shipment-tr').addClass('disable').removeClass('enable');
@@ -266,8 +266,9 @@ jQuery(document).on("change", ".shipment_status_toggle input", function () {
 	var ajax_data = {
 		action: 'update_shipment_status_email_status',
 		id: id,
-		wcast_enable_status_email: wcast_enable_status_email,
+		enable_status_email: enable_status_email,
 		settings_data: settings_data,
+		status: status,
 		security: jQuery('#tswc_shipment_status_email').val()
 	};
 

@@ -826,10 +826,15 @@ class WC_Trackship_Actions {
 	*/
 	public function update_shipment_status_email_status_cb() {
 		check_ajax_referer( 'tswc_shipment_status_email', 'security' );
-		$settings_data = isset( $_POST['settings_data'] ) ? wc_clean( $_POST['settings_data'] ) : '';
+		$settings_data = wc_clean( $_POST['settings_data'] ?? '' );
+		$status = wc_clean( $_POST['status'] ?? '' );
+		$enable_status_email = wc_clean( $_POST['enable_status_email'] ?? '' );
 
-		$enable_status_email = isset( $_POST['wcast_enable_status_email'] ) ? wc_clean( $_POST['wcast_enable_status_email'] ) : '';
 		$p_id = isset( $_POST['id'] ) ? wc_clean( $_POST['id'] ) : '';
+
+		if ( 'trackship_email_settings' == $settings_data ) {
+			update_trackship_email_settings( 'enable', $status, $enable_status_email );
+		}
 		
 		if ( in_array( $settings_data, array( 'late_shipments_email_settings', 'exception_admin_email', 'on_hold_admin_email' ) ) ) {
 			update_trackship_settings( $p_id, $enable_status_email );
@@ -844,12 +849,8 @@ class WC_Trackship_Actions {
 			$On_Hold_Shipments = new WC_TrackShip_On_Hold_Shipments();
 			$On_Hold_Shipments->remove_cron();
 			$On_Hold_Shipments->setup_cron();
-		} else {
-			$status_settings = get_option( $settings_data );
-			$status_settings[$p_id] = $enable_status_email;
-			update_option( wc_clean( $settings_data ), $status_settings );
 		}
-		exit;
+		wp_send_json_success();
 	}
 	
 	/*
@@ -1607,7 +1608,7 @@ class WC_Trackship_Actions {
 		return $bool;
 	}
 
-	public function get_formated_number($phone, $order) {
+	public function get_formated_number( $phone, $order ) {
 		
 		// Check if number do not starts with '+'
 		if ( '+' != substr( $phone, 0, 1 ) ) {
