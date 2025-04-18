@@ -47,7 +47,7 @@ class WC_TrackShip_Email_Manager {
 		$status = str_replace('_', '', $new_status);
 		$status = 'delivered' == $status ? 'delivered_status' : $status;
 
-		$enable = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_enable_' . $status . '_email', '');
+		$enable = get_trackship_email_settings( 'enable', $new_status );
 		$for_amazon_order = trackship_for_woocommerce()->ts_actions->is_notification_on_for_amazon( $order_id );
 		$receive_email = $order->get_meta( '_receive_shipment_emails', true );
 
@@ -73,7 +73,7 @@ class WC_TrackShip_Email_Manager {
 			return;
 		}
 		
-		if ( 'delivered_status' == $status ) {
+		if ( 'delivered' == $new_status ) {
 			$toggle = get_option( 'all-shipment-status-delivered' );
 			$all_delivered = trackship_for_woocommerce()->ts_actions->is_all_shipments_delivered( $order_id );
 			
@@ -90,19 +90,14 @@ class WC_TrackShip_Email_Manager {
 			$sitepress->switch_lang($new_lan);
 		}
 
-		$default = trackship_admin_customizer()->wcast_shipment_settings_defaults( $status );
-
-		$email_subject = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'wcast_' . $status . '_email_settings', 'wcast_' . $status . '_email_subject', $default['wcast_' . $status . '_email_subject']);
-		$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_email_heading', $default['wcast_' . $status . '_email_heading']);
-
-		$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_' . $status . '_email_settings', 'wcast_' . $status . '_email_content', $default['wcast_' . $status . '_email_content']);
+		$email_subject = get_trackship_email_settings( 'subject', $new_status );
+		$email_heading = get_trackship_email_settings( 'heading', $new_status );
+		$email_content = get_trackship_email_settings( 'content', $new_status );
 		$email_content = html_entity_decode( $email_content );
 		
-		$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array( 'wcast_' . $status . '_email_settings', 'wcast_' . $status . '_show_order_details', $default['wcast_' . $status . '_show_order_details'] );
-		
-		$wcast_show_product_image = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array( 'wcast_' . $status . '_email_settings', 'wcast_' . $status . '_show_product_image', $default['wcast_' . $status . '_show_product_image']);
-
-		$wcast_show_shipping_address = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array( 'wcast_' . $status . '_email_settings', 'wcast_' . $status . '_show_shipping_address', $default['wcast_' . $status . '_show_shipping_address']);
+		$wcast_show_order_details = get_trackship_email_settings( 'show_order_details', $new_status );
+		$wcast_show_product_image = get_trackship_email_settings( 'show_product_image', $new_status );
+		$wcast_show_shipping_address = get_trackship_email_settings( 'show_shipping_address', $new_status );
 		
 		$sent_to_admin = false;
 		$plain_text = false;
@@ -111,10 +106,9 @@ class WC_TrackShip_Email_Manager {
 		
 		$subject = $this->email_subject($email_subject, $order_id, $order);
 
-		$email_content = $this->email_content($email_content, $order_id, $order);
+		$message = $this->email_content($email_content, $order_id, $order);
 		
 		$email_heading = $this->email_heading($email_heading, $order_id, $order);
-		$message = $this->append_analytics_link($email_content, $status);
 
 		$message .= $this->get_tracking_info_template( $tracking_item, $shipment_row, $order_id, $new_status );
 
@@ -186,8 +180,8 @@ class WC_TrackShip_Email_Manager {
 			$this->shipment_row = $shipment_row;
 			$this->tracking_item = $tracking_item;
 			$this->tracking_number = $tracking_item['tracking_number'];
-	
-			$enable = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_pickupreminder_email_settings', 'wcast_enable_pickupreminder_email', '');
+
+			$enable = get_trackship_email_settings( 'enable', 'pickup_reminder' );
 	
 			$arg = array(
 				'order_id'			=> $order_id,
@@ -210,22 +204,18 @@ class WC_TrackShip_Email_Manager {
 				$new_lan = $order->get_meta( 'wpml_language', true );
 				$sitepress->switch_lang($new_lan);
 			}
-	
-			$default = trackship_admin_customizer()->wcast_shipment_settings_defaults( 'pickupreminder' );
-	
+
 			$email_to = [];
 			$email_to[] = $order ? $order->get_billing_email() : '';
 			$email_to = apply_filters( 'add_multiple_emails_to_shipment_email', $email_to, $new_status );
 	
-			$email_subject = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'wcast_pickupreminder_email_settings', 'wcast_pickupreminder_email_subject', $default['wcast_pickupreminder_email_subject']);
-			$email_heading = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_pickupreminder_email_settings', 'wcast_pickupreminder_email_heading', $default['wcast_pickupreminder_email_heading']);	
-		
-			$email_content = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_pickupreminder_email_settings', 'wcast_pickupreminder_email_content', $default['wcast_pickupreminder_email_content']);
+			$email_subject = get_trackship_email_settings( 'subject', 'pickup_reminder' );
+			$email_heading = get_trackship_email_settings( 'heading', 'pickup_reminder' );
+			$email_content = get_trackship_email_settings( 'content', 'pickup_reminder' );
 			$email_content = html_entity_decode( $email_content );
 			
-			$wcast_show_order_details = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_pickupreminder_email_settings', 'wcast_pickupreminder_show_order_details', $default['wcast_pickupreminder_show_order_details']);
-			
-			$wcast_show_product_image = trackship_for_woocommerce()->ts_actions->get_checkbox_option_value_from_array('wcast_pickupreminder_email_settings', 'wcast_pickupreminder_show_product_image', $default['wcast_pickupreminder_show_product_image']);
+			$wcast_show_order_details = get_trackship_email_settings( 'show_order_details', 'pickup_reminder' );
+			$wcast_show_product_image = get_trackship_email_settings( 'show_product_image', 'pickup_reminder' );
 			
 			$sent_to_admin = false;
 			$plain_text = false;
@@ -234,10 +224,9 @@ class WC_TrackShip_Email_Manager {
 			
 			$subject = $this->email_subject($email_subject, $order_id, $order);
 	
-			$email_content = $this->email_content($email_content, $order_id, $order);
+			$message = $this->email_content($email_content, $order_id, $order);
 			
 			$email_heading = $this->email_heading($email_heading, $order_id, $order);
-			$message = $this->append_analytics_link($email_content, 'pickupreminder');
 
 			$message .= $this->get_tracking_info_template( $tracking_item, $shipment_row, $order_id, $new_status );
 
@@ -320,7 +309,7 @@ class WC_TrackShip_Email_Manager {
 	*/
 	public function email_footer_text( $footer_text ) {
 		
-		$show_trackship_branding = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'show_trackship_branding', 1 );
+		$show_trackship_branding = get_trackship_email_settings( 'show_trackship_branding', 'common_settings', 1 );
 		$trackship_branding_class = $show_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ? '' : 'hide';
 
 		$trackship_branding_text = '';
@@ -444,30 +433,6 @@ class WC_TrackShip_Email_Manager {
 		}
 		return '<div class="shipment_email_content">' . $email_content . '</div>';
 	}
-	
-	/**
-	 * Code for append analytics link
-	 */
-	public function append_analytics_link( $message, $status ) {
-		if ( 'delivered_status' == $status ) {
-			$analytics_link = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'wcast_delivered_status_email_settings', 'wcast_delivered_status_analytics_link', '' );
-		} else {
-			$analytics_link = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'wcast_' . $status . '_email_settings', 'wcast_' . $status . '_analytics_link', '' );
-		}
-	
-		if ( $analytics_link ) {
-			$regex = '#(<a href=")([^"]*)("[^>]*?>)#i';
-			$message = preg_replace_callback( $regex, function ( $match ) use ( $status ) {
-				$url = $match[2];
-				if ( strpos($url, '?') === false ) {
-					$url .= '?';
-				}
-				$url .= $analytics_link;
-				return $match[1] . $url . $match[3];
-			}, $message);
-		}
-		return $message;
-	}	
 
 	/**
 	 * Code for get estimate delivery date

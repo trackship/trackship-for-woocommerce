@@ -373,6 +373,171 @@ class WC_Trackship_Install {
 			delete_option( 'wc_ast_api_key' );
 			delete_option( 'wc_ast_api_enabled' );
 		}
+
+		// TS4WC version 1.9.2
+		if ( version_compare( get_option( 'trackship_db' ), '1.39', '<' ) ) {
+			update_trackship_settings( 'trackship_db', '1.39' );
+			update_option( 'trackship_db', '1.39' );
+			delete_trackship_settings( 'ts_review_ignore_137' );
+			delete_trackship_settings( 'ts_popup_ignore137' );
+
+			$statuses = array(
+				'in_transit' => __( 'In Transit', 'trackship-for-woocommerce' ),
+				'available_for_pickup' => __( 'Available For Pickup', 'trackship-for-woocommerce' ),
+				'out_for_delivery' => __( 'Out For Delivery', 'trackship-for-woocommerce' ),
+				'failure' => __( 'Delivery Failure', 'trackship-for-woocommerce' ),
+				'on_hold' => __( 'On Hold', 'trackship-for-woocommerce' ),
+				'exception' => __( 'Exception', 'trackship-for-woocommerce' ),
+				'return_to_sender' => __( 'Return To Sender', 'trackship-for-woocommerce' ),
+				'delivered' => __( 'Delivered', 'trackship-for-woocommerce' ),
+				'pickup_reminder' => __( 'Available for Pickup Reminder', 'trackship-for-woocommerce' ),
+			);
+
+			$emails_keys = [
+				'enable',
+				'subject',
+				'heading',
+				'content',
+				'show_order_details',
+				'show_product_image',
+				'show_shipping_address',
+				'days',
+			];
+
+			foreach ( $statuses as $key => $status ) {
+				foreach ( $emails_keys as $key1 ) {
+					$value = '';
+					$value = 'subject' == $key1 ? sprintf( __( 'Your order #%s is %s', 'trackship-for-woocommerce' ), '{order_number}', $status ) : $value;
+					$value = 'heading' == $key1 ? $status : $value;
+					$value = 'content' == $key1 ? sprintf( __( "Hi there. We thought you'd like to know that your recent order from %s is %s", 'trackship-for-woocommerce' ), '{site_title}', $status ) : $value;
+					$value = 'content' == $key1 && 'pickup_reminder' == $key ? __( "Hi there. we thought you'd like to know that your recent order from {site_title} is pending for pickup", 'trackship-for-woocommerce' ) : $value;
+					$value = 'show_order_details' == $key1 ? 1 : $value;
+					$value = 'show_product_image' == $key1 ? 1 : $value;
+					$value = 'show_shipping_address' == $key1 ? 1 : $value;
+					if ( 'pickup_reminder' == $key && 'days' == $key1 ) {
+						$value = 2;
+					} elseif ( 'pickup_reminder' != $key && 'days' == $key1 ) {
+						continue;
+					} elseif ( 'pickup_reminder' == $key && 'show_shipping_address' == $key1 ) {
+						continue;
+					}
+					update_trackship_email_settings( $key1, $key, $value );
+				}
+			}
+
+			$all_statuses = array(
+				'intransit' => 'in_transit',
+				'availableforpickup' => 'available_for_pickup',
+				'outfordelivery' => 'out_for_delivery',
+				'failure' => 'failure',
+				'onhold' => 'on_hold',
+				'exception' => 'exception',
+				'returntosender' => 'return_to_sender',
+				'delivered_status' => 'delivered',
+				'pickupreminder' => 'pickup_reminder',
+			);
+
+			foreach	( $all_statuses as $key2 => $slug ) {
+				$email_settings = 'wcast_' . $key2 . '_email_settings';
+				$value = '';
+				$enable = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, 'wcast_enable_' . $key2 . '_email', '' );
+				if ( $enable ) {
+					update_trackship_email_settings( 'enable', $slug, $enable );
+				}
+				$subject = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, 'wcast_' . $key2 . '_email_subject', '' );
+				if ( $subject ) {
+					update_trackship_email_settings( 'subject', $slug, $subject );
+				}
+				$heading = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, 'wcast_' . $key2 . '_email_heading', '' );
+				if ( $heading ) {
+					update_trackship_email_settings( 'heading', $slug, $heading );
+				}
+				$content = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, 'wcast_' . $key2 . '_email_content', '' );
+				if ( $content ) {
+					update_trackship_email_settings( 'content', $slug, $content );
+				}
+				$show_order_details = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, 'wcast_' . $key2 . '_show_order_details', '' );
+				if ( $show_order_details ) {
+					update_trackship_email_settings( 'show_order_details', $slug, $show_order_details );
+				}
+				$show_product_image = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, 'wcast_' . $key2 . '_show_product_image', '' );
+				if ( $show_product_image ) {
+					update_trackship_email_settings( 'show_product_image', $slug, $show_product_image );
+				}
+				if ( 'pickupreminder' != $key2 ) {
+					$show_shipping_address = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, 'wcast_' . $key2 . '_show_shipping_address', '' );
+					if ( $show_shipping_address ) {
+						update_trackship_email_settings( 'show_shipping_address', $slug, $show_shipping_address );
+					}
+				} else {
+					$days = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, $key2 . '_days', '' );
+					if ( $days ) {
+						update_trackship_email_settings( 'days', $slug, $days );
+					}
+				}
+			}
+
+			$shipment_email_default_settings = [
+				'common_settings' => [
+					'border_color' => '#e8e8e8',
+					'link_color' => '',
+					'bg_color' => '#fff',
+					'font_color' => '#333',
+					'tracking_page_layout' => 't_layout_2',
+					'track_button_Text' => __( 'Track your order', 'trackship-for-woocommerce' ),
+					'track_button_color' => '#3c4858',
+					'track_button_text_color' => '#fff',
+					'track_button_border_radius' => 0,
+					'show_trackship_branding' => 1,
+					'shipping_provider_logo' => 1,
+				]
+			];
+			foreach ( $shipment_email_default_settings['common_settings'] as $key => $value ) {
+				update_trackship_email_settings( $key, 'common_settings', $value );
+			}
+
+			$shipment_email_settings = get_option( 'shipment_email_settings', [] );
+			foreach ( $shipment_email_settings as $key => $value ) {
+				update_trackship_email_settings( $key, 'common_settings', $value );
+			}
+
+			$array_data = get_option('tracking_form_settings');
+			$form_tab_view = $array_data['form_tab_view'] ?? 'both';
+			update_trackship_settings( 'form_tab_view', $form_tab_view );
+			
+			$form_button_Text = $array_data['form_button_Text'] ?? __( 'Track your order', 'trackship-for-woocommerce' );
+			update_trackship_settings( 'form_button_Text', $form_button_Text );
+			
+			$form_button_color = $array_data['form_button_color'] ?? '#3c4858';
+			update_trackship_settings( 'form_button_color', $form_button_color );
+			
+			$form_button_text_color = $array_data['form_button_text_color'] ?? '#fff';
+			update_trackship_settings( 'form_button_text_color', $form_button_text_color );
+			
+			$form_button_border_radius = $array_data['form_button_border_radius'] ?? 0;
+			update_trackship_settings( 'form_button_border_radius', $form_button_border_radius );
+
+			$shipped_product_label = get_option( 'shipped_product_label', __( 'Items in this shipment', 'trackship-for-woocommerce' ) );
+			$shipping_address_label = get_option( 'shipping_address_label', __( 'Shipping address', 'trackship-for-woocommerce' ) );
+
+			update_trackship_email_settings( 'shipped_product_label', 'common_settings', $shipped_product_label );
+			update_trackship_email_settings( 'shipping_address_label', 'common_settings', $shipping_address_label );
+
+			// delete_option('tracking_form_settings'); // add this code in future version
+			// delete_option('shipment_email_settings'); // add this code in future version
+			// delete_option('shipped_product_label'); // add this code in future version
+			// delete_option('shipping_address_label'); // add this code in future version
+			// delete_option('wcast_pickupreminder_email_settings'); // add this code in future version
+			// delete_option('wcast_intransit_email_settings'); // add this code in future version
+			// delete_option('wcast_returntosender_email_settings'); // add this code in future version
+			// delete_option('wcast_availableforpickup_email_settings'); // add this code in future version
+			// delete_option('wcast_exception_email_settings'); // add this code in future version
+			// delete_option('wcast_onhold_email_settings'); // add this code in future version
+			// delete_option('wcast_failure_email_settings'); // add this code in future version
+			// delete_option('wcast_delivered_status_email_settings'); // add this code in future version
+			// delete_option('wcast_outfordelivery_email_settings'); // add this code in future version
+			// delete_option('shipment_email_settings'); // add this code in future version
+		}
 	}
 
 	public function update_trackship_providers() {

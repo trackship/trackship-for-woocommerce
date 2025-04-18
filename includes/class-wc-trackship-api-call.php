@@ -47,7 +47,7 @@ class WC_TrackShip_Api_Call {
 					$tracking_provider = $val['custom_tracking_provider'];
 				}
 				$tracking_provider = apply_filters( 'convert_provider_name_to_slug', $tracking_provider );
-				if ( 'fastway-au' == $tracking_provider ) { $tracking_provider = 'aramex-au'; }
+				$tracking_provider = 'fastway-au' == $tracking_provider ? 'aramex-au' : $tracking_provider;
 				
 				$bool = apply_filters( 'exclude_to_send_data_for_provider', true, $tracking_provider );
 				if ( !$bool ) {

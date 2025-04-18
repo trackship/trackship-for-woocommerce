@@ -26,8 +26,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<table class="form-table shipment-status-email-table">
 			<tbody>
 				<?php foreach ( $ts_notifications as $key => $val ) { ?>
-					<?php $ast_enable_email = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( $val['option_name'], $val['enable_status_name'], ''); ?>
-					<tr class="<?php echo 1 == $ast_enable_email ? 'enable' : 'disable'; ?> ">
+					<?php $enable_email = get_trackship_email_settings( 'enable', $key ); ?>
+					<tr class="<?php echo 1 == $enable_email ? 'enable' : 'disable'; ?> ">
 						<td class="status-label-column">
 							<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/<?php echo esc_html( $val['img_slug'] ); ?>.png">
 							<strong class="shipment-status-label"><?php echo esc_html( $val['title'] ); ?></strong>
@@ -44,8 +44,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<td>
 							<span class="shipment_status_toggle">
 								<input type="hidden" name="<?php echo esc_html( $val['enable_status_name'] ); ?>" value="0"/>
-								<input class="tgl tgl-flat" id="<?php echo esc_html( $val['enable_status_name'] ); ?>" name="<?php echo esc_html( $val['enable_status_name'] ); ?>" data-settings="<?php echo esc_html( $val['option_name'] ); ?>" type="checkbox" <?php echo 1 == $ast_enable_email ? 'checked' : ''; ?> value="yes"/>
-								<label class="tgl-btn tgl-btn-green" for="<?php echo esc_html( $val['enable_status_name'] ); ?>"></label>	
+								<input class="tgl tgl-flat" id="<?php echo esc_html( $val['enable_status_name'] ); ?>" name="<?php echo esc_html( $val['enable_status_name'] ); ?>" data-settings="trackship_email_settings" data-status="<?php echo esc_html( $key ); ?>" type="checkbox" <?php echo 1 == $enable_email ? 'checked' : ''; ?> value="yes"/>
+								<label class="tgl-btn tgl-btn-green" for="<?php echo esc_html( $val['enable_status_name'] ); ?>"></label>
 							</span>
 							<a class="edit_customizer_a dashicons dashicons-admin-generic" href="<?php echo esc_html( $val['customizer_url'] ); ?>"></a>
 						</td>

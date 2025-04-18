@@ -65,7 +65,7 @@
 						<strong>304188629639</strong>
 						</li>
 						<li class="last_mile_tracking_number">
-							<span>Delivery tracking Number </span> 
+							<span><?php esc_html_e( 'Delivery tracking Number', 'trackship-for-woocommerce' ); ?> </span> 
 							<strong style="display:inline-block;">5333452683184862313</strong>
 						</li>
 					</ul>
@@ -84,7 +84,7 @@
 				<img class="shipping_to_img" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/arrow.png">
 				<span class="shipping_to">United states</span>
 			</div>
-			<span class="est_delivery_date">Est. Delivery Date: <strong>Thursday, Oct 01</strong></span>	
+			<span class="est_delivery_date"><?php esc_html_e( 'Est. Delivery Date', 'trackship-for-woocommerce' ); ?>: <strong>Thursday, Oct 01</strong></span>	
 		</div>
 		<?php
 		if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ) {
@@ -112,7 +112,7 @@
 		</div>
 		<div class="tracking_event_tab_view">
 			<div data-label="tracking_events_details" class="heading_panel tracking_detail_label <?php echo 1 != $hide_tracking_events ? 'checked' : 'hide'; ?>" style="<?php echo 1 == $hide_tracking_events ? 'display:none' : ''; ?>">
-				Shipment Progress
+				<?php esc_html_e( 'Shipment Progress', 'trackship-for-woocommerce' ); ?>
 				<span class="accordian-arrow ts-right"></span>
 			</div>
 			<div class="content_panel tracking-details tracking_events_details">
@@ -174,7 +174,7 @@
 				</div>
 			</div>
 			<div data-label="product_details" class="heading_panel">
-				Items in this shipment
+				<?php esc_html_e( 'Items in this shipment', 'trackship-for-woocommerce' ); ?>
 				<span class="accordian-arrow ts-right"></span>
 			</div>
 			<div class="content_panel product_details">
@@ -196,7 +196,7 @@
 				</ul>
 			</div>
 			<div data-label="shipment_status_notifications" class="heading_panel">
-				Notifications
+				<?php esc_html_e( 'Notifications', 'trackship-for-woocommerce' ); ?>
 				<span class="accordian-arrow ts-right"></span>
 			</div>
 			<div class="content_panel shipment_status_notifications">
@@ -206,7 +206,7 @@
 				</label>
 				<label>
 					<input type="checkbox" class="unsubscribe_sms_checkbox" name="unsubscribe_sms" data-lable="sms" value="1" checked="">
-					<span style="font-weight: normal;">SMS notifications</span>
+					<span style="font-weight: normal;"><?php esc_html_e( 'SMS notifications', 'trackship-for-woocommerce' ); ?></span>
 				</label>
 			</div>
 		</div>

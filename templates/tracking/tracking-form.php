@@ -15,12 +15,12 @@ $bg_color = get_trackship_settings( 'wc_ts_bg_color', $tracking_page_defaults->d
 $font_color = get_trackship_settings( 'wc_ts_font_color', $tracking_page_defaults->defaults['wc_ts_font_color'] );
 $border_color = get_trackship_settings( 'wc_ts_border_color', $tracking_page_defaults->defaults['wc_ts_border_color'] );
 $border_radius = get_trackship_settings('wc_ts_border_radius', $tracking_page_defaults->defaults['wc_ts_border_radius'] );
-$show_trackship_branding = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'show_trackship_branding', 1 );
-$form_button_Text = $tracking_page_defaults->get_value( 'tracking_form_settings', 'form_button_Text' );
-$form_button_color = $tracking_page_defaults->get_value( 'tracking_form_settings', 'form_button_color' );
-$form_button_text_color = $tracking_page_defaults->get_value( 'tracking_form_settings', 'form_button_text_color' );
-$form_button_border_radius = $tracking_page_defaults->get_value( 'tracking_form_settings', 'form_button_border_radius' );
-$form_tab_view = $tracking_page_defaults->get_value( 'tracking_form_settings', 'form_tab_view' );
+$show_trackship_branding = get_trackship_email_settings( 'show_trackship_branding', 'common_settings', 1 );
+$form_tab_view = get_trackship_settings( 'form_tab_view' );
+$form_button_Text = get_trackship_settings( 'form_button_Text' );
+$form_button_color = get_trackship_settings( 'form_button_color' );
+$form_button_text_color = get_trackship_settings( 'form_button_text_color' );
+$form_button_border_radius = get_trackship_settings( 'form_button_border_radius' );
 ?>
 <style>
 <?php if ( $bg_color ) { ?>
@@ -82,13 +82,13 @@ $form_tab_view = $tracking_page_defaults->get_value( 'tracking_form_settings', '
 		<div class="search_order_form">
 			<?php if ( 'tracking_details' == $form_tab_view ) { ?>
 				<style>
-					.tracking_form_tabs, .order_id_email {display:none;}
+					.search_order_form .tracking_form_tabs, .search_order_form .order_id_email {display:none;}
 					.search_order_form .by_tracking_number.tracking_form { display:block; }
 					form.order_track_form {min-height:auto;}
 					</style>
 			<?php } elseif ( 'order_details' == $form_tab_view ) { ?>
 				<style>
-					.tracking_form_tabs, .by_tracking_number {display:none;}
+					.search_order_form .tracking_form_tabs, .search_order_form .by_tracking_number {display:none;}
 					.search_order_form .order_id_email.tracking_form { display:block; }
 					form.order_track_form {min-height:auto;}
 					</style>

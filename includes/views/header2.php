@@ -78,7 +78,7 @@ $menu_items = array(
 		'target' => 'target="_blank"'
 	),
 );
-?> 
+?>
 <div class="zorem-layout__header">
 	<div>
 		<span style="font-size:14px">
