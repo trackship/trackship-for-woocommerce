@@ -692,7 +692,7 @@ class TS4WC_Admin_Customizer {
 				'option_name'=> 'trackship_settings',
 				'option_type'=> 'array',
 			),
-			'trackship_settings[show_trackship_branding]' => array(
+			'email_settings[common_settings][show_trackship_branding]' => array(
 				'title'		=> __( 'Display TrackShip branding', 'trackship-for-woocommerce' ),
 				'default'	=> $show_trackship_branding,
 				'type'		=> 'checkbox',
@@ -930,7 +930,7 @@ class TS4WC_Admin_Customizer {
 			'show'		=> true,
 			'class'		=> 'pickup_reminder_sub_menu all_status_submenu pickup_reminder_days',
 		);
-		$settings[ 'trackship_settings[email_trackship_branding]' ] = array(
+		$settings[ 'email_settings[common_settings][email_trackship_branding]' ] = array(
 			'title'		=> esc_html__( 'Display TrackShip branding', 'trackship-for-woocommerce' ),
 			'default'	=> $show_trackship_branding,
 			'type'		=> 'checkbox',
@@ -1339,6 +1339,7 @@ class TS4WC_Admin_Customizer {
 		if ( !empty($_POST) && check_admin_referer( 'trackship_customizer_options_actions', 'trackship_customizer_options_nonce_field' ) ) {
 			
 			$email_settings = wc_clean($_POST['email_settings'] ?? []);
+			unset( $email_settings['common_settings']['email_trackship_branding'] );
 			foreach ( $email_settings['common_settings'] as $key => $val ) {
 				update_trackship_email_settings( $key, 'common_settings', $val );
 			}
