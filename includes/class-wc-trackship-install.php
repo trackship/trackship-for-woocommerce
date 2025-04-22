@@ -421,7 +421,7 @@ class WC_Trackship_Install {
 					} elseif ( 'pickup_reminder' == $key && 'show_shipping_address' == $key1 ) {
 						continue;
 					}
-					update_trackship_email_settings( $key1, $key, $value );
+					update_trackship_email_settings( $key, $key1, $value );
 				}
 			}
 
@@ -442,37 +442,37 @@ class WC_Trackship_Install {
 				$value = '';
 				$enable = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, 'wcast_enable_' . $key2 . '_email', '' );
 				if ( $enable ) {
-					update_trackship_email_settings( 'enable', $slug, $enable );
+					update_trackship_email_settings( $slug, 'enable', $enable );
 				}
 				$subject = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, 'wcast_' . $key2 . '_email_subject', '' );
 				if ( $subject ) {
-					update_trackship_email_settings( 'subject', $slug, $subject );
+					update_trackship_email_settings( $slug, 'subject', $subject );
 				}
 				$heading = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, 'wcast_' . $key2 . '_email_heading', '' );
 				if ( $heading ) {
-					update_trackship_email_settings( 'heading', $slug, $heading );
+					update_trackship_email_settings( $slug, 'heading', $heading );
 				}
 				$content = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, 'wcast_' . $key2 . '_email_content', '' );
 				if ( $content ) {
-					update_trackship_email_settings( 'content', $slug, $content );
+					update_trackship_email_settings( $slug, 'content', $content );
 				}
 				$show_order_details = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, 'wcast_' . $key2 . '_show_order_details', '' );
 				if ( $show_order_details ) {
-					update_trackship_email_settings( 'show_order_details', $slug, $show_order_details );
+					update_trackship_email_settings( $slug, 'show_order_details', $show_order_details );
 				}
 				$show_product_image = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, 'wcast_' . $key2 . '_show_product_image', '' );
 				if ( $show_product_image ) {
-					update_trackship_email_settings( 'show_product_image', $slug, $show_product_image );
+					update_trackship_email_settings( $slug, 'show_product_image', $show_product_image );
 				}
 				if ( 'pickupreminder' != $key2 ) {
 					$show_shipping_address = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, 'wcast_' . $key2 . '_show_shipping_address', '' );
 					if ( $show_shipping_address ) {
-						update_trackship_email_settings( 'show_shipping_address', $slug, $show_shipping_address );
+						update_trackship_email_settings( $slug, 'show_shipping_address', $show_shipping_address );
 					}
 				} else {
 					$days = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, $key2 . '_days', '' );
 					if ( $days ) {
-						update_trackship_email_settings( 'days', $slug, $days );
+						update_trackship_email_settings( $slug, 'days', $days );
 					}
 				}
 			}
@@ -493,12 +493,12 @@ class WC_Trackship_Install {
 				]
 			];
 			foreach ( $shipment_email_default_settings['common_settings'] as $key => $value ) {
-				update_trackship_email_settings( $key, 'common_settings', $value );
+				update_trackship_email_settings( 'common_settings', $key, $value );
 			}
 
 			$shipment_email_settings = get_option( 'shipment_email_settings', [] );
 			foreach ( $shipment_email_settings as $key => $value ) {
-				update_trackship_email_settings( $key, 'common_settings', $value );
+				update_trackship_email_settings( 'common_settings', $key, $value );
 			}
 
 			$array_data = get_option('tracking_form_settings');
@@ -520,8 +520,8 @@ class WC_Trackship_Install {
 			$shipped_product_label = get_option( 'shipped_product_label', __( 'Items in this shipment', 'trackship-for-woocommerce' ) );
 			$shipping_address_label = get_option( 'shipping_address_label', __( 'Shipping address', 'trackship-for-woocommerce' ) );
 
-			update_trackship_email_settings( 'shipped_product_label', 'common_settings', $shipped_product_label );
-			update_trackship_email_settings( 'shipping_address_label', 'common_settings', $shipping_address_label );
+			update_trackship_email_settings( 'common_settings', 'shipped_product_label', $shipped_product_label );
+			update_trackship_email_settings( 'common_settings', 'shipping_address_label', $shipping_address_label );
 
 			// delete_option('tracking_form_settings'); // add this code in future version
 			// delete_option('shipment_email_settings'); // add this code in future version

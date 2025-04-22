@@ -143,7 +143,7 @@ class TS4WC_Admin_Customizer {
 									<?php foreach ( $shipment_status as $key => $value ) { ?>
 										<span class="tgl_<?php esc_attr_e( $key ); ?>" <?php echo $shipmentStatus == $key ? '' : 'style="display:none;"'; ?>>
 											<?php $id = 'email_settings[' . $key . '][enable]'; ?>
-											<?php $enable_email = get_trackship_email_settings( 'enable', $key ); ?>
+											<?php $enable_email = get_trackship_email_settings( $key, 'enable' ); ?>
 											<label style="vertical-align: middle;" for="<?php esc_attr_e( $id ); ?>"><?php esc_html_e( 'Enable email', 'trackship-for-woocommerce' ); ?></label>
 											<input type="hidden" name="<?php esc_attr_e( $id ); ?>" value="0">
 											<input type="checkbox" id="<?php esc_attr_e( $id ); ?>" name="<?php esc_attr_e( $id ); ?>" class="tgl tgl-flat" <?php echo $enable_email ? 'checked' : ''; ?> value="1">
@@ -257,17 +257,17 @@ class TS4WC_Admin_Customizer {
 		$tracking_pageiframe_url = $this->get_tracking_preview_url( $status );
 
 		//Email saved/default vaule
-		$border_color = get_trackship_email_settings( 'border_color', 'common_settings' );
-		$link_color = get_trackship_email_settings( 'link_color', 'common_settings' );
-		$bg_color = get_trackship_email_settings( 'bg_color', 'common_settings' );
-		$font_color = get_trackship_email_settings( 'font_color', 'common_settings' );
-		$tracking_page_layout = get_trackship_email_settings( 'tracking_page_layout', 'common_settings' );
-		$track_button_Text = get_trackship_email_settings( 'track_button_Text', 'common_settings' );
-		$track_button_color = get_trackship_email_settings( 'track_button_color', 'common_settings' );
-		$track_button_text_color = get_trackship_email_settings( 'track_button_text_color', 'common_settings' );
-		$track_button_border_radius = get_trackship_email_settings( 'track_button_border_radius', 'common_settings' );
-		$show_trackship_branding = get_trackship_email_settings( 'show_trackship_branding', 'common_settings' );
-		$shipping_provider_logo = get_trackship_email_settings( 'shipping_provider_logo', 'common_settings' );
+		$border_color = get_trackship_email_settings( 'common_settings', 'border_color' );
+		$link_color = get_trackship_email_settings( 'common_settings', 'link_color' );
+		$bg_color = get_trackship_email_settings( 'common_settings', 'bg_color' );
+		$font_color = get_trackship_email_settings( 'common_settings', 'font_color' );
+		$tracking_page_layout = get_trackship_email_settings( 'common_settings', 'tracking_page_layout' );
+		$track_button_Text = get_trackship_email_settings( 'common_settings', 'track_button_Text' );
+		$track_button_color = get_trackship_email_settings( 'common_settings', 'track_button_color' );
+		$track_button_text_color = get_trackship_email_settings( 'common_settings', 'track_button_text_color' );
+		$track_button_border_radius = get_trackship_email_settings( 'common_settings', 'track_button_border_radius' );
+		$show_trackship_branding = get_trackship_email_settings( 'common_settings', 'show_trackship_branding' );
+		$shipping_provider_logo = get_trackship_email_settings( 'common_settings', 'shipping_provider_logo' );
 
 		//Tracking page saved/default vaule
 		$wc_ts_bg_color = get_trackship_settings( 'wc_ts_bg_color', $this->defaults['wc_ts_bg_color'] );
@@ -282,8 +282,8 @@ class TS4WC_Admin_Customizer {
 		$tracking_page_type = get_trackship_settings( 'tracking_page_type', $this->defaults['tracking_page_type'] );
 		$hide_shipping_from_to = get_trackship_settings( 'ts_hide_from_to', $this->defaults['ts_hide_from_to'] );
 		$hide_last_mile = get_trackship_settings( 'ts_hide_list_mile_tracking', $this->defaults['ts_hide_list_mile_tracking'] );
-		$shipped_product_label = get_trackship_email_settings( 'shipped_product_label', 'common_settings' );
-		$shipping_address_label = get_trackship_email_settings( 'shipping_address_label', 'common_settings' );
+		$shipped_product_label = get_trackship_email_settings( 'common_settings', 'shipped_product_label' );
+		$shipping_address_label = get_trackship_email_settings( 'common_settings', 'shipping_address_label' );
 
 		// Tracking form saved/default vaule
 		$form_tab_view = get_trackship_settings( 'form_tab_view' );
@@ -806,14 +806,14 @@ class TS4WC_Admin_Customizer {
 				'option_name'=> 'trackship_email_settings',
 				'option_type'=> 'array',
 				'show'		=> false,
-				'default'	=> get_trackship_email_settings( 'enable', $value ),
+				'default'	=> get_trackship_email_settings( $value, 'enable' ),
 				'class'		=> $value . '_sub_menu all_status_submenu',
 				'name'		=> $this->shipment_status()[$value]
 			);
 			$settings[ 'email_settings[' . $value . '][subject]' ] = array(
 				'title'		=> esc_html__( 'Email subject', 'trackship-for-woocommerce' ),
 				'desc'		=> esc_html__( 'Available variables:', 'trackship-for-woocommerce' ) . ' {site_title}, {order_number}',
-				'default'	=> get_trackship_email_settings( 'subject', $value ),
+				'default'	=> get_trackship_email_settings( $value, 'subject' ),
 				'type'		=> 'text',
 				'id_name'	=> $value . '_subject',
 				'option_name'=> 'trackship_email_settings',
@@ -824,7 +824,7 @@ class TS4WC_Admin_Customizer {
 			$settings[ 'email_settings[' . $value . '][heading]' ] = array(
 				'title'	=> esc_html__( 'Email heading', 'trackship-for-woocommerce' ),
 				'desc'	=> esc_html__( 'Available variables:', 'trackship-for-woocommerce' ) . ' {site_title}, {order_number}',
-				'default'	=> get_trackship_email_settings( 'heading', $value ),
+				'default'	=> get_trackship_email_settings( $value, 'heading' ),
 				'type'	=> 'text',
 				'id_name'	=> $value . '_heading',
 				'option_name'=> 'trackship_email_settings',
@@ -835,7 +835,7 @@ class TS4WC_Admin_Customizer {
 			$settings[ 'email_settings[' . $value . '][content]' ] = array(
 				'title'		=> esc_html__( 'Email Content', 'trackship-for-woocommerce' ),
 				'desc'		=> '',
-				'default'	=> get_trackship_email_settings( 'content', $value ),
+				'default'	=> get_trackship_email_settings( $value, 'content' ),
 				'type'		=> 'textarea',
 				'id_name'	=> $value . '_content',
 				'option_name'=> 'trackship_email_settings',
@@ -864,7 +864,7 @@ class TS4WC_Admin_Customizer {
 		foreach ( $all_statuses as $key => $value ) {
 			$settings[ 'email_settings[' . $value . '][show_order_details]' ] = array(
 				'title'		=> esc_html__( 'Display shipped products', 'trackship-for-woocommerce' ),
-				'default'	=> get_trackship_email_settings( 'show_order_details', $value ),
+				'default'	=> get_trackship_email_settings( $value, 'show_order_details' ),
 				'type'		=> 'checkbox',
 				'id_name'	=> $value . '_show_order_details',
 				'option_name'=> 'trackship_email_settings',
@@ -888,7 +888,7 @@ class TS4WC_Admin_Customizer {
 		foreach ( $all_statuses as $key => $value ) {
 			$settings[ 'email_settings[' . $value . '][show_product_image]' ] = array(
 				'title'		=> esc_html__( 'Display product image', 'trackship-for-woocommerce' ),
-				'default'	=> get_trackship_email_settings( 'show_product_image', $value ),
+				'default'	=> get_trackship_email_settings( $value, 'show_product_image' ),
 				'type'		=> 'checkbox',
 				'id_name'	=> $value . '_show_product_image',
 				'option_name'=> 'trackship_email_settings',
@@ -899,7 +899,7 @@ class TS4WC_Admin_Customizer {
 			if ( 'pickup_reminder' != $value ) {
 				$settings[ 'email_settings[' . $value . '][show_shipping_address]' ] = array(
 					'title'		=> esc_html__( 'Display shipping address', 'trackship-for-woocommerce' ),
-					'default'	=> get_trackship_email_settings( 'show_shipping_address', $value ),
+					'default'	=> get_trackship_email_settings( $value, 'show_shipping_address' ),
 					'type'		=> 'checkbox',
 					'id_name'	=> $value . '_show_shipping_address',
 					'option_name'=> 'trackship_email_settings',
@@ -921,7 +921,7 @@ class TS4WC_Admin_Customizer {
 		);
 		$settings[ 'email_settings[pickup_reminder][days]' ] = array(
 			'title'		=> esc_html__( 'Set Pickup reminder notifications(in days)', 'trackship-for-woocommerce' ),
-			'default'	=> get_trackship_email_settings( 'days', $value ),
+			'default'	=> get_trackship_email_settings( $value, 'days' ),
 			'type'		=> 'number',
 			'min'		=> 0,
 			'id_name'	=> 'pickup_reminder_days',
@@ -950,8 +950,9 @@ class TS4WC_Admin_Customizer {
 		}
 		if ( 'modern' == $tracking_page_type ) {
 			unset( $settings['trackship_settings[tracking_page_type]'] );
+			unset( $settings['trackship_settings[ts_tracking_events]'] );
+			unset( $settings['trackship_settings[ts_tracking_page_layout]'] );
 		}
-
 		return $settings;
 	}
 
@@ -1341,14 +1342,14 @@ class TS4WC_Admin_Customizer {
 			$email_settings = wc_clean($_POST['email_settings'] ?? []);
 			unset( $email_settings['common_settings']['email_trackship_branding'] );
 			foreach ( $email_settings['common_settings'] as $key => $val ) {
-				update_trackship_email_settings( $key, 'common_settings', $val );
+				update_trackship_email_settings( 'common_settings', $key, $val );
 			}
 			
 			$shipment_status = $this->shipment_status();
 			foreach ( $shipment_status as $slug => $label ) {
 				foreach ( $email_settings[$slug] as $key => $val ) {
 					$val = 'content' == $key ?  wp_kses_post( wp_unslash( $_POST['email_settings'][$slug][$key] ) ) : $val;
-					update_trackship_email_settings( $key, $slug, $val );
+					update_trackship_email_settings( $slug, $key, $val );
 				}
 			}
 

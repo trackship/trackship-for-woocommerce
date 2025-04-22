@@ -12,14 +12,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @version 1.0
  */
 if ( $tracking_items ) : 
-	$track_button_Text = get_trackship_email_settings( 'track_button_Text', 'common_settings' );
-	$tracking_page_layout = get_trackship_email_settings( 'tracking_page_layout', 'common_settings' );
+	$track_button_Text = get_trackship_email_settings( 'common_settings', 'track_button_Text' );
+	$tracking_page_layout = get_trackship_email_settings( 'common_settings', 'tracking_page_layout' );
 	$text_align = is_rtl() ? 'right' : 'left';
-	$border_color = get_trackship_email_settings( 'border_color', 'common_settings' );
-	$link_color = get_trackship_email_settings( 'link_color', 'common_settings' );
-	$background_color = get_trackship_email_settings( 'bg_color', 'common_settings' );
-	$font_color = get_trackship_email_settings( 'font_color', 'common_settings' );
-	$shipping_provider_logo = get_trackship_email_settings( 'shipping_provider_logo', 'common_settings' );
+	$border_color = get_trackship_email_settings( 'common_settings', 'border_color' );
+	$link_color = get_trackship_email_settings( 'common_settings', 'link_color' );
+	$background_color = get_trackship_email_settings( 'common_settings', 'bg_color' );
+	$font_color = get_trackship_email_settings( 'common_settings', 'font_color' );
+	$shipping_provider_logo = get_trackship_email_settings( 'common_settings', 'shipping_provider_logo' );
 	$class = $ts4wc_preview ? 'hide' : '';
 	?>
 	<div class="tracking_info">
@@ -28,7 +28,7 @@ if ( $tracking_items ) :
 				<?php
 				$ship_status = $new_status;
 				$tracking_link = $tracking_item['tracking_page_link'] ? $tracking_item['tracking_page_link'] : $tracking_item['formatted_tracking_link'];
-				$show_trackship_branding = get_trackship_email_settings( 'show_trackship_branding', 'common_settings', 1 );
+				$show_trackship_branding = get_trackship_email_settings( 'common_settings', 'show_trackship_branding', 1 );
 				do_action( 'before_tracking_widget_email', $tracking_item, $order_id );
 				?>
 				<div class="tracking_index display-table">
@@ -145,10 +145,10 @@ if ( $tracking_items ) :
 		display:inline-block;
 	}
 	a.track_your_order {
-		border-radius: <?php echo esc_html( get_trackship_email_settings( 'track_button_border_radius', 'common_settings' ) ); ?>px;
+		border-radius: <?php echo esc_html( get_trackship_email_settings( 'common_settings', 'track_button_border_radius' ) ); ?>px;
 		text-decoration: none;
-		color: <?php echo esc_html( get_trackship_email_settings( 'track_button_text_color', 'common_settings' ) ); ?> !important;
-		background: <?php echo esc_html( get_trackship_email_settings( 'track_button_color', 'common_settings' ) ); ?>;
+		color: <?php echo esc_html( get_trackship_email_settings( 'common_settings', 'track_button_text_color' ) ); ?> !important;
+		background: <?php echo esc_html( get_trackship_email_settings( 'common_settings', 'track_button_color' ) ); ?>;
 		text-align: center;
 		padding: 10px 15px;
 		float: right;

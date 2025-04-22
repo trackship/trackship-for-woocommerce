@@ -9,7 +9,6 @@ if ( !get_trackship_settings( 'wc_admin_notice', '') ) {
 	trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_review();
 	update_trackship_settings( 'wc_admin_notice', 'true');
 }
-
 $url = 'https://api.trackship.com/v1/user-plan/get';
 $args['body'] = json_encode( [ 'user_key' => get_trackship_key() ] );
 $response = wp_remote_post( $url, $args );
