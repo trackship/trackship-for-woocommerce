@@ -9,7 +9,7 @@
  * License URI: 
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
- * WC tested up to: 9.7.1
+ * WC tested up to: 9.8.1
  * Requires Plugins: woocommerce
 */
 

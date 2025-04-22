@@ -121,10 +121,10 @@ class WC_TrackShip_Admin_Notice {
 		if ( get_trackship_settings( 'ts_popup_ignore139', '') || !in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended', 'Free Trial' ) ) ) {
 			return;
 		}
-		$target_date = strtotime('2024-11-10');
+		$target_date = strtotime('2025-05-10');
 		$current_date = current_time('timestamp');
 	
-		// If the current date is after May 31, 2024, return early
+		// If the current date is after May 10, 2025, return early
 		if ( $current_date > $target_date ) {
 			return;
 		}
