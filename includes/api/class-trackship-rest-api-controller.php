@@ -250,9 +250,9 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 				}
 
 				// Schedule action for send Pickup reminder notifiations
-				$enable = get_trackship_email_settings( 'enable', 'pickup_reminder' );
+				$enable = get_trackship_email_settings( 'pickup_reminder', 'enable' );
 				if ( 'available_for_pickup' == $tracking_event_status && $enable ) {
-					$time = get_trackship_email_settings( 'days', 'pickup_reminder' );
+					$time = get_trackship_email_settings( 'pickup_reminder', 'days' );
 					$time = 24*60*60*intval($time);
 					as_schedule_single_action( time() + $time, 'trigger_pickup_reminder_email', array( $order_id, $previous_status, $tracking_event_status, $tracking_number ), 'TrackShip' );
 				}

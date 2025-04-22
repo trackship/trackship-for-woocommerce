@@ -62,17 +62,17 @@ class TSWC_Email_Customizer_Preview {
 		$preview_id = get_option( 'email_preview', 'mockup' );
 		$order = trackship_admin_customizer()->get_wc_order_for_preview( $preview_id );
 		// print_r($order);
-		$email_heading = get_trackship_email_settings( 'heading', $status );
+		$email_heading = get_trackship_email_settings( $status, 'heading' );
 		$email_heading = str_replace( '{site_title}', $this->get_blogname(), $email_heading );
 		$email_heading = str_replace( '{order_number}', $order->get_order_number(), $email_heading );
 		$email_heading = str_replace( '{shipment_status}', 'In Transit', $email_heading );
 		
-		$email_content = get_trackship_email_settings( 'content', $status );
+		$email_content = get_trackship_email_settings( $status, 'content' );
 		$email_content = html_entity_decode( $email_content );
 		
-		$wcast_show_order_details = get_trackship_email_settings( 'show_order_details', $status );
-		$wcast_show_product_image = get_trackship_email_settings( 'show_product_image', $status );
-		$wcast_show_shipping_address = get_trackship_email_settings( 'show_shipping_address', $status );
+		$wcast_show_order_details = get_trackship_email_settings( $status, 'show_order_details' );
+		$wcast_show_product_image = get_trackship_email_settings( $status, 'show_product_image' );
+		$wcast_show_shipping_address = get_trackship_email_settings( $status, 'show_shipping_address' );
 		
 		$sent_to_admin = false;
 		$plain_text = false;
@@ -159,7 +159,7 @@ class TSWC_Email_Customizer_Preview {
 	 * Code for format email subject
 	*/
 	public function email_footer_text( $footer_text ) {
-		$show_trackship_branding = get_trackship_email_settings( 'show_trackship_branding', 'common_settings', 1 );
+		$show_trackship_branding = get_trackship_email_settings( 'common_settings', 'show_trackship_branding', 1 );
 		$class = !( $show_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan', 'Trial Ended' ) ) ) ? 'hide' : '';
 
 		$trackship_branding_text = '<div class="tracking_widget_email trackship_branding ' . $class . '"><p style="margin: 0;"><span style="vertical-align:middle;font-size: 14px;">Powered by <a href="https://trackship.com" title="TrackShip" target="blank">TrackShip</a></span></p></div>';

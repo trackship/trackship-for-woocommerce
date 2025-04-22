@@ -32,7 +32,7 @@ $kt_woomail = get_option( 'kt_woomail' );
 if ( !empty($kt_woomail) && isset( $kt_woomail['font_size'] ) ) {
 	$table_font_size = 'font-size:' . $kt_woomail['font_size'] . 'px';
 }
-$shipped_product_label = get_trackship_email_settings( 'shipped_product_label', 'common_settings' );
+$shipped_product_label = get_trackship_email_settings( 'common_settings', 'shipped_product_label' );
 $shipped_product_label = apply_filters( 'ts_shipped_product_label', $shipped_product_label, $new_status );
 $class = $ts4wc_preview ? 'hide' : '';
 ?>
