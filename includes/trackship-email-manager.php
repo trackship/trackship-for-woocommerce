@@ -47,7 +47,7 @@ class WC_TrackShip_Email_Manager {
 		$status = str_replace('_', '', $new_status);
 		$status = 'delivered' == $status ? 'delivered_status' : $status;
 
-		$enable = get_trackship_email_settings( 'enable', $new_status );
+		$enable = get_trackship_email_settings( $new_status, 'enable' );
 		$for_amazon_order = trackship_for_woocommerce()->ts_actions->is_notification_on_for_amazon( $order_id );
 		$receive_email = $order->get_meta( '_receive_shipment_emails', true );
 
@@ -90,14 +90,14 @@ class WC_TrackShip_Email_Manager {
 			$sitepress->switch_lang($new_lan);
 		}
 
-		$email_subject = get_trackship_email_settings( 'subject', $new_status );
-		$email_heading = get_trackship_email_settings( 'heading', $new_status );
-		$email_content = get_trackship_email_settings( 'content', $new_status );
+		$email_subject = get_trackship_email_settings( $new_status, 'subject' );
+		$email_heading = get_trackship_email_settings( $new_status, 'heading' );
+		$email_content = get_trackship_email_settings( $new_status, 'content' );
 		$email_content = html_entity_decode( $email_content );
 		
-		$wcast_show_order_details = get_trackship_email_settings( 'show_order_details', $new_status );
-		$wcast_show_product_image = get_trackship_email_settings( 'show_product_image', $new_status );
-		$wcast_show_shipping_address = get_trackship_email_settings( 'show_shipping_address', $new_status );
+		$wcast_show_order_details = get_trackship_email_settings( $new_status, 'show_order_details' );
+		$wcast_show_product_image = get_trackship_email_settings( $new_status, 'show_product_image' );
+		$wcast_show_shipping_address = get_trackship_email_settings( $new_status, 'show_shipping_address' );
 		
 		$sent_to_admin = false;
 		$plain_text = false;
@@ -181,7 +181,7 @@ class WC_TrackShip_Email_Manager {
 			$this->tracking_item = $tracking_item;
 			$this->tracking_number = $tracking_item['tracking_number'];
 
-			$enable = get_trackship_email_settings( 'enable', 'pickup_reminder' );
+			$enable = get_trackship_email_settings( 'pickup_reminder', 'enable' );
 	
 			$arg = array(
 				'order_id'			=> $order_id,
@@ -209,13 +209,13 @@ class WC_TrackShip_Email_Manager {
 			$email_to[] = $order ? $order->get_billing_email() : '';
 			$email_to = apply_filters( 'add_multiple_emails_to_shipment_email', $email_to, $new_status );
 	
-			$email_subject = get_trackship_email_settings( 'subject', 'pickup_reminder' );
-			$email_heading = get_trackship_email_settings( 'heading', 'pickup_reminder' );
-			$email_content = get_trackship_email_settings( 'content', 'pickup_reminder' );
+			$email_subject = get_trackship_email_settings( 'pickup_reminder', 'subject' );
+			$email_heading = get_trackship_email_settings( 'pickup_reminder', 'heading' );
+			$email_content = get_trackship_email_settings( 'pickup_reminder', 'content' );
 			$email_content = html_entity_decode( $email_content );
 			
-			$wcast_show_order_details = get_trackship_email_settings( 'show_order_details', 'pickup_reminder' );
-			$wcast_show_product_image = get_trackship_email_settings( 'show_product_image', 'pickup_reminder' );
+			$wcast_show_order_details = get_trackship_email_settings( 'pickup_reminder', 'show_order_details' );
+			$wcast_show_product_image = get_trackship_email_settings( 'pickup_reminder', 'show_product_image' );
 			
 			$sent_to_admin = false;
 			$plain_text = false;
@@ -309,7 +309,7 @@ class WC_TrackShip_Email_Manager {
 	*/
 	public function email_footer_text( $footer_text ) {
 		
-		$show_trackship_branding = get_trackship_email_settings( 'show_trackship_branding', 'common_settings', 1 );
+		$show_trackship_branding = get_trackship_email_settings( 'common_settings', 'show_trackship_branding', 1 );
 		$trackship_branding_class = $show_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ? '' : 'hide';
 
 		$trackship_branding_text = '';
