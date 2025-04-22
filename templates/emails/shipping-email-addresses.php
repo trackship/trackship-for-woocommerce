@@ -30,7 +30,7 @@ $class = $ts4wc_preview ? 'hide' : '';
 <div class="ts4wc_shipping_address <?php echo !$wcast_show_shipping_address ? esc_html($class) : ''; ?>">
 	<?php
 	if ( !empty($shipping) ) { 
-		$shipping_address_label = get_trackship_email_settings( 'shipping_address_label', 'common_settings' );
+		$shipping_address_label = get_trackship_email_settings( 'common_settings', 'shipping_address_label' );
 		?>
 		<h2 class="shipment_email_shipping_address_label" style="text-align:<?php echo esc_html( $text_align ); ?>"><?php esc_html_e( $shipping_address_label ); ?></h2>
 		<address class="address" style="border:0;padding:0;" ><?php echo wp_kses_post( $shipping ); ?></address>

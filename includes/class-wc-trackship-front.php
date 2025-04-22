@@ -398,7 +398,7 @@ class WC_TrackShip_Front {
 		$hide_tracking_events = get_trackship_settings('ts_tracking_events', $tracking_page_defaults->defaults['ts_tracking_events'] );
 		$tracking_page_layout = get_trackship_settings('ts_tracking_page_layout', $tracking_page_defaults->defaults['ts_tracking_page_layout'] );
 		$border_radius = get_trackship_settings('wc_ts_border_radius', $tracking_page_defaults->defaults['wc_ts_border_radius'] );
-		$show_trackship_branding = get_trackship_email_settings( 'show_trackship_branding', 'common_settings', 1 );
+		$show_trackship_branding = get_trackship_email_settings( 'common_settings', 'show_trackship_branding', 1 );
 		?>
 		<style>
 			<?php if ( $link_color ) { ?>
@@ -1001,7 +1001,7 @@ class WC_TrackShip_Front {
 		$link_color = get_trackship_settings( 'wc_ts_link_color', $tracking_page_defaults->defaults['wc_ts_link_color'] );
 		$ts_link_to_carrier = get_trackship_settings( 'ts_link_to_carrier' );
 		$hide_tracking_provider_image = get_trackship_settings( 'hide_provider_image' );
-		$show_trackship_branding = get_trackship_email_settings( 'show_trackship_branding', 'common_settings', 1 );
+		$show_trackship_branding = get_trackship_email_settings( 'common_settings', 'show_trackship_branding', 1 );
 		$font_color = get_trackship_settings( 'wc_ts_font_color', $tracking_page_defaults->defaults['wc_ts_font_color'] );
 		$border_radius = get_trackship_settings('wc_ts_border_radius', $tracking_page_defaults->defaults['wc_ts_border_radius'] );
 		$background_color = get_trackship_settings( 'wc_ts_bg_color', $tracking_page_defaults->defaults['wc_ts_bg_color'] );

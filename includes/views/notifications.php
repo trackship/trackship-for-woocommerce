@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<table class="form-table shipment-status-email-table">
 			<tbody>
 				<?php foreach ( $ts_notifications as $key => $val ) { ?>
-					<?php $enable_email = get_trackship_email_settings( 'enable', $key ); ?>
+					<?php $enable_email = get_trackship_email_settings( $key, 'enable' ); ?>
 					<tr class="<?php echo 1 == $enable_email ? 'enable' : 'disable'; ?> ">
 						<td class="status-label-column">
 							<img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/<?php echo esc_html( $val['img_slug'] ); ?>.png">
