@@ -127,7 +127,7 @@ class WC_Trackship_Html {
 				<fieldset style="<?php echo 'other' != get_trackship_settings( $id ) ? 'display:none;' : 'padding-top: 10px;'; ?>" class="trackship_other_page_fieldset">
 					<input type="text" name="tracking_other_page" id="tracking_other_page" value="<?php echo esc_html( get_trackship_settings('tracking_other_page') ); ?>">
 				</fieldset>
-				<p class="tracking_page_desc"><?php esc_html_e( 'Add the [trackship-track-order] shortcode in the selected page.', 'trackship-for-woocommerce' ); ?> <a href="https://www.zorem.com/docs/woocommerce-advanced-shipment-tracking/integration/" target="blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a></p>
+				<p class="tracking_page_desc"><?php esc_html_e( 'Add the [trackship-track-order] shortcode in the selected page.', 'trackship-for-woocommerce' ); ?> <a href="https://docs.trackship.com/docs/trackship-for-woocommerce/setup/tracking-page/#tracking-page-settings" target="blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a></p>
 			</span>
 		</li>
 		<?php
