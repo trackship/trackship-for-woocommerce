@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 		</div>
 		<div class="panel_content section_mapping_content">
-			<div class="outer_form_table">
+			<div class="">
 				<?php if ( !is_plugin_active( 'ast-pro/ast-pro.php' ) ) { ?>
 					<table class="form-table fixed map-provider-table">
 						<thead>

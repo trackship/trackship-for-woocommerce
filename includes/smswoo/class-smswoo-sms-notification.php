@@ -364,9 +364,9 @@ class TSWC_SMSWoo_SMS_Notification {
 	}
 
 	public function replace_shipping_number( $billing_phone, $order ) {
-        $shipping_phone = $order->get_shipping_phone( 'edit' );
-        return $shipping_phone ? $shipping_phone : $billing_phone;
-    }
+		$shipping_phone = $order->get_shipping_phone( 'edit' );
+		return $shipping_phone ? $shipping_phone : $billing_phone;
+	}
 	
 	/**
 	 * Check if customer opt-in for SMS

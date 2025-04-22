@@ -12,15 +12,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @version 1.0
  */
 if ( $tracking_items ) : 
-	$track_button_Text = trackship_admin_customizer()->get_value( 'shipment_email_settings', 'track_button_Text' );
-	$tracking_page_layout = trackship_admin_customizer()->get_value( 'shipment_email_settings', 'tracking_page_layout' );
+	$track_button_Text = get_trackship_email_settings( 'track_button_Text', 'common_settings' );
+	$tracking_page_layout = get_trackship_email_settings( 'tracking_page_layout', 'common_settings' );
 	$text_align = is_rtl() ? 'right' : 'left';
-	$border_color = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'border_color', '#e8e8e8');
-	$link_color = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'link_color', '');
-	$background_color = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'bg_color', '#fff');
-	$font_color = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'font_color', '#333');
-	$shipping_provider_logo = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'shipping_provider_logo', 1);
-	$ts_last_event = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'ts_last_event', 0);
+	$border_color = get_trackship_email_settings( 'border_color', 'common_settings' );
+	$link_color = get_trackship_email_settings( 'link_color', 'common_settings' );
+	$background_color = get_trackship_email_settings( 'bg_color', 'common_settings' );
+	$font_color = get_trackship_email_settings( 'font_color', 'common_settings' );
+	$shipping_provider_logo = get_trackship_email_settings( 'shipping_provider_logo', 'common_settings' );
 	$class = $ts4wc_preview ? 'hide' : '';
 	?>
 	<div class="tracking_info">
@@ -29,7 +28,7 @@ if ( $tracking_items ) :
 				<?php
 				$ship_status = $new_status;
 				$tracking_link = $tracking_item['tracking_page_link'] ? $tracking_item['tracking_page_link'] : $tracking_item['formatted_tracking_link'];
-				$show_trackship_branding = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( 'shipment_email_settings', 'show_trackship_branding', 1 );
+				$show_trackship_branding = get_trackship_email_settings( 'show_trackship_branding', 'common_settings', 1 );
 				do_action( 'before_tracking_widget_email', $tracking_item, $order_id );
 				?>
 				<div class="tracking_index display-table">
@@ -103,12 +102,6 @@ if ( $tracking_items ) :
 							<div style="clear: both;display: block;"></div>
 						<?php } ?>
 					</div>
-					<?php if ( $shipment_row->last_event ) { ?>
-					<div class="tracking_widget_email tracking_widget_last_event <?php echo !$ts_last_event ? esc_attr($class) : ''; ?>">
-						<p style="margin:0 0 5px;"><strong><?php echo esc_html( date_i18n( 'F j, Y g:i a', strtotime( $shipment_row->last_event_time ) ) ) ?></strong></p>
-						<p class="twe_last_event" style="margin:0"><?php echo $shipment_row->last_event; ?></p>
-					</div>
-					<?php } ?>
 				</div>
 			<?php } ?>
 		</div>
@@ -145,17 +138,17 @@ if ( $tracking_items ) :
 		color: <?php echo esc_html( $font_color ); ?>;
 		border-color: <?php echo esc_html( $border_color ); ?>;
 	}
-	.tracking_widget_bottom, .tracking_widget_last_event {
+	.tracking_widget_bottom {
 		border-top: 1px solid <?php echo esc_html( $border_color ); ?>;
 	}
 	.tracking_widget_bottom div {
 		display:inline-block;
 	}
 	a.track_your_order {
-		border-radius: <?php echo esc_html( trackship_admin_customizer()->get_value( 'shipment_email_settings', 'track_button_border_radius' ) ); ?>px;
+		border-radius: <?php echo esc_html( get_trackship_email_settings( 'track_button_border_radius', 'common_settings' ) ); ?>px;
 		text-decoration: none;
-		color: <?php echo esc_html( trackship_admin_customizer()->get_value( 'shipment_email_settings', 'track_button_text_color' ) ); ?> !important;
-		background: <?php echo esc_html( trackship_admin_customizer()->get_value( 'shipment_email_settings', 'track_button_color' ) ); ?>;
+		color: <?php echo esc_html( get_trackship_email_settings( 'track_button_text_color', 'common_settings' ) ); ?> !important;
+		background: <?php echo esc_html( get_trackship_email_settings( 'track_button_color', 'common_settings' ) ); ?>;
 		text-align: center;
 		padding: 10px 15px;
 		float: right;
@@ -172,7 +165,6 @@ if ( $tracking_items ) :
 	.shipment_status {font-size: 24px;margin: 10px 0;display: inline-block;color: #333;vertical-align: middle;font-weight:500;}
 	.mb-0{margin:0;}
 	.v-align-top{vertical-align:top;}
-	.twe_last_event { margin: 0; }
 	@media screen and (max-width: 460px) {
 		.tracking_widget_track_button {width:100%; margin-top: 15px;}
 		.tracking_widget_track_button a.track_your_order{width: calc(100% - 30px);}

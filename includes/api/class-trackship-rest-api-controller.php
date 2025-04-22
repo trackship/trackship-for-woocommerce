@@ -139,6 +139,19 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			$version_info['wot-pro'] = VI_WOOCOMMERCE_ORDERS_TRACKING_VERSION;
 		}
 		$version_info['trackship_settings'] = get_option( 'trackship_settings' );
+		$version_info['trackship_email_settings'] = get_option( 'trackship_email_settings' );
+		$version_info['old_settings'] = [
+			'wcast_pickupreminder_email_settings' => get_option( 'wcast_pickupreminder_email_settings' ),
+			'wcast_intransit_email_settings' => get_option( 'wcast_intransit_email_settings' ),
+			'wcast_returntosender_email_settings' => get_option( 'wcast_returntosender_email_settings' ),
+			'wcast_availableforpickup_email_settings' => get_option( 'wcast_availableforpickup_email_settings' ),
+			'wcast_exception_email_settings' => get_option( 'wcast_exception_email_settings' ),
+			'wcast_onhold_email_settings' => get_option( 'wcast_onhold_email_settings' ),
+			'wcast_failure_email_settings' => get_option( 'wcast_failure_email_settings' ),
+			'wcast_delivered_status_email_settings' => get_option( 'wcast_delivered_status_email_settings' ),
+			'wcast_outfordelivery_email_settings' => get_option( 'wcast_outfordelivery_email_settings' ),
+			'shipment_email_settings' => get_option( 'shipment_email_settings' ),
+		];
 		
 		$database_version	= wc_get_server_database_version();
 
@@ -237,9 +250,9 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 				}
 
 				// Schedule action for send Pickup reminder notifiations
-				$enable = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_pickupreminder_email_settings', 'wcast_enable_pickupreminder_email', '');
+				$enable = get_trackship_email_settings( 'enable', 'pickup_reminder' );
 				if ( 'available_for_pickup' == $tracking_event_status && $enable ) {
-					$time = trackship_for_woocommerce()->ts_actions->get_option_value_from_array('wcast_pickupreminder_email_settings', 'pickupreminder_days', 2);
+					$time = get_trackship_email_settings( 'days', 'pickup_reminder' );
 					$time = 24*60*60*intval($time);
 					as_schedule_single_action( time() + $time, 'trigger_pickup_reminder_email', array( $order_id, $previous_status, $tracking_event_status, $tracking_number ), 'TrackShip' );
 				}
@@ -294,7 +307,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	public function create_item_permissions_check( $request ) {
 		
 		if ( ! wc_rest_check_post_permissions( $this->post_type, 'create' ) ) {
-			return new WP_Error( 'woocommerce_rest_cannot_create', __( 'Sorry, you are not allowed to create resources.', 'woocommerce' ), array( 'status' => rest_authorization_required_code() ) );
+			return new WP_Error( 'woocommerce_rest_cannot_create', __( 'Sorry, you are not allowed to create resources.', 'trackship-for-woocommerce' ), array( 'status' => rest_authorization_required_code() ) );
 		}
 		return true;
 	}
@@ -307,14 +320,14 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	 */
 	public function get_item_permissions_check( $request ) {
 		if ( ! wc_rest_check_post_permissions( $this->post_type, 'read', (int) $request['order_id'] ) ) {
-			return new WP_Error( 'woocommerce_rest_cannot_view', __( 'Sorry, you cannot view this resource.', 'woocommerce' ), array( 'status' => rest_authorization_required_code() ) );
+			return new WP_Error( 'woocommerce_rest_cannot_view', __( 'Sorry, you cannot view this resource.', 'trackship-for-woocommerce' ), array( 'status' => rest_authorization_required_code() ) );
 		}
 		return true;
 	}
 
 	public function get_permissions_check( $request ) {
 		if ( ! wc_rest_check_manager_permissions( 'settings', 'read' ) ) {
-			return new WP_Error( 'woocommerce_rest_cannot_view', __( 'Sorry, you cannot list resources.', 'woocommerce' ), array( 'status' => rest_authorization_required_code() ) );
+			return new WP_Error( 'woocommerce_rest_cannot_view', __( 'Sorry, you cannot list resources.', 'trackship-for-woocommerce' ), array( 'status' => rest_authorization_required_code() ) );
 		}
 		return true;
 	}

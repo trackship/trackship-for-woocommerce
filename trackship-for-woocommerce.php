@@ -2,7 +2,7 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 1.9.1
+ * Version: 1.9.1.2
  * Author: TrackShip
  * Author URI: https://trackship.com/
  * License: GPL-2.0+
@@ -24,7 +24,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.9.1';
+	public $version = '1.9.1.2';
 	public $plugin_path;
 	public $ts_install;
 	public $ts_actions;
@@ -134,7 +134,7 @@ class Trackship_For_Woocommerce {
 	*/
 	public function init() {
 		
-		add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ) );
+		add_action( 'init', array( $this, 'on_plugins_loaded' ) );
 		
 		add_action( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'tsw_plugin_action_links' ) );
 
@@ -506,6 +506,19 @@ function delete_trackship_settings( $key ) {
 	update_option( 'trackship_settings', $data_array );
 }
 
+// Example: 'border_color' , 'in_transit'
+function get_trackship_email_settings( $key, $status, $default_value = '' ) {
+	$data_array = get_option( 'trackship_email_settings', array() );
+	return $data_array[$status][$key] ?? $default_value;
+}
+
+// Example: 'border_color' , 'in_transit', 'blue'
+function update_trackship_email_settings( $key, $status, $value ) {
+	$data_array = get_option( 'trackship_email_settings', array() );
+	$data_array[$status][$key] = $value;
+	update_option( 'trackship_email_settings', $data_array );
+}
+
 if ( ! function_exists( 'zorem_tracking' ) ) {
 	function zorem_tracking() {
 		require_once dirname(__FILE__) . '/zorem-tracking/zorem-tracking.php';
@@ -517,8 +530,7 @@ if ( ! function_exists( 'zorem_tracking' ) ) {
 		$parent_menu_type = '';
 		$menu_slug = 'trackship-for-woocommerce';
 		$plugin_id = '12';
-		$zorem_tracking = WC_Trackers::get_instance( $plugin_name, $plugin_slug, $user_id,
-		$setting_page_type, $setting_page_location, $parent_menu_type, $menu_slug, $plugin_id );
+		$zorem_tracking = WC_Trackers::get_instance( $plugin_name, $plugin_slug, $user_id, $setting_page_type, $setting_page_location, $parent_menu_type, $menu_slug, $plugin_id );
 
 		return $zorem_tracking;
 	}

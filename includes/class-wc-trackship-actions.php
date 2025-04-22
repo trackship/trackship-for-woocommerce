@@ -167,21 +167,21 @@ class WC_Trackship_Actions {
 
 		$page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
 
+		
 		if ( 'shop_order' === $screen->post_type || 'wc-orders' == $page ) {
-			// wp_enqueue_style( 'trackshipcss' );
+			wp_enqueue_style( 'trackshipcss' );
 			wp_enqueue_script( 'trackship_script' );
 			
 			//front_style for tracking widget
 			wp_enqueue_style( 'front_style' );
 		}
-
+		
 		if ( !in_array( $page, array( 'trackship-for-woocommerce', 'trackship-shipments', 'trackship-dashboard', 'trackship_customizer', 'wcpv-vendor-order', 'trackship-logs' ) ) ) {
 			return;
 		}
 		// remove code in future, added by hitesh
 		if ( 'wcpv-vendor-order' != $page ) {
 			wp_dequeue_style( 'ast_styles' );
-			wp_dequeue_style( 'trackship_styles' );
 		}
 		// remove code in future
 
@@ -528,22 +528,25 @@ class WC_Trackship_Actions {
 					if ( !$row ) {
 						$this->schedule_trackship_trigger( $order_id );
 					}
-
-					//bulk shipment status action for "TrackShip balance is 0" status
-					if ( $row && isset($row->pending_status) && 'insufficient_balance' == $row->pending_status ) {
-						$this->schedule_trackship_trigger( $order_id );
-					}
-
-					//bulk shipment status action for "connection issue" status
-					if ( $row && isset($row->pending_status) && in_array( $row->pending_status, array( 'connection_issue', 'unauthorized' ) ) ) {
-						$this->schedule_trackship_trigger( $order_id );
-					}
 				}
 			}
 		}
-		$url = admin_url('/edit.php?post_type=shop_order');
-		echo esc_url( $url );
-		die();
+
+		global $wpdb;
+		$issue_shipments = $wpdb->get_col("
+			SELECT
+				order_id
+				FROM {$wpdb->prefix}trackship_shipment
+			WHERE 
+				pending_status IN ( 'connection_issue', 'unauthorized', 'unauthorized_api_key', 'unauthorized_store', 'unauthorized_store_api_key', 'insufficient_balance' )
+				AND shipping_date > NOW() - INTERVAL 30 DAY
+		" );
+
+		foreach ( $issue_shipments as $key => $shipment_id ) {
+			$this->schedule_trackship_trigger( $shipment_id );
+		}
+
+		wp_send_json( ['sucess' => true] );
 	}
 	
 	/*
@@ -644,7 +647,7 @@ class WC_Trackship_Actions {
 			'out_for_delivery' => (object) array( 'term' => __( 'Out For Delivery', 'trackship-for-woocommerce' ) ),
 			'delivered' => (object) array( 'term' => __( 'Delivered', 'trackship-for-woocommerce' ) ),
 			'failure' => (object) array( 'term' => __( 'Delivery Failure', 'trackship-for-woocommerce' ) ),
-			'cancelled' => (object) array( 'term' => __( 'Cancelled', 'woocommerce' ) ),
+			'cancelled' => (object) array( 'term' => __( 'Cancelled', 'trackship-for-woocommerce' ) ),
 			'carrier_unsupported' => (object) array( 'term' => __( 'Carrier Unsupported', 'trackship-for-woocommerce' ) ),
 			'return_to_sender' => (object) array( 'term' => __( 'Return To Sender', 'trackship-for-woocommerce' ) ),
 			'exception' => (object) array( 'term' => __( 'Exception', 'trackship-for-woocommerce' ) ),
@@ -697,7 +700,7 @@ class WC_Trackship_Actions {
 				$status = __( 'Return To Sender', 'trackship-for-woocommerce' );
 				break;
 			case 'exception':
-				$status = __( 'Exception', 'woocommerce' );
+				$status = __( 'Exception', 'trackship-for-woocommerce' );
 				break;
 			case 'failure':
 				$status = __( 'Delivery Failure', 'trackship-for-woocommerce' );
@@ -712,10 +715,10 @@ class WC_Trackship_Actions {
 				$status = __( 'Label Cancelled', 'trackship-for-woocommerce' );
 				break;
 			case 'invalid_tracking':
-				$status = __( 'Invalid Tracking', 'woocommerce' );
+				$status = __( 'Invalid Tracking', 'trackship-for-woocommerce' );
 				break;
 			case 'invalid_carrier':
-				$status = __( 'Invalid Carrier', 'woocommerce' );
+				$status = __( 'Invalid Carrier', 'trackship-for-woocommerce' );
 				break;
 			case 'pending_trackship':
 				$status = __( 'Pending Update', 'trackship-for-woocommerce' );
@@ -730,16 +733,16 @@ class WC_Trackship_Actions {
 				$status = __( 'Unauthorized', 'trackship-for-woocommerce' );
 				break;
 			case 'deleted':
-				$status = __( 'Deleted', 'woocommerce' );
+				$status = __( 'Deleted', 'trackship-for-woocommerce' );
 				break;
 			case 'insufficient_balance':
-				$status = __( 'Insufficient Balance', 'woocommerce' );
+				$status = __( 'Insufficient Balance', 'trackship-for-woocommerce' );
 				break;
 			case 'connection_issue':
-				$status = __( 'Connection Issue', 'woocommerce' );
+				$status = __( 'Connection Issue', 'trackship-for-woocommerce' );
 				break;
 			case 'ssl_error':
-				$status = __( 'SSL Error', 'woocommerce' );
+				$status = __( 'SSL Error', 'trackship-for-woocommerce' );
 				break;
 			case 'expired':
 				$status = __( 'Expired', 'trackship-for-woocommerce' );
@@ -826,10 +829,15 @@ class WC_Trackship_Actions {
 	*/
 	public function update_shipment_status_email_status_cb() {
 		check_ajax_referer( 'tswc_shipment_status_email', 'security' );
-		$settings_data = isset( $_POST['settings_data'] ) ? wc_clean( $_POST['settings_data'] ) : '';
+		$settings_data = wc_clean( $_POST['settings_data'] ?? '' );
+		$status = wc_clean( $_POST['status'] ?? '' );
+		$enable_status_email = wc_clean( $_POST['enable_status_email'] ?? '' );
 
-		$enable_status_email = isset( $_POST['wcast_enable_status_email'] ) ? wc_clean( $_POST['wcast_enable_status_email'] ) : '';
 		$p_id = isset( $_POST['id'] ) ? wc_clean( $_POST['id'] ) : '';
+
+		if ( 'trackship_email_settings' == $settings_data ) {
+			update_trackship_email_settings( 'enable', $status, $enable_status_email );
+		}
 		
 		if ( in_array( $settings_data, array( 'late_shipments_email_settings', 'exception_admin_email', 'on_hold_admin_email' ) ) ) {
 			update_trackship_settings( $p_id, $enable_status_email );
@@ -844,12 +852,8 @@ class WC_Trackship_Actions {
 			$On_Hold_Shipments = new WC_TrackShip_On_Hold_Shipments();
 			$On_Hold_Shipments->remove_cron();
 			$On_Hold_Shipments->setup_cron();
-		} else {
-			$status_settings = get_option( $settings_data );
-			$status_settings[$p_id] = $enable_status_email;
-			update_option( wc_clean( $settings_data ), $status_settings );
 		}
-		exit;
+		wp_send_json_success();
 	}
 	
 	/*
@@ -1607,7 +1611,7 @@ class WC_Trackship_Actions {
 		return $bool;
 	}
 
-	public function get_formated_number($phone, $order) {
+	public function get_formated_number( $phone, $order ) {
 		
 		// Check if number do not starts with '+'
 		if ( '+' != substr( $phone, 0, 1 ) ) {

@@ -53,16 +53,21 @@ class WC_TrackShip_Admin_Notice {
 	* Dismiss admin notice for trackship
 	*/
 	public function trackship_admin_notice_ignore() {
-		if (isset($_GET['ts-review-ignore']) && $_GET['ts-review-ignore'] == 'true') {
-			// Verify the nonce
-			if (isset($_GET['nonce']) && wp_verify_nonce( $_GET['nonce'], 'ts_dismiss_notice' )) {
-				update_trackship_settings( 'ts_review_ignore_137', 'true' );
-			}
+		$nonce = sanitize_text_field($_GET['nonce'] ?? '');
+		// Verify the nonce
+		if (!$nonce || !wp_verify_nonce(sanitize_text_field($nonce), 'ts_dismiss_notice')) {
+			return;
 		}
-		if (isset($_GET['ts-upgrade-ignore']) && $_GET['ts-upgrade-ignore'] == 'true') {
-			// Verify the nonce
-			if (isset($_GET['nonce']) && wp_verify_nonce( $_GET['nonce'], 'ts_dismiss_notice' )) {
-				update_trackship_settings( 'ts_popup_ignore137', 'true');
+
+		$notice_types = [
+			'ts-review-ignore'  => 'ts_review_ignore_139',
+			'ts-upgrade-ignore' => 'ts_popup_ignore139',
+		];
+
+		foreach ($notice_types as $param => $setting_key) {
+			$value = sanitize_text_field($_GET[$param] ?? '');
+			if ($value === 'true') {
+				update_trackship_settings($setting_key, 'true');
 			}
 		}
 	}
@@ -72,11 +77,11 @@ class WC_TrackShip_Admin_Notice {
 	*/
 	public function trackship_review_notice() {
 		
-		if ( get_trackship_settings( 'ts_review_ignore_137', '') ) {
+		if ( get_trackship_settings( 'ts_review_ignore_139', '') ) {
 			return;
 		}
 
-		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) && !get_trackship_settings( 'ts_popup_ignore137', '') ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) && !get_trackship_settings( 'ts_popup_ignore139', '') ) {
 			return;
 		}
 
@@ -113,7 +118,7 @@ class WC_TrackShip_Admin_Notice {
 	* Display admin notice on Upgrade TrackShip plan
 	*/
 	public function trackship_upgrade_notice () {
-		if ( get_trackship_settings( 'ts_popup_ignore137', '') || !in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended', 'Free Trial' ) ) ) {
+		if ( get_trackship_settings( 'ts_popup_ignore139', '') || !in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended', 'Free Trial' ) ) ) {
 			return;
 		}
 		$target_date = strtotime('2024-11-10');
@@ -145,7 +150,7 @@ class WC_TrackShip_Admin_Notice {
 			<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
 			<h3>Upgrade to TrackShip Pro!</h3>
 			<p>Upgrade to the Pro Plan today and unlock a suite of premium features that will take your tracking capabilities to the next level. Choose between a monthly or yearly subscription and enjoy advanced tracking benefits. With an annual plan, you can also get up to 2 months FREE!</p>
-			<p>As a special limited-time offer, use coupon code <b>TRACKSHIP10</b> at checkout to receive a 10% discount on your subscription. Don't wait—this offer is valid until November 10th!</p>
+			<p>As a special limited-time offer, use coupon code <b>TRACKSHIP10</b> at checkout to receive a 10% discount on your subscription. Don't wait—this offer is valid until May 10th!</p>
 			<a class="button button-primary" target="_blank" href="<?php echo esc_url($url); ?>" >UPGRADE NOW</a>
 			<a class="button" style="margin: 0 10px;" href="<?php echo esc_url($dismissable_url); ?>" >No thanks</a>
 		</div>

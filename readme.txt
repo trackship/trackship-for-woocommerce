@@ -139,7 +139,6 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 == Changelog ==
 = 1.9.1 - 2025-03-12 =
 * Enhancement - Added integration with Omnisend.
-* Enhancement - Shipment status emails now display the latest tracking event.
 * Enhancement - Added more filters to TrackShip Shipments for shipment status customization.
 * Fix - Resolved a CSS conflict on the WooCommerce order page.
 * Fix - Fixed a warning for an undefined variable in the WooCommerce order tracking plugin.
