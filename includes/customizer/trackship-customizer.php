@@ -950,8 +950,9 @@ class TS4WC_Admin_Customizer {
 		}
 		if ( 'modern' == $tracking_page_type ) {
 			unset( $settings['trackship_settings[tracking_page_type]'] );
+			unset( $settings['trackship_settings[ts_tracking_events]'] );
+			unset( $settings['trackship_settings[ts_tracking_page_layout]'] );
 		}
-
 		return $settings;
 	}
 
