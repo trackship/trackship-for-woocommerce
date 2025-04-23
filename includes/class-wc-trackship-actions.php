@@ -836,7 +836,7 @@ class WC_Trackship_Actions {
 		$p_id = isset( $_POST['id'] ) ? wc_clean( $_POST['id'] ) : '';
 
 		if ( 'trackship_email_settings' == $settings_data ) {
-			update_trackship_email_settings( 'enable', $status, $enable_status_email );
+			update_trackship_email_settings( $status, 'enable', $enable_status_email );
 		}
 		
 		if ( in_array( $settings_data, array( 'late_shipments_email_settings', 'exception_admin_email', 'on_hold_admin_email' ) ) ) {
