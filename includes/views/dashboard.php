@@ -28,9 +28,9 @@ $from_date = gmdate('Y-m-d', strtotime('-30 days'));
 
 $results = $wpdb->get_row($wpdb->prepare("
 SELECT
-	SUM( IF( shipping_length > %1d, 1, 0 ) ) as late_shipment,
-	SUM( IF(shipment_status NOT IN ( '%2s', '%3s', '%4s', '%5s', '%6s', '%7s', '%8s' ) OR pending_status IS NOT NULL, 1, 0) ) as tracking_issues,
-	SUM( IF( shipment_status LIKE '%9s', 1, 0 ) ) as return_to_sender_shipment
+	SUM( IF( shipping_length > %d, 1, 0 ) ) as late_shipment,
+	SUM( IF(shipment_status NOT IN ( %s, %s, %s, %s, %s, %s, %s ) OR pending_status IS NOT NULL, 1, 0) ) as tracking_issues,
+	SUM( IF( shipment_status LIKE '%s', 1, 0 ) ) as return_to_sender_shipment
 FROM {$wpdb->prefix}trackship_shipment
 WHERE shipping_date >= %s", $days, 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup', 'return_to_sender', $from_date ), ARRAY_A);
 

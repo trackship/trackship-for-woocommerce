@@ -66,7 +66,7 @@ class WC_TrackShip_Admin_Notice {
 
 		foreach ($notice_types as $param => $setting_key) {
 			$value = sanitize_text_field($_GET[$param] ?? '');
-			if ($value === 'true') {
+			if ( 'true' ===  $value ) {
 				update_trackship_settings($setting_key, 'true');
 			}
 		}

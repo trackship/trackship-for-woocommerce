@@ -111,18 +111,21 @@ class WC_Trackship_Shipments {
 		global $wpdb;
 
 		// Sanitize and assign input variables
-		$p_start = sanitize_text_field( $_POST['start'] ?? '' );
-		$p_length = sanitize_text_field( $_POST['length'] ?? '' );
-		$limit = 'LIMIT ' . $p_start . ', ' . $p_length;
+		$p_start = sanitize_text_field( $_POST['start'] ?? 0 );
+		$p_length = sanitize_text_field( $_POST['length'] ?? 25 );
+		$limit = $wpdb->prepare( 'LIMIT %d, %d', $p_start, $p_length );
 		
 		$where = [];
+		$params = [];
 		$search_bar = sanitize_text_field( $_POST['search_bar'] ?? '' );
 		if ( $search_bar ) {
-			$where[] = "( `order_id` = '{$search_bar}' OR `order_number` = '{$search_bar}' OR `shipping_provider` LIKE ( '%{$search_bar}%' ) OR `tracking_number` = '{$search_bar}' OR `shipping_country` LIKE ( '%{$search_bar}%' ) )";
+			$like_search = '%' . $wpdb->esc_like( $search_bar ) . '%';
+			$where[] = "(order_id = %s OR order_number = %s OR shipping_provider LIKE %s OR tracking_number = %s OR shipping_country LIKE %s)";
+			$params = array_merge( $params, [ $search_bar, $search_bar, $like_search, $search_bar, $like_search ] );
 		}
 
 		// Get late shipments setting
-		$late_ship_day = get_trackship_settings( 'late_shipments_days', 7);
+		$late_ship_day = (int) get_trackship_settings( 'late_shipments_days', 7);
 		$days = $late_ship_day - 1 ;
 
 		// Filter shipments by status
@@ -138,10 +141,12 @@ class WC_Trackship_Shipments {
 				$where[] = "pending_status = 'carrier_unsupported'";
 				break;
 			case 'late_shipment':
-				$where[] = "shipping_length > {$days}";
+				$where[] = "shipping_length > %d";
+				$params[] = $days;
 				break;
 			case 'active_late':
-				$where[] = "(shipping_length > {$days} AND shipment_status NOT IN ('delivered', 'return_to_sender'))";
+				$where[] = "(shipping_length > %d AND shipment_status NOT IN ('delivered', 'return_to_sender'))";
+				$params[] = $days;
 				break;
 			case 'tracking_issues':
 				$where[] = "( shipment_status NOT IN ('delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup') OR pending_status IS NOT NULL )";
@@ -151,7 +156,8 @@ class WC_Trackship_Shipments {
 				break;
 			default:
 				if ( 'all_ship' !== $active_shipment_status ) {
-					$where[] = $wpdb->prepare('shipment_status = %s', $active_shipment_status);
+					$where[] = 'shipment_status = %s';
+					$params[] = $active_shipment_status;
 				}
 				break;
 		}
@@ -159,33 +165,51 @@ class WC_Trackship_Shipments {
 		// Filter by shipping provider
 		$shipping_provider = sanitize_text_field( $_POST['shipping_provider'] ?? '' );
 		if ( 'all' != $shipping_provider ) {
-			$where[] = "`shipping_provider` = '{$shipping_provider}'";
+			$where[] = 'shipping_provider = %s';
+			$params[] = $shipping_provider;
 		}
 
-		$where_condition = !empty( $where ) ? 'WHERE ' . implode( ' AND ', $where ) : '';
+		// Compile where clause
+		$where_condition = '';
+		if ( ! empty( $where ) ) {
+			$where_condition = 'WHERE ' . implode( ' AND ', $where );
+			$where_condition = $wpdb->prepare( $where_condition, ...$params );
+		}
 
 		// Count total records
-		$sum = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}trackship_shipment $where_condition");
+		$count_sql = "SELECT COUNT(*) FROM {$wpdb->prefix}trackship_shipment t {$where_condition}";
+		$sum = $wpdb->get_var( $count_sql );
 
 		// Determine the order direction
-		$column = isset( $_POST['order'][0]['column'] ) && '1' == wc_clean( $_POST['order'][0]['column'] ) ? 'order_id' : 'shipping_date';
-		$column = isset( $_POST['order'][0]['column'] ) && '3' == wc_clean( $_POST['order'][0]['column'] ) ? 'updated_at' : $column;
+		$column_index = wc_clean( $_POST['order'][0]['column'] ?? '' );
+		switch ( $column_index ) {
+			case '1':
+				$column = 'order_id';
+				break;
+			case '3':
+				$column = 'updated_at';
+				break;
+			default:
+				$column = 'shipping_date';
+				break;
+		}
 
 		// Determine the order direction
-		$dir = isset( $_POST['order'][0]['dir'] ) && 'asc' == wc_clean($_POST['order'][0]['dir']) ? ' ASC' : ' DESC';
-		$order_by = $column . $dir;
-		
-		$order_query = $wpdb->get_results( "
+		$dir = ( wc_clean( $_POST['order'][0]['dir'] ?? 'desc' ) === 'asc' ) ? 'ASC' : 'DESC';
+		$order_by = "{$column} {$dir}";
+
+		// Main query
+		$sql = "
 			SELECT * 
-				FROM {$wpdb->prefix}trackship_shipment t
-				LEFT JOIN {$wpdb->prefix}trackship_shipment_meta m
-				ON t.id = m.meta_id
+			FROM {$wpdb->prefix}trackship_shipment t
+			LEFT JOIN {$wpdb->prefix}trackship_shipment_meta m ON t.id = m.meta_id
 				{$where_condition}
-			ORDER BY
-				{$order_by}
-			{$limit}
-		" );
-		
+				ORDER BY {$order_by}
+				{$limit}
+			";
+
+		$order_query = $wpdb->get_results( $sql );
+
 		$date_format = 'M d';
 
 		$result = array();
