@@ -22,8 +22,8 @@ if ( $db_status['missing_tables'] || $db_status['missing_columns'] ) {
 	<div class="notice notice-warning db_upgrade">
 		<h3>Alert: TrackShip database upgrade required</h3>
 		<p>Some database tables or columns are missing:</p>
-		<?php echo $db_status['missing_tables'] ? '<p><strong>Missing tables:-</strong> ' . implode(', ', $db_status['missing_tables'] ) . '.</p>' : ''; ?>
-		<?php echo $db_status['missing_columns'] ? '<p><strong>Missing columns:-</strong> ' . implode(', ', $db_status['missing_columns'] ) . '.</p>' : ''; ?>
+		<?php echo $db_status['missing_tables'] ? '<p><strong>Missing tables:-</strong> ' . esc_html(implode(', ', $db_status['missing_tables'] )) . '.</p>' : ''; ?>
+		<?php echo $db_status['missing_columns'] ? '<p><strong>Missing columns:-</strong> ' . esc_html(implode(', ', $db_status['missing_columns'] )) . '.</p>' : ''; ?>
 		<a class="button button-primary" href="<?php echo esc_url($url); ?>">Upgrade Database</a>
 	</div>
 	<?php
