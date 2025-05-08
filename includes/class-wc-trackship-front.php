@@ -11,6 +11,8 @@ class WC_TrackShip_Front {
 	 * @var object Class Instance
 	 */
 	private static $instance;
+	public $order_tracking_number;
+	public $tnumber;
 	
 	/**
 	 * Initialize the main plugin function
@@ -147,8 +149,8 @@ class WC_TrackShip_Front {
 		$this->display_tracking_page( $order_id, $tracking_items );
 	}
 	
-	public function admin_tracking_page_widget( $order_id, $tracking_id ) {
-		$order = wc_get_order( $order_id );
+	public function admin_tracking_page_widget( $order_id, $tracking_id, $tnumber ) {
+		$this->tnumber = $tnumber;
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 		foreach ( $tracking_items as $key => $tracking_item ) {
 			if ( $tracking_item['tracking_id'] != $tracking_id && null != $tracking_id ) {
@@ -264,8 +266,9 @@ class WC_TrackShip_Front {
 		}
 		$order_id = isset( $_POST['order_id'] ) ? ltrim( wc_clean( wp_unslash( $_POST['order_id'] ) ), '#' ) : '';
 		$email = isset( $_POST['order_email'] ) ? sanitize_email( $_POST['order_email'] ) : '';
-		$tracking_number = isset( $_POST['order_tracking_number'] ) ? wc_clean( $_POST['order_tracking_number'] ) : '';
-		
+		$tracking_number = wc_clean( $_POST['order_tracking_number'] ?? '');
+		$this->order_tracking_number = $tracking_number;
+
 		$order_id = $order_id ? trackship_for_woocommerce()->ts_actions->get_formated_order_id($order_id) : $order_id;
 		
 		if ( !empty( $tracking_number ) ) {
@@ -470,8 +473,8 @@ class WC_TrackShip_Front {
 		$rows = trackship_for_woocommerce()->actions->get_shipment_rows( $order_id );
 		if ( $total_trackings > 1 && $rows ) {
 			$i = 1;
-			$post_tracking = isset( $_POST['tnumber'] ) ? sanitize_text_field($_POST['tnumber']) : '' ;
-			$post_tracking = isset( $_POST['order_tracking_number'] ) ? sanitize_text_field($_POST['order_tracking_number']) : $post_tracking;
+			$post_tracking = $this->tnumber ?? '';
+			$post_tracking = $this->order_tracking_number ?? $post_tracking;
 			$url_tracking = isset( $_GET['tracking'] ) ? sanitize_text_field($_GET['tracking']) : $post_tracking;
 			$url_tracking = str_replace( ' ', '', $url_tracking );
 			echo '<div class="shipment-header">';
@@ -566,14 +569,14 @@ class WC_TrackShip_Front {
 	* New Tracking Page
 	*/
 	public function new_tracking_widget( $order_id, $tracking_items ) {
-		$post_tracking = isset( $_POST['tnumber'] ) ? sanitize_text_field($_POST['tnumber']) : '' ;
-		$post_tracking = isset( $_POST['order_tracking_number'] ) ? sanitize_text_field($_POST['order_tracking_number']) : $post_tracking;
+		$post_tracking = $this->tnumber ?? '';
+		$post_tracking = $this->order_tracking_number ?? $post_tracking;
 		$url_tracking = isset( $_GET['tracking'] ) ? sanitize_text_field($_GET['tracking']) : $post_tracking;
 		$url_tracking = str_replace( ' ', '', $url_tracking );
 		$order = wc_get_order( $order_id );
 
 		$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $post_tracking );
-		if ( $tracking_page_link && is_admin() && isset( $_POST['tnumber'] ) ) {
+		if ( $tracking_page_link && is_admin() && $this->tnumber ) {
 			?>
 			<p class="ts_enhanced_info">
 				<span>

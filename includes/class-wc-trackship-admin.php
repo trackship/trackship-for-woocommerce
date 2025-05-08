@@ -109,13 +109,13 @@ class WC_Trackship_Admin {
 		$page = isset( $_POST['page'] ) ? sanitize_text_field( $_POST['page'] ) : '' ;
 		$tracking_id = isset( $_POST['tracking_id'] ) && 'wcpv-vendor-order' == $page ? sanitize_text_field( $_POST['tracking_id'] ) : null ;
 		$order_id = isset( $_POST['order_id'] ) ? sanitize_text_field( $_POST['order_id'] ) : '' ;
-		$order = wc_get_order( $order_id );
+		$tnumber = sanitize_text_field( $_POST['tnumber'] ?? '' );
 		check_ajax_referer( 'tswc-' . $order_id, 'security' );
 		
 		if ( current_user_can( 'manage_product' ) || current_user_can( 'manage_woocommerce' ) ) {
 			$trackship_apikey = is_trackship_connected();
 			if ( $trackship_apikey ) {
-				trackship_for_woocommerce()->front->admin_tracking_page_widget( $order_id, $tracking_id );
+				trackship_for_woocommerce()->front->admin_tracking_page_widget( $order_id, $tracking_id, $tnumber );
 			} else {
 				echo '<strong>';
 				esc_html_e( 'Please connect your store with trackship.com.', 'trackship-for-woocommerce' );
@@ -136,24 +136,16 @@ class WC_Trackship_Admin {
 		$order_id = wc_clean( $o_id );
 		
 		if ( !wp_verify_nonce( $security, 'tswc-' . $order_id ) ) {
-			$data = array(
-				'msg' => 'Security check fail, please refresh and try again.'
-			);
-
+			$data = [ 'msg' => 'Security check fail, please refresh and try again.' ];
 			wp_send_json_error( $data );
 		}
 
 		$bool = trackship_for_woocommerce()->actions->schedule_trackship_trigger( $order_id );
 		if ( $bool ) {
-			$data = array(
-				'msg' => 'Tracking information has been sent to TrackShip.'
-			);
+			$data = [ 'msg' => 'Tracking information has been sent to TrackShip.' ];
 			wp_send_json_success( $data );
 		} else {
-			$data = array(
-				'msg' => 'Tracking information was not sent to TrackShip.'
-			);
-
+			$data = [ 'msg' => 'Tracking information was not sent to TrackShip.' ];
 			wp_send_json_error( $data );
 		}
 		die();
