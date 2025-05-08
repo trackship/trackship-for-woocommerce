@@ -30,9 +30,9 @@ $results = $wpdb->get_row($wpdb->prepare("
 SELECT
 	SUM( IF( shipping_length > %d, 1, 0 ) ) as late_shipment,
 	SUM( IF(shipment_status NOT IN ( %s, %s, %s, %s, %s, %s, %s ) OR pending_status IS NOT NULL, 1, 0) ) as tracking_issues,
-	SUM( IF( shipment_status LIKE '%s', 1, 0 ) ) as return_to_sender_shipment
+	SUM( IF( shipment_status = 'return_to_sender', 1, 0 ) ) as return_to_sender_shipment
 FROM {$wpdb->prefix}trackship_shipment
-WHERE shipping_date >= %s", $days, 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup', 'return_to_sender', $from_date ), ARRAY_A);
+WHERE shipping_date >= %s", $days, 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup', $from_date ), ARRAY_A);
 
 $late_shipment = $results['late_shipment'];
 $tracking_issues = $results['tracking_issues'];

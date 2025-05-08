@@ -533,8 +533,8 @@ class WC_Trackship_Install {
 
 		// TS4WC version 1.9.4
 		if ( version_compare( get_option( 'trackship_db' ), '1.40', '<' ) ) {
-			update_trackship_settings( 'trackship_db', '1.38' );
-			update_option( 'trackship_db', '1.38' );
+			update_trackship_settings( 'trackship_db', '1.40' );
+			update_option( 'trackship_db', '1.40' );
 
 			// Indexes to check and create
 			$indexes_to_check = [

@@ -22,7 +22,7 @@ class WC_TrackShip_Api_Call {
 	public function get_trackship_apicall( $order_id ) {
 		
 		$logger = wc_get_logger();
-		$context = array( 'source' => 'wc_ast_trackship' );
+		$context = array( 'source' => 'Trackship_apicall_error' );
 		$array = array();
 		$order = wc_get_order( $order_id );
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
@@ -59,9 +59,6 @@ class WC_TrackShip_Api_Call {
 				
 				if ( is_wp_error( $response ) ) {
 					$error_message = $response->get_error_message();
-					
-					$logger = wc_get_logger();
-					$context = array( 'source' => 'TrackShip_apicall_error' );
 					$logger->error( "Something went wrong: {$error_message} For Order id :" . $order->get_id(), $context );
 					
 					//error like 403 500 502 
@@ -124,8 +121,6 @@ class WC_TrackShip_Api_Call {
 						);
 						trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $val['tracking_number'], $args );
 						
-						$logger = wc_get_logger();
-						$context = array( 'source' => 'Trackship_apicall_error' );
 						$logger->error( 'Error code : ' . $code . ' For Order id :' . $order->get_id(), $context );
 						$logger->error( 'Body : ' . $response['body'], $context );
 					}
@@ -169,6 +164,7 @@ class WC_TrackShip_Api_Call {
 			'destination_country'	=> $shipping_country,
 			'user_key'				=> $user_key,
 			'domain'				=> $domain,
+			'ts4wc'					=> trackship_for_woocommerce()->version,
 		);
 		$args[ 'body' ] = json_encode( $body );
 		$args['timeout'] = 10;
