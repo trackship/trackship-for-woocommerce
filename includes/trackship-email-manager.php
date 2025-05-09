@@ -322,11 +322,10 @@ class WC_TrackShip_Email_Manager {
 			$tracking_item = isset( $this->tracking_item ) && $this->tracking_item ? $this->tracking_item : [];
 			$track_link = $tracking_item['tracking_page_link'] ? $tracking_item['tracking_page_link'] : $this->order->get_view_order_url();
 			$track_link = add_query_arg( array( 'unsubscribe' => 'true' ), $track_link );
-			$unsubscribe = '<div style="text-align:center;padding-bottom: 10px;"><a href="' . $track_link . '">' . esc_html__( 'Unsubscribe', 'trackship-for-woocommerce' ) . '</a></div>';
+			$unsubscribe = '<div style="text-align:center;padding-bottom: 10px; margin-bottom: 20px;"><a href="' . $track_link . '">' . esc_html__( 'Unsubscribe', 'trackship-for-woocommerce' ) . '</a></div>';
 		}
 
-		$footer_text = ( $trackship_branding_text || $unsubscribe ) ? $trackship_branding_text . $unsubscribe : $footer_text;
-		return $footer_text;
+		return $trackship_branding_text . $unsubscribe . $footer_text;
 	}
 
 	public function safe_style_css ( $styles ) {
