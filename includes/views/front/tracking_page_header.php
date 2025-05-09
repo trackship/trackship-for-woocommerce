@@ -47,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php echo esc_html( '#' . $order->get_order_number() ); ?>
 				<?php } ?>
 			</span>
-			<?php if ( $tracking_page_link && is_admin() && !isset( $_POST['order_tracking_number'] ) ) { ?>
+			<?php if ( $tracking_page_link && is_admin() && !$this->order_tracking_number ) { ?>
 				<span style="margin-top: 5px;">
 					<span style="vertical-align: middle;" ><?php esc_html_e( 'Copy Tracking page link', 'trackship-for-woocommerce' ); ?></span>
 					<span class="copy_tracking_page trackship-tip" title="Copy the secure link to the Tracking page" data-tracking_page_link=<?php echo esc_url( $tracking_page_link ); ?> >

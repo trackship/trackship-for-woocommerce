@@ -94,8 +94,7 @@ class WC_Trackship_Install {
 		}
 		
 		if ( version_compare( get_option( 'trackship_db' ), '1.19', '<' ) ) {
-			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment CHANGE shipping_date shipping_date DATE NULL DEFAULT CURRENT_TIMESTAMP" );
-			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment ADD INDEX last_event (last_event);");
+			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment CHANGE shipping_date shipping_date DATE NULL" );
 			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment_meta MODIFY COLUMN shipping_service varchar(60);" );
 			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment MODIFY COLUMN order_number varchar(40);" );
 			$wpdb->query( "ALTER TABLE {$wpdb->prefix}zorem_email_sms_log MODIFY COLUMN order_number varchar(40);" );
@@ -223,18 +222,18 @@ class WC_Trackship_Install {
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.25', '<' ) ) {
-			$wc_ast_select_bg_color = get_option( 'wc_ast_select_bg_color' );
-			$wc_ast_select_font_color = get_option( 'wc_ast_select_font_color' );
-			$wc_ast_select_border_color = get_option( 'wc_ast_select_border_color' );
-			$wc_ast_select_border_radius = get_option( 'wc_ast_select_border_radius' );
-			$wc_ast_select_link_color = get_option( 'wc_ast_select_link_color' );
-			$tracking_page_type = get_option( 'tracking_page_type' );
-			$wc_ast_hide_tracking_events = get_option( 'wc_ast_hide_tracking_events' );
-			$wc_ast_select_tracking_page_layout = get_option( 'wc_ast_select_tracking_page_layout' );
-			$wc_ast_link_to_shipping_provider = get_option( 'wc_ast_link_to_shipping_provider' );
-			$wc_ast_hide_tracking_provider_image = get_option( 'wc_ast_hide_tracking_provider_image' );
-			$wc_ast_hide_from_to = get_option( 'wc_ast_hide_from_to' );
-			$wc_ast_hide_list_mile_tracking = get_option( 'wc_ast_hide_list_mile_tracking' );
+			$wc_ast_select_bg_color = get_option( 'wc_ast_select_bg_color', '#fafafa' );
+			$wc_ast_select_font_color = get_option( 'wc_ast_select_font_color', '#333' );
+			$wc_ast_select_border_color = get_option( 'wc_ast_select_border_color', '#cccccc' );
+			$wc_ast_select_border_radius = get_option( 'wc_ast_select_border_radius', 0 );
+			$wc_ast_select_link_color = get_option( 'wc_ast_select_link_color', '#2271b1' );
+			$tracking_page_type = get_option( 'tracking_page_type', 'modern' );
+			$wc_ast_hide_tracking_events = get_option( 'wc_ast_hide_tracking_events', 2 );
+			$wc_ast_select_tracking_page_layout = get_option( 'wc_ast_select_tracking_page_layout', 't_layout_1' );
+			$wc_ast_link_to_shipping_provider = get_option( 'wc_ast_link_to_shipping_provider', 1 );
+			$wc_ast_hide_tracking_provider_image = get_option( 'wc_ast_hide_tracking_provider_image', 0 );
+			$wc_ast_hide_from_to = get_option( 'wc_ast_hide_from_to', 1 );
+			$wc_ast_hide_list_mile_tracking = get_option( 'wc_ast_hide_list_mile_tracking', 1 );
 
 			update_trackship_settings( 'wc_ts_bg_color', $wc_ast_select_bg_color );
 			update_trackship_settings( 'wc_ts_font_color', $wc_ast_select_font_color );
@@ -354,12 +353,6 @@ class WC_Trackship_Install {
 
 			$this->create_shipping_provider_table();
 			$this->update_shipping_providers();
-
-			// Execute the query
-			$wpdb->query("ALTER TABLE {$wpdb->prefix}trackship_shipment 
-				ADD INDEX `first_event_time` (`first_event_time`),
-				ADD INDEX `shipment_status_first_event_time` (`shipment_status`, `first_event_time`);"
-			);
 
 			delete_trackship_settings( 'ts_review_ignore_136' );
 			delete_trackship_settings( 'ts_popup_ignore136' );
@@ -536,7 +529,26 @@ class WC_Trackship_Install {
 			// delete_option('wcast_failure_email_settings'); // add this code in future version
 			// delete_option('wcast_delivered_status_email_settings'); // add this code in future version
 			// delete_option('wcast_outfordelivery_email_settings'); // add this code in future version
-			// delete_option('shipment_email_settings'); // add this code in future version
+		}
+
+		// TS4WC version 1.9.4
+		if ( version_compare( get_option( 'trackship_db' ), '1.40', '<' ) ) {
+			update_trackship_settings( 'trackship_db', '1.40' );
+			update_option( 'trackship_db', '1.40' );
+
+			// Indexes to check and create
+			$indexes_to_check = [
+				'last_event' => 'ADD INDEX `last_event` (`last_event`(100))',
+				'first_event_time' => 'ADD INDEX `first_event_time` (`first_event_time`)',
+				'shipment_status_first_event_time' => 'ADD INDEX `shipment_status_first_event_time` (`shipment_status`, `first_event_time`)',
+			];
+
+			foreach ( $indexes_to_check as $index => $value ) {
+				$index_exists = $wpdb->get_results( $wpdb->prepare( "SHOW INDEX FROM {$wpdb->prefix}trackship_shipment WHERE Key_name = %s", $index ) );
+				if ( empty( $index_exists ) ) {
+					$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment {$value}" );
+				}
+			}
 		}
 	}
 
@@ -668,6 +680,7 @@ class WC_Trackship_Install {
 				INDEX `on_hold_email` (`on_hold_email`),
 				INDEX `exception_email` (`exception_email`),
 				INDEX `est_delivery_date` (`est_delivery_date`),
+				INDEX `last_event` (`last_event`(100)),
 				INDEX `first_event_time` (`first_event_time`),
 				INDEX `shipment_status_first_event_time` (`shipment_status`,`first_event_time`)
 			) $charset_collate;";

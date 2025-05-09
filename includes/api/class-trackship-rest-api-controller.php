@@ -225,7 +225,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 				'updated_at'			=> $request['updated_at'],
 				'last_event_time'		=> $last_event_time ? $last_event_time : gmdate( 'Y-m-d H:i:s' ),
 				'first_event_time'		=> $first_event_time,
-				'est_delivery_date'		=> $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : NULL,
+				'est_delivery_date'		=> $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : null,
 			);
 			$args2 = array(
 				'origin_country'		=> $request['origin_country'],
@@ -272,6 +272,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			'status' => 'success',
 			'execution_time' => microtime(true) - $REQUEST_TIME_FLOAT,
 			'data' => $query,
+			'version' => trackship_for_woocommerce()->version
 		);
 		
 		return rest_ensure_response( $data );

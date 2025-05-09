@@ -69,38 +69,60 @@ class WC_Trackship_Logs {
 		check_ajax_referer( '_trackship_logs', 'ajax_nonce' );
 		
 		global $wpdb;
-		$p_start = sanitize_text_field( $_POST['start'] ?? '');
-		$p_length = sanitize_text_field( $_POST['length'] ?? '');
-		$limit = 'limit ' . $p_start . ', ' . $p_length;
+		// Sanitize and validate input
+		$p_start  = absint( $_POST['start'] ?? 0 );
+		$p_length = absint( $_POST['length'] ?? 25 );
+		$limit    = "LIMIT {$p_start}, {$p_length}";
 		
 		$search_bar = sanitize_text_field( $_POST['search_bar'] ?? '');
 		$shipment_status = sanitize_text_field( $_POST['shipment_status'] ?? '');
 		$log_type = sanitize_text_field( $_POST['log_type'] ?? '');
 
-		$where = [];
-		if ( $search_bar ) {
-			$where[] = "( `order_id` = '{$search_bar}' OR `order_number` = '{$search_bar}' OR `to` LIKE '%{$search_bar}%' OR `tracking_number` = '{$search_bar}' )";
-		}
-		$where[] = "( `type` LIKE 'Email' OR `sms_type` LIKE 'shipment_status' )";
-		if ( $shipment_status ) {
-			$where[] = "`shipment_status` = '{$shipment_status}'";
-		}
-		
-		if ( $log_type ) {
-			$where[] = "`type` = '{$log_type}'";
-		}
-		
-		$where_condition = !empty( $where ) ? 'WHERE ' . implode( ' AND ', $where ) : '';
+		$where  = [];
+		$params = [];
 
-		$sum = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}zorem_email_sms_log $where_condition ");
-		$order_query = $wpdb->get_results("
+		// Search bar filtering with placeholders
+		if ( $search_bar ) {
+			$like_search = '%' . $wpdb->esc_like( $search_bar ) . '%';
+			$where[] = "(order_id = %s OR order_number = %s OR `to` LIKE %s OR tracking_number = %s)";
+			$params = array_merge( $params, [ $search_bar, $search_bar, $like_search, $search_bar ] );
+		}
+
+		// Fixed log type or sms_type filtering
+		$where[] = "(type = 'Email' OR sms_type = 'shipment_status')";
+
+		// Filter by shipment_status
+		if ( $shipment_status ) {
+			$where[]  = "shipment_status = %s";
+			$params[] = $shipment_status;
+		}
+
+		// Filter by log type
+		if ( $log_type ) {
+			$where[]  = "type = %s";
+			$params[] = $log_type;
+		}
+
+		// Compile WHERE clause
+		$where_sql = '';
+		if ( ! empty( $where ) ) {
+			$where_sql = 'WHERE ' . implode( ' AND ', $where );
+			$where_sql = $wpdb->prepare( $where_sql, ...$params );
+		}
+
+		// Count query
+		$count_sql = "SELECT COUNT(*) FROM {$wpdb->prefix}zorem_email_sms_log {$where_sql}";
+		$sum = $wpdb->get_var( $count_sql );
+
+		// Data query
+		$data_sql = "
 			SELECT * 
-				FROM {$wpdb->prefix}zorem_email_sms_log
-			$where_condition
-			ORDER BY
-				`date` DESC
+			FROM {$wpdb->prefix}zorem_email_sms_log
+			{$where_sql}
+			ORDER BY `date` DESC
 			{$limit}
-		");
+		";
+		$order_query = $wpdb->get_results( $data_sql );
 		
 		$result = array();
 		$i = 0;

@@ -120,7 +120,7 @@ class WC_Trackship_Shipments {
 		$search_bar = sanitize_text_field( $_POST['search_bar'] ?? '' );
 		if ( $search_bar ) {
 			$like_search = '%' . $wpdb->esc_like( $search_bar ) . '%';
-			$where[] = "(order_id = %s OR order_number = %s OR shipping_provider LIKE %s OR tracking_number = %s OR shipping_country LIKE %s)";
+			$where[] = '(order_id = %s OR order_number = %s OR shipping_provider LIKE %s OR tracking_number = %s OR shipping_country LIKE %s)';
 			$params = array_merge( $params, [ $search_bar, $search_bar, $like_search, $search_bar, $like_search ] );
 		}
 
@@ -141,7 +141,7 @@ class WC_Trackship_Shipments {
 				$where[] = "pending_status = 'carrier_unsupported'";
 				break;
 			case 'late_shipment':
-				$where[] = "shipping_length > %d";
+				$where[] = 'shipping_length > %d';
 				$params[] = $days;
 				break;
 			case 'active_late':

@@ -87,11 +87,7 @@ if ( $tracking_items ) :
 								<?php } ?>
 								<div class="tracking_info" style="margin:10px 0;">
 									<?php echo esc_html( ! empty( $tracking_item['formatted_tracking_provider'] ) ? $tracking_item['formatted_tracking_provider'] : ( !empty( $tracking_item['tracking_provider'] ) ? $tracking_item['tracking_provider'] : $tracking_item['custom_tracking_provider'] ) ); ?>
-									<?php if ( 'delivered' == $ship_status ) { ?>
-										<?php echo esc_html( $tracking_item['tracking_number'] ); ?>
-									<?php } else { ?>
-										<a href="<?php echo esc_url( $tracking_link ); ?>" style="text-decoration:none"><?php echo esc_html( $tracking_item['tracking_number'] ); ?></a>
-									<?php } ?>
+									<a href="<?php echo esc_url( $tracking_link ); ?>" style="text-decoration:none"><?php echo esc_html( $tracking_item['tracking_number'] ); ?></a>
 								</div>
 								<?php
 							}
