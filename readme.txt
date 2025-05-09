@@ -2,9 +2,9 @@
 Contributors: TrackShip
 Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order tracking, tracking
 Requires at least: 6.2
-Tested up to: 6.8
+Tested up to: 6.8.1
 Requires PHP: 7.4
-Stable tag: 1.9.3
+Stable tag: 1.9.4
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -137,6 +137,12 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended.
 
 == Changelog ==
+= 1.9.4 - 2025-05-08 =
+* Update - Updated strings for WPML translations.
+* Enhancement - Added tracking link to the tracking number in the Delivered shipment status email.
+* Compatibility - Verified compatibility with WooCommerce version 9.8.4.
+* Compatibility - Tested and confirmed compatibility with WordPress version 6.8.1.
+
 = 1.9.3 - 2025-04-23 =
 * Fix - Resolved an issue with saving shipment notification settings.
 * Compatibility - Verified compatibility with WooCommerce version 9.8.2.
