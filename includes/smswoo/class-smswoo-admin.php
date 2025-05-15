@@ -41,10 +41,11 @@ class TSWC_SMSWoo_Admin {
 		//register admin menu
 		add_action( 'after_trackship_settings', array( $this, 'smswoo_settings' ) );
 		
-		//ajax save admin api settings
-		add_action( 'wp_ajax_smswoo_settings_tab_save', array( $this, 'smswoo_settings_tab_save_callback' ) );
-
 		if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocommerce/zorem-sms-for-woocommerce.php' ) ) {
+
+			//ajax save admin api settings
+			add_action( 'wp_ajax_smswoo_settings_tab_save', array( $this, 'smswoo_settings_tab_save_callback' ) );
+
 			//hook into TS4WC for shipment SMS notification
 			add_action( 'shipment_status_sms_section', array( $this, 'shipment_status_notification_tab'), 10, 1 );
 			
@@ -65,20 +66,7 @@ class TSWC_SMSWoo_Admin {
 		?>
 		<ul class="settings_ul">
 			<?php foreach ( (array) $arrays as $id => $array ) { ?>
-				
-				<?php if ( 'title' == $array['type'] ) { ?>
-					<li class="<?php echo esc_html($array['type']); ?>_row <?php echo isset( $array['class'] ) ? esc_html($array['class']) : ''; ?>">
-						<?php if ( ( 'true' == $button ) ) { ?>
-							<div style="float:right;">
-								<div class="spinner workflow_spinner"></div>
-								<button name="save" class="button-primary button-trackship btn_large button-primary woocommerce-save-button button-smswoo" type="submit" ><?php esc_html_e( 'Save Changes', 'trackship-for-woocommerce' ); ?></button>
-							</div>
-						<?php } ?>
-						<h3><?php echo esc_html($array['title']); ?></h3>
-					</li>
-					<?php continue; ?>
-				<?php } ?>
-				
+
 				<?php if ( 'dropdown_button' == $array['type'] ) { ?>
 					<li class="<?php echo esc_html($array['type']); ?>_row <?php echo esc_html($array['class']); ?> dis_block">
 						<label><?php esc_html_e( $array['title'] ); ?>
