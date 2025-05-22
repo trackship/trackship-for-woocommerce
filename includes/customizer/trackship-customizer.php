@@ -1357,6 +1357,10 @@ class TS4WC_Admin_Customizer {
 			foreach ( $trackship_settings as $key => $val ) {
 				update_trackship_settings( $key, $val );
 			}
+
+			if ( isset($_POST[ 'email_preview' ]) ) {
+				update_option( 'email_preview', wc_clean( $_POST[ 'email_preview' ] ) );
+			}
 			
 			wp_send_json(['success' => 'true']);
 		}
