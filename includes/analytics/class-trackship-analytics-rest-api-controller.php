@@ -211,7 +211,8 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 				$shipments_data = array(
 					'total_shipments' => (int) $record->total_shipments,
 					'active_shipments' => (int) $record->active_shipments,
-					'delivered_shipments' => (int) $record->delivered_shipments
+					'delivered_shipments' => (int) $record->delivered_shipments,
+					'avg_shipment_length' => (int) $record->avg_shipment_length,
 				);
 
 				$record->date_start = $start_datetime->format( 'Y-m-d H:i:s' );
@@ -318,7 +319,8 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 				DATE_FORMAT(ts.shipping_date, '$db_format') AS time_interval,
 				COUNT(DATE(ts.shipping_date)) AS total_shipments,
 				SUM(CASE WHEN ts.shipment_status NOT IN ('delivered', 'return_to_sender') THEN 1 ELSE 0 END) AS active_shipments,
-				SUM(CASE WHEN ts.shipment_status IN ('delivered', 'return_to_sender') THEN 1 ELSE 0 END) AS delivered_shipments
+				SUM(CASE WHEN ts.shipment_status IN ('delivered', 'return_to_sender') THEN 1 ELSE 0 END) AS delivered_shipments,
+				ROUND(AVG(ts.shipping_length)) AS avg_shipment_length
 			FROM {$woo_trackship_shipment} ts
 			LEFT JOIN {$wpdb->prefix}trackship_shipping_provider tp ON ts.shipping_provider = tp.ts_slug
 			$where_sql
