@@ -1131,7 +1131,7 @@ class WC_Trackship_Actions {
 	/*
 	* Return option value for customizer
 	*/
-	public function get_option_value_from_array( $array, $key, $default_value) {
+	public function get_option_value_from_array( $array, $key, $default_value = '' ) {
 		$array_data = get_option($array);
 		$value = '';
 		
