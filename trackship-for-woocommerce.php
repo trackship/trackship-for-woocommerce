@@ -543,10 +543,3 @@ if ( ! function_exists( 'zorem_tracking' ) ) {
 	}
 	zorem_tracking();
 }
-
-add_action( 'trackship_tracking_apicall', 'custom_ts_cb' );
-function custom_ts_cb($order_id) {
-	$logger = wc_get_logger();
-	$context = array( 'source' => 'TrackShip' );
-	$logger->error( "Log For Order id :" . $order_id, $context );
-}
