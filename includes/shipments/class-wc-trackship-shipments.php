@@ -323,8 +323,7 @@ class WC_Trackship_Shipments {
 		check_ajax_referer( '_trackship_shipments', 'security' );
 		$orderids = isset( $_POST['orderids'] ) ? wc_clean($_POST['orderids']) : [];
 		foreach ( ( array ) $orderids as $order_id ) {
-			trackship_for_woocommerce()->actions->set_temp_pending( $order_id );
-			as_schedule_single_action( time() + 1, 'trackship_tracking_apicall', array( $order_id ) );
+			trackship_for_woocommerce()->actions->schedule_trackship_trigger( $order_id );
 		}
 		wp_send_json(true);
 	}
