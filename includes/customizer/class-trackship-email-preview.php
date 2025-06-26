@@ -148,9 +148,20 @@ class TSWC_Email_Customizer_Preview {
 		add_filter( 'woocommerce_email_styles', array( trackship_admin_customizer(), 'shipment_email_preview_css' ), 9999, 2 );
 
 		add_filter( 'woocommerce_email_footer_text', array( $this, 'email_footer_text' ) );
-		
-		// wrap the content with the email template and then add styles
-		$email_html = apply_filters( 'woocommerce_mail_content', $email->style_inline( $mailer->wrap_message( $email_heading, $message ) ) );
+
+		if ( class_exists( 'WooCommerce_Email_Template_Customizer' ) ) {
+			// Exception: Villa Theme Email Customizer (Premium) does not follow WooCommerce standards.
+			// It is incompatible with WC()->mailer()->wrap_message(), so we skip wrapping to preserve layout.
+			// This ensures email content renders correctly with their custom structure.
+			$message = $message; // Intentionally left unchanged for compatibility.
+		} else {
+			// Compatible with standard-compliant email customizer plugins:
+			// Kadence, YayMail, Zorem, WP HTML Mail, etc.
+			// Wrap the content using WooCommerce's default template, then styles are applied.
+			$message = $mailer->wrap_message( $email_heading, $message );
+		}
+
+		$email_html = apply_filters( 'woocommerce_mail_content', $email->style_inline( $message ) );
 		$email_html = apply_filters( 'trackship_mail_content', $email_html, $email_heading, $preview_id, 'shipment_email', $status );
 		echo wp_kses_post($email_html);
 	}
