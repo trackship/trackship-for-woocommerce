@@ -117,7 +117,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		
 		if ( trackship_for_woocommerce()->is_st_active() ) {
 			$plugin.= '-st';
-			$version_info['st'] = WC_SHIPMENT_TRACKING_VERSION;
+			$version_info['st'] = defined('WC_SHIPMENT_TRACKING_VERSION') ? WC_SHIPMENT_TRACKING_VERSION : null;
 		}
 
 		if ( is_plugin_active( 'yith-woocommerce-order-tracking/init.php' ) ) {
