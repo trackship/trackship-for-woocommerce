@@ -46,7 +46,36 @@ jQuery('.shipping_date').on('cancel.daterangepicker', function(ev, picker) {
 
 jQuery(document).ready(function() {
 	'use strict';
-	var url;
+	var start = moment().subtract(6, 'month');
+	var end = moment();
+
+	jQuery('#shipment_date_range').daterangepicker({
+		startDate: start,
+		endDate: end,
+		locale: {
+			format: 'YYYY-MM-DD'
+		},
+		ranges: {
+		   'Today': [moment(), moment()],
+		   'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+		   'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+		   'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+		   'This Month': [moment().startOf('month'), moment().endOf('month')],
+		   'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+		   'Last 6 Month': [moment().subtract(6, 'month'), moment()]
+		}
+	}, function(start, end, label) {
+		jQuery('#shipment_start_date_range').val(start.format('YYYY-MM-DD'));
+		jQuery('#shipment_end_date_range').val(end.format('YYYY-MM-DD'));
+		$table.ajax.reload();
+	});
+	// Set default value on load
+	jQuery('#shipment_date_range').val(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+
+	// Optionally set the hidden fields too
+	jQuery('#shipment_start_date_range').val(start.format('YYYY-MM-DD'));
+	jQuery('#shipment_end_date_range').val(end.format('YYYY-MM-DD'));
+
 	var $table = jQuery("#active_shipments_table").DataTable({
 		dom: "i<'shipments_custom_data'>B<'table_scroll't><'datatable_footer'ipl>",
 		searching: false,
@@ -76,6 +105,8 @@ jQuery(document).ready(function() {
 				d.shipping_date = jQuery("#shipping_date").val();
 				d.order_id = jQuery("#order_id").val();
 				d.shipment_type	= jQuery("#shipment_type").val();
+				d.start_date = jQuery("#shipment_start_date_range").val();
+				d.end_date = jQuery("#shipment_end_date_range").val();
 			},
 		},
 		
@@ -104,6 +135,14 @@ jQuery(document).ready(function() {
 				'orderable': true,
 				"mRender":function(data,type,full) {
 					return '<a href="'+shipments_script.admin_url+'post.php?post='+full.order_id+'&action=edit">' + full.order_number + '</a>';
+				},
+			},
+			{
+				"width": "130px",
+				'orderable': true,
+				'data': 'order_date',
+				"mRender":function(data,type,full) {
+					return full.order_date.formatted_date1 ? '<span class="trackship-tip" title="' + full.order_date.formatted_date2 + '">' + full.order_date.formatted_date1 + '</span>' : '';
 				},
 			},
 			{
@@ -166,6 +205,11 @@ jQuery(document).ready(function() {
 				"width": "140px",
 				'orderable': false,
 				'data': 'ship_city',
+			},
+			{
+				"width": "140px",
+				'orderable': false,
+				'data': 'last_event_date',
 			},
 			{
 				"width": "200px",
@@ -347,25 +391,25 @@ jQuery(document).ready(function() {
 		}	
 	});
 
-	var localStorageData = localStorage.getItem('shipment_column');
+	var localStorageData = localStorage.getItem('shipment_columns');
 	if(localStorageData){
 		var data = JSON.parse(localStorageData);
 		Object.keys(data).map((keyName) => {
 			jQuery(`#column_${keyName}`).prop("checked",data[keyName]);
-			$table.columns(keyName).visible(keyName == 16 ? true : data[keyName]);
+			$table.columns(keyName).visible(keyName == 18 ? true : data[keyName]);
 		})
 	}
 
 	jQuery(document).on("change", ".column_toogle input", function () {
-		var localStorageData = localStorage.getItem('shipment_column')
+		var localStorageData = localStorage.getItem('shipment_columns')
 		var number = jQuery(this).data('number');
 		if(localStorageData){
-			localStorage.setItem('shipment_column',JSON.stringify({
+			localStorage.setItem('shipment_columns',JSON.stringify({
 				...JSON.parse(localStorageData),
 				[number]:jQuery(this).prop("checked") == true
 			}));
 		}else{
-			localStorage.setItem('shipment_column',JSON.stringify({
+			localStorage.setItem('shipment_columns',JSON.stringify({
 				[number]:jQuery(this).prop("checked") == true
 			}));
 		}

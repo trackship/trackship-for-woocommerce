@@ -43,20 +43,22 @@ $ship_status = array(
 );
 $columns = array(
 	1 => 'Order',
-	2 => 'Shipping date',
-	3 => 'Updated at',
-	4 => 'Tracking Number',
-	5 => 'Shipping provider',
-	6 => 'Shipment status',
-	7 => 'Ship from',
-	8 => 'Ship to',
-	9 => 'Ship State',
-	10 => 'Ship City',
-	11 => 'Last Event',
-	12 => 'Customer',
-	13 => 'Shipping time',
-	14 => 'Delivery date',
-	15 => 'Delivery number',
+	2 => 'Order date',
+	3 => 'Shipping date',
+	4 => 'Updated at',
+	5 => 'Tracking Number',
+	6 => 'Shipping carrier',
+	7 => 'Shipment status',
+	8 => 'Ship from',
+	9 => 'Ship to',
+	10 => 'Ship State',
+	11 => 'Ship City',
+	12 => 'Latest Event Date',
+	13 => 'Last Event',
+	14 => 'Customer',
+	15 => 'Shipping time',
+	16 => 'Delivery date',
+	17 => 'Delivery number',
 );
 $url_status = isset( $_GET['status'] ) ? sanitize_text_field( $_GET['status'] ) : '';
 $url_provider = isset( $_GET['provider'] ) ? sanitize_text_field( $_GET['provider'] ) : '';
@@ -85,6 +87,12 @@ $provider_count_array = array_column($res, 'provider_count');
 $provider_count = array_combine($provider_array, $provider_count_array);
 ?>
 <div>
+	<span class="shipment_date_range">
+		<input type="text" class="select_option" id="shipment_date_range" placeholder="Select date range" />
+		<input type="hidden" id="shipment_start_date_range">
+		<input type="hidden" id="shipment_end_date_range">
+	</span>
+
 	<span class="shipment_status">
 		<select class="select_option" name="shipment_status" id="shipment_status">
 			<?php foreach ( $ship_status as $key => $val ) { ?>

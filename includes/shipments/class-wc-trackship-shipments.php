@@ -58,9 +58,13 @@ class WC_Trackship_Shipments {
 		}
 
 		$user_plan = get_option( 'user_plan' );
+
+		// Enqueue WooCommerce's Flatpickr and style
+		wp_enqueue_script( 'ts_daterangepicker', 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js', array(), '5.37.0', true );
+    	wp_enqueue_style( 'ts_daterangepicker', 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css', array(), '5.37.0' );
 		
 		// Rubik font
-		wp_enqueue_style( 'custom-google-fonts', 'https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap', array(), time() );
+		wp_enqueue_style( 'custom-google-fonts', 'https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap', array(), trackship_for_woocommerce()->version );
 
 		//dataTables library
 		wp_enqueue_script( 'TS-DataTable', 'https://cdn.datatables.net/2.1.8/js/dataTables.js', array ( 'jquery' ), '2.1.8', true);
@@ -97,7 +101,7 @@ class WC_Trackship_Shipments {
 		wp_enqueue_script( 'TS-FixColumn2' );
 
 		wp_enqueue_style( 'shipments_styles', trackship_for_woocommerce()->plugin_dir_url() . 'includes/shipments/assets/css/shipments.css', array(), trackship_for_woocommerce()->version );
-		wp_enqueue_script( 'shipments_script', trackship_for_woocommerce()->plugin_dir_url() . 'includes/shipments/assets/js/shipments.js', array( 'jquery' ), trackship_for_woocommerce()->version, true );
+		wp_enqueue_script( 'shipments_script', trackship_for_woocommerce()->plugin_dir_url() . 'includes/shipments/assets/js/shipments.js', array( 'jquery', 'ts_daterangepicker' ), trackship_for_woocommerce()->version, true );
 		wp_localize_script('shipments_script', 'shipments_script', array(
 			'admin_url'	=> admin_url(),
 			'user_plan'	=> $user_plan,
@@ -169,6 +173,15 @@ class WC_Trackship_Shipments {
 			$params[] = $shipping_provider;
 		}
 
+		// Filter by shipping date
+		$start_date = sanitize_text_field( $_POST['start_date'] ?? '' );
+		$end_date = sanitize_text_field( $_POST['end_date'] ?? '' );
+		if ( $start_date && $end_date ) {
+			$where[] = 'shipping_date BETWEEN %s AND %s';
+			$params[] = $start_date;
+			$params[] = $end_date;
+		}
+
 		// Compile where clause
 		$where_condition = '';
 		if ( ! empty( $where ) ) {
@@ -222,17 +235,26 @@ class WC_Trackship_Shipments {
 			$shipping_length = $value->shipping_length ? $shipping_length : '';
 
 			$customer = '';
+			$formatted_date1 = '';
 			$order = wc_get_order( $value->order_id );
 			if ( $order ) {
 				$customer = trim($order->get_formatted_shipping_full_name()) ? $order->get_formatted_shipping_full_name() : $order->get_formatted_billing_full_name();
+				$order_date = $order->get_date_created();
+				// Format as string (e.g., Y-m-d H:i:s)
+				if ( $order_date ) {
+					$formatted_date1 = $order_date->date( 'M d, Y' );
+					$formatted_date2 = $order_date->date( 'M d, Y H:i:s' );
+				}
 			}
 
 			$result[$i] = new \stdClass();
 			$result[$i]->et_shipped_at = date_i18n( 'M d, Y', strtotime( $value->shipping_date ) );
 			$result[$i]->updated_at = [ 'updated_date1' => $value->updated_at ? date_i18n( 'M d, Y', strtotime( $value->updated_at ) ) : '', 'updated_date2' => $value->updated_at ? date_i18n( 'M d, Y H:i:s', strtotime( $value->updated_at ) ) : '' ];
 			$result[$i]->order_id = $value->order_id;
+			$result[$i]->order_date = [ 'formatted_date1' => $formatted_date1, 'formatted_date2' => $formatted_date1 ? $formatted_date2 : '' ];
 			$result[$i]->delivery_number = $value->delivery_number;
-			$result[$i]->last_event = $value->last_event ? gmdate( $date_format, strtotime( $value->last_event_time ) ) . ': ' . $value->last_event : '';
+			$result[$i]->last_event_date = $value->last_event_time ? gmdate( $date_format, strtotime( $value->last_event_time ) ) : '';
+			$result[$i]->last_event = $value->last_event ? $value->last_event : '';
 			$result[$i]->order_number = wc_get_order( $value->order_id ) ? wc_get_order( $value->order_id )->get_order_number() : $value->order_id;
 			$result[$i]->shipment_status = apply_filters('trackship_status_filter', $status );
 			$result[$i]->shipment_status_id = $status;
