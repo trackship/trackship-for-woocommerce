@@ -185,7 +185,12 @@ jQuery(document).on( "change", "#smswoo_sms_provider", function(){
 
 	if ( provider === 'smswoo_msg91' && jQuery('#smswoo_msg91_dlt').prop("checked") ) {
 		jQuery('.shipment-status-sms-section .smswoo-textarea').hide();
-		jQuery('.shipment-status-sms-section .smswoo-text').show();
+		jQuery('.shipment-status-sms-section .smswoo-text').hide();
+		jQuery('.shipment-status-sms-section .smswoo-text.smswoo-msg91-field').show();
+	} else if ( provider === 'whatsapp_business' ) {
+		jQuery('.shipment-status-sms-section .smswoo-textarea').hide();
+		jQuery('.shipment-status-sms-section .smswoo-text').hide();
+		jQuery('.shipment-status-sms-section .smswoo-text.whatsapp-businesses-field').show();
 	} else {
 		jQuery('.shipment-status-sms-section .smswoo-textarea').show();
 		jQuery('.shipment-status-sms-section .smswoo-text').hide();
@@ -196,9 +201,13 @@ jQuery(document).on( "change", "#smswoo_msg91_dlt", function(){
 	'use strict';
 	var provider = jQuery('#smswoo_sms_provider').val();
 	
-	if ( provider === 'smswoo_msg91' && jQuery('#smswoo_msg91_dlt').prop("checked") ) {
+	if ( (provider === 'smswoo_msg91' && jQuery('#smswoo_msg91_dlt').prop("checked")) ) {
 		jQuery('.shipment-status-sms-section .smswoo-textarea').hide();
-		jQuery('.shipment-status-sms-section .smswoo-text').show();
+		jQuery('.shipment-status-sms-section .smswoo-text.smswoo-msg91-field').show();
+	} else if ( provider === 'whatsapp_business' ) {
+		jQuery('.shipment-status-sms-section .smswoo-textarea').hide();
+		jQuery('.shipment-status-sms-section .smswoo-text').hide();
+		jQuery('.shipment-status-sms-section .smswoo-text.whatsapp-businesses-field').show();
 	} else {
 		jQuery('.shipment-status-sms-section .smswoo-textarea').show();
 		jQuery('.shipment-status-sms-section .smswoo-text').hide();

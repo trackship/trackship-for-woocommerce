@@ -62,6 +62,7 @@ class TSWC_SMSWOO_Init {
 			require_once 'services/class-smswoo-fast2sms.php';
 			require_once 'services/class-smswoo-msg91.php';
 			require_once 'services/class-smswoo-smsalert.php';
+			require_once 'services/class-whatsapp-business.php';
 		}
 	}
 	
