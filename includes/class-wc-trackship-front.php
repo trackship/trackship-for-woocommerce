@@ -955,19 +955,16 @@ class WC_TrackShip_Front {
 			$receive_email = '' != $receive_email ? $receive_email : 1;
 
 			$receive_sms = $order->get_meta( '_smswoo_receive_sms', true );
-			$receive_sms = '' != $receive_sms ? $receive_sms : 1;
 			$receive_sms = 'no' == $receive_sms ? 0 : 1;
 			?>
 			<label>
 				<input type="checkbox" class="unsubscribe_emails_checkbox" name="unsubscribe_emails" data-lable="email" value="1" <?php echo $receive_email ? 'checked' : ''; ?>>
 				<span style="font-weight: normal;"><?php esc_html_e( 'Email notifications', 'trackship-for-woocommerce' ); ?></span>
 			</label>
-			<?php if ( class_exists( 'SMS_for_WooCommerce' ) ) { ?>
-				<label>
-					<input type="checkbox" class="unsubscribe_sms_checkbox" name="unsubscribe_sms" data-lable="sms" value="1" <?php echo $receive_sms ? 'checked' : ''; ?>>
-					<span style="font-weight: normal;"><?php esc_html_e( 'SMS notifications', 'trackship-for-woocommerce' ); ?></span>
-				</label>
-			<?php } ?>
+			<label>
+				<input type="checkbox" class="unsubscribe_sms_checkbox" name="unsubscribe_sms" data-lable="sms" value="1" <?php echo $receive_sms ? 'checked' : ''; ?>>
+				<span style="font-weight: normal;"><?php esc_html_e( 'SMS notifications', 'trackship-for-woocommerce' ); ?></span>
+			</label>
 			<?php $ajax_nonce = wp_create_nonce( 'unsubscribe_emails' . $order_id ); ?>
 			<input type="hidden" class="order_id_field" value="<?php echo esc_attr( $order_id ); ?>">
 			<input type="hidden" name="action" value="unsubscribe_emails_save">

@@ -290,6 +290,11 @@ class TSWC_SMSWoo_SMS_Notification {
 	 */
 	public function trigger_sms_on_shipment_status_change( $order_id, $old_status, $new_status, $tracking_number ) {
 
+		if ( !$this->user_subscribed_sms( $order_id ) ) {
+			//$logger->log( 'info', 'user not subscribed. ' . $order_id, $context );
+			return;
+		}
+
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 
 		foreach ( ( array ) $tracking_items as $key => $tracking_item ) {
@@ -367,9 +372,13 @@ class TSWC_SMSWoo_SMS_Notification {
 	 * @return boolean
 	 */
 	public function user_subscribed_sms( $order_id ) {
-
-		return true;
-
+		if ( get_trackship_settings( 'enable_email_widget' ) ) {
+			$order       = wc_get_order( $order_id );
+			$receive_sms = $order->get_meta( '_smswoo_receive_sms', true );
+			return 'no' == $receive_sms ? false : true;
+		} else {
+			return true;
+		}
 	}
 	
 	/**
