@@ -91,10 +91,9 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 			
 		}
 		public function load_admin_page() {
-		
+
 			if (isset($_GET['page']) && $_GET['page'] === $this->menu_slug) {
 				if (!get_option($this->plugin_slug_with_hyphens . '_usage_data_selector')) {
-					
 					$this->usage_data_signup_box();
 				}
 				
