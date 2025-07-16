@@ -128,9 +128,6 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 		$args['shipment_type']		= $request['shipment_type'];
 		$args['providers']			= $request['providers'];
 		$args['interval']			= $request['interval'];
-
-
-		// hitesh
 		$args['page']		= 1;
 		$args['orderby']	= 'date';
 
@@ -170,7 +167,8 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 
 		// Fill missing intervals
 		$db_intervals = array_column( $intervals, 'time_interval' );
-		$data = $this->fill_in_missing_intervals( $db_intervals, new DateTime( $query_args['after'] ), new DateTime( $query_args['before'] ), $interval, $data );
+		$local_tz = new \DateTimeZone( wc_timezone_string() );
+		$data = $this->fill_in_missing_intervals( $db_intervals, new DateTime( $query_args['after'], $local_tz ), new DateTime( $query_args['before'], $local_tz ), $interval, $data );
 
 		return rest_ensure_response( $data );
 	}
@@ -193,8 +191,19 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 		// @todo Should 'products' be in intervals?
 		unset( $totals_arr['products'] );
 		while ( $start_datetime <= $end_datetime ) {
-			$next_start	= TimeInterval::iterate( $start_datetime, $time_interval );
-			$time_id	= TimeInterval::time_interval_id( $time_interval, $start_datetime );
+			if ( $time_interval === 'week' ) {
+				// For custom weeks, the time ID is the week start date (formatted like in SQL)
+				$time_id = $start_datetime->format( 'Y-m-d' );
+			} else {
+				$time_id = TimeInterval::time_interval_id( $time_interval, $start_datetime );
+			}
+			if ( $time_interval === 'week' ) {
+				$next_start = clone $start_datetime;
+				$next_start->modify('+7 days');
+			} else {
+				$next_start = TimeInterval::iterate( $start_datetime, $time_interval );
+			}
+
 			// Either create fill-zero interval or use data from db.
 			if ( $next_start > $end_datetime ) {
 				$interval_end = $end_datetime->format( 'Y-m-d H:i:s' );
@@ -211,13 +220,13 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 				$shipments_data = array(
 					'total_shipments' => (int) $record->total_shipments,
 					'active_shipments' => (int) $record->active_shipments,
-					'delivered_shipments' => (int) $record->delivered_shipments
+					'delivered_shipments' => (int) $record->delivered_shipments,
+					'avg_shipment_length' => (int) $record->avg_shipment_length,
 				);
 
 				$record->date_start = $start_datetime->format( 'Y-m-d H:i:s' );
 				$record->date_end	= $interval_end;
 				$record->subtotals	= $shipments_data;
-
 
 			} elseif ( ! array_key_exists( $time_id, $db_intervals ) ) {
 				// For intervals present in the db outside of this time frame, do nothing.
@@ -280,7 +289,7 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 	/**
 	 * Get data by Shipments
 	 */
-	public function get_data_by_shipments( $after_date, $before_date, $shipment_status, $interval, $providers_id = [] ) {
+	public function get_data_by_shipments( $after_date, $before_date, $shipment_status, $interval, $providers_id = '' ) {
 		global $wpdb;
 		$woo_trackship_shipment = $this->shipment_table;
 	
@@ -312,13 +321,23 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 		}
 	
 		$where_sql = $where ? 'WHERE ' . implode( ' AND ', $where ) : '';
+
+		if ( $interval == 'week' ) {
+			$custom_time_interval = "
+				DATE_FORMAT(DATE_ADD('$after_date', INTERVAL FLOOR(DATEDIFF(ts.shipping_date, '$after_date') / 7) WEEK), '%Y-%m-%d') AS time_interval
+			";
+		} else {
+			$custom_time_interval = "DATE_FORMAT(ts.shipping_date, '$db_format') AS time_interval";
+		}
+
 	
 		$sql = "
 			SELECT 
-				DATE_FORMAT(ts.shipping_date, '$db_format') AS time_interval,
+				$custom_time_interval,
 				COUNT(DATE(ts.shipping_date)) AS total_shipments,
 				SUM(CASE WHEN ts.shipment_status NOT IN ('delivered', 'return_to_sender') THEN 1 ELSE 0 END) AS active_shipments,
-				SUM(CASE WHEN ts.shipment_status IN ('delivered', 'return_to_sender') THEN 1 ELSE 0 END) AS delivered_shipments
+				SUM(CASE WHEN ts.shipment_status IN ('delivered', 'return_to_sender') THEN 1 ELSE 0 END) AS delivered_shipments,
+				ROUND(AVG(ts.shipping_length)) AS avg_shipment_length
 			FROM {$woo_trackship_shipment} ts
 			LEFT JOIN {$wpdb->prefix}trackship_shipping_provider tp ON ts.shipping_provider = tp.ts_slug
 			$where_sql

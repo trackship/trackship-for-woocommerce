@@ -1357,6 +1357,10 @@ class TS4WC_Admin_Customizer {
 			foreach ( $trackship_settings as $key => $val ) {
 				update_trackship_settings( $key, $val );
 			}
+
+			if ( isset($_POST[ 'email_preview' ]) ) {
+				update_option( 'email_preview', wc_clean( $_POST[ 'email_preview' ] ) );
+			}
 			
 			wp_send_json(['success' => 'true']);
 		}
@@ -1385,7 +1389,7 @@ class TS4WC_Admin_Customizer {
 	 */
 	public function get_value ( $email_settings, $key, $status = '' ) {
 		_deprecated_function( __FUNCTION__, '1.9.2', 'get_trackship_email_settings' );
-		$value = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( $email_settings, $key );
+		$value = trackship_for_woocommerce()->ts_actions->get_option_value_from_array( $email_settings, $key, '' );
 		return $value;
 	}
 }

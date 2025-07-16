@@ -155,11 +155,6 @@ class WC_Trackship_Install {
 			unset($late_shipments_settings['wcast_late_shipments_days']);
 			update_option( 'late_shipments_email_settings', $late_shipments_settings );
 
-			$columns = $wpdb->get_row( "SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}trackship_shipment' AND COLUMN_NAME = 'new_shipping_provider' ", ARRAY_A );
-			if ( $columns ) {
-				$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment DROP COLUMN pending_status;" );
-			}
-
 			update_trackship_settings( 'trackship_db', '1.20' );
 			update_option( 'trackship_db', '1.20' );
 		}

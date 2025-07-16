@@ -41,10 +41,11 @@ class TSWC_SMSWoo_Admin {
 		//register admin menu
 		add_action( 'after_trackship_settings', array( $this, 'smswoo_settings' ) );
 		
-		//ajax save admin api settings
-		add_action( 'wp_ajax_smswoo_settings_tab_save', array( $this, 'smswoo_settings_tab_save_callback' ) );
-
 		if ( ! function_exists( 'SMSWOO' ) && !is_plugin_active( 'zorem-sms-for-woocommerce/zorem-sms-for-woocommerce.php' ) ) {
+
+			//ajax save admin api settings
+			add_action( 'wp_ajax_smswoo_settings_tab_save', array( $this, 'smswoo_settings_tab_save_callback' ) );
+
 			//hook into TS4WC for shipment SMS notification
 			add_action( 'shipment_status_sms_section', array( $this, 'shipment_status_notification_tab'), 10, 1 );
 			
@@ -65,20 +66,7 @@ class TSWC_SMSWoo_Admin {
 		?>
 		<ul class="settings_ul">
 			<?php foreach ( (array) $arrays as $id => $array ) { ?>
-				
-				<?php if ( 'title' == $array['type'] ) { ?>
-					<li class="<?php echo esc_html($array['type']); ?>_row <?php echo isset( $array['class'] ) ? esc_html($array['class']) : ''; ?>">
-						<?php if ( ( 'true' == $button ) ) { ?>
-							<div style="float:right;">
-								<div class="spinner workflow_spinner"></div>
-								<button name="save" class="button-primary button-trackship btn_large button-primary woocommerce-save-button button-smswoo" type="submit" ><?php esc_html_e( 'Save Changes', 'trackship-for-woocommerce' ); ?></button>
-							</div>
-						<?php } ?>
-						<h3><?php echo esc_html($array['title']); ?></h3>
-					</li>
-					<?php continue; ?>
-				<?php } ?>
-				
+
 				<?php if ( 'dropdown_button' == $array['type'] ) { ?>
 					<li class="<?php echo esc_html($array['type']); ?>_row <?php echo esc_html($array['class']); ?> dis_block">
 						<label><?php esc_html_e( $array['title'] ); ?>
@@ -251,6 +239,7 @@ class TSWC_SMSWoo_Admin {
 					'smswoo_fast2sms'	=> 'Fast2sms',
 					'smswoo_msg91'		=> 'Msg91',
 					'smswoo_smsalert'	=> 'SMS Alert',
+					'whatsapp_business'	=> 'WhatsApp Business',
 				),
 				'link' => array(
 					'smswoo_nexmo' => array(
@@ -282,6 +271,11 @@ class TSWC_SMSWoo_Admin {
 						/* translators: %s: search for a tag */
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'SMS Alert' ),
 						'link' => 'https://docs.trackship.com/docs/trackship-for-woocommerce/setup/sms-notifications/sms-alert/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
+					),
+					'whatsapp_business' => array(
+						/* translators: %s: search for a tag */
+						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'WhatsApp Business' ),
+						'link' => 'https://docs.trackship.com/docs/trackship-for-woocommerce/setup/sms-notifications/whatsapp-business/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
 					),
 				),
 			),
@@ -369,13 +363,20 @@ class TSWC_SMSWoo_Admin {
 				'id'		=> 'smswoo_smsalert_key',
 				'class'		=> 'smswoo_sms_provider smswoo_smsalert_sms_provider',
 			),
+			'whatsapp_business_authkey' => array(
+				'title'		=> __( 'Access Token', 'trackship-for-woocommerce' ),
+				'type'		=> 'text',
+				'show'		=> true,
+				'id'		=> 'whatsapp_business_authkey',
+				'class'		=> 'smswoo_sms_provider whatsapp_business_sms_provider',
+			),
 			'smswoo_sender_phone_number' => array(
 				'title'		=> __( 'Sender phone number / Sender ID', 'trackship-for-woocommerce' ),
 				'desc'		=> __( 'This field appears as a from or Sender ID', 'trackship-for-woocommerce'),
 				'type'		=> 'text',
 				'show'		=> true,
 				'id'		=> 'smswoo_sender_phone_number',
-				'class'		=> 'smswoo_sms_provider smswoo_nexmo_sms_provider smswoo_twilio_sms_provider smswoo_clicksend_sms_provider smswoo_smsalert_sms_provider smswoo_msg91_sms_provider', //add provider class if need this field in another provider
+				'class'		=> 'smswoo_sms_provider smswoo_nexmo_sms_provider smswoo_twilio_sms_provider smswoo_clicksend_sms_provider smswoo_smsalert_sms_provider smswoo_msg91_sms_provider whatsapp_business_sms_provider', //add provider class if need this field in another provider
 			),
 			'smswoo_admin_phone_number' => array(
 				'title'		=> __( 'Admin Phone Number', 'trackship-for-woocommerce' ),
@@ -410,10 +411,12 @@ class TSWC_SMSWoo_Admin {
 				$enabled_customer = $val['id'] . '_enabled_customer';
 				$templete_id = $val['id'] . '_templete_id';
 				$template_var = $val['id'] . '_template_var';
+				$template_lang = $val['id'] . '_template_lang';
 				
 				update_option( $enabled_customer, isset($_POST[ $enabled_customer ]) ? wc_clean($_POST[ $enabled_customer ]) : '' );
 				update_option( $templete_id, isset($_POST[ $templete_id ]) ? wc_clean($_POST[ $templete_id ]) : '' );
 				update_option( $template_var, isset($_POST[ $template_var ]) ? wc_clean($_POST[ $template_var ]) : '' );
+				update_option( $template_lang, isset($_POST[ $template_lang ]) ? wc_clean($_POST[ $template_lang ]) : '' );
 			}
 		}
 		
@@ -472,6 +475,7 @@ class TSWC_SMSWoo_Admin {
 				$enabled_customer = $array['id'] . '_enabled_customer';
 				$template_id = $array['id'] . '_templete_id';
 				$template_var = $array['id'] . '_template_var';
+				$template_lang = $array['id'] . '_template_lang';
 				
 				$checked_customer = get_option( $enabled_customer );
 				?>
@@ -514,8 +518,10 @@ class TSWC_SMSWoo_Admin {
 							<div class="smawoo-textarea-placeholder">
 								<textarea class="smswoo-textarea" name="<?php echo esc_attr($array['id']); ?>" id="<?php echo esc_attr($array['id']); ?>" cols="30" rows="5"><?php echo esc_html(get_option( $array['id'], $array['default'] )); ?></textarea>
 								
-								<input title="<?php esc_html_e('Add template id for this SMS', 'trackship-for-woocommerce'); ?>" class="smswoo-text smswoo-msg91-field tipTip" placeholder="<?php esc_html_e('Template ID', 'trackship-for-woocommerce'); ?>" type="text" name="<?php echo esc_html($template_id); ?>" id="<?php echo esc_html($template_id); ?>" value="<?php echo esc_html(get_option( $template_id )); ?>">
-								<input title="<?php esc_html_e('Add template variables that used for this SMS, add variables like this:- {shipment_status}, {tracking_number}', 'trackship-for-woocommerce'); ?>" class="smswoo-text smswoo-msg91-field tipTip" placeholder="<?php esc_html_e('Template variables', 'trackship-for-woocommerce'); ?>" type="text" name="<?php echo esc_attr($template_var); ?>" id="<?php echo esc_attr($template_var); ?>" value="<?php echo esc_html(get_option( $template_var )); ?>">
+								<input title="<?php esc_html_e('Add template id for this SMS', 'trackship-for-woocommerce'); ?>" class="smswoo-text smswoo-msg91-field whatsapp-businesses-field tipTip" placeholder="<?php esc_html_e('Template ID', 'trackship-for-woocommerce'); ?>" type="text" name="<?php echo esc_html($template_id); ?>" id="<?php echo esc_html($template_id); ?>" value="<?php echo esc_html(get_option( $template_id )); ?>">
+								<input title="<?php esc_html_e('Add template variables that used for this SMS, add variables like this:- {shipment_status}, {tracking_number}', 'trackship-for-woocommerce'); ?>" class="smswoo-text smswoo-msg91-field whatsapp-businesses-field tipTip" placeholder="<?php esc_html_e('Template variables', 'trackship-for-woocommerce'); ?>" type="text" name="<?php echo esc_attr($template_var); ?>" id="<?php echo esc_attr($template_var); ?>" value="<?php echo esc_html(get_option( $template_var )); ?>">
+
+								<input title="<?php esc_html_e('Add template langauge for this SMS', 'trackship-for-woocommerce'); ?>" class="smswoo-text whatsapp-businesses-field tipTip" placeholder="<?php esc_html_e('Template Language', 'trackship-for-woocommerce'); ?>" type="text" name="<?php echo esc_attr($template_lang); ?>" id="<?php echo esc_attr($template_lang); ?>" value="<?php echo esc_html(get_option( $template_lang )); ?>">
 
 							</div>
 							<div class="zorem_plugin_sidebar smswoo_sidebar">

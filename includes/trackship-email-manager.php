@@ -141,8 +141,17 @@ class WC_TrackShip_Email_Manager {
 		add_filter( 'safe_style_css', array( $this, 'safe_style_css' ), 10, 1 );
 		add_filter( 'woocommerce_email_footer_text', array( $this, 'email_footer_text' ) );
 
-		// wrap the content with the email template and then add styles
-		$message = $mailer->wrap_message( $email_heading, $message );
+		if ( class_exists( 'WooCommerce_Email_Template_Customizer' ) ) {
+			// Exception: Villa Theme Email Customizer (Premium) does not follow WooCommerce standards.
+			// It is incompatible with WC()->mailer()->wrap_message(), so we skip wrapping to preserve layout.
+			// This ensures email content renders correctly with their custom structure.
+			$message = $message; // Intentionally left unchanged for compatibility.
+		} else {
+			// Compatible with standard-compliant email customizer plugins:
+			// Kadence, YayMail, Zorem, WP HTML Mail, etc.
+			// Wrap the content using WooCommerce's default template, then styles are applied.
+			$message = $mailer->wrap_message( $email_heading, $message );
+		}
 		$message = apply_filters( 'trackship_mail_content', $message, $email_heading, $order_id, $email_class->id, $new_status );
 
 		foreach ( $recipients as $recipient ) {
@@ -322,11 +331,10 @@ class WC_TrackShip_Email_Manager {
 			$tracking_item = isset( $this->tracking_item ) && $this->tracking_item ? $this->tracking_item : [];
 			$track_link = $tracking_item['tracking_page_link'] ? $tracking_item['tracking_page_link'] : $this->order->get_view_order_url();
 			$track_link = add_query_arg( array( 'unsubscribe' => 'true' ), $track_link );
-			$unsubscribe = '<div style="text-align:center;padding-bottom: 10px;"><a href="' . $track_link . '">' . esc_html__( 'Unsubscribe', 'trackship-for-woocommerce' ) . '</a></div>';
+			$unsubscribe = '<div style="text-align:center;padding-bottom: 10px; margin-bottom: 20px;"><a href="' . $track_link . '">' . esc_html__( 'Unsubscribe', 'trackship-for-woocommerce' ) . '</a></div>';
 		}
 
-		$footer_text = ( $trackship_branding_text || $unsubscribe ) ? $trackship_branding_text . $unsubscribe : $footer_text;
-		return $footer_text;
+		return $trackship_branding_text . $unsubscribe . $footer_text;
 	}
 
 	public function safe_style_css ( $styles ) {

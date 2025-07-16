@@ -63,6 +63,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 
 	public function check_ts4wc_installed( $request ) {
 
+		$start_time = microtime(true);
 		if ( $request['user_key'] ) {
 			update_option('trackship_apikey', $request['user_key']);
 		}
@@ -116,7 +117,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		
 		if ( trackship_for_woocommerce()->is_st_active() ) {
 			$plugin.= '-st';
-			$version_info['st'] = WC_SHIPMENT_TRACKING_VERSION;
+			$version_info['st'] = defined('WC_SHIPMENT_TRACKING_VERSION') ? WC_SHIPMENT_TRACKING_VERSION : null;
 		}
 
 		if ( is_plugin_active( 'yith-woocommerce-order-tracking/init.php' ) ) {
@@ -172,12 +173,13 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			'trackship_shipping_provider' => $shipping_provider_structure ? $shipping_provider_structure : 'Table does not exist',
 		);
 
-		$REQUEST_TIME_FLOAT = isset($_SERVER['REQUEST_TIME_FLOAT']) ? sanitize_text_field($_SERVER['REQUEST_TIME_FLOAT']) : '';
+		$REQUEST_TIME_FLOAT = isset($_SERVER['REQUEST_TIME_FLOAT']) ? sanitize_text_field($_SERVER['REQUEST_TIME_FLOAT']) : 0.0;
 		$data = array(
 			'status'		=> 'installed',
 			'plugin'		=> $plugin,
 			'ts_cron'		=> $ts_cron,
-			'execution_time'=> microtime(true) - $REQUEST_TIME_FLOAT,
+			'code_exec_time'=> microtime(true) - $REQUEST_TIME_FLOAT,
+			'fun_exe_time'	=> microtime(true) - $start_time,
 			'version_info'	=> $version_info,
 			'server_info'	=> $server_info,
 		);
@@ -186,6 +188,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	
 	public function tracking_webhook( $request ) {
 		
+		$start_time = microtime(true);
 		$order_id = $request['order_id'];
 		$tracking_number = $request['tracking_number'];
 		$tracking_event_status = $request['tracking_event_status'];
@@ -267,10 +270,11 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		
 		$trackship->check_tracking_delivered( $order_id );
 		
-		$REQUEST_TIME_FLOAT = isset($_SERVER['REQUEST_TIME_FLOAT']) ? sanitize_text_field($_SERVER['REQUEST_TIME_FLOAT']) : '';
+		$REQUEST_TIME_FLOAT = isset($_SERVER['REQUEST_TIME_FLOAT']) ? sanitize_text_field($_SERVER['REQUEST_TIME_FLOAT']) : 0.0;
 		$data = array(
 			'status' => 'success',
-			'execution_time' => microtime(true) - $REQUEST_TIME_FLOAT,
+			'code_exec_time'=> microtime(true) - $REQUEST_TIME_FLOAT,
+			'fun_exe_time'	=> microtime(true) - $start_time,
 			'data' => $query,
 			'version' => trackship_for_woocommerce()->version
 		);

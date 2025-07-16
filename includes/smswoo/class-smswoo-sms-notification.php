@@ -13,6 +13,7 @@ class TSWC_SMSWoo_SMS_Notification {
 	public $_sms_length = 160;
 
 	public $new_status;
+	public $tracking_number;
 	public $_country_code;
 	public $_calling_code;
 	public $_sms_type;
@@ -126,9 +127,8 @@ class TSWC_SMSWoo_SMS_Notification {
 		if ( function_exists( 'ast_get_tracking_items' ) || trackship_for_woocommerce()->is_active_yith_order_tracking() || trackship_for_woocommerce()->is_active_woo_order_tracking() ) {
 			$tracking_item = $this->tracking_item;
 			
-			$tracking_number = $tracking_item['tracking_number'];
-			$replacements[ '%tracking_number%' ] = $tracking_number;
-			$replacements[ '{tracking_number}' ] = $tracking_number;
+			$replacements[ '%tracking_number%' ] = $this->tracking_number;
+			$replacements[ '{tracking_number}' ] = $this->tracking_number;
 			
 			$tracking_provider = $tracking_item['formatted_tracking_provider'];
 			$replacements[ '%tracking_provider%' ] = $tracking_provider;
@@ -147,9 +147,8 @@ class TSWC_SMSWoo_SMS_Notification {
 			
 			$formatted_items = $st->get_tracking_items( $object->order->get_id(), true );
 			
-			$tracking_number = array_column( $formatted_items, 'tracking_number');
-			$replacements[ '%tracking_number%' ] = implode( ', ', $tracking_number );
-			$replacements[ '{tracking_number}' ] = implode( ', ', $tracking_number );
+			$replacements[ '%tracking_number%' ] = implode( ', ', $this->tracking_number );
+			$replacements[ '{tracking_number}' ] = implode( ', ', $this->tracking_number );
 			
 			$tracking_provider = array_column( $formatted_items, 'formatted_tracking_provider');
 			$replacements[ '%tracking_provider%' ] = implode( ', ', $tracking_provider );
@@ -188,32 +187,27 @@ class TSWC_SMSWoo_SMS_Notification {
 	 * @return boolean
 	 */
 	private function send_sms( $phone, $message ) {
-		
 		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 			return ;
 		}
 		
 		$bool = apply_filters( 'smswoo_timeschedule', false, $this, $phone, $message );
-		
 		//retun if sms is scheduled
 		if ( $bool ) {
 			return;
 		}
-		
+
 		$sms_provider = $this->get_sms_provider();
-		
 		if ( ! $sms_provider ) {
 			return;
 		}
-		
 		$sms_gateway = new $sms_provider();
-
+		
 		$sms_gateway->new_status = $this->new_status;
+		$sms_gateway->tracking_number = $this->tracking_number;
 		$order_id = ! empty( $this->order ) ? $this->order->get_id() : '';
 
 		$this->_sms_length = 160;
-
-		$sms_limit = apply_filters( 'smswoo_sms_limit', $this->_sms_length );
 
 		try {
 			
@@ -225,7 +219,6 @@ class TSWC_SMSWoo_SMS_Notification {
 			$this->_calling_code = $WC_Countries->get_country_calling_code( $this->_country_code );
 
 			$phone				= $this->format_phone_number( $phone );
-			//$message			= mb_substr( $message, 0, $sms_limit );
 			$status_message		= __( 'Sent', 'trackship-for-woocommerce' );
 			$sms_gateway->send( $phone, $message, $this->_country_code );
 			$success = true;
@@ -297,7 +290,11 @@ class TSWC_SMSWoo_SMS_Notification {
 	 */
 	public function trigger_sms_on_shipment_status_change( $order_id, $old_status, $new_status, $tracking_number ) {
 
-		$order = wc_get_order( $order_id );
+		if ( !$this->user_subscribed_sms( $order_id ) ) {
+			//$logger->log( 'info', 'user not subscribed. ' . $order_id, $context );
+			return;
+		}
+
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 
 		foreach ( ( array ) $tracking_items as $key => $tracking_item ) {
@@ -309,6 +306,7 @@ class TSWC_SMSWoo_SMS_Notification {
 		}
 
 		$this->new_status = $new_status;
+		$this->tracking_number = $tracking_number;
 		$this->order = wc_get_order( $order_id );
 		
 		$toggle = get_option( 'all-shipment-status-sms-delivered' );
@@ -322,12 +320,12 @@ class TSWC_SMSWoo_SMS_Notification {
 		}
 		$logger = wc_get_logger();
 		$context = array( 'source' => 'smswoo' );
-		//$logger->log( 'debug', 'Order id: '.$this->order->get_id(), $context );
+		// $logger->log( 'debug', 'Order id: '.$this->order->get_id(), $context );
 		
 		// Check if sending SMS updates for this order's status
 		if ( get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_customer' ) ) {
 			
-			//$logger->log( 'debug', 'Sms will be sent', $context );
+			// $logger->log( 'debug', 'Sms will be sent', $context );
 			
 			// get message template
 			$message = get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template' );
@@ -345,16 +343,12 @@ class TSWC_SMSWoo_SMS_Notification {
 
 			// allow modification of message after variable replace
 			$message = apply_filters( 'smswoo_customer_sms_after_variable_replace', $message, $this->order );
-			
-			//$logger->log( 'debug', 'Message: ' . $message, $context );
-			//$logger->log( 'debug', 'Phone: ' . $phone, $context );
-			
+
 			//message filter
 			$message = apply_filters( 'smswoo_customer_sms_send', $message, $this->order );
 			
 			// send the SMS to customer!
 			if ( !in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) && get_option( 'smswoo_trackship_status_' . $new_status . '_sms_template_enabled_customer' ) ) {
-				
 				// allow modification of the "to" phone number
 				$phone = apply_filters( 'smswoo_sms_customer_phone', $this->order->get_billing_phone( 'edit' ), $this->order );
 				$this->_customer_sms = true;
@@ -378,9 +372,13 @@ class TSWC_SMSWoo_SMS_Notification {
 	 * @return boolean
 	 */
 	public function user_subscribed_sms( $order_id ) {
-
-		return true;
-
+		if ( get_trackship_settings( 'enable_email_widget' ) ) {
+			$order       = wc_get_order( $order_id );
+			$receive_sms = $order->get_meta( '_smswoo_receive_sms', true );
+			return 'no' == $receive_sms ? false : true;
+		} else {
+			return true;
+		}
 	}
 	
 	/**
