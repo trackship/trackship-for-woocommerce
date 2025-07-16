@@ -137,8 +137,10 @@ class WC_TrackShip_Email_Manager {
 		$mailer = WC()->mailer();
 		$email_class = new WC_Email();
 		$email_class->id = 'shipment_email';
-	
-		add_filter( 'safe_style_css', array( $this, 'safe_style_css' ), 10, 1 );
+
+		add_filter( 'wp_kses_allowed_html', array( trackship_admin_customizer(), 'my_allowed_tags' ) );
+		add_filter( 'safe_style_css', array( trackship_admin_customizer(), 'safe_style_css_callback' ), 10, 1 );
+
 		add_filter( 'woocommerce_email_footer_text', array( $this, 'email_footer_text' ) );
 
 		if ( class_exists( 'WooCommerce_Email_Template_Customizer' ) ) {
@@ -253,7 +255,8 @@ class WC_TrackShip_Email_Manager {
 			$email_class = new WC_Email();
 			$email_class->id = 'pickup_reminder';
 
-			add_filter( 'safe_style_css', array( $this, 'safe_style_css' ), 10, 1 );
+			add_filter( 'wp_kses_allowed_html', array( trackship_admin_customizer(), 'my_allowed_tags' ) );
+			add_filter( 'safe_style_css', array( trackship_admin_customizer(), 'safe_style_css_callback' ), 10, 1 );
 			// wrap the content with the email template and then add styles
 			$message = $mailer->wrap_message( $email_heading, $message );
 			$message = apply_filters( 'trackship_mail_content', $message, $email_heading, $order_id, $email_class->id, $new_status );
@@ -335,11 +338,6 @@ class WC_TrackShip_Email_Manager {
 		}
 
 		return $trackship_branding_text . $unsubscribe . $footer_text;
-	}
-
-	public function safe_style_css ( $styles ) {
-		$styles[] = 'display';
-		return $styles;
 	}
 
 	/**
