@@ -60,7 +60,8 @@ class WC_Trackship_Shipments {
 		$user_plan = get_option( 'user_plan' );
 
 		// Enqueue WooCommerce's Flatpickr and style
-		wp_enqueue_script( 'ts_daterangepicker', 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js', array(), '5.37.0', true );
+		wp_enqueue_script('moment-js', 'https://cdn.jsdelivr.net/momentjs/latest/moment.min.js', array('jquery'), null, true);
+		wp_enqueue_script( 'ts_daterangepicker', 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js', array('jquery', 'moment-js'), '5.37.0', true );
     	wp_enqueue_style( 'ts_daterangepicker', 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css', array(), '5.37.0' );
 		
 		// Rubik font
