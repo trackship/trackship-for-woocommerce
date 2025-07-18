@@ -220,7 +220,7 @@ class WC_TrackShip_Front {
 		if ( isset( $_GET['tracking'] ) ) {
 			global $wpdb;
 			$tracking_number = wc_clean( $_GET[ 'tracking' ] );
-			$order_id = $wpdb->get_var( $wpdb->prepare( "SELECT order_id FROM {$wpdb->prefix}trackship_shipment WHERE tracking_number = %s", $tracking_number ) );
+			$order_id = $wpdb->get_var( $wpdb->prepare( "SELECT order_id FROM {$wpdb->prefix}trackship_shipment WHERE tracking_number = %s ORDER BY id DESC", $tracking_number ) );
 			$order = wc_get_order( $order_id );
 			if ( empty( $order ) ) {
 				$error = new WP_Error( 'ts4wc', __( 'Unable to locate the order.', 'trackship-for-woocommerce' ) );
