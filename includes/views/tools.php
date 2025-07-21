@@ -25,13 +25,4 @@ $check_class = isset( $_GET['verify-db'] ) ? sanitize_text_field( $_GET['verify-
 			<button class="button-primary button-trackship verify_database_table tools-ts-button <?php echo 'true' == $check_class ? 'checked' : ''; ?>"><?php esc_html_e( 'Verify DB Structure', 'trackship-for-woocommerce' ); ?></button>
 		</p>
 	</div>
-	<?php if ( get_trackship_settings( 'old_user' ) ) { ?>
-		<?php $auto = isset( $_GET['auto'] ) ? sanitize_text_field( $_GET['auto'] ) : ''; ?>
-		<div class="trackship-update-tracking-info p15 inner_div">
-			<p>
-				<?php esc_html_e( 'Updating tracking details during migration from older to newer version.', 'trackship-for-woocommerce' ); ?>
-				<button class="button-primary button-trackship bulk_migration tools-ts-button" data-auto="<?php echo esc_html($auto); ?>"><?php esc_html_e( 'Migration', 'trackship-for-woocommerce' ); ?></button>
-			</p>
-		</div>
-	<?php } ?>
 </div>

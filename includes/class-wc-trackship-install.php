@@ -76,23 +76,6 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.13' );
 		}
 
-		global $wpdb;
-		if ( version_compare( get_option( 'trackship_db' ), '1.16', '<' ) ) {
-			$result = $wpdb->get_col(
-				"SELECT t.order_id FROM {$wpdb->prefix}trackship_shipment t
-				LEFT JOIN {$wpdb->prefix}trackship_shipment_meta m
-				ON t.id = m.meta_id
-				WHERE (m.tracking_events IS NULL OR m.tracking_events = '')
-					AND t.shipping_date >= DATE_SUB(NOW(), INTERVAL 60 DAY)
-				GROUP BY t.order_id
-				LIMIT 2000"
-			);
-			if ( $result ) {
-				update_trackship_settings( 'old_user', true );
-			}
-			update_option( 'trackship_db', '1.16' );
-		}
-		
 		if ( version_compare( get_option( 'trackship_db' ), '1.19', '<' ) ) {
 			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment CHANGE shipping_date shipping_date DATE NULL" );
 			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment_meta MODIFY COLUMN shipping_service varchar(60);" );
