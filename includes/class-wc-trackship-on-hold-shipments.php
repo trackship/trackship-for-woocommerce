@@ -184,6 +184,9 @@ class WC_TrackShip_On_Hold_Shipments {
 		// create a new email
 		$email = new WC_Email();
 
+		add_filter( 'wp_kses_allowed_html', array( trackship_admin_customizer(), 'my_allowed_tags' ) );
+		add_filter( 'safe_style_css', array( trackship_admin_customizer(), 'safe_style_css_callback' ), 10, 1 );
+		
 		// wrap the content with the email template and then add styles
 		$email_content = apply_filters( 'woocommerce_mail_content', $email->style_inline( $mailer->wrap_message( $email_heading, $email_content ) ) );
 
