@@ -69,13 +69,7 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.0' );
 		}
 
-		if ( version_compare( get_option( 'trackship_db' ), '1.13', '<' ) ) {
-			// migration to change api key name 
-			$trackship_apikey = get_option( 'wc_ast_api_key' );
-			update_option( 'trackship_apikey', $trackship_apikey );
-			update_option( 'trackship_db', '1.13' );
-		}
-
+		global $wpdb;
 		if ( version_compare( get_option( 'trackship_db' ), '1.19', '<' ) ) {
 			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment CHANGE shipping_date shipping_date DATE NULL" );
 			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment_meta MODIFY COLUMN shipping_service varchar(60);" );
