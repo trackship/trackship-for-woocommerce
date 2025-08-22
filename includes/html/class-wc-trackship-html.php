@@ -38,7 +38,7 @@ class WC_Trackship_Html {
 		<li class="multiple_select_li dis_block">
 			<label><?php esc_html_e( $array['title'] ); ?>
 				<?php if ( isset($array['tooltip']) ) { ?>
-					<span class="woocommerce-help-tip tipTip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
+					<span class="dashicons dashicons-editor-help trackship-tip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
 				<?php } ?>
 			</label>
 			<div class="multiple_select_container">	
@@ -70,7 +70,7 @@ class WC_Trackship_Html {
 								
 			<label class="setting_ul_tgl_checkbox_label" for="<?php echo esc_html( $id ); ?>"><?php echo esc_html( $array['title'] ); ?>
 			<?php if ( isset( $array['tooltip'] ) ) { ?>
-				<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
+				<span class="dashicons dashicons-editor-help trackship-tip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
 			<?php } ?>
 			</label>
 			<?php if ( isset( $array['customize_link'] ) ) { ?>
@@ -100,7 +100,7 @@ class WC_Trackship_Html {
 		<li class="dis_block">
 			<label><?php esc_html_e( $array['title'] ); ?>
 				<?php if ( isset($array['tooltip']) ) { ?>
-					<span class="woocommerce-help-tip tipTip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
+					<span class="dashicons dashicons-editor-help trackship-tip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
 				<?php } ?>
 			</label>
 			<input class="input-text" type="number" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" min="1" value="<?php echo esc_attr(get_trackship_settings( $id, isset( $array['default'] ) ? $array['default'] : '' )); ?>">
@@ -113,7 +113,7 @@ class WC_Trackship_Html {
 		<li class="li_<?php esc_html_e( $id ); ?>">
 			<label class="left_label"><b><?php esc_html_e( $array['title'] ); ?></b>
 				<?php if ( isset( $array['tooltip'] ) ) { ?>
-					<span class="woocommerce-help-tip tipTip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
+					<span class="dashicons dashicons-editor-help trackship-tip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
 				<?php } ?>
 			</label>
 			<span style="display: block; padding-top: 10px;">
@@ -139,7 +139,7 @@ class WC_Trackship_Html {
 			<?php if ( $array['title'] ) { ?>
 				<label class="left_label"><?php echo esc_html( $array['title'] ); ?>
 					<?php if ( isset($array['tooltip']) ) { ?>
-					<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
+					<span class="dashicons dashicons-editor-help trackship-tip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
 					<?php } ?>
 				</label>
 			<?php } ?>
@@ -156,7 +156,7 @@ class WC_Trackship_Html {
 			<?php if ( $array['title'] ) { ?>
 				<label class="left_label"><?php echo esc_html( $array['title'] ); ?>
 					<?php if ( isset($array['tooltip']) ) { ?>
-					<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
+					<span class="dashicons dashicons-editor-help trackship-tip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
 					<?php } ?>
 				</label>
 			<?php } ?>
@@ -174,7 +174,7 @@ class WC_Trackship_Html {
 			<?php if ( $array['title'] ) { ?>
 				<label class="left_label"><?php echo esc_html( $array['title'] ); ?>
 					<?php if ( isset($array['tooltip']) ) { ?>
-					<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
+					<span class="dashicons dashicons-editor-help trackship-tip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
 					<?php } ?>
 				</label>
 			<?php } ?>

@@ -71,7 +71,7 @@ class TSWC_SMSWoo_Admin {
 					<li class="<?php echo esc_html($array['type']); ?>_row <?php echo esc_html($array['class']); ?> dis_block">
 						<label><?php esc_html_e( $array['title'] ); ?>
 							<?php if ( isset($array['tooltip']) ) { ?>
-								<span class="woocommerce-help-tip tipTip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
+								<span class="dashicons dashicons-editor-help trackship-tip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
 							<?php } ?>
 						</label>
 						<?php $value = get_option($id); ?>
@@ -133,7 +133,7 @@ class TSWC_SMSWoo_Admin {
 					<?php if ( 'desc' != $array['type'] ) { ?>										
 						<label for="" class=""><?php echo esc_html($array['title']); ?><?php echo isset( $array['title_link'] ) ? esc_html( $array['title_link'] ) : ''; ?>
 							<?php if ( isset( $array['tooltip'] ) ) { ?>
-								<span class="woocommerce-help-tip tipTip" title="<?php echo esc_html($array['tooltip']); ?>"></span>
+								<span class="dashicons dashicons-editor-help trackship-tip" title="<?php echo esc_html($array['tooltip']); ?>"></span>
 							<?php } ?>
 						</label>
 					<?php } ?>
