@@ -60,7 +60,7 @@ class WOO_Order_Tracking_TS4WC {
 				foreach ( $tracking_data as $key => $value ) {
 					$product_array = [];
 					$product_data = (object) array (
-						'product'	=> $item_value->get_product()->get_id(),
+						'product'	=> $item_value->get_product_id(),
 						'item_id'	=> $item_id,
 						'qty'		=> $qty,
 					);
@@ -93,7 +93,7 @@ class WOO_Order_Tracking_TS4WC {
 
 				$product_array = [];
 				$product_data = (object) array (
-					'product'	=> $item_value->get_product()->get_id(),
+					'product'	=> $item_value->get_product_id(),
 					'item_id'	=> $item_id,
 					'qty'		=> $item_qty,
 				);
