@@ -318,14 +318,7 @@ class WC_Trackship_Install {
 		if ( version_compare( get_option( 'trackship_db' ), '1.37', '<' ) ) {
 			update_trackship_settings( 'trackship_db', '1.37' );
 			update_option( 'trackship_db', '1.37' );
-			// create first_event_time column in trackship_shipment table
-			$this->create_shipment_table();
-			$this->create_shipment_meta_table();
-			$this->check_column_exists();
-
-			$this->create_shipping_provider_table();
-			$this->update_shipping_providers();
-
+			
 			delete_trackship_settings( 'ts_review_ignore_136' );
 			delete_trackship_settings( 'ts_popup_ignore136' );
 		}
@@ -503,11 +496,15 @@ class WC_Trackship_Install {
 			// delete_option('wcast_outfordelivery_email_settings'); // add this code in future version
 		}
 
-		// TS4WC version 1.9.4
-		if ( version_compare( get_option( 'trackship_db' ), '1.40', '<' ) ) {
-			update_trackship_settings( 'trackship_db', '1.40' );
-			update_option( 'trackship_db', '1.40' );
+		// TS4WC version 1.9.7
+		if ( version_compare( get_option( 'trackship_db' ), '1.41', '<' ) ) {
+			$this->create_shipment_table();
+			$this->create_shipment_meta_table();
+			$this->check_column_exists();
 
+			$this->create_shipping_provider_table();
+			$this->update_shipping_providers();
+			
 			// Indexes to check and create
 			$indexes_to_check = [
 				'last_event' => 'ADD INDEX `last_event` (`last_event`(100))',

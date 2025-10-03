@@ -128,7 +128,7 @@ class WC_Trackship_Actions {
 		}
 		
 		add_action( 'admin_init', array( $this, 'register_scheduled_cron') );
-		
+
 		// filter from AST to change Tracking page link
 		add_filter( 'ast_tracking_link', array( $this, 'ast_tracking_link' ), 10, 4 );
 
@@ -230,7 +230,7 @@ class WC_Trackship_Actions {
 		if ( ! wp_next_scheduled( 'scheduled_cron_shipment_length' ) ) {
 			wp_schedule_event( time(), 'daily', 'scheduled_cron_shipment_length' );
 		}
-		
+
 		$hooks = array(
 			'late_shipments_digest_time'		=> 'trackship_late_shipments_hook',
 			'exception_shipments_digest_time'	=> 'trackship_exception_shipments_hook',
@@ -252,7 +252,7 @@ class WC_Trackship_Actions {
 			}
 		}
 	}
-	
+
 	/*
 	* Set shipment length
 	*/
@@ -1513,7 +1513,7 @@ class WC_Trackship_Actions {
 		}
 		return $query;
 	}
-	
+
 	public function update_notification_table ( $args ) {
 		$install = WC_Trackship_Install::get_instance();
 		$install->create_email_log_table();

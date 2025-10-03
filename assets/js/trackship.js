@@ -1,4 +1,4 @@
-(function ($, data, wp, ajaxurl) {
+(function ($, data, ajaxurl) {
 
 	var trackship_js = {
 
@@ -104,7 +104,7 @@
 		trackship_js.init();
 	});
 
-})(jQuery, trackship_script, wp, ajaxurl);
+})(jQuery, trackship_script, ajaxurl);
 
 jQuery(document).ready(function () {
 	jQuery(".trackship-tip").tipTip();
