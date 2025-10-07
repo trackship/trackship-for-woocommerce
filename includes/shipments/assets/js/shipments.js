@@ -247,7 +247,7 @@ jQuery(document).ready(function() {
 				"width": "55px",
 				'orderable': false,
 				"mRender": function(data, type, full) {
-					return 'delivered' == full.shipment_status_id ? '' : '<a href="javascript:void(0);" class="shipments_get_shipment_status" data-orderid="' + full.order_id + '" data-tnumber="' + full.tracking_number + '"><span class="dashicons dashicons-update"></span></a>';
+					return 'delivered' == full.shipment_status_id ? '' : '<span class="shipments_get_shipment_status" data-orderid="' + full.order_id + '" data-tnumber="' + full.tracking_number + '"><span class="dashicons dashicons-update"></span></span>';
 				},
 			},
 		],
