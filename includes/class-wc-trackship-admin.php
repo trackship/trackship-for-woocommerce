@@ -429,6 +429,16 @@ class WC_Trackship_Admin {
 				'class'		=> '',
 			);
 		}
+
+		if ( trackship_for_woocommerce()->is_active_villa_TEC() ) {
+			$form_data[ 'ts_use_villa_email_template' ] = array(
+				'type'		=> 'tgl_checkbox',
+				'title'		=> __( 'Use Villa Theme Email Customizer Template', 'trackship-for-woocommerce' ),
+				'show'		=> true,
+				'class'		=> '',
+				'tooltip'	=> __( "If you disable it, TrackShip emails will use the WooCommerce default design instead of the Villa theme's customized email layout.", 'trackship-for-woocommerce' ),
+			);
+		}
 		
 		return $form_data;
 	}

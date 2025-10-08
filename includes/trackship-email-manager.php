@@ -143,7 +143,7 @@ class WC_TrackShip_Email_Manager {
 
 		add_filter( 'woocommerce_email_footer_text', array( $this, 'email_footer_text' ) );
 
-		if ( class_exists( 'WooCommerce_Email_Template_Customizer' ) ) {
+		if ( trackship_for_woocommerce()->is_active_villa_TEC() && get_trackship_settings( 'ts_use_villa_email_template' ) ) {
 			// Exception: Villa Theme Email Customizer (Premium) does not follow WooCommerce standards.
 			// It is incompatible with WC()->mailer()->wrap_message(), so we skip wrapping to preserve layout.
 			// This ensures email content renders correctly with their custom structure.
