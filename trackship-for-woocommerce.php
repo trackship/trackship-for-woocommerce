@@ -371,6 +371,21 @@ class Trackship_For_Woocommerce {
 	}
 
 	/**
+	 * Check if Villa Theme Email customizer(VITEC) is active
+	 *
+	 * @since 1.9.7
+	 * @return bool
+	*/
+	public function is_active_villa_TEC() {
+		
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		}
+
+		return is_plugin_active( 'email-template-customizer-for-woo/email-template-customizer-for-woo.php' ) || is_plugin_active( 'woocommerce-email-template-customizer/woocommerce-email-template-customizer.php' ) ? true : false;
+	}
+
+	/**
 	 * Check if Yith order Tracking is active
 	 *
 	 * @since 1.5.0
