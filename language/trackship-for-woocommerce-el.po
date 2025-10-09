@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: TrackShip for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-06 10:11+0000\n"
-"PO-Revision-Date: 2025-04-18 05:18+0000\n"
+"PO-Revision-Date: 2025-10-09 09:51+0000\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el\n"
@@ -12,14 +12,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.7.2; wp-6.8-RC4-60165\n"
+"X-Loco-Version: 2.8.0; wp-6.8.3; php-8.3.25\n"
 "X-Domain: trackship-for-woocommerce"
+
+#: includes/smswoo/class-smswoo-admin.php:367
+msgid "Access Token"
+msgstr "Διακριτικό πρόσβασης"
 
 #: includes/views/dashboard.php:113
 msgid "Account Dashboard"
 msgstr "Πίνακας ελέγχου λογαριασμού"
 
-#: includes/smswoo/class-smswoo-admin.php:303
+#: includes/smswoo/class-smswoo-admin.php:297
 msgid "Account SID"
 msgstr "SID λογαριασμού"
 
@@ -27,8 +31,7 @@ msgstr "SID λογαριασμού"
 msgid "Action Needed"
 msgstr "Απαιτείται ενέργεια"
 
-#: includes/views/logs.php:56
-#: includes/shipments/views/trackship_shipments.php:30
+#: includes/views/logs.php:56 includes/views/shipments.php:177
 msgid "Actions"
 msgstr "Ενέργειες"
 
@@ -48,11 +51,15 @@ msgstr "Ενεργές Αποστολές"
 msgid "Add mapping"
 msgstr "Προσθήκη χαρτογράφησης"
 
-#: includes/smswoo/class-smswoo-admin.php:517
+#: includes/smswoo/class-smswoo-admin.php:521
 msgid "Add template id for this SMS"
 msgstr "Προσθήκη αναγνωριστικού προτύπου για αυτό το SMS"
 
-#: includes/smswoo/class-smswoo-admin.php:518
+#: includes/smswoo/class-smswoo-admin.php:524
+msgid "Add template langauge for this SMS"
+msgstr "Προσθήκη γλώσσας προτύπου για αυτό το SMS"
+
+#: includes/smswoo/class-smswoo-admin.php:522
 msgid ""
 "Add template variables that used for this SMS, add variables like this:- "
 "{shipment_status}, {tracking_number}"
@@ -68,7 +75,7 @@ msgstr "Προσθέστε τονshortcode [trackship-track-order] στην επ
 msgid "Admin Notifications"
 msgstr "Ειδοποιήσεις διαχειριστή"
 
-#: includes/smswoo/class-smswoo-admin.php:381
+#: includes/smswoo/class-smswoo-admin.php:382
 msgid "Admin Phone Number"
 msgstr "Αριθμός τηλεφώνου διαχειριστή"
 
@@ -80,7 +87,7 @@ msgstr "Όλες οι ειδοποιήσεις"
 msgid "All Shipments"
 msgstr "Όλες οι αποστολές"
 
-#: includes/views/shipments.php:101
+#: includes/views/shipments.php:109
 msgid "All shipping providers"
 msgstr "Όλοι οι πάροχοι αποστολής"
 
@@ -88,7 +95,7 @@ msgstr "Όλοι οι πάροχοι αποστολής"
 msgid "All Types"
 msgstr "Όλοι οι τύποι"
 
-#: includes/class-wc-trackship-admin.php:422
+#: includes/class-wc-trackship-admin.php:413
 msgid ""
 "Allow users to opt-out of receiving Shipment status notifications on the "
 "Tracking page and Shipment status emails."
@@ -97,9 +104,9 @@ msgstr ""
 "κατάστασης αποστολής στη σελίδα Παρακολούθηση και μηνύματα ηλεκτρονικού "
 "ταχυδρομείου για την κατάσταση αποστολής."
 
+#: includes/smswoo/services/class-smswoo-msg91.php:156
 #: includes/smswoo/services/class-smswoo-twilio.php:111
 #: includes/smswoo/services/class-smswoo-twilio.php:181
-#: includes/smswoo/services/class-smswoo-msg91.php:156
 msgid "An error has occurred while sending the sms"
 msgstr "Παρουσιάστηκε σφάλμα κατά την αποστολή του sms"
 
@@ -120,28 +127,28 @@ msgstr ""
 "Παρουσιάστηκε σφάλμα: Το Clicksend δεν υποστηρίζεται για επικύρωση αριθμού "
 "τηλεφώνου στο ταμείο, Επικοινωνήστε με την υποστήριξη"
 
-#: includes/class-wc-trackship-admin.php:228 includes/views/header2.php:59
+#: includes/class-wc-trackship-admin.php:219 includes/views/header2.php:59
 msgid "Analytics"
 msgstr "Analytics"
 
-#: includes/smswoo/class-smswoo-admin.php:343
-#: includes/smswoo/class-smswoo-admin.php:365
+#: includes/smswoo/class-smswoo-admin.php:337
+#: includes/smswoo/class-smswoo-admin.php:359
 msgid "API Authorization Key"
 msgstr "Κλειδί εξουσιοδότησης API"
 
-#: includes/smswoo/class-smswoo-admin.php:336
+#: includes/smswoo/class-smswoo-admin.php:330
 msgid "API key"
 msgstr "Κλειδί API"
 
-#: includes/smswoo/class-smswoo-admin.php:329
+#: includes/smswoo/class-smswoo-admin.php:323
 msgid "API Username"
 msgstr "Όνομα χρήστη API"
 
-#: includes/views/shipments.php:116
+#: includes/views/shipments.php:124
 msgid "Apply"
 msgstr "Εφαρμογή"
 
-#: includes/smswoo/class-smswoo-admin.php:310
+#: includes/smswoo/class-smswoo-admin.php:304
 msgid "Auth Token"
 msgstr "Auth Token"
 
@@ -149,16 +156,17 @@ msgstr "Auth Token"
 msgid "Available Balance"
 msgstr "Διαθέσιμο υπόλοιπο"
 
-#: includes/class-wc-trackship-actions.php:646
-#: includes/class-wc-trackship-actions.php:697
-#: includes/class-wc-trackship-admin.php:1259
-#: includes/smswoo/class-smswoo-admin.php:541
+#: includes/class-wc-trackship-admin.php:1233
+#: includes/class-wc-trackship-actions.php:645
+#: includes/class-wc-trackship-actions.php:696
+#: includes/class-wc-trackship-install.php:312 includes/views/shipments.php:31
+#: includes/smswoo/class-smswoo-admin.php:547
 #: includes/customizer/trackship-customizer.php:212
 #: includes/customizer/trackship-customizer.php:791
-#: includes/views/shipments.php:31
 msgid "Available For Pickup"
 msgstr "Διαθέσιμο για παραλαβή"
 
+#: includes/class-wc-trackship-install.php:319
 #: includes/customizer/trackship-customizer.php:798
 msgid "Available for Pickup Reminder"
 msgstr "Διαθέσιμο για Υπενθύμιση παραλαβής"
@@ -176,7 +184,7 @@ msgstr "Διαθέσιμα σύμβολα κράτησης θέσης:"
 msgid "Available variables:"
 msgstr "Διαθέσιμες μεταβλητές:"
 
-#: includes/views/shipments.php:113
+#: includes/views/shipments.php:121
 msgid "Bulk actions"
 msgstr "Μαζικές ενέργειες"
 
@@ -198,24 +206,24 @@ msgstr "Ακτίνα κουμπιού"
 msgid "Button text"
 msgstr "Κείμενο κουμπιού"
 
-#: includes/class-wc-trackship-actions.php:650
+#: includes/class-wc-trackship-actions.php:649
 msgid "Cancelled"
 msgstr "Ακυρώθηκε"
 
-#: includes/class-wc-trackship-actions.php:651
-#: includes/class-wc-trackship-actions.php:730 includes/views/shipments.php:40
+#: includes/class-wc-trackship-actions.php:650
+#: includes/class-wc-trackship-actions.php:729 includes/views/shipments.php:40
 msgid "Carrier Unsupported"
 msgstr "Μη υποστηριζόμενος φορέας"
 
-#: includes/class-wc-trackship-admin.php:713
+#: includes/class-wc-trackship-admin.php:714
 msgid "Change order status to"
 msgstr "Αλλαγή κατάστασης παραγγελίας σε"
 
-#: includes/class-wc-trackship-admin.php:709
+#: includes/class-wc-trackship-admin.php:710
 msgid "Change status: "
 msgstr "Αλλαγή κατάστασης: "
 
-#: includes/class-wc-trackship-admin.php:406
+#: includes/class-wc-trackship-admin.php:397
 msgid "Choose on which order emails to include the shipment tracking info"
 msgstr ""
 "Επιλέξτε με ποια παραγγελία θα περιλαμβάνονται τα μηνύματα ηλεκτρονικού "
@@ -226,7 +234,7 @@ msgstr ""
 msgid "Classic"
 msgstr "Κλασσικός"
 
-#: includes/class-wc-trackship-admin.php:923
+#: includes/class-wc-trackship-admin.php:924
 msgid "Close"
 msgstr "Κοντά"
 
@@ -234,11 +242,11 @@ msgstr "Κοντά"
 msgid "Connect a Store"
 msgstr "Συνδέστε ένα κατάστημα"
 
-#: includes/views/trackship-integration.php:27 includes/views/header2.php:37
+#: includes/views/header2.php:37 includes/views/trackship-integration.php:27
 msgid "Connect your store"
 msgstr "Συνδέστε το κατάστημά σας"
 
-#: includes/class-wc-trackship-actions.php:742
+#: includes/class-wc-trackship-actions.php:741
 msgid "Connection Issue"
 msgstr "Ζήτημα Σύνδεσης"
 
@@ -250,12 +258,12 @@ msgstr "Προβολή περιεχομένου"
 msgid "Content Type & Text"
 msgstr "Τύπος περιεχομένου"
 
-#: includes/class-wc-trackship-front.php:587
+#: includes/class-wc-trackship-front.php:589
 #: includes/views/front/tracking_page_header.php:52
 msgid "Copy Tracking page link"
 msgstr "Αντιγραφή συνδέσμου σελίδας παρακολούθησης"
 
-#: includes/shipments/views/trackship_shipments.php:26
+#: includes/views/shipments.php:173
 msgid "Customer"
 msgstr "Πελάτης"
 
@@ -267,7 +275,7 @@ msgstr "Προσαρμογή"
 msgid "Customize the Tracking Widget"
 msgstr "Προσαρμογή του γραφικού στοιχείου παρακολούθησης"
 
-#: includes/class-wc-trackship-admin.php:222 includes/views/header2.php:34
+#: includes/class-wc-trackship-admin.php:213 includes/views/header2.php:34
 #: includes/views/header2.php:44
 msgid "Dashboard"
 msgstr "Ταμπλό"
@@ -281,32 +289,32 @@ msgid "Delete notifications logs more than 30 days"
 msgstr ""
 "Διαγραφή αρχείων καταγραφής ειδοποιήσεων για περισσότερες από 30 ημέρες"
 
-#: includes/class-wc-trackship-actions.php:736
+#: includes/class-wc-trackship-actions.php:735
 msgid "Deleted"
 msgstr "Διαγράφηκε"
 
-#: includes/class-wc-trackship-actions.php:648
-#: includes/class-wc-trackship-actions.php:691
-#: includes/class-wc-trackship-admin.php:631
-#: includes/class-wc-trackship-admin.php:649
-#: includes/class-wc-trackship-admin.php:701
-#: includes/class-wc-trackship-admin.php:1295
-#: includes/smswoo/class-smswoo-admin.php:547
+#: includes/class-wc-trackship-admin.php:632
+#: includes/class-wc-trackship-admin.php:650
+#: includes/class-wc-trackship-admin.php:702
+#: includes/class-wc-trackship-admin.php:1269
+#: includes/class-wc-trackship-actions.php:647
+#: includes/class-wc-trackship-actions.php:690
+#: includes/class-wc-trackship-install.php:318 includes/views/shipments.php:29
+#: includes/views/dashboard.php:79 includes/smswoo/class-smswoo-admin.php:553
 #: includes/customizer/trackship-customizer.php:218
 #: includes/customizer/trackship-customizer.php:797
-#: includes/views/shipments.php:29 includes/views/dashboard.php:79
 msgid "Delivered"
 msgstr "Παραδόθηκε"
 
 #. %s: search number of order
-#: includes/class-wc-trackship-admin.php:637
+#: includes/class-wc-trackship-admin.php:638
 #, php-format
 msgid "Delivered <span class=\"count\">(%s)</span>"
 msgid_plural "Delivered <span class=\"count\">(%s)</span>"
 msgstr[0] "Παραδόθηκε"
 msgstr[1] "Παραδόθηκαν"
 
-#: includes/class-wc-trackship-front.php:650
+#: includes/class-wc-trackship-front.php:652
 #: includes/views/front/preview_enhanced_tracking_page.php:75
 msgid "Delivered on"
 msgstr "Παραδόθηκε στις"
@@ -315,28 +323,28 @@ msgstr "Παραδόθηκε στις"
 msgid "Delivery Date"
 msgstr "Ημερομηνία Παράδοσης"
 
-#: includes/shipments/views/trackship_shipments.php:28
+#: includes/views/shipments.php:175
 msgid "Delivery date"
 msgstr "Ημερομηνία παράδοσης"
 
-#: includes/class-wc-trackship-actions.php:649
-#: includes/class-wc-trackship-actions.php:706
-#: includes/class-wc-trackship-admin.php:1271
-#: includes/smswoo/class-smswoo-admin.php:543
+#: includes/class-wc-trackship-admin.php:1245
+#: includes/class-wc-trackship-actions.php:648
+#: includes/class-wc-trackship-actions.php:705
+#: includes/class-wc-trackship-install.php:314 includes/views/shipments.php:32
+#: includes/smswoo/class-smswoo-admin.php:549
 #: includes/customizer/trackship-customizer.php:214
 #: includes/customizer/trackship-customizer.php:793
-#: includes/views/shipments.php:32
 msgid "Delivery Failure"
 msgstr "Αποτυχία παράδοσης"
 
-#: includes/shipments/views/trackship_shipments.php:29
+#: includes/views/shipments.php:176
 msgid "Delivery number"
 msgstr "Αριθμός παράδοσης"
 
-#: includes/views/front/preview_tracking_page.php:68
 #: includes/views/front/enhanced_shipment_details_notifications.php:14
-#: includes/views/front/preview_enhanced_tracking_page.php:122
 #: includes/views/front/tracking_page_header.php:33
+#: includes/views/front/preview_tracking_page.php:68
+#: includes/views/front/preview_enhanced_tracking_page.php:122
 msgid "Delivery tracking Number"
 msgstr "Αριθμός παρακολούθησης παράδοσης"
 
@@ -355,7 +363,7 @@ msgstr "Λεπτομέριες"
 msgid "Display Options"
 msgstr "Επιλογές εμφάνισης"
 
-#: includes/customizer/trackship-customizer.php:886
+#: includes/customizer/trackship-customizer.php:890
 msgid "Display product image"
 msgstr "Εμφάνιση εικόνας προϊόντος"
 
@@ -363,7 +371,7 @@ msgstr "Εμφάνιση εικόνας προϊόντος"
 msgid "Display shipped products"
 msgstr "Εμφάνιση προϊόντων που έχουν αποσταλεί"
 
-#: includes/customizer/trackship-customizer.php:897
+#: includes/customizer/trackship-customizer.php:901
 msgid "Display shipping address"
 msgstr "Εμφάνιση διεύθυνσης αποστολής"
 
@@ -372,7 +380,7 @@ msgid "Display Shipping provider logo"
 msgstr "Εμφάνιση λογότυπου παρόχου αποστολής"
 
 #: includes/customizer/trackship-customizer.php:696
-#: includes/customizer/trackship-customizer.php:931
+#: includes/customizer/trackship-customizer.php:934
 msgid "Display TrackShip branding"
 msgstr "Εμφάνιση επωνυμίας TrackShip"
 
@@ -384,7 +392,7 @@ msgstr "Έγγραφα"
 msgid "Documentation"
 msgstr "Τεκμηρίωση"
 
-#: templates/tracking/tracking-form.php:113
+#: templates/tracking/tracking-form.php:111
 msgid "Email address"
 msgstr "Διεύθυνση ηλεκτρονικού ταχυδρομείου"
 
@@ -398,14 +406,14 @@ msgstr "Περιεχόμενο email"
 msgid "Email heading"
 msgstr "Επικεφαλίδα email"
 
+#: includes/views/notifications.php:15
 #: includes/customizer/trackship-customizer.php:302
 #: includes/customizer/trackship-customizer.php:303
-#: includes/views/notifications.php:15
 #: includes/views/front/preview_tracking_page.php:205
 msgid "Email Notifications"
 msgstr "Ειδοποιήσεις μέσω email"
 
-#: includes/class-wc-trackship-front.php:960
+#: includes/class-wc-trackship-front.php:961
 msgid "Email notifications"
 msgstr "Ειδοποιήσεις μέσω email"
 
@@ -421,13 +429,13 @@ msgstr "Τύπος email"
 msgid "Emails"
 msgstr "Email"
 
-#: includes/customizer/trackship-customizer.php:1138
+#: includes/customizer/trackship-customizer.php:1144
 #, php-format
 #| msgid "Enable  %1$s email"
 msgid "Enable %1$s email"
 msgstr "Ενεργοποίηση %1$s email"
 
-#: includes/class-wc-trackship-admin.php:429
+#: includes/class-wc-trackship-admin.php:420
 msgid ""
 "Enable a Custom Order Status Delivered that will be set automatically when "
 "all the order shipments are delivered"
@@ -437,7 +445,7 @@ msgstr ""
 "παραγγελιώνΕνεργοποιήστε μια Προσαρμοσμένη Κατάσταση Παραγγελίας Παράδοσης "
 "που θα ρυθμιστεί αυτόματα όταν παραδοθούν όλες οι αποστολές παραγγελιών"
 
-#: includes/class-wc-trackship-admin.php:413
+#: includes/class-wc-trackship-admin.php:404
 msgid "Enable a shipment status filter on orders admin"
 msgstr ""
 "Ενεργοποίηση φίλτρου κατάστασης αποστολής στη διαχείριση "
@@ -448,11 +456,11 @@ msgstr ""
 msgid "Enable email"
 msgstr "Ενεργοποίηση email"
 
-#: includes/class-wc-trackship-admin.php:426
+#: includes/class-wc-trackship-admin.php:417
 msgid "Enable Order Delivery Automation"
 msgstr "Ενεργοποίηση Αυτοματισμού Παράδοσης Παραγγελιών"
 
-#: includes/class-wc-trackship-admin.php:436
+#: includes/class-wc-trackship-admin.php:427
 msgid "Enable shipment status notification for order created by Amazon"
 msgstr ""
 "Ενεργοποίηση ειδοποίησης κατάστασης αποστολής για παραγγελία που "
@@ -463,36 +471,36 @@ msgstr ""
 msgid "Enable tracking # link to carrier"
 msgstr "Ενεργοποίηση παρακολούθησης"
 
-#: includes/class-wc-trackship-admin.php:1221
+#: includes/class-wc-trackship-admin.php:1195
 msgid "Enable Tracking Page"
 msgstr "Ενεργοποίηση σελίδας παρακολούθησης"
 
-#: includes/class-wc-trackship-admin.php:419
+#: includes/class-wc-trackship-admin.php:410
 msgid "Enable unsubscribe (opt-out) from Shipment status notifications"
 msgstr ""
 "Ενεργοποιήστε την απεγγραφή (opt-out) από τις ειδοποιήσεις κατάστασης "
 "αποστολής"
 
-#: includes/smswoo/class-smswoo-admin.php:382
 #: includes/smswoo/class-smswoo-admin.php:383
+#: includes/smswoo/class-smswoo-admin.php:384
 msgid "Enter admin phone number with country code."
 msgstr "Εισαγάγετε τον αριθμό τηλεφώνου διαχειριστή με κωδικό χώρας."
 
-#: includes/class-wc-trackship-front.php:650
+#: includes/class-wc-trackship-front.php:652
 #: templates/emails/tracking-info.php:50
+#: includes/views/front/tracking_page_header.php:82
 #: includes/views/front/preview_tracking_page.php:87
 #: includes/views/front/preview_enhanced_tracking_page.php:75
-#: includes/views/front/tracking_page_header.php:82
 msgid "Est. Delivery Date"
 msgstr "Εκτιμ. "
 
-#: includes/class-wc-trackship-actions.php:653
-#: includes/class-wc-trackship-actions.php:703
-#: includes/class-wc-trackship-admin.php:1283
-#: includes/smswoo/class-smswoo-admin.php:545
+#: includes/class-wc-trackship-admin.php:1257
+#: includes/class-wc-trackship-actions.php:652
+#: includes/class-wc-trackship-actions.php:702
+#: includes/class-wc-trackship-install.php:316 includes/views/shipments.php:27
+#: includes/smswoo/class-smswoo-admin.php:551
 #: includes/customizer/trackship-customizer.php:216
 #: includes/customizer/trackship-customizer.php:795
-#: includes/views/shipments.php:27
 msgid "Exception"
 msgstr "Εξαίρεση"
 
@@ -504,15 +512,15 @@ msgstr "Εξαίρεση αποστολής"
 msgid "Exception Shipments"
 msgstr "Αποστολές Εξαίρεσης"
 
-#: includes/class-wc-trackship-admin.php:787
+#: includes/class-wc-trackship-admin.php:788
 msgid "Exception Shipments Notifications"
 msgstr "Ειδοποιήσεις Αποστολών Εξαίρεσης"
 
-#: includes/class-wc-trackship-actions.php:748 includes/views/shipments.php:33
+#: includes/class-wc-trackship-actions.php:747 includes/views/shipments.php:33
 msgid "Expired"
 msgstr "Λήγει"
 
-#: includes/class-wc-trackship-actions.php:659
+#: includes/class-wc-trackship-actions.php:658
 msgid "Filter by shipment status"
 msgstr "Φιλτράρισμα κατά κατάσταση αποστολής"
 
@@ -524,23 +532,39 @@ msgstr "Χρώμα γραμματοσειράς"
 msgid "General options"
 msgstr "Γενικές επιλογές"
 
-#: includes/views/settings.php:38
+#: includes/views/settings.php:37
 msgid "General Settings"
 msgstr "Γενικές ρυθμίσεις"
 
-#: includes/class-wc-trackship-actions.php:576
-#: includes/class-wc-trackship-actions.php:998
-#: includes/class-wc-trackship-admin.php:551 includes/views/tools.php:14
+#: includes/class-wc-trackship-admin.php:552
+#: includes/class-wc-trackship-actions.php:575
+#: includes/class-wc-trackship-actions.php:997 includes/views/tools.php:14
 msgid "Get Shipment Status"
 msgstr "Λήψη κατάστασης αποστολής"
 
-#: includes/views/shipments.php:114
+#: includes/views/shipments.php:122
 msgid "Get shipment status"
 msgstr "Λήψη κατάστασης αποστολής"
 
 #: includes/views/header2.php:75
 msgid "Get Support"
 msgstr "Λάβετε υποστήριξη"
+
+#: includes/class-wc-trackship-install.php:338
+#, php-format
+msgid ""
+"Hi there. We thought you'd like to know that your recent order from %s is %s"
+msgstr ""
+"Γεια σας. Σκεφτήκαμε ότι θα θέλατε να μάθετε ότι η πρόσφατη παραγγελία σας "
+"από %s είναι %s"
+
+#: includes/class-wc-trackship-install.php:339
+msgid ""
+"Hi there. we thought you'd like to know that your recent order from "
+"{site_title} is pending for pickup"
+msgstr ""
+"Γεια σας. Σκεφτήκαμε ότι θα θέλατε να μάθετε ότι η πρόσφατη παραγγελία σας "
+"από το {site_title} εκκρεμεί για παραλαβή."
 
 #: includes/customizer/trackship-customizer.php:686
 msgid "Hide delivery tracking number"
@@ -559,12 +583,13 @@ msgid "Hide tracking events"
 msgstr "Απόκρυψη συμβάντων παρακολούθησης"
 
 #. %s: search for a tag
-#: includes/smswoo/class-smswoo-admin.php:258
-#: includes/smswoo/class-smswoo-admin.php:263
-#: includes/smswoo/class-smswoo-admin.php:268
-#: includes/smswoo/class-smswoo-admin.php:273
-#: includes/smswoo/class-smswoo-admin.php:278
-#: includes/smswoo/class-smswoo-admin.php:283
+#: includes/smswoo/class-smswoo-admin.php:247
+#: includes/smswoo/class-smswoo-admin.php:252
+#: includes/smswoo/class-smswoo-admin.php:257
+#: includes/smswoo/class-smswoo-admin.php:262
+#: includes/smswoo/class-smswoo-admin.php:267
+#: includes/smswoo/class-smswoo-admin.php:272
+#: includes/smswoo/class-smswoo-admin.php:277
 #, php-format
 msgid "How to find your %s credential"
 msgstr "Πώς να βρείτε τα διαπιστευτήριά σας %s"
@@ -574,13 +599,22 @@ msgstr "Πώς να βρείτε τα διαπιστευτήριά σας %s"
 msgid "Icons"
 msgstr "Εικονίδια"
 
-#: includes/class-wc-trackship-actions.php:645
-#: includes/class-wc-trackship-actions.php:682
-#: includes/class-wc-trackship-admin.php:1253
-#: includes/smswoo/class-smswoo-admin.php:540
+#: includes/class-wc-trackship-admin.php:439
+msgid ""
+"If you disable it, TrackShip emails will use the WooCommerce default design "
+"instead of the Villa theme's customized email layout."
+msgstr ""
+"Εάν το απενεργοποιήσετε, τα email του TrackShip θα χρησιμοποιούν την "
+"προεπιλεγμένη σχεδίαση του WooCommerce αντί για την προσαρμοσμένη διάταξη "
+"email του θέματος Villa."
+
+#: includes/class-wc-trackship-admin.php:1227
+#: includes/class-wc-trackship-actions.php:644
+#: includes/class-wc-trackship-actions.php:681
+#: includes/class-wc-trackship-install.php:311 includes/views/shipments.php:24
+#: includes/smswoo/class-smswoo-admin.php:546
 #: includes/customizer/trackship-customizer.php:211
 #: includes/customizer/trackship-customizer.php:790
-#: includes/views/shipments.php:24
 msgid "In Transit"
 msgstr "Σε διέλευση"
 
@@ -605,7 +639,7 @@ msgstr ""
 msgid "Install Shipment Tracking plugin"
 msgstr "Εγκαταστήστε την προσθήκη Παρακολούθησης Αποστολών"
 
-#: includes/class-wc-trackship-actions.php:739
+#: includes/class-wc-trackship-actions.php:738
 msgid "Insufficient Balance"
 msgstr "Ανεπαρκές υπόλοιπο"
 
@@ -613,30 +647,31 @@ msgstr "Ανεπαρκές υπόλοιπο"
 msgid "Integrations"
 msgstr "Ολοκληρώσεις"
 
-#: includes/class-wc-trackship-actions.php:721 includes/views/shipments.php:39
+#: includes/class-wc-trackship-actions.php:720 includes/views/shipments.php:39
 msgid "Invalid Carrier"
 msgstr "Μη έγκυρη εταιρεία κινητής τηλεφωνίας"
 
-#: includes/class-wc-trackship-actions.php:654
-#: includes/class-wc-trackship-actions.php:718 includes/views/shipments.php:38
+#: includes/class-wc-trackship-actions.php:653
+#: includes/class-wc-trackship-actions.php:717 includes/views/shipments.php:38
 msgid "Invalid Tracking"
 msgstr "Μη έγκυρη παρακολούθηση"
 
+#: includes/class-wc-trackship-install.php:446
 #: includes/views/front/preview_tracking_page.php:177
 #: includes/views/front/layout1_tracking_details.php:13
 msgid "Items in this shipment"
 msgstr "Είδη σε αυτήν την αποστολή"
 
-#: includes/class-wc-trackship-front.php:699
+#: includes/class-wc-trackship-front.php:701
 #: includes/views/front/preview_enhanced_tracking_page.php:83
 msgid "Journey"
 msgstr "Ταξίδι"
 
-#: includes/smswoo/class-smswoo-admin.php:289
+#: includes/smswoo/class-smswoo-admin.php:283
 msgid "Key"
 msgstr "Κλειδί"
 
-#: includes/class-wc-trackship-actions.php:715 includes/views/shipments.php:37
+#: includes/class-wc-trackship-actions.php:714 includes/views/shipments.php:37
 msgid "Label Cancelled"
 msgstr "Ετικέτα ακυρώθηκε"
 
@@ -648,7 +683,7 @@ msgstr "Τελευταίες 30 ημέρες"
 msgid "Last 60 days"
 msgstr "Τελευταίες 60 ημέρες"
 
-#: includes/class-wc-trackship-actions.php:949
+#: includes/class-wc-trackship-actions.php:948
 msgid "Last event date: "
 msgstr "Ημερομηνία τελευταίας εκδήλωσης:"
 
@@ -656,7 +691,7 @@ msgstr "Ημερομηνία τελευταίας εκδήλωσης:"
 msgid "Late shipment"
 msgstr "Καθυστερημένη αποστολή"
 
-#: includes/views/shipments.php:34 includes/views/notifications.php:68
+#: includes/views/notifications.php:68 includes/views/shipments.php:34
 msgid "Late Shipments"
 msgstr "Καθυστερημένες αποστολές"
 
@@ -664,20 +699,24 @@ msgstr "Καθυστερημένες αποστολές"
 msgid "Late Shipments for last 30 days"
 msgstr "Καθυστερημένες αποστολές για τις τελευταίες 30 ημέρες"
 
-#: includes/class-wc-trackship-admin.php:786
+#: includes/class-wc-trackship-admin.php:787
 msgid "Late Shipments Notifications"
 msgstr "Ειδοποιήσεις καθυστερημένων αποστολών"
 
-#: includes/shipments/views/trackship_shipments.php:25
+#: includes/views/shipments.php:172
 msgid "Latest Event"
 msgstr "Τελευταία εκδήλωση"
+
+#: includes/views/shipments.php:171
+msgid "Latest Event Date"
+msgstr "Τελευταία ημερομηνία συμβάντος"
 
 #: includes/customizer/trackship-customizer.php:449
 #: includes/customizer/trackship-customizer.php:568
 msgid "Links color"
 msgstr "Χρώμα συνδέσμων"
 
-#: includes/class-wc-trackship-admin.php:226 includes/views/header2.php:36
+#: includes/class-wc-trackship-admin.php:217 includes/views/header2.php:36
 #: includes/views/header2.php:54
 msgid "Logs"
 msgstr "κούτσουρα"
@@ -687,15 +726,11 @@ msgstr "κούτσουρα"
 msgid "Map Shipping Carriers"
 msgstr "Παρόχοι αποστολής χάρτη"
 
-#: includes/class-wc-trackship-admin.php:736
+#: includes/class-wc-trackship-admin.php:737
 msgid "Mark order as delivered"
 msgstr "Επισημάνετε την παραγγελία ως παραδοθείσα"
 
-#: includes/views/tools.php:33
-msgid "Migration"
-msgstr "Μετανάστευση"
-
-#: includes/customizer/trackship-customizer.php:1170
+#: includes/customizer/trackship-customizer.php:1176
 msgid "Mockup Order"
 msgstr "Παραγγελία μακέτας"
 
@@ -711,8 +746,8 @@ msgstr "Μήνας μέχρι σήμερα"
 msgid "More info"
 msgstr "Περισσότερες πληροφορίες"
 
-#: includes/class-wc-trackship-actions.php:445
-#: includes/class-wc-trackship-actions.php:958
+#: includes/class-wc-trackship-actions.php:444
+#: includes/class-wc-trackship-actions.php:957
 #: includes/html/class-wc-trackship-html.php:130
 msgid "more info"
 msgstr "περισσότερες πληροφορίες"
@@ -723,14 +758,14 @@ msgstr "Δεν απαιτείται ενέργεια για αποστολές"
 
 #: includes/smswoo/services/class-smswoo-nexmo.php:100
 #: includes/smswoo/services/class-smswoo-nexmo.php:160
+#: includes/smswoo/services/class-smswoo-clicksend.php:90
 #: includes/smswoo/services/class-smswoo-twilio.php:101
 #: includes/smswoo/services/class-smswoo-twilio.php:171
-#: includes/smswoo/services/class-smswoo-clicksend.php:90
 msgid "No answer"
 msgstr "Καμία απάντηση"
 
-#: includes/smswoo/services/class-smswoo-twilio.php:118
 #: includes/smswoo/services/class-smswoo-msg91.php:163
+#: includes/smswoo/services/class-smswoo-twilio.php:118
 msgid "No answer code"
 msgstr "Χωρίς κωδικό απάντησης"
 
@@ -739,31 +774,31 @@ msgid "No response code"
 msgstr "Χωρίς κωδικό απάντησης"
 
 #: includes/views/content.php:19
-#: includes/views/front/preview_tracking_page.php:199
 #: includes/views/front/enhanced_shipment_details_notifications.php:40
-#: includes/views/front/layout1_tracking_details.php:14
+#: includes/views/front/preview_tracking_page.php:199
 #: includes/views/front/preview_enhanced_tracking_page.php:147
+#: includes/views/front/layout1_tracking_details.php:14
 msgid "Notifications"
 msgstr "Ειδοποιήσεις"
 
-#: includes/class-wc-trackship-admin.php:827
+#: includes/class-wc-trackship-admin.php:828
 msgid "Notifications detail"
 msgstr "Λεπτομέρεια ειδοποιήσεων"
 
-#: includes/smswoo/class-smswoo-admin.php:317
+#: includes/smswoo/class-smswoo-admin.php:311
 msgid "Notifications Type (SMS/WhatsApp)"
 msgstr "Τύπος ειδοποιήσεων (SMS/WhatsApp)"
 
-#: includes/class-wc-trackship-admin.php:453
+#: includes/class-wc-trackship-admin.php:454
 msgid "Number of days for late shipments"
 msgstr "Αριθμός ημερών για καθυστερημένες αποστολές"
 
-#: includes/class-wc-trackship-actions.php:685
-#: includes/class-wc-trackship-admin.php:1277
-#: includes/smswoo/class-smswoo-admin.php:544
+#: includes/class-wc-trackship-admin.php:1251
+#: includes/class-wc-trackship-actions.php:684
+#: includes/class-wc-trackship-install.php:315 includes/views/shipments.php:28
+#: includes/smswoo/class-smswoo-admin.php:550
 #: includes/customizer/trackship-customizer.php:215
 #: includes/customizer/trackship-customizer.php:794
-#: includes/views/shipments.php:28
 msgid "On Hold"
 msgstr "Σε αναμονή"
 
@@ -775,59 +810,62 @@ msgstr "Αποστολή σε αναμονή"
 msgid "On Hold Shipments"
 msgstr "Αποστολές σε Αναμονή"
 
-#: includes/class-wc-trackship-admin.php:788
+#: includes/class-wc-trackship-admin.php:789
 msgid "On Hold Shipments Notifications"
 msgstr "Ειδοποιήσεις αποστολών σε αναμονή"
 
-#: includes/views/logs.php:50
-#: includes/shipments/views/trackship_shipments.php:15
+#: includes/views/logs.php:50 includes/views/shipments.php:160
 #: includes/views/front/tracking_page_header.php:43
 msgid "Order"
 msgstr "Παραγγελία"
+
+#: includes/views/shipments.php:161
+msgid "Order date"
+msgstr "Ημερομηνία παραγγελίας"
 
 #: includes/integration/class-automatewoo-delivered-trigger.php:17
 msgid "Order Delivered"
 msgstr "Η παραγγελία παραδόθηκε"
 
-#: templates/tracking/tracking-form.php:106
+#: templates/tracking/tracking-form.php:104
 msgid "Order Details"
 msgstr "Λεπτομέρειες Παραγγελίας"
 
-#: templates/tracking/tracking-form.php:113
+#: templates/tracking/tracking-form.php:111
 msgid "Order Email"
 msgstr "Email παραγγελίας"
 
-#: templates/tracking/tracking-form.php:112
+#: templates/tracking/tracking-form.php:110
 msgid "Order ID"
 msgstr "Αριθμός Παραγγελίας"
 
-#: includes/class-wc-trackship-actions.php:751
+#: includes/class-wc-trackship-actions.php:750
 msgid "Order id not found"
 msgstr "Η παραγγελία δεν βρέθηκε"
 
-#: includes/class-wc-trackship-admin.php:831
-#: templates/tracking/tracking-form.php:112
+#: includes/class-wc-trackship-admin.php:832
+#: templates/tracking/tracking-form.php:110
+#: templates/emails/on-hold-shipment-email.php:16
 #: templates/emails/exception-shipment-email.php:16
 #: templates/emails/late-shipment-email.php:16
-#: templates/emails/on-hold-shipment-email.php:16
 msgid "Order Number"
 msgstr "Αριθμός παραγγελίας"
 
-#: includes/class-wc-trackship-front.php:360
+#: includes/class-wc-trackship-front.php:362
 msgid "Order Processing"
 msgstr "Επεξεργασία παραγγελίας"
 
-#: includes/class-wc-trackship-admin.php:405
+#: includes/class-wc-trackship-admin.php:396
 msgid "Order statuses to trigger TrackShip "
 msgstr "Οι καταστάσεις παραγγελίας για να ενεργοποιήσουν το trackship"
 
-#: templates/tracking/tracking-form.php:118
+#: templates/tracking/tracking-form.php:116
 msgid "Order tracking number."
 msgstr "Αριθμός αποστολής παραγγελίας."
 
+#: includes/views/front/enhanced_tracking_events.php:72
 #: includes/views/front/layout1_tracking_details.php:111
 #: includes/views/front/layout1_tracking_details.php:199
-#: includes/views/front/enhanced_tracking_events.php:72
 msgid "Origin Details"
 msgstr "Λεπτομέρειες προέλευσης"
 
@@ -835,28 +873,28 @@ msgstr "Λεπτομέρειες προέλευσης"
 msgid "Other"
 msgstr "Άλλο"
 
-#: includes/class-wc-trackship-actions.php:647
-#: includes/class-wc-trackship-actions.php:694
-#: includes/class-wc-trackship-admin.php:1265
-#: includes/smswoo/class-smswoo-admin.php:542
+#: includes/class-wc-trackship-admin.php:1239
+#: includes/class-wc-trackship-actions.php:646
+#: includes/class-wc-trackship-actions.php:693
+#: includes/class-wc-trackship-install.php:313 includes/views/shipments.php:25
+#: includes/smswoo/class-smswoo-admin.php:548
 #: includes/customizer/trackship-customizer.php:213
 #: includes/customizer/trackship-customizer.php:792
-#: includes/views/shipments.php:25
 msgid "Out For Delivery"
 msgstr "Έξω για παράδοση"
 
-#: includes/class-wc-trackship-front.php:696
+#: includes/class-wc-trackship-front.php:698
 #: includes/views/front/preview_enhanced_tracking_page.php:80
 msgid "Overview"
 msgstr "ΣΦΑΙΡΙΚΗ ΕΙΚΟΝΑ"
 
-#: includes/class-wc-trackship-actions.php:642
-#: includes/class-wc-trackship-actions.php:724 includes/views/shipments.php:42
+#: includes/class-wc-trackship-actions.php:641
+#: includes/class-wc-trackship-actions.php:723 includes/views/shipments.php:42
 msgid "Pending Update"
 msgstr "Εκκρεμεί ενημέρωση"
 
-#: includes/class-wc-trackship-actions.php:444
-#: includes/class-wc-trackship-actions.php:956
+#: includes/class-wc-trackship-actions.php:443
+#: includes/class-wc-trackship-actions.php:955
 msgid ""
 "Pending Update is a temporary status that will display for a few minutes "
 "until we update the order with the first tracking event from the shipping "
@@ -873,15 +911,15 @@ msgstr ""
 msgid "Pickup Reminder"
 msgstr "Υπενθύμιση παραλαβής"
 
-#: includes/class-wc-trackship-admin.php:1302
+#: includes/class-wc-trackship-admin.php:1276
 msgid "Pickup reminder"
 msgstr "Υπενθύμιση παραλαβής"
 
-#: includes/smswoo/class-smswoo-admin.php:240
+#: includes/smswoo/class-smswoo-admin.php:228
 msgid "Please choose SMS gateway from Dropown."
 msgstr "Επιλέξτε την πύλη SMS από το Dropown."
 
-#: includes/class-wc-trackship-admin.php:121
+#: includes/class-wc-trackship-admin.php:120
 msgid "Please connect your store with trackship.com."
 msgstr "Συνδέστε το κατάστημά σας με το trackship.com."
 
@@ -900,28 +938,28 @@ msgstr ""
 msgid "Please note: "
 msgstr "Παρακαλώ σημειώστε:"
 
-#: includes/class-wc-trackship-admin.php:125
+#: includes/class-wc-trackship-admin.php:124
 msgid "Please refresh the page and try again."
 msgstr "Ανανεώστε τη σελίδα και δοκιμάστε ξανά."
 
-#: includes/class-wc-trackship-front.php:364
+#: includes/class-wc-trackship-front.php:366
 msgid "Please try again after you receive the shipping confirmation email."
 msgstr "Παρακαλώ δοκιμάστε ξανά αφού λάβετε το email επιβεβαίωσης αποστολής."
 
-#: includes/class-wc-trackship-front.php:553
-#: includes/class-wc-trackship-front.php:618
-#: templates/tracking/tracking-form.php:129
+#: includes/class-wc-trackship-front.php:555
+#: includes/class-wc-trackship-front.php:620
+#: templates/tracking/tracking-form.php:127
 #: includes/views/front/preview_tracking_page.php:216
 #: includes/views/front/preview_enhanced_tracking_page.php:164
 msgid "Powered by "
 msgstr "Powered By"
 
-#: includes/class-wc-trackship-actions.php:644
-#: includes/class-wc-trackship-actions.php:688 includes/views/shipments.php:26
+#: includes/class-wc-trackship-actions.php:643
+#: includes/class-wc-trackship-actions.php:687 includes/views/shipments.php:26
 msgid "Pre Transit"
 msgstr "Προ διέλευσης"
 
-#: includes/class-wc-trackship-admin.php:782
+#: includes/class-wc-trackship-admin.php:783
 msgid "Priority Support"
 msgstr "Υποστήριξη προτεραιότητας"
 
@@ -930,27 +968,27 @@ msgstr "Υποστήριξη προτεραιότητας"
 msgid "Progress bar"
 msgstr "Μπάρα προόδου"
 
-#: includes/class-wc-trackship-admin.php:815
+#: includes/class-wc-trackship-admin.php:816
 msgid "Providers list Updated"
 msgstr "Η λίστα παρόχων ενημερώθηκε"
 
-#: includes/class-wc-trackship-admin.php:458
-#: includes/class-wc-trackship-admin.php:480
-#: includes/class-wc-trackship-admin.php:502
+#: includes/class-wc-trackship-admin.php:459
+#: includes/class-wc-trackship-admin.php:481
+#: includes/class-wc-trackship-admin.php:503
 msgid "Recipient(s)"
 msgstr "Παραλήπτης (ες)"
 
-#: includes/class-wc-trackship-admin.php:784
+#: includes/class-wc-trackship-admin.php:785
 msgid "Remove TrackShip’s branding"
 msgstr "Κατάργηση της επωνυμίας του TrackShip"
 
-#: includes/class-wc-trackship-actions.php:652
-#: includes/class-wc-trackship-actions.php:700
-#: includes/class-wc-trackship-admin.php:1289
-#: includes/smswoo/class-smswoo-admin.php:546
+#: includes/class-wc-trackship-admin.php:1263
+#: includes/class-wc-trackship-actions.php:651
+#: includes/class-wc-trackship-actions.php:699
+#: includes/class-wc-trackship-install.php:317 includes/views/shipments.php:30
+#: includes/smswoo/class-smswoo-admin.php:552
 #: includes/customizer/trackship-customizer.php:217
 #: includes/customizer/trackship-customizer.php:796
-#: includes/views/shipments.php:30
 msgid "Return To Sender"
 msgstr "Επιστροφή στον αποστολέα"
 
@@ -962,17 +1000,13 @@ msgstr "Επιστροφή στον αποστολέα για τις τελευ�
 msgid "Review"
 msgstr "Κριτική"
 
-#: includes/smswoo/class-smswoo-admin.php:502
-#: includes/views/map-providers.php:13 includes/views/settings.php:43
-#: includes/views/tracking-page.php:13 includes/views/notifications.php:71
+#: includes/views/settings.php:42 includes/views/notifications.php:71
 #: includes/views/notifications.php:99 includes/views/notifications.php:127
+#: includes/views/map-providers.php:13 includes/views/tracking-page.php:13
+#: includes/smswoo/class-smswoo-admin.php:506
 #: includes/smswoo/admin-html/settings_tab.php:12
 msgid "Save & close"
 msgstr "Αποθήκευση"
-
-#: includes/smswoo/class-smswoo-admin.php:74
-msgid "Save Changes"
-msgstr "Αποθήκευση αλλαγών"
 
 #: includes/customizer/trackship-customizer.php:104
 msgid "Saved"
@@ -982,78 +1016,78 @@ msgstr "Αποθηκεύτηκε"
 msgid "Search"
 msgstr "Αναζήτηση"
 
-#: includes/views/shipments.php:124
+#: includes/views/shipments.php:132
 msgid "Search by Tracking Number, Shipping carrier, Order number"
 msgstr ""
 "Αναζήτηση κατά αριθμό παρακολούθησης, μεταφορέα αποστολής, αριθμό "
 "παραγγελίαςΑναζήτηση με αριθμό παρακολούθησης, μεταφορέα αποστολής, αριθμό "
 "παραγγελίας"
 
-#: includes/smswoo/class-smswoo-admin.php:296
+#: includes/smswoo/class-smswoo-admin.php:290
 msgid "Secret"
 msgstr "Μυστικό"
 
-#: includes/class-wc-trackship-front.php:259
+#: includes/class-wc-trackship-front.php:260
 msgid "Security verification failed, please refresh page and try again."
 msgstr ""
 "Η επαλήθευση ασφαλείας απέτυχε, ανανεώστε τη σελίδα και δοκιμάστε ξανά."
 
-#: includes/class-wc-trackship-admin.php:913
-#: includes/class-wc-trackship-admin.php:976
+#: includes/class-wc-trackship-admin.php:914
+#: includes/class-wc-trackship-admin.php:977
 msgid "Select"
 msgstr "Επιλέγω"
 
-#: includes/class-wc-trackship-admin.php:1227
+#: includes/class-wc-trackship-admin.php:1201
 msgid "Select tracking page:"
 msgstr "Επιλογή σελίδας παρακολούθησης:"
 
-#: includes/class-wc-trackship-admin.php:464
-#: includes/class-wc-trackship-admin.php:486
-#: includes/class-wc-trackship-admin.php:508
+#: includes/class-wc-trackship-admin.php:465
+#: includes/class-wc-trackship-admin.php:487
+#: includes/class-wc-trackship-admin.php:509
 msgid "Send email at"
 msgstr "Αποστολή email στο"
 
-#: includes/class-wc-trackship-admin.php:1296
-#: includes/smswoo/class-smswoo-admin.php:495
+#: includes/class-wc-trackship-admin.php:1270
+#: includes/smswoo/class-smswoo-admin.php:499
 msgid "Send only when all shipments for the order are delivered"
 msgstr "Αποστολή μόνο όταν παραδοθούν όλες οι αποστολές για την παραγγελία"
 
-#: includes/smswoo/class-smswoo-admin.php:373
+#: includes/smswoo/class-smswoo-admin.php:374
 msgid "Sender phone number / Sender ID"
 msgstr "Αριθμός τηλεφώνου αποστολέα / Αναγνωριστικό αποστολέα"
 
-#: includes/smswoo/class-smswoo-sms-notification.php:229
+#: includes/smswoo/class-smswoo-sms-notification.php:222
 msgid "Sent"
 msgstr "Σταλμένος"
 
-#: includes/customizer/trackship-customizer.php:918
+#: includes/customizer/trackship-customizer.php:923
 msgid "Set Pickup reminder notifications(in days)"
 msgstr "Ορισμός ειδοποιήσεων υπενθύμισης παραλαβής (σε ημέρες)"
 
-#: trackship-for-woocommerce.php:288 includes/class-wc-trackship-admin.php:230
-#: includes/views/content.php:14 includes/views/header2.php:35
-#: includes/views/header2.php:64
+#: trackship-for-woocommerce.php:288 includes/class-wc-trackship-admin.php:221
+#: includes/views/header2.php:35 includes/views/header2.php:64
+#: includes/views/content.php:14
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
-#: includes/shipments/views/trackship_shipments.php:24
+#: includes/views/shipments.php:170
 msgid "Ship City"
 msgstr "Πόλη του πλοίου"
 
-#: includes/shipments/views/trackship_shipments.php:21
+#: includes/views/shipments.php:167
 msgid "Ship from"
 msgstr "Αποστολή από"
 
-#: includes/shipments/views/trackship_shipments.php:23
+#: includes/views/shipments.php:169
 msgid "Ship State"
 msgstr "Κράτος πλοίου"
 
-#: includes/shipments/views/trackship_shipments.php:22
+#: includes/views/shipments.php:168
 msgid "Ship to"
 msgstr "Αποστολή σε"
 
 #. %s: search for a tag
-#: includes/class-wc-trackship-front.php:484
+#: includes/class-wc-trackship-front.php:486
 #, php-format
 msgid "Shipment %1$s"
 msgstr "Αποστολή %1$s"
@@ -1063,19 +1097,19 @@ msgstr "Αποστολή %1$s"
 msgid "Shipment Progress"
 msgstr "Πρόοδος αποστολής"
 
-#: includes/class-wc-trackship-actions.php:368
-#: includes/class-wc-trackship-admin.php:832
+#: includes/class-wc-trackship-admin.php:833
+#: includes/class-wc-trackship-actions.php:367
 #: templates/emails/late-shipment-email.php:17 includes/views/logs.php:51
-#: includes/shipments/views/trackship_shipments.php:20
+#: includes/views/shipments.php:166
 msgid "Shipment status"
 msgstr "Κατάσταση αποστολής"
 
-#: includes/class-wc-trackship-admin.php:224 includes/views/header2.php:33
+#: includes/class-wc-trackship-admin.php:215 includes/views/header2.php:33
 #: includes/views/header2.php:49
 msgid "Shipments"
 msgstr "Αποστολές"
 
-#: includes/class-wc-trackship-admin.php:785
+#: includes/class-wc-trackship-admin.php:786
 msgid "Shipments Dashboard"
 msgstr "Πίνακας ελέγχου αποστολών"
 
@@ -1088,19 +1122,19 @@ msgstr ""
 "Για να ξεκινήσετε την παρακολούθηση αυτών των προηγούμενων παραγγελιών, "
 "απλώς κάντε κλικ εδώ"
 
-#: includes/class-wc-trackship-actions.php:712
-#: includes/class-wc-trackship-actions.php:727
+#: includes/class-wc-trackship-actions.php:711
+#: includes/class-wc-trackship-actions.php:726
 #: templates/emails/tracking-info.php:81
-#: includes/views/front/enhanced_tracking_events.php:18
 #: includes/views/front/tracking_page_header.php:64
+#: includes/views/front/enhanced_tracking_events.php:18
 msgid "Shipped"
 msgstr "Αποστέλλεται"
 
-#: includes/shipments/views/trackship_shipments.php:16
+#: includes/views/shipments.php:162
 msgid "Shipped date"
 msgstr "Ημερομηνία αποστολής"
 
-#: includes/customizer/trackship-customizer.php:876
+#: includes/customizer/trackship-customizer.php:878
 msgid "Shipped products header text"
 msgstr "Κείμενο κεφαλίδας αποστολής προϊόντων"
 
@@ -1108,7 +1142,7 @@ msgstr "Κείμενο κεφαλίδας αποστολής προϊόντων"
 msgid "Shipping & Delivery"
 msgstr "Ναυτιλία"
 
-#: includes/class-wc-trackship-admin.php:789
+#: includes/class-wc-trackship-admin.php:790
 msgid "Shipping & Delivery Analytics"
 msgstr "Ναυτιλία"
 
@@ -1116,32 +1150,36 @@ msgstr "Ναυτιλία"
 msgid "Shipping & Delivery Overview"
 msgstr "Ναυτιλία"
 
-#: includes/customizer/trackship-customizer.php:907
+#: includes/class-wc-trackship-install.php:447
+msgid "Shipping address"
+msgstr "Διεύθυνση αποστολής"
+
+#: includes/customizer/trackship-customizer.php:913
 msgid "Shipping address header text"
 msgstr "Κείμενο κεφαλίδας διεύθυνσης αποστολής"
 
-#: includes/shipments/views/trackship_shipments.php:19
+#: includes/views/shipments.php:165
 msgid "Shipping carrier"
 msgstr "Ναυτιλιακή εταιρεία"
 
+#: templates/emails/on-hold-shipment-email.php:19
 #: templates/emails/exception-shipment-email.php:19
 #: templates/emails/late-shipment-email.php:20
-#: templates/emails/on-hold-shipment-email.php:19
 msgid "Shipping days"
 msgstr "Ημέρες αποστολής"
 
+#: templates/emails/on-hold-shipment-email.php:17
 #: templates/emails/exception-shipment-email.php:17
 #: templates/emails/late-shipment-email.php:18
-#: templates/emails/on-hold-shipment-email.php:17
 #: includes/views/map-providers.php:25
 msgid "Shipping provider"
 msgstr "Πάροχος αποστολής"
 
-#: includes/class-wc-trackship-actions.php:757
+#: includes/class-wc-trackship-actions.php:756
 msgid "Shipping provider not found"
 msgstr "Ο πάροχος αποστολής δεν βρέθηκε"
 
-#: includes/shipments/views/trackship_shipments.php:27
+#: includes/views/shipments.php:174
 msgid "Shipping time"
 msgstr "Χρόνος αποστολής"
 
@@ -1189,12 +1227,12 @@ msgstr "Μονό εικονίδιο"
 msgid "SMS"
 msgstr "SMS"
 
-#: includes/smswoo/class-smswoo-admin.php:239
-#: includes/smswoo/class-smswoo-admin.php:247
+#: includes/smswoo/class-smswoo-admin.php:227
+#: includes/smswoo/class-smswoo-admin.php:235
 msgid "SMS gateways"
 msgstr "Πύλες SMS"
 
-#: includes/class-wc-trackship-admin.php:783
+#: includes/class-wc-trackship-admin.php:784
 #: includes/views/notifications.php:18
 msgid "SMS Notifications"
 msgstr "Ειδοποιήσεις SMS"
@@ -1204,42 +1242,42 @@ msgstr "Ειδοποιήσεις SMS"
 msgid "SMS notifications"
 msgstr "Ειδοποιήσεις SMS"
 
-#: includes/class-wc-trackship-admin.php:1317
+#: includes/class-wc-trackship-admin.php:1291
 #: includes/smswoo/admin-html/settings_tab.php:8
 msgid "SMS Settings"
 msgstr "Ρυθμίσεις SMS"
 
-#: includes/api/class-trackship-rest-api-controller.php:297
+#: includes/api/class-trackship-rest-api-controller.php:315
 msgid "Sorry, you are not allowed to create resources."
 msgstr "Λυπούμαστε, δεν επιτρέπεται να δημιουργείτε πόρους."
 
+#: includes/api/class-trackship-rest-api-controller.php:335
 #: includes/analytics/class-trackship-analytics-rest-api-controller.php:107
-#: includes/api/class-trackship-rest-api-controller.php:317
 msgid "Sorry, you cannot list resources."
 msgstr "Λυπούμαστε, δεν μπορείτε να απαριθμήσετε τους πόρους."
 
-#: includes/api/class-trackship-rest-api-controller.php:310
+#: includes/api/class-trackship-rest-api-controller.php:328
 msgid "Sorry, you cannot view this resource."
 msgstr "Λυπούμαστε, δεν μπορείτε να δείτε αυτόν τον πόρο."
 
-#: includes/class-wc-trackship-actions.php:745
+#: includes/class-wc-trackship-actions.php:744
 msgid "SSL Error"
 msgstr "Σφάλμα SSL"
 
-#: includes/class-wc-trackship-admin.php:790
+#: includes/class-wc-trackship-admin.php:791
 #| msgid "Starting from $9 a month"
 msgid "Starting from $11 a month"
 msgstr "Ξεκινώντας από $11 το μήνα"
 
-#: includes/class-wc-trackship-admin.php:837 includes/views/logs.php:55
+#: includes/class-wc-trackship-admin.php:838 includes/views/logs.php:55
 msgid "Status"
 msgstr "Κατάσταση"
 
-#: includes/class-wc-trackship-actions.php:766
+#: includes/class-wc-trackship-actions.php:765
 msgid "Store is conneted with different account"
 msgstr "Το κατάστημα συνδέεται με διαφορετικό λογαριασμό"
 
-#: includes/class-wc-trackship-actions.php:763
+#: includes/class-wc-trackship-actions.php:762
 msgid "Store is not Connected to TrackShip"
 msgstr "Το κατάστημα δεν είναι συνδεδεμένο στο TrackShip"
 
@@ -1247,12 +1285,12 @@ msgstr "Το κατάστημα δεν είναι συνδεδεμένο στο 
 msgid "Style & Colors"
 msgstr "Στυλ"
 
-#: includes/class-wc-trackship-admin.php:809
-#: includes/class-wc-trackship-admin.php:817
+#: includes/class-wc-trackship-admin.php:810
+#: includes/class-wc-trackship-admin.php:818
 msgid "Sync TrackShip Providers"
 msgstr "Συγχρονισμός παρόχων TrackShip"
 
-#: includes/class-wc-trackship-admin.php:813
+#: includes/class-wc-trackship-admin.php:814
 msgid ""
 "Syncing the TrackShip providers list add or updates the pre-set TrackShip "
 "providers and will not effect custom shipping providers."
@@ -1265,11 +1303,15 @@ msgstr ""
 msgid "Tabs display"
 msgstr "Εμφάνιση καρτελών"
 
-#: includes/smswoo/class-smswoo-admin.php:517
+#: includes/smswoo/class-smswoo-admin.php:521
 msgid "Template ID"
 msgstr "Αναγνωριστικό προτύπου"
 
-#: includes/smswoo/class-smswoo-admin.php:518
+#: includes/smswoo/class-smswoo-admin.php:524
+msgid "Template Language"
+msgstr "Γλώσσα προτύπου"
+
+#: includes/smswoo/class-smswoo-admin.php:522
 msgid "Template variables"
 msgstr "Μεταβλητές προτύπου"
 
@@ -1295,8 +1337,8 @@ msgstr "Οι ακόλουθες αποστολές καθυστερούν:"
 msgid "The following shipments are On Hold:"
 msgstr "Οι παρακάτω αποστολές είναι σε αναμονή:"
 
-#: includes/class-wc-trackship-front.php:282
-#: includes/class-wc-trackship-front.php:292
+#: includes/class-wc-trackship-front.php:284
+#: includes/class-wc-trackship-front.php:294
 msgid ""
 "The order/shipment you're trying to track has not been shipped yet or the "
 "order number entered is incorrect."
@@ -1304,7 +1346,7 @@ msgstr ""
 "Η παραγγελία/αποστολή που προσπαθείτε να παρακολουθήσετε δεν έχει αποσταλεί "
 "ακόμα ή ο αριθμός παραγγελίας που καταχωρίσατε είναι λάθος."
 
-#: includes/class-wc-trackship-actions.php:563
+#: includes/class-wc-trackship-actions.php:562
 msgid ""
 "The shipment status updates will run in the background, please refresh the "
 "page in a few minutes."
@@ -1324,25 +1366,25 @@ msgstr ""
 "αντιστοιχίσετε τα ονόματα των παρόχων αποστολής που λαμβάνετε από τη "
 "ναυτιλιακή σας εταιρεία με τα ονόματα παρόχων της TrackShip."
 
-#: includes/smswoo/class-smswoo-admin.php:374
+#: includes/smswoo/class-smswoo-admin.php:375
 msgid "This field appears as a from or Sender ID"
 msgstr "Αυτό το πεδίο εμφανίζεται ως αναγνωριστικό από ή αποστολέα"
 
-#: includes/class-wc-trackship-admin.php:834 includes/views/logs.php:52
+#: includes/class-wc-trackship-admin.php:835 includes/views/logs.php:52
 msgid "Time"
 msgstr "Ώρα"
 
-#: includes/class-wc-trackship-admin.php:835 includes/views/logs.php:53
+#: includes/class-wc-trackship-admin.php:836 includes/views/logs.php:53
 msgid "To"
 msgstr "Προς"
 
-#: templates/tracking/tracking-form.php:111
+#: templates/tracking/tracking-form.php:109
 msgid "To track your order, enter your order number and email address:"
 msgstr ""
 "Για να παρακολουθήσετε την παραγγελία σας, εισαγάγετε τον αριθμό παραγγελίας "
 "και τη διεύθυνση email σας:"
 
-#: templates/tracking/tracking-form.php:117
+#: templates/tracking/tracking-form.php:115
 msgid ""
 "To track your order, please enter the tracking number you received in the "
 "shipping confirmation email"
@@ -1358,10 +1400,10 @@ msgstr "Εργαλεία"
 msgid "Total Shipments"
 msgstr "Σύνολο αποστολών"
 
-#: includes/class-wc-trackship-actions.php:436
-#: includes/class-wc-trackship-actions.php:442
-#: includes/class-wc-trackship-actions.php:954
-#: includes/class-wc-trackship-actions.php:965
+#: includes/class-wc-trackship-actions.php:435
+#: includes/class-wc-trackship-actions.php:441
+#: includes/class-wc-trackship-actions.php:953
+#: includes/class-wc-trackship-actions.php:964
 msgid "Track"
 msgstr "Κομμάτι"
 
@@ -1373,16 +1415,21 @@ msgstr "Ακτίνα κουμπιού διαδρομής"
 msgid "Track button text"
 msgstr "Κείμενο κουμπιού παρακολούθησης"
 
-#: includes/class-wc-trackship-admin.php:190
+#: includes/class-wc-trackship-admin.php:181
 msgid "Track Shipment"
 msgstr "Παρακολούθηση αποστολής"
+
+#: includes/class-wc-trackship-install.php:413
+#: includes/class-wc-trackship-install.php:434
+msgid "Track your order"
+msgstr "Παρακολουθήστε την παραγγελία σας"
 
 #: includes/customizer/trackship-customizer.php:405
 #: includes/customizer/trackship-customizer.php:644
 msgid "Tracker type"
 msgstr "Τύπος ιχνηλάτη"
 
-#: includes/class-wc-trackship-admin.php:1316
+#: includes/class-wc-trackship-admin.php:1290
 msgid "Tracking Analytics"
 msgstr "Tracking Analytics"
 
@@ -1411,23 +1458,22 @@ msgstr "Προβλήματα παρακολούθησης"
 msgid "Tracking Issues for last 30 days"
 msgstr "Προβλήματα παρακολούθησης για τις τελευταίες 30 ημέρες"
 
-#: includes/class-wc-trackship-admin.php:833
-#: templates/tracking/tracking-form.php:108
-#: templates/tracking/tracking-form.php:118
-#: templates/emails/exception-shipment-email.php:18
-#: templates/emails/late-shipment-email.php:19
+#: includes/class-wc-trackship-admin.php:834
+#: templates/tracking/tracking-form.php:106
+#: templates/tracking/tracking-form.php:116
 #: templates/emails/on-hold-shipment-email.php:18
-#: includes/shipments/views/trackship_shipments.php:18
+#: templates/emails/exception-shipment-email.php:18
+#: templates/emails/late-shipment-email.php:19 includes/views/shipments.php:164
 msgid "Tracking Number"
 msgstr "Αριθμός αποστολής"
 
-#: includes/class-wc-trackship-actions.php:754
+#: includes/class-wc-trackship-actions.php:753
 msgid "Tracking number not found"
 msgstr "Ο αριθμός αποστολής δεν βρέθηκε"
 
+#: includes/views/tracking-page.php:8
 #: includes/customizer/trackship-customizer.php:332
 #: includes/customizer/trackship-customizer.php:616
-#: includes/views/tracking-page.php:8
 msgid "Tracking Page"
 msgstr "Σελίδα παρακολούθησης"
 
@@ -1474,46 +1520,40 @@ msgstr "Ο πίνακας βάσης δεδομένων TrackShip Shipments δε
 msgid "TrackShip Shipments meta database table does not exist."
 msgstr "Ο πίνακας μετα-βάσης δεδομένων TrackShip Shipments δεν υπάρχει."
 
-#: includes/class-wc-trackship-admin.php:836 includes/views/logs.php:54
+#: includes/class-wc-trackship-admin.php:837 includes/views/logs.php:54
 msgid "Type"
 msgstr "Τύπος"
 
-#: includes/class-wc-trackship-front.php:206
-#: includes/class-wc-trackship-front.php:224
+#: includes/class-wc-trackship-front.php:208
+#: includes/class-wc-trackship-front.php:226
 msgid "Unable to locate the order."
 msgstr "Δεν είναι δυνατός ο εντοπισμός της παραγγελίας."
 
-#: includes/class-wc-trackship-front.php:212
+#: includes/class-wc-trackship-front.php:214
 msgid "Unable to locate the order. or Invalid order key"
 msgstr ""
 "Δεν είναι δυνατός ο εντοπισμός της παραγγελίας. Δεν είναι δυνατός ο "
 "εντοπισμός της παραγγελίας. ή Μη έγκυρο κλειδί παραγγελίας"
 
-#: includes/class-wc-trackship-actions.php:733
+#: includes/class-wc-trackship-actions.php:732
 msgid "Unauthorized"
 msgstr "Μη εξουσιοδοτημένο"
 
-#: includes/class-wc-trackship-actions.php:643
-#: includes/class-wc-trackship-actions.php:709 includes/views/shipments.php:36
+#: includes/class-wc-trackship-actions.php:642
+#: includes/class-wc-trackship-actions.php:708 includes/views/shipments.php:36
 msgid "Unknown"
 msgstr "Άγνωστο"
 
-#: includes/trackship-email-manager.php:325
-#: includes/customizer/class-trackship-email-preview.php:167
+#: includes/trackship-email-manager.php:337
+#: includes/customizer/class-trackship-email-preview.php:178
 msgid "Unsubscribe"
 msgstr "Κατάργηση εγγραφής"
 
-#: includes/shipments/views/trackship_shipments.php:17
+#: includes/views/shipments.php:163
 msgid "Updated at"
 msgstr "Ενημερώθηκε στις"
 
-#: includes/views/tools.php:32
-msgid "Updating tracking details during migration from older to newer version."
-msgstr ""
-"Ενημέρωση λεπτομερειών παρακολούθησης κατά τη μετεγκατάσταση από παλαιότερη "
-"σε νεότερη έκδοση."
-
-#: includes/class-wc-trackship-admin.php:793
+#: includes/class-wc-trackship-admin.php:794
 msgid "UPGRADE TO PRO"
 msgstr "ΑΝΑΒΑΘΜΙΣΗ ΣΕ PRO"
 
@@ -1521,11 +1561,15 @@ msgstr "ΑΝΑΒΑΘΜΙΣΗ ΣΕ PRO"
 msgid "Upgrade to Pro"
 msgstr "Αναβάθμιση σε Pro"
 
-#: includes/class-wc-trackship-admin.php:778
+#: includes/class-wc-trackship-admin.php:779
 msgid "Upgrade to TrackShip Pro"
 msgstr "Αναβάθμιση στο TrackShip Pro"
 
-#: includes/class-wc-trackship-actions.php:760
+#: includes/class-wc-trackship-admin.php:436
+msgid "Use Villa Theme Email Customizer Template"
+msgstr "Χρησιμοποιήστε το πρότυπο προσαρμογής email θέματος Villa"
+
+#: includes/class-wc-trackship-actions.php:759
 msgid "User not found for this key"
 msgstr "Δεν βρέθηκε ο χρήστης για αυτό το κλειδί"
 
@@ -1551,7 +1595,7 @@ msgstr "προβολή λιγότερο"
 msgid "view more"
 msgstr "Δείτε περισσότερα"
 
-#: includes/class-wc-trackship-actions.php:968
+#: includes/class-wc-trackship-actions.php:967
 msgid "View Shipment log"
 msgstr "Προβολή αρχείου καταγραφής αποστολής"
 
@@ -1592,7 +1636,7 @@ msgid "We detected %d On Hold shipments:"
 msgstr "Εντοπίσαμε %d αποστολές σε αναμονή:"
 
 #. %s: replace with Partially Shipped order count
-#: includes/class-wc-trackship-admin.php:909
+#: includes/class-wc-trackship-admin.php:910
 #, php-format
 msgid ""
 "We detected %s orders that use the Delivered order status, You can reassign "
@@ -1603,7 +1647,7 @@ msgstr ""
 "διαφορετική κατάσταση"
 
 #. %s: search for a total_orders
-#: includes/class-wc-trackship-admin.php:550
+#: includes/class-wc-trackship-admin.php:551
 #, php-format
 msgid ""
 "We detected %s Shipments from the last 30 days that were not sent to "
@@ -1648,8 +1692,8 @@ msgstr "Διάταξη widget"
 msgid "Widget Style"
 msgstr "Στυλ γραφικών στοιχείων"
 
-#: includes/customizer/trackship-customizer.php:962
-#: includes/customizer/trackship-customizer.php:1002
+#: includes/customizer/trackship-customizer.php:969
+#: includes/customizer/trackship-customizer.php:1009
 msgid "You are customizing"
 msgstr "Προσαρμόζετε"
 
@@ -1662,7 +1706,7 @@ msgstr ""
 "Μπορείτε να επεξεργαστείτε τις πύλες SMS από το SMS για το WooCommerce "
 "%1$ssettings%2$s"
 
-#: includes/class-wc-trackship-front.php:388
+#: includes/class-wc-trackship-front.php:390
 msgid "You have been unsubscribed from shipment status emails."
 msgstr "Έχετε καταργήσει την εγγραφή σας από τα email κατάστασης αποστολής."
 
@@ -1684,7 +1728,12 @@ msgstr ""
 "Πρέπει να έχετε εγκαταστήσει μια προσθήκη Παρακολούθησης Αποστολών για να "
 "χρησιμοποιήσετε το TrackShip για WooCommerce."
 
-#: includes/class-wc-trackship-front.php:363
+#: includes/class-wc-trackship-install.php:336
+#, php-format
+msgid "Your order #%s is %s"
+msgstr "Η παραγγελία σας #%s είναι %s"
+
+#: includes/class-wc-trackship-front.php:365
 msgid ""
 "Your order is being processed, the tracking details will be available once "
 "it's Shipped."
@@ -1694,7 +1743,7 @@ msgstr ""
 "επεξεργασία, οι λεπτομέρειες παρακολούθησης θα είναι διαθέσιμες μόλις "
 "αποσταλεί."
 
-#: includes/class-wc-trackship-actions.php:161
-#: includes/smswoo/class-smswoo-admin.php:443
+#: includes/class-wc-trackship-actions.php:160
+#: includes/smswoo/class-smswoo-admin.php:446
 msgid "Your settings have been successfully saved."
 msgstr "Οι ρυθμίσεις σας αποθηκεύτηκαν με επιτυχία."
