@@ -200,7 +200,7 @@ class Trackship_For_Woocommerce {
 		require_once $this->get_plugin_path() . '/includes/shipments/class-wc-trackship-shipments.php';
 		$this->shipments = WC_Trackship_Shipments::get_instance();
 
-		require_once $this->get_plugin_path() . '/includes/logs/class-wc-trackship-logs.php';
+		require_once $this->get_plugin_path() . '/includes/ts-logs/class-wc-trackship-logs.php';
 		$this->logs = WC_Trackship_Logs::get_instance();
 
 		require_once $this->get_plugin_path() . '/includes/analytics/class-wc-trackship-analytics.php';
