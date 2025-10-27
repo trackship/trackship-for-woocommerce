@@ -22,7 +22,7 @@ class WC_TrackShip_Api_Call {
 	public function get_trackship_apicall( $order_id ) {
 		
 		$logger = wc_get_logger();
-		$context = array( 'source' => 'Trackship_apicall_error' );
+		$context = array( 'source' => 'trackship_api_call' );
 		$array = array();
 		$order = wc_get_order( $order_id );
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );

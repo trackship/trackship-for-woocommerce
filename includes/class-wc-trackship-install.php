@@ -490,6 +490,9 @@ class WC_Trackship_Install {
 			delete_option('wcast_failure_email_settings');
 			delete_option('wcast_delivered_status_email_settings');
 			delete_option('wcast_outfordelivery_email_settings');
+
+			delete_trackship_settings( 'ts_review_ignore_139' );
+			delete_trackship_settings( 'ts_popup_ignore139' );
 		}
 	}
 

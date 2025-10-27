@@ -60,8 +60,8 @@ class WC_TrackShip_Admin_Notice {
 		}
 
 		$notice_types = [
-			'ts-review-ignore'  => 'ts_review_ignore_139',
-			'ts-upgrade-ignore' => 'ts_popup_ignore139',
+			'ts-review-ignore'  => 'ts_review_ignore_141',
+			'ts-upgrade-ignore' => 'ts_popup_ignore141',
 		];
 
 		foreach ($notice_types as $param => $setting_key) {
@@ -77,11 +77,11 @@ class WC_TrackShip_Admin_Notice {
 	*/
 	public function trackship_review_notice() {
 		
-		if ( get_trackship_settings( 'ts_review_ignore_139', '') ) {
+		if ( get_trackship_settings( 'ts_review_ignore_141', '') ) {
 			return;
 		}
 
-		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) && !get_trackship_settings( 'ts_popup_ignore139', '') ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) && !get_trackship_settings( 'ts_popup_ignore141', '') ) {
 			return;
 		}
 
@@ -94,6 +94,10 @@ class WC_TrackShip_Admin_Notice {
 			padding: 12px;
 			text-decoration: none;
 		}
+		.trackship-dismissable-notice h3, .trackship-dismissable-notice p {
+			margin: 0;
+			padding-bottom: 20px;
+		}
 		.wp-core-ui .notice.trackship-dismissable-notice a.notice-dismiss{
 			padding: 9px;
 			text-decoration: none;
@@ -101,7 +105,7 @@ class WC_TrackShip_Admin_Notice {
 		</style>	
 		<div class="notice notice-success is-dismissible trackship-dismissable-notice">
 			<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
-			<p>Hi there! I hope you're enjoying the TrackShip for WooCommerce plugin and finding it valuable for your business. Your feedback is incredibly important to us, and it helps us continue to enhance and refine the plugin. If you could spare a moment, I'd be grateful if you could share your experience by leaving a review on <a href="<?php echo esc_url($url); ?>" target="_blank">WordPress.org</a>. Your insights help us grow and improve, making TrackShip even better for you and others.</p>
+			<p>Hi there!<br> I hope you're enjoying the TrackShip for WooCommerce plugin and finding it valuable for your business. Your feedback is incredibly important to us, and it helps us continue to enhance and refine the plugin. If you could spare a moment, I'd be grateful if you could share your experience by leaving a review on <a href="<?php echo esc_url($url); ?>" target="_blank">WordPress.org</a>. Your insights help us grow and improve, making TrackShip even better for you and others.</p>
 			<p>
 				Thank you for your continued support!<br>
 				Best regards,<br>
@@ -118,13 +122,13 @@ class WC_TrackShip_Admin_Notice {
 	* Display admin notice on Upgrade TrackShip plan
 	*/
 	public function trackship_upgrade_notice () {
-		if ( get_trackship_settings( 'ts_popup_ignore139', '') || !in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended', 'Free Trial' ) ) ) {
+		if ( get_trackship_settings( 'ts_popup_ignore141', '') || !in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended', 'Free Trial' ) ) ) {
 			return;
 		}
-		$target_date = strtotime('2025-05-10');
+		$target_date = strtotime('2025-10-30');
 		$current_date = current_time('timestamp');
 	
-		// If the current date is after May 10, 2025, return early
+		// If the current date is after Oct 30, 2025, return early
 		if ( $current_date > $target_date ) {
 			return;
 		}
@@ -150,7 +154,7 @@ class WC_TrackShip_Admin_Notice {
 			<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
 			<h3>Upgrade to TrackShip Pro!</h3>
 			<p>Upgrade to the Pro Plan today and unlock a suite of premium features that will take your tracking capabilities to the next level. Choose between a monthly or yearly subscription and enjoy advanced tracking benefits. With an annual plan, you can also get up to 2 months FREE!</p>
-			<p>As a special limited-time offer, use coupon code <b>TRACKSHIP10</b> at checkout to receive a 10% discount on your subscription. Don't wait—this offer is valid until May 10th!</p>
+			<p>As a special limited-time offer, use coupon code <b>TRACKSHIP10</b> at checkout to receive a 10% discount on your subscription. Don't wait—this offer is valid until October 30th!</p>
 			<a class="button button-primary" target="_blank" href="<?php echo esc_url($url); ?>" >UPGRADE NOW</a>
 			<a class="button" style="margin: 0 10px;" href="<?php echo esc_url($dismissable_url); ?>" >No thanks</a>
 		</div>

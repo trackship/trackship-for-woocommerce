@@ -2,7 +2,7 @@
 Contributors: TrackShip
 Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order tracking, tracking
 Requires at least: 6.2
-Tested up to: 6.8.2
+Tested up to: 6.8.3
 Requires PHP: 7.4
 Stable tag: 1.9.6
 License: GPLv2 
@@ -137,6 +137,17 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended.
 
 == Changelog ==
+= 1.9.7 - 2025-10-09 =
+* Enhancement - Added Japanese translation for the plugin.
+* Update - Updated translations to improve language support.
+* Update - Ensured the tracking page always fetches the latest order when a tracking number is added to multiple orders.
+* Enhancement - Added filters to allow specific HTML tags and CSS styles in admin emails (Exception, On Hold, Late Shipments).
+* Enhancement - Introduced a setting to use the Villa Theme Email Customizer template.
+* Enhancement - Replaced WooCommerce's deprecated tipTip with Dashicons for improved tooltip handling.
+* Update - Added documentation link in the Integrations section.
+* Compatibility - Verified compatibility with WooCommerce version 10.2.2.
+* Compatibility - Tested and confirmed compatibility with WordPress version 6.8.3.
+
 = 1.9.6 - 2025-07-16 =
 * Fix - Resolved a CSS issue in the Shipment Status email.
 

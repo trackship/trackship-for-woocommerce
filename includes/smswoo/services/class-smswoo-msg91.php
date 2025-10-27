@@ -22,6 +22,7 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 	class SMSWOO_Msg91 extends SMSWOO_Sms_Gateway {
 
 		public $new_status;
+		public $tracking_number;
 		public $_msg91_authkey;
 
 		/**
@@ -163,8 +164,6 @@ if ( ! class_exists( 'SMSWOO_Msg91' ) ) {
 				throw new Exception( __( 'No answer code', 'trackship-for-woocommerce' ) );
 
 			}
-
-			$this->_log[] = $response;
 
 			return;
 

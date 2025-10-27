@@ -111,7 +111,7 @@ class WC_TrackShip_Late_Shipments {
 		
 		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 			$logger = wc_get_logger();
-			$context = array( 'source' => 'trackship_late_shipments_email' );
+			$context = array( 'source' => 'trackship_admin_email' );
 			$logger->info( 'Late Shipments email not sent. Upgrade your plan', $context );
 			return;
 		}

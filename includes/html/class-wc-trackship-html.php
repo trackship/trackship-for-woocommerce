@@ -36,7 +36,7 @@ class WC_Trackship_Html {
 	public function get_multiple_select_html( $id, $array ) {
 		?>
 		<li class="multiple_select_li dis_block">
-			<label><?php esc_html_e( $array['title'] ); ?>
+			<label for="<?php echo esc_html( $id ); ?>"><?php esc_html_e( $array['title'] ); ?>
 				<?php if ( isset($array['tooltip']) ) { ?>
 					<span class="dashicons dashicons-editor-help trackship-tip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
 				<?php } ?>
@@ -98,7 +98,7 @@ class WC_Trackship_Html {
 	public function get_number_html( $id, $array ) {
 		?>
 		<li class="dis_block">
-			<label><?php esc_html_e( $array['title'] ); ?>
+			<label for="<?php echo esc_html( $id ); ?>"><?php esc_html_e( $array['title'] ); ?>
 				<?php if ( isset($array['tooltip']) ) { ?>
 					<span class="dashicons dashicons-editor-help trackship-tip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
 				<?php } ?>
@@ -111,7 +111,7 @@ class WC_Trackship_Html {
 	public function get_dropdown_tpage_html( $id, $array ) {
 		?>
 		<li class="li_<?php esc_html_e( $id ); ?>">
-			<label class="left_label"><b><?php esc_html_e( $array['title'] ); ?></b>
+			<label for="<?php echo esc_html( $id ); ?>" class="left_label"><b><?php esc_html_e( $array['title'] ); ?></b>
 				<?php if ( isset( $array['tooltip'] ) ) { ?>
 					<span class="dashicons dashicons-editor-help trackship-tip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
 				<?php } ?>
@@ -154,7 +154,7 @@ class WC_Trackship_Html {
 		?>
 		<li class="dis_block">
 			<?php if ( $array['title'] ) { ?>
-				<label class="left_label"><?php echo esc_html( $array['title'] ); ?>
+				<label for="<?php echo esc_html( $id ); ?>" class="left_label"><?php echo esc_html( $array['title'] ); ?>
 					<?php if ( isset($array['tooltip']) ) { ?>
 					<span class="dashicons dashicons-editor-help trackship-tip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
 					<?php } ?>

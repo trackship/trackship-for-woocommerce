@@ -24,6 +24,7 @@ if ( ! class_exists( 'SMSWOO_SMSAlert' ) ) {
 
 		private $_smsalert_api_key;
 		public $new_status;
+		public $tracking_number;
 
 		/**
 		 * Constructor
@@ -93,8 +94,6 @@ if ( ! class_exists( 'SMSWOO_SMSAlert' ) ) {
 				throw new Exception( $response->get_error_message() );
 
 			}
-
-			$this->_log[] = $response;
 
 			// Check for proper response / body
 			if ( ! isset( $response['response'] ) || ! isset( $response['body'] ) ) {
