@@ -44,8 +44,6 @@ class WC_TrackShip_Exception_Shipments {
 	 * @since 1.0
 	*/
 	public function init() {
-		
-		$ts_actions = new WC_Trackship_Actions();
 
 		$exception_admin_email_enable = get_trackship_settings( 'exception_admin_email_enable' );
 		
@@ -112,7 +110,7 @@ class WC_TrackShip_Exception_Shipments {
 		
 		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 			$logger = wc_get_logger();
-			$context = array( 'source' => 'trackship' );
+			$context = array( 'source' => 'trackship_admin_email' );
 			$logger->info( 'Exception Shipments email not sent. Upgrade your plan', $context );
 			return;
 		}
@@ -164,9 +162,6 @@ class WC_TrackShip_Exception_Shipments {
 		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 			return;
 		}
-		$logger = wc_get_logger();
-		$sent_to_admin = false;
-		$plain_text = false;
 
 		//Email Subject
 		$subject = __( 'Exception shipment', 'trackship-for-woocommerce' );

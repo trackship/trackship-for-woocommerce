@@ -20,6 +20,7 @@ if ( ! class_exists( 'SMSWOO_Nexmo' ) ) {
 		private $_nexmo_api_secret;
 		
 		public $new_status;
+		public $tracking_number;
 
 		/**
 		 * Constructor
@@ -92,8 +93,6 @@ if ( ! class_exists( 'SMSWOO_Nexmo' ) ) {
 
 			}
 
-			$this->_log[] = $response;
-
 			// Check for proper response / body
 			if ( ! isset( $response['response'] ) || ! isset( $response['body'] ) ) {
 
@@ -151,8 +150,6 @@ if ( ! class_exists( 'SMSWOO_Nexmo' ) ) {
 				throw new Exception( $response->get_error_message() );
 
 			}
-
-			$this->_log[] = $response;
 
 			// Check for proper response / body
 			if ( ! isset( $response['response'] ) || ! isset( $response['body'] ) ) {

@@ -69,7 +69,7 @@ class TSWC_SMSWoo_Admin {
 
 				<?php if ( 'dropdown_button' == $array['type'] ) { ?>
 					<li class="<?php echo esc_html($array['type']); ?>_row <?php echo esc_html($array['class']); ?> dis_block">
-						<label><?php esc_html_e( $array['title'] ); ?>
+						<label for="<?php echo esc_html($id); ?>"><?php esc_html_e( $array['title'] ); ?>
 							<?php if ( isset($array['tooltip']) ) { ?>
 								<span class="dashicons dashicons-editor-help trackship-tip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
 							<?php } ?>
@@ -131,7 +131,7 @@ class TSWC_SMSWoo_Admin {
 						</label>
 					<?php } ?>
 					<?php if ( 'desc' != $array['type'] ) { ?>										
-						<label for="" class=""><?php echo esc_html($array['title']); ?><?php echo isset( $array['title_link'] ) ? esc_html( $array['title_link'] ) : ''; ?>
+						<label for="<?php echo esc_html($id); ?>" class=""><?php echo esc_html($array['title']); ?><?php echo isset( $array['title_link'] ) ? esc_html( $array['title_link'] ) : ''; ?>
 							<?php if ( isset( $array['tooltip'] ) ) { ?>
 								<span class="dashicons dashicons-editor-help trackship-tip" title="<?php echo esc_html($array['tooltip']); ?>"></span>
 							<?php } ?>
