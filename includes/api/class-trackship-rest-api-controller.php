@@ -68,9 +68,15 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			update_option('trackship_apikey', $request['user_key']);
 		}
 		
-		if ( $request['trackers_balance'] ) {
-			update_option( 'trackers_balance', $request['trackers_balance'] );
-		}			
+		if ( $request['tracker_balance'] ) {
+			update_option( 'trackers_balance', $request['tracker_balance'] );
+		}
+		if ( isset( $request['subscription_plan'] ) ) {
+			update_option( 'user_plan', $request['subscription_plan'] );
+		}
+		if ( isset( $request['period'] ) ) {
+			update_option( 'plan_period', $request['period'] );
+		}
 		
 		$trackship = new WC_Trackship_Actions();
 		$trackship->create_tracking_page();
@@ -301,6 +307,8 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 	public function disconnect_from_trackship_fun( $request ) {
 		update_option( 'trackship_apikey', '' );
 		delete_option( 'trackers_balance' );
+		delete_option( 'user_plan' );
+		delete_option( 'plan_period' );
 	}
 	
 	/**

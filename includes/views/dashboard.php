@@ -2,7 +2,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-
 if ( !get_trackship_settings( 'wc_admin_notice', '') ) {
 	if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 		trackship_for_woocommerce()->wc_admin_notice->admin_notices_for_TrackShip_pro();
@@ -24,7 +23,7 @@ if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $wpdb->prefix . 'trac
 
 $late_ship_day = get_trackship_settings( 'late_shipments_days', 7);
 $days = $late_ship_day - 1 ;
-$from_date = gmdate('Y-m-d', strtotime('-30 days'));
+$from_date = gmdate('Y-m-d', strtotime('today -30 days'));
 
 $results = $wpdb->get_row($wpdb->prepare("
 SELECT
@@ -107,8 +106,11 @@ $response = wp_remote_post( $url, $args );
 $plan_data = is_wp_error( $response ) ? [] : json_decode( $response[ 'body' ] );
 $current_plan = $plan_data->subscription_plan;
 $current_balance = $plan_data->tracker_balance;
+$plan_period = $plan_data->period;
 update_option( 'user_plan', $current_plan );
 update_option( 'trackers_balance', $current_balance );
+update_option( 'plan_period', $plan_period );
+
 $nonce = wp_create_nonce( 'ts_tools');
 $store_text = in_array( $current_plan, array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ? __( 'Upgrade to Pro', 'trackship-for-woocommerce' ) : __( 'Account Dashboard', 'trackship-for-woocommerce' );
 $store_url = in_array( $current_plan, array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ? 'https://my.trackship.com/settings/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=upgrade#billing' : 'https://my.trackship.com/?utm_source=wpadmin&utm_medium=trackship&utm_campaign=dashboard';
