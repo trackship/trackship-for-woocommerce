@@ -1076,7 +1076,7 @@ button.button-primary.button-trackship.tools-ts-button {
 .p15 {
 	padding: 15px;
 }
-.trackship-notice p, .trackship-verify-table p, .trackship-update-tracking-info p {
+.trackship-notice p, .trackship-verify-table p {
 	margin: 0;
 	line-height: 35px;
 }
@@ -1655,10 +1655,14 @@ span.ts_plan_details_bottom {
 	border-top: 0;
 }
 /** End Fullfillment Dashboard **/
+/* ==========================================================
+	🔷 Iintegrations LAYOUT START
+	========================================================== */
 .ts_integrations_row {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 }
+/* Each integration box/card */
 .ts_integrations_row .ts-grid-item {
 	padding: 14px;
 	background: #ffffff;
@@ -1666,79 +1670,97 @@ span.ts_plan_details_bottom {
 	border-radius: 3px;
 	margin: 0 14px 14px 0;
 	display: flex;
+	align-items: center;
+	transition: background 0.2s ease, box-shadow 0.2s ease;
 }
-.ts_integrations_row .ts-grid-item:hover{
-	background: #f6f6f6;
+/* Hover effect for cards */
+.ts_integrations_row .ts-grid-item:hover {
+	background: #f9f9f9;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
+/* ==========================================================
+   🔷 IMAGE SECTION
+   ========================================================== */
 .ts_integration_image {
 	margin-right: 15px;
 	height: 40px;
 }
+.ts_integration_image img {
+	width: 40px;
+	height: 40px;
+	object-fit: contain;
+}
+/* ==========================================================
+   🔷 TITLE + DOCUMENTATION LINK
+   ========================================================== */
+.ts_integration_title {
+	display: flex;
+	flex-direction: column; /* title + doc stacked vertically */
+	align-items: flex-start;
+	color: #005b9a;
+	font-size: 16px;
+	font-weight: 600;
+}
+/* Documentation link under title */
+.ts_integration_doc a {
+	font-size: 13px;
+	color: #666;
+	display: inline-block;
+}
+.ts_integration_doc a:hover {
+	color: #2271b1;
+}
+/* ==========================================================
+   🔷 TOGGLE SWITCH
+   ========================================================== */
 .ts_integration_checkbox {
 	margin-left: auto;
-}
-.ts_integration_title, .ts_integration_checkbox {
 	display: flex;
 	align-items: center;
 }
-.ts_integration_title {
-	color: #005b9a;
-	font-size: 15px;
-	font-weight: 600;
-}
-
-@media(min-width: 1550px) {
-	.ts_integrations_row .ts-grid-item:nth-child(5n){
+/* ==========================================================
+   🔷 RESPONSIVE GRID (Existing Breakpoints)
+   ========================================================== */
+@media (min-width: 1550px) {
+	.ts_integrations_row .ts-grid-item:nth-child(5n) {
 		margin: 0 0 14px 0;
 	}
 }
-
-@media(min-width: 1301px) and (max-width: 1500px){
-	.ts_integrations_row{
-		display: grid;
+@media (min-width: 1100px) and (max-width: 1500px) {
+	.ts_integrations_row {
 		grid-template-columns: repeat(4, 1fr);
 	}
-	.ts_integrations_row .ts-grid-item:nth-child(4n){
+	.ts_integrations_row .ts-grid-item:nth-child(4n) {
 		margin: 0 0 14px 0;
-	}	
+	}
 }
-
-@media(min-width: 768px) and (max-width: 1100px) {
-	.ts_integrations_row{
-		display: grid;
+@media (min-width: 768px) and (max-width: 1100px) {
+	.ts_integrations_row {
 		grid-template-columns: repeat(3, 1fr);
 	}
-	.ts_integrations_row .ts-grid-item:nth-child(3n){
+	.ts_integrations_row .ts-grid-item:nth-child(3n) {
 		margin: 0 0 14px 0;
-	}	
-}
-@media(min-width: 1100px) and (max-width: 1300px) {
-	.ts_integrations_row{
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
 	}
 }
-
-@media(min-width: 500px) and (max-width: 767px) {
-	.ts_integrations_row{
-		display: grid;
+@media (min-width: 500px) and (max-width: 767px) {
+	.ts_integrations_row {
 		grid-template-columns: repeat(2, 1fr);
 	}
-	.ts_integrations_row .ts-grid-item:nth-child(2n){
+	.ts_integrations_row .ts-grid-item:nth-child(2n) {
 		margin: 0 0 14px 0;
-	}	
+	}
 }
-
-@media(max-width: 499px) {
-	.ts_integrations_row{
-		display: grid;
+@media (max-width: 499px) {
+	.ts_integrations_row {
 		grid-template-columns: repeat(1, 1fr);
 	}
-	.ts_integrations_row .ts-grid-item:nth-child(1n){
+	.ts_integrations_row .ts-grid-item:nth-child(1n) {
 		margin: 0 0 14px 0;
-	}	
+	}
 }
-
+/* ==========================================================
+	🔷 Iintegrations LAYOUT END
+	========================================================== */
 
 @media (min-width: 992px) {
 .col-lg-6 {

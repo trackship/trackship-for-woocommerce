@@ -49,17 +49,9 @@ class WC_Trackship_Install {
 		if ( version_compare( get_option( 'trackship_db' ), '1.0', '<' ) ) {
 			update_trackship_settings( 'ts_tracking_page', 1 );
 
-			$availableforpickup_data = get_option( 'wcast_availableforpickup_email_settings', array() );
-			$availableforpickup_data['wcast_enable_availableforpickup_email'] = 1;
-			update_option( 'wcast_availableforpickup_email_settings', $availableforpickup_data );
-
-			$outfordelivery_data = get_option( 'wcast_outfordelivery_email_settings', array() );
-			$outfordelivery_data['wcast_enable_outfordelivery_email'] = 1;
-			update_option( 'wcast_outfordelivery_email_settings', $outfordelivery_data );
-
-			$delivered_data = get_option( 'wcast_delivered_status_email_settings', array() );
-			$delivered_data['wcast_enable_delivered_status_email'] = 1;
-			update_option( 'wcast_delivered_status_email_settings', $delivered_data );
+			update_trackship_email_settings( 'available_for_pickup', 'enable', 1 );
+			update_trackship_email_settings( 'out_for_delivery', 'enable', 1 );
+			update_trackship_email_settings( 'delivered', 'enable', 1 );
 
 			$this->create_shipping_provider_table();
 			$this->update_shipping_providers();
@@ -69,30 +61,7 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.0' );
 		}
 
-		if ( version_compare( get_option( 'trackship_db' ), '1.13', '<' ) ) {
-			// migration to change api key name 
-			$trackship_apikey = get_option( 'wc_ast_api_key' );
-			update_option( 'trackship_apikey', $trackship_apikey );
-			update_option( 'trackship_db', '1.13' );
-		}
-
 		global $wpdb;
-		if ( version_compare( get_option( 'trackship_db' ), '1.16', '<' ) ) {
-			$result = $wpdb->get_col(
-				"SELECT t.order_id FROM {$wpdb->prefix}trackship_shipment t
-				LEFT JOIN {$wpdb->prefix}trackship_shipment_meta m
-				ON t.id = m.meta_id
-				WHERE (m.tracking_events IS NULL OR m.tracking_events = '')
-					AND t.shipping_date >= DATE_SUB(NOW(), INTERVAL 60 DAY)
-				GROUP BY t.order_id
-				LIMIT 2000"
-			);
-			if ( $result ) {
-				update_trackship_settings( 'old_user', true );
-			}
-			update_option( 'trackship_db', '1.16' );
-		}
-		
 		if ( version_compare( get_option( 'trackship_db' ), '1.19', '<' ) ) {
 			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment CHANGE shipping_date shipping_date DATE NULL" );
 			$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment_meta MODIFY COLUMN shipping_service varchar(60);" );
@@ -104,11 +73,7 @@ class WC_Trackship_Install {
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.20', '<' ) ) {
-			$valid_order_statuses = get_option( 'trackship_trigger_order_statuses', ['completed', 'partial-shipped', 'shipped'] );
-			if ( $valid_order_statuses ) {
-				update_trackship_settings( 'trackship_trigger_order_statuses', $valid_order_statuses );
-			}
-
+			
 			$wc_ts_shipment_status_filter = get_option( 'wc_ast_show_shipment_status_filter' );
 			if ( $wc_ts_shipment_status_filter ) {
 				update_trackship_settings( 'wc_ts_shipment_status_filter', $wc_ts_shipment_status_filter );
@@ -174,16 +139,6 @@ class WC_Trackship_Install {
 			}
 			delete_option( 'late_shipments_email_settings' );
 			update_option( 'trackship_db', '1.21' );
-		}
-
-		if ( version_compare( get_option( 'trackship_db' ), '1.22', '<' ) ) {
-			$status = get_trackship_settings( 'trackship_trigger_order_statuses' );
-			if ( !$status ) {
-				update_trackship_settings( 'trackship_trigger_order_statuses', ['completed', 'partial-shipped', 'shipped'] );
-			}
-
-			update_trackship_settings( 'trackship_db', '1.22' );
-			update_option( 'trackship_db', '1.22' );
 		}
 
 		if ( version_compare( get_option( 'trackship_db' ), '1.23', '<' ) ) {
@@ -268,16 +223,6 @@ class WC_Trackship_Install {
 			update_option( 'trackship_db', '1.26' );
 		}
 
-		if ( version_compare( get_option( 'trackship_db' ), '1.29', '<' ) ) {
-			update_trackship_settings( 'trackship_db', '1.29' );
-			update_option( 'trackship_db', '1.29' );
-
-			delete_trackship_settings( 'review_notice_ignore' );
-			delete_trackship_settings( 'trackship_upgrade_ignore' );
-			delete_trackship_settings( 'klaviyo_notice_ignore' );
-			delete_trackship_settings( 'ts_upgrade_ignore' );
-		}
-
 		if ( version_compare( get_option( 'trackship_db' ), '1.30', '<' ) ) {
 			update_trackship_settings( 'trackship_db', '1.30' );
 			update_option( 'trackship_db', '1.30' );
@@ -341,14 +286,7 @@ class WC_Trackship_Install {
 		if ( version_compare( get_option( 'trackship_db' ), '1.37', '<' ) ) {
 			update_trackship_settings( 'trackship_db', '1.37' );
 			update_option( 'trackship_db', '1.37' );
-			// create first_event_time column in trackship_shipment table
-			$this->create_shipment_table();
-			$this->create_shipment_meta_table();
-			$this->check_column_exists();
-
-			$this->create_shipping_provider_table();
-			$this->update_shipping_providers();
-
+			
 			delete_trackship_settings( 'ts_review_ignore_136' );
 			delete_trackship_settings( 'ts_popup_ignore136' );
 		}
@@ -511,26 +449,19 @@ class WC_Trackship_Install {
 			update_trackship_email_settings( 'common_settings', 'shipped_product_label', $shipped_product_label );
 			update_trackship_email_settings( 'common_settings', 'shipping_address_label', $shipping_address_label );
 
-			// delete_option('tracking_form_settings'); // add this code in future version
-			// delete_option('shipment_email_settings'); // add this code in future version
-			// delete_option('shipped_product_label'); // add this code in future version
-			// delete_option('shipping_address_label'); // add this code in future version
-			// delete_option('wcast_pickupreminder_email_settings'); // add this code in future version
-			// delete_option('wcast_intransit_email_settings'); // add this code in future version
-			// delete_option('wcast_returntosender_email_settings'); // add this code in future version
-			// delete_option('wcast_availableforpickup_email_settings'); // add this code in future version
-			// delete_option('wcast_exception_email_settings'); // add this code in future version
-			// delete_option('wcast_onhold_email_settings'); // add this code in future version
-			// delete_option('wcast_failure_email_settings'); // add this code in future version
-			// delete_option('wcast_delivered_status_email_settings'); // add this code in future version
-			// delete_option('wcast_outfordelivery_email_settings'); // add this code in future version
 		}
 
-		// TS4WC version 1.9.4
-		if ( version_compare( get_option( 'trackship_db' ), '1.40', '<' ) ) {
-			update_trackship_settings( 'trackship_db', '1.40' );
-			update_option( 'trackship_db', '1.40' );
+		// TS4WC version 1.9.7
+		if ( version_compare( get_option( 'trackship_db' ), '1.41', '<' ) ) {
+			update_trackship_settings( 'trackship_db', '1.41' );
+			update_option( 'trackship_db', '1.41' );
+			$this->create_shipment_table();
+			$this->create_shipment_meta_table();
+			$this->check_column_exists();
 
+			$this->create_shipping_provider_table();
+			$this->update_shipping_providers();
+			
 			// Indexes to check and create
 			$indexes_to_check = [
 				'last_event' => 'ADD INDEX `last_event` (`last_event`(100))',
@@ -544,6 +475,24 @@ class WC_Trackship_Install {
 					$wpdb->query( "ALTER TABLE {$wpdb->prefix}trackship_shipment {$value}" );
 				}
 			}
+			update_trackship_settings( 'ts_use_villa_email_template', 1 );
+
+			delete_option('tracking_form_settings');
+			delete_option('shipment_email_settings');
+			delete_option('shipped_product_label');
+			delete_option('shipping_address_label');
+			delete_option('wcast_pickupreminder_email_settings');
+			delete_option('wcast_intransit_email_settings');
+			delete_option('wcast_returntosender_email_settings');
+			delete_option('wcast_availableforpickup_email_settings');
+			delete_option('wcast_exception_email_settings');
+			delete_option('wcast_onhold_email_settings');
+			delete_option('wcast_failure_email_settings');
+			delete_option('wcast_delivered_status_email_settings');
+			delete_option('wcast_outfordelivery_email_settings');
+
+			delete_trackship_settings( 'ts_review_ignore_139' );
+			delete_trackship_settings( 'ts_popup_ignore139' );
 		}
 	}
 

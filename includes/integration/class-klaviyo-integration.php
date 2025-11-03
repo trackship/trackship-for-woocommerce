@@ -38,25 +38,12 @@ class WOO_Klaviyo_TS4WC {
 	*/
 	public function init() {
 		add_action( 'trackship_shipment_status_trigger', array( $this, 'ts_status_change_callback'), 10, 4 );
-		add_action( 'klaviyo_hoook', array( $this, 'klaviyo_callback'), 10, 4 );
-	}
-
-	public function ts_status_change_callback ( $order_id, $old_status, $new_status, $tracking_number ) {
-		$timestamp = time() + 3;
-		$hook = 'klaviyo_hoook';
-		$args = array(
-			'order_id'			=> $order_id,
-			'old_status'		=> $old_status,
-			'new_status'		=> $new_status,
-			'tracking_number'	=> $tracking_number
-		);
-		as_schedule_single_action( $timestamp, $hook, $args, 'TrackShip klaviyo' );
 	}
 	
 	/**
 	 * Schedule action callback for integrately_callback
 	 */
-	public function klaviyo_callback( $order_id, $old_status, $new_status, $tracking_number ) {
+	public function ts_status_change_callback( $order_id, $old_status, $new_status, $tracking_number ) {
 
 		if ( !get_trackship_settings( 'klaviyo', '') ) {
 			return;

@@ -22,7 +22,7 @@ class WC_TrackShip_Api_Call {
 	public function get_trackship_apicall( $order_id ) {
 		
 		$logger = wc_get_logger();
-		$context = array( 'source' => 'Trackship_apicall_error' );
+		$context = array( 'source' => 'trackship_api_call' );
 		$array = array();
 		$order = wc_get_order( $order_id );
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
@@ -37,7 +37,7 @@ class WC_TrackShip_Api_Call {
 				}
 				$row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id, $tracking_number );
 
-				if ( isset($row->shipment_status) && 'delivered' == $row->shipment_status && !get_trackship_settings( 'ts_migration' ) ) {
+				if ( isset($row->shipment_status) && 'delivered' == $row->shipment_status ) {
 					continue;
 				}
 				
@@ -56,7 +56,7 @@ class WC_TrackShip_Api_Call {
 
 				//do api call to TrackShip
 				$response = $this->get_trackship_data( $order, $tracking_number, $tracking_provider );
-				
+
 				if ( is_wp_error( $response ) ) {
 					$error_message = $response->get_error_message();
 					$logger->error( "Something went wrong: {$error_message} For Order id :" . $order->get_id(), $context );
@@ -66,7 +66,7 @@ class WC_TrackShip_Api_Call {
 					$args = array( $order->get_id() );
 					$hook = 'trackship_tracking_apicall';
 					as_schedule_single_action( $timestamp, $hook, $args );
-					
+
 					$args = array(
 						'pending_status'	=> 'Something went wrong',
 						'shipping_provider'	=> $tracking_provider,
@@ -91,6 +91,9 @@ class WC_TrackShip_Api_Call {
 						}
 						if ( isset( $body['user_plan'] ) ) {
 							update_option( 'user_plan', $body['user_plan'] );
+						}
+						if ( isset( $body['period'] ) ) {
+							update_option( 'plan_period', $body['period'] );
 						}
 						
 						$ts_shipment_status = $order->get_meta( 'ts_shipment_status', true );
@@ -129,7 +132,7 @@ class WC_TrackShip_Api_Call {
 		}
 		return $array;
 	}
-	
+
 	/*
 	* Get trackship shipment data
 	*/

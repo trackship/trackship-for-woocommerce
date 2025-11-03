@@ -45,8 +45,6 @@ class WC_TrackShip_On_Hold_Shipments {
 	*/
 	public function init() {
 
-		$ts_actions = new WC_Trackship_Actions();
-
 		$on_hold_admin_email_enable = get_trackship_settings( 'on_hold_admin_email_enable' );
 
 		if ( !$on_hold_admin_email_enable || ! is_trackship_connected() ) {
@@ -112,7 +110,7 @@ class WC_TrackShip_On_Hold_Shipments {
 
 		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 			$logger = wc_get_logger();
-			$context = array( 'source' => 'trackship' );
+			$context = array( 'source' => 'trackship_admin_email' );
 			$logger->info( 'On Hold Shipments email not sent. Upgrade your plan', $context );
 			return;
 		}
@@ -164,9 +162,6 @@ class WC_TrackShip_On_Hold_Shipments {
 		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
 			return;
 		}
-		$logger = wc_get_logger();
-		$sent_to_admin = false;
-		$plain_text = false;
 
 		//Email Subject
 		$subject = __( 'On Hold shipment', 'trackship-for-woocommerce' );
@@ -184,6 +179,9 @@ class WC_TrackShip_On_Hold_Shipments {
 		// create a new email
 		$email = new WC_Email();
 
+		add_filter( 'wp_kses_allowed_html', array( trackship_admin_customizer(), 'my_allowed_tags' ) );
+		add_filter( 'safe_style_css', array( trackship_admin_customizer(), 'safe_style_css_callback' ), 10, 1 );
+		
 		// wrap the content with the email template and then add styles
 		$email_content = apply_filters( 'woocommerce_mail_content', $email->style_inline( $mailer->wrap_message( $email_heading, $email_content ) ) );
 

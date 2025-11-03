@@ -1,4 +1,4 @@
-(function ($, data, wp, ajaxurl) {
+(function ($, data, ajaxurl) {
 
 	var trackship_js = {
 
@@ -104,7 +104,7 @@
 		trackship_js.init();
 	});
 
-})(jQuery, trackship_script, wp, ajaxurl);
+})(jQuery, trackship_script, ajaxurl);
 
 jQuery(document).ready(function () {
 	jQuery(".trackship-tip").tipTip();
@@ -130,16 +130,12 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 jQuery(document).ready(function () {
 	'use strict';
-	var auto = jQuery('.trackship-update-tracking-info .bulk_migration').data('auto');
 	jQuery('.inner_tab_input:checked').trigger('click');
 	jQuery('.tab_input:checked').trigger('click');
 	jQuery('.map-provider-table .select2').select2();
 	jQuery('.accordion_container .heading_panel.checked').trigger('click');
 	jQuery('.verify_database_table.checked').trigger('click');
 
-	if ( 'yes' == auto ) {
-		jQuery('.trackship-update-tracking-info .bulk_migration').trigger('click');
-	}
 	if ( ! jQuery('.map-provider-table tbody').find('tr').length ) {
 		jQuery(".map-provider-table .ptw_provider_border").hide();
 	}
@@ -685,27 +681,6 @@ jQuery(document).on("click", ".trackship-verify-table .verify_database_table", f
 			urlParams.delete('verify-db'); // Remove the 'verify-db' parameter
 			var newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + urlParams.toString(); // Construct the new URL without 'verify-db'
 			window.history.pushState({ path: newUrl }, '', newUrl);
-		},
-		error: function (response, jqXHR, exception) {
-			trackship_js_error(response, jqXHR, exception)
-		}
-	});
-	return false;
-});
-
-jQuery(document).on("click", ".trackship-update-tracking-info .bulk_migration", function () {
-	var ajax_data = {
-		action: 'ts_bulk_migration',
-		security: jQuery('#ts_tools').val()
-	};
-	jQuery.ajax({
-		url: ajaxurl,
-		data: ajax_data,
-		type: 'POST',
-		dataType: "json",
-		success: function (response) {
-			jQuery(document).trackship_snackbar('Migration is currently in progress.');
-			jQuery('.trackship_migration_notice, .tools_tab .trackship-update-tracking-info').hide();
 		},
 		error: function (response, jqXHR, exception) {
 			trackship_js_error(response, jqXHR, exception)

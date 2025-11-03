@@ -120,7 +120,6 @@ class WC_Trackship_Actions {
 		//run cron action
 		add_action( 'wcast_retry_trackship_apicall', array( $this, 'trigger_trackship_apicall' ) );
 		add_action( 'trackship_tracking_apicall', array( $this, 'trigger_trackship_apicall' ) );
-		add_action( 'remove_ts_temp_key', array( $this, 'remove_ts_temp_key' ) );
 		
 		$valid_order_statuses = get_trackship_settings( 'trackship_trigger_order_statuses', ['completed', 'partial-shipped', 'shipped'] );
 		foreach ( $valid_order_statuses as $order_status ) {
@@ -129,7 +128,7 @@ class WC_Trackship_Actions {
 		}
 		
 		add_action( 'admin_init', array( $this, 'register_scheduled_cron') );
-		
+
 		// filter from AST to change Tracking page link
 		add_filter( 'ast_tracking_link', array( $this, 'ast_tracking_link' ), 10, 4 );
 
@@ -153,7 +152,7 @@ class WC_Trackship_Actions {
 
 		wp_register_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.min.js', array( 'jquery' ), WC_VERSION, true );
 		wp_register_script( 'jquery-blockui', WC()->plugin_url() . '/assets/js/jquery-blockui/jquery.blockUI' . $suffix . '.js', array( 'jquery' ), '2.70', true );
-		wp_register_script( 'trackship_script', trackship_for_woocommerce()->plugin_dir_url() . 'assets/js/trackship.js', array( 'jquery', 'wp-util' ), trackship_for_woocommerce()->version );
+		wp_register_script( 'trackship_script', trackship_for_woocommerce()->plugin_dir_url() . 'assets/js/trackship.js', array( 'jquery' ), trackship_for_woocommerce()->version );
 		wp_register_script( 'smswoo_ts', trackship_for_woocommerce()->plugin_dir_url() . 'assets/js/smswoo_ts.js', array( 'jquery', 'wp-util' ), trackship_for_woocommerce()->version );
 
 		wp_localize_script( 'trackship_script', 'trackship_script', array(
@@ -231,7 +230,7 @@ class WC_Trackship_Actions {
 		if ( ! wp_next_scheduled( 'scheduled_cron_shipment_length' ) ) {
 			wp_schedule_event( time(), 'daily', 'scheduled_cron_shipment_length' );
 		}
-		
+
 		$hooks = array(
 			'late_shipments_digest_time'		=> 'trackship_late_shipments_hook',
 			'exception_shipments_digest_time'	=> 'trackship_exception_shipments_hook',
@@ -253,7 +252,7 @@ class WC_Trackship_Actions {
 			}
 		}
 	}
-	
+
 	/*
 	* Set shipment length
 	*/
@@ -1188,7 +1187,7 @@ class WC_Trackship_Actions {
 	public function check_order_status( $bool, $order ) {
 		$valid_order_statuses = get_trackship_settings( 'trackship_trigger_order_statuses', ['completed', 'partial-shipped', 'shipped'] );
 		$bool = in_array( $order->get_status(), $valid_order_statuses );
-		$bool = get_trackship_settings( 'ts_migration' ) && 'delivered' == $order->get_status() ? true : $bool;
+		$bool = 'delivered' == $order->get_status() ? true : $bool;
 		return $bool;
 	}
 
@@ -1258,10 +1257,6 @@ class WC_Trackship_Actions {
 		}
 	}
 
-	public function remove_ts_temp_key() {
-		delete_trackship_settings( 'ts_migration' );
-	}
-	
 	/*
 	* trigger when order status changed to shipped or completed or update tracking
 	* param $order_id
@@ -1518,7 +1513,7 @@ class WC_Trackship_Actions {
 		}
 		return $query;
 	}
-	
+
 	public function update_notification_table ( $args ) {
 		$install = WC_Trackship_Install::get_instance();
 		$install->create_email_log_table();

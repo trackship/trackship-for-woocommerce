@@ -23,6 +23,8 @@ if ( ! class_exists( 'SMSWOO_Fast2sms' ) ) {
 	class SMSWOO_Fast2sms extends SMSWOO_Sms_Gateway {
 
 		private $_fast2sms_api_key;
+		public $new_status;
+		public $tracking_number;
 
 		/**
 		 * Constructor
@@ -96,8 +98,6 @@ if ( ! class_exists( 'SMSWOO_Fast2sms' ) ) {
 				throw new Exception( $response->get_error_message() );
 
 			}
-
-			$this->_log[] = $response;
 
 			// Check for proper response / body
 			if ( ! isset( $response['response'] ) || ! isset( $response['body'] ) ) {

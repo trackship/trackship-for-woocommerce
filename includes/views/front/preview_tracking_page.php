@@ -169,8 +169,8 @@
 							</li>
 						</ul>							
 					</div>
-					<a class="view_old_details view_more_class" href="javaScript:void(0);" style="display: inline;"><?php esc_html_e( 'view more', 'trackship-for-woocommerce' ); ?></a>
-					<a class="hide_old_details view_more_class" href="javaScript:void(0);" style="display: none;"><?php esc_html_e( 'view less', 'trackship-for-woocommerce' ); ?></a>
+					<span class="view_old_details view_more_class" style="display: inline;"><?php esc_html_e( 'view more', 'trackship-for-woocommerce' ); ?></span>
+					<span class="hide_old_details view_more_class" style="display: none;"><?php esc_html_e( 'view less', 'trackship-for-woocommerce' ); ?></span>
 				</div>
 			</div>
 			<div data-label="product_details" class="heading_panel">

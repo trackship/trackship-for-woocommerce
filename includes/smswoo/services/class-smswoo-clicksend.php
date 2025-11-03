@@ -18,6 +18,7 @@ if ( ! class_exists( 'SMSWOO_Clicksend' ) ) {
 		private $_clicksend_username;
 		private $_clicksend_key;
 		public $new_status;
+		public $tracking_number;
 		
 		/**
 		* Constructor
@@ -82,8 +83,6 @@ if ( ! class_exists( 'SMSWOO_Clicksend' ) ) {
 			if ( is_wp_error( $response ) ) {
 				throw new Exception( $response->get_error_message() );
 			}
-
-			$this->_log[] = $response;
 
 			// Check for proper response / body
 			if ( ! isset( $response['response'] ) || ! isset( $response['body'] ) ) {

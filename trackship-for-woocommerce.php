@@ -2,14 +2,14 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 1.9.6
+ * Version: 1.9.7
  * Author: TrackShip
  * Author URI: https://trackship.com/
  * License: GPL-2.0+
  * License URI: 
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
- * WC tested up to: 10.0.2
+ * WC tested up to: 10.3.4
  * Requires Plugins: woocommerce
 */
 
@@ -24,7 +24,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.9.6';
+	public $version = '1.9.7';
 	public $plugin_path;
 	public $ts_install;
 	public $ts_actions;
@@ -200,7 +200,7 @@ class Trackship_For_Woocommerce {
 		require_once $this->get_plugin_path() . '/includes/shipments/class-wc-trackship-shipments.php';
 		$this->shipments = WC_Trackship_Shipments::get_instance();
 
-		require_once $this->get_plugin_path() . '/includes/logs/class-wc-trackship-logs.php';
+		require_once $this->get_plugin_path() . '/includes/ts-logs/class-wc-trackship-logs.php';
 		$this->logs = WC_Trackship_Logs::get_instance();
 
 		require_once $this->get_plugin_path() . '/includes/analytics/class-wc-trackship-analytics.php';
@@ -368,6 +368,21 @@ class Trackship_For_Woocommerce {
 		}
 
 		return is_plugin_active( 'omnisend-connect/omnisend-woocommerce.php' ) ? true : false;
+	}
+
+	/**
+	 * Check if Villa Theme Email customizer(VITEC) is active
+	 *
+	 * @since 1.9.7
+	 * @return bool
+	*/
+	public function is_active_villa_TEC() {
+		
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		}
+
+		return is_plugin_active( 'email-template-customizer-for-woo/email-template-customizer-for-woo.php' ) || is_plugin_active( 'woocommerce-email-template-customizer/woocommerce-email-template-customizer.php' ) ? true : false;
 	}
 
 	/**

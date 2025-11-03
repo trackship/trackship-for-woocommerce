@@ -111,8 +111,7 @@ if ( ! class_exists( 'WhatsApp_Business' ) ) {
 			if ( is_wp_error( $response ) ) {
 				throw new Exception( $response->get_error_message() );
 			}
-			
-			$this->_log[] = $response;
+
 			$body = wp_remote_retrieve_body( $response );
 			$bodyArray = json_decode( $body, true );
 

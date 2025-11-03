@@ -38,6 +38,7 @@ jQuery(document).ready(function() {
 		"pageLength":25,
 		"drawCallback": function(settings) {
 			jQuery(window).resize();
+			jQuery(".trackship-tip").tipTip();
 			jQuery("#trackship_notifications_logs").unblock();
 		},
 		oLanguage: {
@@ -62,13 +63,13 @@ jQuery(document).ready(function() {
 				"width": "185px",
 				'orderable': false,
 				"mRender":function(data,type,full) {
-					var condi_time = '<time title="' + full.date.time1 + '">' + full.date.time2 + '</time>';
+					var condi_time = '<time class="trackship-tip" title="' + full.date.time1 + '">' + full.date.time2 + '</time>';
 					if ( 60 > full.date.time_diff ) {
-						var condi_time = '<time title="' + full.date.time1 + '">' + full.date.time_diff + ' seconds ago</time>';
+						var condi_time = '<time class="trackship-tip" title="' + full.date.time1 + '">' + full.date.time_diff + ' seconds ago</time>';
 					} else if ( 3600 > full.date.time_diff ) {
-						var condi_time = '<time title="' + full.date.time1 + '">' + Math.floor( full.date.time_diff/60 ) + ' mins ago</time>';
+						var condi_time = '<time class="trackship-tip" title="' + full.date.time1 + '">' + Math.floor( full.date.time_diff/60 ) + ' mins ago</time>';
 					} else if ( 60*60*24 > full.date.time_diff ) {
-						var condi_time = '<time title="' + full.date.time1 + '">' + Math.floor( full.date.time_diff/( 60*60 ) ) + ' hours ago</time>';
+						var condi_time = '<time class="trackship-tip" title="' + full.date.time1 + '">' + Math.floor( full.date.time_diff/( 60*60 ) ) + ' hours ago</time>';
 					}
 					return condi_time;
 				},

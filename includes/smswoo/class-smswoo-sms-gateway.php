@@ -30,10 +30,6 @@ if ( ! class_exists( 'SMSWOO_Sms_Gateway' ) ) {
 
 		protected $_from_asid;
 
-		protected $_log;
-
-		protected $_logger;
-
 		/**
 		 * Constructor
 		 *
@@ -45,8 +41,6 @@ if ( ! class_exists( 'SMSWOO_Sms_Gateway' ) ) {
 			$this->_from_asid = substr( get_option( 'smswoo_from_asid' ), 0, 11 );
 			//$this->_from_number = preg_replace( '[\D]', '', get_option( 'smswoo_sender_phone_number' ) );
 			$this->_from_number = get_option( 'smswoo_sender_phone_number' );
-			
-			$this->_logger	= wc_get_logger();
 
 		}
 
@@ -99,6 +93,7 @@ if ( ! class_exists( 'SMSWOO_Sms_Gateway' ) ) {
 				return;
 			}
 
+			$logger = wc_get_logger();
 			$context = array( 'source' => 'ts4wc-sms' );
 
 			$log = strtoupper( ( 'test' != $args['type'] ? 'Order #' . $args['order'] . ' - ' : '' ) . $args['type'] . ' MESSAGE' ) . "\r\n";
@@ -107,9 +102,9 @@ if ( ! class_exists( 'SMSWOO_Sms_Gateway' ) ) {
 			$log .= 'Message: ' . $args['message'] . "\r\n";
 
 			if ( $args['success'] ) {
-				$this->_logger->info( $log, $context );
+				$logger->info( $log, $context );
 			} else {
-				$this->_logger->error( $log, $context );
+				$logger->error( $log, $context );
 			}
 		}
 	}

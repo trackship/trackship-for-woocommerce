@@ -49,7 +49,6 @@ class WC_Trackship_Admin {
 		add_action( 'wp_ajax_remove_tracking_event', array( $this, 'remove_tracking_event' ) );
 		add_action( 'wp_ajax_remove_trackship_logs', array( $this, 'remove_trackship_logs' ) );
 		add_action( 'wp_ajax_verify_database_table', array( $this, 'verify_database_table' ) );
-		add_action( 'wp_ajax_ts_bulk_migration', array( $this, 'ts_bulk_migration' ) );
 		add_action( 'wp_ajax_trackship_mapping_form_update', array( $this, 'trackship_custom_mapping_form_update') );
 		add_action( 'wp_ajax_trackship_integration_form_update', array( $this, 'trackship_integration_form_update_cb') );
 
@@ -428,6 +427,16 @@ class WC_Trackship_Admin {
 				'title'		=> __( 'Enable shipment status notification for order created by Amazon', 'trackship-for-woocommerce' ),
 				'show'		=> true,
 				'class'		=> '',
+			);
+		}
+
+		if ( trackship_for_woocommerce()->is_active_villa_TEC() ) {
+			$form_data[ 'ts_use_villa_email_template' ] = array(
+				'type'		=> 'tgl_checkbox',
+				'title'		=> __( 'Use Villa Theme Email Customizer Template', 'trackship-for-woocommerce' ),
+				'show'		=> true,
+				'class'		=> '',
+				'tooltip'	=> __( "If you disable it, TrackShip emails will use the WooCommerce default design instead of the Villa theme's customized email layout.", 'trackship-for-woocommerce' ),
 			);
 		}
 		
@@ -1064,33 +1073,6 @@ class WC_Trackship_Admin {
 		$install->create_email_log_table();
 		$install->check_column_exists();
 
-		wp_send_json( array( 'success' => 'true' ) );
-	}
-
-	public function ts_bulk_migration() {
-		check_ajax_referer( 'ts_tools', 'security' );
-
-		global $wpdb;
-		$orderids = $wpdb->get_col(
-			"SELECT t.order_id FROM {$wpdb->prefix}trackship_shipment t
-			LEFT JOIN {$wpdb->prefix}trackship_shipment_meta m
-			ON t.id = m.meta_id
-			WHERE (m.tracking_events IS NULL OR m.tracking_events = '')
-				AND t.shipping_date >= DATE_SUB(NOW(), INTERVAL 60 DAY)
-			GROUP BY t.order_id
-			LIMIT 2000"
-		);
-
-		if ( $orderids ) {
-			update_trackship_settings( 'ts_migration', true );
-		}
-
-		foreach ( ( array ) $orderids as $order_id ) {
-			trackship_for_woocommerce()->actions->set_temp_pending( $order_id );
-			as_schedule_single_action( time() + 1, 'trackship_tracking_apicall', array( $order_id ) );
-		}
-		as_schedule_single_action( time() + 3600*60, 'remove_ts_temp_key' );
-		delete_trackship_settings( 'old_user' );
 		wp_send_json( array( 'success' => 'true' ) );
 	}
 

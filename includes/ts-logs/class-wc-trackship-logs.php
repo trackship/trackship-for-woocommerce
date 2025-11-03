@@ -59,8 +59,7 @@ class WC_Trackship_Logs {
 			return;
 		}
 		
-		wp_enqueue_style( 'trackship_log_styles', trackship_for_woocommerce()->plugin_dir_url() . '/includes/logs/assets/logs.css', array(), trackship_for_woocommerce()->version );
-		wp_enqueue_script( 'trackship_log_script', trackship_for_woocommerce()->plugin_dir_url() . '/includes/logs/assets/logs.js', array( 'jquery' ), trackship_for_woocommerce()->version, true );
+		wp_enqueue_script( 'trackship_log_script', trackship_for_woocommerce()->plugin_dir_url() . '/includes/ts-logs/assets/logs.js', array( 'jquery' ), trackship_for_woocommerce()->version, true );
 
 	}
 

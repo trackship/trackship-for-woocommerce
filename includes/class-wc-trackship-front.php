@@ -220,7 +220,7 @@ class WC_TrackShip_Front {
 		if ( isset( $_GET['tracking'] ) ) {
 			global $wpdb;
 			$tracking_number = wc_clean( $_GET[ 'tracking' ] );
-			$order_id = $wpdb->get_var( $wpdb->prepare( "SELECT order_id FROM {$wpdb->prefix}trackship_shipment WHERE tracking_number = %s", $tracking_number ) );
+			$order_id = $wpdb->get_var( $wpdb->prepare( "SELECT order_id FROM {$wpdb->prefix}trackship_shipment WHERE tracking_number = %s ORDER BY id DESC", $tracking_number ) );
 			$order = wc_get_order( $order_id );
 			if ( empty( $order ) ) {
 				$error = new WP_Error( 'ts4wc', __( 'Unable to locate the order.', 'trackship-for-woocommerce' ) );
@@ -235,20 +235,19 @@ class WC_TrackShip_Front {
 
 			ob_start();
 			$this->track_form_template();
-			$form = ob_get_clean();	
-			return $form;
+			return ob_get_clean();
 
 		} else {
-
+			
 			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
+			ob_start();
 			if ( !$tracking_items ) {
-				unset( $order_id );
+				$this->track_form_template();
+			} else {
+				echo esc_html( $this->display_tracking_page( $order_id, $tracking_items ) );
 			}
 
-			ob_start();
-			echo esc_html( $this->display_tracking_page( $order_id, $tracking_items ) );
-			$form = ob_get_clean();
-			return $form;
+			return ob_get_clean();
 		}
 	}
 	
@@ -793,7 +792,6 @@ class WC_TrackShip_Front {
 				'product_qty' => $item->get_quantity(),
 			);
 		}
-
 		$products = apply_filters( 'tracking_widget_product_array', $products, $order_id, $tracker, $tracking_provider, $tracking_number );
 
 		?>
@@ -807,6 +805,8 @@ class WC_TrackShip_Front {
 					$image = $_product->get_image( $image_size );
 					// echo esc_html($image);
 					echo '<li>' . wp_kses_post( $image ) . '<span><a target="_blank" href=' . esc_url( get_permalink( $product['product_id'] ) ) . '>' . esc_html( $product['product_name'] ) . '</a> x ' . esc_html( $product['product_qty'] ) . '</span></li>';
+				} else {
+					echo '<li><span>' . esc_html( $product['product_name'] ) . ' x ' . esc_html( $product['product_qty'] ) . '</span></li>';
 				}
 			}
 			?>
@@ -867,7 +867,6 @@ class WC_TrackShip_Front {
 
 		foreach ( $tracking_items as $tracking_item ) {
 			if ( $tracking_item['tracking_number'] == $tracking_number ) {
-				
 				if ( !isset( $tracking_item['products_list'] ) ) {
 					return $products;
 				}
@@ -877,16 +876,16 @@ class WC_TrackShip_Front {
 				}
 
 				foreach ( (array) $tracking_item[ 'products_list' ] as $product_list ) {
-					if ( $product_list->product ) {
-						$product = wc_get_product( $product_list->product );
-						if ( $product ) {
-							$tpi_products[] = array(
-								'product_id' => $product_list->product,
-								'product_name' => $product->get_name(),
-								'product_qty' => $product_list->qty,
-							);
-						}
+					$item_id = $product_list->item_id;
+					$item = new WC_Order_Item_Product( $item_id );
+					if ( !$item ) {
+						continue;
 					}
+					$tpi_products[] = array(
+						'product_id' => $item->get_product_id(),
+						'product_name' => $item->get_name(),
+						'product_qty' => $product_list->qty,
+					);
 				}
 			}
 		}
