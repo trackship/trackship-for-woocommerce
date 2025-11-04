@@ -135,7 +135,6 @@ class WC_TrackShip_Admin_Notice {
 		}
 		
 		$user_plan = get_option( 'user_plan' );
-		$plan_period = get_option( 'plan_period' );
 		
 		$nonce = wp_create_nonce('ts_dismiss_notice');
 		$dismissable_url = esc_url( add_query_arg( [ 'ts-upgrade-ignore' => 'true', 'nonce' => $nonce ] ) );
@@ -155,20 +154,6 @@ class WC_TrackShip_Admin_Notice {
 			text-decoration: none;
 		}
 		</style>
-
-		<?php // Switch to Yearly Notice ?>
-		<?php if ( !in_array( $user_plan, array( 'Free 50', 'No active plan', 'Trial Ended', 'Free Trial' ) ) && $plan_period === 'month' ) { ?>
-			<div class="notice notice-success is-dismissible trackship-dismissable-notice" role="region">
-				<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
-				<h3>Thank you for growing with TrackShip Pro!</h3>
-				<p>Keep delighting customers with seamless tracking and post-purchase updates.</p>
-				<p>💡 Switch to yearly and save 20% – 2 months FREE + 20% OFF with <strong>TRACKSHIP20Y</strong>.</p>
-				<p style="padding:0;">
-					<a class="button button-primary" target="_blank" href="<?php echo esc_url( $url ); ?>">Upgrade to Yearly</a>
-					<a class="button" href="<?php echo esc_url( $dismissable_url ); ?>">Dismiss</a>
-				</p>
-			</div>
-		<?php } ?>
 
 		<?php // Upgrade to Pro Notice for Free Plan ?>
 		<?php if ( in_array( $user_plan, array( 'Free 50' ) ) ) { ?>
