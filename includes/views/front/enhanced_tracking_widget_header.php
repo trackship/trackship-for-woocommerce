@@ -2,6 +2,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+$provider_name = apply_filters( 'ast_provider_title', $provider_name );
+$provider_name = trackship_for_woocommerce()->actions->get_provider_name( apply_filters( 'convert_provider_name_to_slug', $provider_name ) );
 ?>
 <div class="tracking_number_wrap <?php echo str_replace( ' ', '', $tracking_number ) == $url_tracking ? 'checked' : ''; ?>">
 	<div style="display: flex;">
@@ -14,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="tracking_number_div">
 			<ul>
 				<li>
-					<span class="tracking_page_provider_name"><?php echo esc_html( trackship_for_woocommerce()->actions->get_provider_name( apply_filters( 'ast_provider_title', $provider_name ) ) ); ?></span>
+					<span class="tracking_page_provider_name"><?php echo esc_html( $provider_name ); ?></span>
 				</li>
 				<li>
 					<?php if ( $ts_link_to_carrier && $tracking_link ) { ?>
