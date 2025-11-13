@@ -7,6 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php
 	$row = trackship_for_woocommerce()->actions->get_shipment_row( $order->get_id(), $tracking_number );
 	$tracking_page_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order->get_id(), $tracking_number );
+	$tracking_provider = apply_filters( 'ast_provider_title', $tracking_provider );
+	$provider_name = trackship_for_woocommerce()->actions->get_provider_name( apply_filters( 'convert_provider_name_to_slug', $tracking_provider ) );
 	?>
 
 	<div class="tracking_number_wrap">
@@ -21,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="tracking_number_div">
 				<ul>
 					<li>
-						<span class="tracking_page_provider_name"><?php echo esc_html( apply_filters( 'ast_provider_title', $tracking_provider ) ); ?></span>
+						<span class="tracking_page_provider_name"><?php echo esc_html( $provider_name ); ?></span>
 						<?php if ( $ts_link_to_carrier && $tracking_link ) { ?>
 							<a href="<?php echo esc_url( $tracking_link ); ?>" target="blank"><strong><?php esc_html_e( $tracking_number ); ?></strong></a>	
 						<?php } else { ?>
