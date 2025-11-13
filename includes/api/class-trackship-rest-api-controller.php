@@ -108,6 +108,8 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		$version_info['wc'] = WC_VERSION;
 		$version_info['site_url'] = get_site_url();
 		$version_info['home_url'] = get_home_url();
+		$page_id = get_trackship_settings( 'tracking_page_id' );
+		$version_info['tracking_page'] = get_trackship_settings( 'ts_tracking_page' ) && $page_id ? get_permalink( $page_id ) : 'Not setup';
 		$version_info['trackship_db'] = get_option( 'trackship_db' );
 		$version_info['trackship_key'] = get_trackship_key();
 		
@@ -147,19 +149,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		}
 		$version_info['trackship_settings'] = get_option( 'trackship_settings' );
 		$version_info['trackship_email_settings'] = get_option( 'trackship_email_settings' );
-		$version_info['old_settings'] = [
-			'wcast_pickupreminder_email_settings' => get_option( 'wcast_pickupreminder_email_settings' ),
-			'wcast_intransit_email_settings' => get_option( 'wcast_intransit_email_settings' ),
-			'wcast_returntosender_email_settings' => get_option( 'wcast_returntosender_email_settings' ),
-			'wcast_availableforpickup_email_settings' => get_option( 'wcast_availableforpickup_email_settings' ),
-			'wcast_exception_email_settings' => get_option( 'wcast_exception_email_settings' ),
-			'wcast_onhold_email_settings' => get_option( 'wcast_onhold_email_settings' ),
-			'wcast_failure_email_settings' => get_option( 'wcast_failure_email_settings' ),
-			'wcast_delivered_status_email_settings' => get_option( 'wcast_delivered_status_email_settings' ),
-			'wcast_outfordelivery_email_settings' => get_option( 'wcast_outfordelivery_email_settings' ),
-			'shipment_email_settings' => get_option( 'shipment_email_settings' ),
-		];
-		
+
 		$database_version	= wc_get_server_database_version();
 
 		global $wpdb;
