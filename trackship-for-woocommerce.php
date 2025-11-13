@@ -405,6 +405,9 @@ class Trackship_For_Woocommerce {
 			$tracking_items = ast_get_tracking_items( $order_id );
 		} elseif ( class_exists( 'WC_Shipment_Tracking' ) ) {
 			$tracking_items = WC_Shipment_Tracking()->actions->get_tracking_items( $order_id, true );
+			foreach ( $tracking_items as $key => $tracking_item ) {
+				$tracking_items[$key]['formatted_tracking_provider'] = trackship_for_woocommerce()->actions->get_provider_name( apply_filters( 'convert_provider_name_to_slug', $tracking_item['tracking_provider'] ?? $tracking_item['custom_tracking_provider'] ) );
+			}
 		} elseif ( class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 			$order = wc_get_order( $order_id );
 			if ( !$order || !$order->get_meta( 'ywot_tracking_code', true ) ) {
