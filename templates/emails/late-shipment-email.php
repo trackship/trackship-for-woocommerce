@@ -30,7 +30,7 @@ if ( $orders ) :
 				}
 			}
 			$shipment_status = apply_filters( 'trackship_status_filter', $val1->shipment_status );
-			$order_url = wc_get_order( $val1->order_id )->get_edit_order_url();
+			$order_url = wc_get_order( $val1->order_id ) ? wc_get_order( $val1->order_id )->get_edit_order_url() : '#';
 			?>
 			<tr>
 				<td><a href="<?php echo esc_html( $order_url ); ?>"><?php echo esc_html( $val1->order_number ); ?></a></td>
