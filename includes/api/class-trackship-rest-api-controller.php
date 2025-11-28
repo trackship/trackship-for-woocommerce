@@ -222,7 +222,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 				'shipment_status'		=> $tracking_event_status,
 				'last_event'			=> $last_event,
 				'updated_at'			=> $request['updated_at'],
-				'last_event_time'		=> $last_event_time ? $last_event_time : gmdate( 'Y-m-d H:i:s' ),
+				'last_event_time'		=> $last_event_time ? $last_event_time : current_time( 'Y-m-d H:i:s' ),
 				'first_event_time'		=> $first_event_time,
 				'est_delivery_date'		=> $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : null,
 			);

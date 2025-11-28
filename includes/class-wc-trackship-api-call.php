@@ -108,7 +108,7 @@ class WC_TrackShip_Api_Call {
 							'shipping_date'		=> date_i18n('Y-m-d', $val['date_shipped'] ),
 							'shipping_country'	=> $order->get_shipping_country() ? WC()->countries->countries[ $order->get_shipping_country() ] : '',
 							'est_delivery_date' => null,
-							'last_event_time'	=> gmdate( 'Y-m-d H:i:s' ),
+							'last_event_time'	=> current_time( 'Y-m-d H:i:s' ),
 						);
 						$order->save();
 						trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $val['tracking_number'], $args );
