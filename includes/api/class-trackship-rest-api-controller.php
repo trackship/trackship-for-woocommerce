@@ -239,6 +239,25 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			);
 			$query = trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_number, $args, $args2 );
 			
+			/*
+			* NOTE:
+			* This code is a temporary compatibility fix for RouteApp.
+			* RouteApp hooks into `added_post_meta` and `updated_post_meta` and causes conflicts with TrackShip when tracking meta is saved. So we remove those actions.
+			*/
+			// If the RouteApp plugin is active, disable its tracking meta-update hooks
+			if ( is_plugin_active( 'routeapp/routeapp.php' ) ) {
+				// Access the RouteApp public class instance
+				global $routeapp_public;
+				// Remove RouteApp handler from added_post_meta
+				if ( has_action( 'added_post_meta', array( $routeapp_public, 'routeapp_update_tracking_order_api' ) ) ) {
+					remove_action( 'added_post_meta', array( $routeapp_public, 'routeapp_update_tracking_order_api' ), 20, 3 );
+				}
+				// Remove RouteApp handler from updated_post_meta
+				if ( has_action( 'updated_post_meta', array( $routeapp_public, 'routeapp_update_tracking_order_api' ) ) ) {
+					remove_action( 'updated_post_meta', array( $routeapp_public, 'routeapp_update_tracking_order_api' ), 20, 3 );
+				}
+			}
+
 			$order->update_meta_data( 'ts_shipment_status', $ts_shipment_status );
 			$order->save();
 
