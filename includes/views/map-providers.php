@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 		<div class="panel_content section_mapping_content">
 			<div class="">
-				<?php if ( !is_plugin_active( 'ast-pro/ast-pro.php' ) ) { ?>
+				<?php if ( !is_plugin_active( 'ast-pro/ast-pro.php' ) && !is_plugin_active( 'advanced-shipment-tracking-pro/advanced-shipment-tracking-pro.php' ) ) { ?>
 					<table class="form-table fixed map-provider-table">
 						<thead>
 							<p class="map_providers_note"><?php esc_html_e( 'This feature lets you align shipping providers from external shipping services with those on TrackShip. You can match the names of the Shipping Providers you receive from your shipping company with TrackShip’s provider names.', 'trackship-for-woocommerce' ); ?></p>
