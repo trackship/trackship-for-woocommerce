@@ -170,8 +170,8 @@ class WC_TrackShip_Front {
 		
 		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		wp_register_script( 'jquery-blockui', WC()->plugin_url() . '/assets/js/jquery-blockui/jquery.blockUI' . $suffix . '.js', array( 'jquery' ), '2.70', true );
-		wp_register_script( 'front-js', trackship_for_woocommerce()->plugin_dir_url() . 'assets/js/front.js', array( 'jquery' ), trackship_for_woocommerce()->version );
-		wp_localize_script( 'front-js', 'zorem_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+		wp_register_script( 'ts-front-js', trackship_for_woocommerce()->plugin_dir_url() . 'assets/js/front.js', array( 'jquery' ), trackship_for_woocommerce()->version );
+		wp_localize_script( 'ts-front-js', 'zorem_ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 		
 		wp_register_style( 'front_style', trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/front.css', array(), trackship_for_woocommerce()->version );
 		
@@ -179,7 +179,7 @@ class WC_TrackShip_Front {
 		// echo '<pre>';print_r($_REQUEST);echo '</pre>';
 		if ( in_array( $action, array( 'preview_tracking_page', 'tracking-form-preview' ) ) || is_wc_endpoint_url( 'order-received' ) || is_wc_endpoint_url( 'view-order' ) ) {
 			wp_enqueue_style( 'front_style' );
-			wp_enqueue_script( 'front-js' );
+			wp_enqueue_script( 'ts-front-js' );
 		}
 	}
 	
@@ -191,7 +191,7 @@ class WC_TrackShip_Front {
 		
 		wp_enqueue_style( 'front_style' );
 		wp_enqueue_script( 'jquery-blockui' );
-		wp_enqueue_script( 'front-js' );	
+		wp_enqueue_script( 'ts-front-js' );	
 		
 		if ( ! is_trackship_connected() ) { ?>
 			<p><a href="https://trackship.com/" target="blank">TrackShip</a> is not active.</p>
@@ -377,7 +377,7 @@ class WC_TrackShip_Front {
 	public function display_tracking_page( $order_id, $tracking_items ) {
 		wp_enqueue_style( 'front_style' );
 		wp_enqueue_script( 'jquery-blockui' );
-		wp_enqueue_script( 'front-js' );
+		wp_enqueue_script( 'ts-front-js' );
 		
 		global $wpdb;
 
