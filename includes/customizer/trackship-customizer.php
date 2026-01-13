@@ -1348,7 +1348,7 @@ class TS4WC_Admin_Customizer {
 			$shipment_status = $this->shipment_status();
 			foreach ( $shipment_status as $slug => $label ) {
 				foreach ( $email_settings[$slug] as $key => $val ) {
-					$val = 'content' == $key ?  wp_kses_post( wp_unslash( $_POST['email_settings'][$slug][$key] ) ) : $val;
+					$val = in_array( $key, array( 'content', 'heading' ) ) ?  wp_kses_post( wp_unslash( $_POST['email_settings'][$slug][$key] ) ) : $val;
 					update_trackship_email_settings( $slug, $key, $val );
 				}
 			}
