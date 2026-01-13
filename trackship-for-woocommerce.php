@@ -57,7 +57,7 @@ class Trackship_For_Woocommerce {
 			return;
 		}
 
-		if ( !$this->is_ast_active() && !$this->is_st_active() && !$this->is_active_woo_order_tracking() && !$this->is_active_yith_order_tracking() ) {
+		if ( !$this->is_ast_active() && !$this->is_st_active() && !$this->is_active_woo_order_tracking() && !$this->is_active_yith_order_tracking() && ! $this->is_woocommerce_shipping_active() ) {
 			add_action( 'admin_notices', array( $this, 'notice_activate_ast' ) );
 		}
 
@@ -324,7 +324,22 @@ class Trackship_For_Woocommerce {
 
 		return is_plugin_active( 'woocommerce-shipment-tracking/woocommerce-shipment-tracking.php' ) ? true : false;
 	}
-	
+
+	/**
+	 * Check if Shipment Tracking is active
+	 *
+	 * @since 1.0.0
+	 * @return bool
+	*/
+	public function is_woocommerce_shipping_active() {
+		
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		}
+
+		return is_plugin_active( 'woocommerce-shipping/woocommerce-shipping.php' ) ? true : false;
+	}
+
 	/**
 	 * Check if Woo order Tracking is active
 	 *
@@ -429,6 +444,23 @@ class Trackship_For_Woocommerce {
 		} else {
 			$order = wc_get_order( $order_id );
 			$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );
+			foreach ( $tracking_items as $key => $tracking_item ) {
+				$provider = ! empty( $tracking_item['custom_tracking_provider'] )? $tracking_item['custom_tracking_provider'] : $tracking_item['tracking_provider'];
+
+				$provider_array = array(
+					'USPS'	=> 'usps',
+					'UPS'	=> 'ups',
+					'DHL'	=> 'dhl-express',
+				);
+				foreach ( $provider_array as $provider_key => $val ) {
+					if ( strpos( $provider, $provider_key ) !== false ) {
+						$provider = $val;
+						break;
+					}
+				}
+				$tracking_items[$key]['tracking_provider'] = $provider;
+				$tracking_items[$key]['formatted_tracking_provider'] = trackship_for_woocommerce()->actions->get_provider_name( apply_filters( 'convert_provider_name_to_slug', $provider ) );
+			}
 			$tracking_items = $tracking_items ? $tracking_items : array();
 		}
 
