@@ -1282,10 +1282,13 @@ input#late_shipments_email_to, input#exception_shipments_email_to, input#on_hold
 	max-height: 100%;
 	background: transparent;
 	vertical-align: top;
-	margin-top: 100px;
-	max-width: 840px;
+	max-width: 600px;
 	box-sizing: border-box;
-	padding-top: 0;
+	position: fixed;
+	right: 0;
+	background: #fff;
+	border-left: 1px solid #ccc;
+	height: 100%;
 }
 span.admin_tracking_page_close {
 	width: 60px;
