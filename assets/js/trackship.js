@@ -409,24 +409,26 @@ jQuery(document).ready(function () {
 
 function trackship_js_error(response, jqXHR, exception) {
 	console.log(response, jqXHR, exception);
+	
 	var msg = '';
-	if (response.status === 0) {
+	if (response.status == 0) {
 		msg = 'Not connect.\n Verify Network.';
 	} else if (response.status == 404) {
 		msg = 'Requested page not found. [404]';
 	} else if (response.status == 500) {
 		msg = 'Internal Server Error [500].';
-	} else if (exception === 'parsererror') {
+	} else if (exception == 'parsererror') {
 		msg = 'Requested JSON parse failed.';
-	} else if (exception === 'timeout') {
+	} else if (exception == 'timeout') {
 		msg = 'Time out error.';
-	} else if (exception === 'abort') {
+	} else if (exception == 'abort') {
 		msg = 'Ajax request aborted.';
-	} else if (response.responseText === '-1') {
+	} else if (response.responseText == '-1') {
 		msg = 'Security check fail, please refresh and try again.';
 	} else {
 		msg = 'Uncaught Error.\n' + response.responseText;
 	}
+	
 	jQuery(document).trackship_snackbar_warning(msg);
 }
 
@@ -531,7 +533,8 @@ jQuery(document).on("click", ".open_tracking_details", function () {
 		data: data,
 		type: 'POST',
 		success: function (response) {
-			jQuery("#admin_tracking_widget .popuprow").html(response);
+			var html = '<span class="admin_tracking_page_close popupclose"><span class="dashicons dashicons-no-alt"></span></span>' + response;
+			jQuery("#admin_tracking_widget .popuprow").html(html);
 			jQuery("#admin_tracking_widget").show();
 			jQuery('.shipment-header .ts_from_input:checked').trigger('change');
 			jQuery('.heading_panel.checked').trigger('click');
@@ -726,7 +729,6 @@ jQuery(document).on("click", ".inner_tab_section .heading_panel", function () {
 		jQuery(this).find('button.button-primary').show();
 		jQuery(this).find('span.dashicons').removeClass('dashicons-arrow-right-alt2');
 	}
-
 });
 
 jQuery(document).on("click", "#activity-panel-tab-help", function () {
@@ -818,4 +820,32 @@ jQuery(document).on("click", ".enhanced_tracking_detail .tracking_number_wrap", 
 		jQuery(this).find('.accordian-arrow').removeClass('ts-right').addClass('ts-down');
 		jQuery(this).siblings('.enhanced_tracking_content').slideDown('slow');
 	}
+});
+
+jQuery(document).on("click", ".ts_enable_fulfillments", function(){
+	jQuery('.setup_tab').block({
+		message: null,
+		overlayCSS: {
+			background: '#fff',
+			opacity: .6
+		}
+	});
+	var ajax_data = {
+		action: 'enabled_wc_fulfillments',
+		security: jQuery('#ts_tools').val()
+	};
+	jQuery.ajax({
+		url: ajaxurl,
+		data: ajax_data,
+		type: 'POST',
+		success: function (response) {
+			jQuery(document).trackship_snackbar('WooCommerce Fulfillments enabled successfully');
+			jQuery('.before_fulfillments').remove();
+			jQuery('.after_fulfillments').show();
+			jQuery('.setup_tab').unblock();
+		},
+		error: function (response, jqXHR, exception) {
+			trackship_js_error(response, jqXHR, exception)
+		}
+	});
 });

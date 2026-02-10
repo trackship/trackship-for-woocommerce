@@ -11,7 +11,7 @@ jQuery(document).on("submit", ".order_track_form", function(){
 		} else{
 			hideerror(order_id);
 		}
-		if(order_email.val() == '' ){		
+		if(order_email.val() == '' ){
 			showerror(order_email);error = true;
 		} else {
 			hideerror(order_email);
@@ -30,7 +30,7 @@ jQuery(document).on("submit", ".order_track_form", function(){
 	
 	jQuery(".search_order_form").ts_start_loader();
 	jQuery.ajax({
-		url: zorem_ajax_object.ajax_url,		
+		url: zorem_ajax_object.ajax_url,
 		data: form.serialize(),
 		type: 'POST',
 		dataType: "json",
@@ -51,8 +51,8 @@ jQuery(document).on("submit", ".order_track_form", function(){
 				}
 			} else{
 				jQuery(".track_fail_msg").text(response.message);
-				jQuery(".track_fail_msg").show();				
-			}			
+				jQuery(".track_fail_msg").show();
+			}
 			jQuery(".search_order_form").ts_stop_loader();
 		},
 		error: function (response, jqXHR, exception) {
@@ -104,7 +104,7 @@ jQuery(document).on("click", ".view_old_details", function(){
 jQuery(document).on("click", ".hide_old_details", function(){
 	jQuery(this).hide();
 	jQuery(this).closest('.tracking-details').find('.view_old_details').show();
-	jQuery(this).closest('.tracking-details').find('.old-details').fadeOut();	
+	jQuery(this).closest('.tracking-details').find('.old-details').fadeOut();
 });
 
 function showerror(element){
@@ -113,46 +113,6 @@ function showerror(element){
 function hideerror(element){
 	element.css("border-color","");
 }
-
-jQuery(document).on("click", ".open_tracking_lightbox", function(){	
-	
-	jQuery(".tracking_info,.my_account_tracking,.fluid_section").block({
-	message: null,
-		overlayCSS: {
-			background: "#fff",
-			opacity: .6
-		}	
-	});
-	
-	
-	var order_id = jQuery(this).data('order');
-	var tracking_number = jQuery(this).data('tracking');	
-	
-	var ajax_data = {
-		action: 'ts_open_tracking_lightbox',
-		order_id: order_id,
-		tracking_number: tracking_number,		
-	};
-	
-	jQuery.ajax({
-		url: zorem_ajax_object.ajax_url,		
-		data: ajax_data,
-		type: 'POST',						
-		success: function(response) {		
-			jQuery(".ts_tracking_popup .popuprow").html(response);				
-			jQuery('.ts_tracking_popup').show();	
-			jQuery(".tracking_info,.my_account_tracking,.fluid_section").unblock();				
-		},
-		error: function(response) {					
-			jQuery(".tracking_info,.my_account_tracking,.fluid_section").unblock();
-		}
-	});	
-	
-});
-
-jQuery(document).on("click", ".popupclose", function(){
-	jQuery('.ts_tracking_popup').hide();	
-});
 
 jQuery(document).on("click", ".order_track_form .search_order_form .ts_from_input", function(){
 	var div = jQuery(this).data('name');
@@ -317,14 +277,14 @@ jQuery(document).on("change", ".unsubscribe_emails_checkbox, .unsubscribe_sms_ch
 	$.fn.ts_start_loader = function() {
 		if( this.find(".ts_loader").length === 0 ){this.append("<span class=ts_loader></span>");}
 		return this;
-	}; 
+	};
 })( jQuery );
 (function( $ ){
 	'use strict';
 	$.fn.ts_stop_loader = function() {
 		this.find(".ts_loader").remove();
 		return this;
-	}; 
+	};
 })( jQuery );
 
 (function( $ ){
@@ -332,7 +292,7 @@ jQuery(document).on("change", ".unsubscribe_emails_checkbox, .unsubscribe_sms_ch
 	$.fn.start_loader = function() {
 		if( this.find(".trackship_loader").length === 0 ){this.append("<span class=trackship_loader></span>");}
 		return this;
-	}; 
+	};
 })( jQuery );
 
 (function( $ ){
@@ -340,5 +300,5 @@ jQuery(document).on("change", ".unsubscribe_emails_checkbox, .unsubscribe_sms_ch
 	$.fn.stop_loader = function() {
 		this.find(".trackship_loader").remove();
 		return this;
-	}; 
+	};
 })( jQuery );

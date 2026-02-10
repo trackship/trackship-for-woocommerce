@@ -2,14 +2,14 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 1.9.7.1
+ * Version: 1.9.8
  * Author: TrackShip
  * Author URI: https://trackship.com/
  * License: GPL-2.0+
  * License URI: 
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
- * WC tested up to: 10.3.4
+ * WC tested up to: 10.5.0
  * Requires Plugins: woocommerce
 */
 
@@ -24,7 +24,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '1.9.7.1';
+	public $version = '1.9.8';
 	public $plugin_path;
 	public $ts_install;
 	public $ts_actions;
@@ -45,6 +45,8 @@ class Trackship_For_Woocommerce {
 	public $wot_ts;
 	public $kly_ts;
 	public $omn_ts;
+	public $fulfillment_init;
+	public $fulfillment;
 
 	/**
 	 * Initialize the main plugin function
@@ -57,7 +59,7 @@ class Trackship_For_Woocommerce {
 			return;
 		}
 
-		if ( !$this->is_ast_active() && !$this->is_st_active() && !$this->is_active_woo_order_tracking() && !$this->is_active_yith_order_tracking() ) {
+		if ( !$this->is_ast_active() && !$this->is_st_active() && !$this->is_active_woo_order_tracking() && !$this->is_active_yith_order_tracking() && ! $this->is_woocommerce_shipping_active() ) {
 			add_action( 'admin_notices', array( $this, 'notice_activate_ast' ) );
 		}
 
@@ -212,6 +214,12 @@ class Trackship_For_Woocommerce {
 		require_once $this->get_plugin_path() . '/includes/class-wc-admin-notices.php';
 		$this->wc_admin_notice = WC_TS4WC_Admin_Notices_Under_WC_Admin::get_instance();
 
+		require_once $this->get_plugin_path() . '/includes/fulfillment/class-ts-wc-fulfillment.php';
+		$this->fulfillment_init = TSWC_Fulfillment_Init::get_instance();
+
+		require_once plugin_dir_path( __FILE__ ) . '/includes/integration/class-woo-fulfillment-integration.php';
+		$this->fulfillment = WOO_Fulfillment_Tracking_TS4WC::get_instance();
+
 		//SMSWOO
 		require_once $this->get_plugin_path() . '/includes/smswoo/class-smswoo-init.php';
 		$this->smswoo_init = TSWC_SMSWOO_Init::get_instance();
@@ -324,7 +332,22 @@ class Trackship_For_Woocommerce {
 
 		return is_plugin_active( 'woocommerce-shipment-tracking/woocommerce-shipment-tracking.php' ) ? true : false;
 	}
-	
+
+	/**
+	 * Check if WooCommerce Shipping is active
+	 *
+	 * @since 1.9.8
+	 * @return bool
+	*/
+	public function is_woocommerce_shipping_active() {
+		
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+		}
+
+		return is_plugin_active( 'woocommerce-shipping/woocommerce-shipping.php' ) ? true : false;
+	}
+
 	/**
 	 * Check if Woo order Tracking is active
 	 *
@@ -340,6 +363,16 @@ class Trackship_For_Woocommerce {
 		return is_plugin_active( 'woo-orders-tracking/woo-orders-tracking.php' ) || is_plugin_active( 'woocommerce-orders-tracking/woocommerce-orders-tracking.php' ) ? true : false;
 	}
 
+	/**
+	 * Check if WC Fulfillments is active
+	 *
+	 * @since 1.9.8
+	 * @return bool
+	*/
+	public function is_active_fulfillments() {
+		return 'yes' == get_option('woocommerce_feature_fulfillments_enabled') && WC_VERSION >= '10.2' ? true : false;
+	}
+	
 	/**
 	 * Check if Klaviyo is active
 	 *
@@ -401,10 +434,19 @@ class Trackship_For_Woocommerce {
 	}
 
 	public function get_tracking_items( $order_id ) {
+
+		$tracking_items = $this->fulfillment->woo_orders_tracking_items( $order_id );
+		if ( $tracking_items ) {
+			return $tracking_items;
+		}
+
 		if ( function_exists( 'ast_get_tracking_items' ) ) {
 			$tracking_items = ast_get_tracking_items( $order_id );
 		} elseif ( class_exists( 'WC_Shipment_Tracking' ) ) {
 			$tracking_items = WC_Shipment_Tracking()->actions->get_tracking_items( $order_id, true );
+			foreach ( $tracking_items as $key => $tracking_item ) {
+				$tracking_items[$key]['formatted_tracking_provider'] = trackship_for_woocommerce()->actions->get_provider_name( apply_filters( 'convert_provider_name_to_slug', $tracking_item['tracking_provider'] ?? $tracking_item['custom_tracking_provider'] ) );
+			}
 		} elseif ( class_exists( 'YITH_WooCommerce_Order_Tracking' ) ) {
 			$order = wc_get_order( $order_id );
 			if ( !$order || !$order->get_meta( 'ywot_tracking_code', true ) ) {
@@ -426,6 +468,23 @@ class Trackship_For_Woocommerce {
 		} else {
 			$order = wc_get_order( $order_id );
 			$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );
+			foreach ( $tracking_items as $key => $tracking_item ) {
+				$provider = ! empty( $tracking_item['custom_tracking_provider'] )? $tracking_item['custom_tracking_provider'] : $tracking_item['tracking_provider'];
+
+				$provider_array = array(
+					'USPS'	=> 'usps',
+					'UPS'	=> 'ups',
+					'DHL'	=> 'dhl-express',
+				);
+				foreach ( $provider_array as $provider_key => $val ) {
+					if ( strpos( $provider, $provider_key ) !== false ) {
+						$provider = $val;
+						break;
+					}
+				}
+				$tracking_items[$key]['tracking_provider'] = $provider;
+				$tracking_items[$key]['formatted_tracking_provider'] = trackship_for_woocommerce()->actions->get_provider_name( apply_filters( 'convert_provider_name_to_slug', $provider ) );
+			}
 			$tracking_items = $tracking_items ? $tracking_items : array();
 		}
 

@@ -49,6 +49,7 @@ class WC_Trackship_Admin {
 		add_action( 'wp_ajax_remove_tracking_event', array( $this, 'remove_tracking_event' ) );
 		add_action( 'wp_ajax_remove_trackship_logs', array( $this, 'remove_trackship_logs' ) );
 		add_action( 'wp_ajax_verify_database_table', array( $this, 'verify_database_table' ) );
+		add_action( 'wp_ajax_enabled_wc_fulfillments', array( $this, 'enabled_wc_fulfillments' ) );
 		add_action( 'wp_ajax_trackship_mapping_form_update', array( $this, 'trackship_custom_mapping_form_update') );
 		add_action( 'wp_ajax_trackship_integration_form_update', array( $this, 'trackship_integration_form_update_cb') );
 
@@ -151,14 +152,12 @@ class WC_Trackship_Admin {
 	}
 
 	public function register_metabox() {
-		if ( ! trackship_for_woocommerce()->is_ast_active() ) {
-			if ( class_exists( 'Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController' ) ) {
-				$screen = wc_get_container()->get( CustomOrdersTableController::class )->custom_orders_table_usage_is_enabled() ? wc_get_page_screen_id( 'shop-order' ) : 'shop_order';
-			} else {
-				$screen = 'shop_order';
-			}
-			add_meta_box( 'trackship', 'TrackShip', array( $this, 'trackship_metabox_cb'), $screen, 'side', 'high' );
+		if ( class_exists( 'Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController' ) ) {
+			$screen = wc_get_container()->get( CustomOrdersTableController::class )->custom_orders_table_usage_is_enabled() ? wc_get_page_screen_id( 'shop-order' ) : 'shop_order';
+		} else {
+			$screen = 'shop_order';
 		}
+		add_meta_box( 'trackship', 'TrackShip', array( $this, 'trackship_metabox_cb'), $screen, 'side', 'high' );
 	}
 	
 	public function trackship_metabox_cb( $post_or_order_object ) {
@@ -773,7 +772,7 @@ class WC_Trackship_Admin {
 			vertical-align: text-bottom;
 		}
 		</style>
-		<?php echo '<div id=admin_tracking_widget class=popupwrapper style="display:none;"><span class="admin_tracking_page_close popupclose"><span class="dashicons dashicons-no-alt"></span></span><div class=popuprow></div><div class=popupclose></div></div>'; ?>
+		<?php echo '<div id=admin_tracking_widget class=popupwrapper style="display:none;"><div class=popuprow></div><div class=popupclose></div></div>'; ?>
 		<div id="free_user_popup" class="popupwrapper" style="display:none;">
 			<div class="free_user_popup popuprow" style="padding:20px">
 				<h1 style="text-align: center;"><?php esc_html_e( 'Upgrade to TrackShip Pro', 'trackship-for-woocommerce' ); ?></h1>
@@ -1072,6 +1071,15 @@ class WC_Trackship_Admin {
 		$install->update_shipping_providers();
 		$install->create_email_log_table();
 		$install->check_column_exists();
+
+		wp_send_json( array( 'success' => 'true' ) );
+	}
+
+	public function enabled_wc_fulfillments() {
+		check_ajax_referer( 'ts_tools', 'security' );
+
+		update_option( 'woocommerce_feature_fulfillments_enabled', 'yes' );
+		update_trackship_settings('ts_fulfillments_ignore', 'true');
 
 		wp_send_json( array( 'success' => 'true' ) );
 	}

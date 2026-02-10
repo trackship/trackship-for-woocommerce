@@ -109,10 +109,11 @@ class WC_Trackship_Actions {
 		if ( ! get_option( 'trackship_apikey' ) ) {
 			return;
 		}
-		
-		//filter in shipped orders
-		add_filter( 'is_order_shipped', array( $this, 'check_order_status' ), 5, 2 );
-		add_filter( 'is_order_shipped', array( $this, 'check_tracking_exist' ), 10, 2 );
+
+		// Fulfillments: If WooCommerce Fulfillment already exists for this order
+		// Check order status against TrackShip’s allowed trigger statuses.
+		// If the order has tracking info
+		add_filter( 'is_order_shipped', array( $this, 'maybe_order_shipped' ), 10, 2 );
 		
 		// CSV / manually
 		add_action( 'send_order_to_trackship', array( $this, 'schedule_while_adding_tracking' ), 10, 1 );
@@ -144,15 +145,10 @@ class WC_Trackship_Actions {
 	public function trackship_styles( $hook ) {
 		$screen = get_current_screen(); 
 
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-
 		wp_register_style( 'trackshipcss', trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/trackship.css', array(), trackship_for_woocommerce()->version );
 		wp_register_style( 'smswoo_ts', trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/smswoo_ts.css', array(), trackship_for_woocommerce()->version );
-		wp_register_style( 'woocommerce_admin_styles', WC()->plugin_url() . '/assets/css/admin.css', array(), WC_VERSION );
 
-		wp_register_script( 'jquery-tiptip', WC()->plugin_url() . '/assets/js/jquery-tiptip/jquery.tipTip.min.js', array( 'jquery' ), WC_VERSION, true );
-		wp_register_script( 'jquery-blockui', WC()->plugin_url() . '/assets/js/jquery-blockui/jquery.blockUI' . $suffix . '.js', array( 'jquery' ), '2.70', true );
-		wp_register_script( 'trackship_script', trackship_for_woocommerce()->plugin_dir_url() . 'assets/js/trackship.js', array( 'jquery' ), trackship_for_woocommerce()->version );
+		wp_register_script( 'trackship_script', trackship_for_woocommerce()->plugin_dir_url() . 'assets/js/trackship.js', array( 'jquery', 'jquery-tiptip' ), trackship_for_woocommerce()->version );
 		wp_register_script( 'smswoo_ts', trackship_for_woocommerce()->plugin_dir_url() . 'assets/js/smswoo_ts.js', array( 'jquery', 'wp-util' ), trackship_for_woocommerce()->version );
 
 		wp_localize_script( 'trackship_script', 'trackship_script', array(
@@ -165,24 +161,18 @@ class WC_Trackship_Actions {
 		wp_register_style( 'front_style', trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/front.css', array(), trackship_for_woocommerce()->version );
 
 		$page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
-
 		
 		if ( 'shop_order' === $screen->post_type || 'wc-orders' == $page ) {
 			wp_enqueue_style( 'trackshipcss' );
 			wp_enqueue_script( 'trackship_script' );
 			
-			//front_style for tracking widget
+			// front_style for tracking widget
 			wp_enqueue_style( 'front_style' );
 		}
 		
 		if ( !in_array( $page, array( 'trackship-for-woocommerce', 'trackship-shipments', 'trackship-dashboard', 'trackship_customizer', 'wcpv-vendor-order', 'trackship-logs' ) ) ) {
 			return;
 		}
-		// remove code in future, added by hitesh
-		if ( 'wcpv-vendor-order' != $page ) {
-			wp_dequeue_style( 'ast_styles' );
-		}
-		// remove code in future
 
 		wp_enqueue_style( 'front_style' );
 
@@ -190,18 +180,9 @@ class WC_Trackship_Actions {
 		wp_enqueue_style( 'woocommerce_admin_styles' );
 		wp_enqueue_style( 'trackshipcss' );
 
-		wp_enqueue_script( 'wp-color-picker' );	
-		wp_enqueue_script( 'jquery-tiptip' );
+		wp_enqueue_script( 'wp-color-picker' );
 		wp_enqueue_script( 'jquery-blockui' );
-
-		$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';	
-
-		wp_register_script( 'select2', WC()->plugin_url() . '/assets/js/select2/select2.full' . $suffix . '.js', array( 'jquery' ), '4.0.3' );
 		wp_enqueue_script( 'select2');
-
-		wp_register_script( 'selectWoo', WC()->plugin_url() . '/assets/js/selectWoo/selectWoo.full' . $suffix . '.js', array( 'jquery' ), '1.0.4' );
-		wp_register_script( 'wc-enhanced-select', WC()->plugin_url() . '/assets/js/admin/wc-enhanced-select' . $suffix . '.js', array( 'jquery', 'selectWoo' ), WC_VERSION );
-
 		wp_enqueue_script( 'selectWoo');
 		wp_enqueue_script( 'wc-enhanced-select');
 
@@ -397,10 +378,8 @@ class WC_Trackship_Actions {
 	 * @param string[] $column name of column being displayed
 	 */
 	public function shipment_status_column_content( $order_id ) {
-		$order = wc_get_order( $order_id );
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 		
-		$date_format = $this->get_date_format();
 		$date_time_format = get_option( 'date_format' ) . ' ' . $this->get_time_format();
 
 		if ( count( $tracking_items ) > 0 ) {
@@ -1093,8 +1072,15 @@ class WC_Trackship_Actions {
 			//trigger order deleivered
 			$order = wc_get_order( $order_id );
 			$order_status = $order->get_status();
+			$fulfillments = trackship_for_woocommerce()->fulfillment->get_fulfillments_by_order_id( $order_id );
+			if ( $fulfillments ) {
+				$has_pending_items = trackship_for_woocommerce()->fulfillment->has_pending_items( $order_id );
+				if ( $has_pending_items ) {
+					return;
+				}
+			}
 			
-			if ( in_array( $order_status, apply_filters( 'allowed_order_status_for_delivered', array( 'completed', 'updated-tracking', 'shipped' ) ) ) ) {
+			if ( in_array( $order_status, apply_filters( 'allowed_order_status_for_delivered', array( 'completed', 'updated-tracking', 'shipped' ) ) ) || $fulfillments ) {
 				$order->update_status( 'delivered' );
 			}
 		}
@@ -1160,35 +1146,51 @@ class WC_Trackship_Actions {
 		}
 		return $value;
 	}
-	
-	/*
-	 * tracking number filter
-	 * if number not found. return false
-	 * if number found. return true
-	*/
-	public function check_tracking_exist( $bool, $order ) {
 
-		if ( true == $bool ) {
-			$order_id = $order->get_id();
-			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
-			if ( $tracking_items ) {
-				return true;
-			} else {
-				return false;
-			}
+
+	/**
+	 * Determine whether an order should be considered "shipped" for TrackShip.
+	 *
+	 * Logic priority:
+	 *  1. If WooCommerce Fulfillment exists → directly treat as shipped.
+	 *  2. Otherwise, validate order status against TrackShip settings.
+	 *  3. Finally, ensure the order actually has tracking items.
+	 *
+	 * @param bool	$bool Incoming value (ignored in our logic).
+	 * @param WC_Order $order WooCommerce order object.
+	 *
+	 * @return bool True if the order qualifies as shipped, false otherwise.
+	 */
+	public function maybe_order_shipped( $bool, $order ) {
+		if ( ! $order instanceof WC_Order ) {
+			return false;
 		}
-		return $bool;
-	}
+		$order_id = $order->get_id();
 
-	/*
-	 * check order status?
-	 * is it valid for TS trigger
-	*/
-	public function check_order_status( $bool, $order ) {
-		$valid_order_statuses = get_trackship_settings( 'trackship_trigger_order_statuses', ['completed', 'partial-shipped', 'shipped'] );
-		$bool = in_array( $order->get_status(), $valid_order_statuses );
-		$bool = 'delivered' == $order->get_status() ? true : $bool;
-		return $bool;
+		// 1. Fulfillments: If WooCommerce Fulfillment already exists for this order
+		$fulfillments = trackship_for_woocommerce()->fulfillment->get_fulfillments_by_order_id( $order_id );
+		if ( ! empty( $fulfillments ) ) {
+			return true;
+		}
+
+		// 2. Check order status against TrackShip’s allowed trigger statuses.
+		$valid_order_statuses = get_trackship_settings( 'trackship_trigger_order_statuses', array( 'completed', 'partial-shipped', 'shipped' ) );
+		$status = $order->get_status();
+		$status_ok = in_array( $status, $valid_order_statuses, true ) || ( 'delivered' == $status );
+
+		if ( ! $status_ok ) {
+			return false;
+		}
+
+		// 3. If the order has tracking info
+		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
+
+		if ( ! empty( $tracking_items ) ) {
+			return true;
+		}
+
+		// No fulfillment, no valid status OR no tracking → not shipped.
+		return false;
 	}
 
 	/*
@@ -1240,6 +1242,7 @@ class WC_Trackship_Actions {
 			// set temp pending in shipment table 
 			$args = array(
 				'pending_status' => 'pending_trackship',
+				'fulfillment_id' => $tracking_item['fulfillment_id'] ?? '',
 			);
 			trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_item['tracking_number'], $args );
 		}
@@ -1253,7 +1256,7 @@ class WC_Trackship_Actions {
 		$order_shipped = apply_filters( 'is_order_shipped', false, $order );
 		if ( $order_shipped ) {
 			$api = new WC_TrackShip_Api_Call();
-			$array = $api->get_trackship_apicall( $order_id );
+			$api->get_trackship_apicall( $order_id );
 		}
 	}
 

@@ -98,7 +98,7 @@ label.tab_label a {
 section.inner_tab_section {
 	display: none;
 }
-section#content_trackship_settings, section#content_trackship_notifications, section#content_trackship_integrations, section#content_trackship_tracking_page {
+section#content_trackship_settings, section#content_trackship_notifications, section#content_trackship_integrations, section#content_trackship_tracking_page, section#content_trackship_setup {
 	margin: 0 20px;
 }
 .trackship_admin_content section#content_trackship_dashboard, section#content_trackship_tools, section#content_trackship_logs {
@@ -930,7 +930,7 @@ opacity: 1;
 }
 .snackbar-logs {
 	position: fixed;
-	z-index: 999999;
+	z-index: 9999999;
 	top: 95px;
 	right: 30px;
 	width: 300px;
@@ -1060,11 +1060,26 @@ button.button-primary.button-trackship.tools-ts-button {
 	font-weight: 600;
 	cursor: pointer;
 }
-.tools_tab {
+.tools_tab, .setup_tab {
 	max-width: 1000px;
 	width: 100%;
 }
-.tools_tab .inner_div {
+.setup_heading {
+    margin: 0;
+    font-size: 16px;
+    padding-bottom: 15px;
+}
+.setup_span {
+    padding-bottom: 15px;
+    display: block;
+}
+.setup_docs_link a {
+    text-decoration: none;
+    color: #124fd6;
+    font-weight: 600;
+    font-size: 14px;
+}
+.tools_tab .inner_div, #content_trackship_setup .inner_div {
 	border: 1px solid #e0e0e0;
 	border-radius: 5px;
 	background: #fff;
@@ -1075,6 +1090,9 @@ button.button-primary.button-trackship.tools-ts-button {
 }
 .p15 {
 	padding: 15px;
+}
+.mb0 {
+    margin-bottom: 0 !important;
 }
 .trackship-notice p, .trackship-verify-table p {
 	margin: 0;
@@ -1282,10 +1300,13 @@ input#late_shipments_email_to, input#exception_shipments_email_to, input#on_hold
 	max-height: 100%;
 	background: transparent;
 	vertical-align: top;
-	margin-top: 100px;
-	max-width: 840px;
+	max-width: 600px;
 	box-sizing: border-box;
-	padding-top: 0;
+	position: fixed;
+	right: 0;
+	background: #fff;
+	border-left: 1px solid #ccc;
+	height: 100%;
 }
 span.admin_tracking_page_close {
 	width: 60px;
@@ -1698,7 +1719,7 @@ span.ts_plan_details_bottom {
 	flex-direction: column; /* title + doc stacked vertically */
 	align-items: flex-start;
 	color: #005b9a;
-	font-size: 16px;
+	font-size: 15px;
 	font-weight: 600;
 }
 /* Documentation link under title */

@@ -108,6 +108,8 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		$version_info['wc'] = WC_VERSION;
 		$version_info['site_url'] = get_site_url();
 		$version_info['home_url'] = get_home_url();
+		$page_id = get_trackship_settings( 'tracking_page_id' );
+		$version_info['tracking_page'] = get_trackship_settings( 'ts_tracking_page' ) && $page_id ? get_permalink( $page_id ) : 'Not setup';
 		$version_info['trackship_db'] = get_option( 'trackship_db' );
 		$version_info['trackship_key'] = get_trackship_key();
 		
@@ -147,19 +149,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		}
 		$version_info['trackship_settings'] = get_option( 'trackship_settings' );
 		$version_info['trackship_email_settings'] = get_option( 'trackship_email_settings' );
-		$version_info['old_settings'] = [
-			'wcast_pickupreminder_email_settings' => get_option( 'wcast_pickupreminder_email_settings' ),
-			'wcast_intransit_email_settings' => get_option( 'wcast_intransit_email_settings' ),
-			'wcast_returntosender_email_settings' => get_option( 'wcast_returntosender_email_settings' ),
-			'wcast_availableforpickup_email_settings' => get_option( 'wcast_availableforpickup_email_settings' ),
-			'wcast_exception_email_settings' => get_option( 'wcast_exception_email_settings' ),
-			'wcast_onhold_email_settings' => get_option( 'wcast_onhold_email_settings' ),
-			'wcast_failure_email_settings' => get_option( 'wcast_failure_email_settings' ),
-			'wcast_delivered_status_email_settings' => get_option( 'wcast_delivered_status_email_settings' ),
-			'wcast_outfordelivery_email_settings' => get_option( 'wcast_outfordelivery_email_settings' ),
-			'shipment_email_settings' => get_option( 'shipment_email_settings' ),
-		];
-		
+
 		$database_version	= wc_get_server_database_version();
 
 		global $wpdb;
@@ -232,7 +222,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 				'shipment_status'		=> $tracking_event_status,
 				'last_event'			=> $last_event,
 				'updated_at'			=> $request['updated_at'],
-				'last_event_time'		=> $last_event_time ? $last_event_time : gmdate( 'Y-m-d H:i:s' ),
+				'last_event_time'		=> $last_event_time ? $last_event_time : current_time( 'Y-m-d H:i:s' ),
 				'first_event_time'		=> $first_event_time,
 				'est_delivery_date'		=> $tracking_est_delivery_date ? gmdate('Y-m-d', strtotime($tracking_est_delivery_date)) : null,
 			);
@@ -249,6 +239,25 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			);
 			$query = trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_number, $args, $args2 );
 			
+			/*
+			* NOTE:
+			* This code is a temporary compatibility fix for RouteApp.
+			* RouteApp hooks into `added_post_meta` and `updated_post_meta` and causes conflicts with TrackShip when tracking meta is saved. So we remove those actions.
+			*/
+			// If the RouteApp plugin is active, disable its tracking meta-update hooks
+			if ( is_plugin_active( 'routeapp/routeapp.php' ) ) {
+				// Access the RouteApp public class instance
+				global $routeapp_public;
+				// Remove RouteApp handler from added_post_meta
+				if ( has_action( 'added_post_meta', array( $routeapp_public, 'routeapp_update_tracking_order_api' ) ) ) {
+					remove_action( 'added_post_meta', array( $routeapp_public, 'routeapp_update_tracking_order_api' ), 20, 3 );
+				}
+				// Remove RouteApp handler from updated_post_meta
+				if ( has_action( 'updated_post_meta', array( $routeapp_public, 'routeapp_update_tracking_order_api' ) ) ) {
+					remove_action( 'updated_post_meta', array( $routeapp_public, 'routeapp_update_tracking_order_api' ), 20, 3 );
+				}
+			}
+
 			$order->update_meta_data( 'ts_shipment_status', $ts_shipment_status );
 			$order->save();
 

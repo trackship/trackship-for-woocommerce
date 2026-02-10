@@ -21,6 +21,9 @@ if ( $orders ) :
 		</tr>
 		<?php
 		foreach ( $orders as $key1 => $val1 ) {
+			if ( !wc_get_order( $val1->order_id ) ) {
+				continue;
+			}
 			//Get tracking url and Formatted tracking provider
 			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $val1->order_id );
 			foreach ( $tracking_items as $key2 => $val2 ) {
