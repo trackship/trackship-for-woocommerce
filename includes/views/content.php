@@ -41,6 +41,11 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 				unset( $array['setup'] ); // Remove Setup tab if WooCommerce version is less than 10.2 or WooCommerce Fulfillments is active
 			}
 
+			// Fallback when the requested tab is no longer available (e.g., setup removed after enabling fulfillments).
+			if ( ! array_key_exists( $menu_tab, $array ) ) {
+				$menu_tab = 'settings';
+			}
+
 			?>
 			<div>
 				<?php foreach ( $array as $key => $val ) { ?>
