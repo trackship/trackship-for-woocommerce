@@ -494,6 +494,18 @@ class WC_Trackship_Install {
 			delete_trackship_settings( 'ts_review_ignore_139' );
 			delete_trackship_settings( 'ts_popup_ignore139' );
 		}
+
+		// TS4WC version 1.9.8 or 2.0
+		if ( version_compare( get_option( 'trackship_db' ), '1.42', '<' ) ) {
+			update_trackship_settings( 'trackship_db', '1.42' );
+			update_option( 'trackship_db', '1.42' );
+			$this->create_shipment_table();
+			$this->create_shipment_meta_table();
+			$this->check_column_exists();
+
+			$this->create_shipping_provider_table();
+			$this->update_shipping_providers();
+		}
 	}
 
 	public function update_trackship_providers() {
@@ -594,6 +606,7 @@ class WC_Trackship_Install {
 			$sql = "CREATE TABLE {$wpdb->prefix}trackship_shipment (
 				`id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
 				`order_id` BIGINT(20) ,
+				`fulfillment_id` BIGINT(20) ,
 				`order_number` VARCHAR(40) ,
 				`tracking_number` VARCHAR(80) ,
 				`shipping_provider` VARCHAR(50) ,
@@ -669,6 +682,7 @@ class WC_Trackship_Install {
 		$shipment_table = array(
 			'id'					=> ' BIGINT(20) NOT NULL AUTO_INCREMENT',
 			'order_id'				=> ' BIGINT(20)',
+			'fulfillment_id'		=> ' BIGINT(20)',
 			'order_number'			=> ' VARCHAR(40)',
 			'tracking_number'		=> ' VARCHAR(80)',
 			'shipping_provider'		=> ' VARCHAR(50)',
