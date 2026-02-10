@@ -45,6 +45,8 @@ class Trackship_For_Woocommerce {
 	public $wot_ts;
 	public $kly_ts;
 	public $omn_ts;
+	public $fulfillment_init;
+	public $fulfillment;
 
 	/**
 	 * Initialize the main plugin function
@@ -212,6 +214,12 @@ class Trackship_For_Woocommerce {
 		require_once $this->get_plugin_path() . '/includes/class-wc-admin-notices.php';
 		$this->wc_admin_notice = WC_TS4WC_Admin_Notices_Under_WC_Admin::get_instance();
 
+		require_once $this->get_plugin_path() . '/includes/fulfillment/class-ts-wc-fulfillment.php';
+		$this->fulfillment_init = TSWC_Fulfillment_Init::get_instance();
+
+		require_once plugin_dir_path( __FILE__ ) . '/includes/integration/class-woo-fulfillment-integration.php';
+		$this->fulfillment = WOO_Fulfillment_Tracking_TS4WC::get_instance();
+
 		//SMSWOO
 		require_once $this->get_plugin_path() . '/includes/smswoo/class-smswoo-init.php';
 		$this->smswoo_init = TSWC_SMSWOO_Init::get_instance();
@@ -326,7 +334,7 @@ class Trackship_For_Woocommerce {
 	}
 
 	/**
-	 * Check if Shipment Tracking is active
+	 * Check if WooCommerce Shipping is active
 	 *
 	 * @since 1.0.0
 	 * @return bool
@@ -355,6 +363,16 @@ class Trackship_For_Woocommerce {
 		return is_plugin_active( 'woo-orders-tracking/woo-orders-tracking.php' ) || is_plugin_active( 'woocommerce-orders-tracking/woocommerce-orders-tracking.php' ) ? true : false;
 	}
 
+	/**
+	 * Check if WC Fulfillments is active
+	 *
+	 * @since 1.6.3
+	 * @return bool
+	*/
+	public function is_active_fulfillments() {
+		return get_option('woocommerce_feature_fulfillments_enabled') && WC_VERSION >= '10.2' ? true : false;
+	}
+	
 	/**
 	 * Check if Klaviyo is active
 	 *
@@ -416,6 +434,12 @@ class Trackship_For_Woocommerce {
 	}
 
 	public function get_tracking_items( $order_id ) {
+
+		$tracking_items = $this->fulfillment->woo_orders_tracking_items( $order_id );
+		if ( $tracking_items ) {
+			return $tracking_items;
+		}
+
 		if ( function_exists( 'ast_get_tracking_items' ) ) {
 			$tracking_items = ast_get_tracking_items( $order_id );
 		} elseif ( class_exists( 'WC_Shipment_Tracking' ) ) {

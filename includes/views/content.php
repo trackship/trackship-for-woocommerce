@@ -10,27 +10,37 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 		<div class="trackship_nav_div">
 			<?php
 			$array = array(
-				array(
+				'settings' => array(
 					'label'	=> __( 'Settings', 'trackship-for-woocommerce' ),
 					'slug'	=> 'settings',
 					'show'	=> true,
 				),
-				array(
+				'notifications' => array(
 					'label'	=> __( 'Notifications', 'trackship-for-woocommerce' ),
 					'slug'	=> 'notifications',
 					'show'	=> true,
 				),
-				array(
+				'integrations' => array(
 					'label'	=> __( 'Integrations', 'trackship-for-woocommerce' ),
 					'slug'	=> 'integrations',
 					'show'	=> true,
 				),
-				array(
+				'tools' => array(
 					'label'	=> __( 'Tools', 'trackship-for-woocommerce' ),
 					'slug'	=> 'tools',
 					'show'	=> true,
 				),
+				'setup' => array(
+					'label'	=> __( 'Setup', 'trackship-for-woocommerce' ),
+					'slug'	=> 'setup',
+					'show'	=> true,
+				),
 			);
+
+			if ( WC_VERSION < '10.2' || trackship_for_woocommerce()->is_active_fulfillments() ) {
+				unset( $array['setup'] ); // Remove Setup tab if WooCommerce version is less than 10.2 or WooCommerce Fulfillments is active
+			}
+
 			?>
 			<div>
 				<?php foreach ( $array as $key => $val ) { ?>
