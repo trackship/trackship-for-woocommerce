@@ -2,9 +2,9 @@
 Contributors: TrackShip
 Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order tracking, tracking
 Requires at least: 6.2
-Tested up to: 6.8.3
+Tested up to: 6.9.1
 Requires PHP: 7.4
-Stable tag: 1.9.7.1
+Stable tag: 1.9.8
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -137,6 +137,24 @@ Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipme
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended.
 
 == Changelog ==
+
+= 1.9.8 - 2026-02-10 =
+* New - Added WooCommerce Fulfillments integration for native shipment data sync.
+* New - Added Setup tab to enable WooCommerce Fulfillments from TrackShip settings.
+* New - Added WooCommerce Shipping plugin compatibility.
+* Enhancement - Redesigned admin tracking widget to sidebar layout.
+* Enhancement - Improved "is order shipped" logic to support fulfillment-based orders.
+* Enhancement - Added formatted provider name display for WC Shipment Tracking.
+* Fix - Fixed email heading input issue with single quote character.
+* Fix - Fixed error on null order object in Late Shipment email.
+* Fix - Addressed RouteApp compatibility issue.
+* Fix - Fixed Map carrier condition for AST Pro.
+* Update - Renamed front-end JS handle to avoid conflicts.
+* Update - Uses `current_time` for store time instead of server time.
+* Update - Removed redundant WooCommerce script and style registrations (jquery-tiptip, select2, selectWoo, wc-enhanced-select) as they are already registered by WooCommerce.
+* Compatibility - Verified compatibility with WooCommerce version 10.5.0.
+* Compatibility - Tested and confirmed compatibility with WordPress version 6.9.1.
+
 = 1.9.7.1 - 2025-11-04 =
 * Enhancement - Added Japanese translation for the plugin.
 * Update - Updated translations to improve language support.
