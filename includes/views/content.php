@@ -42,7 +42,7 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 			}
 
 			// Fallback when the requested tab is no longer available (e.g., setup removed after enabling fulfillments).
-			if ( ! array_key_exists( $menu_tab, $array ) ) {
+			if ( ! array_key_exists( $menu_tab, $array ) && 'setup' == $menu_tab ) {
 				$menu_tab = 'settings';
 			}
 
