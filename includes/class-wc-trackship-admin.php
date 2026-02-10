@@ -772,7 +772,7 @@ class WC_Trackship_Admin {
 			vertical-align: text-bottom;
 		}
 		</style>
-		<?php echo '<div id=admin_tracking_widget class=popupwrapper style="display:none;"><span class="admin_tracking_page_close popupclose"><span class="dashicons dashicons-no-alt"></span></span><div class=popuprow></div><div class=popupclose></div></div>'; ?>
+		<?php echo '<div id=admin_tracking_widget class=popupwrapper style="display:none;"><div class=popuprow></div><div class=popupclose></div></div>'; ?>
 		<div id="free_user_popup" class="popupwrapper" style="display:none;">
 			<div class="free_user_popup popuprow" style="padding:20px">
 				<h1 style="text-align: center;"><?php esc_html_e( 'Upgrade to TrackShip Pro', 'trackship-for-woocommerce' ); ?></h1>
