@@ -336,7 +336,7 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Check if WooCommerce Shipping is active
 	 *
-	 * @since 1.0.0
+	 * @since 2.0.0
 	 * @return bool
 	*/
 	public function is_woocommerce_shipping_active() {
@@ -366,11 +366,11 @@ class Trackship_For_Woocommerce {
 	/**
 	 * Check if WC Fulfillments is active
 	 *
-	 * @since 1.6.3
+	 * @since 2.0.0
 	 * @return bool
 	*/
 	public function is_active_fulfillments() {
-		return get_option('woocommerce_feature_fulfillments_enabled') && WC_VERSION >= '10.2' ? true : false;
+		return 'yes' == get_option('woocommerce_feature_fulfillments_enabled') && WC_VERSION >= '10.2' ? true : false;
 	}
 	
 	/**
