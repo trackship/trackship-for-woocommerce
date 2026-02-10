@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="p15 inner_div before_fulfillments">
 			<h4 class="setup_heading"><?php echo '🔗 '; ?><?php esc_html_e( 'TrackShip is compatible with WooCommerce Fulfillments', 'trackship-for-woocommerce' ); ?></h4>
 			<span class="setup_span"><?php esc_html_e( 'Fulfillments let TrackShip read shipment data natively and keep tracking in sync.', 'trackship-for-woocommerce' ); ?></span>
-			<div><a class="setup_docs_link" href="https://www.trackship.com/woocommerce-fulfillments/" target="_blank"><?php esc_html_e( 'Learn more →', 'trackship-for-woocommerce' ); ?></a></div>
+			<div><a class="setup_docs_link" href="https://docs.trackship.com/docs/trackship-for-woocommerce/compatibility/#shipment-tracking" target="_blank"><?php esc_html_e( 'Learn more →', 'trackship-for-woocommerce' ); ?></a></div>
 		</div>
 		<div class="p15 inner_div mb0 before_fulfillments">
 			<h4 class="setup_heading"><?php esc_html_e( 'Enable WooCommerce Fulfillments', 'trackship-for-woocommerce' ); ?></h4>
