@@ -495,7 +495,7 @@ class WC_Trackship_Install {
 			delete_trackship_settings( 'ts_popup_ignore139' );
 		}
 
-		// TS4WC version 1.9.8 or 2.0
+		// TS4WC version 1.9.8
 		if ( version_compare( get_option( 'trackship_db' ), '1.42', '<' ) ) {
 			update_trackship_settings( 'trackship_db', '1.42' );
 			update_option( 'trackship_db', '1.42' );
