@@ -821,3 +821,31 @@ jQuery(document).on("click", ".enhanced_tracking_detail .tracking_number_wrap", 
 		jQuery(this).siblings('.enhanced_tracking_content').slideDown('slow');
 	}
 });
+
+jQuery(document).on("click", ".ts_enable_fulfillments", function(){
+	jQuery('.setup_tab').block({
+		message: null,
+		overlayCSS: {
+			background: '#fff',
+			opacity: .6
+		}
+	});
+	var ajax_data = {
+		action: 'enabled_wc_fulfillments',
+		security: jQuery('#ts_tools').val()
+	};
+	jQuery.ajax({
+		url: ajaxurl,
+		data: ajax_data,
+		type: 'POST',
+		success: function (response) {
+			jQuery(document).trackship_snackbar('WooCommerce Fulfillments enabled successfully');
+			jQuery('.before_fulfillments').remove();
+			jQuery('.after_fulfillments').show();
+			jQuery('.setup_tab').unblock();
+		},
+		error: function (response, jqXHR, exception) {
+			trackship_js_error(response, jqXHR, exception)
+		}
+	});
+});

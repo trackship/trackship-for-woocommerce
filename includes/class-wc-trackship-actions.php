@@ -109,10 +109,11 @@ class WC_Trackship_Actions {
 		if ( ! get_option( 'trackship_apikey' ) ) {
 			return;
 		}
-		
-		//filter in shipped orders
-		add_filter( 'is_order_shipped', array( $this, 'check_order_status' ), 5, 2 );
-		add_filter( 'is_order_shipped', array( $this, 'check_tracking_exist' ), 10, 2 );
+
+		// Fulfillments: If WooCommerce Fulfillment already exists for this order
+		// Check order status against TrackShip’s allowed trigger statuses.
+		// If the order has tracking info
+		add_filter( 'is_order_shipped', array( $this, 'maybe_order_shipped' ), 10, 2 );
 		
 		// CSV / manually
 		add_action( 'send_order_to_trackship', array( $this, 'schedule_while_adding_tracking' ), 10, 1 );
@@ -1071,8 +1072,15 @@ class WC_Trackship_Actions {
 			//trigger order deleivered
 			$order = wc_get_order( $order_id );
 			$order_status = $order->get_status();
+			$fulfillments = trackship_for_woocommerce()->fulfillment->get_fulfillments_by_order_id( $order_id );
+			if ( $fulfillments ) {
+				$has_pending_items = trackship_for_woocommerce()->fulfillment->has_pending_items( $order_id );
+				if ( $has_pending_items ) {
+					return;
+				}
+			}
 			
-			if ( in_array( $order_status, apply_filters( 'allowed_order_status_for_delivered', array( 'completed', 'updated-tracking', 'shipped' ) ) ) ) {
+			if ( in_array( $order_status, apply_filters( 'allowed_order_status_for_delivered', array( 'completed', 'updated-tracking', 'shipped' ) ) ) || $fulfillments ) {
 				$order->update_status( 'delivered' );
 			}
 		}
@@ -1138,35 +1146,51 @@ class WC_Trackship_Actions {
 		}
 		return $value;
 	}
-	
-	/*
-	 * tracking number filter
-	 * if number not found. return false
-	 * if number found. return true
-	*/
-	public function check_tracking_exist( $bool, $order ) {
 
-		if ( true == $bool ) {
-			$order_id = $order->get_id();
-			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
-			if ( $tracking_items ) {
-				return true;
-			} else {
-				return false;
-			}
+
+	/**
+	 * Determine whether an order should be considered "shipped" for TrackShip.
+	 *
+	 * Logic priority:
+	 *  1. If WooCommerce Fulfillment exists → directly treat as shipped.
+	 *  2. Otherwise, validate order status against TrackShip settings.
+	 *  3. Finally, ensure the order actually has tracking items.
+	 *
+	 * @param bool	$bool Incoming value (ignored in our logic).
+	 * @param WC_Order $order WooCommerce order object.
+	 *
+	 * @return bool True if the order qualifies as shipped, false otherwise.
+	 */
+	public function maybe_order_shipped( $bool, $order ) {
+		if ( ! $order instanceof WC_Order ) {
+			return false;
 		}
-		return $bool;
-	}
+		$order_id = $order->get_id();
 
-	/*
-	 * check order status?
-	 * is it valid for TS trigger
-	*/
-	public function check_order_status( $bool, $order ) {
-		$valid_order_statuses = get_trackship_settings( 'trackship_trigger_order_statuses', ['completed', 'partial-shipped', 'shipped'] );
-		$bool = in_array( $order->get_status(), $valid_order_statuses );
-		$bool = 'delivered' == $order->get_status() ? true : $bool;
-		return $bool;
+		// 1. Fulfillments: If WooCommerce Fulfillment already exists for this order
+		$fulfillments = trackship_for_woocommerce()->fulfillment->get_fulfillments_by_order_id( $order_id );
+		if ( ! empty( $fulfillments ) ) {
+			return true;
+		}
+
+		// 2. Check order status against TrackShip’s allowed trigger statuses.
+		$valid_order_statuses = get_trackship_settings( 'trackship_trigger_order_statuses', array( 'completed', 'partial-shipped', 'shipped' ) );
+		$status = $order->get_status();
+		$status_ok = in_array( $status, $valid_order_statuses, true ) || ( 'delivered' == $status );
+
+		if ( ! $status_ok ) {
+			return false;
+		}
+
+		// 3. If the order has tracking info
+		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
+
+		if ( ! empty( $tracking_items ) ) {
+			return true;
+		}
+
+		// No fulfillment, no valid status OR no tracking → not shipped.
+		return false;
 	}
 
 	/*
@@ -1218,6 +1242,7 @@ class WC_Trackship_Actions {
 			// set temp pending in shipment table 
 			$args = array(
 				'pending_status' => 'pending_trackship',
+				'fulfillment_id' => $tracking_item['fulfillment_id'] ?? '',
 			);
 			trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_item['tracking_number'], $args );
 		}
@@ -1231,7 +1256,7 @@ class WC_Trackship_Actions {
 		$order_shipped = apply_filters( 'is_order_shipped', false, $order );
 		if ( $order_shipped ) {
 			$api = new WC_TrackShip_Api_Call();
-			$array = $api->get_trackship_apicall( $order_id );
+			$api->get_trackship_apicall( $order_id );
 		}
 	}
 

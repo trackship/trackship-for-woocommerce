@@ -48,6 +48,9 @@ class WC_TrackShip_Admin_Notice {
 		add_action( 'admin_notices', array( $this, 'trackship_upgrade_notice' ) );
 
 		// review notice
+		add_action( 'admin_notices', array( $this, 'trackship_fulfillments_notice' ) );
+
+		// review notice
 		add_action( 'admin_notices', array( $this, 'trackship_store_connect_notice' ) );
 	}
 
@@ -64,6 +67,7 @@ class WC_TrackShip_Admin_Notice {
 		$notice_types = [
 			'ts-review-ignore'  => 'ts_review_ignore_141',
 			'ts-upgrade-ignore' => 'ts_popup_ignore141',
+			'ts-fulfillments-ignore' => 'ts_fulfillments_ignore',
 		];
 
 		foreach ($notice_types as $param => $setting_key) {
@@ -210,6 +214,51 @@ class WC_TrackShip_Admin_Notice {
 			</div>
 			<?php
 		}
+	}
+
+	/*
+	* Display admin notice to promote WC Fulfillments
+	*/
+	public function trackship_fulfillments_notice () {
+		if ( get_trackship_settings( 'ts_fulfillments_ignore', '') || WC_VERSION < '10.2' ) {
+			return;
+		}
+		$nonce = wp_create_nonce('ts_dismiss_notice');
+		$dismissable_url = esc_url( add_query_arg( [ 'ts-fulfillments-ignore' => 'true', 'nonce' => $nonce ] ) );
+		$url = add_query_arg( array( 'page' => 'trackship-for-woocommerce', 'tab' => 'setup' ), admin_url( 'admin.php' ) );
+		$is_fulfillments = trackship_for_woocommerce()->is_active_fulfillments();
+		?>
+		<style>
+			.wp-core-ui .notice.trackship-dismissable-notice {
+				padding: 15px;
+				text-decoration: none;
+			}
+			.trackship-dismissable-notice h3, .trackship-dismissable-notice p {
+				margin: 0;
+				padding-bottom: 10px;
+			}
+			.wp-core-ui .notice.trackship-dismissable-notice a.notice-dismiss {
+				padding: 9px;
+				text-decoration: none;
+			}
+		</style>
+		<?php if ( !$is_fulfillments ) { ?>
+			<div class="notice notice-info is-dismissible trackship-dismissable-notice" role="region">
+				<a href="<?php echo esc_url( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
+				<h3>🆕 WooCommerce Fulfillments is now supported</h3>
+				<p>TrackShip can sync shipments created via WooCommerce Fulfillments. Enable it once to start tracking fulfilment-based shipments automatically.</p>
+				<p style="padding:0;">
+					<a class="button button-primary" href="<?php echo esc_url( $url ); ?>">Start setup</a>
+					<a class="button" href="<?php echo esc_url( $dismissable_url ); ?>">Skip for now</a>
+				</p>
+			</div>
+		<?php } else { ?>
+			<div class="notice notice-success is-dismissible trackship-dismissable-notice" role="region">
+				<a href="<?php echo esc_url( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
+				<h3>✅ WooCommerce Fulfillments is enabled</h3>
+				<p>TrackShip is now syncing shipments created via WooCommerce Fulfillments. Your fulfilment-based shipments are being tracked automatically.</p>
+			</div>
+		<?php }
 	}
 
 	public function trackship_store_connect_notice () {
