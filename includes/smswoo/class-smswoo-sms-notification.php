@@ -124,43 +124,21 @@ class TSWC_SMSWoo_SMS_Notification {
 			return $replacements;
 		}
 		
-		if ( function_exists( 'ast_get_tracking_items' ) || trackship_for_woocommerce()->is_active_yith_order_tracking() || trackship_for_woocommerce()->is_active_woo_order_tracking() ) {
-			$tracking_item = $this->tracking_item;
-			
-			$replacements[ '%tracking_number%' ] = $this->tracking_number;
-			$replacements[ '{tracking_number}' ] = $this->tracking_number;
-			
-			$tracking_provider = $tracking_item['formatted_tracking_provider'];
-			$replacements[ '%tracking_provider%' ] = $tracking_provider;
-			$replacements[ '{tracking_provider}' ] = $tracking_provider;
-			
-			$replacements[ '%shipping_provider%' ] = $tracking_provider;
-			$replacements[ '{shipping_provider}' ] = $tracking_provider;
-			
-			$tracking_link = $tracking_item['tracking_page_link'] ? $tracking_item['tracking_page_link'] : $tracking_item['formatted_tracking_link'];
-			$replacements[ '%tracking_link%' ] = $tracking_link;
-			$replacements[ '{tracking_link}' ] = $tracking_link;
-		}
+		$tracking_item = $this->tracking_item;
 		
-		if ( is_plugin_active( 'woocommerce-shipment-tracking/woocommerce-shipment-tracking.php' ) ) {
-			$st = WC_Shipment_Tracking_Actions::get_instance();
-			
-			$formatted_items = $st->get_tracking_items( $object->order->get_id(), true );
-			
-			$replacements[ '%tracking_number%' ] = implode( ', ', $this->tracking_number );
-			$replacements[ '{tracking_number}' ] = implode( ', ', $this->tracking_number );
-			
-			$tracking_provider = array_column( $formatted_items, 'formatted_tracking_provider');
-			$replacements[ '%tracking_provider%' ] = implode( ', ', $tracking_provider );
-			$replacements[ '{tracking_provider}' ] = implode( ', ', $tracking_provider );
-			
-			$replacements[ '%shipping_provider%' ] = implode( ', ', $tracking_provider );
-			$replacements[ '{shipping_provider}' ] = implode( ', ', $tracking_provider );
-			
-			$tracking_link = array_column( $formatted_items, 'formatted_tracking_link');
-			$replacements[ '%tracking_link%' ] = implode( ', ', $tracking_link );
-			$replacements[ '{tracking_link}' ] = implode( ', ', $tracking_link );
-		}
+		$replacements[ '%tracking_number%' ] = $this->tracking_number;
+		$replacements[ '{tracking_number}' ] = $this->tracking_number;
+		
+		$tracking_provider = $tracking_item['formatted_tracking_provider'];
+		$replacements[ '%tracking_provider%' ] = $tracking_provider;
+		$replacements[ '{tracking_provider}' ] = $tracking_provider;
+		
+		$replacements[ '%shipping_provider%' ] = $tracking_provider;
+		$replacements[ '{shipping_provider}' ] = $tracking_provider;
+		
+		$tracking_link = $tracking_item['tracking_page_link'] ? $tracking_item['tracking_page_link'] : $tracking_item['formatted_tracking_link'];
+		$replacements[ '%tracking_link%' ] = $tracking_link;
+		$replacements[ '{tracking_link}' ] = $tracking_link;
 		
 		if ( is_trackship_connected() ) {
 			$status = apply_filters( 'trackship_status_filter', $this->new_status );
