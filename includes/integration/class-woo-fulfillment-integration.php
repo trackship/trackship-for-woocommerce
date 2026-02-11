@@ -66,6 +66,13 @@ class WOO_Fulfillment_Tracking_TS4WC {
 			return [];
 		}
 
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'wc_order_fulfillments';
+
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) !== $table_name ) {
+			return [];
+		}
+
 		// read_fulfillments( string $entity_type, string $entity_id )
 		$fulfillments = $datastore->read_fulfillments( \WC_Order::class, (string) $order_id );
 
