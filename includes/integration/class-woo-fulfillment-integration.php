@@ -15,6 +15,7 @@ class WOO_Fulfillment_Tracking_TS4WC {
 	 * @var object Class Instance
 	*/
 	private static $instance;
+	private $fulfillments_table_exists;
 
 	/**
 	 * Private constructor to prevent direct instantiation.
@@ -66,6 +67,10 @@ class WOO_Fulfillment_Tracking_TS4WC {
 			return [];
 		}
 
+		if ( ! $this->is_fulfillments_table_exists() ) {
+			return [];
+		}
+
 		// read_fulfillments( string $entity_type, string $entity_id )
 		$fulfillments = $datastore->read_fulfillments( \WC_Order::class, (string) $order_id );
 
@@ -109,10 +114,9 @@ class WOO_Fulfillment_Tracking_TS4WC {
 				'formatted_tracking_provider'	=> trackship_for_woocommerce()->actions->get_provider_name( $shipment_provider ),
 				'tracking_provider'				=> $shipment_provider,
 				'tracking_number'				=> $tracking_number,
-				'formatted_tracking_link'		=> $fulfillment->get_meta( 'carrier_tracking_url', true ),
+				'formatted_tracking_link'		=> $fulfillment->get_meta( '_carrier_tracking_url', true ),
 				'tracking_id'					=> '',
 				'date_shipped'					=> $fulfillment->get_meta( '_date_fulfilled', true ),
-				'tracking_page_link'			=> trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $tracking_number ),
 				'products_list'					=> $product_array,
 				'tracking_provider_image'		=> $providers[ $shipment_provider ]['icon'] ?? null,
 			);
@@ -130,5 +134,22 @@ class WOO_Fulfillment_Tracking_TS4WC {
 
 	public function get_providers() {
 		return FulfillmentUtils::get_shipping_providers_object();
+	}
+
+	public function is_fulfillments_table_exists() {
+		if ( $this->fulfillments_table_exists ) {
+			return 'yes' === $this->fulfillments_table_exists;
+		}
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'wc_order_fulfillments';
+
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) === $table_name ) {
+			$this->fulfillments_table_exists = 'yes';
+			return true;
+		} else {
+			$this->fulfillments_table_exists = 'no';
+		}
+
+		return false;
 	}
 }

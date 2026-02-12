@@ -524,7 +524,7 @@ class WC_Trackship_Actions {
 			$this->schedule_trackship_trigger( $shipment_id );
 		}
 
-		wp_send_json( ['sucess' => true] );
+		wp_send_json( ['success' => true] );
 	}
 	
 	/*
@@ -741,7 +741,7 @@ class WC_Trackship_Actions {
 				$status = __( 'Store is not Connected to TrackShip', 'trackship-for-woocommerce' );
 				break;
 			case 'unauthorized_store_api_key':
-				$status = __( 'Store is conneted with different account', 'trackship-for-woocommerce' );
+				$status = __( 'Store is connected with different account', 'trackship-for-woocommerce' );
 				break;
 		}
 		return $status;
@@ -1069,14 +1069,17 @@ class WC_Trackship_Actions {
 		}
 
 		if ( count( (array) $rows ) > 0 && true == $delivered ) {
-			//trigger order deleivered
+			// trigger order delivered
 			$order = wc_get_order( $order_id );
 			$order_status = $order->get_status();
-			$fulfillments = trackship_for_woocommerce()->fulfillment->get_fulfillments_by_order_id( $order_id );
-			if ( $fulfillments ) {
-				$has_pending_items = trackship_for_woocommerce()->fulfillment->has_pending_items( $order_id );
-				if ( $has_pending_items ) {
-					return;
+			$fulfillments = [];
+			if ( trackship_for_woocommerce()->is_active_fulfillments() ) {
+				$fulfillments = trackship_for_woocommerce()->fulfillment->get_fulfillments_by_order_id( $order_id );
+				if ( $fulfillments ) {
+					$has_pending_items = trackship_for_woocommerce()->fulfillment->has_pending_items( $order_id );
+					if ( $has_pending_items ) {
+						return;
+					}
 				}
 			}
 			
