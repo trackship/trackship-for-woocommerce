@@ -119,6 +119,7 @@ class WOO_Fulfillment_Tracking_TS4WC {
 				'date_shipped'					=> $fulfillment->get_meta( '_date_fulfilled', true ),
 				'products_list'					=> $product_array,
 				'tracking_provider_image'		=> $providers[ $shipment_provider ]['icon'] ?? null,
+				'tracking_page_link'			=> trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $tracking_number ),
 			);
 			$tracking_items[] = $tracking_item;
 		}

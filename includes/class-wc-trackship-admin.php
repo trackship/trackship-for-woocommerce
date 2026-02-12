@@ -394,8 +394,8 @@ class WC_Trackship_Admin {
 		$form_data = array(
 			'trackship_trigger_order_statuses' => array(
 				'type'		=> 'multiple_select',
-				'title'		=> __( 'Order statuses to trigger TrackShip ', 'trackship-for-woocommerce' ),
-				'tooltip'	=> __( 'Choose on which order emails to include the shipment tracking info', 'trackship-for-woocommerce' ),
+				'title'		=> __( 'Auto-track these order statuses', 'trackship-for-woocommerce' ),
+				'tooltip'	=> __( 'Tracking is sent to TrackShip when the order change to the selected status. Choose default (Completed/Shipped or Partially Shipped) or custom statuses to trigger it automatically.', 'trackship-for-woocommerce' ),
 				'options'	=> $status_array,
 				'show'		=> true,
 				'class'		=> '',
@@ -568,13 +568,13 @@ class WC_Trackship_Admin {
 			'limit'	 => 100,
 			'date_created' => '>' . ( time() - 2592000 ),
 			'type' => 'shop_order',
+			'return' => 'ids',
 		);
 		$orders = wc_get_orders( $args );
 		
 		$completed_order_with_tracking = 0;
 		
-		foreach ( $orders as $order ) {
-			$order_id = $order->get_id();
+		foreach ( $orders as $order_id ) {
 			$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 			
 			if ( $tracking_items ) {
