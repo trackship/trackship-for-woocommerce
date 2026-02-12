@@ -441,7 +441,12 @@ class Trackship_For_Woocommerce {
 
 		if ( $this->is_active_fulfillments() ) {
 			$tracking_items = $this->fulfillment->woo_orders_tracking_items( $order_id );
-		} elseif ( function_exists( 'ast_get_tracking_items' ) ) {
+			if ( $tracking_items ) {
+				return $tracking_items;
+			}
+		}
+		
+		if ( function_exists( 'ast_get_tracking_items' ) ) {
 			$tracking_items = ast_get_tracking_items( $order_id );
 		} elseif ( class_exists( 'WC_Shipment_Tracking' ) ) {
 			$tracking_items = WC_Shipment_Tracking()->actions->get_tracking_items( $order_id, true );
