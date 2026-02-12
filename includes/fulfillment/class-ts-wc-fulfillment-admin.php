@@ -85,7 +85,7 @@ class TrackShip_Fulfillment_Admin {
 		$tracking_link = trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $tracking_number );
 
 		$_tracking_url = $fulfillment->get_meta( '_tracking_url', true );
-		$fulfillment->update_meta_data( 'carrier_tracking_url', $_tracking_url );
+		$fulfillment->update_meta_data( '_carrier_tracking_url', $_tracking_url );
 
 		if ( $tracking_link ) {
 			$fulfillment->update_meta_data( '_tracking_url', $tracking_link );

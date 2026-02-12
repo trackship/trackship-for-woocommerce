@@ -152,12 +152,14 @@ class WC_Trackship_Admin {
 	}
 
 	public function register_metabox() {
-		if ( class_exists( 'Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController' ) ) {
-			$screen = wc_get_container()->get( CustomOrdersTableController::class )->custom_orders_table_usage_is_enabled() ? wc_get_page_screen_id( 'shop-order' ) : 'shop_order';
-		} else {
-			$screen = 'shop_order';
+		if ( ! trackship_for_woocommerce()->is_ast_active() || trackship_for_woocommerce()->is_active_fulfillments() ) {
+			if ( class_exists( 'Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController' ) ) {
+				$screen = wc_get_container()->get( CustomOrdersTableController::class )->custom_orders_table_usage_is_enabled() ? wc_get_page_screen_id( 'shop-order' ) : 'shop_order';
+			} else {
+				$screen = 'shop_order';
+			}
+			add_meta_box( 'trackship', 'TrackShip', array( $this, 'trackship_metabox_cb'), $screen, 'side', 'high' );
 		}
-		add_meta_box( 'trackship', 'TrackShip', array( $this, 'trackship_metabox_cb'), $screen, 'side', 'high' );
 	}
 	
 	public function trackship_metabox_cb( $post_or_order_object ) {

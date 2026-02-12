@@ -60,7 +60,7 @@ class Trackship_For_Woocommerce {
 		}
 
 		if ( !$this->is_ast_active() && !$this->is_st_active() && !$this->is_active_woo_order_tracking() && !$this->is_active_yith_order_tracking() && ! $this->is_woocommerce_shipping_active() ) {
-			add_action( 'admin_notices', array( $this, 'notice_activate_ast' ) );
+			add_action( 'admin_notices', array( $this, 'notice_required_shipment_tracking_extension' ) );
 		}
 
 		// Include required files.
@@ -122,7 +122,11 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @since 1.0.0
 	*/
-	public function notice_activate_ast() {
+	public function notice_required_shipment_tracking_extension() {
+		$is_fulfillments = trackship_for_woocommerce()->is_active_fulfillments();
+		if ( $is_fulfillments ) {
+			return;
+		}
 		?>
 		<div class="error">
 			<?php /* translators: %s: search for a tag */ ?>
@@ -435,12 +439,9 @@ class Trackship_For_Woocommerce {
 
 	public function get_tracking_items( $order_id ) {
 
-		$tracking_items = $this->fulfillment->woo_orders_tracking_items( $order_id );
-		if ( $tracking_items ) {
-			return $tracking_items;
-		}
-
-		if ( function_exists( 'ast_get_tracking_items' ) ) {
+		if ( $this->is_active_fulfillments() ) {
+			$tracking_items = $this->fulfillment->woo_orders_tracking_items( $order_id );
+		} elseif ( function_exists( 'ast_get_tracking_items' ) ) {
 			$tracking_items = ast_get_tracking_items( $order_id );
 		} elseif ( class_exists( 'WC_Shipment_Tracking' ) ) {
 			$tracking_items = WC_Shipment_Tracking()->actions->get_tracking_items( $order_id, true );
