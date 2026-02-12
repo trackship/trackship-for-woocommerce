@@ -4,7 +4,7 @@ Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order trackin
 Requires at least: 6.2
 Tested up to: 6.9.1
 Requires PHP: 7.4
-Stable tag: 1.9.8
+Stable tag: 1.9.9
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,13 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 
 == Changelog ==
 
+= 1.9.9 - 2026-02-12 =
+* Fix - Fixed WooCommerce fulfillment table missing error by adding table existence check.
+* Fix - Simplified tracking code logic to fix SMS notifications issue with WooCommerce Shipment Tracking plugin.
+* Fix - Fixed metabox display logic when AST is inactive with fulfillments active.
+* Enhancement - Updated shipment tracking extension notice to skip when fulfillments are active.
+* Compatibility - Verified compatibility with WooCommerce version 10.5.1.
+
 = 1.9.8 - 2026-02-10 =
 * New - Added WooCommerce Fulfillments integration for native shipment data sync.
 * New - Added Setup tab to enable WooCommerce Fulfillments from TrackShip settings.
@@ -186,10 +193,5 @@ For a complete changelog history, please visit our [documentation](https://docs.
 
 == Upgrade Notice ==
 
-= 1.9.8 =
-Major update! Now supports WooCommerce Fulfillments 
-integration for native shipment data sync. Includes 
-redesigned admin tracking widget, improved fulfillment-
-based order support, and multiple bug fixes. Fully 
-compatible with WooCommerce 10.5.0 and WordPress 6.9.1. 
-All users recommended to upgrade.
+= 1.9.9 =
+Fixes WooCommerce fulfillment table missing error, SMS notifications issue with WooCommerce Shipment Tracking plugin, and carrier tracking URL meta key. Includes improved fulfillment integration and code stability fixes. Compatible with WooCommerce 10.5.1.
