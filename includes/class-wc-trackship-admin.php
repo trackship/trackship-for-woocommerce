@@ -844,10 +844,10 @@ class WC_Trackship_Admin {
 		<?php
 		// uninstall_notice
 		$screen = get_current_screen();
-		$delivered_count = wc_orders_count( 'delivered' );
-		$order_statuses = wc_get_order_statuses();
-		
+		$delivered_count = get_trackship_settings( 'ts_delivered_status', 1 ) ? wc_orders_count( 'delivered' ) : null;
+
 		if ( 'plugins.php' == $screen->parent_file && $delivered_count > 0 ) {
+			$order_statuses = wc_get_order_statuses();
 			wp_enqueue_style( 'trackshipcss', trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/trackship.css', array(), trackship_for_woocommerce()->version, time() );
 			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 			wp_enqueue_script( 'jquery-blockui', WC()->plugin_url() . '/assets/js/jquery-blockui/jquery.blockUI' . $suffix . '.js', array( 'jquery' ), '2.70', true );
