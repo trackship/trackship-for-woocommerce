@@ -80,6 +80,9 @@ class WOO_Klaviyo_TS4WC {
 				'product_id' => $product_id,
 				'product_name' => $item->get_name(),
 				'product_qty' => $item->get_quantity(),
+				'items_total_price' => $item->get_total(),
+				'item_unit_price' => $item->get_subtotal() / $item->get_quantity(),
+				'product_image' => get_the_post_thumbnail_url( $product_id, 'thumbnail' ),
 			);
 		}
 		$products_array = trackship_for_woocommerce()->front->tracking_widget_product_array_callback ( $products, $order_id, [], '', $tracking_number );
@@ -94,6 +97,7 @@ class WOO_Klaviyo_TS4WC {
 						'tracking_number'				=> $tracking_number,
 						'tracking_provider'				=> $row->shipping_provider,
 						'tracking_event_status'			=> $row->shipment_status,
+						'tracking_event_status_label'	=> apply_filters('trackship_status_filter', $row->shipment_status ),
 						'tracking_est_delivery_date'	=> $row->est_delivery_date,
 						'tracking_link'					=> trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $tracking_number ),
 						'latest_event' 					=> $row->last_event,
@@ -147,7 +151,7 @@ class WOO_Klaviyo_TS4WC {
 			'headers'	=> array(
 				'accept'		=> 'application/json',
 				'Content-Type'	=> 'application/json',
-				'revision'		=> '2024-02-15',
+				'revision'		=> '2026-01-15',
 			),
 		);
 

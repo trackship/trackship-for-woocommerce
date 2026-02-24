@@ -76,6 +76,9 @@ class WOO_Omnisend_TS4WC {
 				'product_id' => $product_id,
 				'product_name' => $item->get_name(),
 				'product_qty' => $item->get_quantity(),
+				'items_total_price' => $item->get_total(),
+				'item_unit_price' => $item->get_subtotal() / $item->get_quantity(),
+				'product_image' => get_the_post_thumbnail_url( $product_id, 'thumbnail' ),
 			);
 		}
 		$products_array = trackship_for_woocommerce()->front->tracking_widget_product_array_callback ( $products, $order_id, [], '', $tracking_number );
