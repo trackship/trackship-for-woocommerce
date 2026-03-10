@@ -789,7 +789,7 @@ class WC_Trackship_Admin {
 							<li><?php esc_html_e( 'Exception Shipments Notifications', 'trackship-for-woocommerce' ); ?></li>
 							<li><?php esc_html_e( 'On Hold Shipments Notifications', 'trackship-for-woocommerce' ); ?></li>
 							<li><?php esc_html_e( 'Shipping & Delivery Analytics', 'trackship-for-woocommerce' ); ?></li>
-							<p style="font-size: 16px;"><?php esc_html_e( 'Starting from $11 a month', 'trackship-for-woocommerce' ); ?></p>
+							<p style="font-size: 16px;"><?php echo esc_html( time() < strtotime( '2026-03-16' ) ? __( 'Starting from $11 a month', 'trackship-for-woocommerce' ) : __( 'Starting from $15 a month', 'trackship-for-woocommerce' ) ); ?></p>
 						</ul>
 						<div>
 							<a href="https://my.trackship.com/?utm_source=wpadmin&utm_medium=TS4WC&utm_campaign=shipment"><button class="button-primary button-trackship btn_large" style="font-size: 17px; padding: 8px 30px; background-color: #09d3ac;border-color:#09d3ac;"><?php esc_html_e( 'UPGRADE TO PRO', 'trackship-for-woocommerce' ); ?><span style="line-height: 18px;" class="dashicons dashicons-arrow-right-alt2"></span></button></a>
@@ -844,10 +844,10 @@ class WC_Trackship_Admin {
 		<?php
 		// uninstall_notice
 		$screen = get_current_screen();
-		$delivered_count = wc_orders_count( 'delivered' );
-		$order_statuses = wc_get_order_statuses();
-		
+		$delivered_count = get_trackship_settings( 'ts_delivered_status', 1 ) ? wc_orders_count( 'delivered' ) : null;
+
 		if ( 'plugins.php' == $screen->parent_file && $delivered_count > 0 ) {
+			$order_statuses = wc_get_order_statuses();
 			wp_enqueue_style( 'trackshipcss', trackship_for_woocommerce()->plugin_dir_url() . 'assets/css/trackship.css', array(), trackship_for_woocommerce()->version, time() );
 			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 			wp_enqueue_script( 'jquery-blockui', WC()->plugin_url() . '/assets/js/jquery-blockui/jquery.blockUI' . $suffix . '.js', array( 'jquery' ), '2.70', true );

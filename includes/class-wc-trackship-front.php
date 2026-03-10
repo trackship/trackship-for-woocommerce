@@ -774,7 +774,6 @@ class WC_TrackShip_Front {
 		// echo $order_id;
 		$order = wc_get_order( $order_id );
 		$items = $order->get_items();
-		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 		 
 		$products = array();
 		foreach ( $items as $item_id => $item ) {
@@ -790,6 +789,9 @@ class WC_TrackShip_Front {
 				'product_id' => $product_id,
 				'product_name' => $item->get_name(),
 				'product_qty' => $item->get_quantity(),
+				'items_total_price' => $item->get_total(),
+				'item_unit_price' => $item->get_subtotal() / $item->get_quantity(),
+				'product_image' => get_the_post_thumbnail_url( $product_id, 'thumbnail' ),
 			);
 		}
 		$products = apply_filters( 'tracking_widget_product_array', $products, $order_id, $tracker, $tracking_provider, $tracking_number );
@@ -885,6 +887,9 @@ class WC_TrackShip_Front {
 						'product_id' => $item->get_product_id(),
 						'product_name' => $item->get_name(),
 						'product_qty' => $product_list->qty,
+						'items_total_price' => $item->get_total(),
+						'item_unit_price' => $item->get_subtotal() / $item->get_quantity(),
+						'product_image' => get_the_post_thumbnail_url( $product_id, 'thumbnail' ),
 					);
 				}
 			}
