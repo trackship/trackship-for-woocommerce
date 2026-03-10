@@ -4,7 +4,7 @@ Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order trackin
 Requires at least: 6.2
 Tested up to: 6.9.1
 Requires PHP: 7.4
-Stable tag: 1.9.9.1
+Stable tag: 2.0.0
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,11 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 13. You can view TrackShip Analytics and filter results by time range, shipment status, or provider.
 
 == Changelog ==
+= 2.0.0 - 2026-03-10 =
+* New - Added item price, item image, and items total price to Klaviyo integration.
+* New - Added item price, item image, and items total price to Omnisend integration.
+* Fix - Fixed fatal error during WooCommerce email preview when no shipment tracking plugin is active.
+* Compatibility - Verified compatibility with WooCommerce version 10.5.3.
 
 = 1.9.9.1 - 2026-02-12 =
 * Fix - Fixed WooCommerce fulfillment table missing error by adding table existence check.
@@ -178,20 +183,9 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 * Compatibility - Verified compatibility with WooCommerce version 10.5.0.
 * Compatibility - Tested and confirmed compatibility with WordPress version 6.9.1.
 
-= 1.9.7.1 - 2025-11-04 =
-* Enhancement - Added Japanese translation for the plugin.
-* Update - Updated translations to improve language support.
-* Update - Ensured the tracking page always fetches the latest order when a tracking number is added to multiple orders.
-* Enhancement - Added filters to allow specific HTML tags and CSS styles in admin emails (Exception, On Hold, Late Shipments).
-* Enhancement - Introduced a setting to use the Villa Theme Email Customizer template.
-* Enhancement - Replaced WooCommerce's deprecated tipTip with Dashicons for improved tooltip handling.
-* Update - Added documentation link in the Integrations section.
-* Compatibility - Verified compatibility with WooCommerce version 10.3.4.
-* Compatibility - Tested and confirmed compatibility with WordPress version 6.8.3.
-
 For a complete changelog history, please visit our [documentation](https://docs.trackship.com/docs/trackship-for-woocommerce/changelog/).
 
 == Upgrade Notice ==
 
-= 1.9.9.1 =
-Fixes WooCommerce fulfillment table missing error, SMS notifications issue with WooCommerce Shipment Tracking plugin, and carrier tracking URL meta key. Includes improved fulfillment integration and code stability fixes. Compatible with WooCommerce 10.5.1.
+= 2.0.0 =
+Minor update. Item price, item image, and items total price added in Klaviyo and Omnisend integrations. Fixes a fatal error during WooCommerce email preview when no shipment tracking plugin is active.
