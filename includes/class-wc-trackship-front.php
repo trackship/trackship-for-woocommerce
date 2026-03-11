@@ -889,7 +889,7 @@ class WC_TrackShip_Front {
 						'product_qty' => $product_list->qty,
 						'items_total_price' => $item->get_total(),
 						'item_unit_price' => $item->get_subtotal() / $item->get_quantity(),
-						'product_image' => get_the_post_thumbnail_url( $product_id, 'thumbnail' ),
+						'product_image' => get_the_post_thumbnail_url( $item->get_product_id(), 'thumbnail' ),
 					);
 				}
 			}
