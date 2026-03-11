@@ -2,14 +2,14 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 2.0.0
+ * Version: 2.0.1
  * Author: TrackShip
  * Author URI: https://trackship.com/
  * License: GPL-2.0+
  * License URI: 
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
- * WC tested up to: 10.5.3
+ * WC tested up to: 10.6.0
  * Requires Plugins: woocommerce
 */
 
@@ -24,7 +24,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '2.0.0';
+	public $version = '2.0.1';
 	public $plugin_path;
 	public $ts_install;
 	public $ts_actions;

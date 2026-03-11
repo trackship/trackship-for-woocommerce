@@ -2,9 +2,9 @@
 Contributors: TrackShip
 Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order tracking, tracking
 Requires at least: 6.2
-Tested up to: 6.9.1
+Tested up to: 6.9.3
 Requires PHP: 7.4
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,10 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 13. You can view TrackShip Analytics and filter results by time range, shipment status, or provider.
 
 == Changelog ==
+= 2.0.1 - 2026-03-11 =
+* Compatibility - Verified compatibility with WooCommerce version 10.6.0.
+* Compatibility - Verified compatibility with WordPress version 6.9.3.
+
 = 2.0.0 - 2026-03-10 =
 * New - Added item price, item image, and items total price to Klaviyo integration.
 * New - Added item price, item image, and items total price to Omnisend integration.
@@ -186,6 +190,9 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 For a complete changelog history, please visit our [documentation](https://docs.trackship.com/docs/trackship-for-woocommerce/changelog/).
 
 == Upgrade Notice ==
+
+= 2.0.1 =
+Minor update. Verified compatibility with WooCommerce 10.6.0 and WordPress 6.9.3.
 
 = 2.0.0 =
 Minor update. Item price, item image, and items total price added in Klaviyo and Omnisend integrations. Fixes a fatal error during WooCommerce email preview when no shipment tracking plugin is active.
