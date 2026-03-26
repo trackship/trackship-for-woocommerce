@@ -19,7 +19,7 @@ https://www.youtube.com/watch?v=QDKV2Irqz9M
 == TrackShip Pricing ==
 
 TrackShip offers a **15-day free trial** that allows you to track up to **100 shipments** with access to all premium features. During the trial period, you can experience everything TrackShip has to offer.
-After the trial, if you choose not to go with a paid plan, you can continue using TrackShip on our **Free Plan**. The free plan allows you to track up to **50 shipments per month**, but with access to basic features only. For users who need to track more shipments or want advanced features such as SMS notifications, branded tracking pages, or enhanced analytics, we offer paid plans that scale according to your business needs.
+After the trial, you can sign up for a paid plan that scales according to your business needs. We offer paid plans for users who need to track more shipments or want advanced features such as SMS notifications, branded tracking pages, or enhanced analytics.
 For more details on pricing and features, please visit our [TrackShip Pricing Page](https://trackship.com/pricing/).
 
 == Why use TrackShip? ==
@@ -131,7 +131,7 @@ Yes, TrackShip adds a Shipment Status column on your orders admin and displays t
 It doesn’t. When a shipment tracker is not supported by TrackShip or returned Unknown the Shipment tracker isn’t counted in your trackers balance.
 
 = Do you offer Free Trials?
-Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipments monthly plan, once you finish your trial balance, you can sign up for a paid subscription in order to continue to track additional shipments.
+Yes, When you sign up for your TrackShip account, you’ll get a 15-day free trial with up to 100 shipments and access to all premium features. Once your trial ends, you can sign up for a paid subscription in order to continue tracking shipments.
 
 = Will I be charged when my free shipment trackers are finished?
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended.
