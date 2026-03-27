@@ -2,9 +2,9 @@
 Contributors: TrackShip
 Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order tracking, tracking
 Requires at least: 6.2
-Tested up to: 6.9.3
+Tested up to: 6.9.4
 Requires PHP: 7.4
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,7 +19,7 @@ https://www.youtube.com/watch?v=QDKV2Irqz9M
 == TrackShip Pricing ==
 
 TrackShip offers a **15-day free trial** that allows you to track up to **100 shipments** with access to all premium features. During the trial period, you can experience everything TrackShip has to offer.
-After the trial, if you choose not to go with a paid plan, you can continue using TrackShip on our **Free Plan**. The free plan allows you to track up to **50 shipments per month**, but with access to basic features only. For users who need to track more shipments or want advanced features such as SMS notifications, branded tracking pages, or enhanced analytics, we offer paid plans that scale according to your business needs.
+After the trial, you can sign up for a paid plan that scales according to your business needs. We offer paid plans for users who need to track more shipments or want advanced features such as SMS notifications, branded tracking pages, or enhanced analytics.
 For more details on pricing and features, please visit our [TrackShip Pricing Page](https://trackship.com/pricing/).
 
 == Why use TrackShip? ==
@@ -131,7 +131,7 @@ Yes, TrackShip adds a Shipment Status column on your orders admin and displays t
 It doesn’t. When a shipment tracker is not supported by TrackShip or returned Unknown the Shipment tracker isn’t counted in your trackers balance.
 
 = Do you offer Free Trials?
-Yes, When you sign up for your TrackShip account,  you’ll get a free 50 shipments monthly plan, once you finish your trial balance, you can sign up for a paid subscription in order to continue to track additional shipments.
+Yes, When you sign up for your TrackShip account, you’ll get a 15-day free trial with up to 100 shipments and access to all premium features. Once your trial ends, you can sign up for a paid subscription in order to continue tracking shipments.
 
 = Will I be charged when my free shipment trackers are finished?
 No. You can fully test out TrackShip and all the features with the free trial Trackers without adding a credit card. It is completely up to you if you would like to carry on using TrackShip after your trial has ended.
@@ -153,6 +153,12 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 13. You can view TrackShip Analytics and filter results by time range, shipment status, or provider.
 
 == Changelog ==
+= 2.0.2 - 2026-03-27 =
+* Enhancement - Added a follow-up upgrade notice shown after the initial upgrade notice is dismissed, with conditional messaging based on available tracker balance.
+* Update - Translation updated.
+* Compatibility - Verified compatibility with WooCommerce version 10.6.1.
+* Compatibility - Verified compatibility with WordPress version 6.9.4.
+
 = 2.0.1 - 2026-03-11 =
 * Compatibility - Verified compatibility with WooCommerce version 10.6.0.
 * Compatibility - Verified compatibility with WordPress version 6.9.3.
@@ -191,8 +197,5 @@ For a complete changelog history, please visit our [documentation](https://docs.
 
 == Upgrade Notice ==
 
-= 2.0.1 =
-Minor update. Verified compatibility with WooCommerce 10.6.0 and WordPress 6.9.3.
-
-= 2.0.0 =
-Minor update. Item price, item image, and items total price added in Klaviyo and Omnisend integrations. Fixes a fatal error during WooCommerce email preview when no shipment tracking plugin is active.
+= 2.0.2 =
+Minor update. Translation updated. Verified compatibility with WooCommerce 10.6.1 and WordPress 6.9.4.
