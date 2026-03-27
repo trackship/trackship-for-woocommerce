@@ -154,7 +154,6 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 
 == Changelog ==
 = 2.0.2 - 2026-03-27 =
-* Enhancement - Added a follow-up upgrade notice shown after the initial upgrade notice is dismissed, with conditional messaging based on available tracker balance.
 * Update - Translation updated.
 * Compatibility - Verified compatibility with WooCommerce version 10.6.1.
 * Compatibility - Verified compatibility with WordPress version 6.9.4.
