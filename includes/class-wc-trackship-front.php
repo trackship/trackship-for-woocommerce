@@ -546,7 +546,9 @@ class WC_TrackShip_Front {
 						esc_html_e( $this->tracking_page_header( $order, $tracking_provider, $tracking_number, $tracker, $item, $trackind_detail_by_status_rev ) );
 						
 						esc_html_e( $this->tracking_progress_bar( $tracker ) );
-						
+
+						do_action( 'trackship_tracking_page_notice', $tracking_provider, $tracking_number, $order_id );
+
 						esc_html_e( $this->layout1_tracking_details( $trackind_detail_by_status_rev, $tracking_details_by_date, $trackind_destination_detail_by_status_rev, $tracking_destination_details_by_date, $tracker , $order_id, $tracking_provider, $tracking_number ) );
 
 						?>
