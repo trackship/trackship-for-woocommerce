@@ -61,8 +61,10 @@ class WC_TrackShip_Email_Manager {
 		);
 
 		$email_to = [];
-		if ( $enable && $for_amazon_order && '0' != $receive_email && $order->get_billing_email() ) {
-			$email_to[] = $order->get_billing_email();
+		$email_address = apply_filters( 'trackship_shipment_email_recipient', $order->get_billing_email(), $order );
+
+		if ( $enable && $for_amazon_order && '0' != $receive_email && $email_address ) {
+			$email_to[] = $email_address;
 		}
 		$email_to = apply_filters( 'add_multiple_emails_to_shipment_email', $email_to, $new_status );
 
