@@ -3,11 +3,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use Automattic\WooCommerce\Internal\DataStores\Fulfillments\FulfillmentsDataStore;
-use Automattic\WooCommerce\Internal\Fulfillments\DTO\Fulfillment;
-// use Automattic\WooCommerce\Internal\Fulfillments\FulfillmentUtils;
-use Automattic\WooCommerce\Admin\Features\Fulfillments\FulfillmentUtils;
-
 class WOO_Fulfillment_Tracking_TS4WC {
 
 	/**
@@ -17,6 +12,8 @@ class WOO_Fulfillment_Tracking_TS4WC {
 	*/
 	private static $instance;
 	private $fulfillments_table_exists;
+	private $datastore_class_cache;
+	private $utils_class_cache;
 
 	/**
 	 * Private constructor to prevent direct instantiation.
@@ -44,7 +41,7 @@ class WOO_Fulfillment_Tracking_TS4WC {
 	 *
 	 * @param int $order_id WooCommerce order ID.
 	 *
-	 * @return Fulfillment[] Array of fulfillment DTOs (can be empty).
+	 * @return array Array of fulfillment objects (can be empty).
 	 */
 	public function get_fulfillments_by_order_id( $order_id ) {
 		$order_id = (int) $order_id;
@@ -57,12 +54,12 @@ class WOO_Fulfillment_Tracking_TS4WC {
 			return [];
 		}
 
-		if ( ! class_exists( FulfillmentsDataStore::class ) ) {
+		$datastore_class = $this->get_fulfillments_datastore_class();
+		if ( ! $datastore_class ) {
 			return [];
 		}
 
-		/** @var FulfillmentsDataStore $datastore */
-		$datastore = wc_get_container()->get( FulfillmentsDataStore::class );
+		$datastore = wc_get_container()->get( $datastore_class );
 
 		if ( ! $datastore ) {
 			return [];
@@ -98,13 +95,16 @@ class WOO_Fulfillment_Tracking_TS4WC {
 			}
 			$product_array = [];
 			$items = $fulfillment->get_meta( '_items', true );
-			foreach ( $items as $item_value ) {
-				$item_id = $item_value['item_id'];
+			foreach ( (array) $items as $item_value ) {
+				$item_id = $item_value['item_id'] ?? null;
+				if ( ! $item_id ) {
+					continue;
+				}
 				$item = $order->get_item( $item_id );
 				$product_array[] = (object) array(
 					'product'	=> $item ? $item->get_product_id() : null,
-					'item_id'	=> $item_value['item_id'],
-					'qty'		=> $item_value['qty'],
+					'item_id'	=> $item_id,
+					'qty'		=> $item_value['qty'] ?? 1,
 				);
 			}
 
@@ -119,7 +119,7 @@ class WOO_Fulfillment_Tracking_TS4WC {
 				'tracking_id'					=> '',
 				'date_shipped'					=> $fulfillment->get_meta( '_date_fulfilled', true ),
 				'products_list'					=> $product_array,
-				'tracking_provider_image'		=> $providers[ $shipment_provider ]['icon'] ?? null,
+				'tracking_provider_image'		=> $this->get_provider_image( $providers, $shipment_provider ),
 				'tracking_page_link'			=> trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $tracking_number ),
 			);
 			$tracking_items[] = $tracking_item;
@@ -127,21 +127,83 @@ class WOO_Fulfillment_Tracking_TS4WC {
 		return $tracking_items;
 	}
 
+	/**
+	 * Returns the provider image, handling WC 10.6 (class name string) and WC 10.7+ (instantiated object).
+	 *
+	 * @param array|false $providers        Result of get_providers().
+	 * @param string      $shipment_provider Provider slug.
+	 * @return string|null
+	 */
+	private function get_provider_image( $providers, $shipment_provider ) {
+		if ( ! $providers || ! isset( $providers[ $shipment_provider ] ) ) {
+			return null;
+		}
+		$provider = $providers[ $shipment_provider ];
+		// WC 10.7+: provider is already an instantiated object
+		if ( is_object( $provider ) ) {
+			return method_exists( $provider, 'get_icon' ) ? $provider->get_icon() : null;
+		}
+		// WC 10.6: provider is a class name string — resolve via container to handle DI dependencies
+		if ( is_string( $provider ) && class_exists( $provider ) ) {
+			$instance = function_exists( 'wc_get_container' ) ? wc_get_container()->get( $provider ) : new $provider();
+			return ( $instance && method_exists( $instance, 'get_icon' ) ) ? $instance->get_icon() : null;
+		}
+		return null;
+	}
+
+	/**
+	 * Returns the available FulfillmentsDataStore class name, supporting WooCommerce 10.6 and 10.7+.
+	 *
+	 * @return string|null Fully-qualified class name, or null if neither exists.
+	 */
+	private function get_fulfillments_datastore_class() {
+		if ( $this->datastore_class_cache !== null ) {
+			return $this->datastore_class_cache;
+		}
+		if ( class_exists( 'Automattic\WooCommerce\Admin\Features\Fulfillments\DataStore\FulfillmentsDataStore' ) ) {
+			return $this->datastore_class_cache = 'Automattic\WooCommerce\Admin\Features\Fulfillments\DataStore\FulfillmentsDataStore';
+		}
+		if ( class_exists( 'Automattic\WooCommerce\Internal\DataStores\Fulfillments\FulfillmentsDataStore' ) ) {
+			return $this->datastore_class_cache = 'Automattic\WooCommerce\Internal\DataStores\Fulfillments\FulfillmentsDataStore';
+		}
+		return $this->datastore_class_cache = false;
+	}
+
+	/**
+	 * Returns the available FulfillmentUtils class name, supporting WooCommerce 10.6 and 10.7+.
+	 *
+	 * @return string|null Fully-qualified class name, or null if neither exists.
+	 */
+	private function get_fulfillment_utils_class() {
+		if ( $this->utils_class_cache !== null ) {
+			return $this->utils_class_cache;
+		}
+		if ( class_exists( 'Automattic\WooCommerce\Admin\Features\Fulfillments\FulfillmentUtils' ) ) {
+			return $this->utils_class_cache = 'Automattic\WooCommerce\Admin\Features\Fulfillments\FulfillmentUtils';
+		}
+		if ( class_exists( 'Automattic\WooCommerce\Internal\Fulfillments\FulfillmentUtils' ) ) {
+			return $this->utils_class_cache = 'Automattic\WooCommerce\Internal\Fulfillments\FulfillmentUtils';
+		}
+		return $this->utils_class_cache = false;
+	}
+
 	public function has_pending_items( $order_id ) {
-		if ( ! class_exists( FulfillmentUtils::class ) ) {
+		$utils_class = $this->get_fulfillment_utils_class();
+		if ( ! $utils_class ) {
 			return false;
 		}
 		$order = wc_get_order( $order_id );
 		$fulfillments = $this->get_fulfillments_by_order_id( $order_id );
 
-		return FulfillmentUtils::has_pending_items( $order, $fulfillments );
+		return $utils_class::has_pending_items( $order, $fulfillments );
 	}
 
 	public function get_providers() {
-		if ( ! class_exists( FulfillmentUtils::class ) ) {
+		$utils_class = $this->get_fulfillment_utils_class();
+		if ( ! $utils_class ) {
 			return false;
 		}
-		return FulfillmentUtils::get_shipping_providers();
+		return $utils_class::get_shipping_providers();
 	}
 
 	public function is_fulfillments_table_exists() {
