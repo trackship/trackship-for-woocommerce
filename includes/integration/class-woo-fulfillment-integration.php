@@ -5,7 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Automattic\WooCommerce\Internal\DataStores\Fulfillments\FulfillmentsDataStore;
 use Automattic\WooCommerce\Internal\Fulfillments\DTO\Fulfillment;
-use Automattic\WooCommerce\Internal\Fulfillments\FulfillmentUtils;
+// use Automattic\WooCommerce\Internal\Fulfillments\FulfillmentUtils;
+use Automattic\WooCommerce\Admin\Features\Fulfillments\FulfillmentUtils;
 
 class WOO_Fulfillment_Tracking_TS4WC {
 
@@ -127,6 +128,9 @@ class WOO_Fulfillment_Tracking_TS4WC {
 	}
 
 	public function has_pending_items( $order_id ) {
+		if ( ! class_exists( FulfillmentUtils::class ) ) {
+			return false;
+		}
 		$order = wc_get_order( $order_id );
 		$fulfillments = $this->get_fulfillments_by_order_id( $order_id );
 
@@ -134,7 +138,10 @@ class WOO_Fulfillment_Tracking_TS4WC {
 	}
 
 	public function get_providers() {
-		return FulfillmentUtils::get_shipping_providers_object();
+		if ( ! class_exists( FulfillmentUtils::class ) ) {
+			return false;
+		}
+		return FulfillmentUtils::get_shipping_providers();
 	}
 
 	public function is_fulfillments_table_exists() {
