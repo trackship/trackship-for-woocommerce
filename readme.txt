@@ -4,7 +4,7 @@ Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order trackin
 Requires at least: 6.2
 Tested up to: 6.9.4
 Requires PHP: 7.4
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -153,6 +153,13 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 13. You can view TrackShip Analytics and filter results by time range, shipment status, or provider.
 
 == Changelog ==
+= 2.0.3 - 2026-04-15 =
+* Fix - Fixed fatal error with WooCommerce Fulfillments integration caused by class namespace changes in WooCommerce 10.7.
+* Fix - Added check for delivered status existence before counting orders.
+* New - Added filter for shipment email recipient: trackship_shipment_email_recipient.
+* New - Added custom hook to tracking page for notice: trackship_tracking_page_notice.
+* Compatibility - Verified compatibility with WooCommerce version 10.7.0.
+
 = 2.0.2 - 2026-03-27 =
 * Update - Translation updated.
 * Compatibility - Verified compatibility with WooCommerce version 10.6.1.
@@ -196,5 +203,5 @@ For a complete changelog history, please visit our [documentation](https://docs.
 
 == Upgrade Notice ==
 
-= 2.0.2 =
-Minor update. Translation updated. Verified compatibility with WooCommerce 10.6.1 and WordPress 6.9.4.
+= 2.0.3 =
+Fixed fatal error with WooCommerce Fulfillments on WooCommerce 10.7. Added filter for shipment email recipient and custom hook for tracking page notice.

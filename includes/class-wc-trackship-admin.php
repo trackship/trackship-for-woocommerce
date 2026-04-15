@@ -844,7 +844,7 @@ class WC_Trackship_Admin {
 		<?php
 		// uninstall_notice
 		$screen = get_current_screen();
-		$delivered_count = get_trackship_settings( 'ts_delivered_status', 1 ) ? wc_orders_count( 'delivered' ) : null;
+		$delivered_count = get_trackship_settings( 'ts_delivered_status', 1 ) && array_key_exists( 'wc-delivered', wc_get_order_statuses() ) ? wc_orders_count( 'delivered' ) : null;
 
 		if ( 'plugins.php' == $screen->parent_file && $delivered_count > 0 ) {
 			$order_statuses = wc_get_order_statuses();
