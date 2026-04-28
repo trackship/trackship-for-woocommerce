@@ -93,12 +93,10 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		
 		foreach ($hooks as $hook) {
 			$timestamp = wp_next_scheduled($hook);
-			if ($timestamp) {
-				$next_run = gmdate('Y-m-d H:i:s', $timestamp + wc_timezone_offset());
-				$ts_cron[$hook] = $next_run;
-			} else {
-				$ts_cron[$hook] = 'Not scheduled';
-			}
+			$ts_cron[$hook] = array(
+				'next_run'    => $timestamp ? gmdate('Y-m-d H:i:s', $timestamp + wc_timezone_offset()) : 'Not scheduled',
+				'has_action'  => has_action($hook) ? 'yes' : 'no',
+			);
 		}
 		
 		//check which shipment tracking plugin active
@@ -148,6 +146,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 			$version_info['wot-pro'] = VI_WOOCOMMERCE_ORDERS_TRACKING_VERSION;
 		}
 		$version_info['trackship_settings'] = get_option( 'trackship_settings' );
+		$version_info['trackship_settings']['trackship_map_provider'] = get_option( 'trackship_map_provider', [] );
 		$version_info['trackship_email_settings'] = get_option( 'trackship_email_settings' );
 
 		$database_version	= wc_get_server_database_version();
