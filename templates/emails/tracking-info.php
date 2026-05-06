@@ -158,7 +158,7 @@ if ( $tracking_items ) :
 		text-align: center;
 		margin-bottom: 20px;
 	}
-	.shipment_status {font-size: 24px;margin: 10px 0;display: inline-block;color: #333;vertical-align: middle;font-weight:500;}
+	.shipment_status {font-size: 24px;margin: 10px 0;display: inline-block;vertical-align: middle;font-weight:500;}
 	.mb-0{margin:0;}
 	.v-align-top{vertical-align:top;}
 	@media screen and (max-width: 460px) {
