@@ -2,9 +2,9 @@
 Contributors: TrackShip
 Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order tracking, tracking
 Requires at least: 6.2
-Tested up to: 6.9.4
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.0.3
+Stable tag: 2.0.4
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,8 +24,8 @@ For more details on pricing and features, please visit our [TrackShip Pricing Pa
 
 == Why use TrackShip? ==
 
-= Automatic Shipment Tracking with 950+ Shipping carriers =
-TrackShip auto-tracks your orders from shipping to delivery with 950+ shipping providers and carriers around the world. Our supported providers includes USPS, ePacket, Delhivery, Yun Express Tracking, UPS, Australia Post, FedEx, Aramex, DHL eCommerce, ELTA Courier, Colissimo, DHL Express, La Poste, DHLParcel NL, Purolator, 4px, Brazil Correios, Deutsche Post, Bpost, DHL, EMS, DPD.de, GLS, China Post, Loomis Express, DHL Express, PostNL International 3S, Royal Mail and more…
+= Automatic Shipment Tracking with 1000+ Shipping carriers =
+TrackShip auto-tracks your orders from shipping to delivery with 1000+ shipping providers and carriers around the world. Our supported providers includes USPS, ePacket, Delhivery, Yun Express Tracking, UPS, Australia Post, FedEx, Aramex, DHL eCommerce, ELTA Courier, Colissimo, DHL Express, La Poste, DHLParcel NL, Purolator, 4px, Brazil Correios, Deutsche Post, Bpost, DHL, EMS, DPD.de, GLS, China Post, Loomis Express, DHL Express, PostNL International 3S, Royal Mail and more…
 Check out the complete list of supported [shipping carriers](https://trackship.com/shipping-providers/).
 
 = Take control of the post-purchase workflow = 
@@ -122,7 +122,7 @@ You can trigger these orders to TrackShip by using the [Get Shipment Status](htt
 TrackShip checks the shipment status with the shipping providers APIs every 2-4 hours. We check for updates more often once the package is in the "unknown" status, until the first tracking event is received from the providers API and when the shipment is out for delivery.
 
 = Which shipping providers (carriers) do you support?
-TrackShip supports 950+ [shipping providers](https://trackship.com/shipping-providers/) around the globe ,if you can find your carrier on our supported shipping providers list, you can suggest a shipping provider [here](https://feedback.zorem.com/trackship)
+TrackShip supports 1000+ [shipping providers](https://trackship.com/shipping-providers/) around the globe ,if you can find your carrier on our supported shipping providers list, you can suggest a shipping provider [here](https://feedback.zorem.com/trackship)
 
 = Do you show the shipment status for orders on WooCommerce admin?
 Yes, TrackShip adds a Shipment Status column on your orders admin and displays the shipment tracking status, last update date, and the Est Delivery Date for every order that you shipped after connecting your store.
@@ -153,6 +153,11 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 13. You can view TrackShip Analytics and filter results by time range, shipment status, or provider.
 
 == Changelog ==
+= 2.0.4 - 2026-05-21 =
+* Fix - Removed explicit font color from shipment status in email tracking widget to respect email theme styling.
+* Update - Added WC log when Klaviyo API key is not configured to improve integration discoverability.
+* Compatibility - Verified compatibility with WordPress version 7.0.
+
 = 2.0.3 - 2026-04-15 =
 * Fix - Fixed fatal error with WooCommerce Fulfillments integration caused by class namespace changes in WooCommerce 10.7.
 * Fix - Added check for delivered status existence before counting orders.
@@ -202,6 +207,9 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 For a complete changelog history, please visit our [documentation](https://docs.trackship.com/docs/trackship-for-woocommerce/changelog/).
 
 == Upgrade Notice ==
+
+= 2.0.4 =
+Removed hardcoded font color from email tracking widget and added Klaviyo API key warning log.
 
 = 2.0.3 =
 Fixed fatal error with WooCommerce Fulfillments on WooCommerce 10.7. Added filter for shipment email recipient and custom hook for tracking page notice.
