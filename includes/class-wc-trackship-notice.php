@@ -69,8 +69,8 @@ class WC_TrackShip_Admin_Notice {
 
 		$notice_types = [
 			'ts-review-ignore' => 'ts_review_ignore_141',
-			'ts-upgrade-ignore' => 'ts_popup_ignore202',
-			'ts-upgrade-ignore-v2' => 'ts_popup_ignore202_v2',
+			'ts-upgrade-ignore' => 'ts_popup_ignore203',
+			'ts-upgrade-ignore-v2' => 'ts_popup_ignore203_v2',
 			'ts-fulfillments-ignore' => 'ts_fulfillments_ignore',
 		];
 
@@ -132,10 +132,10 @@ class WC_TrackShip_Admin_Notice {
 	* Display admin notice on Upgrade TrackShip plan
 	*/
 	public function trackship_upgrade_notice () {
-		if ( get_trackship_settings( 'ts_popup_ignore202', '') ) {
+		if ( get_trackship_settings( 'ts_popup_ignore203', '') ) {
 			return;
 		}
-		if ( current_time( 'timestamp' ) > strtotime( '2026-05-01 23:59:59' ) ) {
+		if ( current_time( 'timestamp' ) > strtotime( '2026-05-31 23:59:59' ) ) {
 			return;
 		}
 		$user_plan = get_option( 'user_plan' );
@@ -167,7 +167,7 @@ class WC_TrackShip_Admin_Notice {
 				<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
 				<h3>New plan starting from 50 shipments/month — only $9/month!</h3>
 				<p>Upgrade to TrackShip Pro and give buyers the branded, worry-free tracking experience they love.</p>
-				<p>🎁 Use coupon code <strong>STARTER70</strong> to get 600 shipments/year for just <strong>$70</strong>! <em>(Valid till May 1, 2026)</em></p>
+				<p>🎁 Use coupon code <strong>STARTER80</strong> to get 600 shipments/year for just <strong>$80</strong>! <em>(Valid till May 31, 2026)</em></p>
 				<p style="padding:0;">
 					<a class="button button-primary" target="_blank" href="<?php echo esc_url( $url ); ?>">Upgrade to Pro</a>
 					<a class="button" href="<?php echo esc_url( $dismissable_url ); ?>">Dismiss</a>
@@ -178,17 +178,17 @@ class WC_TrackShip_Admin_Notice {
 	}
 
 	/*
-	* Display admin notice after user dismisses the first upgrade notice (ts_popup_ignore202)
+	* Display admin notice after user dismisses the first upgrade notice (ts_popup_ignore203)
 	* Shows conditionally based on tracker balance
 	*/
 	public function trackship_upgrade_notice_v2() {
-		if ( ! get_trackship_settings( 'ts_popup_ignore202', '' ) ) {
+		if ( ! get_trackship_settings( 'ts_popup_ignore203', '' ) ) {
 			return;
 		}
-		if ( get_trackship_settings( 'ts_popup_ignore202_v2', '' ) ) {
+		if ( get_trackship_settings( 'ts_popup_ignore203_v2', '' ) ) {
 			return;
 		}
-		if ( current_time( 'timestamp' ) > strtotime( '2026-05-01 23:59:59' ) ) {
+		if ( current_time( 'timestamp' ) > strtotime( '2026-05-31 23:59:59' ) ) {
 			return;
 		}
 		$user_plan = get_option( 'user_plan' );
@@ -238,9 +238,9 @@ class WC_TrackShip_Admin_Notice {
 		<?php if ( $trackers_balance > 0 ) { ?>
 			<div class="notice notice-warning is-dismissible trackship-upgrade-v2-notice" role="region">
 				<a href="<?php echo esc_url( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
-				<h3>Free plan ending in 30 days.</h3>
+				<h3>Free plan ending this month.</h3>
 				<p>Upgrade to continue tracking shipments without interruption.</p>
-				<p>🎁 Use coupon code <strong>STARTER70</strong> to get 600 shipments/year for just <strong>$70</strong>! <em>(Valid till May 1, 2026)</em></p>
+				<p>🎁 Use coupon code <strong>STARTER80</strong> to get 600 shipments/year for just <strong>$80</strong>! <em>(Valid till May 31, 2026)</em></p>
 				<p style="padding:0;">
 					<a class="button button-primary" target="_blank" href="<?php echo esc_url( $url ); ?>">Upgrade Now</a>
 					<a class="button" href="<?php echo esc_url( $dismissable_url ); ?>">Dismiss</a>
@@ -255,7 +255,7 @@ class WC_TrackShip_Admin_Notice {
 					<strong>Starter Plan</strong>
 					<span>50 shipments/month for $9/month</span>
 				</div>
-				<p>🎁 Use coupon code <strong>STARTER70</strong> to get 600 shipments/year for just <strong>$70</strong>! <em>(Valid till May 1, 2026)</em></p>
+				<p>🎁 Use coupon code <strong>STARTER80</strong> to get 600 shipments/year for just <strong>$80</strong>! <em>(Valid till May 31, 2026)</em></p>
 				<p style="padding:0;">
 					<a class="button button-primary" target="_blank" href="<?php echo esc_url( $url ); ?>">Upgrade Now</a>
 					<a class="button" href="<?php echo esc_url( $dismissable_url ); ?>">Dismiss</a>
