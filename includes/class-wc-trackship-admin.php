@@ -1121,10 +1121,14 @@ class WC_Trackship_Admin {
 	public function detect_custom_mapping_provider( $tracking_provider ) {
 		$map_provider_array = get_option( 'trackship_map_provider', [] );
 
+		if ( ! is_array( $map_provider_array ) ) {
+			return $tracking_provider;
+		}
+
 		if ( isset( $map_provider_array[ $tracking_provider ] ) ) {
 			return $map_provider_array[ $tracking_provider ];
 		}
-		
+
 		// $map_provider_array key replace space to '-' and lower case
 		$map_provider_array = array_change_key_case( $map_provider_array, CASE_LOWER );
 		$keys = str_replace( ' ', '-', array_keys( $map_provider_array ) );

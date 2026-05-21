@@ -11,12 +11,12 @@ class WOO_Klaviyo_TS4WC {
 	 * @var object Class Instance
 	 */
 	private static $instance;
-	
+
 	/**
 	 * Initialize the main plugin function
 	*/
 	public function __construct() {
-		$this->init();	
+		$this->init();
 	}
 	
 	/**
@@ -52,7 +52,9 @@ class WOO_Klaviyo_TS4WC {
 		$klaviyo_settings = get_option('klaviyo_settings');
 		$api_key = isset($klaviyo_settings['klaviyo_public_api_key']) ? $klaviyo_settings['klaviyo_public_api_key'] : '';
 
+		$logger = wc_get_logger();
 		if ( !$api_key ) {
+			$logger->warning( 'Klaviyo API key not found. Please configure it in Klaviyo settings.', array( 'source' => 'trackship-klaviyo-response' ) );
 			return;
 		}
 
@@ -159,7 +161,6 @@ class WOO_Klaviyo_TS4WC {
 		$response = wp_remote_post( $url, $args );
 
 		$content = print_r($response, true);
-		$logger = wc_get_logger();
 		$context = array( 'source' => 'trackship-klaviyo-response' );
 		$logger->info( "Response \n" . $content . "\n", $context );
 
