@@ -50,14 +50,12 @@ $class = $ts4wc_preview ? 'hide' : '';
 					$image         = '';
 					$image_size = array( 64, 64 );
 				
-					$product_name = $item->get_name();
 					if ( is_object( $product ) ) {
-						$sku			= $product->get_sku();
-						$purchase_note	= $product->get_purchase_note();
-						$image			= $product->get_image( $image_size );
-						$product_name	= $product->get_name();
+						$sku           = $product->get_sku();
+						$purchase_note = $product->get_purchase_note();
+						$image         = $product->get_image( $image_size );
 					} else {
-						$image	= '<img src=' . esc_url( trackship_for_woocommerce()->plugin_dir_url() ) . 'assets/images/dummy-product-image.jpg>';
+						$image         = '<img src=' . esc_url( trackship_for_woocommerce()->plugin_dir_url() ) . 'assets/images/dummy-product-image.jpg>';
 					}
 					//echo $image = $wcast_show_product_image ? $image : '';
 					?>
@@ -68,7 +66,7 @@ $class = $ts4wc_preview ? 'hide' : '';
 						<td class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>; vertical-align: middle; font-family: 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif; word-wrap:break-word;border-left:0;border:0;border-bottom:1px solid #e0e0e0;padding: 12px 5px;">
 							<?php 
 							$qty = $item->get_quantity();
-							echo wp_kses_post( apply_filters( 'woocommerce_order_item_name', $product_name, $item, false ) );
+							echo wp_kses_post( apply_filters( 'woocommerce_order_item_name', $product->get_name(), $item, false ) );
 							echo ' x ';
 							echo esc_html( $qty );
 							if ( !$ts4wc_preview ) {
