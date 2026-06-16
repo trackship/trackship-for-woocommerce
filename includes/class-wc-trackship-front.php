@@ -808,7 +808,7 @@ class WC_TrackShip_Front {
 					$image_size = array( 50, 50 );
 					$image = $_product->get_image( $image_size );
 					// echo esc_html($image);
-					echo '<li>' . wp_kses_post( $image ) . '<span><a target="_blank" href=' . esc_url( get_permalink( $product['product_id'] ) ) . '>' . esc_html( $product['product_name'] ) . '</a> x ' . esc_html( $product['product_qty'] ) . '</span></li>';
+					echo '<li>' . wp_kses_post( $image ) . '<span><a target="_blank" href=' . esc_url( get_permalink( $product['product_id'] ) ) . '>' . wp_kses_post( $_product->get_name() ) . '</a> x ' . esc_html( $product['product_qty'] ) . '</span></li>';
 				} else {
 					echo '<li><span>' . esc_html( $product['product_name'] ) . ' x ' . esc_html( $product['product_qty'] ) . '</span></li>';
 				}
