@@ -1693,6 +1693,40 @@ section#content_trackship_settings.inner_tab_section, section#content_trackship_
 	display: block;
 }
 
+/* --- AST alert banner --- */
+.tsd-alert {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	background: #fff;
+	border: 1px solid var(--tsd-line);
+	border-left: 4px solid #f59e0b;
+	border-radius: var(--tsd-radius);
+	box-shadow: var(--tsd-shadow);
+	padding: 18px 20px;
+	margin-bottom: 20px;
+}
+.tsd-alert__icon {
+	flex: 0 0 auto;
+	width: 38px;
+	height: 38px;
+	padding: 8px;
+	border-radius: 10px;
+	color: #f59e0b;
+	background: rgba(245, 158, 11, .12);
+}
+.tsd-alert__body { flex: 1 1 auto; }
+.tsd-alert__body strong {
+	display: block;
+	font-size: 15px;
+	margin-bottom: 4px;
+}
+.tsd-alert__body p {
+	margin: 0;
+	font-size: 13px;
+	line-height: 1.55;
+	color: var(--tsd-muted);
+}
 
 /* --- Hero overview band --- */
 .tsd-hero {
@@ -2385,6 +2419,7 @@ section#content_trackship_settings.inner_tab_section, section#content_trackship_
 	.tsd-stats { grid-template-columns: 1fr; }
 	.tsd-hero__head { flex-direction: column; }
 	.tsd-tabs { width: 100%; justify-content: space-between; }
+	.tsd-alert { flex-direction: column; align-items: flex-start; }
 	.tsd-donut-wrap { flex-direction: column; text-align: center; }
 	.tsd-bars-grid { grid-template-columns: 1fr; gap: 22px; }
 }
