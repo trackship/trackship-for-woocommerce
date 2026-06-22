@@ -230,19 +230,6 @@ $tsd_action_meta = array(
 );
 ?>
 <div class="tsd-dashboard">
-	<?php if ( ! trackship_for_woocommerce()->is_ast_active() ) { ?>
-		<div class="tsd-alert">
-			<span class="tsd-alert__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
-			<div class="tsd-alert__body">
-				<strong><?php esc_html_e( 'You must have a Shipment Tracking plugin installed to use TrackShip for WooCommerce.', 'trackship-for-woocommerce' ); ?></strong>
-				<p><?php esc_html_e( "Include shipment tracking details in your WooCommerce orders, enabling customers to effortlessly monitor their orders. Shipment tracking information will be accessible within customers' accounts, located in the order section, and will also be included in the WooCommerce order completion email.", 'trackship-for-woocommerce' ); ?></p>
-			</div>
-			<a class="tsd-btn tsd-btn--solid" href="<?php echo esc_url( admin_url( 'plugin-install.php?tab=search&s=AST&plugin-search-input=Search+Plugins' ) ); ?>" target="_blank">
-				<span><?php esc_html_e( 'Install Shipment Tracking plugin', 'trackship-for-woocommerce' ); ?></span>
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-			</a>
-		</div>
-	<?php } ?>
 
 	<!-- Brand-forward overview hero with live status tiles -->
 	<section class="tsd-hero">
