@@ -507,7 +507,7 @@ class WC_Trackship_Install {
 			$this->update_shipping_providers();
 		}
 
-		// TS4WC version 2.0.4.1
+		// TS4WC version 2.0.5
 		if ( version_compare( get_option( 'trackship_db' ), '1.44', '<' ) ) {
 			delete_trackship_settings( 'ts_popup_ignore203_v2' );
 			delete_trackship_settings( 'ts_popup_ignore203' );
