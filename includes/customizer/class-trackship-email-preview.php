@@ -38,11 +38,15 @@ class TSWC_Email_Customizer_Preview {
 		<head>
 			<meta charset="<?php bloginfo('charset'); ?>" />
 			<meta name="viewport" content="width=device-width" />
-			<style type="text/css" id="ast_designer_custom_css">.woocommerce-store-notice.demo_store, .mfp-hide {display: none;}</style>
+			<style type="text/css">
+				.woocommerce-store-notice.demo_store, .mfp-hide {display: none;}
+				#wrapper { padding: 30px 0 30px 0 !important; }
+				body {font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;}
+			</style>
 		</head>
-		<body class="ast_preview_body" style="margin:0;">
+		<body style="margin:0;">
 			<div id="overlay"></div>
-			<div id="ast_preview_wrapper" style="display: block;">
+			<div>
 				<?php self::preview_email(); ?>
 			</div>
 			<?php do_action( 'woomail_footer' ); ?>
@@ -145,7 +149,6 @@ class TSWC_Email_Customizer_Preview {
 		
 		add_filter( 'wp_kses_allowed_html', array( trackship_admin_customizer(), 'my_allowed_tags' ) );
 		add_filter( 'safe_style_css', array( trackship_admin_customizer(), 'safe_style_css_callback' ), 10, 1 );
-		add_filter( 'woocommerce_email_styles', array( trackship_admin_customizer(), 'shipment_email_preview_css' ), 9999, 2 );
 
 		add_filter( 'woocommerce_email_footer_text', array( $this, 'email_footer_text' ) );
 
@@ -161,9 +164,9 @@ class TSWC_Email_Customizer_Preview {
 			$message = $mailer->wrap_message( $email_heading, $message );
 		}
 
-		$email_html = apply_filters( 'woocommerce_mail_content', $email->style_inline( $message ) );
-		$email_html = apply_filters( 'trackship_mail_content', $email_html, $email_heading, $preview_id, 'shipment_email', $status );
-		echo wp_kses_post($email_html);
+		$message = apply_filters( 'woocommerce_mail_content', $email->style_inline( $message ) );
+		$message = apply_filters( 'trackship_mail_content', $message, $email_heading, $preview_id, 'shipment_email', $status );
+		echo wp_kses_post($message);
 	}
 
 	/**
@@ -171,7 +174,7 @@ class TSWC_Email_Customizer_Preview {
 	*/
 	public function email_footer_text( $footer_text ) {
 		$show_trackship_branding = get_trackship_email_settings( 'common_settings', 'show_trackship_branding', 1 );
-		$class = !( $show_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan', 'Trial Ended' ) ) ) ? 'hide' : '';
+		$class = !( $show_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended' ) ) ) ? 'hide' : '';
 
 		$trackship_branding_text = '<div class="tracking_widget_email trackship_branding ' . $class . '"><p style="margin: 0;"><span style="vertical-align:middle;font-size: 14px;">Powered by <a href="https://trackship.com" title="TrackShip" target="blank">TrackShip</a></span></p></div>';
 

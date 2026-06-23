@@ -53,7 +53,7 @@ class TSWC_SMSWOO_Init {
 			require_once 'class-smswoo-sms-gateway.php';
 			
 			//include all provider
-			if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
+			if ( in_array( get_option( 'user_plan' ), array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended' ) ) ) {
 				return;
 			}
 			require_once 'services/class-smswoo-nexmo.php';

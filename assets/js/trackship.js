@@ -22,10 +22,6 @@
 			.done(function (response) {
 				$("#wc_trackship_form").find(".spinner").removeClass("active");
 				$(document).trackship_snackbar(trackship_script.i18n.data_saved);
-				jQuery('.heading_panel').removeClass('active');
-				jQuery('.heading_panel').siblings('.panel_content').removeClass('active').slideUp('slow');
-				jQuery('.heading_panel').find('span.dashicons').addClass('dashicons-arrow-right-alt2');
-				jQuery('.heading_panel').find('button.button-primary').hide();
 			})
 			.fail(function (response, jqXHR, exception) {
 				trackship_js_error(response, jqXHR, exception);
@@ -43,10 +39,6 @@
 			.done(function (response) {
 				$("#trackship_tracking_page_form").find(".spinner").removeClass("active");
 				$(document).trackship_snackbar(trackship_script.i18n.data_saved);
-				jQuery('.heading_panel').removeClass('active');
-				jQuery('.heading_panel').siblings('.panel_content').removeClass('active').slideUp('slow');
-				jQuery('.heading_panel').find('span.dashicons').addClass('dashicons-arrow-right-alt2');
-				jQuery('.heading_panel').find('button.button-primary').hide();
 			})
 			.fail(function (response, jqXHR, exception) {
 				trackship_js_error(response, jqXHR, exception);
@@ -64,10 +56,6 @@
 			.done(function (response) {
 				$("#trackship_mapping_form").find(".spinner").removeClass("active");
 				$(document).trackship_snackbar(trackship_script.i18n.data_saved);
-				jQuery('.heading_panel').removeClass('active');
-				jQuery('.heading_panel').siblings('.panel_content').removeClass('active').slideUp('slow');
-				jQuery('.heading_panel').find('span.dashicons').addClass('dashicons-arrow-right-alt2');
-				jQuery('.heading_panel').find('button.button-primary').hide();
 			})
 			.fail(function (response, jqXHR, exception) {
 				trackship_js_error(response, jqXHR, exception);
@@ -130,10 +118,9 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 jQuery(document).ready(function () {
 	'use strict';
-	jQuery('.inner_tab_input:checked').trigger('click');
+	jQuery('.ts_notifications_outer_table .ts-nav-item.active').trigger('click');
 	jQuery('.tab_input:checked').trigger('click');
 	jQuery('.map-provider-table .select2').select2();
-	jQuery('.accordion_container .heading_panel.checked').trigger('click');
 	jQuery('.verify_database_table.checked').trigger('click');
 
 	if ( ! jQuery('.map-provider-table tbody').find('tr').length ) {
@@ -163,24 +150,23 @@ jQuery(document).on("click", ".trackship_admin_content .trackship_nav_div .tab_i
 
 	// Handle the notifications tab specifically
 	if (jQuery('.tab_input#tab_trackship_notifications').is(':checked')) {
-		jQuery('.inner_tab_input:checked').trigger('click');
+		jQuery('.ts_notifications_outer_table .ts-nav-item.active').trigger('click');
 	}
 });
 
 
-jQuery(document).on("click", ".ts_notifications_outer_table .inner_tab_input", function () {
+jQuery(document).on("click", ".ts_notifications_outer_table .ts-nav-item", function () {
 	'use strict';
-	var type = jQuery(this).data("type");
-	var tab = jQuery(this).data('tab');
+	var $item = jQuery(this);
+	var type = $item.data("type");
+	var tab = $item.data('tab');
+	jQuery('.ts_notifications_outer_table .ts-nav-item').removeClass('active');
+	$item.addClass('active');
 	jQuery('.tab_inner_container .inner_tab_section').hide();
 	jQuery('.outer_form_table.ts_notifications_outer_table .shipment-status-' + type + '-section').show();
-	// Get the current URL parameters
 	var urlParams = new URLSearchParams(window.location.search);
-	// Set or update the 'tab' parameter
 	urlParams.set('tab', tab);
-	// Construct the new URL with the updated parameters
 	var url = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + urlParams.toString();
-	// Update the browser's URL without reloading the page
 	window.history.pushState({ path: url }, '', url);
 	jQuery(window).trigger('resize');
 });
@@ -238,7 +224,7 @@ jQuery(document).on("change", ".shipment_status_toggle input", function () {
 	var settings_data = jQuery(this).data("settings");
 	var status = jQuery(this).data('status');
 	if ( jQuery.inArray( settings_data, [ "late_shipments_email_settings", "exception_admin_email", "on_hold_admin_email" ] ) !== -1 ) {
-		if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan", "Trial Ended"] ) !== -1 ) {
+		if ( jQuery.inArray( shipments_script.user_plan, ["Complimentary 100", "Complimentary 150", "Free 20", "No active plan", "Trial Ended"] ) !== -1 ) {
 			jQuery("#free_user_popup").show();
 			return;
 		}
@@ -333,7 +319,7 @@ jQuery(document).on("change", ".ts_integration_checkbox input", function () {
 
 jQuery(document).on("click", ".admin_notifications_tr", function (event) {
 
-	if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan", "Trial Ended"] ) !== -1 ) {
+	if ( jQuery.inArray( shipments_script.user_plan, ["Complimentary 100", "Complimentary 150", "Free 20", "No active plan", "Trial Ended"] ) !== -1 ) {
 		jQuery("#free_user_popup").show();
 		return;
 	}
@@ -560,35 +546,37 @@ jQuery(document).on("click", ".popup_close_icon", function () {
 jQuery(document).on("click", ".update_shipping_provider", function () {
 	jQuery('.sync_trackship_provider_popup').show();
 	jQuery('.sync_message').show();
-	jQuery(".sync_trackship_providers_btn").show();
+	jQuery('.sync_trackship_providers_btn').show();
+	jQuery('.ts-dots-loader').hide();
 	jQuery('.synch_result').hide();
 });
 
 jQuery(document).on("click", ".sync_trackship_providers_btn", function () {
+	jQuery('.sync_trackship_providers_btn').hide();
+	jQuery('.sync_message').hide();
+	jQuery('.ts-dots-loader').show();
 
-	jQuery('.sync_trackship_provider_popup .spinner').addClass('active');
 	var nonce = jQuery('#nonce_trackship_provider').val();
+	var ajax_data = { action: 'update_trackship_providers', security: nonce };
 
-	var ajax_data = {
-		action: 'update_trackship_providers',
-		security: nonce,
-	};
 	jQuery.ajax({
 		url: ajaxurl,
 		data: ajax_data,
 		type: 'POST',
 		dataType: "json",
 		success: function (response) {
-			jQuery('.sync_trackship_provider_popup .spinner').removeClass('active');
-			jQuery('.sync_message').hide();
-			jQuery(".sync_trackship_providers_btn").hide();
+			jQuery('.ts-dots-loader').hide();
 			jQuery('.synch_result').show();
 		},
 		error: function (response, jqXHR, exception) {
-			trackship_js_error(response, jqXHR, exception)
+			jQuery('.ts-dots-loader').hide();
+			jQuery('.sync_trackship_providers_btn').show();
+			jQuery('.sync_message').show();
+			trackship_js_error(response, jqXHR, exception);
 		}
 	});
 });
+
 
 jQuery(document).on("click", ".view_old_details", function () {
 	jQuery(this).hide();
@@ -705,31 +693,11 @@ jQuery(document).on('click', '.inner_tab_section .heading_panel.section_sms_head
 		jQuery('.heading_panel.section_sms_heading').find( 'button' ).attr('disabled', true);
 		jQuery('.panel_content.section_sms_content').find( 'select, input' ).attr('disabled', true);
 		jQuery('.panel_content.section_sms_content .outer_form_table').addClass('smswoo_active');
-	} else if ( jQuery.inArray( shipments_script.user_plan, ["Free 50", "No active plan", "Trial Ended"] ) !== -1) {
+	} else if ( jQuery.inArray( shipments_script.user_plan, ['Complimentary 100', 'Complimentary 150', 'Free 20', "No active plan", "Trial Ended"] ) !== -1) {
 		jQuery('.panel_content.section_sms_content').find( 'select, input' ).attr('disabled', true);
 	}
 });
 
-jQuery(document).on("click", ".inner_tab_section .heading_panel", function () {
-	if (jQuery(this).next('.panel_content').hasClass('active')) {
-		jQuery(this).removeClass('active');
-		jQuery(this).siblings('.panel_content').removeClass('active').slideUp('slow');
-		jQuery(".heading_panel").find('span.dashicons').addClass('dashicons-arrow-right-alt2');
-		jQuery(".heading_panel").find('button.button-primary').hide();
-	} else {
-		jQuery(".heading_panel").css('border-color', '');
-		jQuery(".heading_panel").removeClass('active');
-		jQuery(".panel_content").removeClass('active').slideUp("slow");
-		jQuery(".heading_panel").find('button.button-primary').hide();
-		jQuery(".heading_panel").find('span.dashicons').addClass('dashicons-arrow-right-alt2');
-		jQuery(this).addClass('active');
-		jQuery(this).next('.panel_content').addClass('active').slideDown("slow", function () {
-			jQuery('.map-provider-table .select2').select2();
-		});
-		jQuery(this).find('button.button-primary').show();
-		jQuery(this).find('span.dashicons').removeClass('dashicons-arrow-right-alt2');
-	}
-});
 
 jQuery(document).on("click", "#activity-panel-tab-help", function () {
 	jQuery(this).addClass('is-active');
@@ -822,7 +790,8 @@ jQuery(document).on("click", ".enhanced_tracking_detail .tracking_number_wrap", 
 	}
 });
 
-jQuery(document).on("click", ".ts_enable_fulfillments", function(){
+jQuery(document).on("click", ".ts_enable_fulfillments, .ts_disable_fulfillments", function(){
+	var enable = jQuery(this).hasClass('ts_enable_fulfillments');
 	jQuery('.setup_tab').block({
 		message: null,
 		overlayCSS: {
@@ -830,22 +799,68 @@ jQuery(document).on("click", ".ts_enable_fulfillments", function(){
 			opacity: .6
 		}
 	});
-	var ajax_data = {
-		action: 'enabled_wc_fulfillments',
-		security: jQuery('#ts_tools').val()
-	};
 	jQuery.ajax({
 		url: ajaxurl,
-		data: ajax_data,
+		data: {
+			action: 'toggle_wc_fulfillments',
+			enable: enable ? 'true' : 'false',
+			security: jQuery('#ts_tools').val()
+		},
 		type: 'POST',
-		success: function (response) {
-			jQuery(document).trackship_snackbar('WooCommerce Fulfillments enabled successfully');
-			jQuery('.before_fulfillments').remove();
-			jQuery('.after_fulfillments').show();
+		success: function () {
+			if ( enable ) {
+				jQuery(document).trackship_snackbar('WooCommerce Fulfillments enabled successfully');
+				jQuery('.before_fulfillments').hide();
+				jQuery('.after_fulfillments').show();
+			} else {
+				jQuery(document).trackship_snackbar('WooCommerce Fulfillments disabled successfully');
+				jQuery('.after_fulfillments').hide();
+				jQuery('.before_fulfillments').show();
+			}
 			jQuery('.setup_tab').unblock();
 		},
 		error: function (response, jqXHR, exception) {
-			trackship_js_error(response, jqXHR, exception)
+			trackship_js_error(response, jqXHR, exception);
+			jQuery('.setup_tab').unblock();
+		}
+	});
+});
+
+/* ---- Settings sidebar layout ---- */
+jQuery(document).ready(function ($) {
+	if (!$('.ts-settings-layout').length) return;
+
+	// Show first panel by default, hide rest
+	var $panels = $('.ts-settings-main .accordion_container').children();
+	$panels.each(function (i) {
+		if (i === 0) {
+			$(this).show().find('.panel_content').show();
+		} else {
+			$(this).hide();
+		}
+	});
+
+	// Sidebar nav click (scoped to settings layout only)
+	$(document).on('click', '.ts-settings-layout .ts-nav-item', function () {
+		var $item  = $(this);
+		var target = $item.data('target');
+
+		$('.ts-settings-layout .ts-nav-item').removeClass('active');
+		$item.addClass('active');
+
+		$panels.hide();
+
+		// Find the direct child of accordion that contains the target element
+		var $target = $panels.filter(target);
+		if (!$target.length) {
+			$target = $panels.has(target);
+		}
+		$target.show().find('.panel_content').show();
+
+		// SMS plugin check
+		var $smsHeading = $target.find('.heading_panel.section_sms_heading');
+		if ($smsHeading.length && typeof smswoo_active !== 'undefined' && smswoo_active === 'yes') {
+			$smsHeading.trigger('click');
 		}
 	});
 });

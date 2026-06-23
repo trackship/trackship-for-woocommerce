@@ -100,7 +100,7 @@ class TS4WC_Admin_Customizer {
 							<?php $back_link = 'shipment_email' == $type ? admin_url( 'admin.php?page=trackship-for-woocommerce&tab=notifications' ) : admin_url( 'admin.php?page=trackship-for-woocommerce' ); ?>
 							<a class="zoremmail-back-wordpress-link" href="<?php echo esc_html( $back_link ); ?>"><span class="zoremmail-back-wordpress-title dashicons dashicons-no-alt"></span></a>
 						</button>
-						<span class="wcts-save-content" style="float: right;">
+						<span class="wcts-save-content">
 							<button name="save" class="button-primary button-trackship btn_large woocommerce-save-button" type="submit" value="Saved" disabled><?php esc_html_e( 'Saved', 'trackship-for-woocommerce' ); ?></button>
 							<?php wp_nonce_field( 'trackship_customizer_options_actions', 'trackship_customizer_options_nonce_field' ); ?>
 							<input type="hidden" name="action" value="save_trackship_customizer">
@@ -139,7 +139,7 @@ class TS4WC_Admin_Customizer {
 										<option value="<?php echo esc_html( $key ); ?>" <?php echo $preview_id == $key ? 'selected' : ''; ?>><?php echo esc_html( $label ); ?></option>
 									<?php } ?>
 								</select>
-								<span class="tgl-btn-parent" style="margin: 20px;float: right;">
+								<span class="tgl-btn-parent">
 									<?php foreach ( $shipment_status as $key => $value ) { ?>
 										<span class="tgl_<?php esc_attr_e( $key ); ?>" <?php echo $shipmentStatus == $key ? '' : 'style="display:none;"'; ?>>
 											<?php $id = 'email_settings[' . $key . '][enable]'; ?>
@@ -701,7 +701,7 @@ class TS4WC_Admin_Customizer {
 				'option_name'=> 'trackship_email_settings',
 				'option_type'=> 'array',
 				'required' 	=> 'pro',
-				'plan'		=> in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ),
+				'plan'		=> in_array( get_option( 'user_plan' ), array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended' ) ),
 			),
 			// Tracking widget form sections from below
 			'heading7'	=> array(
@@ -940,7 +940,7 @@ class TS4WC_Admin_Customizer {
 			'show'		=> true,
 			'class'		=> '',
 			'required' 	=> 'pro',
-			'plan'		=> in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ),
+			'plan'		=> in_array( get_option( 'user_plan' ), array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended' ) ),
 		);
 
 		if ( 'tracking_page' == $type ) {
@@ -1231,13 +1231,6 @@ class TS4WC_Admin_Customizer {
 	public function safe_style_css_callback( $styles ) {
 		$styles[] = 'display';
 		return $styles;
-	}
-
-	public function shipment_email_preview_css( $css, $email ) { 
-		$css .= '
-			#wrapper { padding: 30px 0 30px 0 !important; }
-		';
-		return $css;
 	}
 	
 	/**

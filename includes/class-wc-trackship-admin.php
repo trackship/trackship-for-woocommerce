@@ -49,7 +49,7 @@ class WC_Trackship_Admin {
 		add_action( 'wp_ajax_remove_tracking_event', array( $this, 'remove_tracking_event' ) );
 		add_action( 'wp_ajax_remove_trackship_logs', array( $this, 'remove_trackship_logs' ) );
 		add_action( 'wp_ajax_verify_database_table', array( $this, 'verify_database_table' ) );
-		add_action( 'wp_ajax_enabled_wc_fulfillments', array( $this, 'enabled_wc_fulfillments' ) );
+		add_action( 'wp_ajax_toggle_wc_fulfillments', array( $this, 'toggle_wc_fulfillments' ) );
 		add_action( 'wp_ajax_trackship_mapping_form_update', array( $this, 'trackship_custom_mapping_form_update') );
 		add_action( 'wp_ajax_trackship_integration_form_update', array( $this, 'trackship_integration_form_update_cb') );
 
@@ -174,21 +174,19 @@ class WC_Trackship_Admin {
 				$tracking_number = $tracking_item['tracking_number'];
 				$tracking_link = $tracking_item['tracking_page_link'] ? $tracking_item['tracking_page_link'] : $tracking_item['formatted_tracking_link'];
 				?>
-				<div class="ts-tracking-item">
-					<div class="tracking-content">
-						<div>
-							<strong><?php esc_html_e( $tracking_provider ); ?></strong> - 
-							<?php if ( $tracking_link ) { ?>
-								<?php echo sprintf( '<a href="%s" target="_blank" title="' . esc_attr( __( 'Track Shipment', 'trackship-for-woocommerce' ) ) . '">' . esc_html( $tracking_number ) . '</a>', esc_url( $tracking_link ) ); ?>
-							<?php } else { ?>
-								<span><?php esc_html_e( $tracking_number ); ?></span>
-							<?php } ?>
-						</div>
-						<?php
-						do_action( 'ast_after_tracking_number', $order_id, $tracking_item['tracking_id'] );
-						do_action( 'ast_shipment_tracking_end', $order_id, $tracking_item );
-						?>
+				<div class="tracking-content">
+					<div>
+						<strong><?php esc_html_e( $tracking_provider ); ?></strong> - 
+						<?php if ( $tracking_link ) { ?>
+							<?php echo sprintf( '<a href="%s" target="_blank" title="' . esc_attr( __( 'Track Shipment', 'trackship-for-woocommerce' ) ) . '">' . esc_html( $tracking_number ) . '</a>', esc_url( $tracking_link ) ); ?>
+						<?php } else { ?>
+							<span><?php esc_html_e( $tracking_number ); ?></span>
+						<?php } ?>
 					</div>
+					<?php
+					do_action( 'ast_after_tracking_number', $order_id, $tracking_item['tracking_id'] );
+					do_action( 'ast_shipment_tracking_end', $order_id, $tracking_item );
+					?>
 				</div>
 			<?php } ?>
 		</div>
@@ -330,9 +328,12 @@ class WC_Trackship_Admin {
 				SUM( IF( `shipping_date` BETWEEN %s AND %s, 1, 0 ) ) as total_shipment,
 				SUM( IF( (`shipment_status` NOT LIKE 'delivered' OR `pending_status` IS NOT NULL) AND `shipping_date` BETWEEN %s AND %s, 1, 0 ) ) as active_shipment,
 				SUM( IF( (`shipment_status` LIKE 'delivered') AND `shipping_date` BETWEEN %s AND %s, 1, 0 ) ) as delivered_shipment,
-				SUM( IF((`shipment_status` NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' ) OR `pending_status` IS NOT NULL) AND `shipping_date` BETWEEN %s AND %s, 1, 0) ) as tracking_issues
+				SUM( IF((`shipment_status` NOT IN ( 'delivered', 'in_transit', 'out_for_delivery', 'pre_transit', 'exception', 'return_to_sender', 'available_for_pickup' ) OR `pending_status` IS NOT NULL) AND `shipping_date` BETWEEN %s AND %s, 1, 0) ) as tracking_issues,
+				ROUND( AVG( IF( `shipping_date` BETWEEN %s AND %s, NULLIF( `shipping_length`, '' ), NULL ) ), 1 ) as avg_transit,
+				ROUND( 100 * SUM( IF( `shipment_status` = 'delivered' AND `shipping_date` BETWEEN %s AND %s, 1, 0 ) ) / NULLIF( SUM( IF( `shipping_date` BETWEEN %s AND %s, 1, 0 ) ), 0 ) ) as delivered_rate
 				FROM {$wpdb->prefix}trackship_shipment AS row1",
-				$start_date, $end_date, $start_date, $end_date, $start_date, $end_date, $start_date, $end_date
+				$start_date, $end_date, $start_date, $end_date, $start_date, $end_date, $start_date, $end_date,
+				$start_date, $end_date, $start_date, $end_date, $start_date, $end_date
 		), ARRAY_A);
 
 		// print_r($wpdb->last_query);
@@ -422,7 +423,7 @@ class WC_Trackship_Admin {
 			),
 		);
 
-		if ( ( is_plugin_active( 'wp-lister-for-amazon/wp-lister-amazon.php' ) || is_plugin_active( 'wp-lister-amazon/wp-lister-amazon.php' ) ) && !in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
+		if ( ( is_plugin_active( 'wp-lister-for-amazon/wp-lister-amazon.php' ) || is_plugin_active( 'wp-lister-amazon/wp-lister-amazon.php' ) ) && !in_array( get_option( 'user_plan' ), array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended' ) ) ) {
 			$form_data[ 'enable_notification_for_amazon_order' ] = array(
 				'type'		=> 'tgl_checkbox',
 				'title'		=> __( 'Enable shipment status notification for order created by Amazon', 'trackship-for-woocommerce' ),
@@ -817,7 +818,11 @@ class WC_Trackship_Admin {
 						<li class="providers_updated"><?php esc_html_e( 'Providers list Updated', 'trackship-for-woocommerce' ); ?></li>
 					</ul>
 					<button class="sync_trackship_providers_btn button-primary button-trackship"><?php esc_html_e( 'Sync TrackShip Providers', 'trackship-for-woocommerce' ); ?></button>
-					<div class="spinner"></div>
+					<div class="ts-dots-loader" style="display:none;">
+						<span class="ts-dot ts-dot--green"></span>
+						<span class="ts-dot ts-dot--blue"></span>
+						<span class="ts-dot ts-dot--blue"></span>
+					</div>
 				</div>
 				<input type="hidden" id="nonce_trackship_provider" value="<?php esc_html_e( wp_create_nonce( 'nonce_trackship_provider' ) ); ?>">
 			</div>
@@ -1077,11 +1082,13 @@ class WC_Trackship_Admin {
 		wp_send_json( array( 'success' => 'true' ) );
 	}
 
-	public function enabled_wc_fulfillments() {
+	public function toggle_wc_fulfillments() {
 		check_ajax_referer( 'ts_tools', 'security' );
 
-		update_option( 'woocommerce_feature_fulfillments_enabled', 'yes' );
-		update_trackship_settings('ts_fulfillments_ignore', 'true');
+		$enable = isset( $_POST['enable'] ) && 'true' === sanitize_text_field( $_POST['enable'] );
+
+		update_option( 'woocommerce_feature_fulfillments_enabled', $enable ? 'yes' : 'no' );
+		update_trackship_settings( 'ts_fulfillments_ignore', 'true' );
 
 		wp_send_json( array( 'success' => 'true' ) );
 	}

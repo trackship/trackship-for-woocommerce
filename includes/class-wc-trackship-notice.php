@@ -47,9 +47,6 @@ class WC_TrackShip_Admin_Notice {
 		// review notice
 		add_action( 'admin_notices', array( $this, 'trackship_upgrade_notice' ) );
 
-		// upgrade notice v2 (balance exhausted)
-		add_action( 'admin_notices', array( $this, 'trackship_upgrade_notice_v2' ) );
-
 		// review notice
 		add_action( 'admin_notices', array( $this, 'trackship_fulfillments_notice' ) );
 
@@ -69,8 +66,7 @@ class WC_TrackShip_Admin_Notice {
 
 		$notice_types = [
 			'ts-review-ignore' => 'ts_review_ignore_141',
-			'ts-upgrade-ignore' => 'ts_popup_ignore203',
-			'ts-upgrade-ignore-v2' => 'ts_popup_ignore203_v2',
+			'ts-upgrade-ignore' => 'ts_popup_ignore204',
 			'ts-fulfillments-ignore' => 'ts_fulfillments_ignore',
 		];
 
@@ -91,7 +87,7 @@ class WC_TrackShip_Admin_Notice {
 			return;
 		}
 
-		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) && !get_trackship_settings( 'ts_popup_ignore141', '') ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended' ) ) && !get_trackship_settings( 'ts_popup_ignore141', '') ) {
 			return;
 		}
 
@@ -132,14 +128,14 @@ class WC_TrackShip_Admin_Notice {
 	* Display admin notice on Upgrade TrackShip plan
 	*/
 	public function trackship_upgrade_notice () {
-		if ( get_trackship_settings( 'ts_popup_ignore203', '') ) {
+		if ( get_trackship_settings( 'ts_popup_ignore204', '') ) {
 			return;
 		}
-		if ( current_time( 'timestamp' ) > strtotime( '2026-05-31 23:59:59' ) ) {
+		if ( current_time( 'timestamp' ) > strtotime( '2026-07-15 23:59:59' ) ) {
 			return;
 		}
 		$user_plan = get_option( 'user_plan' );
-		
+
 		$nonce = wp_create_nonce('ts_dismiss_notice');
 		$dismissable_url = esc_url( add_query_arg( [ 'ts-upgrade-ignore' => 'true', 'nonce' => $nonce ] ) );
 		$url = 'https://my.trackship.com/settings/#billing';
@@ -160,14 +156,13 @@ class WC_TrackShip_Admin_Notice {
 		</style>
 
 		<?php // Upgrade to Pro Notice for Free Plan ?>
-		<?php if ( in_array( $user_plan, array( 'Free 50', 'No active plan', 'Trial Ended', 'Free Trial' ) ) ) { ?>
+		<?php if ( in_array( $user_plan, array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended', 'Free Trial' ) ) ) { ?>
 
-			<?php // Upgrade to Pro Notice for Free Plan (Under 50 shipments) ?>
 			<div class="notice notice-success is-dismissible trackship-dismissable-notice" role="region">
 				<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
-				<h3>New plan starting from 50 shipments/month — only $9/month!</h3>
+				<h3>Limited-time offer: 1,200 Shipments/year for just $110!</h3>
 				<p>Upgrade to TrackShip Pro and give buyers the branded, worry-free tracking experience they love.</p>
-				<p>🎁 Use coupon code <strong>STARTER80</strong> to get 600 shipments/year for just <strong>$80</strong>! <em>(Valid till May 31, 2026)</em></p>
+				<p>🎁 Use coupon code <strong>MINI110</strong> to get 1,200 shipments/year for just <strong>$110</strong> <em>(regular price $150)</em>! <em>(Valid till July 15, 2026)</em></p>
 				<p style="padding:0;">
 					<a class="button button-primary" target="_blank" href="<?php echo esc_url( $url ); ?>">Upgrade to Pro</a>
 					<a class="button" href="<?php echo esc_url( $dismissable_url ); ?>">Dismiss</a>
@@ -175,94 +170,6 @@ class WC_TrackShip_Admin_Notice {
 			</div>
 			<?php
 		}
-	}
-
-	/*
-	* Display admin notice after user dismisses the first upgrade notice (ts_popup_ignore203)
-	* Shows conditionally based on tracker balance
-	*/
-	public function trackship_upgrade_notice_v2() {
-		if ( ! get_trackship_settings( 'ts_popup_ignore203', '' ) ) {
-			return;
-		}
-		if ( get_trackship_settings( 'ts_popup_ignore203_v2', '' ) ) {
-			return;
-		}
-		if ( current_time( 'timestamp' ) > strtotime( '2026-05-31 23:59:59' ) ) {
-			return;
-		}
-		$user_plan = get_option( 'user_plan' );
-		if ( ! in_array( $user_plan, array( 'Free 50' ) ) ) {
-			return;
-		}
-
-		$trackers_balance = (int) get_option( 'trackers_balance', 0 );
-		$nonce            = wp_create_nonce( 'ts_dismiss_notice' );
-		$dismissable_url  = esc_url( add_query_arg( [ 'ts-upgrade-ignore-v2' => 'true', 'nonce' => $nonce ] ) );
-		$url              = 'https://my.trackship.com/settings/#billing';
-		?>
-		<style>
-			.wp-core-ui .notice.trackship-upgrade-v2-notice {
-				padding: 20px;
-				text-decoration: none;
-			}
-			.trackship-upgrade-v2-notice h3,
-			.trackship-upgrade-v2-notice p {
-				margin: 0;
-				padding-bottom: 10px;
-			}
-			.trackship-upgrade-v2-notice .ts-plan-box {
-				display: inline-block;
-				border: 1px solid #ddd;
-				border-radius: 6px;
-				padding: 12px 20px;
-				margin: 4px 0 14px;
-				background: #f9f9f9;
-			}
-			.trackship-upgrade-v2-notice .ts-plan-box strong {
-				display: block;
-				font-size: 15px;
-				margin-bottom: 4px;
-			}
-			.trackship-upgrade-v2-notice .ts-plan-box span {
-				display: block;
-				color: #555;
-				font-size: 13px;
-			}
-			.wp-core-ui .notice.trackship-upgrade-v2-notice a.notice-dismiss {
-				padding: 9px;
-				text-decoration: none;
-			}
-		</style>
-
-		<?php if ( $trackers_balance > 0 ) { ?>
-			<div class="notice notice-warning is-dismissible trackship-upgrade-v2-notice" role="region">
-				<a href="<?php echo esc_url( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
-				<h3>Free plan ending this month.</h3>
-				<p>Upgrade to continue tracking shipments without interruption.</p>
-				<p>🎁 Use coupon code <strong>STARTER80</strong> to get 600 shipments/year for just <strong>$80</strong>! <em>(Valid till May 31, 2026)</em></p>
-				<p style="padding:0;">
-					<a class="button button-primary" target="_blank" href="<?php echo esc_url( $url ); ?>">Upgrade Now</a>
-					<a class="button" href="<?php echo esc_url( $dismissable_url ); ?>">Dismiss</a>
-				</p>
-			</div>
-		<?php } else { ?>
-			<div class="notice notice-error is-dismissible trackship-upgrade-v2-notice" role="region">
-				<a href="<?php echo esc_url( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
-				<h3>You've reached your free plan limit.</h3>
-				<p>Upgrade to continue tracking shipments without interruption.</p>
-				<div class="ts-plan-box">
-					<strong>Starter Plan</strong>
-					<span>50 shipments/month for $9/month</span>
-				</div>
-				<p>🎁 Use coupon code <strong>STARTER80</strong> to get 600 shipments/year for just <strong>$80</strong>! <em>(Valid till May 31, 2026)</em></p>
-				<p style="padding:0;">
-					<a class="button button-primary" target="_blank" href="<?php echo esc_url( $url ); ?>">Upgrade Now</a>
-					<a class="button" href="<?php echo esc_url( $dismissable_url ); ?>">Dismiss</a>
-				</p>
-			</div>
-		<?php } ?>
-		<?php
 	}
 
 	/*

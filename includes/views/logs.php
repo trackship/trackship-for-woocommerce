@@ -33,10 +33,10 @@ $url_search = isset( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
 			<option value="SMS"><?php esc_html_e('SMS', 'trackship-for-woocommerce'); ?></option>
 		</select>
 	</span>
-	<button class="serch_button" type="button" style="float:right;"><?php esc_html_e( 'Search', 'trackship-for-woocommerce' ); ?></button>
 	<span class="log_search_bar">
-		<input type="text" id="search_bar" name="search_bar" placeholder="Order id, Email, Phone number" value="<?php echo esc_html($url_search); ?>">
+		<input type="text" id="search_bar" name="search_bar" placeholder="<?php esc_attr_e( 'Order id, Email, Phone number', 'trackship-for-woocommerce' ); ?>" value="<?php echo esc_attr( $url_search ); ?>">
 		<span class="dashicons dashicons-no"></span>
+		<button class="serch_button" type="button"><?php esc_html_e( 'Search', 'trackship-for-woocommerce' ); ?></button>
 	</span>
 </div>
 <div class="trackship_admin_content">	

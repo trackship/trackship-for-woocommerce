@@ -30,7 +30,7 @@ function shipment_js_error(response, jqXHR, exception) {
 			overlayCSS: {
 				background: "#fff",
 				opacity: 0.6
-			}	
+			}
 		});
 		return this;
 	}; 
@@ -165,7 +165,7 @@ jQuery(document).ready(function() {
 				'orderable': false,
 				// 'data': 'tracking_number_colom',
 				"mRender":function(data,type,full) {
-					return '<span class="copied_tracking_numnber dashicons dashicons-admin-page" data-number="' + full.tracking_number + '"></span><a class="open_tracking_details shipment_tracking_number" data-orderid="' + full.order_id + '" data-tnumber="' + full.tracking_number + '" data-nonce="' + full.nonce + '">' + full.tracking_number + '</a>';
+					return '<div class="tn-cell"><span class="copied_tracking_numnber dashicons dashicons-admin-page" data-number="' + full.tracking_number + '"></span><a class="open_tracking_details shipment_tracking_number" data-orderid="' + full.order_id + '" data-tnumber="' + full.tracking_number + '" data-nonce="' + full.nonce + '">' + full.tracking_number + '</a></div>';
 				},
 			},
 			{
@@ -229,8 +229,10 @@ jQuery(document).ready(function() {
 				'orderable': false,
 				'data': 'shipment_length',
 				"mRender": function(data, type, full) {
-					var late_shipment = full.shipment_length.cond ? '<span class="dashicons dashicons-info trackship-tip ' + full.shipment_length.late_class + ' late_shipment" title="late shipment"></span>' : '';
-					return '<span class="shipment_length ' + full.shipment_length.late_class + '">' + late_shipment + full.shipment_length.shipping_length + '</span>';
+					var late_shipment = full.shipment_length.cond ? '<span class="dashicons dashicons-info ' + full.shipment_length.late_class + ' late_shipment"></span>' : '';
+					var extraClass    = full.shipment_length.cond ? ' trackship-tip' : '';
+					var titleAttr     = full.shipment_length.cond ? ' title="This shipment has been in transit for ' + full.shipment_length.shipping_length + ' and may be late."' : '';
+					return '<span class="shipment_length ' + full.shipment_length.late_class + extraClass + '"' + titleAttr + '>' + late_shipment + full.shipment_length.shipping_length + '</span>';
 				},
 			},	
 			{
@@ -475,6 +477,10 @@ jQuery(document).on("click", ".dashboard_input_tab .tab_input", function(){
 			jQuery('.innner_content .active_shipment').html(response.active_shipment ? response.active_shipment : 0);
 			jQuery('.innner_content .delivered_shipment').html(response.delivered_shipment ? response.delivered_shipment : 0);
 			jQuery('.innner_content .tracking_issues').html(response.tracking_issues ? response.tracking_issues : 0);
+			var avgTransit = response.avg_transit ? response.avg_transit : 0;
+			jQuery('.tsd-stat--avg_transit .tsd-stat__value').html(avgTransit + '<small>' + (shipments_script.days || 'days') + '</small>');
+			var deliveredRate = response.delivered_rate ? response.delivered_rate : 0;
+			jQuery('.tsd-stat--delivered_rate .tsd-stat__value').html(deliveredRate + '<small>%</small>');
 			jQuery(".fullfillment_dashboard_section_content").unblock();
 		},
 		error: function(response, jqXHR, exception) {

@@ -7,10 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="heading_panel section_tracking_page_heading <?php echo 'tracking' == $section ? 'checked' : ''; ?>">
 		<strong><?php esc_html_e( 'Tracking Page', 'trackship-for-woocommerce' ); ?></strong>
 		<div class="heading_panel_save">
-			<span class="dashicons dashicons-arrow-right-alt2"></span>
 			<div class="spinner"></div>
-			<button name="save" class="button-primary button-trackship btn_large woocommerce-save-button" type="submit" value="Save & close">
-				<?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?>
+			<button name="save" class="button-primary button-trackship btn_large woocommerce-save-button" type="submit" value="Save">
+				<?php esc_html_e( 'Save', 'trackship-for-woocommerce' ); ?>
 			</button>
 			<?php wp_nonce_field( 'trackship_tracking_page_form', 'trackship_tracking_page_form_nonce' ); ?>
 			<input type="hidden" name="action" value="trackship_tracking_page_form_update">

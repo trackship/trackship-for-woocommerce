@@ -8,9 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="heading_panel section_mapping_heading">
 			<strong><?php esc_html_e( 'Map Shipping Carriers', 'trackship-for-woocommerce' ); ?></strong>
 			<div class="heading_panel_save">
-				<span class="dashicons dashicons-arrow-right-alt2"></span>
 				<div class="spinner"></div>
-				<button name="save" class="button-primary btn_green2 btn_large woocommerce-save-button button-trackship" type="submit"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
+				<button name="save" class="button-primary btn_green2 btn_large woocommerce-save-button button-trackship" type="submit"><?php esc_html_e( 'Save', 'trackship-for-woocommerce' ); ?></button>
 				<?php wp_nonce_field( 'trackship_mapping_form', 'trackship_mapping_form_nonce' ); ?>
 				<input type="hidden" name="action" value="trackship_mapping_form_update">
 			</div>

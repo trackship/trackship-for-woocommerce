@@ -4,7 +4,7 @@ Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order trackin
 Requires at least: 6.2
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.0.4
+Stable tag: 2.0.5
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,12 +67,13 @@ For more information, check out our [Documentation](https://docs.trackship.com/d
 * Pretty permalinks - navigate to Settings > Permalinks and make sure that the permalink structure is based on Post Name.
 * Shipment Tracking Plugin
 
-= Supported shipment tracking plugins for WooCommerce: =
-* [Advanced Shipment Tracking AST]()
+= Supported shipment tracking extension for WooCommerce: =
+* [Advanced Shipment Tracking AST](https://wordpress.org/plugins/woo-advanced-shipment-tracking/)
 * [Advanced Shipment Tracking Pro (AST PRO)](https://www.zorem.com/products/woocommerce-advanced-shipment-tracking/)
 * WooCommerce Shipment Tracking
 * Orders Tracking for WooCommerce by VillaTheme
 * YITH WooCommerce Order & Shipment Tracking by Yith
+* WooCommerce Fulfillments
 
 == Compatibility ==
 We tested and added compatibility to the following plugins:
@@ -153,6 +154,12 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 13. You can view TrackShip Analytics and filter results by time range, shipment status, or provider.
 
 == Changelog ==
+= 2.0.5 - 2026-06-21 =
+* Enhancement - Revamped admin interface and dashboard with modern UI, including expanded analytics for shipments, carrier performance, and historical trends.
+* New - Added WooCommerce Fulfillments tab for improved shipment management.
+* Fix - Fixed product name display in tracking details and email templates to consistently use the canonical product name from the WC_Product object, preventing empty names when product data is missing.
+* Update - Translation updated.
+
 = 2.0.4 - 2026-05-21 =
 * Fix - Removed explicit font color from shipment status in email tracking widget to respect email theme styling.
 * Update - Added WC log when Klaviyo API key is not configured to improve integration discoverability.
@@ -207,9 +214,5 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 For a complete changelog history, please visit our [documentation](https://docs.trackship.com/docs/trackship-for-woocommerce/changelog/).
 
 == Upgrade Notice ==
-
-= 2.0.4 =
-Removed hardcoded font color from email tracking widget and added Klaviyo API key warning log.
-
-= 2.0.3 =
-Fixed fatal error with WooCommerce Fulfillments on WooCommerce 10.7. Added filter for shipment email recipient and custom hook for tracking page notice.
+= 2.0.5 =
+Revamped admin interface with modern UI and enhanced analytics. Added WooCommerce Fulfillments tab. Fixed product name display in email templates.

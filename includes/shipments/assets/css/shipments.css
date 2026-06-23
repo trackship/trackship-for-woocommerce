@@ -16,10 +16,6 @@
 #active_shipments_table_info.dt-info, #trackship_notifications_logs_info.dt-info {
 	margin: 15px 0;
 }
-.shipment_search_bar #search_bar{
-	width: 100%;
-	padding: 0 40px;
-}
 .shipment_search_bar #search_bar::placeholder{
 	color: #ccc;
 }
@@ -31,7 +27,7 @@ span.dashicons.dashicons-search.serch_icon {
 	left: 0;
 	height: 40px;
 	width: 40px;
-	padding: 10px;
+	padding: 4px;
 	cursor: pointer;
 	color: #3858e9;
 }
@@ -61,27 +57,13 @@ span.shipment_search_bar span.dashicons-no {
 table.dataTable th.dt-type-numeric, table.dataTable.fullfilments_table td.dt-type-numeric, table.dataTable.trackship_logs td.dt-type-numeric {
 	text-align: left;
 }
-div.bulk_action_div button.bulk_action_button {
-	height: 50px;
-	padding: 0 30px;
-	font-size: 14px;
-}
-.bulk_action_div {
-	margin-top: 15px;
-}
-.export_shipment, .more_info_shipment {
-	display: inline-block;
-	margin: 30px 5px 0;
-	padding: 0 0 25px 0px;
-	cursor: pointer;
-}
 .shipments_custom_data {
 	display: flex;
 	background: #fff;
-	border: 1px solid #e0e0e0;
-	border-radius: 5px 5px 0 0;
-	border-bottom: 0;
-	padding: 0 10px;
+	border: 0;
+	border-bottom: 1px solid var(--tsd-line);
+	border-radius: var(--tsd-radius) var(--tsd-radius) 0 0;
+	padding: 10px;
 }
 img.country_flag {
 	height: 13px;
@@ -90,6 +72,35 @@ img.country_flag {
 }
 .all_checkboxes {
 	margin: 0 2px !important;
+}
+input[type="checkbox"].shipment_checkbox,
+input[type="checkbox"].all_checkboxes {
+	appearance: none;
+	-webkit-appearance: none;
+	width: 16px !important;
+	height: 16px !important;
+	min-width: 16px;
+	margin: 0;
+	border: 1px solid #8c8f94;
+	border-radius: 3px;
+	background-color: #fff;
+	cursor: pointer;
+	flex-shrink: 0;
+	vertical-align: middle;
+}
+/* Suppress the WP admin ::before checkmark (it renders blue/oversized on mobile) */
+input[type="checkbox"].shipment_checkbox::before,
+input[type="checkbox"].all_checkboxes::before {
+	content: none !important;
+}
+input[type="checkbox"].shipment_checkbox:checked,
+input[type="checkbox"].all_checkboxes:checked {
+	background-color: #2271b1 !important;
+	border-color: #2271b1 !important;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: 11px;
 }
 #active_shipments_table_wrapper .dt-buttons {
 	display: none;
@@ -118,9 +129,6 @@ table.dataTable tbody td span.get_log_detail {
 	z-index: 10;
 	opacity: 1;
 	visibility: visible;
-}
-.column_toogle {
-	margin: 10px 0;
 }
 .more_info_shipment .dashicons {
 	rotate: 90deg;
@@ -154,6 +162,14 @@ table.dataTable thead th, table.dataTable thead td {
 	font-size: 13px;
 	color: #3c4758;
 }
+/* Hide the DataTables v2 sizing thead that lives inside .dt-scroll-body */
+div.dt-scroll-body > table > thead {
+	visibility: collapse;
+}
+/* Hide the empty dt-scroll-foot ghost strip (DataTables creates it even with no tfoot) */
+div.dt-scroll-foot {
+	display: none !important;
+}
 table.dataTable tbody tr {
 	background: none;
 }
@@ -183,6 +199,18 @@ table.dataTable tbody a {
 	line-height: 2em;
 	display: inline;
 	box-shadow: none;
+}
+.tn-cell {
+	display: flex;
+	align-items: center;
+	flex-wrap: nowrap;
+	min-width: 0;
+}
+table.dataTable tbody .tn-cell a.shipment_tracking_number {
+	display: block;
+	flex: 1;
+	min-width: 0;
+	max-width: none;
 }
 table.dataTable tbody a.shipment_tracking_number {
 	white-space: nowrap;
@@ -221,9 +249,6 @@ span.dashicons.dashicons-info {
 	margin: 0 1px;
 	font-size: 17px;
 }
-span.not_delivered.late_shipment {
-	color: #f44336;
-}
 .rtl table.dataTable tbody td:last-child span {
 	padding-right: 0;
 	padding-left: 25px;
@@ -234,12 +259,16 @@ table.dataTable tbody tr.hover, table.dataTable tbody tr.focus {
 div.dt-container.dt-empty-footer .table_scroll .dt-scroll-body {
 	border-bottom: 0 !important;
 }
+/* ---- Status badges ---- */
 table.dataTable tbody .shipment_status_label {
+	white-space: nowrap;
+	font-size: 12px;
 	display: block;
 	background-color: #f5f7fb;
 	padding: 4px 8px;
 	border-radius: 10px;
 	width: fit-content;
+	font-weight: 500;
 }
 table.dataTable tbody .shipment_status_label:before {
 	font-family: dashicons;

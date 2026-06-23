@@ -7,9 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="heading_panel section_sms_heading">
 		<strong><?php esc_html_e( 'SMS Settings', 'trackship-for-woocommerce' ); ?></strong>
 		<div class="heading_panel_save">
-			<span class="dashicons dashicons-arrow-right-alt2"></span>
 			<div class="spinner workflow_spinner"></div>
-			<button name="save" class="button-primary button-trackship btn_large woocommerce-save-button button-smswoo" type="submit" ><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
+			<button name="save" class="button-primary button-trackship btn_large woocommerce-save-button button-smswoo" type="submit"><?php esc_html_e( 'Save', 'trackship-for-woocommerce' ); ?></button>
 			<?php $nonce = wp_create_nonce( 'smswoo_settings_tab' ); ?>
 			<input type="hidden" name="smswoo_settings_tab_nonce" value="<?php echo esc_attr($nonce); ?>">
 			<input type="hidden" name="action" value="smswoo_settings_tab_save">

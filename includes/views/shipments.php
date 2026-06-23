@@ -86,7 +86,7 @@ $provider_array = array_column($res, 'shipping_provider');
 $provider_count_array = array_column($res, 'provider_count');
 $provider_count = array_combine($provider_array, $provider_count_array);
 ?>
-<div>
+<div class="ts-filters-bar">
 	<span class="shipment_date_range">
 		<input type="text" class="select_option" id="shipment_date_range" placeholder="Select date range" />
 		<input type="hidden" id="shipment_start_date_range">

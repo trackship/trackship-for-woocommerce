@@ -506,6 +506,20 @@ class WC_Trackship_Install {
 			$this->create_shipping_provider_table();
 			$this->update_shipping_providers();
 		}
+
+		// TS4WC version 2.0.5
+		if ( version_compare( get_option( 'trackship_db' ), '1.44', '<' ) ) {
+			delete_trackship_settings( 'ts_popup_ignore203_v2' );
+			delete_trackship_settings( 'ts_popup_ignore203' );
+			update_trackship_settings( 'trackship_db', '1.44' );
+			update_option( 'trackship_db', '1.44' );
+			$this->create_shipment_table();
+			$this->create_shipment_meta_table();
+			$this->check_column_exists();
+
+			$this->create_shipping_provider_table();
+			$this->update_shipping_providers();
+		}
 	}
 
 	public function update_trackship_providers() {

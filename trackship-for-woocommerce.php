@@ -2,14 +2,14 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 2.0.4
+ * Version: 2.0.5
  * Author: TrackShip
  * Author URI: https://trackship.com/
  * License: GPL-2.0+
  * License URI:
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
- * WC tested up to: 10.7
+ * WC tested up to: 10.8.1
  * Requires Plugins: woocommerce
 */
 
@@ -24,7 +24,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '2.0.4';
+	public $version = '2.0.5';
 	public $plugin_path;
 	public $ts_install;
 	public $ts_actions;
@@ -127,10 +127,19 @@ class Trackship_For_Woocommerce {
 		if ( $is_fulfillments ) {
 			return;
 		}
+		$install_url = esc_url( admin_url( 'plugin-install.php?tab=search&s=AST&plugin-search-input=Search+Plugins' ) );
+		$docs_url    = 'https://docs.trackship.com/docs/trackship-for-woocommerce/getting-started/requirements/#shipment-tracking-plugin';
 		?>
-		<div class="error">
-			<?php /* translators: %s: search for a tag */ ?>
-			<p><?php printf( esc_html__( 'You must have a %1$sShipment Tracking plugin%2$s installed to use TrackShip for WooCommerce.', 'trackship-for-woocommerce' ), '<a href="' . esc_url( admin_url( 'plugin-install.php?tab=search&s=AST&plugin-search-input=Search+Plugins' ) ) . '">', '</a>' ); ?></p>
+		<div class="notice notice-error">
+			<p>
+				<strong><?php esc_html_e( 'TrackShip for WooCommerce requires a Shipment Tracking extension.', 'trackship-for-woocommerce' ); ?></strong>
+			</p>
+			<p><?php esc_html_e( 'You must have a Shipment Tracking extension installed and active to use TrackShip for WooCommerce.', 'trackship-for-woocommerce' ); ?></p>
+			<p>
+				<a href="<?php echo $install_url; ?>" class="button-primary button-trackship" target="_blank"><?php esc_html_e( 'Install Shipment Tracking extension', 'trackship-for-woocommerce' ); ?></a>
+				&nbsp;
+				<a href="<?php echo $docs_url; ?>" target="_blank"><?php esc_html_e( 'Learn more →', 'trackship-for-woocommerce' ); ?></a>
+			</p>
 		</div>
 		<?php
 	}

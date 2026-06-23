@@ -5,7 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 'settings';
 ?>
 <div class="woocommerce trackship_admin_layout">
-	<span class="ts_activity-panel"><?php include 'header-sidebar.php'; ?></span>
 	<div class="trackship_admin_content" >
 		<div class="trackship_nav_div">
 			<?php
@@ -31,14 +30,14 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 					'show'	=> true,
 				),
 				'setup' => array(
-					'label'	=> __( 'Setup', 'trackship-for-woocommerce' ),
+					'label'	=> __( 'WooCommerce Fulfillment', 'trackship-for-woocommerce' ),
 					'slug'	=> 'setup',
 					'show'	=> true,
 				),
 			);
 
-			if ( WC_VERSION < '10.2' || trackship_for_woocommerce()->is_active_fulfillments() ) {
-				unset( $array['setup'] ); // Remove Setup tab if WooCommerce version is less than 10.2 or WooCommerce Fulfillments is active
+			if ( WC_VERSION < '10.2' ) {
+				unset( $array['setup'] ); // Remove Setup tab if WooCommerce version is less than 10.2
 			}
 
 			// Fallback when the requested tab is no longer available (e.g., setup removed after enabling fulfillments).

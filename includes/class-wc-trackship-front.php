@@ -556,7 +556,7 @@ class WC_TrackShip_Front {
 					<div class="trackship_branding">
 						<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://trackship.com" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
 					</div>
-					<?php if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) { ?>
+					<?php if ( in_array( get_option( 'user_plan' ), array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended' ) ) ) { ?>
 						<style> .trackship_branding{display:block !important;} </style>
 					<?php } ?>
 				</div>
@@ -621,7 +621,7 @@ class WC_TrackShip_Front {
 			<div class="enhanced_trackship_branding">
 				<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><a href="https://trackship.com/" title="TrackShip" target="blank"><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></a></p>
 			</div>
-			<?php if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) { ?>
+			<?php if ( in_array( get_option( 'user_plan' ), array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended' ) ) ) { ?>
 				<style> .enhanced_trackship_branding{display:block !important;} </style>
 			<?php } ?>
 			<?php
@@ -808,7 +808,7 @@ class WC_TrackShip_Front {
 					$image_size = array( 50, 50 );
 					$image = $_product->get_image( $image_size );
 					// echo esc_html($image);
-					echo '<li>' . wp_kses_post( $image ) . '<span><a target="_blank" href=' . esc_url( get_permalink( $product['product_id'] ) ) . '>' . esc_html( $product['product_name'] ) . '</a> x ' . esc_html( $product['product_qty'] ) . '</span></li>';
+					echo '<li>' . wp_kses_post( $image ) . '<span><a target="_blank" href=' . esc_url( get_permalink( $product['product_id'] ) ) . '>' . wp_kses_post( $_product->get_name() ) . '</a> x ' . esc_html( $product['product_qty'] ) . '</span></li>';
 				} else {
 					echo '<li><span>' . esc_html( $product['product_name'] ) . ' x ' . esc_html( $product['product_qty'] ) . '</span></li>';
 				}

@@ -28,7 +28,7 @@
 	top: 0;
 }
 .zoremmail-layout-sider-container span.dashicons-arrow-right-alt2 {
-	color: #077ff1;
+	color: #6b7280;
 }
 aside.zoremmail-layout-content-collapse {
 	position: absolute;
@@ -52,12 +52,20 @@ ul.zoremmail-panels,ul.zoremmail-sub-panels {
 	width: 46px;
 }
 .codeinfo span.email_placeholder {
-	background: #fff;
-	padding: 5px 8px;
-	margin: 2px;
-	border: 1px solid #e0e0e0;
-	border-radius: 5px;
+	background: #eef2fd;
+	color: #124ed6;
+	font-size: 12px;
+	font-weight: 500;
+	padding: 4px 9px;
+	margin: 3px 2px;
+	border: 1px solid #c8d6f8;
+	border-radius: 999px;
 	display: inline-block;
+	cursor: pointer;
+	transition: background .12s;
+}
+.codeinfo span.email_placeholder:hover {
+	background: #dde7fc;
 }
 .customize-section-back {
 	float: left;
@@ -105,8 +113,8 @@ ul.zoremmail-panels,ul.zoremmail-sub-panels {
 	display: flex !important;
 }
 .customize-section-title h3 {
-	font-size: 20px;
-	font-weight: 200;
+	font-size: 16px;
+	font-weight: 600;
 	display: block;
 	overflow: hidden;
 	white-space: nowrap;
@@ -114,7 +122,7 @@ ul.zoremmail-panels,ul.zoremmail-sub-panels {
 	padding: 10px 10px 12px 14px;
 	margin: 0;
 	line-height: 25px;
-	color: #50575e;
+	color: #1f2540;
 }
 .customize-section-title span.customize-action-default, .customize-section-title span.customize-action-changed {
 	font-size: 13px;
@@ -181,26 +189,27 @@ a.zoremmail-back-wordpress-link {
 	display: none;
 }
 .zoremmail-menu-submenu-title, .zoremmail-panel-title, .zoremmail-sub-panel-title, .zoremmail-panel-title.back {
-	line-height: 1.8;
+	line-height: 1.5;
 	margin-bottom: 0;
 	position: relative;
-	background: #f8f8fb;
-	padding: 12px 10px 12px 14px;
-	border-bottom: 1px solid #e0e0e0;
-	border-left: 4px solid #fff;
-	font-size: 14px;
+	background: #fff;
+	padding: 14px 16px;
+	border-bottom: 1px solid #e9ebf2;
+	border-left: 3px solid transparent;
+	font-size: 13px;
 	font-weight: 600;
-	color: #50575e;
+	color: #1f2540;
 	cursor: pointer;
+	transition: color .15s, background .15s, border-color .15s;
 }
 .zoremmail-sub-panel-heading.sub_options_panel{
 	margin-bottom: 0;
 	border-bottom: 1px solid #e0e0e0;
 }
 .zoremmail-panel-title:hover, .zoremmail-sub-panel-title:hover {
-	color: #077ff1;
-	background: #f6f7f7;
-	border-left: 4px solid #077ff1;
+	color: #124ed6;
+	background: #f0f4ff;
+	border-left: 3px solid #124ed6;
 }
 .zoremmail-menu-submenu-title .dashicons, .zoremmail-panel-title .dashicons, .zoremmail-sub-panel-title .dashicons {
 	position: absolute;
@@ -210,15 +219,19 @@ a.zoremmail-back-wordpress-link {
 }
 .zoremmail-menu.zoremmail-menu-inline {
 	margin: 0;
-	padding-top: 15px;
 }
 .zoremmail-menu-item {
-	margin: 0 15px;
+	margin: 0;
+	padding: 12px 16px;
+	border-bottom: 1px solid #e9ebf2;
 }
 .menu-sub-title {
-	font-size: 15px;
-	line-height: 28px;
-	color: #333333;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 1.4;
+	color: #1f2540;
+	margin-bottom: 6px;
+	display: block;
 }
 input[type=text] {
 	cursor: pointer;
@@ -242,8 +255,13 @@ input[type=text] {
 	line-height: 33px;
 }
 .menu-sub-tooltip {
-	font-size: 12px;
-	color: #424242;
+	font-size: 11px;
+	color: #6b7280;
+	margin-top: 5px;
+	display: block;
+}
+.menu-sub-tooltip:empty {
+	display: none;
 }
 .wp-color-result-text {
 	background: #f6f7f7;
@@ -257,8 +275,18 @@ input[type=text] {
 }
 .menu-sub-field .zoremmail-input {
 	width: 100%;
-	min-height: 35px;
-	border-color: #e0e0e0;
+	min-height: 38px;
+	border: 1px solid #e9ebf2;
+	border-radius: 7px;
+	padding: 6px 10px;
+	font-size: 13px;
+	color: #1f2540;
+	transition: border-color .15s, box-shadow .15s;
+	outline: none;
+}
+.menu-sub-field .zoremmail-input:focus {
+	border-color: #124ed6;
+	box-shadow: 0 0 0 3px rgba(18, 78, 214, .1);
 }
 .zoremmail-menu-contain {
 	display: none;
@@ -284,7 +312,7 @@ input[type=text] {
 	color: #fff;
 	font-size: 14px;
 	line-height: 16px;
-	margin: 15px;
+	margin: 10px;
 }
 .zoremmail-layout-content-container {
 	display: flex;
@@ -382,8 +410,8 @@ aside .dashicons:focus, aside .dashicons:hover {
 	overflow-x: hidden;
 	overflow-y: auto;
 	width: 100%;
-	border-right: 1px solid #dcdcde;
-	background: #f9f9f9;
+	border-right: 1px solid #e9ebf2;
+	background: #fff;
 }
 .toplevel_page_trackship_customizer .snackbar-log-success {
 	background: linear-gradient(to right, #05d6f2, #077ff1);
@@ -392,25 +420,82 @@ aside .dashicons:focus, aside .dashicons:hover {
 	max-height: 300px !important;
 }
 .zoremmail-layout-content-header {
-	border-bottom: 1px solid #e0e0e0;
+	border-bottom: 1px solid #e9ebf2;
 	height: 60px;
-	background: #f8f8fb;
+	background: #fff;
 }
-.header_mockup_order .select2.select2-container{
-	height: 30px;
-	margin: 15px 0;
+.header_mockup_order .select2.select2-container {
+	height: 38px;
+	margin: 11px 0;
 }
+.header_mockup_order .select2-selection.select2-selection--single {
+	height: 38px !important;
+	line-height: 36px !important;
+	border: 1px solid #e9ebf2 !important;
+	border-radius: 2px !important;
+	background: #f6f8fb !important;
+	min-width: 220px;
+}
+.header_mockup_order .select2-selection__rendered {
+	line-height: 36px !important;
+	padding-left: 12px !important;
+	font-size: 13px !important;
+	color: #1f2540 !important;
+}
+.header_mockup_order .select2-selection__arrow {
+	height: 36px !important;
+	width: 30px !important;
+}
+/* Select (native) — matches zoremmail-input */
+.zoremmail-menu-item select {
+	height: 38px;
+	background: #fff;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 10px center;
+	line-height: 1;
+}
+.zoremmail-menu-item select:focus {
+	border-color: #124ed6;
+	box-shadow: 0 0 0 3px rgba(18, 78, 214, .1);
+}
+.rtl .zoremmail-menu-item select {
+	background-position: left 10px center;
+	padding-right: 10px;
+	padding-left: 30px;
+}
+/* Select2 — same dimensions and border as native select */
 .zoremmail-menu-item .select2-selection__arrow,
 .zoremmail-menu-item .select2-selection__rendered,
 .zoremmail-menu-item .select2-selection {
-	height: 35px !important;
-	line-height: 33px !important;
+	height: 38px !important;
+	line-height: 36px !important;
 }
 .wc-wp-version-gte-53 .select2-container .select2-selection.select2-selection--single {
-	border-color: #ccc;
+	border-color: #e9ebf2;
 }
 .zoremmail-menu-item .select2-selection {
-	border-color: #e0e0e0 !important;
+	border: 1px solid #e9ebf2 !important;
+	border-radius: 7px !important;
+}
+.zoremmail-menu-item .select2-container--focus .select2-selection,
+.zoremmail-menu-item .select2-container--open .select2-selection {
+	border-color: #124ed6 !important;
+	box-shadow: 0 0 0 3px rgba(18, 78, 214, .1) !important;
+	outline: none !important;
+}
+.zoremmail-menu-item .select2-selection__rendered {
+	font-size: 13px !important;
+	color: #1f2540 !important;
+	padding-left: 10px !important;
+}
+.rtl .zoremmail-menu-item .select2-selection__arrow {
+	left: 6px !important;
+	right: auto !important;
+}
+.rtl .zoremmail-menu-item .select2-selection__rendered {
+	padding-right: 10px !important;
+	padding-left: 30px !important;
 }
 a.updgrade_feature {
 	color: #077ff1;
@@ -439,85 +524,7 @@ a.updgrade_feature .dashicons.dashicons-arrow-up-alt {
 .tgl-btn .menu-sub-field .shipment_email_label {
 	margin: 0 8px;
 }
-/* Toggle CSS */
-input[type=checkbox].tgl {
-	display: none;
-}
-.tgl, .tgl:after, .tgl:before, .tgl *, .tgl *:after, .tgl *:before, .tgl + .tgl-btn {
-	box-sizing: border-box;
-}
-.tgl::-moz-selection, .tgl:after::-moz-selection, .tgl:before::-moz-selection, .tgl *::-moz-selection, .tgl *:after::-moz-selection, .tgl *:before::-moz-selection, .tgl + .tgl-btn::-moz-selection {
- background: none;
-}
-.tgl::selection, .tgl:after::selection, .tgl:before::selection, .tgl *::selection, .tgl *:after::selection, .tgl *:before::selection, .tgl + .tgl-btn::selection {
- background: none;
-}
-.tgl + .tgl-btn {
-	outline: 0;
-	display: inline-block;
-	width: 36px;
-	height: 18px;
-	position: relative;
-	cursor: pointer;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
-.tgl + .tgl-btn:after, .tgl + .tgl-btn:before {
-	position: relative;
-	display: block;
-	content: "";
-	width: 40%;
-	height: 100%;
-}
-.tgl + .tgl-btn:after {
-	left: 0;
-}
-.tgl + .tgl-btn:before {
-	display: none;
-}
-.tgl:checked + .tgl-btn:after {
-	left: 50%;
-}
-.tgl-flat + .tgl-btn {
-	padding: 2px;
-	-webkit-transition: all .3s ease;
-	transition: all .3s ease;
-	background: rgba(0,0,0, 0.26);
-	border: 1px solid #ccc;
-	border-radius: 2em;
-}
-.tgl-flat + .tgl-btn:after {
-	-webkit-transition: all .2s ease;
-	transition: all .2s ease;
-	background: #f2f2f2;
-	content: "";
-	border-radius: 1em;
-}
-.tgl-flat:checked + .tgl-btn {
-	border: 1px solid #ccc;
-	background: #ffff;
-	vertical-align: middle;
-}
-.zoremmail-layout .tgl-flat:checked + .tgl-btn:after {
-	left: 55%;
-	background: linear-gradient(to right, #05d6f2, #077ff1);
-}
-.rtl .tgl-flat:checked + .tgl-btn:after {
-	right: 55%;
-}
-.rtl .tgl + .tgl-btn:after {
-	right: 0;
-}
-.rtl .zoremmail-menu-submenu-title .dashicons, .rtl .zoremmail-panel-title .dashicons, .rtl .zoremmail-sub-panel-title .dashicons {
-	left: 20px;
-	right: auto;
-}
-.rtl .wordpress-to-back {
-	float: left;
-}
-/*Toggle end*/
+
 @media screen and (min-width: 1667px) {
 .zoremmail-layout.zoremmail-layout-has-sider {
 	margin-left: 18%;
@@ -528,4 +535,129 @@ input[type=checkbox].tgl {
 }
 .snackbar-logs {
 	top: 30px !important;
+}
+.tgl-btn-parent {
+	margin: 20px;
+	float: right;
+}
+.rtl .tgl-btn-parent {
+	float: left;
+}
+.wcts-save-content {
+	float: right;
+}
+.rtl .wcts-save-content {
+	float: left;
+}
+
+/* ---- RTL ---- */
+.rtl .zoremmail-layout.zoremmail-layout-has-sider {
+	margin-left: 0;
+	margin-right: 300px;
+}
+.rtl .zoremmail-layout-sider {
+	left: auto;
+	right: 0;
+}
+.rtl .zoremmail-layout-slider-header,
+.rtl aside.zoremmail-layout-content-collapse {
+	border-right: 0;
+	border-left: 1px solid #e0e0e0;
+}
+.rtl .wordpress-to-back {
+	border-right: 0;
+	border-left: 1px solid #e0e0e0;
+}
+.rtl .zoremmail-layout-slider-content {
+	border-right: 0;
+	border-left: 1px solid #e9ebf2;
+}
+.rtl .zoremmail-layout-content-preview {
+	border-right: 0;
+	border-left: 1px solid #e0e0e0;
+}
+.rtl .zoremmail-back-wordpress {
+	border-right: 0;
+	border-left: 1px solid #e0e0e0;
+}
+.rtl .zoremmail-menu-submenu-title.open .customize-section-back,
+.rtl .zoremmail-sub-panel-heading.open .customize-section-back {
+	border-right: 0;
+	border-left: 1px solid #e0e0e0;
+}
+.rtl .zoremmail-panel-title,
+.rtl .zoremmail-sub-panel-title,
+.rtl .zoremmail-menu-submenu-title {
+	border-left: 0;
+	border-right: 3px solid transparent;
+}
+.rtl .zoremmail-panel-title:hover,
+.rtl .zoremmail-sub-panel-title:hover {
+	border-right-color: #124ed6;
+	border-left-color: transparent;
+}
+.rtl .zoremmail-menu-submenu-title .dashicons,
+.rtl .zoremmail-panel-title .dashicons,
+.rtl .zoremmail-sub-panel-title .dashicons {
+	right: auto;
+	left: 20px;
+}
+.rtl .customize-section-back:before {
+	content: "\f345";
+	left: auto;
+	right: 9px;
+}
+.rtl .customize-section-back {
+	float: right;
+	border-left: 0;
+	border-right: 0;
+	padding: 0 0 0 20px;
+}
+.rtl .customize-section-title.open {
+	flex-direction: row-reverse;
+}
+.rtl .customize-section-title h3 {
+	text-align: right;
+}
+.rtl .zoremmail-layout .customize-section-back:hover {
+	border-left: 0 !important;
+	border-right: 0 !important;
+}
+.rtl aside .zoremmail-layout-content-media {
+	float: left;
+}
+.rtl .zoremmail-back-wordpress-title .dashicons-arrow-left-alt {
+	margin-right: 0;
+	margin-left: 10px;
+}
+.rtl .zoremmail-layout-content-preview.customizer-unloading #overlay {
+	left: 0;
+	right: 300px;
+}
+@media screen and (min-width: 1667px) {
+	.rtl .zoremmail-layout.zoremmail-layout-has-sider {
+		margin-left: 0;
+		margin-right: 18%;
+	}
+	.rtl .zoremmail-layout-content-preview.customizer-unloading #overlay {
+		right: 18%;
+		left: 0;
+	}
+}
+
+/* Textarea min-height */
+.menu-sub-field textarea.zoremmail-input {
+	min-height: 100px;
+	resize: vertical;
+}
+/* "Available placeholders" block — subtle grey tint to separate from fields */
+.zoremmail-menu-item:has(.menu-sub-codeinfo.codeinfo) {
+	background: #f6f8fb;
+}
+.zoremmail-menu-item:has(.menu-sub-codeinfo.codeinfo) .menu-sub-title {
+	font-size: 11px;
+	font-weight: 600;
+	color: #6b7280;
+	text-transform: uppercase;
+	letter-spacing: .05em;
 }

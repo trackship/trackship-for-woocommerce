@@ -126,7 +126,7 @@ $form_button_border_radius = get_trackship_settings( 'form_button_border_radius'
 	<div class="trackship_branding">
 		<p><span><?php esc_html_e( 'Powered by ', 'trackship-for-woocommerce' ); ?></span><img src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png"></p>
 	</div>
-	<?php if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) { ?>
+	<?php if ( in_array( get_option( 'user_plan' ), array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended' ) ) ) { ?>
 		<style> .trackship_branding{display:block !important;} </style>
 	<?php } ?>
 </div>

@@ -10,16 +10,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	
 	$ts_notifications = $this->trackship_shipment_status_notifications_data();
 	?>
-	<div class="trackship_tab_name" style="margin-top: -10px;">
-		<input id="tab_email_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-tab="email-notification" data-type="email" <?php echo 'checked'; ?> >
-		<label for="tab_email_notifications" class="inner_tab_label ts_tabs_label inner_email_tab"><?php esc_html_e( 'Email Notifications', 'trackship-for-woocommerce' ); ?></label>
-
-		<input id="tab_sms_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-tab="sms-notification" data-type="sms" <?php echo 'sms-notification' == $tab_type ? 'checked' : ''; ?> >
-		<label for="tab_sms_notifications" class="inner_tab_label ts_tabs_label inner_sms_tab"><?php esc_html_e( 'SMS Notifications', 'trackship-for-woocommerce' ); ?></label>
-		
-		<input id="tab_admin_notifications" type="radio" name="ts_notification_tabs" class="inner_tab_input" data-tab="admin-notification" data-type="late-email" <?php echo 'admin-notification' == $tab_type ? 'checked' : ''; ?> >
-		<label for="tab_admin_notifications" class="inner_tab_label ts_tabs_label inner_admin_tab"><?php esc_html_e( 'Admin Notifications', 'trackship-for-woocommerce' ); ?></label>
-	</div>
+	<nav class="trackship_tab_name">
+		<div class="ts-nav-item <?php echo ( 'sms-notification' !== $tab_type && 'admin-notification' !== $tab_type ) ? 'active' : ''; ?>" data-tab="email-notification" data-type="email">
+			<span class="dashicons dashicons-email-alt"></span>
+			<span class="ts-nav-label"><?php esc_html_e( 'Email Notifications', 'trackship-for-woocommerce' ); ?></span>
+		</div>
+		<div class="ts-nav-item <?php echo 'sms-notification' === $tab_type ? 'active' : ''; ?>" data-tab="sms-notification" data-type="sms">
+			<span class="dashicons dashicons-smartphone"></span>
+			<span class="ts-nav-label"><?php esc_html_e( 'SMS Notifications', 'trackship-for-woocommerce' ); ?></span>
+		</div>
+		<div class="ts-nav-item <?php echo 'admin-notification' === $tab_type ? 'active' : ''; ?>" data-tab="admin-notification" data-type="late-email">
+			<span class="dashicons dashicons-admin-users"></span>
+			<span class="ts-nav-label"><?php esc_html_e( 'Admin Notifications', 'trackship-for-woocommerce' ); ?></span>
+		</div>
+	</nav>
 	<section class="inner_tab_section shipment-status-email-section">
 		<?php $nonce = wp_create_nonce( 'tswc_shipment_status_email'); ?>
 		<input type="hidden" id="tswc_shipment_status_email" name="tswc_shipment_status_email" value="<?php echo esc_attr( $nonce ); ?>" />
@@ -145,7 +149,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</form>
 	</section>
 	<section class="inner_tab_section shipment-status-sms-section">
-		<?php if ( ! function_exists( 'SMSWOO' ) && in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) { ?>
+		<?php if ( ! function_exists( 'SMSWOO' ) && in_array( get_option( 'user_plan' ), array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended' ) ) ) { ?>
 			<input type="hidden" class="disable_pro" name="disable_pro" value="disable_pro">
 		<?php } ?>
 		<?php do_action( 'shipment_status_sms_section' ); ?>

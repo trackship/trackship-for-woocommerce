@@ -106,6 +106,7 @@ class WC_Trackship_Shipments {
 		wp_localize_script('shipments_script', 'shipments_script', array(
 			'admin_url'	=> admin_url(),
 			'user_plan'	=> $user_plan,
+			'days'		=> __( 'days', 'trackship-for-woocommerce' ),
 		));
 	}
 	

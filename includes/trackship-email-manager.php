@@ -324,10 +324,10 @@ class WC_TrackShip_Email_Manager {
 	public function email_footer_text( $footer_text ) {
 		
 		$show_trackship_branding = get_trackship_email_settings( 'common_settings', 'show_trackship_branding', 1 );
-		$trackship_branding_class = $show_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ? '' : 'hide';
+		$trackship_branding_class = $show_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended' ) ) ? '' : 'hide';
 
 		$trackship_branding_text = '';
-		if ( $show_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
+		if ( $show_trackship_branding || in_array( get_option( 'user_plan' ), array( 'Free Trial', 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended' ) ) ) {
 			$trackship_branding_text = '<div class="tracking_widget_email trackship_branding ' . $trackship_branding_class . '"><p style="margin: 0;"><span style="vertical-align:middle;font-size: 14px;">Powered by <a href="https://trackship.com" title="TrackShip" target="blank">TrackShip</a></span></p></div>';
 		}
 

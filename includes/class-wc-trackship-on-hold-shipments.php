@@ -108,7 +108,7 @@ class WC_TrackShip_On_Hold_Shipments {
 	 */
 	public function send_on_hold_shipments_email() {
 
-		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended' ) ) ) {
 			$logger = wc_get_logger();
 			$context = array( 'source' => 'trackship_admin_email' );
 			$logger->info( 'On Hold Shipments email not sent. Upgrade your plan', $context );
@@ -126,7 +126,7 @@ class WC_TrackShip_On_Hold_Shipments {
 				AND on_hold_email = %d
 		", 0 ));
 
-		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) || 0 == $count ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended' ) ) || 0 == $count ) {
 			return;
 		}
 
@@ -159,7 +159,7 @@ class WC_TrackShip_On_Hold_Shipments {
 	 * Code for send on_hold shipment status email
 	 */
 	public function on_hold_shippment_email_trigger( $orders, $count ) {
-		if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
+		if ( in_array( get_option( 'user_plan' ), array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended' ) ) ) {
 			return;
 		}
 
@@ -192,7 +192,7 @@ class WC_TrackShip_On_Hold_Shipments {
 		$email_to = explode( ',', $email_to );
 		$email_send = array();
 		foreach ( $email_to as $email_addr ) {
-			if ( in_array( get_option( 'user_plan' ), array( 'Free 50', 'No active plan', 'Trial Ended' ) ) ) {
+			if ( in_array( get_option( 'user_plan' ), array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended' ) ) ) {
 				return;
 			}
 			//string replace for '{admin_email}'
