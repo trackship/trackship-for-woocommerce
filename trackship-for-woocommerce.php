@@ -310,7 +310,6 @@ class Trackship_For_Woocommerce {
 		$links = array_merge( array(
 			'<a href="' . esc_url( $admin_url ) . '">' . esc_html__( $name ) . '</a>',
 			'<a href="https://docs.trackship.com/docs/trackship-for-woocommerce/">' . __( 'Docs', 'trackship-for-woocommerce' ) . '</a>',
-			'<a href="https://wordpress.org/support/plugin/trackship-for-woocommerce/#new-topic-0">' . __( 'Support' ) . '</a>',
 			'<a href="https://wordpress.org/support/plugin/trackship-for-woocommerce/reviews/#new-post">' . __( 'Review', 'trackship-for-woocommerce' ) . '</a>'
 		), $links );
 		return $links;
