@@ -459,8 +459,8 @@ jQuery(document).on("change", ".shipment_checkbox", function(){
 
 jQuery(document).on("click", ".dashboard_input_tab .tab_input", function(){
 	'use strict';
-	jQuery(document).ajax_loader(".fullfillment_dashboard_section_content");
-	
+	jQuery('.fullfillment_dashboard_section_content .tsd-stat__value').html('<span class="tsd-skeleton"></span>');
+
 	var selected_option = jQuery( this ).data('tab');
 	var ajax_data = {
 		action: 'dashboard_page_count_query',
@@ -481,7 +481,6 @@ jQuery(document).on("click", ".dashboard_input_tab .tab_input", function(){
 			jQuery('.tsd-stat--avg_transit .tsd-stat__value').html(avgTransit + '<small>' + (shipments_script.days || 'days') + '</small>');
 			var deliveredRate = response.delivered_rate ? response.delivered_rate : 0;
 			jQuery('.tsd-stat--delivered_rate .tsd-stat__value').html(deliveredRate + '<small>%</small>');
-			jQuery(".fullfillment_dashboard_section_content").unblock();
 		},
 		error: function(response, jqXHR, exception) {
 			shipment_js_error(response, jqXHR, exception)

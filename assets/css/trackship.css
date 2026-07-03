@@ -1964,6 +1964,19 @@ section#content_trackship_settings.inner_tab_section, section#content_trackship_
 	font-size: 13px;
 	color: var(--tsd-muted);
 }
+@keyframes tsd-shimmer {
+	0%   { background-position: -400px 0; }
+	100% { background-position: 400px 0; }
+}
+.tsd-skeleton {
+	display: block;
+	width: 56px;
+	height: 30.8px;
+	border-radius: 6px;
+	background: linear-gradient(90deg, #e8eaed 25%, #f3f4f6 50%, #e8eaed 75%);
+	background-size: 400px 100%;
+	animation: tsd-shimmer 1.2s infinite linear;
+}
 .tsd-hero__foot {
 	position: relative;
 	z-index: 1;
