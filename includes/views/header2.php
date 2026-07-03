@@ -66,15 +66,17 @@ $tsh_nav_items = array(
 			<img class="tsh-header__logo" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/trackship-logo.png" alt="TrackShip">
 		</a>
 
-		<!-- Main navigation -->
-		<nav class="tsh-header__nav" role="navigation" aria-label="<?php esc_attr_e( 'TrackShip navigation', 'trackship-for-woocommerce' ); ?>">
-			<?php foreach ( $tsh_nav_items as $item ) { ?>
-				<a href="<?php echo esc_url( $item['url'] ); ?>"
-				   class="tsh-header__nav-link<?php echo $item['active'] ? ' tsh-header__nav-link--active' : ''; ?>">
-					<?php echo esc_html( $item['label'] ); ?>
-				</a>
-			<?php } ?>
-		</nav>
+		<?php if ( is_trackship_connected() ) { ?>
+			<!-- Main navigation -->
+			<nav class="tsh-header__nav" role="navigation" aria-label="<?php esc_attr_e( 'TrackShip navigation', 'trackship-for-woocommerce' ); ?>">
+				<?php foreach ( $tsh_nav_items as $item ) { ?>
+					<a href="<?php echo esc_url( $item['url'] ); ?>"
+					class="tsh-header__nav-link<?php echo $item['active'] ? ' tsh-header__nav-link--active' : ''; ?>">
+						<?php echo esc_html( $item['label'] ); ?>
+					</a>
+				<?php } ?>
+			</nav>
+		<?php } ?>
 
 		<!-- External links -->
 		<div class="tsh-header__actions">

@@ -221,6 +221,10 @@ class WC_TrackShip_Admin_Notice {
 		if ( is_trackship_connected() ) {
 			return;
 		}
+		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( 'trackship-dashboard' === $page ) {
+			return;
+		}
 		$store_url = get_site_url();
 		$url = add_query_arg( array(
 			'utm_source'	=> 'wpadmin',
