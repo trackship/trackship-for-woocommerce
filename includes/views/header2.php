@@ -82,11 +82,11 @@ $tsh_nav_items = array(
 		<div class="tsh-header__actions">
 			<a href="https://docs.trackship.com/docs/trackship-for-woocommerce/" target="_blank" rel="noopener noreferrer" class="tsh-header__action">
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-				<?php esc_html_e( 'Docs', 'trackship-for-woocommerce' ); ?>
+				<span><?php esc_html_e( 'Docs', 'trackship-for-woocommerce' ); ?></span>
 			</a>
 			<a href="https://my.trackship.com/?support=1" target="_blank" rel="noopener noreferrer" class="tsh-header__action tsh-header__action--support">
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-				<?php esc_html_e( 'Support', 'trackship-for-woocommerce' ); ?>
+				<span><?php esc_html_e( 'Support', 'trackship-for-woocommerce' ); ?></span>
 			</a>
 		</div>
 

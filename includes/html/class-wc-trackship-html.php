@@ -35,17 +35,18 @@ class WC_Trackship_Html {
 
 	public function get_multiple_select_html( $id, $array ) {
 		?>
-		<li class="multiple_select_li dis_block">
-			<label for="<?php echo esc_html( $id ); ?>"><?php esc_html_e( $array['title'] ); ?>
-				<?php if ( isset($array['tooltip']) ) { ?>
-					<span class="dashicons dashicons-editor-help trackship-tip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
+		<li class="multiple_select_li dis_block ts-setting-row">
+			<div class="ts-setting-row__label">
+				<span class="ts-setting-row__title"><?php esc_html_e( $array['title'] ); ?></span>
+				<?php if ( isset( $array['tooltip'] ) ) { ?>
+					<span class="ts-setting-row__desc"><?php esc_html_e( $array['tooltip'] ); ?></span>
 				<?php } ?>
-			</label>
-			<div class="multiple_select_container">	
+			</div>
+			<div class="multiple_select_container">
 				<select multiple class="wc-enhanced-select" name="<?php echo esc_html( $id ); ?>[]" id="<?php echo esc_html( $id ); ?>">
 				<?php
 				$multi_checkbox_data = get_trackship_settings( $id, ['completed', 'partial-shipped', 'shipped'] );
-				foreach ( (array) $array['options'] as $key => $val ) { 
+				foreach ( (array) $array['options'] as $key => $val ) {
 					$selected = in_array( $key, $multi_checkbox_data ) ? 'selected' : '';
 					?>
 					<option value="<?php echo esc_attr( $key ); ?>" <?php echo esc_html( $selected ); ?>><?php echo esc_html( $val ); ?></option>
@@ -63,19 +64,21 @@ class WC_Trackship_Html {
 			$checked = '';
 		}
 		?>
-		<li>
-			<input type="hidden" name="<?php echo esc_html( $id ); ?>" value="0"/>
-			<input class="tgl tgl-flat" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>" type="checkbox" <?php echo esc_html( $checked ); ?> value="1"/>
-			<label class="tgl-btn" for="<?php echo esc_html( $id ); ?>"></label>
-								
-			<label class="setting_ul_tgl_checkbox_label" for="<?php echo esc_html( $id ); ?>"><?php echo esc_html( $array['title'] ); ?>
-			<?php if ( isset( $array['tooltip'] ) ) { ?>
-				<span class="dashicons dashicons-editor-help trackship-tip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
-			<?php } ?>
-			</label>
-			<?php if ( isset( $array['customize_link'] ) ) { ?>
-				<a href="<?php echo esc_url( $array['customize_link'] ); ?>" class="button-primary btn_outline"><?php esc_html_e( 'Customize', 'trackship-for-woocommerce' ); ?></a>
-			<?php } ?>
+		<li class="ts-setting-row ts-setting-row--toggle">
+			<div class="ts-setting-row__label">
+				<span class="ts-setting-row__title"><?php echo esc_html( $array['title'] ); ?></span>
+				<?php if ( isset( $array['tooltip'] ) ) { ?>
+					<span class="ts-setting-row__desc"><?php echo esc_html( $array['tooltip'] ); ?></span>
+				<?php } ?>
+			</div>
+			<div class="ts-setting-row__control">
+				<input type="hidden" name="<?php echo esc_html( $id ); ?>" value="0"/>
+				<input class="tgl tgl-flat" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>" type="checkbox" <?php echo esc_html( $checked ); ?> value="1"/>
+				<label class="tgl-btn" for="<?php echo esc_html( $id ); ?>"></label>
+				<?php if ( isset( $array['customize_link'] ) ) { ?>
+					<a href="<?php echo esc_url( $array['customize_link'] ); ?>" class="button-primary btn_outline"><?php esc_html_e( 'Customize', 'trackship-for-woocommerce' ); ?></a>
+				<?php } ?>
+			</div>
 		</li>
 		<?php
 	}
@@ -97,26 +100,30 @@ class WC_Trackship_Html {
 
 	public function get_number_html( $id, $array ) {
 		?>
-		<li class="dis_block">
-			<label for="<?php echo esc_html( $id ); ?>"><?php esc_html_e( $array['title'] ); ?>
-				<?php if ( isset($array['tooltip']) ) { ?>
-					<span class="dashicons dashicons-editor-help trackship-tip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
+		<li class="dis_block ts-setting-row">
+			<div class="ts-setting-row__label">
+				<span class="ts-setting-row__title"><?php echo esc_html( $array['title'] ); ?></span>
+				<?php if ( isset( $array['tooltip'] ) ) { ?>
+					<span class="ts-setting-row__desc"><?php echo esc_html( $array['tooltip'] ); ?></span>
 				<?php } ?>
-			</label>
-			<input class="input-text" type="number" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" min="1" value="<?php echo esc_attr(get_trackship_settings( $id, isset( $array['default'] ) ? $array['default'] : '' )); ?>">
+			</div>
+			<div class="ts-setting-row__control">
+				<input class="input-text" type="number" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" min="1" value="<?php echo esc_attr(get_trackship_settings( $id, isset( $array['default'] ) ? $array['default'] : '' )); ?>">
+			</div>
 		</li>
 		<?php
 	}
 
 	public function get_dropdown_tpage_html( $id, $array ) {
 		?>
-		<li class="li_<?php esc_html_e( $id ); ?>">
-			<label for="<?php echo esc_html( $id ); ?>" class="left_label"><b><?php esc_html_e( $array['title'] ); ?></b>
+		<li class="li_<?php esc_html_e( $id ); ?> ts-setting-row ts-setting-row--dropdown">
+			<div class="ts-setting-row__label">
+				<span class="ts-setting-row__title"><?php echo esc_html( $array['title'] ); ?></span>
 				<?php if ( isset( $array['tooltip'] ) ) { ?>
-					<span class="dashicons dashicons-editor-help trackship-tip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
+					<span class="ts-setting-row__desc"><?php echo esc_html( $array['tooltip'] ); ?></span>
 				<?php } ?>
-			</label>
-			<span style="display: block; padding-top: 10px;">
+			</div>
+			<div class="ts-setting-row__control ts-setting-row__control--stack">
 				<select class="select select2 tracking_page_select" id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>">
 					<?php foreach ( (array) $array['options'] as $page_id => $page_name ) { ?>
 						<option <?php echo get_trackship_settings( $id ) == $page_id ? 'selected' : ''; ?> value="<?php echo esc_html( $page_id ); ?>"><?php esc_html_e( $page_name ); ?></option>
@@ -124,27 +131,30 @@ class WC_Trackship_Html {
 					<option <?php echo 'other' == get_trackship_settings( $id ) ? 'selected' : ''; ?> value="other"><?php esc_html_e( 'Other', 'trackship-for-woocommerce' ); ?>
 					</option>
 				</select>
-				<fieldset style="<?php echo 'other' != get_trackship_settings( $id ) ? 'display:none;' : 'padding-top: 10px;'; ?>" class="trackship_other_page_fieldset">
+				<fieldset style="<?php echo 'other' != get_trackship_settings( $id ) ? 'display:none;' : ''; ?>" class="trackship_other_page_fieldset">
 					<input type="text" name="tracking_other_page" id="tracking_other_page" value="<?php echo esc_html( get_trackship_settings('tracking_other_page') ); ?>">
 				</fieldset>
 				<p class="tracking_page_desc"><?php esc_html_e( 'Add the [trackship-track-order] shortcode in the selected page.', 'trackship-for-woocommerce' ); ?> <a href="https://docs.trackship.com/docs/trackship-for-woocommerce/setup/tracking-page/#tracking-page-settings" target="blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a></p>
-			</span>
+			</div>
 		</li>
 		<?php
 	}
 
 	public function get_button_html( $id, $array ) {
 		?>
-		<li>
+		<li class="ts-setting-row">
 			<?php if ( $array['title'] ) { ?>
-				<label class="left_label"><?php echo esc_html( $array['title'] ); ?>
-					<?php if ( isset($array['tooltip']) ) { ?>
-					<span class="dashicons dashicons-editor-help trackship-tip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
+				<div class="ts-setting-row__label">
+					<span class="ts-setting-row__title"><?php echo esc_html( $array['title'] ); ?></span>
+					<?php if ( isset( $array['tooltip'] ) ) { ?>
+						<span class="ts-setting-row__desc"><?php echo esc_html( $array['tooltip'] ); ?></span>
 					<?php } ?>
-				</label>
+				</div>
 			<?php } ?>
 			<?php if ( isset($array['customize_link']) ) { ?>
-				<a href="<?php echo esc_url( $array['customize_link'] ); ?>" class="button-primary btn_ts_sidebar ts_customizer_btn"><?php esc_html_e( 'Customize the Tracking Widget', 'trackship-for-woocommerce' ); ?></a>
+				<div class="ts-setting-row__control">
+					<a href="<?php echo esc_url( $array['customize_link'] ); ?>" class="button-primary btn_ts_sidebar ts_customizer_btn"><?php esc_html_e( 'Customize the Tracking Widget', 'trackship-for-woocommerce' ); ?></a>
+				</div>
 			<?php } ?>
 		</li>
 		<?php
@@ -152,33 +162,35 @@ class WC_Trackship_Html {
 
 	public function get_text_html( $id, $array ) {
 		?>
-		<li class="dis_block">
+		<li class="dis_block ts-setting-row">
 			<?php if ( $array['title'] ) { ?>
-				<label for="<?php echo esc_html( $id ); ?>" class="left_label"><?php echo esc_html( $array['title'] ); ?>
-					<?php if ( isset($array['tooltip']) ) { ?>
-					<span class="dashicons dashicons-editor-help trackship-tip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
+				<div class="ts-setting-row__label">
+					<span class="ts-setting-row__title"><?php echo esc_html( $array['title'] ); ?></span>
+					<?php if ( isset( $array['tooltip'] ) ) { ?>
+						<span class="ts-setting-row__desc"><?php echo esc_html( $array['tooltip'] ); ?></span>
 					<?php } ?>
-				</label>
+				</div>
 			<?php } ?>
-			<fieldset>
-				<input class="input-text regular-input " type="text" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" placeholder="<?php esc_html_e( 'E.g. {admin_email}, admin@example.org' ); ?>" value="<?php echo esc_attr(get_trackship_settings( $id, get_option('admin_email') )); ?>">
-			</fieldset>
+			<div class="ts-setting-row__control">
+				<input class="input-text regular-input" type="text" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" placeholder="<?php esc_html_e( 'E.g. {admin_email}, admin@example.org' ); ?>" value="<?php echo esc_attr(get_trackship_settings( $id, get_option('admin_email') )); ?>">
+			</div>
 		</li>
 		<?php
-		
+
 	}
 
 	public function get_time_html( $id, $array ) {
 		?>
-		<li class="dis_block">
+		<li class="dis_block ts-setting-row">
 			<?php if ( $array['title'] ) { ?>
-				<label class="left_label"><?php echo esc_html( $array['title'] ); ?>
-					<?php if ( isset($array['tooltip']) ) { ?>
-					<span class="dashicons dashicons-editor-help trackship-tip" title="<?php echo esc_html( $array['tooltip'] ); ?>"></span>
+				<div class="ts-setting-row__label">
+					<span class="ts-setting-row__title"><?php echo esc_html( $array['title'] ); ?></span>
+					<?php if ( isset( $array['tooltip'] ) ) { ?>
+						<span class="ts-setting-row__desc"><?php echo esc_html( $array['tooltip'] ); ?></span>
 					<?php } ?>
-				</label>
+				</div>
 			<?php } ?>
-			<?php 
+			<?php
 			$send_time_array = array();
 			for ( $hour = 0; $hour < 24; $hour++ ) {
 				for ( $min = 0; $min < 60; $min = $min + 30 ) {
@@ -187,11 +199,13 @@ class WC_Trackship_Html {
 				}
 			}
 			?>
-			<select class="select daily_digest_time" name="<?php echo esc_html( $id ); ?>">
-				<?php foreach ( (array) $send_time_array as $key1 => $val1 ) { ?>
-					<option <?php echo get_trackship_settings( $id ) == $key1 ? 'selected' : ''; ?> value="<?php echo esc_html( $key1 ); ?>" ><?php echo esc_html( $val1 ); ?></option>
-				<?php } ?>
-			</select>
+			<div class="ts-setting-row__control">
+				<select class="select daily_digest_time" name="<?php echo esc_html( $id ); ?>">
+					<?php foreach ( (array) $send_time_array as $key1 => $val1 ) { ?>
+						<option <?php echo get_trackship_settings( $id ) == $key1 ? 'selected' : ''; ?> value="<?php echo esc_html( $key1 ); ?>"><?php echo esc_html( $val1 ); ?></option>
+					<?php } ?>
+				</select>
+			</div>
 		</li>
 		<?php
 	}

@@ -231,6 +231,38 @@ $tsd_action_meta = array(
 ?>
 <div class="tsd-dashboard">
 
+	<!-- Account summary bar -->
+	<div class="tsd-account-bar">
+		<div class="tsd-account-bar__metrics">
+			<div class="tsd-account-bar__metric">
+				<span class="tsd-plan__icon tsd-plan__icon--balance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h16a1 1 0 0 1 1 1v3"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-3"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg></span>
+				<div>
+					<span class="tsd-account-bar__value"><?php echo esc_html( get_option( 'trackers_balance' ) ); ?></span>
+					<span class="tsd-account-bar__label"><?php esc_html_e( 'Available Balance', 'trackship-for-woocommerce' ); ?></span>
+				</div>
+			</div>
+			<div class="tsd-account-bar__divider"></div>
+			<div class="tsd-account-bar__metric">
+				<span class="tsd-plan__icon tsd-plan__icon--plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11.56 3.27a.5.5 0 0 1 .88 0l2.95 5.6a1 1 0 0 0 1.52.3l4.27-3.67a.5.5 0 0 1 .8.52l-2.84 10.25a1 1 0 0 1-.95.73H5.81a1 1 0 0 1-.96-.73L2.02 6.02a.5.5 0 0 1 .8-.52l4.27 3.67a1 1 0 0 0 1.52-.3z"/><path d="M5 21h14"/></svg></span>
+				<div>
+					<span class="tsd-account-bar__value tsd-plan__value--plan"><?php echo isset( $plan_data->subscription_plan ) ? esc_html( $plan_data->subscription_plan ) : '&mdash;'; ?></span>
+					<span class="tsd-account-bar__label"><?php esc_html_e( 'Current Plan', 'trackship-for-woocommerce' ); ?></span>
+				</div>
+			</div>
+		</div>
+		<div class="tsd-account-bar__account">
+			<span class="tsd-plan__account-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+			<div>
+				<span class="tsd-account-bar__label"><?php esc_html_e( 'Connected with TrackShip account', 'trackship-for-woocommerce' ); ?></span>
+				<span class="tsd-account-bar__email"><?php echo esc_html( $connected_email ); ?></span>
+			</div>
+		</div>
+		<a class="tsd-btn tsd-btn--ghost tsd-account-bar__cta" href="<?php echo esc_url( $store_url ); ?>" target="_blank">
+			<span><?php echo esc_html( $store_text ); ?></span>
+			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+		</a>
+	</div>
+
 	<!-- Brand-forward overview hero with live status tiles -->
 	<section class="tsd-hero">
 		<div class="tsd-hero__head">
@@ -272,7 +304,7 @@ $tsd_action_meta = array(
 		</div>
 	</section>
 
-	<div class="tsd-grid">
+	<div class="tsd-grid tsd-grid--single">
 		<!-- Action Needed -->
 		<section class="tsd-card tsd-card--action">
 			<div class="tsd-card__head">
@@ -305,34 +337,6 @@ $tsd_action_meta = array(
 			</div>
 		</section>
 
-		<!-- Plan & Balance -->
-		<section class="tsd-card tsd-card--plan">
-			<div class="tsd-plan">
-				<div class="tsd-plan__metrics">
-					<div class="tsd-plan__metric">
-						<span class="tsd-plan__icon tsd-plan__icon--balance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h16a1 1 0 0 1 1 1v3"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-3"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg></span>
-						<span class="tsd-plan__value"><?php echo esc_html( get_option( 'trackers_balance' ) ); ?></span>
-						<span class="tsd-plan__label"><?php esc_html_e( 'Available Balance', 'trackship-for-woocommerce' ); ?></span>
-					</div>
-					<div class="tsd-plan__metric">
-						<span class="tsd-plan__icon tsd-plan__icon--plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11.56 3.27a.5.5 0 0 1 .88 0l2.95 5.6a1 1 0 0 0 1.52.3l4.27-3.67a.5.5 0 0 1 .8.52l-2.84 10.25a1 1 0 0 1-.95.73H5.81a1 1 0 0 1-.96-.73L2.02 6.02a.5.5 0 0 1 .8-.52l4.27 3.67a1 1 0 0 0 1.52-.3z"/><path d="M5 21h14"/></svg></span>
-						<span class="tsd-plan__value tsd-plan__value--plan"><?php echo isset( $plan_data->subscription_plan ) ? esc_html( $plan_data->subscription_plan ) : '&mdash;'; ?></span>
-						<span class="tsd-plan__label"><?php esc_html_e( 'Current Plan', 'trackship-for-woocommerce' ); ?></span>
-					</div>
-				</div>
-				<div class="tsd-plan__account">
-					<span class="tsd-plan__account-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
-					<span class="tsd-plan__account-text">
-						<span class="tsd-plan__account-label"><?php esc_html_e( 'Connected with TrackShip account', 'trackship-for-woocommerce' ); ?></span>
-						<span class="tsd-plan__account-email"><?php echo esc_html( $connected_email ); ?></span>
-					</span>
-				</div>
-				<a class="tsd-btn tsd-btn--ghost" href="<?php echo esc_url( $store_url ); ?>" target="_blank">
-					<span><?php echo esc_html( $store_text ); ?></span>
-					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-				</a>
-			</div>
-		</section>
 	</div>
 
 	<!-- Shipment status + shipments over time -->
