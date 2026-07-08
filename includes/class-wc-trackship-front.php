@@ -55,8 +55,6 @@ class WC_TrackShip_Front {
 		//save optin optout butoon 
 		add_action( 'wp_ajax_save_unsunscribe_email_notifications_data', array( $this, 'unsubscribe_emails_save_callback') );
 		add_action( 'wp_ajax_nopriv_save_unsunscribe_email_notifications_data', array( $this, 'unsubscribe_emails_save_callback') );
-		add_action( 'wp_ajax_resubscribe_emails_save', array( $this, 'resubscribe_emails_save_callback') );
-		add_action( 'wp_ajax_nopriv_resubscribe_emails_save', array( $this, 'resubscribe_emails_save_callback') );
 	}
 	
 	public function on_plugin_loaded() {
@@ -123,10 +121,22 @@ class WC_TrackShip_Front {
 	* Save data
 	*/
 	public function unsubscribe_emails_save_callback() {
-		$order_id = isset( $_POST['order_id'] ) ? sanitize_text_field( $_POST['order_id'] ) : '';
+		$order_id = isset( $_POST['order_id'] ) ? absint( $_POST['order_id'] ) : 0;
 		check_ajax_referer( 'unsubscribe_emails' . $order_id, 'security' );
-		$checkbox = isset( $_POST['checkbox'] ) ? sanitize_text_field( $_POST['checkbox'] ) : '';
+
 		$order = wc_get_order( $order_id );
+		if ( ! $order ) {
+			wp_send_json_error( array( 'message' => __( 'Invalid order.', 'trackship-for-woocommerce' ) ) );
+		}
+
+		// Bind the action to the order key so only a visitor holding the order's
+		// secret link (the same token used to view the tracking page) can change it.
+		$order_key = isset( $_POST['order_key'] ) ? sanitize_text_field( wp_unslash( $_POST['order_key'] ) ) : '';
+		if ( ! hash_equals( (string) $order->get_order_key(), $order_key ) ) {
+			wp_send_json_error( array( 'message' => __( 'Invalid order key.', 'trackship-for-woocommerce' ) ) );
+		}
+
+		$checkbox = isset( $_POST['checkbox'] ) ? sanitize_text_field( $_POST['checkbox'] ) : '';
 		$lable = isset( $_POST['lable'] ) ? sanitize_text_field( $_POST['lable'] ) : '';
 		if ( 'email' == $lable ) {
 			$order->update_meta_data( '_receive_shipment_emails', $checkbox );
@@ -973,6 +983,7 @@ class WC_TrackShip_Front {
 			</label>
 			<?php $ajax_nonce = wp_create_nonce( 'unsubscribe_emails' . $order_id ); ?>
 			<input type="hidden" class="order_id_field" value="<?php echo esc_attr( $order_id ); ?>">
+			<input type="hidden" class="unsubscribe_order_key" value="<?php echo esc_attr( $order->get_order_key() ); ?>">
 			<input type="hidden" name="action" value="unsubscribe_emails_save">
 			<input type="hidden" name="unsubscribe_emails_nonce" class="unsubscribe_emails_nonce" value="<?php echo esc_html( $ajax_nonce ); ?>"/>
 

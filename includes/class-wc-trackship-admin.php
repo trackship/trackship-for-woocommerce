@@ -317,7 +317,10 @@ class WC_Trackship_Admin {
 	* Query for Dashboard
 	*/
 	public function dashboard_page_count_query() {
-		
+
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error( array( 'message' => 'You are not allowed' ) );
+		}
 		check_ajax_referer( 'ts_tools', 'security' );
 		$start_date = isset( $_POST['selected_option'] ) ? wc_clean( $_POST['selected_option'] ) : '';
 		$end_date = gmdate( 'Y-m-d' );
@@ -1069,6 +1072,9 @@ class WC_Trackship_Admin {
 	}
 
 	public function verify_database_table() {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error( array( 'message' => 'You are not allowed' ) );
+		}
 		check_ajax_referer( 'ts_tools', 'security' );
 
 		$install = trackship_for_woocommerce()->ts_install;
@@ -1083,6 +1089,9 @@ class WC_Trackship_Admin {
 	}
 
 	public function toggle_wc_fulfillments() {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error( array( 'message' => 'You are not allowed' ) );
+		}
 		check_ajax_referer( 'ts_tools', 'security' );
 
 		$enable = isset( $_POST['enable'] ) && 'true' === sanitize_text_field( $_POST['enable'] );
@@ -1094,6 +1103,9 @@ class WC_Trackship_Admin {
 	}
 
 	public function trackship_integration_form_update_cb() {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error( array( 'message' => 'You are not allowed' ) );
+		}
 		check_ajax_referer( 'ts_integrations', 'integrations_nonce' );
 		$integrations = $this->get_trackship_integrations_data();
 		foreach ( $integrations as $key => $value ) {

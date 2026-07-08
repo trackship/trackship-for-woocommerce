@@ -64,7 +64,10 @@ class WC_Trackship_Logs {
 	}
 
 	public function get_trackship_logs() {
-		
+
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error( array( 'message' => 'You are not allowed' ) );
+		}
 		check_ajax_referer( '_trackship_logs', 'ajax_nonce' );
 		
 		global $wpdb;
@@ -164,6 +167,9 @@ class WC_Trackship_Logs {
 	}
 
 	public function log_details_popup() {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error( array( 'message' => 'You are not allowed' ) );
+		}
 		check_ajax_referer( '_trackship_logs', 'security' );
 		global $wpdb;
 		$order_id = sanitize_text_field($_POST['order_id'] ?? '');
