@@ -1,10 +1,9 @@
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: TrackShip for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-19 13:58+0000\n"
-"PO-Revision-Date: 2026-03-27 07:19+0000\n"
+"PO-Revision-Date: 2026-07-10 05:04+0000\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -16,7 +15,11 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.8.3; wp-6.9.4; php-8.3.30\n"
 
-#: includes/smswoo/class-smswoo-admin.php:367
+#: includes/views/dashboard.php:271
+msgid "A live snapshot of your shipments across the selected period."
+msgstr "En liveögonblicksbild av dina försändelser under den valda perioden."
+
+#: includes/smswoo/class-smswoo-admin.php:369
 msgid "Access Token"
 msgstr "Åtkomsttoken"
 
@@ -24,11 +27,11 @@ msgstr "Åtkomsttoken"
 msgid "Account Dashboard"
 msgstr "Kontoinstrumentpanel"
 
-#: includes/smswoo/class-smswoo-admin.php:297
+#: includes/smswoo/class-smswoo-admin.php:299
 msgid "Account SID"
 msgstr "Konto SID"
 
-#: includes/views/dashboard.php:293
+#: includes/views/dashboard.php:311
 msgid "Action Needed"
 msgstr "Åtgärd behövs"
 
@@ -48,19 +51,19 @@ msgstr "Aktiva sena leveranser"
 msgid "Active Shipments"
 msgstr "Aktiva försändelser"
 
-#: includes/views/map-providers.php:53
+#: includes/views/map-providers.php:67
 msgid "Add mapping"
 msgstr "Lägg till mappning"
 
-#: includes/smswoo/class-smswoo-admin.php:521
+#: includes/smswoo/class-smswoo-admin.php:523
 msgid "Add template id for this SMS"
 msgstr "Lägg till mall-id för detta SMS"
 
-#: includes/smswoo/class-smswoo-admin.php:524
+#: includes/smswoo/class-smswoo-admin.php:526
 msgid "Add template langauge for this SMS"
 msgstr "Lägg till mallspråk för detta SMS"
 
-#: includes/smswoo/class-smswoo-admin.php:522
+#: includes/smswoo/class-smswoo-admin.php:524
 msgid ""
 "Add template variables that used for this SMS, add variables like this:- "
 "{shipment_status}, {tracking_number}"
@@ -68,15 +71,15 @@ msgstr ""
 "Lägg till mallvariabler som används för detta SMS, lägg till variabler som "
 "denna:- {shipment_status}, {tracking_number}"
 
-#: includes/html/class-wc-trackship-html.php:130
+#: includes/html/class-wc-trackship-html.php:137
 msgid "Add the [trackship-track-order] shortcode in the selected page."
 msgstr "Lägg till kortkoden [wcast-track-order] på den valda sidan."
 
-#: includes/views/notifications.php:24
+#: includes/views/notifications.php:25 includes/views/notifications.php:95
 msgid "Admin Notifications"
 msgstr "Administratörsmeddelanden"
 
-#: includes/smswoo/class-smswoo-admin.php:382
+#: includes/smswoo/class-smswoo-admin.php:384
 msgid "Admin Phone Number"
 msgstr "Administratörs telefonnummer"
 
@@ -92,17 +95,22 @@ msgstr "Alla försändelser"
 msgid "All shipping providers"
 msgstr "Alla fraktleverantörer"
 
+#: includes/views/dashboard.php:347 includes/views/dashboard.php:414
+#: includes/views/dashboard.php:455
+msgid "All time"
+msgstr "Alltid"
+
 #: includes/views/logs.php:31
 msgid "All Types"
 msgstr "Alla typer"
 
-#: includes/class-wc-trackship-admin.php:415
+#: includes/class-wc-trackship-admin.php:418
 msgid ""
 "Allow users to opt-out of receiving Shipment status notifications on the "
 "Tracking page and Shipment status emails."
 msgstr ""
-"Tillåt användare att välja bort att ta emot meddelanden om leveransstatus på"
-" spårningssidan och e-postmeddelanden om leveransstatus."
+"Tillåt användare att välja bort att ta emot meddelanden om leveransstatus på "
+"spårningssidan och e-postmeddelanden om leveransstatus."
 
 #: includes/smswoo/services/class-smswoo-msg91.php:157
 #: includes/smswoo/services/class-smswoo-twilio.php:110
@@ -131,16 +139,16 @@ msgstr ""
 msgid "Analytics"
 msgstr "Analytics"
 
-#: includes/smswoo/class-smswoo-admin.php:337
-#: includes/smswoo/class-smswoo-admin.php:359
+#: includes/smswoo/class-smswoo-admin.php:339
+#: includes/smswoo/class-smswoo-admin.php:361
 msgid "API Authorization Key"
 msgstr "API-auktoriseringsnyckel"
 
-#: includes/smswoo/class-smswoo-admin.php:330
+#: includes/smswoo/class-smswoo-admin.php:332
 msgid "API key"
 msgstr "API-nyckel"
 
-#: includes/smswoo/class-smswoo-admin.php:323
+#: includes/smswoo/class-smswoo-admin.php:325
 msgid "API Username"
 msgstr "API-användarnamn"
 
@@ -148,27 +156,40 @@ msgstr "API-användarnamn"
 msgid "Apply"
 msgstr "Tillämpa"
 
-#: includes/smswoo/class-smswoo-admin.php:304
+#: includes/smswoo/class-smswoo-admin.php:306
 msgid "Auth Token"
 msgstr "Auth Token"
 
-#: includes/class-wc-trackship-admin.php:398
+#: includes/views/trackship-integration.php:75
+msgid "Auto-Track Shipments"
+msgstr "Automatisk spårning av försändelser"
+
+#: includes/class-wc-trackship-admin.php:401
 msgid "Auto-track these order statuses"
 msgstr "Spåra dessa orderstatusar automatiskt"
 
-#: includes/views/dashboard.php:329
+#: includes/views/trackship-integration.php:76
+msgid ""
+"Automatically track shipments across 1,000+ carriers without any manual work."
+msgstr "Spåra försändelser automatiskt hos 1 000+ transportörer utan manuellt arbete."
+
+#: includes/views/dashboard.php:241
 msgid "Available Balance"
 msgstr "Tillgängligt Saldo"
 
-#: includes/class-wc-trackship-actions.php:627
-#: includes/class-wc-trackship-actions.php:678
-#: includes/class-wc-trackship-admin.php:1248
+#: includes/class-wc-trackship-actions.php:624
+#: includes/class-wc-trackship-actions.php:675
+#: includes/class-wc-trackship-admin.php:1269
 #: includes/class-wc-trackship-install.php:312
 #: includes/customizer/trackship-customizer.php:212
 #: includes/customizer/trackship-customizer.php:791
-#: includes/smswoo/class-smswoo-admin.php:547 includes/views/shipments.php:31
+#: includes/smswoo/class-smswoo-admin.php:549 includes/views/shipments.php:31
 msgid "Available For Pickup"
 msgstr "Tillgänglig för hämtning"
+
+#: includes/views/dashboard.php:48
+msgid "Available for Pickup"
+msgstr "Tillgänglig för uphämtning"
 
 #: includes/class-wc-trackship-install.php:319
 #: includes/customizer/trackship-customizer.php:798
@@ -187,6 +208,18 @@ msgstr "Tillgängliga platshållare:"
 #: includes/customizer/trackship-customizer.php:826
 msgid "Available variables:"
 msgstr "Tillgängliga variabler:"
+
+#: includes/views/dashboard.php:460
+msgid "Avg transit"
+msgstr "Snitt transit"
+
+#: includes/views/dashboard.php:291
+msgid "Avg. Transit Time"
+msgstr "Genomsnittlig transittid"
+
+#: includes/views/trackship-integration.php:82
+msgid "Branded Notifications"
+msgstr "Varumärkesanpassade aviseringar"
 
 #: includes/views/shipments.php:121
 msgid "Bulk actions"
@@ -210,20 +243,36 @@ msgstr "Knappens radie"
 msgid "Button text"
 msgstr "Knapp-text"
 
-#: includes/class-wc-trackship-actions.php:631
+#: includes/class-wc-trackship-actions.php:628
 msgid "Cancelled"
 msgstr "Avbruten"
 
-#: includes/class-wc-trackship-actions.php:632
-#: includes/class-wc-trackship-actions.php:711 includes/views/shipments.php:40
+#: includes/views/dashboard.php:459
+msgid "Carrier"
+msgstr "Fraktbolag"
+
+#: includes/views/map-providers.php:81
+msgid "Carrier mapping managed by AST PRO"
+msgstr "Transportörsmappning hanteras av AST PRO"
+
+#: includes/views/dashboard.php:454
+msgid "Carrier Performance"
+msgstr "Fraktbolagets prestanda"
+
+#: includes/class-wc-trackship-actions.php:629
+#: includes/class-wc-trackship-actions.php:708 includes/views/shipments.php:40
 msgid "Carrier Unsupported"
 msgstr "Operatör stöds inte"
 
-#: includes/class-wc-trackship-admin.php:716
+#: includes/views/dashboard.php:413
+msgid "Carriers & Destinations"
+msgstr "Fraktbolag och destinationer"
+
+#: includes/class-wc-trackship-admin.php:719
 msgid "Change order status to"
 msgstr "Ändra orderstatus till"
 
-#: includes/class-wc-trackship-admin.php:712
+#: includes/class-wc-trackship-admin.php:715
 msgid "Change status: "
 msgstr "Ändra status: "
 
@@ -231,19 +280,30 @@ msgstr "Ändra status: "
 msgid "Classic"
 msgstr "Klassisk"
 
-#: includes/class-wc-trackship-admin.php:926
+#: includes/class-wc-trackship-admin.php:933
+#: includes/views/trackship-integration.php:37
 msgid "Close"
 msgstr "Nära"
 
-#: trackship-for-woocommerce.php:300
+#: trackship-for-woocommerce.php:309
 msgid "Connect a Store"
 msgstr "Anslut en butik"
 
-#: includes/views/trackship-integration.php:27
-msgid "Connect your store"
-msgstr "Anslut din butik"
+#: includes/views/trackship-integration.php:23
+msgid "Connect Store"
+msgstr "Anslut butik"
 
-#: includes/class-wc-trackship-actions.php:723
+#: includes/views/trackship-integration.php:21
+msgid ""
+"Connect your store to TrackShip to auto-track shipments, automate order "
+"workflows, and give customers a superior post-purchase experience."
+msgstr "Anslut din butik till TrackShip för att automatiskt spåra försändelser, automatisera orderflöden och ge kunderna en överlägsen upplevelse efter köpet."
+
+#: includes/views/dashboard.php:256
+msgid "Connected with TrackShip account"
+msgstr "Ansluten till TrackShip-konto"
+
+#: includes/class-wc-trackship-actions.php:720
 msgid "Connection Issue"
 msgstr "Anslutningsproblem"
 
@@ -255,26 +315,35 @@ msgstr "Innehållsvisning"
 msgid "Content Type & Text"
 msgstr "Innehållstyp och text"
 
-#: includes/class-wc-trackship-front.php:591
+#: includes/class-wc-trackship-front.php:601
 #: includes/views/front/tracking_page_header.php:52
 msgid "Copy Tracking page link"
 msgstr "Kopiera spårningssida"
+
+#: includes/views/dashboard.php:249
+msgid "Current Plan"
+msgstr "Aktuell plan"
 
 #: includes/views/shipments.php:173
 msgid "Customer"
 msgstr "Kund"
 
-#: includes/html/class-wc-trackship-html.php:77
+#: includes/html/class-wc-trackship-html.php:79
 msgid "Customize"
 msgstr "Anpassa"
 
-#: includes/html/class-wc-trackship-html.php:147
+#: includes/html/class-wc-trackship-html.php:156
 msgid "Customize the Tracking Widget"
 msgstr "Anpassa spårningswidgeten"
 
 #: includes/class-wc-trackship-admin.php:212 includes/views/header2.php:35
 msgid "Dashboard"
 msgstr "instrumentbräda"
+
+#: includes/shipments/class-wc-trackship-shipments.php:109
+#: includes/views/dashboard.php:290 includes/views/dashboard.php:469
+msgid "days"
+msgstr "dagar"
 
 #: includes/views/tools.php:18
 msgid "Delete notifications logs"
@@ -284,36 +353,40 @@ msgstr "Ta bort aviseringsloggar"
 msgid "Delete notifications logs more than 30 days"
 msgstr "Ta bort aviseringsloggar mer än 30 dagar"
 
-#: includes/class-wc-trackship-actions.php:717
+#: includes/class-wc-trackship-actions.php:714
 msgid "Deleted"
 msgstr "Raderad"
 
-#: includes/class-wc-trackship-actions.php:629
-#: includes/class-wc-trackship-actions.php:672
-#: includes/class-wc-trackship-admin.php:634
-#: includes/class-wc-trackship-admin.php:652
-#: includes/class-wc-trackship-admin.php:704
-#: includes/class-wc-trackship-admin.php:1284
+#: includes/class-wc-trackship-actions.php:626
+#: includes/class-wc-trackship-actions.php:669
+#: includes/class-wc-trackship-admin.php:637
+#: includes/class-wc-trackship-admin.php:655
+#: includes/class-wc-trackship-admin.php:707
+#: includes/class-wc-trackship-admin.php:1305
 #: includes/class-wc-trackship-install.php:318
 #: includes/customizer/trackship-customizer.php:218
 #: includes/customizer/trackship-customizer.php:797
-#: includes/smswoo/class-smswoo-admin.php:553 includes/views/dashboard.php:44
+#: includes/smswoo/class-smswoo-admin.php:555 includes/views/dashboard.php:44
 #: includes/views/dashboard.php:163 includes/views/shipments.php:29
 msgid "Delivered"
 msgstr "Levereras"
 
 #. %s: search number of order
-#: includes/class-wc-trackship-admin.php:640
+#: includes/class-wc-trackship-admin.php:643
 #, php-format
 msgid "Delivered <span class=\"count\">(%s)</span>"
 msgid_plural "Delivered <span class=\"count\">(%s)</span>"
 msgstr[0] "Levererat <span class=\"count\">(%s)</span>"
 msgstr[1] "Levererat <span class=\"count\">(%s)</span>"
 
-#: includes/class-wc-trackship-front.php:654
+#: includes/class-wc-trackship-front.php:664
 #: includes/views/front/preview_enhanced_tracking_page.php:75
 msgid "Delivered on"
 msgstr "Levererad på"
+
+#: includes/views/dashboard.php:296
+msgid "Delivered Rate"
+msgstr "Leveransfrekvens"
 
 #: includes/views/front/tracking_page_header.php:82
 msgid "Delivery Date"
@@ -323,13 +396,13 @@ msgstr "Leveransdatum"
 msgid "Delivery date"
 msgstr "Leveransdatum"
 
-#: includes/class-wc-trackship-actions.php:630
-#: includes/class-wc-trackship-actions.php:687
-#: includes/class-wc-trackship-admin.php:1260
+#: includes/class-wc-trackship-actions.php:627
+#: includes/class-wc-trackship-actions.php:684
+#: includes/class-wc-trackship-admin.php:1281
 #: includes/class-wc-trackship-install.php:314
 #: includes/customizer/trackship-customizer.php:214
 #: includes/customizer/trackship-customizer.php:793
-#: includes/smswoo/class-smswoo-admin.php:549 includes/views/shipments.php:32
+#: includes/smswoo/class-smswoo-admin.php:551 includes/views/shipments.php:32
 msgid "Delivery Failure"
 msgstr "Misslyckad leverans"
 
@@ -353,6 +426,10 @@ msgstr "Destinationsinformation"
 #: includes/views/front/preview_enhanced_tracking_page.php:117
 msgid "Details"
 msgstr "Detaljer"
+
+#: includes/views/setup.php:31
+msgid "Disable Fulfillments"
+msgstr "Inaktivera Fulfillments"
 
 #: includes/customizer/trackship-customizer.php:360
 #: includes/customizer/trackship-customizer.php:379
@@ -380,7 +457,7 @@ msgstr "Visa fraktleverantörens logotyp"
 msgid "Display TrackShip branding"
 msgstr "Visa varumärket TrackShip"
 
-#: trackship-for-woocommerce.php:303 includes/views/header2.php:83
+#: trackship-for-woocommerce.php:312 includes/views/header2.php:85
 msgid "Docs"
 msgstr "Dokument"
 
@@ -404,12 +481,12 @@ msgstr "E-postrubrik"
 
 #: includes/customizer/trackship-customizer.php:302
 #: includes/customizer/trackship-customizer.php:303
-#: includes/views/notifications.php:16
+#: includes/views/notifications.php:17 includes/views/notifications.php:56
 #: includes/views/front/preview_tracking_page.php:205
 msgid "Email Notifications"
 msgstr "E-postmeddelanden"
 
-#: includes/class-wc-trackship-front.php:968
+#: includes/class-wc-trackship-front.php:978
 msgid "Email notifications"
 msgstr "E-postmeddelanden"
 
@@ -431,7 +508,7 @@ msgstr "E-postmeddelanden"
 msgid "Enable %1$s email"
 msgstr "Aktivera %1$s e-post"
 
-#: includes/class-wc-trackship-admin.php:422
+#: includes/class-wc-trackship-admin.php:425
 msgid ""
 "Enable a Custom Order Status Delivered that will be set automatically when "
 "all the order shipments are delivered"
@@ -439,7 +516,7 @@ msgstr ""
 "Aktivera en anpassad orderstatus levererad som kommer att ställas in "
 "automatiskt när alla beställningsförsändelser har levererats"
 
-#: includes/class-wc-trackship-admin.php:406
+#: includes/class-wc-trackship-admin.php:409
 msgid "Enable a shipment status filter on orders admin"
 msgstr "Aktivera ett leveransstatusfilter på orderadministratören"
 
@@ -447,41 +524,36 @@ msgstr "Aktivera ett leveransstatusfilter på orderadministratören"
 msgid "Enable email"
 msgstr "Aktivera e-post"
 
-#: includes/views/setup.php:20
+#: includes/views/setup.php:17
 msgid "Enable Fulfillments"
 msgstr "Aktivera uppfyllelser"
 
-#: includes/class-wc-trackship-admin.php:419
+#: includes/class-wc-trackship-admin.php:422
 msgid "Enable Order Delivery Automation"
 msgstr "Aktivera orderleveransautomation"
 
-#: includes/class-wc-trackship-admin.php:429
+#: includes/class-wc-trackship-admin.php:432
 msgid "Enable shipment status notification for order created by Amazon"
-msgstr ""
-"Aktivera meddelande om leveransstatus för beställning skapad av Amazon"
+msgstr "Aktivera meddelande om leveransstatus för beställning skapad av Amazon"
 
 #: includes/customizer/trackship-customizer.php:659
 msgid "Enable tracking # link to carrier"
 msgstr "Aktivera spårnings # länk till operatören"
 
-#: includes/class-wc-trackship-admin.php:1210
+#: includes/class-wc-trackship-admin.php:1231
 msgid "Enable Tracking Page"
 msgstr "Aktivera spårningssida"
 
-#: includes/class-wc-trackship-admin.php:412
+#: includes/class-wc-trackship-admin.php:415
 msgid "Enable unsubscribe (opt-out) from Shipment status notifications"
 msgstr "Aktivera avregistrering (opt-out) från meddelanden om leveransstatus"
 
-#: includes/views/setup.php:15
-msgid "Enable WooCommerce Fulfillments"
-msgstr "Aktivera WooCommerce-leveranser"
-
-#: includes/smswoo/class-smswoo-admin.php:383
-#: includes/smswoo/class-smswoo-admin.php:384
+#: includes/smswoo/class-smswoo-admin.php:385
+#: includes/smswoo/class-smswoo-admin.php:386
 msgid "Enter admin phone number with country code."
 msgstr "Ange administratörstelefonnummer med landskod."
 
-#: includes/class-wc-trackship-front.php:654
+#: includes/class-wc-trackship-front.php:664
 #: templates/emails/tracking-info.php:50
 #: includes/views/front/preview_enhanced_tracking_page.php:75
 #: includes/views/front/preview_tracking_page.php:87
@@ -489,13 +561,13 @@ msgstr "Ange administratörstelefonnummer med landskod."
 msgid "Est. Delivery Date"
 msgstr "Uppskattad Leveransdatum"
 
-#: includes/class-wc-trackship-actions.php:634
-#: includes/class-wc-trackship-actions.php:684
-#: includes/class-wc-trackship-admin.php:1272
+#: includes/class-wc-trackship-actions.php:631
+#: includes/class-wc-trackship-actions.php:681
+#: includes/class-wc-trackship-admin.php:1293
 #: includes/class-wc-trackship-install.php:316
 #: includes/customizer/trackship-customizer.php:216
 #: includes/customizer/trackship-customizer.php:795
-#: includes/smswoo/class-smswoo-admin.php:551 includes/views/dashboard.php:50
+#: includes/smswoo/class-smswoo-admin.php:553 includes/views/dashboard.php:50
 #: includes/views/shipments.php:27
 msgid "Exception"
 msgstr "Undantag"
@@ -504,19 +576,19 @@ msgstr "Undantag"
 msgid "Exception shipment"
 msgstr "Undantagssändning"
 
-#: includes/views/notifications.php:100
+#: includes/views/notifications.php:119
 msgid "Exception Shipments"
 msgstr "Undantagsförsändelser"
 
-#: includes/class-wc-trackship-admin.php:790
+#: includes/class-wc-trackship-admin.php:793
 msgid "Exception Shipments Notifications"
 msgstr "Undantagsförsändelser"
 
-#: includes/class-wc-trackship-actions.php:729 includes/views/shipments.php:33
+#: includes/class-wc-trackship-actions.php:726 includes/views/shipments.php:33
 msgid "Expired"
 msgstr "Utgånget"
 
-#: includes/class-wc-trackship-actions.php:640
+#: includes/class-wc-trackship-actions.php:637
 msgid "Filter by shipment status"
 msgstr "Filtrera efter leveransstatus"
 
@@ -524,25 +596,23 @@ msgstr "Filtrera efter leveransstatus"
 msgid "Font color"
 msgstr "Fontfärg"
 
-#: includes/views/setup.php:11
+#: includes/views/setup.php:15
 msgid ""
-"Fulfillments let TrackShip read shipment data natively and keep tracking in "
-"sync."
-msgstr ""
-"Leveranser låter TrackShip läsa leveransdata direkt och hålla spårningen "
-"synkroniserad."
+"Fulfillments let TrackShip read shipment data natively from WooCommerce and "
+"keep tracking in sync automatically — no extra configuration needed."
+msgstr "Fulfillments låter TrackShip läsa fraktdata direkt från WooCommerce och hålla spårningen automatiskt synkroniserad — ingen extra konfiguration behövs."
 
 #: includes/customizer/trackship-customizer.php:709
 msgid "General options"
 msgstr "Generella val"
 
-#: includes/views/settings.php:44 includes/views/settings.php:64
+#: includes/views/settings.php:45 includes/views/settings.php:98
 msgid "General Settings"
 msgstr "Allmänna Inställningar"
 
-#: includes/class-wc-trackship-actions.php:557
-#: includes/class-wc-trackship-actions.php:979
-#: includes/class-wc-trackship-admin.php:554 includes/views/tools.php:14
+#: includes/class-wc-trackship-actions.php:554
+#: includes/class-wc-trackship-actions.php:976
+#: includes/class-wc-trackship-admin.php:557 includes/views/tools.php:14
 msgid "Get Shipment Status"
 msgstr "Få leveransstatus"
 
@@ -550,12 +620,26 @@ msgstr "Få leveransstatus"
 msgid "Get shipment status"
 msgstr "Få leveransstatus"
 
-#: includes/views/setup.php:18
+#: includes/views/trackship-integration.php:19
+msgid "Get started for Free"
+msgstr "Kom igång gratis"
+
+#: includes/views/notifications.php:36 includes/views/settings.php:69
+msgid "Get Support"
+msgstr "Få support"
+
+#: includes/views/trackship-integration.php:90
 msgid ""
-"Heads up: This is a one-way step. You must enable Fulfillments to continue."
-msgstr ""
-"Obs! Detta är ett enkelriktat steg. Du måste aktivera Leveranser för att "
-"fortsätta."
+"Give customers a branded tracking page to follow their shipment in real time."
+msgstr "Ge kunderna en varumärkesanpassad spårningssida för att följa sin försändelse i realtid."
+
+#: includes/views/map-providers.php:84
+msgid "Go to AST PRO Shipping Providers"
+msgstr "Gå till AST PRO:s transportörer"
+
+#: includes/smswoo/admin-html/settings_tab.php:30
+msgid "Go to SMS for WooCommerce Settings"
+msgstr "Gå till SMS for WooCommerce-inställningar"
 
 #: includes/class-wc-trackship-install.php:338
 #, php-format
@@ -590,13 +674,13 @@ msgid "Hide tracking events"
 msgstr "Dölj spårningshändelser"
 
 #. %s: search for a tag
-#: includes/smswoo/class-smswoo-admin.php:247
-#: includes/smswoo/class-smswoo-admin.php:252
-#: includes/smswoo/class-smswoo-admin.php:257
-#: includes/smswoo/class-smswoo-admin.php:262
-#: includes/smswoo/class-smswoo-admin.php:267
-#: includes/smswoo/class-smswoo-admin.php:272
-#: includes/smswoo/class-smswoo-admin.php:277
+#: includes/smswoo/class-smswoo-admin.php:249
+#: includes/smswoo/class-smswoo-admin.php:254
+#: includes/smswoo/class-smswoo-admin.php:259
+#: includes/smswoo/class-smswoo-admin.php:264
+#: includes/smswoo/class-smswoo-admin.php:269
+#: includes/smswoo/class-smswoo-admin.php:274
+#: includes/smswoo/class-smswoo-admin.php:279
 #, php-format
 msgid "How to find your %s credential"
 msgstr "Så här hittar du dina %s-uppgifter"
@@ -606,45 +690,30 @@ msgstr "Så här hittar du dina %s-uppgifter"
 msgid "Icons"
 msgstr "Ikoner"
 
-#: includes/class-wc-trackship-admin.php:441
+#: includes/class-wc-trackship-admin.php:444
 msgid ""
 "If you disable it, TrackShip emails will use the WooCommerce default design "
 "instead of the Villa theme's customized email layout."
 msgstr ""
 "Om du inaktiverar det kommer TrackShip-e-postmeddelanden att använda "
-"WooCommerces standarddesign istället för Villa-temats anpassade "
-"e-postlayout."
+"WooCommerces standarddesign istället för Villa-temats anpassade e-postlayout."
 
-#: includes/class-wc-trackship-actions.php:626
-#: includes/class-wc-trackship-actions.php:663
-#: includes/class-wc-trackship-admin.php:1242
+#: includes/class-wc-trackship-actions.php:623
+#: includes/class-wc-trackship-actions.php:660
+#: includes/class-wc-trackship-admin.php:1263
 #: includes/class-wc-trackship-install.php:311
 #: includes/customizer/trackship-customizer.php:211
 #: includes/customizer/trackship-customizer.php:790
-#: includes/smswoo/class-smswoo-admin.php:546 includes/views/dashboard.php:45
+#: includes/smswoo/class-smswoo-admin.php:548 includes/views/dashboard.php:45
 #: includes/views/shipments.php:24
 msgid "In Transit"
 msgstr "Pågående transport"
 
-#: includes/views/dashboard.php:239
-msgid ""
-"Include shipment tracking details in your WooCommerce orders, enabling "
-"customers to effortlessly monitor their orders. Shipment tracking "
-"information will be accessible within customers' accounts, located in the "
-"order section, and will also be included in the WooCommerce order completion"
-" email."
-msgstr ""
-"Inkludera leveransspårningsdetaljer i dina WooCommerce-ordrar, så att "
-"kunderna enkelt kan övervaka sina beställningar. Spårningsinformation för "
-"försändelser kommer att vara tillgänglig i kundernas konton, som finns i "
-"beställningssektionen, och kommer också att inkluderas i WooCommerce-"
-"beställningsmeddelandet."
+#: trackship-for-woocommerce.php:139
+msgid "Install Shipment Tracking extension"
+msgstr "Installera tillägg för försändelsespårning"
 
-#: includes/views/dashboard.php:242
-msgid "Install Shipment Tracking plugin"
-msgstr "Installera plugin för leveransspårning"
-
-#: includes/class-wc-trackship-actions.php:720
+#: includes/class-wc-trackship-actions.php:717
 msgid "Insufficient Balance"
 msgstr "Otillräcklig balans"
 
@@ -652,12 +721,20 @@ msgstr "Otillräcklig balans"
 msgid "Integrations"
 msgstr "Integrationer"
 
-#: includes/class-wc-trackship-actions.php:702 includes/views/shipments.php:39
+#: includes/class-wc-trackship-actions.php:699 includes/views/shipments.php:39
 msgid "Invalid Carrier"
 msgstr "Ogiltig operatör"
 
-#: includes/class-wc-trackship-actions.php:635
-#: includes/class-wc-trackship-actions.php:699 includes/views/shipments.php:38
+#: includes/class-wc-trackship-front.php:136
+msgid "Invalid order key."
+msgstr "Ogiltig beställningsnyckel."
+
+#: includes/class-wc-trackship-front.php:129
+msgid "Invalid order."
+msgstr "Ogiltig beställning."
+
+#: includes/class-wc-trackship-actions.php:632
+#: includes/class-wc-trackship-actions.php:696 includes/views/shipments.php:38
 msgid "Invalid Tracking"
 msgstr "Ogiltig spårning"
 
@@ -667,18 +744,22 @@ msgstr "Ogiltig spårning"
 msgid "Items in this shipment"
 msgstr "Artiklar i denna försändelse"
 
-#: includes/class-wc-trackship-front.php:703
+#: includes/class-wc-trackship-front.php:713
 #: includes/views/front/preview_enhanced_tracking_page.php:83
 msgid "Journey"
 msgstr "Resa"
 
-#: includes/smswoo/class-smswoo-admin.php:283
+#: includes/smswoo/class-smswoo-admin.php:285
 msgid "Key"
 msgstr "Nyckel"
 
-#: includes/class-wc-trackship-actions.php:696 includes/views/shipments.php:37
+#: includes/class-wc-trackship-actions.php:693 includes/views/shipments.php:37
 msgid "Label Cancelled"
 msgstr "Etikett annullerad"
+
+#: includes/views/dashboard.php:388
+msgid "Last 12 months"
+msgstr "Senaste 12 månaderna"
 
 #: includes/views/dashboard.php:178
 msgid "Last 30 days"
@@ -688,7 +769,7 @@ msgstr "Senaste 30 dagarna"
 msgid "Last 60 days"
 msgstr "Senaste 60 dagarna"
 
-#: includes/class-wc-trackship-actions.php:930
+#: includes/class-wc-trackship-actions.php:927
 msgid "Last event date: "
 msgstr "Senaste evenemangsdatum:"
 
@@ -696,7 +777,7 @@ msgstr "Senaste evenemangsdatum:"
 msgid "Late shipment"
 msgstr "Sen leverans"
 
-#: includes/views/notifications.php:72 includes/views/shipments.php:34
+#: includes/views/notifications.php:104 includes/views/shipments.php:34
 msgid "Late Shipments"
 msgstr "Sena leveranser"
 
@@ -704,7 +785,7 @@ msgstr "Sena leveranser"
 msgid "Late Shipments for last 30 days"
 msgstr "Sena leveranser de senaste 30 dagarna"
 
-#: includes/class-wc-trackship-admin.php:789
+#: includes/class-wc-trackship-admin.php:792
 msgid "Late Shipments Notifications"
 msgstr "Aviseringar om sena leveranser"
 
@@ -716,7 +797,12 @@ msgstr "senaste eventet"
 msgid "Latest Event Date"
 msgstr "Senaste evenemangsdatum"
 
-#: includes/views/setup.php:12
+#: includes/views/notifications.php:30 includes/views/settings.php:63
+msgid "Learn how to configure TrackShip for best results."
+msgstr "Lär dig hur du konfigurerar TrackShip för bästa resultat."
+
+#: trackship-for-woocommerce.php:141 includes/views/setup.php:18
+#: includes/views/setup.php:32
 msgid "Learn more →"
 msgstr "Läs mer →"
 
@@ -729,12 +815,12 @@ msgstr "Länkar Färg"
 msgid "Logs"
 msgstr "Loggar"
 
-#: includes/views/map-providers.php:9 includes/views/settings.php:56
+#: includes/views/map-providers.php:11 includes/views/settings.php:57
 #| msgid "Map Shipping Providers"
 msgid "Map Shipping Carriers"
 msgstr "Karta fraktleverantörer"
 
-#: includes/class-wc-trackship-admin.php:739
+#: includes/class-wc-trackship-admin.php:742
 msgid "Mark order as delivered"
 msgstr "Markera beställningen som levererad"
 
@@ -754,13 +840,13 @@ msgstr "Månad hittills"
 msgid "More info"
 msgstr "Mer information"
 
-#: includes/class-wc-trackship-actions.php:426
-#: includes/class-wc-trackship-actions.php:939
-#: includes/html/class-wc-trackship-html.php:130
+#: includes/class-wc-trackship-actions.php:423
+#: includes/class-wc-trackship-actions.php:936
+#: includes/html/class-wc-trackship-html.php:137
 msgid "more info"
 msgstr "mer information"
 
-#: includes/views/dashboard.php:315
+#: includes/views/dashboard.php:333
 msgid "No action needed for Shipments"
 msgstr "Ingen åtgärd krävs för försändelser"
 
@@ -777,6 +863,14 @@ msgstr "Inget svar"
 msgid "No answer code"
 msgstr "Ingen svarskod"
 
+#: includes/views/dashboard.php:430 includes/views/dashboard.php:478
+msgid "No carrier data yet."
+msgstr "Inga fraktbolagsdata ännu."
+
+#: includes/views/dashboard.php:446
+msgid "No destination data yet."
+msgstr "Inga destinationsdata ännu."
+
 #: includes/smswoo/services/class-smswoo-twilio.php:183
 msgid "No response code"
 msgstr "Ingen svarskod"
@@ -789,24 +883,24 @@ msgstr "Ingen svarskod"
 msgid "Notifications"
 msgstr "Aviseringar"
 
-#: includes/class-wc-trackship-admin.php:830
+#: includes/class-wc-trackship-admin.php:837
 msgid "Notifications detail"
 msgstr "Aviseringsdetaljer"
 
-#: includes/smswoo/class-smswoo-admin.php:311
+#: includes/smswoo/class-smswoo-admin.php:313
 msgid "Notifications Type (SMS/WhatsApp)"
 msgstr "Aviseringstyp (SMS/WhatsApp)"
 
-#: includes/class-wc-trackship-admin.php:456
+#: includes/class-wc-trackship-admin.php:459
 msgid "Number of days for late shipments"
 msgstr "Antal dagar för sena leveranser"
 
-#: includes/class-wc-trackship-actions.php:666
-#: includes/class-wc-trackship-admin.php:1266
+#: includes/class-wc-trackship-actions.php:663
+#: includes/class-wc-trackship-admin.php:1287
 #: includes/class-wc-trackship-install.php:315
 #: includes/customizer/trackship-customizer.php:215
 #: includes/customizer/trackship-customizer.php:794
-#: includes/smswoo/class-smswoo-admin.php:550 includes/views/dashboard.php:51
+#: includes/smswoo/class-smswoo-admin.php:552 includes/views/dashboard.php:51
 #: includes/views/shipments.php:28
 msgid "On Hold"
 msgstr "Placerad i kö"
@@ -815,13 +909,17 @@ msgstr "Placerad i kö"
 msgid "On Hold shipment"
 msgstr "On Hold-sändning"
 
-#: includes/views/notifications.php:128
+#: includes/views/notifications.php:134
 msgid "On Hold Shipments"
 msgstr "Pausade försändelser"
 
-#: includes/class-wc-trackship-admin.php:791
+#: includes/class-wc-trackship-admin.php:794
 msgid "On Hold Shipments Notifications"
 msgstr "Aviseringar om väntande leveranser"
+
+#: includes/views/dashboard.php:461
+msgid "On-time"
+msgstr "I tid"
 
 #: includes/views/logs.php:50 includes/views/shipments.php:160
 #: includes/views/front/tracking_page_header.php:43
@@ -848,11 +946,15 @@ msgstr "Beställningsmail"
 msgid "Order ID"
 msgstr "Beställnings-ID"
 
-#: includes/class-wc-trackship-actions.php:732
+#: includes/class-wc-trackship-actions.php:729
 msgid "Order id not found"
 msgstr "Beställnings-ID hittades inte"
 
-#: includes/class-wc-trackship-admin.php:834
+#: includes/views/logs.php:37
+msgid "Order id, Email, Phone number"
+msgstr "Order-ID, e-post, telefonnummer"
+
+#: includes/class-wc-trackship-admin.php:841
 #: templates/emails/exception-shipment-email.php:16
 #: templates/emails/late-shipment-email.php:16
 #: templates/emails/on-hold-shipment-email.php:16
@@ -860,7 +962,7 @@ msgstr "Beställnings-ID hittades inte"
 msgid "Order Number"
 msgstr "Ordernummer"
 
-#: includes/class-wc-trackship-front.php:362
+#: includes/class-wc-trackship-front.php:372
 msgid "Order Processing"
 msgstr "Orderhantering"
 
@@ -874,37 +976,41 @@ msgstr "Beställningens spårningsnummer."
 msgid "Origin Details"
 msgstr "Ursprungsdetaljer"
 
-#: includes/html/class-wc-trackship-html.php:124
+#: includes/html/class-wc-trackship-html.php:131
 #: includes/views/dashboard.php:66 includes/views/dashboard.php:86
 msgid "Other"
 msgstr "Övrig"
 
-#: includes/class-wc-trackship-actions.php:628
-#: includes/class-wc-trackship-actions.php:675
-#: includes/class-wc-trackship-admin.php:1254
+#: includes/class-wc-trackship-actions.php:625
+#: includes/class-wc-trackship-actions.php:672
+#: includes/class-wc-trackship-admin.php:1275
 #: includes/class-wc-trackship-install.php:313
 #: includes/customizer/trackship-customizer.php:213
 #: includes/customizer/trackship-customizer.php:792
-#: includes/smswoo/class-smswoo-admin.php:548 includes/views/shipments.php:25
+#: includes/smswoo/class-smswoo-admin.php:550 includes/views/shipments.php:25
 msgid "Out For Delivery"
 msgstr "Ute för leverans"
 
-#: includes/class-wc-trackship-front.php:700
+#: includes/views/dashboard.php:46
+msgid "Out for Delivery"
+msgstr "Ute för leverans"
+
+#: includes/class-wc-trackship-front.php:710
 #: includes/views/front/preview_enhanced_tracking_page.php:80
 msgid "Overview"
 msgstr "Översikt"
 
-#: includes/class-wc-trackship-actions.php:623
-#: includes/class-wc-trackship-actions.php:705 includes/views/shipments.php:42
+#: includes/class-wc-trackship-actions.php:620
+#: includes/class-wc-trackship-actions.php:702 includes/views/shipments.php:42
 msgid "Pending Update"
 msgstr "Väntande uppdatering"
 
-#: includes/class-wc-trackship-actions.php:425
-#: includes/class-wc-trackship-actions.php:937
+#: includes/class-wc-trackship-actions.php:422
+#: includes/class-wc-trackship-actions.php:934
 #| msgid ""
-#| "Pending TrackShip is a temporary status that will display for a few minutes "
-#| "until we update the order with the first tracking event from the shipping "
-#| "provider. Please refresh the orders admin in 2-3 minutes."
+#| "Pending TrackShip is a temporary status that will display for a few "
+#| "minutes until we update the order with the first tracking event from the "
+#| "shipping provider. Please refresh the orders admin in 2-3 minutes."
 msgid ""
 "Pending Update is a temporary status that will display for a few minutes "
 "until we update the order with the first tracking event from the shipping "
@@ -918,11 +1024,11 @@ msgstr ""
 msgid "Pickup Reminder"
 msgstr "Påminnelse om hämtning"
 
-#: includes/class-wc-trackship-admin.php:1291
+#: includes/class-wc-trackship-admin.php:1312
 msgid "Pickup reminder"
 msgstr "Påminnelse om hämtning"
 
-#: includes/smswoo/class-smswoo-admin.php:228
+#: includes/smswoo/class-smswoo-admin.php:230
 #| msgid "Please choose SMS provider from Dropown."
 msgid "Please choose SMS gateway from Dropown."
 msgstr "Välj SMS-leverantör från Dropown."
@@ -940,33 +1046,32 @@ msgid ""
 msgstr ""
 "Installera och aktivera %1$sWooCommerce%2$s för TrackShip för WooCommerce!"
 
-#: includes/views/map-providers.php:56
-#: includes/smswoo/admin-html/settings_tab.php:20
-msgid "Please note: "
-msgstr "Vänligen notera:"
-
 #: includes/class-wc-trackship-admin.php:125
 msgid "Please refresh the page and try again."
 msgstr "Uppdatera sidan och försök igen."
 
-#: includes/class-wc-trackship-front.php:366
+#: includes/class-wc-trackship-front.php:376
 msgid "Please try again after you receive the shipping confirmation email."
 msgstr "Försök igen efter att du har fått leveransbekräftelsen via e-post."
 
-#: includes/class-wc-trackship-front.php:557
-#: includes/class-wc-trackship-front.php:622
+#: includes/class-wc-trackship-front.php:567
+#: includes/class-wc-trackship-front.php:632
 #: templates/tracking/tracking-form.php:127
 #: includes/views/front/preview_enhanced_tracking_page.php:164
 #: includes/views/front/preview_tracking_page.php:216
 msgid "Powered by "
 msgstr "Drivs av"
 
-#: includes/class-wc-trackship-actions.php:625
-#: includes/class-wc-trackship-actions.php:669 includes/views/shipments.php:26
+#: includes/class-wc-trackship-actions.php:622
+#: includes/class-wc-trackship-actions.php:666 includes/views/shipments.php:26
 msgid "Pre Transit"
 msgstr "Pre Transit"
 
-#: includes/class-wc-trackship-admin.php:785
+#: includes/views/dashboard.php:47
+msgid "Pre-Transit"
+msgstr "Förtransit"
+
+#: includes/class-wc-trackship-admin.php:788
 msgid "Priority Support"
 msgstr "Prioriterad support"
 
@@ -975,43 +1080,57 @@ msgstr "Prioriterad support"
 msgid "Progress bar"
 msgstr "Förloppsindikator"
 
-#: includes/class-wc-trackship-admin.php:818
+#: includes/class-wc-trackship-admin.php:821
 msgid "Providers list Updated"
 msgstr "Leverantörslista uppdaterad"
 
-#: includes/class-wc-trackship-admin.php:461
-#: includes/class-wc-trackship-admin.php:483
-#: includes/class-wc-trackship-admin.php:505
+#: includes/views/notifications.php:29 includes/views/settings.php:62
+msgid "Quick Help"
+msgstr "Snabbhjälp"
+
+#: includes/class-wc-trackship-admin.php:464
+#: includes/class-wc-trackship-admin.php:486
+#: includes/class-wc-trackship-admin.php:508
 msgid "Recipient(s)"
 msgstr "Mottagare"
 
-#: includes/class-wc-trackship-admin.php:787
+#: includes/class-wc-trackship-admin.php:790
 msgid "Remove TrackShip’s branding"
 msgstr "Ta bort TrackShips varumärke"
 
-#: includes/class-wc-trackship-actions.php:633
-#: includes/class-wc-trackship-actions.php:681
-#: includes/class-wc-trackship-admin.php:1278
+#: includes/class-wc-trackship-actions.php:630
+#: includes/class-wc-trackship-actions.php:678
+#: includes/class-wc-trackship-admin.php:1299
 #: includes/class-wc-trackship-install.php:317
 #: includes/customizer/trackship-customizer.php:217
 #: includes/customizer/trackship-customizer.php:796
-#: includes/smswoo/class-smswoo-admin.php:552 includes/views/shipments.php:30
+#: includes/smswoo/class-smswoo-admin.php:554 includes/views/shipments.php:30
 msgid "Return To Sender"
 msgstr "Åter avsändaren"
+
+#: includes/views/dashboard.php:49
+msgid "Return to Sender"
+msgstr "Återlämna till avsändaren"
 
 #: includes/views/dashboard.php:149
 msgid "Return To Sender for last 30 days"
 msgstr "Återgå till avsändaren för de senaste 30 dagarna"
 
-#: trackship-for-woocommerce.php:305
+#: trackship-for-woocommerce.php:313
 msgid "Review"
 msgstr "Recension"
 
-#: includes/smswoo/class-smswoo-admin.php:506
-#: includes/views/notifications.php:75 includes/views/notifications.php:103
-#: includes/views/notifications.php:131
+#: includes/smswoo/class-smswoo-admin.php:508
+#: includes/views/notifications.php:106 includes/views/notifications.php:121
+#: includes/views/notifications.php:136
 msgid "Save & close"
 msgstr "Spara & stäng"
+
+#: includes/views/map-providers.php:15 includes/views/settings.php:102
+#: includes/views/tracking-page.php:13
+#: includes/smswoo/admin-html/settings_tab.php:13
+msgid "Save changes"
+msgstr "Spara ändringar"
 
 #: includes/customizer/trackship-customizer.php:104
 msgid "Saved"
@@ -1025,35 +1144,41 @@ msgstr "Sök"
 msgid "Search by Tracking Number, Shipping carrier, Order number"
 msgstr "Sök på spårningsnummer, fraktfraktare, ordernummer"
 
-#: includes/smswoo/class-smswoo-admin.php:290
+#: includes/smswoo/class-smswoo-admin.php:292
 msgid "Secret"
 msgstr "Hemlighet"
 
-#: includes/class-wc-trackship-front.php:260
+#: includes/class-wc-trackship-front.php:270
 msgid "Security verification failed, please refresh page and try again."
 msgstr "Säkerhetsverifieringen misslyckades. Uppdatera sidan och försök igen."
 
-#: includes/class-wc-trackship-admin.php:916
-#: includes/class-wc-trackship-admin.php:979
+#: includes/class-wc-trackship-admin.php:923
+#: includes/class-wc-trackship-admin.php:989
 msgid "Select"
 msgstr "Välja"
 
-#: includes/class-wc-trackship-admin.php:1216
+#: includes/class-wc-trackship-admin.php:1237
 msgid "Select tracking page:"
 msgstr "Välj spårningssida:"
 
-#: includes/class-wc-trackship-admin.php:467
-#: includes/class-wc-trackship-admin.php:489
-#: includes/class-wc-trackship-admin.php:511
+#: includes/class-wc-trackship-admin.php:470
+#: includes/class-wc-trackship-admin.php:492
+#: includes/class-wc-trackship-admin.php:514
 msgid "Send email at"
 msgstr "Skicka e-post på"
 
-#: includes/class-wc-trackship-admin.php:1285
-#: includes/smswoo/class-smswoo-admin.php:499
+#: includes/class-wc-trackship-admin.php:1306
+#: includes/smswoo/class-smswoo-admin.php:501
 msgid "Send only when all shipments for the order are delivered"
 msgstr "Skicka först när alla försändelser för beställningen är levererade"
 
-#: includes/smswoo/class-smswoo-admin.php:374
+#: includes/views/trackship-integration.php:83
+msgid ""
+"Send proactive shipment status emails that reduce \"Where is my order?\" "
+"support tickets."
+msgstr "Skicka proaktiva e-postmeddelanden om försändelsestatus som minskar \"Var är min beställning?\"-supportärenden."
+
+#: includes/smswoo/class-smswoo-admin.php:376
 msgid "Sender phone number / Sender ID"
 msgstr "Avsändarens telefonnummer / Avsändar-ID"
 
@@ -1065,14 +1190,10 @@ msgstr "Skickat"
 msgid "Set Pickup reminder notifications(in days)"
 msgstr "Ställ in aviseringar om hämtningspåminnelser (i dagar)"
 
-#: trackship-for-woocommerce.php:300 includes/class-wc-trackship-admin.php:220
+#: trackship-for-woocommerce.php:309 includes/class-wc-trackship-admin.php:220
 #: includes/views/content.php:13 includes/views/header2.php:55
 msgid "Settings"
 msgstr "inställningar"
-
-#: includes/views/content.php:33
-msgid "Setup"
-msgstr "Installation"
 
 #: includes/views/shipments.php:170
 msgid "Ship City"
@@ -1091,7 +1212,7 @@ msgid "Ship to"
 msgstr "Frakta till"
 
 #. %s: search for a tag
-#: includes/class-wc-trackship-front.php:486
+#: includes/class-wc-trackship-front.php:496
 #, php-format
 msgid "Shipment %1$s"
 msgstr "Leverans %1$s"
@@ -1101,19 +1222,22 @@ msgstr "Leverans %1$s"
 msgid "Shipment Progress"
 msgstr "Leveransförlopp"
 
-#: includes/class-wc-trackship-actions.php:351
-#: includes/class-wc-trackship-admin.php:835 includes/views/logs.php:51
-#: includes/views/shipments.php:166
-#: templates/emails/late-shipment-email.php:17
+#: includes/views/dashboard.php:346
+msgid "Shipment Status"
+msgstr "Försändelsestatus"
+
+#: includes/class-wc-trackship-actions.php:348
+#: includes/class-wc-trackship-admin.php:842 includes/views/logs.php:51
+#: includes/views/shipments.php:166 templates/emails/late-shipment-email.php:17
 msgid "Shipment status"
 msgstr "Leveransstatus"
 
-#: includes/class-wc-trackship-admin.php:214 includes/views/dashboard.php:379
+#: includes/class-wc-trackship-admin.php:214 includes/views/dashboard.php:369
 #: includes/views/header2.php:40
 msgid "Shipments"
 msgstr "Försändelser"
 
-#: includes/class-wc-trackship-admin.php:788
+#: includes/class-wc-trackship-admin.php:791
 msgid "Shipments Dashboard"
 msgstr "Instrumentpanel för leveranser"
 
@@ -1125,8 +1249,12 @@ msgstr ""
 "försändelser från de senaste 30 dagarna som inte har spårats automatiskt. "
 "För att börja spåra dessa tidigare beställningar, klicka bara här"
 
-#: includes/class-wc-trackship-actions.php:693
-#: includes/class-wc-trackship-actions.php:708
+#: includes/views/dashboard.php:387
+msgid "Shipments Over Time"
+msgstr "Försändelser över tid"
+
+#: includes/class-wc-trackship-actions.php:690
+#: includes/class-wc-trackship-actions.php:705
 #: templates/emails/tracking-info.php:81
 #: includes/views/front/enhanced_tracking_events.php:18
 #: includes/views/front/tracking_page_header.php:64
@@ -1145,11 +1273,11 @@ msgstr "Skickade produkters rubriktext"
 msgid "Shipping & Delivery"
 msgstr "Frakt"
 
-#: includes/class-wc-trackship-admin.php:792
+#: includes/class-wc-trackship-admin.php:795
 msgid "Shipping & Delivery Analytics"
 msgstr "Frakt- och leveransanalys"
 
-#: includes/views/dashboard.php:252
+#: includes/views/dashboard.php:270
 msgid "Shipping & Delivery Overview"
 msgstr "Frakt & leveransöversikt"
 
@@ -1171,14 +1299,13 @@ msgstr "Fraktbärare"
 msgid "Shipping days"
 msgstr "Fraktdagar"
 
-#: includes/views/map-providers.php:24
 #: templates/emails/exception-shipment-email.php:17
 #: templates/emails/late-shipment-email.php:18
 #: templates/emails/on-hold-shipment-email.php:17
 msgid "Shipping provider"
 msgstr "Fraktleverantör"
 
-#: includes/class-wc-trackship-actions.php:738
+#: includes/class-wc-trackship-actions.php:735
 msgid "Shipping provider not found"
 msgstr "Fraktleverantör hittades inte"
 
@@ -1206,18 +1333,6 @@ msgstr "visa endast beställningsdetaljer"
 msgid "show only Tracking details"
 msgstr "visa endast spårningsdetaljer"
 
-#. %s: search for a count
-#: includes/views/map-providers.php:58
-#, php-format
-msgid ""
-"Since AST PRO is installed, the shipping provider name mapping is done on "
-"the shipping provider settings (WooCommerce > Shipment Tracking > "
-"%1$sShipping Providers%2$s)"
-msgstr ""
-"Eftersom AST PRO är installerat, görs kartläggningen av fraktleverantörens "
-"namn på fraktleverantörens inställningar (WooCommerce > Leveransspårning > "
-"%1$sShipping Providers%2$s)"
-
 #: includes/customizer/trackship-customizer.php:415
 #: includes/customizer/trackship-customizer.php:651
 msgid "Single icon"
@@ -1227,25 +1342,29 @@ msgstr "Enda ikonen"
 msgid "SMS"
 msgstr "SMS"
 
-#: includes/smswoo/class-smswoo-admin.php:227
-#: includes/smswoo/class-smswoo-admin.php:235
+#: includes/smswoo/class-smswoo-admin.php:229
+#: includes/smswoo/class-smswoo-admin.php:237
 msgid "SMS gateways"
 msgstr "SMS-gateways"
 
-#: includes/class-wc-trackship-admin.php:786
-#: includes/views/notifications.php:20
+#: includes/class-wc-trackship-admin.php:789
+#: includes/views/notifications.php:21 includes/views/notifications.php:150
 msgid "SMS Notifications"
 msgstr "SMS-aviseringar"
 
-#: includes/class-wc-trackship-front.php:972
+#: includes/class-wc-trackship-front.php:982
 #: includes/views/front/preview_tracking_page.php:209
 msgid "SMS notifications"
 msgstr "SMS-aviseringar"
 
-#: includes/class-wc-trackship-admin.php:1306 includes/views/settings.php:52
-#: includes/smswoo/admin-html/settings_tab.php:8
+#: includes/class-wc-trackship-admin.php:1327 includes/views/settings.php:53
+#: includes/smswoo/admin-html/settings_tab.php:9
 msgid "SMS Settings"
 msgstr "SMS-inställningar"
+
+#: includes/smswoo/admin-html/settings_tab.php:27
+msgid "SMS Settings managed by SMS for WooCommerce"
+msgstr "SMS-inställningar hanteras av SMS for WooCommerce"
 
 #: includes/api/class-trackship-rest-api-controller.php:331
 msgid "Sorry, you are not allowed to create resources."
@@ -1260,25 +1379,25 @@ msgstr "Tyvärr, du kan inte lista resurser."
 msgid "Sorry, you cannot view this resource."
 msgstr "Tyvärr, du kan inte se den här resursen."
 
-#: includes/class-wc-trackship-actions.php:726
+#: includes/class-wc-trackship-actions.php:723
 msgid "SSL Error"
 msgstr "SSL-fel"
 
-#: includes/class-wc-trackship-admin.php:793
+#: includes/class-wc-trackship-admin.php:796
 #| msgid "Starting from $11 a month"
 msgid "Starting from $9 a month"
 msgstr "Från 9 dollar i månaden"
 
-#: includes/class-wc-trackship-admin.php:840 includes/views/logs.php:55
+#: includes/class-wc-trackship-admin.php:847 includes/views/logs.php:55
 msgid "Status"
 msgstr "Status"
 
-#: includes/class-wc-trackship-actions.php:747
+#: includes/class-wc-trackship-actions.php:744
 #| msgid "Store is conneted with different account"
 msgid "Store is connected with different account"
 msgstr "Butiken är ansluten till ett annat konto"
 
-#: includes/class-wc-trackship-actions.php:744
+#: includes/class-wc-trackship-actions.php:741
 msgid "Store is not Connected to TrackShip"
 msgstr "Butiken är inte ansluten till TrackShip"
 
@@ -1286,12 +1405,20 @@ msgstr "Butiken är inte ansluten till TrackShip"
 msgid "Style & Colors"
 msgstr "Stil & Färger"
 
-#: includes/class-wc-trackship-admin.php:812
-#: includes/class-wc-trackship-admin.php:820
+#: includes/views/header2.php:89
+msgid "Support"
+msgstr "Support"
+
+#: includes/views/map-providers.php:71
+msgid "Sync providers"
+msgstr "Synkronisera transportörer"
+
+#: includes/class-wc-trackship-admin.php:815
+#: includes/class-wc-trackship-admin.php:823
 msgid "Sync TrackShip Providers"
 msgstr "Synkronisera TrackShip-leverantörer"
 
-#: includes/class-wc-trackship-admin.php:816
+#: includes/class-wc-trackship-admin.php:819
 msgid ""
 "Syncing the TrackShip providers list add or updates the pre-set TrackShip "
 "providers and will not effect custom shipping providers."
@@ -1304,15 +1431,15 @@ msgstr ""
 msgid "Tabs display"
 msgstr "Flikar visas"
 
-#: includes/smswoo/class-smswoo-admin.php:521
+#: includes/smswoo/class-smswoo-admin.php:523
 msgid "Template ID"
 msgstr "Mall-ID"
 
-#: includes/smswoo/class-smswoo-admin.php:524
+#: includes/smswoo/class-smswoo-admin.php:526
 msgid "Template Language"
 msgstr "Mallspråk"
 
-#: includes/smswoo/class-smswoo-admin.php:522
+#: includes/smswoo/class-smswoo-admin.php:524
 msgid "Template variables"
 msgstr "Mallvariabler"
 
@@ -1337,16 +1464,16 @@ msgstr "Följande försändelser är försenade:"
 msgid "The following shipments are On Hold:"
 msgstr "Följande försändelser är på is:"
 
-#: includes/class-wc-trackship-front.php:284
 #: includes/class-wc-trackship-front.php:294
+#: includes/class-wc-trackship-front.php:304
 msgid ""
 "The order/shipment you're trying to track has not been shipped yet or the "
 "order number entered is incorrect."
 msgstr ""
-"Beställningen/försändelsen du försöker spåra har inte skickats ännu eller så"
-" är det angivna ordernumret felaktigt."
+"Beställningen/försändelsen du försöker spåra har inte skickats ännu eller så "
+"är det angivna ordernumret felaktigt."
 
-#: includes/class-wc-trackship-actions.php:544
+#: includes/class-wc-trackship-actions.php:541
 msgid ""
 "The shipment status updates will run in the background, please refresh the "
 "page in a few minutes."
@@ -1354,27 +1481,26 @@ msgstr ""
 "Leveransstatusuppdateringarna kommer att köras i bakgrunden, vänligen "
 "uppdatera sidan om några minuter."
 
-#: includes/views/map-providers.php:22
+#: includes/views/map-providers.php:26
 msgid ""
 "This feature lets you align shipping providers from external shipping "
 "services with those on TrackShip. You can match the names of the Shipping "
-"Providers you receive from your shipping company with TrackShip’s provider "
+"Providers you receive from your shipping company with TrackShip's provider "
 "names."
 msgstr ""
 "Den här funktionen låter dig anpassa fraktleverantörer från externa "
 "frakttjänster med dem på TrackShip. Du kan matcha namnen på de "
-"fraktleverantörer du får från ditt fraktbolag med TrackShips "
-"leverantörsnamn."
+"fraktleverantörer du får från ditt fraktbolag med TrackShips leverantörsnamn."
 
-#: includes/smswoo/class-smswoo-admin.php:375
+#: includes/smswoo/class-smswoo-admin.php:377
 msgid "This field appears as a from or Sender ID"
 msgstr "Detta fält visas som ett från eller avsändar-ID"
 
-#: includes/class-wc-trackship-admin.php:837 includes/views/logs.php:52
+#: includes/class-wc-trackship-admin.php:844 includes/views/logs.php:52
 msgid "Time"
 msgstr "Tid"
 
-#: includes/class-wc-trackship-admin.php:838 includes/views/logs.php:53
+#: includes/class-wc-trackship-admin.php:845 includes/views/logs.php:53
 msgid "To"
 msgstr "Till"
 
@@ -1395,14 +1521,22 @@ msgstr ""
 msgid "Tools"
 msgstr "Verktyg"
 
+#: includes/views/dashboard.php:418
+msgid "Top Carriers"
+msgstr "Toppfraktbolag"
+
+#: includes/views/dashboard.php:434
+msgid "Top Destinations"
+msgstr "Toppdestinationer"
+
 #: includes/views/dashboard.php:155
 msgid "Total Shipments"
 msgstr "Totala leveranser"
 
-#: includes/class-wc-trackship-actions.php:417
-#: includes/class-wc-trackship-actions.php:423
-#: includes/class-wc-trackship-actions.php:935
-#: includes/class-wc-trackship-actions.php:946
+#: includes/class-wc-trackship-actions.php:414
+#: includes/class-wc-trackship-actions.php:420
+#: includes/class-wc-trackship-actions.php:932
+#: includes/class-wc-trackship-actions.php:943
 msgid "Track"
 msgstr "Spår"
 
@@ -1428,7 +1562,7 @@ msgstr "Spåra din beställning"
 msgid "Tracker type"
 msgstr "Tracker typ"
 
-#: includes/class-wc-trackship-admin.php:1305
+#: includes/class-wc-trackship-admin.php:1326
 msgid "Tracking Analytics"
 msgstr "Spårningsanalys"
 
@@ -1440,7 +1574,7 @@ msgstr "Spårningshändelsevisning"
 msgid "Tracking information is not available, please try again later."
 msgstr "Spårningsinformation är inte tillgänglig, försök igen senare."
 
-#: includes/class-wc-trackship-admin.php:399
+#: includes/class-wc-trackship-admin.php:402
 msgid ""
 "Tracking is sent to TrackShip when the order change to the selected status. "
 "Choose default (Completed/Shipped or Partially Shipped) or custom statuses "
@@ -1466,7 +1600,7 @@ msgstr "Spårningsproblem"
 msgid "Tracking Issues for last 30 days"
 msgstr "Spårningsproblem under de senaste 30 dagarna"
 
-#: includes/class-wc-trackship-admin.php:836 includes/views/shipments.php:164
+#: includes/class-wc-trackship-admin.php:843 includes/views/shipments.php:164
 #: templates/emails/exception-shipment-email.php:18
 #: templates/emails/late-shipment-email.php:19
 #: templates/emails/on-hold-shipment-email.php:18
@@ -1475,13 +1609,14 @@ msgstr "Spårningsproblem under de senaste 30 dagarna"
 msgid "Tracking Number"
 msgstr "Spårningsnummer"
 
-#: includes/class-wc-trackship-actions.php:735
+#: includes/class-wc-trackship-actions.php:732
 msgid "Tracking number not found"
 msgstr "Spårningsnummer hittades inte"
 
 #: includes/customizer/trackship-customizer.php:332
 #: includes/customizer/trackship-customizer.php:616
-#: includes/views/settings.php:48 includes/views/tracking-page.php:8
+#: includes/views/settings.php:49 includes/views/tracking-page.php:9
+#: includes/views/trackship-integration.php:89
 msgid "Tracking Page"
 msgstr "Spårningssida"
 
@@ -1505,17 +1640,27 @@ msgstr ""
 "spårar automatiskt dina beställningar, automatiserar ditt arbetsflöde efter "
 "leverans och låter dig ge dina kunder en överlägsen upplevelse efter köp."
 
-#: includes/views/setup.php:10
-msgid "TrackShip is compatible with WooCommerce Fulfillments"
-msgstr "TrackShip är kompatibelt med WooCommerce Fulfillments"
+#: trackship-for-woocommerce.php:135
+msgid "TrackShip for WooCommerce requires a Shipment Tracking extension."
+msgstr "TrackShip for WooCommerce kräver ett tillägg för försändelsespårning."
+
+#: includes/views/setup.php:29
+msgid ""
+"TrackShip is syncing fulfillment-based shipments automatically. All new "
+"fulfillments will be tracked in real time."
+msgstr "TrackShip synkroniserar fulfillment-baserade försändelser automatiskt. Alla nya fulfillments spåras i realtid."
 
 #: includes/views/logs.php:13
 msgid "TrackShip logs table does not exist, Please try after few minutes"
 msgstr "TrackShip-loggtabellen finns inte, försök efter några minuter"
 
-#: includes/views/map-providers.php:25
-msgid "TrackShip Provider"
-msgstr "TrackShip-leverantör"
+#: includes/views/header2.php:71
+msgid "TrackShip navigation"
+msgstr "TrackShip-navigering"
+
+#: includes/views/map-providers.php:33
+msgid "TrackShip provider"
+msgstr "TrackShip-transportör"
 
 #: includes/views/dashboard.php:15 includes/views/shipments.php:8
 msgid "TrackShip Shipments database table does not exist."
@@ -1525,36 +1670,30 @@ msgstr "Databastabellen TrackShip Shipments finns inte."
 msgid "TrackShip Shipments meta database table does not exist."
 msgstr "TrackShip Shipments metadatabastabell finns inte."
 
-#: includes/views/setup.php:24
-msgid "TrackShip will now sync fulfillment-based shipments automatically."
-msgstr ""
-"TrackShip kommer nu att synkronisera leveransbaserade försändelser "
-"automatiskt."
-
-#: includes/class-wc-trackship-admin.php:839 includes/views/logs.php:54
+#: includes/class-wc-trackship-admin.php:846 includes/views/logs.php:54
 msgid "Type"
 msgstr "Typ"
 
-#: includes/class-wc-trackship-front.php:208
-#: includes/class-wc-trackship-front.php:226
+#: includes/class-wc-trackship-front.php:218
+#: includes/class-wc-trackship-front.php:236
 msgid "Unable to locate the order."
 msgstr "Det gick inte att hitta beställningen."
 
-#: includes/class-wc-trackship-front.php:214
+#: includes/class-wc-trackship-front.php:224
 msgid "Unable to locate the order. or Invalid order key"
 msgstr "Det gick inte att hitta beställningen. eller Ogiltig ordernyckel"
 
-#: includes/class-wc-trackship-actions.php:714
+#: includes/class-wc-trackship-actions.php:711
 msgid "Unauthorized"
 msgstr "Obehörig"
 
-#: includes/class-wc-trackship-actions.php:624
-#: includes/class-wc-trackship-actions.php:690 includes/views/shipments.php:36
+#: includes/class-wc-trackship-actions.php:621
+#: includes/class-wc-trackship-actions.php:687 includes/views/shipments.php:36
 msgid "Unknown"
 msgstr "Okänd"
 
 #: includes/trackship-email-manager.php:339
-#: includes/customizer/class-trackship-email-preview.php:178
+#: includes/customizer/class-trackship-email-preview.php:181
 msgid "Unsubscribe"
 msgstr "Säga upp"
 
@@ -1562,7 +1701,7 @@ msgstr "Säga upp"
 msgid "Updated at"
 msgstr "Uppdaterad kl"
 
-#: includes/class-wc-trackship-admin.php:796
+#: includes/class-wc-trackship-admin.php:799
 msgid "UPGRADE TO PRO"
 msgstr "UPPGRADERA TILL PRO"
 
@@ -1570,15 +1709,15 @@ msgstr "UPPGRADERA TILL PRO"
 msgid "Upgrade to Pro"
 msgstr "Uppgradera till PRO"
 
-#: includes/class-wc-trackship-admin.php:781
+#: includes/class-wc-trackship-admin.php:784
 msgid "Upgrade to TrackShip Pro"
 msgstr "Uppgradera till TrackShip Pro"
 
-#: includes/class-wc-trackship-admin.php:438
+#: includes/class-wc-trackship-admin.php:441
 msgid "Use Villa Theme Email Customizer Template"
 msgstr "Använd e-postanpassningsmall för Villa-tema"
 
-#: includes/class-wc-trackship-actions.php:741
+#: includes/class-wc-trackship-actions.php:738
 msgid "User not found for this key"
 msgstr "Användaren hittades inte för denna nyckel"
 
@@ -1590,9 +1729,13 @@ msgstr "Verifiera DB-strukturen"
 msgid "Verify if all TrackShip database tables are present."
 msgstr "Kontrollera om alla TrackShip-databastabeller finns."
 
-#: includes/views/dashboard.php:283
+#: includes/views/dashboard.php:301
 msgid "View detailed stats"
 msgstr "Se detaljerad statistik"
+
+#: includes/views/notifications.php:32 includes/views/settings.php:65
+msgid "View Documentation"
+msgstr "Visa dokumentation"
 
 #: includes/views/front/layout1_tracking_details.php:168
 #: includes/views/front/preview_tracking_page.php:173
@@ -1604,7 +1747,7 @@ msgstr "se mindre"
 msgid "view more"
 msgstr "visa mer"
 
-#: includes/class-wc-trackship-actions.php:949
+#: includes/class-wc-trackship-actions.php:946
 msgid "View Shipment log"
 msgstr "Visa leveranslogg"
 
@@ -1613,18 +1756,26 @@ msgstr "Visa leveranslogg"
 msgid "View your order details"
 msgstr "Se dina beställningsdetaljer"
 
+#: includes/views/trackship-integration.php:24
+msgid "Watch demo video"
+msgstr "Titta på demovideo"
+
+#: includes/views/trackship-integration.php:28
+msgid "Watch Video"
+msgstr "Titta på video"
+
 #. %s: search for a orders
 #: includes/views/tools.php:14
 #, php-format
 #| msgid ""
-#| "We detected %1$s Shipped orders from the last 30 days that were not sent to "
-#| "TrackShip, you can bulk send them to TrackShip"
+#| "We detected %1$s Shipped orders from the last 30 days that were not sent "
+#| "to TrackShip, you can bulk send them to TrackShip"
 msgid ""
 "We detected %1$s Shipments from the last 30 days that were not sent to "
 "TrackShip, you can bulk send them to TrackShip"
 msgstr ""
-"Vi upptäckte %1$s skickade beställningar från de senaste 30 dagarna som inte"
-" har skickats till TrackShip, du kan skicka dem i grupp till TrackShip"
+"Vi upptäckte %1$s skickade beställningar från de senaste 30 dagarna som inte "
+"har skickats till TrackShip, du kan skicka dem i grupp till TrackShip"
 
 #. %s: search for a count
 #: includes/class-wc-trackship-exception-shipments.php:170
@@ -1642,17 +1793,17 @@ msgid "We detected %d On Hold shipments:"
 msgstr "Vi upptäckte %d väntande försändelser:"
 
 #. %s: replace with Partially Shipped order count
-#: includes/class-wc-trackship-admin.php:912
+#: includes/class-wc-trackship-admin.php:919
 #, php-format
 msgid ""
 "We detected %s orders that use the Delivered order status, You can reassign "
 "these orders to a different status"
 msgstr ""
-"Vi har upptäckt %s beställningar som använder statusen Levererad "
-"beställning. Du kan tilldela dessa beställningar en annan status"
+"Vi har upptäckt %s beställningar som använder statusen Levererad beställning."
+" Du kan tilldela dessa beställningar en annan status"
 
 #. %s: search for a total_orders
-#: includes/class-wc-trackship-admin.php:553
+#: includes/class-wc-trackship-admin.php:556
 #, php-format
 #| msgid ""
 #| "We detected %s Shipped orders from the last 30 days that were not sent to "
@@ -1663,14 +1814,6 @@ msgid ""
 msgstr ""
 "Vi upptäckte %s skickade beställningar från de senaste 30 dagarna som inte "
 "skickats till TrackShip, du kan skicka dem i bulk till TrackShip"
-
-#: includes/views/setup.php:16
-msgid ""
-"We'll enable Fulfillments for you. This step can't be reverted from "
-"TrackShip (WooCommerce controls it)."
-msgstr ""
-"Vi aktiverar leveranser åt dig. Det här steget kan inte återställas från "
-"TrackShip (WooCommerce styr det)."
 
 #: includes/customizer/trackship-customizer.php:527
 msgid "Widget Background color"
@@ -1708,57 +1851,55 @@ msgstr "Widget Layout"
 msgid "Widget Style"
 msgstr "Widget stil"
 
-#: includes/views/setup.php:8
+#: includes/views/content.php:33
+msgid "WooCommerce Fulfillment"
+msgstr "WooCommerce Fulfillment"
+
+#: includes/views/setup.php:14
 msgid "WooCommerce Fulfillments"
 msgstr "WooCommerce-leveranser"
 
-#: includes/views/setup.php:23
-msgid "WooCommerce Fulfillments enabled"
-msgstr "WooCommerce-leveranser aktiverade"
+#: includes/views/setup.php:28
+msgid "WooCommerce Fulfillments Enabled"
+msgstr "WooCommerce Fulfillments aktiverat"
 
 #: includes/customizer/trackship-customizer.php:969
 #: includes/customizer/trackship-customizer.php:1009
 msgid "You are customizing"
 msgstr "Du anpassar dig"
 
-#. %s: search for a tag
-#: includes/smswoo/admin-html/settings_tab.php:22
-#, php-format
-#| msgid ""
-#| "You can edit the SMS provider from the SMS for WooCommerce %1$ssettings%2$s"
-msgid ""
-"You can edit the SMS gateways from the SMS for WooCommerce %1$ssettings%2$s"
-msgstr ""
-"Du kan redigera SMS-leverantören från SMS för WooCommerce %1$ssettings%2$s"
-
-#: includes/class-wc-trackship-front.php:390
+#: includes/class-wc-trackship-front.php:400
 msgid "You have been unsubscribed from shipment status emails."
 msgstr "Du har avregistrerats från e-postmeddelanden om leveransstatus."
 
-#. %s: search for a tag
-#: trackship-for-woocommerce.php:133
-#, php-format
+#: includes/views/map-providers.php:82
 msgid ""
-"You must have a %1$sShipment Tracking plugin%2$s installed to use TrackShip "
-"for WooCommerce."
-msgstr ""
-"Du måste ha ett %1$sShipment Tracking-plugin%2$s installerat för att använda"
-" TrackShip för WooCommerce."
+"You have the AST PRO plugin activated. The shipping provider name mapping is "
+"done on the shipping provider settings in AST PRO."
+msgstr "AST PRO-tillägget är aktiverat. Mappningen av transportörsnamn görs i transportörsinställningarna i AST PRO."
 
-#: includes/views/dashboard.php:238
+#: includes/smswoo/admin-html/settings_tab.php:28
 msgid ""
-"You must have a Shipment Tracking plugin installed to use TrackShip for "
-"WooCommerce."
-msgstr ""
-"Du måste ha ett plugin för leveransspårning installerat för att använda "
-"TrackShip för WooCommerce."
+"You have the SMS for WooCommerce plugin activated. Configure your SMS "
+"gateways and credentials directly from that plugin's settings."
+msgstr "SMS for WooCommerce-tillägget är aktiverat. Konfigurera dina SMS-gatewayer och inloggningsuppgifter direkt i det tilläggets inställningar."
+
+#: trackship-for-woocommerce.php:137
+msgid ""
+"You must have a Shipment Tracking extension installed and active to use "
+"TrackShip for WooCommerce."
+msgstr "Du måste ha ett tillägg för försändelsespårning installerat och aktivt för att använda TrackShip for WooCommerce."
+
+#: includes/views/dashboard.php:334
+msgid "You're all caught up."
+msgstr "Du är uppdaterad."
 
 #: includes/class-wc-trackship-install.php:336
 #, php-format
 msgid "Your order #%s is %s"
 msgstr "Din beställning #%s är %s"
 
-#: includes/class-wc-trackship-front.php:365
+#: includes/class-wc-trackship-front.php:375
 msgid ""
 "Your order is being processed, the tracking details will be available once "
 "it's Shipped."
@@ -1766,122 +1907,15 @@ msgstr ""
 "Din beställning behandlas, spårningsinformationen kommer att vara "
 "tillgänglig när den har skickats."
 
-#: includes/class-wc-trackship-actions.php:159
-#: includes/smswoo/class-smswoo-admin.php:446
+#: includes/views/trackship-integration.php:20
+msgid "Your Post-Shipping & Delivery Autopilot"
+msgstr "Din autopilot för efter frakt och leverans"
+
+#: includes/class-wc-trackship-actions.php:156
+#: includes/smswoo/class-smswoo-admin.php:448
 msgid "Your settings have been successfully saved."
 msgstr "Dina inställningar har sparats."
 
-#: includes/views/dashboard.php:253
-msgid "A live snapshot of your shipments across the selected period."
-msgstr "En liveögonblicksbild av dina försändelser under den valda perioden."
-
-#: includes/views/dashboard.php:357 includes/views/dashboard.php:424
-#: includes/views/dashboard.php:465
-msgid "All time"
-msgstr "Alltid"
-
-#: includes/views/dashboard.php:48
-msgid "Available for Pickup"
-msgstr "Tillgänglig för uphämtning"
-
-#: includes/views/dashboard.php:470
-msgid "Avg transit"
-msgstr "Snitt transit"
-
-#: includes/views/dashboard.php:273
-msgid "Avg. Transit Time"
-msgstr "Genomsnittlig transittid"
-
-#: includes/views/dashboard.php:469
-msgid "Carrier"
-msgstr "Fraktbolag"
-
-#: includes/views/dashboard.php:464
-msgid "Carrier Performance"
-msgstr "Fraktbolagets prestanda"
-
-#: includes/views/dashboard.php:423
-msgid "Carriers & Destinations"
-msgstr "Fraktbolag och destinationer"
-
-#: includes/views/dashboard.php:340
-msgid "Connected with TrackShip account"
-msgstr "Ansluten till TrackShip-konto"
-
-#: includes/views/dashboard.php:334
-msgid "Current Plan"
-msgstr "Aktuell plan"
-
-#: includes/views/dashboard.php:272 includes/views/dashboard.php:479
-msgid "days"
-msgstr "dagar"
-
-#: includes/views/dashboard.php:278
-msgid "Delivered Rate"
-msgstr "Leveransfrekvens"
-
-#: includes/views/dashboard.php:398
-msgid "Last 12 months"
-msgstr "Senaste 12 månaderna"
-
-#: includes/views/dashboard.php:440 includes/views/dashboard.php:488
-msgid "No carrier data yet."
-msgstr "Inga fraktbolagsdata ännu."
-
-#: includes/views/dashboard.php:456
-msgid "No destination data yet."
-msgstr "Inga destinationsdata ännu."
-
-#: includes/views/dashboard.php:471
-msgid "On-time"
-msgstr "I tid"
-
-#: includes/views/logs.php:37
-msgid "Order id, Email, Phone number"
-msgstr "Order-ID, e-post, telefonnummer"
-
-#: includes/views/dashboard.php:46
-msgid "Out for Delivery"
-msgstr "Ute för leverans"
-
-#: includes/views/dashboard.php:47
-msgid "Pre-Transit"
-msgstr "Förtransit"
-
-#: includes/views/dashboard.php:49
-msgid "Return to Sender"
-msgstr "Återlämna till avsändaren"
-
-#: includes/views/map-providers.php:12 includes/views/settings.php:68
-#: includes/views/tracking-page.php:12
-#: includes/smswoo/admin-html/settings_tab.php:11
-msgid "Save"
-msgstr "Spara"
-
-#: includes/views/dashboard.php:356
-msgid "Shipment Status"
-msgstr "Försändelsestatus"
-
-#: includes/views/dashboard.php:397
-msgid "Shipments Over Time"
-msgstr "Försändelser över tid"
-
-#: includes/views/header2.php:87
-msgid "Support"
-msgstr "Support"
-
-#: includes/views/dashboard.php:428
-msgid "Top Carriers"
-msgstr "Toppfraktbolag"
-
-#: includes/views/dashboard.php:444
-msgid "Top Destinations"
-msgstr "Toppdestinationer"
-
-#: includes/views/header2.php:70
-msgid "TrackShip navigation"
-msgstr "TrackShip-navigering"
-
-#: includes/views/dashboard.php:316
-msgid "You're all caught up."
-msgstr "Du är uppdaterad."
+#: includes/views/map-providers.php:31
+msgid "Your shipping provider"
+msgstr "Din transportör"

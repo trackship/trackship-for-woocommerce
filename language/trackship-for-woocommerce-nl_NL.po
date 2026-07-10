@@ -1,10 +1,9 @@
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: TrackShip for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-23 07:09+0000\n"
-"PO-Revision-Date: 2026-03-27 06:59+0000\n"
+"PO-Revision-Date: 2026-07-10 05:04+0000\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -16,7 +15,11 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.8.3; wp-6.9.4; php-8.3.30\n"
 
-#: includes/smswoo/class-smswoo-admin.php:367
+#: includes/views/dashboard.php:271
+msgid "A live snapshot of your shipments across the selected period."
+msgstr "Een live momentopname van uw zendingen over de geselecteerde periode."
+
+#: includes/smswoo/class-smswoo-admin.php:369
 msgid "Access Token"
 msgstr "Toegangstoken"
 
@@ -24,11 +27,11 @@ msgstr "Toegangstoken"
 msgid "Account Dashboard"
 msgstr "account Dashboard"
 
-#: includes/smswoo/class-smswoo-admin.php:297
+#: includes/smswoo/class-smswoo-admin.php:299
 msgid "Account SID"
 msgstr "Account-SID"
 
-#: includes/views/dashboard.php:293
+#: includes/views/dashboard.php:311
 msgid "Action Needed"
 msgstr "Actie nodig"
 
@@ -48,36 +51,35 @@ msgstr "Actieve late verzendingen"
 msgid "Active Shipments"
 msgstr "Actieve zendingen"
 
-#: includes/views/map-providers.php:53
+#: includes/views/map-providers.php:67
 msgid "Add mapping"
 msgstr "Toewijzing toevoegen"
 
-#: includes/smswoo/class-smswoo-admin.php:521
+#: includes/smswoo/class-smswoo-admin.php:523
 msgid "Add template id for this SMS"
 msgstr "Voeg sjabloon-ID toe voor deze sms"
 
-#: includes/smswoo/class-smswoo-admin.php:524
+#: includes/smswoo/class-smswoo-admin.php:526
 msgid "Add template langauge for this SMS"
 msgstr "Voeg sjabloontaal toe voor deze SMS"
 
-#: includes/smswoo/class-smswoo-admin.php:522
+#: includes/smswoo/class-smswoo-admin.php:524
 msgid ""
 "Add template variables that used for this SMS, add variables like this:- "
 "{shipment_status}, {tracking_number}"
 msgstr ""
-"Voeg sjabloonvariabelen toe die voor deze sms zijn gebruikt, voeg variabelen"
-" toe zoals deze:- {shipment_status}, {tracking_number}"
+"Voeg sjabloonvariabelen toe die voor deze sms zijn gebruikt, voeg variabelen "
+"toe zoals deze:- {shipment_status}, {tracking_number}"
 
-#: includes/html/class-wc-trackship-html.php:130
+#: includes/html/class-wc-trackship-html.php:137
 msgid "Add the [trackship-track-order] shortcode in the selected page."
-msgstr ""
-"Voeg de [wcast-track-order] shortcode toe aan de geselecteerde pagina."
+msgstr "Voeg de [wcast-track-order] shortcode toe aan de geselecteerde pagina."
 
-#: includes/views/notifications.php:24
+#: includes/views/notifications.php:25 includes/views/notifications.php:95
 msgid "Admin Notifications"
 msgstr "Beheerdersmeldingen"
 
-#: includes/smswoo/class-smswoo-admin.php:382
+#: includes/smswoo/class-smswoo-admin.php:384
 msgid "Admin Phone Number"
 msgstr "Telefoonnummer beheerder"
 
@@ -93,18 +95,23 @@ msgstr "Alle zendingen"
 msgid "All shipping providers"
 msgstr "Alle vervoerders"
 
+#: includes/views/dashboard.php:347 includes/views/dashboard.php:414
+#: includes/views/dashboard.php:455
+msgid "All time"
+msgstr "Altijd"
+
 #: includes/views/logs.php:31
 msgid "All Types"
 msgstr "Alle typen"
 
-#: includes/class-wc-trackship-admin.php:415
+#: includes/class-wc-trackship-admin.php:418
 msgid ""
 "Allow users to opt-out of receiving Shipment status notifications on the "
 "Tracking page and Shipment status emails."
 msgstr ""
 "Sta gebruikers toe om zich af te melden voor het ontvangen van meldingen "
-"over de status van de zending op de trackingpagina en e-mails over de status"
-" van de zending."
+"over de status van de zending op de trackingpagina en e-mails over de status "
+"van de zending."
 
 #: includes/smswoo/services/class-smswoo-msg91.php:157
 #: includes/smswoo/services/class-smswoo-twilio.php:110
@@ -133,16 +140,16 @@ msgstr ""
 msgid "Analytics"
 msgstr "Analytics"
 
-#: includes/smswoo/class-smswoo-admin.php:337
-#: includes/smswoo/class-smswoo-admin.php:359
+#: includes/smswoo/class-smswoo-admin.php:339
+#: includes/smswoo/class-smswoo-admin.php:361
 msgid "API Authorization Key"
 msgstr "API-autorisatiesleutel"
 
-#: includes/smswoo/class-smswoo-admin.php:330
+#: includes/smswoo/class-smswoo-admin.php:332
 msgid "API key"
 msgstr "API sleutel"
 
-#: includes/smswoo/class-smswoo-admin.php:323
+#: includes/smswoo/class-smswoo-admin.php:325
 msgid "API Username"
 msgstr "API-gebruikersnaam"
 
@@ -150,27 +157,40 @@ msgstr "API-gebruikersnaam"
 msgid "Apply"
 msgstr "Toepassen"
 
-#: includes/smswoo/class-smswoo-admin.php:304
+#: includes/smswoo/class-smswoo-admin.php:306
 msgid "Auth Token"
 msgstr "Authenticatietoken"
 
-#: includes/class-wc-trackship-admin.php:398
+#: includes/views/trackship-integration.php:75
+msgid "Auto-Track Shipments"
+msgstr "Zendingen automatisch volgen"
+
+#: includes/class-wc-trackship-admin.php:401
 msgid "Auto-track these order statuses"
 msgstr "Volg deze orderstatussen automatisch."
 
-#: includes/views/dashboard.php:329
+#: includes/views/trackship-integration.php:76
+msgid ""
+"Automatically track shipments across 1,000+ carriers without any manual work."
+msgstr "Volg zendingen automatisch bij 1.000+ vervoerders zonder handmatig werk."
+
+#: includes/views/dashboard.php:241
 msgid "Available Balance"
 msgstr "beschikbaar saldo"
 
-#: includes/class-wc-trackship-actions.php:627
-#: includes/class-wc-trackship-actions.php:678
-#: includes/class-wc-trackship-admin.php:1248
+#: includes/class-wc-trackship-actions.php:624
+#: includes/class-wc-trackship-actions.php:675
+#: includes/class-wc-trackship-admin.php:1269
 #: includes/class-wc-trackship-install.php:312
 #: includes/customizer/trackship-customizer.php:212
 #: includes/customizer/trackship-customizer.php:791
-#: includes/smswoo/class-smswoo-admin.php:547 includes/views/shipments.php:31
+#: includes/smswoo/class-smswoo-admin.php:549 includes/views/shipments.php:31
 msgid "Available For Pickup"
 msgstr "Beschikbaar om af te halen"
+
+#: includes/views/dashboard.php:48
+msgid "Available for Pickup"
+msgstr "Beschikbaar voor ophalen"
 
 #: includes/class-wc-trackship-install.php:319
 #: includes/customizer/trackship-customizer.php:798
@@ -189,6 +209,18 @@ msgstr "Beschikbare tijdelijke aanduidingen:"
 #: includes/customizer/trackship-customizer.php:826
 msgid "Available variables:"
 msgstr "Beschikbare variabelen:"
+
+#: includes/views/dashboard.php:460
+msgid "Avg transit"
+msgstr "Gem. transit"
+
+#: includes/views/dashboard.php:291
+msgid "Avg. Transit Time"
+msgstr "Gem. transittijd"
+
+#: includes/views/trackship-integration.php:82
+msgid "Branded Notifications"
+msgstr "Notificaties in eigen huisstijl"
 
 #: includes/views/shipments.php:121
 msgid "Bulk actions"
@@ -212,20 +244,36 @@ msgstr "Knopradius"
 msgid "Button text"
 msgstr "Knop tekst"
 
-#: includes/class-wc-trackship-actions.php:631
+#: includes/class-wc-trackship-actions.php:628
 msgid "Cancelled"
 msgstr "Geannuleerd"
 
-#: includes/class-wc-trackship-actions.php:632
-#: includes/class-wc-trackship-actions.php:711 includes/views/shipments.php:40
+#: includes/views/dashboard.php:459
+msgid "Carrier"
+msgstr "Vervoerder"
+
+#: includes/views/map-providers.php:81
+msgid "Carrier mapping managed by AST PRO"
+msgstr "Vervoerder-mapping wordt beheerd door AST PRO"
+
+#: includes/views/dashboard.php:454
+msgid "Carrier Performance"
+msgstr "Vervoerderprestaties"
+
+#: includes/class-wc-trackship-actions.php:629
+#: includes/class-wc-trackship-actions.php:708 includes/views/shipments.php:40
 msgid "Carrier Unsupported"
 msgstr "Vervoerder niet ondersteund"
 
-#: includes/class-wc-trackship-admin.php:716
+#: includes/views/dashboard.php:413
+msgid "Carriers & Destinations"
+msgstr "Vervoerders & bestemmingen"
+
+#: includes/class-wc-trackship-admin.php:719
 msgid "Change order status to"
 msgstr "Wijzig orderstatus naar"
 
-#: includes/class-wc-trackship-admin.php:712
+#: includes/class-wc-trackship-admin.php:715
 msgid "Change status: "
 msgstr "Status wijzigen:"
 
@@ -233,19 +281,30 @@ msgstr "Status wijzigen:"
 msgid "Classic"
 msgstr "Klassiek"
 
-#: includes/class-wc-trackship-admin.php:926
+#: includes/class-wc-trackship-admin.php:933
+#: includes/views/trackship-integration.php:37
 msgid "Close"
 msgstr "Dichtbij"
 
-#: trackship-for-woocommerce.php:300
+#: trackship-for-woocommerce.php:309
 msgid "Connect a Store"
 msgstr "Verbind een winkel"
 
-#: includes/views/trackship-integration.php:27
-msgid "Connect your store"
-msgstr "Verbind je winkel"
+#: includes/views/trackship-integration.php:23
+msgid "Connect Store"
+msgstr "Winkel verbinden"
 
-#: includes/class-wc-trackship-actions.php:723
+#: includes/views/trackship-integration.php:21
+msgid ""
+"Connect your store to TrackShip to auto-track shipments, automate order "
+"workflows, and give customers a superior post-purchase experience."
+msgstr "Verbind je winkel met TrackShip om zendingen automatisch te volgen, orderworkflows te automatiseren en klanten een superieure ervaring na aankoop te bieden."
+
+#: includes/views/dashboard.php:256
+msgid "Connected with TrackShip account"
+msgstr "Verbonden met TrackShip-account"
+
+#: includes/class-wc-trackship-actions.php:720
 msgid "Connection Issue"
 msgstr "Verbindingsprobleem"
 
@@ -257,26 +316,35 @@ msgstr "Inhoudsweergave"
 msgid "Content Type & Text"
 msgstr "Inhoudstype en tekst"
 
-#: includes/class-wc-trackship-front.php:591
+#: includes/class-wc-trackship-front.php:601
 #: includes/views/front/tracking_page_header.php:52
 msgid "Copy Tracking page link"
 msgstr "Traceringspagina kopiëren"
+
+#: includes/views/dashboard.php:249
+msgid "Current Plan"
+msgstr "Huidig plan"
 
 #: includes/views/shipments.php:173
 msgid "Customer"
 msgstr "Klant"
 
-#: includes/html/class-wc-trackship-html.php:77
+#: includes/html/class-wc-trackship-html.php:79
 msgid "Customize"
 msgstr "Aanpassen"
 
-#: includes/html/class-wc-trackship-html.php:147
+#: includes/html/class-wc-trackship-html.php:156
 msgid "Customize the Tracking Widget"
 msgstr "Pas de trackingwidget aan"
 
 #: includes/class-wc-trackship-admin.php:212 includes/views/header2.php:35
 msgid "Dashboard"
 msgstr "Dashboard"
+
+#: includes/shipments/class-wc-trackship-shipments.php:109
+#: includes/views/dashboard.php:290 includes/views/dashboard.php:469
+msgid "days"
+msgstr "dagen"
 
 #: includes/views/tools.php:18
 msgid "Delete notifications logs"
@@ -286,36 +354,40 @@ msgstr "Meldingslogboeken verwijderen"
 msgid "Delete notifications logs more than 30 days"
 msgstr "Meldingslogboeken meer dan 30 dagen verwijderen"
 
-#: includes/class-wc-trackship-actions.php:717
+#: includes/class-wc-trackship-actions.php:714
 msgid "Deleted"
 msgstr "Verwijderd"
 
-#: includes/class-wc-trackship-actions.php:629
-#: includes/class-wc-trackship-actions.php:672
-#: includes/class-wc-trackship-admin.php:634
-#: includes/class-wc-trackship-admin.php:652
-#: includes/class-wc-trackship-admin.php:704
-#: includes/class-wc-trackship-admin.php:1284
+#: includes/class-wc-trackship-actions.php:626
+#: includes/class-wc-trackship-actions.php:669
+#: includes/class-wc-trackship-admin.php:637
+#: includes/class-wc-trackship-admin.php:655
+#: includes/class-wc-trackship-admin.php:707
+#: includes/class-wc-trackship-admin.php:1305
 #: includes/class-wc-trackship-install.php:318
 #: includes/customizer/trackship-customizer.php:218
 #: includes/customizer/trackship-customizer.php:797
-#: includes/smswoo/class-smswoo-admin.php:553 includes/views/dashboard.php:44
+#: includes/smswoo/class-smswoo-admin.php:555 includes/views/dashboard.php:44
 #: includes/views/dashboard.php:163 includes/views/shipments.php:29
 msgid "Delivered"
 msgstr "Geleverd"
 
 #. %s: search number of order
-#: includes/class-wc-trackship-admin.php:640
+#: includes/class-wc-trackship-admin.php:643
 #, php-format
 msgid "Delivered <span class=\"count\">(%s)</span>"
 msgid_plural "Delivered <span class=\"count\">(%s)</span>"
 msgstr[0] "Bezorgd <span class=\"count\">(%s)</span>"
 msgstr[1] "Bezorgd <span class=\"count\">(%s)</span>"
 
-#: includes/class-wc-trackship-front.php:654
+#: includes/class-wc-trackship-front.php:664
 #: includes/views/front/preview_enhanced_tracking_page.php:75
 msgid "Delivered on"
 msgstr "Afgeleverd op"
+
+#: includes/views/dashboard.php:296
+msgid "Delivered Rate"
+msgstr "Leveringspercentage"
 
 #: includes/views/front/tracking_page_header.php:82
 msgid "Delivery Date"
@@ -325,13 +397,13 @@ msgstr "Bezorgdatum"
 msgid "Delivery date"
 msgstr "Bezorgdatum"
 
-#: includes/class-wc-trackship-actions.php:630
-#: includes/class-wc-trackship-actions.php:687
-#: includes/class-wc-trackship-admin.php:1260
+#: includes/class-wc-trackship-actions.php:627
+#: includes/class-wc-trackship-actions.php:684
+#: includes/class-wc-trackship-admin.php:1281
 #: includes/class-wc-trackship-install.php:314
 #: includes/customizer/trackship-customizer.php:214
 #: includes/customizer/trackship-customizer.php:793
-#: includes/smswoo/class-smswoo-admin.php:549 includes/views/shipments.php:32
+#: includes/smswoo/class-smswoo-admin.php:551 includes/views/shipments.php:32
 msgid "Delivery Failure"
 msgstr "Bezorgings probleem"
 
@@ -355,6 +427,10 @@ msgstr "Bestemmingsdetails"
 #: includes/views/front/preview_enhanced_tracking_page.php:117
 msgid "Details"
 msgstr "Details"
+
+#: includes/views/setup.php:31
+msgid "Disable Fulfillments"
+msgstr "Fulfillments uitschakelen"
 
 #: includes/customizer/trackship-customizer.php:360
 #: includes/customizer/trackship-customizer.php:379
@@ -382,7 +458,7 @@ msgstr "Geef het logo van de vervoerder weer"
 msgid "Display TrackShip branding"
 msgstr "TrackShip-branding weergeven"
 
-#: trackship-for-woocommerce.php:303 includes/views/header2.php:83
+#: trackship-for-woocommerce.php:312 includes/views/header2.php:85
 msgid "Docs"
 msgstr "Documenten"
 
@@ -406,12 +482,12 @@ msgstr "E-mail rubriek"
 
 #: includes/customizer/trackship-customizer.php:302
 #: includes/customizer/trackship-customizer.php:303
-#: includes/views/notifications.php:16
+#: includes/views/notifications.php:17 includes/views/notifications.php:56
 #: includes/views/front/preview_tracking_page.php:205
 msgid "Email Notifications"
 msgstr "E-mail notificaties"
 
-#: includes/class-wc-trackship-front.php:968
+#: includes/class-wc-trackship-front.php:978
 msgid "Email notifications"
 msgstr "E-mail notificaties"
 
@@ -433,7 +509,7 @@ msgstr "E-mails"
 msgid "Enable %1$s email"
 msgstr "%1$s e-mail inschakelen"
 
-#: includes/class-wc-trackship-admin.php:422
+#: includes/class-wc-trackship-admin.php:425
 msgid ""
 "Enable a Custom Order Status Delivered that will be set automatically when "
 "all the order shipments are delivered"
@@ -441,7 +517,7 @@ msgstr ""
 "Schakel een aangepaste bestelstatus afgeleverd in die automatisch wordt "
 "ingesteld wanneer alle bestellingszendingen zijn afgeleverd"
 
-#: includes/class-wc-trackship-admin.php:406
+#: includes/class-wc-trackship-admin.php:409
 msgid "Enable a shipment status filter on orders admin"
 msgstr "Schakel een verzendstatusfilter in op de bestellingenbeheerder"
 
@@ -449,15 +525,15 @@ msgstr "Schakel een verzendstatusfilter in op de bestellingenbeheerder"
 msgid "Enable email"
 msgstr "E-mail inschakelen"
 
-#: includes/views/setup.php:20
+#: includes/views/setup.php:17
 msgid "Enable Fulfillments"
 msgstr "Afhandelingen inschakelen"
 
-#: includes/class-wc-trackship-admin.php:419
+#: includes/class-wc-trackship-admin.php:422
 msgid "Enable Order Delivery Automation"
 msgstr "Automatisering van orderlevering inschakelen"
 
-#: includes/class-wc-trackship-admin.php:429
+#: includes/class-wc-trackship-admin.php:432
 msgid "Enable shipment status notification for order created by Amazon"
 msgstr ""
 "Statusmelding van verzending inschakelen voor bestelling gemaakt door Amazon"
@@ -466,25 +542,21 @@ msgstr ""
 msgid "Enable tracking # link to carrier"
 msgstr "Tracking inschakelen # link naar provider"
 
-#: includes/class-wc-trackship-admin.php:1210
+#: includes/class-wc-trackship-admin.php:1231
 msgid "Enable Tracking Page"
 msgstr "Trackingpagina inschakelen"
 
-#: includes/class-wc-trackship-admin.php:412
+#: includes/class-wc-trackship-admin.php:415
 msgid "Enable unsubscribe (opt-out) from Shipment status notifications"
 msgstr ""
 "Afmelden (opt-out) inschakelen voor meldingen over de status van de zending"
 
-#: includes/views/setup.php:15
-msgid "Enable WooCommerce Fulfillments"
-msgstr "WooCommerce Fulfillment inschakelen"
-
-#: includes/smswoo/class-smswoo-admin.php:383
-#: includes/smswoo/class-smswoo-admin.php:384
+#: includes/smswoo/class-smswoo-admin.php:385
+#: includes/smswoo/class-smswoo-admin.php:386
 msgid "Enter admin phone number with country code."
 msgstr "Voer het beheerderstelefoonnummer met landcode in."
 
-#: includes/class-wc-trackship-front.php:654
+#: includes/class-wc-trackship-front.php:664
 #: templates/emails/tracking-info.php:50
 #: includes/views/front/preview_enhanced_tracking_page.php:75
 #: includes/views/front/preview_tracking_page.php:87
@@ -492,13 +564,13 @@ msgstr "Voer het beheerderstelefoonnummer met landcode in."
 msgid "Est. Delivery Date"
 msgstr "Est. Bezorgdatum"
 
-#: includes/class-wc-trackship-actions.php:634
-#: includes/class-wc-trackship-actions.php:684
-#: includes/class-wc-trackship-admin.php:1272
+#: includes/class-wc-trackship-actions.php:631
+#: includes/class-wc-trackship-actions.php:681
+#: includes/class-wc-trackship-admin.php:1293
 #: includes/class-wc-trackship-install.php:316
 #: includes/customizer/trackship-customizer.php:216
 #: includes/customizer/trackship-customizer.php:795
-#: includes/smswoo/class-smswoo-admin.php:551 includes/views/dashboard.php:50
+#: includes/smswoo/class-smswoo-admin.php:553 includes/views/dashboard.php:50
 #: includes/views/shipments.php:27
 msgid "Exception"
 msgstr "Uitzondering"
@@ -507,19 +579,19 @@ msgstr "Uitzondering"
 msgid "Exception shipment"
 msgstr "Uitzondering verzending"
 
-#: includes/views/notifications.php:100
+#: includes/views/notifications.php:119
 msgid "Exception Shipments"
 msgstr "Uitzonderingszendingen"
 
-#: includes/class-wc-trackship-admin.php:790
+#: includes/class-wc-trackship-admin.php:793
 msgid "Exception Shipments Notifications"
 msgstr "Meldingen van uitzonderingszendingen"
 
-#: includes/class-wc-trackship-actions.php:729 includes/views/shipments.php:33
+#: includes/class-wc-trackship-actions.php:726 includes/views/shipments.php:33
 msgid "Expired"
 msgstr "Verlopen"
 
-#: includes/class-wc-trackship-actions.php:640
+#: includes/class-wc-trackship-actions.php:637
 msgid "Filter by shipment status"
 msgstr "Filteren op verzendstatus"
 
@@ -527,25 +599,23 @@ msgstr "Filteren op verzendstatus"
 msgid "Font color"
 msgstr "Letterkleur"
 
-#: includes/views/setup.php:11
+#: includes/views/setup.php:15
 msgid ""
-"Fulfillments let TrackShip read shipment data natively and keep tracking in "
-"sync."
-msgstr ""
-"Met Fulfillment kan TrackShip verzendgegevens rechtstreeks uitlezen en de "
-"tracking synchroniseren."
+"Fulfillments let TrackShip read shipment data natively from WooCommerce and "
+"keep tracking in sync automatically — no extra configuration needed."
+msgstr "Met Fulfillments leest TrackShip verzendgegevens rechtstreeks uit WooCommerce en blijft de tracking automatisch gesynchroniseerd — geen extra configuratie nodig."
 
 #: includes/customizer/trackship-customizer.php:709
 msgid "General options"
 msgstr "Algemene opties"
 
-#: includes/views/settings.php:44 includes/views/settings.php:64
+#: includes/views/settings.php:45 includes/views/settings.php:98
 msgid "General Settings"
 msgstr "Algemene instellingen"
 
-#: includes/class-wc-trackship-actions.php:557
-#: includes/class-wc-trackship-actions.php:979
-#: includes/class-wc-trackship-admin.php:554 includes/views/tools.php:14
+#: includes/class-wc-trackship-actions.php:554
+#: includes/class-wc-trackship-actions.php:976
+#: includes/class-wc-trackship-admin.php:557 includes/views/tools.php:14
 msgid "Get Shipment Status"
 msgstr "Verzendstatus ophalen"
 
@@ -553,12 +623,26 @@ msgstr "Verzendstatus ophalen"
 msgid "Get shipment status"
 msgstr "Verzendstatus opvragen"
 
-#: includes/views/setup.php:18
+#: includes/views/trackship-integration.php:19
+msgid "Get started for Free"
+msgstr "Begin gratis"
+
+#: includes/views/notifications.php:36 includes/views/settings.php:69
+msgid "Get Support"
+msgstr "Krijg ondersteuning"
+
+#: includes/views/trackship-integration.php:90
 msgid ""
-"Heads up: This is a one-way step. You must enable Fulfillments to continue."
-msgstr ""
-"Let op: dit is een eenrichtingsstap. U moet 'Fulfillments' inschakelen om "
-"verder te gaan."
+"Give customers a branded tracking page to follow their shipment in real time."
+msgstr "Geef klanten een tracking-pagina in eigen huisstijl om hun zending in realtime te volgen."
+
+#: includes/views/map-providers.php:84
+msgid "Go to AST PRO Shipping Providers"
+msgstr "Ga naar AST PRO-vervoerders"
+
+#: includes/smswoo/admin-html/settings_tab.php:30
+msgid "Go to SMS for WooCommerce Settings"
+msgstr "Ga naar SMS for WooCommerce-instellingen"
 
 #: includes/class-wc-trackship-install.php:338
 #, php-format
@@ -593,13 +677,13 @@ msgid "Hide tracking events"
 msgstr "Volggebeurtenissen verbergen"
 
 #. %s: search for a tag
-#: includes/smswoo/class-smswoo-admin.php:247
-#: includes/smswoo/class-smswoo-admin.php:252
-#: includes/smswoo/class-smswoo-admin.php:257
-#: includes/smswoo/class-smswoo-admin.php:262
-#: includes/smswoo/class-smswoo-admin.php:267
-#: includes/smswoo/class-smswoo-admin.php:272
-#: includes/smswoo/class-smswoo-admin.php:277
+#: includes/smswoo/class-smswoo-admin.php:249
+#: includes/smswoo/class-smswoo-admin.php:254
+#: includes/smswoo/class-smswoo-admin.php:259
+#: includes/smswoo/class-smswoo-admin.php:264
+#: includes/smswoo/class-smswoo-admin.php:269
+#: includes/smswoo/class-smswoo-admin.php:274
+#: includes/smswoo/class-smswoo-admin.php:279
 #, php-format
 msgid "How to find your %s credential"
 msgstr "Hoe u uw %s-referentie kunt vinden"
@@ -609,7 +693,7 @@ msgstr "Hoe u uw %s-referentie kunt vinden"
 msgid "Icons"
 msgstr "pictogrammen"
 
-#: includes/class-wc-trackship-admin.php:441
+#: includes/class-wc-trackship-admin.php:444
 msgid ""
 "If you disable it, TrackShip emails will use the WooCommerce default design "
 "instead of the Villa theme's customized email layout."
@@ -618,36 +702,22 @@ msgstr ""
 "standaardontwerp van WooCommerce in plaats van de aangepaste e-mailindeling "
 "van het Villa-thema."
 
-#: includes/class-wc-trackship-actions.php:626
-#: includes/class-wc-trackship-actions.php:663
-#: includes/class-wc-trackship-admin.php:1242
+#: includes/class-wc-trackship-actions.php:623
+#: includes/class-wc-trackship-actions.php:660
+#: includes/class-wc-trackship-admin.php:1263
 #: includes/class-wc-trackship-install.php:311
 #: includes/customizer/trackship-customizer.php:211
 #: includes/customizer/trackship-customizer.php:790
-#: includes/smswoo/class-smswoo-admin.php:546 includes/views/dashboard.php:45
+#: includes/smswoo/class-smswoo-admin.php:548 includes/views/dashboard.php:45
 #: includes/views/shipments.php:24
 msgid "In Transit"
 msgstr "Onderweg"
 
-#: includes/views/dashboard.php:239
-msgid ""
-"Include shipment tracking details in your WooCommerce orders, enabling "
-"customers to effortlessly monitor their orders. Shipment tracking "
-"information will be accessible within customers' accounts, located in the "
-"order section, and will also be included in the WooCommerce order completion"
-" email."
-msgstr ""
-"Voeg trackinggegevens voor verzending toe aan uw WooCommerce-bestellingen, "
-"zodat klanten hun bestellingen moeiteloos kunnen volgen. Informatie over het"
-" volgen van zendingen is toegankelijk via de accounts van klanten, te vinden"
-" in het bestelgedeelte, en wordt ook opgenomen in de WooCommerce-e-mail voor"
-" het voltooien van de bestelling."
+#: trackship-for-woocommerce.php:139
+msgid "Install Shipment Tracking extension"
+msgstr "Installeer extensie voor zendingtracking"
 
-#: includes/views/dashboard.php:242
-msgid "Install Shipment Tracking plugin"
-msgstr "Installeer de plug-in Verzending volgen"
-
-#: includes/class-wc-trackship-actions.php:720
+#: includes/class-wc-trackship-actions.php:717
 msgid "Insufficient Balance"
 msgstr "Onvoldoende saldo"
 
@@ -655,12 +725,20 @@ msgstr "Onvoldoende saldo"
 msgid "Integrations"
 msgstr "Integraties"
 
-#: includes/class-wc-trackship-actions.php:702 includes/views/shipments.php:39
+#: includes/class-wc-trackship-actions.php:699 includes/views/shipments.php:39
 msgid "Invalid Carrier"
 msgstr "Ongeldige vervoerder"
 
-#: includes/class-wc-trackship-actions.php:635
-#: includes/class-wc-trackship-actions.php:699 includes/views/shipments.php:38
+#: includes/class-wc-trackship-front.php:136
+msgid "Invalid order key."
+msgstr "Ongeldige bestelsleutel."
+
+#: includes/class-wc-trackship-front.php:129
+msgid "Invalid order."
+msgstr "Ongeldige bestelling."
+
+#: includes/class-wc-trackship-actions.php:632
+#: includes/class-wc-trackship-actions.php:696 includes/views/shipments.php:38
 msgid "Invalid Tracking"
 msgstr "Ongeldige tracking"
 
@@ -670,18 +748,22 @@ msgstr "Ongeldige tracking"
 msgid "Items in this shipment"
 msgstr "Artikelen in deze zending"
 
-#: includes/class-wc-trackship-front.php:703
+#: includes/class-wc-trackship-front.php:713
 #: includes/views/front/preview_enhanced_tracking_page.php:83
 msgid "Journey"
 msgstr "Reis"
 
-#: includes/smswoo/class-smswoo-admin.php:283
+#: includes/smswoo/class-smswoo-admin.php:285
 msgid "Key"
 msgstr "Sleutel"
 
-#: includes/class-wc-trackship-actions.php:696 includes/views/shipments.php:37
+#: includes/class-wc-trackship-actions.php:693 includes/views/shipments.php:37
 msgid "Label Cancelled"
 msgstr "Label geannuleerd"
+
+#: includes/views/dashboard.php:388
+msgid "Last 12 months"
+msgstr "Laatste 12 maanden"
 
 #: includes/views/dashboard.php:178
 msgid "Last 30 days"
@@ -691,7 +773,7 @@ msgstr "Laatste 30 dagen"
 msgid "Last 60 days"
 msgstr "Laatste 60 dagen"
 
-#: includes/class-wc-trackship-actions.php:930
+#: includes/class-wc-trackship-actions.php:927
 msgid "Last event date: "
 msgstr "Datum laatste evenement:"
 
@@ -699,7 +781,7 @@ msgstr "Datum laatste evenement:"
 msgid "Late shipment"
 msgstr "Late verzending"
 
-#: includes/views/notifications.php:72 includes/views/shipments.php:34
+#: includes/views/notifications.php:104 includes/views/shipments.php:34
 msgid "Late Shipments"
 msgstr "Late zendingen"
 
@@ -707,7 +789,7 @@ msgstr "Late zendingen"
 msgid "Late Shipments for last 30 days"
 msgstr "Late verzendingen gedurende de afgelopen 30 dagen"
 
-#: includes/class-wc-trackship-admin.php:789
+#: includes/class-wc-trackship-admin.php:792
 msgid "Late Shipments Notifications"
 msgstr "Meldingen van late verzendingen"
 
@@ -719,7 +801,12 @@ msgstr "laatste evenement"
 msgid "Latest Event Date"
 msgstr "Laatste gebeurtenisdatum"
 
-#: includes/views/setup.php:12
+#: includes/views/notifications.php:30 includes/views/settings.php:63
+msgid "Learn how to configure TrackShip for best results."
+msgstr "Leer hoe je TrackShip configureert voor de beste resultaten."
+
+#: trackship-for-woocommerce.php:141 includes/views/setup.php:18
+#: includes/views/setup.php:32
 msgid "Learn more →"
 msgstr "Meer informatie →"
 
@@ -732,12 +819,12 @@ msgstr "Kleur links"
 msgid "Logs"
 msgstr "Logboeken"
 
-#: includes/views/map-providers.php:9 includes/views/settings.php:56
+#: includes/views/map-providers.php:11 includes/views/settings.php:57
 #| msgid "Map Shipping Providers"
 msgid "Map Shipping Carriers"
 msgstr "Verzendaanbieders in kaart brengen"
 
-#: includes/class-wc-trackship-admin.php:739
+#: includes/class-wc-trackship-admin.php:742
 msgid "Mark order as delivered"
 msgstr "Markeer bestelling als geleverd"
 
@@ -757,13 +844,13 @@ msgstr "Maand tot nu toe"
 msgid "More info"
 msgstr "Meer informatie"
 
-#: includes/class-wc-trackship-actions.php:426
-#: includes/class-wc-trackship-actions.php:939
-#: includes/html/class-wc-trackship-html.php:130
+#: includes/class-wc-trackship-actions.php:423
+#: includes/class-wc-trackship-actions.php:936
+#: includes/html/class-wc-trackship-html.php:137
 msgid "more info"
 msgstr "meer informatie"
 
-#: includes/views/dashboard.php:315
+#: includes/views/dashboard.php:333
 msgid "No action needed for Shipments"
 msgstr "Geen actie nodig voor Zendingen"
 
@@ -780,6 +867,14 @@ msgstr "Geen antwoord"
 msgid "No answer code"
 msgstr "Geen antwoordcode"
 
+#: includes/views/dashboard.php:430 includes/views/dashboard.php:478
+msgid "No carrier data yet."
+msgstr "Nog geen vervoerdersgegevens."
+
+#: includes/views/dashboard.php:446
+msgid "No destination data yet."
+msgstr "Nog geen bestemmingsgegevens."
+
 #: includes/smswoo/services/class-smswoo-twilio.php:183
 msgid "No response code"
 msgstr "Geen antwoordcode"
@@ -792,24 +887,24 @@ msgstr "Geen antwoordcode"
 msgid "Notifications"
 msgstr "Meldingen"
 
-#: includes/class-wc-trackship-admin.php:830
+#: includes/class-wc-trackship-admin.php:837
 msgid "Notifications detail"
 msgstr "Details van meldingen"
 
-#: includes/smswoo/class-smswoo-admin.php:311
+#: includes/smswoo/class-smswoo-admin.php:313
 msgid "Notifications Type (SMS/WhatsApp)"
 msgstr "Type meldingen (SMS/WhatsApp)"
 
-#: includes/class-wc-trackship-admin.php:456
+#: includes/class-wc-trackship-admin.php:459
 msgid "Number of days for late shipments"
 msgstr "Aantal dagen voor late verzendingen"
 
-#: includes/class-wc-trackship-actions.php:666
-#: includes/class-wc-trackship-admin.php:1266
+#: includes/class-wc-trackship-actions.php:663
+#: includes/class-wc-trackship-admin.php:1287
 #: includes/class-wc-trackship-install.php:315
 #: includes/customizer/trackship-customizer.php:215
 #: includes/customizer/trackship-customizer.php:794
-#: includes/smswoo/class-smswoo-admin.php:550 includes/views/dashboard.php:51
+#: includes/smswoo/class-smswoo-admin.php:552 includes/views/dashboard.php:51
 #: includes/views/shipments.php:28
 msgid "On Hold"
 msgstr "In de wacht"
@@ -818,13 +913,17 @@ msgstr "In de wacht"
 msgid "On Hold shipment"
 msgstr "Verzending in de wacht"
 
-#: includes/views/notifications.php:128
+#: includes/views/notifications.php:134
 msgid "On Hold Shipments"
 msgstr "Verzendingen in de wacht"
 
-#: includes/class-wc-trackship-admin.php:791
+#: includes/class-wc-trackship-admin.php:794
 msgid "On Hold Shipments Notifications"
 msgstr "Meldingen over zendingen die in de wacht staan"
+
+#: includes/views/dashboard.php:461
+msgid "On-time"
+msgstr "Op tijd"
 
 #: includes/views/logs.php:50 includes/views/shipments.php:160
 #: includes/views/front/tracking_page_header.php:43
@@ -851,11 +950,15 @@ msgstr "E-mail bestellen"
 msgid "Order ID"
 msgstr "Order ID"
 
-#: includes/class-wc-trackship-actions.php:732
+#: includes/class-wc-trackship-actions.php:729
 msgid "Order id not found"
 msgstr "Bestelling-ID niet gevonden"
 
-#: includes/class-wc-trackship-admin.php:834
+#: includes/views/logs.php:37
+msgid "Order id, Email, Phone number"
+msgstr "Bestelnummer, e-mail, telefoonnummer"
+
+#: includes/class-wc-trackship-admin.php:841
 #: templates/emails/exception-shipment-email.php:16
 #: templates/emails/late-shipment-email.php:16
 #: templates/emails/on-hold-shipment-email.php:16
@@ -863,7 +966,7 @@ msgstr "Bestelling-ID niet gevonden"
 msgid "Order Number"
 msgstr "Bestellingsnummer"
 
-#: includes/class-wc-trackship-front.php:362
+#: includes/class-wc-trackship-front.php:372
 msgid "Order Processing"
 msgstr "Orderverwerking"
 
@@ -877,37 +980,41 @@ msgstr "Volgnummer van de bestelling."
 msgid "Origin Details"
 msgstr "Herkomstgegevens"
 
-#: includes/html/class-wc-trackship-html.php:124
+#: includes/html/class-wc-trackship-html.php:131
 #: includes/views/dashboard.php:66 includes/views/dashboard.php:86
 msgid "Other"
 msgstr "Ander"
 
-#: includes/class-wc-trackship-actions.php:628
-#: includes/class-wc-trackship-actions.php:675
-#: includes/class-wc-trackship-admin.php:1254
+#: includes/class-wc-trackship-actions.php:625
+#: includes/class-wc-trackship-actions.php:672
+#: includes/class-wc-trackship-admin.php:1275
 #: includes/class-wc-trackship-install.php:313
 #: includes/customizer/trackship-customizer.php:213
 #: includes/customizer/trackship-customizer.php:792
-#: includes/smswoo/class-smswoo-admin.php:548 includes/views/shipments.php:25
+#: includes/smswoo/class-smswoo-admin.php:550 includes/views/shipments.php:25
 msgid "Out For Delivery"
 msgstr "Uit voor levering"
 
-#: includes/class-wc-trackship-front.php:700
+#: includes/views/dashboard.php:46
+msgid "Out for Delivery"
+msgstr "Onderweg voor bezorging"
+
+#: includes/class-wc-trackship-front.php:710
 #: includes/views/front/preview_enhanced_tracking_page.php:80
 msgid "Overview"
 msgstr "Overzicht"
 
-#: includes/class-wc-trackship-actions.php:623
-#: includes/class-wc-trackship-actions.php:705 includes/views/shipments.php:42
+#: includes/class-wc-trackship-actions.php:620
+#: includes/class-wc-trackship-actions.php:702 includes/views/shipments.php:42
 msgid "Pending Update"
 msgstr "Update in afwachting"
 
-#: includes/class-wc-trackship-actions.php:425
-#: includes/class-wc-trackship-actions.php:937
+#: includes/class-wc-trackship-actions.php:422
+#: includes/class-wc-trackship-actions.php:934
 #| msgid ""
-#| "Pending TrackShip is a temporary status that will display for a few minutes "
-#| "until we update the order with the first tracking event from the shipping "
-#| "provider. Please refresh the orders admin in 2-3 minutes."
+#| "Pending TrackShip is a temporary status that will display for a few "
+#| "minutes until we update the order with the first tracking event from the "
+#| "shipping provider. Please refresh the orders admin in 2-3 minutes."
 msgid ""
 "Pending Update is a temporary status that will display for a few minutes "
 "until we update the order with the first tracking event from the shipping "
@@ -922,11 +1029,11 @@ msgstr ""
 msgid "Pickup Reminder"
 msgstr "Ophaalherinnering"
 
-#: includes/class-wc-trackship-admin.php:1291
+#: includes/class-wc-trackship-admin.php:1312
 msgid "Pickup reminder"
 msgstr "Herinnering voor ophalen"
 
-#: includes/smswoo/class-smswoo-admin.php:228
+#: includes/smswoo/class-smswoo-admin.php:230
 #| msgid "Please choose SMS provider from Dropown."
 msgid "Please choose SMS gateway from Dropown."
 msgstr "Kies de sms-provider van Dropown."
@@ -944,35 +1051,34 @@ msgid ""
 msgstr ""
 "Installeer en activeer %1$sWooCommerce%2$s voor TrackShip voor WooCommerce!"
 
-#: includes/views/map-providers.php:56
-#: includes/smswoo/admin-html/settings_tab.php:20
-msgid "Please note: "
-msgstr "Houd er rekening mee dat:"
-
 #: includes/class-wc-trackship-admin.php:125
 msgid "Please refresh the page and try again."
 msgstr "Ververs de pagina en probeer het opnieuw."
 
-#: includes/class-wc-trackship-front.php:366
+#: includes/class-wc-trackship-front.php:376
 msgid "Please try again after you receive the shipping confirmation email."
 msgstr ""
 "Probeer het opnieuw nadat je de e-mail met de verzendbevestiging hebt "
 "ontvangen."
 
-#: includes/class-wc-trackship-front.php:557
-#: includes/class-wc-trackship-front.php:622
+#: includes/class-wc-trackship-front.php:567
+#: includes/class-wc-trackship-front.php:632
 #: templates/tracking/tracking-form.php:127
 #: includes/views/front/preview_enhanced_tracking_page.php:164
 #: includes/views/front/preview_tracking_page.php:216
 msgid "Powered by "
 msgstr "Mogelijk gemaakt door"
 
-#: includes/class-wc-trackship-actions.php:625
-#: includes/class-wc-trackship-actions.php:669 includes/views/shipments.php:26
+#: includes/class-wc-trackship-actions.php:622
+#: includes/class-wc-trackship-actions.php:666 includes/views/shipments.php:26
 msgid "Pre Transit"
 msgstr "Voor doorgang"
 
-#: includes/class-wc-trackship-admin.php:785
+#: includes/views/dashboard.php:47
+msgid "Pre-Transit"
+msgstr "Vóór transit"
+
+#: includes/class-wc-trackship-admin.php:788
 msgid "Priority Support"
 msgstr "Prioritaire ondersteuning"
 
@@ -981,43 +1087,57 @@ msgstr "Prioritaire ondersteuning"
 msgid "Progress bar"
 msgstr "Voortgangsbalk"
 
-#: includes/class-wc-trackship-admin.php:818
+#: includes/class-wc-trackship-admin.php:821
 msgid "Providers list Updated"
 msgstr "Lijst met providers Bijgewerkt"
 
-#: includes/class-wc-trackship-admin.php:461
-#: includes/class-wc-trackship-admin.php:483
-#: includes/class-wc-trackship-admin.php:505
+#: includes/views/notifications.php:29 includes/views/settings.php:62
+msgid "Quick Help"
+msgstr "Snelle hulp"
+
+#: includes/class-wc-trackship-admin.php:464
+#: includes/class-wc-trackship-admin.php:486
+#: includes/class-wc-trackship-admin.php:508
 msgid "Recipient(s)"
 msgstr "ontvanger(s)"
 
-#: includes/class-wc-trackship-admin.php:787
+#: includes/class-wc-trackship-admin.php:790
 msgid "Remove TrackShip’s branding"
 msgstr "De branding van TrackShip verwijderen"
 
-#: includes/class-wc-trackship-actions.php:633
-#: includes/class-wc-trackship-actions.php:681
-#: includes/class-wc-trackship-admin.php:1278
+#: includes/class-wc-trackship-actions.php:630
+#: includes/class-wc-trackship-actions.php:678
+#: includes/class-wc-trackship-admin.php:1299
 #: includes/class-wc-trackship-install.php:317
 #: includes/customizer/trackship-customizer.php:217
 #: includes/customizer/trackship-customizer.php:796
-#: includes/smswoo/class-smswoo-admin.php:552 includes/views/shipments.php:30
+#: includes/smswoo/class-smswoo-admin.php:554 includes/views/shipments.php:30
 msgid "Return To Sender"
 msgstr "Retourneer naar verzender"
+
+#: includes/views/dashboard.php:49
+msgid "Return to Sender"
+msgstr "Terugsturen naar afzender"
 
 #: includes/views/dashboard.php:149
 msgid "Return To Sender for last 30 days"
 msgstr "Terug naar afzender voor de afgelopen 30 dagen"
 
-#: trackship-for-woocommerce.php:305
+#: trackship-for-woocommerce.php:313
 msgid "Review"
 msgstr "Beoordeling"
 
-#: includes/smswoo/class-smswoo-admin.php:506
-#: includes/views/notifications.php:75 includes/views/notifications.php:103
-#: includes/views/notifications.php:131
+#: includes/smswoo/class-smswoo-admin.php:508
+#: includes/views/notifications.php:106 includes/views/notifications.php:121
+#: includes/views/notifications.php:136
 msgid "Save & close"
 msgstr "Opslaan & sluiten"
+
+#: includes/views/map-providers.php:15 includes/views/settings.php:102
+#: includes/views/tracking-page.php:13
+#: includes/smswoo/admin-html/settings_tab.php:13
+msgid "Save changes"
+msgstr "Wijzigingen opslaan"
 
 #: includes/customizer/trackship-customizer.php:104
 msgid "Saved"
@@ -1031,37 +1151,43 @@ msgstr "Zoekopdracht"
 msgid "Search by Tracking Number, Shipping carrier, Order number"
 msgstr "Zoek op trackingnummer, vervoerder, bestelnummer"
 
-#: includes/smswoo/class-smswoo-admin.php:290
+#: includes/smswoo/class-smswoo-admin.php:292
 msgid "Secret"
 msgstr "Geheim"
 
-#: includes/class-wc-trackship-front.php:260
+#: includes/class-wc-trackship-front.php:270
 msgid "Security verification failed, please refresh page and try again."
 msgstr ""
 "Beveiligingsverificatie mislukt. Vernieuw de pagina en probeer het opnieuw."
 
-#: includes/class-wc-trackship-admin.php:916
-#: includes/class-wc-trackship-admin.php:979
+#: includes/class-wc-trackship-admin.php:923
+#: includes/class-wc-trackship-admin.php:989
 msgid "Select"
 msgstr "Selecteer"
 
-#: includes/class-wc-trackship-admin.php:1216
+#: includes/class-wc-trackship-admin.php:1237
 msgid "Select tracking page:"
 msgstr "Selecteer trackingpagina:"
 
-#: includes/class-wc-trackship-admin.php:467
-#: includes/class-wc-trackship-admin.php:489
-#: includes/class-wc-trackship-admin.php:511
+#: includes/class-wc-trackship-admin.php:470
+#: includes/class-wc-trackship-admin.php:492
+#: includes/class-wc-trackship-admin.php:514
 msgid "Send email at"
 msgstr "Stuur een e-mail naar"
 
-#: includes/class-wc-trackship-admin.php:1285
-#: includes/smswoo/class-smswoo-admin.php:499
+#: includes/class-wc-trackship-admin.php:1306
+#: includes/smswoo/class-smswoo-admin.php:501
 msgid "Send only when all shipments for the order are delivered"
 msgstr ""
 "Alleen verzenden wanneer alle zendingen voor de bestelling zijn afgeleverd"
 
-#: includes/smswoo/class-smswoo-admin.php:374
+#: includes/views/trackship-integration.php:83
+msgid ""
+"Send proactive shipment status emails that reduce \"Where is my order?\" "
+"support tickets."
+msgstr "Verstuur proactieve e-mails over de zendingstatus die \"Waar is mijn bestelling?\"-supporttickets verminderen."
+
+#: includes/smswoo/class-smswoo-admin.php:376
 msgid "Sender phone number / Sender ID"
 msgstr "Telefoonnummer afzender / ID afzender"
 
@@ -1073,14 +1199,10 @@ msgstr "Verstuurd"
 msgid "Set Pickup reminder notifications(in days)"
 msgstr "Ophaalherinneringsmeldingen instellen (in dagen)"
 
-#: trackship-for-woocommerce.php:300 includes/class-wc-trackship-admin.php:220
+#: trackship-for-woocommerce.php:309 includes/class-wc-trackship-admin.php:220
 #: includes/views/content.php:13 includes/views/header2.php:55
 msgid "Settings"
 msgstr "Instellingen"
-
-#: includes/views/content.php:33
-msgid "Setup"
-msgstr "Instellen"
 
 #: includes/views/shipments.php:170
 msgid "Ship City"
@@ -1099,7 +1221,7 @@ msgid "Ship to"
 msgstr "Verzend naar"
 
 #. %s: search for a tag
-#: includes/class-wc-trackship-front.php:486
+#: includes/class-wc-trackship-front.php:496
 #, php-format
 msgid "Shipment %1$s"
 msgstr "Verzending %1$s"
@@ -1109,19 +1231,22 @@ msgstr "Verzending %1$s"
 msgid "Shipment Progress"
 msgstr "Zendingsvoortgang"
 
-#: includes/class-wc-trackship-actions.php:351
-#: includes/class-wc-trackship-admin.php:835 includes/views/logs.php:51
-#: includes/views/shipments.php:166
-#: templates/emails/late-shipment-email.php:17
+#: includes/views/dashboard.php:346
+msgid "Shipment Status"
+msgstr "Verzendstatus"
+
+#: includes/class-wc-trackship-actions.php:348
+#: includes/class-wc-trackship-admin.php:842 includes/views/logs.php:51
+#: includes/views/shipments.php:166 templates/emails/late-shipment-email.php:17
 msgid "Shipment status"
 msgstr "Verzending status"
 
-#: includes/class-wc-trackship-admin.php:214 includes/views/dashboard.php:379
+#: includes/class-wc-trackship-admin.php:214 includes/views/dashboard.php:369
 #: includes/views/header2.php:40
 msgid "Shipments"
 msgstr "Zendingen"
 
-#: includes/class-wc-trackship-admin.php:788
+#: includes/class-wc-trackship-admin.php:791
 msgid "Shipments Dashboard"
 msgstr "Verzendingsdashboard"
 
@@ -1133,8 +1258,12 @@ msgstr ""
 "zendingen van de afgelopen 30 dagen die niet automatisch zijn gevolgd. Klik "
 "hier om deze eerdere bestellingen te volgen"
 
-#: includes/class-wc-trackship-actions.php:693
-#: includes/class-wc-trackship-actions.php:708
+#: includes/views/dashboard.php:387
+msgid "Shipments Over Time"
+msgstr "Zendingen in de loop van de tijd"
+
+#: includes/class-wc-trackship-actions.php:690
+#: includes/class-wc-trackship-actions.php:705
 #: templates/emails/tracking-info.php:81
 #: includes/views/front/enhanced_tracking_events.php:18
 #: includes/views/front/tracking_page_header.php:64
@@ -1153,11 +1282,11 @@ msgstr "Koptekst verzonden producten"
 msgid "Shipping & Delivery"
 msgstr "verzending en bezorging"
 
-#: includes/class-wc-trackship-admin.php:792
+#: includes/class-wc-trackship-admin.php:795
 msgid "Shipping & Delivery Analytics"
 msgstr "Verzend- en bezorganalyses"
 
-#: includes/views/dashboard.php:252
+#: includes/views/dashboard.php:270
 msgid "Shipping & Delivery Overview"
 msgstr "Overzicht van verzending en levering"
 
@@ -1179,14 +1308,13 @@ msgstr "Transporteur"
 msgid "Shipping days"
 msgstr "Verzenddagen"
 
-#: includes/views/map-providers.php:24
 #: templates/emails/exception-shipment-email.php:17
 #: templates/emails/late-shipment-email.php:18
 #: templates/emails/on-hold-shipment-email.php:17
 msgid "Shipping provider"
 msgstr "Verzendprovider"
 
-#: includes/class-wc-trackship-actions.php:738
+#: includes/class-wc-trackship-actions.php:735
 msgid "Shipping provider not found"
 msgstr "Verzendprovider niet gevonden"
 
@@ -1214,18 +1342,6 @@ msgstr "toon alleen bestelgegevens"
 msgid "show only Tracking details"
 msgstr "toon alleen trackinggegevens"
 
-#. %s: search for a count
-#: includes/views/map-providers.php:58
-#, php-format
-msgid ""
-"Since AST PRO is installed, the shipping provider name mapping is done on "
-"the shipping provider settings (WooCommerce > Shipment Tracking > "
-"%1$sShipping Providers%2$s)"
-msgstr ""
-"Aangezien AST PRO is geïnstalleerd, wordt de naamtoewijzing van de "
-"verzendprovider gedaan in de instellingen van de verzendprovider "
-"(WooCommerce > Verzending volgen > %1$sVerzendproviders%2$s)"
-
 #: includes/customizer/trackship-customizer.php:415
 #: includes/customizer/trackship-customizer.php:651
 msgid "Single icon"
@@ -1235,25 +1351,29 @@ msgstr "Enkele icoon"
 msgid "SMS"
 msgstr "sms"
 
-#: includes/smswoo/class-smswoo-admin.php:227
-#: includes/smswoo/class-smswoo-admin.php:235
+#: includes/smswoo/class-smswoo-admin.php:229
+#: includes/smswoo/class-smswoo-admin.php:237
 msgid "SMS gateways"
 msgstr "SMS-gateways"
 
-#: includes/class-wc-trackship-admin.php:786
-#: includes/views/notifications.php:20
+#: includes/class-wc-trackship-admin.php:789
+#: includes/views/notifications.php:21 includes/views/notifications.php:150
 msgid "SMS Notifications"
 msgstr "SMS-meldingen"
 
-#: includes/class-wc-trackship-front.php:972
+#: includes/class-wc-trackship-front.php:982
 #: includes/views/front/preview_tracking_page.php:209
 msgid "SMS notifications"
 msgstr "SMS-meldingen"
 
-#: includes/class-wc-trackship-admin.php:1306 includes/views/settings.php:52
-#: includes/smswoo/admin-html/settings_tab.php:8
+#: includes/class-wc-trackship-admin.php:1327 includes/views/settings.php:53
+#: includes/smswoo/admin-html/settings_tab.php:9
 msgid "SMS Settings"
 msgstr "SMS-instellingen"
+
+#: includes/smswoo/admin-html/settings_tab.php:27
+msgid "SMS Settings managed by SMS for WooCommerce"
+msgstr "SMS-instellingen worden beheerd door SMS for WooCommerce"
 
 #: includes/api/class-trackship-rest-api-controller.php:331
 msgid "Sorry, you are not allowed to create resources."
@@ -1268,25 +1388,25 @@ msgstr "Helaas kunt u geen bronnen vermelden."
 msgid "Sorry, you cannot view this resource."
 msgstr "Helaas kunt u deze bron niet bekijken."
 
-#: includes/class-wc-trackship-actions.php:726
+#: includes/class-wc-trackship-actions.php:723
 msgid "SSL Error"
 msgstr "SSL-fout"
 
-#: includes/class-wc-trackship-admin.php:793
+#: includes/class-wc-trackship-admin.php:796
 #| msgid "Starting from $11 a month"
 msgid "Starting from $9 a month"
 msgstr "Vanaf $9 per maand"
 
-#: includes/class-wc-trackship-admin.php:840 includes/views/logs.php:55
+#: includes/class-wc-trackship-admin.php:847 includes/views/logs.php:55
 msgid "Status"
 msgstr "Toestand"
 
-#: includes/class-wc-trackship-actions.php:747
+#: includes/class-wc-trackship-actions.php:744
 #| msgid "Store is conneted with different account"
 msgid "Store is connected with different account"
 msgstr "De winkel is gekoppeld aan een ander account."
 
-#: includes/class-wc-trackship-actions.php:744
+#: includes/class-wc-trackship-actions.php:741
 msgid "Store is not Connected to TrackShip"
 msgstr "Winkel is niet verbonden met TrackShip"
 
@@ -1294,12 +1414,20 @@ msgstr "Winkel is niet verbonden met TrackShip"
 msgid "Style & Colors"
 msgstr "Stijl & Kleuren"
 
-#: includes/class-wc-trackship-admin.php:812
-#: includes/class-wc-trackship-admin.php:820
+#: includes/views/header2.php:89
+msgid "Support"
+msgstr "Ondersteuning"
+
+#: includes/views/map-providers.php:71
+msgid "Sync providers"
+msgstr "Vervoerders synchroniseren"
+
+#: includes/class-wc-trackship-admin.php:815
+#: includes/class-wc-trackship-admin.php:823
 msgid "Sync TrackShip Providers"
 msgstr "TrackShip-providers synchroniseren"
 
-#: includes/class-wc-trackship-admin.php:816
+#: includes/class-wc-trackship-admin.php:819
 msgid ""
 "Syncing the TrackShip providers list add or updates the pre-set TrackShip "
 "providers and will not effect custom shipping providers."
@@ -1312,15 +1440,15 @@ msgstr ""
 msgid "Tabs display"
 msgstr "Tabbladen worden weergegeven"
 
-#: includes/smswoo/class-smswoo-admin.php:521
+#: includes/smswoo/class-smswoo-admin.php:523
 msgid "Template ID"
 msgstr "Sjabloon-ID"
 
-#: includes/smswoo/class-smswoo-admin.php:524
+#: includes/smswoo/class-smswoo-admin.php:526
 msgid "Template Language"
 msgstr "Sjabloontaal"
 
-#: includes/smswoo/class-smswoo-admin.php:522
+#: includes/smswoo/class-smswoo-admin.php:524
 msgid "Template variables"
 msgstr "Sjabloonvariabelen"
 
@@ -1331,8 +1459,8 @@ msgid ""
 "service (i.e 4PX -> USPS)"
 msgstr ""
 "Het trackingnummer van de levering wordt weergegeven als de zending in het "
-"land van bestemming een ander trackingnummer krijgt dan de lokale postdienst"
-" (d.w.z. 4PX -> USPS)"
+"land van bestemming een ander trackingnummer krijgt dan de lokale postdienst "
+"(d.w.z. 4PX -> USPS)"
 
 #: includes/class-wc-trackship-exception-shipments.php:173
 msgid "The following shipments are exception:"
@@ -1346,44 +1474,44 @@ msgstr "De volgende zendingen zijn te laat:"
 msgid "The following shipments are On Hold:"
 msgstr "De volgende zendingen staan in de wacht:"
 
-#: includes/class-wc-trackship-front.php:284
 #: includes/class-wc-trackship-front.php:294
+#: includes/class-wc-trackship-front.php:304
 msgid ""
 "The order/shipment you're trying to track has not been shipped yet or the "
 "order number entered is incorrect."
 msgstr ""
-"De bestelling/zending die u probeert te volgen, is nog niet verzonden of het"
-" ingevoerde bestelnummer is onjuist."
+"De bestelling/zending die u probeert te volgen, is nog niet verzonden of het "
+"ingevoerde bestelnummer is onjuist."
 
-#: includes/class-wc-trackship-actions.php:544
+#: includes/class-wc-trackship-actions.php:541
 msgid ""
 "The shipment status updates will run in the background, please refresh the "
 "page in a few minutes."
 msgstr ""
-"De statusupdates van de zending worden op de achtergrond uitgevoerd, ververs"
-" de pagina over een paar minuten."
+"De statusupdates van de zending worden op de achtergrond uitgevoerd, ververs "
+"de pagina over een paar minuten."
 
-#: includes/views/map-providers.php:22
+#: includes/views/map-providers.php:26
 msgid ""
 "This feature lets you align shipping providers from external shipping "
 "services with those on TrackShip. You can match the names of the Shipping "
-"Providers you receive from your shipping company with TrackShip’s provider "
+"Providers you receive from your shipping company with TrackShip's provider "
 "names."
 msgstr ""
 "Met deze functie kunt u verzendaanbieders van externe verzendservices "
-"afstemmen op die van TrackShip. U kunt de namen van de verzendaanbieders die"
-" u van uw rederij ontvangt, matchen met de namen van de aanbieders van "
+"afstemmen op die van TrackShip. U kunt de namen van de verzendaanbieders die "
+"u van uw rederij ontvangt, matchen met de namen van de aanbieders van "
 "TrackShip."
 
-#: includes/smswoo/class-smswoo-admin.php:375
+#: includes/smswoo/class-smswoo-admin.php:377
 msgid "This field appears as a from or Sender ID"
 msgstr "Dit veld verschijnt als een van of afzender-ID"
 
-#: includes/class-wc-trackship-admin.php:837 includes/views/logs.php:52
+#: includes/class-wc-trackship-admin.php:844 includes/views/logs.php:52
 msgid "Time"
 msgstr "Tijd"
 
-#: includes/class-wc-trackship-admin.php:838 includes/views/logs.php:53
+#: includes/class-wc-trackship-admin.php:845 includes/views/logs.php:53
 msgid "To"
 msgstr "Naar"
 
@@ -1403,14 +1531,22 @@ msgstr ""
 msgid "Tools"
 msgstr "Gereedschap"
 
+#: includes/views/dashboard.php:418
+msgid "Top Carriers"
+msgstr "Topvervoerders"
+
+#: includes/views/dashboard.php:434
+msgid "Top Destinations"
+msgstr "Topbestemmingen"
+
 #: includes/views/dashboard.php:155
 msgid "Total Shipments"
 msgstr "Totaal zendingen"
 
-#: includes/class-wc-trackship-actions.php:417
-#: includes/class-wc-trackship-actions.php:423
-#: includes/class-wc-trackship-actions.php:935
-#: includes/class-wc-trackship-actions.php:946
+#: includes/class-wc-trackship-actions.php:414
+#: includes/class-wc-trackship-actions.php:420
+#: includes/class-wc-trackship-actions.php:932
+#: includes/class-wc-trackship-actions.php:943
 msgid "Track"
 msgstr "Spoor"
 
@@ -1436,7 +1572,7 @@ msgstr "Volg uw bestelling"
 msgid "Tracker type"
 msgstr "Type tracker"
 
-#: includes/class-wc-trackship-admin.php:1305
+#: includes/class-wc-trackship-admin.php:1326
 msgid "Tracking Analytics"
 msgstr "Analytics bijhouden"
 
@@ -1448,7 +1584,7 @@ msgstr "Weergave van trackinggebeurtenis"
 msgid "Tracking information is not available, please try again later."
 msgstr "Er is geen trackinginformatie beschikbaar, probeer het later opnieuw."
 
-#: includes/class-wc-trackship-admin.php:399
+#: includes/class-wc-trackship-admin.php:402
 msgid ""
 "Tracking is sent to TrackShip when the order change to the selected status. "
 "Choose default (Completed/Shipped or Partially Shipped) or custom statuses "
@@ -1464,8 +1600,8 @@ msgid ""
 "Tracking is still not yet available for this shipment, please try again "
 "later."
 msgstr ""
-"Tracking is nog steeds niet beschikbaar voor deze zending. Probeer het later"
-" opnieuw."
+"Tracking is nog steeds niet beschikbaar voor deze zending. Probeer het later "
+"opnieuw."
 
 #: includes/views/dashboard.php:167 includes/views/shipments.php:41
 msgid "Tracking Issues"
@@ -1475,7 +1611,7 @@ msgstr "Problemen met volgen"
 msgid "Tracking Issues for last 30 days"
 msgstr "Trackingproblemen van de afgelopen 30 dagen"
 
-#: includes/class-wc-trackship-admin.php:836 includes/views/shipments.php:164
+#: includes/class-wc-trackship-admin.php:843 includes/views/shipments.php:164
 #: templates/emails/exception-shipment-email.php:18
 #: templates/emails/late-shipment-email.php:19
 #: templates/emails/on-hold-shipment-email.php:18
@@ -1484,13 +1620,14 @@ msgstr "Trackingproblemen van de afgelopen 30 dagen"
 msgid "Tracking Number"
 msgstr "Volg nummer"
 
-#: includes/class-wc-trackship-actions.php:735
+#: includes/class-wc-trackship-actions.php:732
 msgid "Tracking number not found"
 msgstr "Trackingnummer niet gevonden"
 
 #: includes/customizer/trackship-customizer.php:332
 #: includes/customizer/trackship-customizer.php:616
-#: includes/views/settings.php:48 includes/views/tracking-page.php:8
+#: includes/views/settings.php:49 includes/views/tracking-page.php:9
+#: includes/views/trackship-integration.php:89
 msgid "Tracking Page"
 msgstr "Trackingpagina"
 
@@ -1515,18 +1652,27 @@ msgstr ""
 "en stelt u in staat om uw klanten een superieure post-aankoopervaring te "
 "bieden."
 
-#: includes/views/setup.php:10
-msgid "TrackShip is compatible with WooCommerce Fulfillments"
-msgstr "TrackShip is compatibel met WooCommerce Fulfillment."
+#: trackship-for-woocommerce.php:135
+msgid "TrackShip for WooCommerce requires a Shipment Tracking extension."
+msgstr "TrackShip for WooCommerce vereist een extensie voor zendingtracking."
+
+#: includes/views/setup.php:29
+msgid ""
+"TrackShip is syncing fulfillment-based shipments automatically. All new "
+"fulfillments will be tracked in real time."
+msgstr "TrackShip synchroniseert fulfillment-gebaseerde zendingen automatisch. Alle nieuwe fulfillments worden in realtime gevolgd."
 
 #: includes/views/logs.php:13
 msgid "TrackShip logs table does not exist, Please try after few minutes"
-msgstr ""
-"TrackShip-logboektabel bestaat niet, probeer het over een paar minuten"
+msgstr "TrackShip-logboektabel bestaat niet, probeer het over een paar minuten"
 
-#: includes/views/map-providers.php:25
-msgid "TrackShip Provider"
-msgstr "TrackShip-aanbieder"
+#: includes/views/header2.php:71
+msgid "TrackShip navigation"
+msgstr "TrackShip-navigatie"
+
+#: includes/views/map-providers.php:33
+msgid "TrackShip provider"
+msgstr "TrackShip-vervoerder"
 
 #: includes/views/dashboard.php:15 includes/views/shipments.php:8
 msgid "TrackShip Shipments database table does not exist."
@@ -1536,36 +1682,30 @@ msgstr "De TrackShip Zendingen-databasetabel bestaat niet."
 msgid "TrackShip Shipments meta database table does not exist."
 msgstr "De meta-databasetabel voor TrackShip-zendingen bestaat niet."
 
-#: includes/views/setup.php:24
-msgid "TrackShip will now sync fulfillment-based shipments automatically."
-msgstr ""
-"TrackShip synchroniseert nu automatisch verzendingen die via de "
-"fulfilmentafdeling worden afgehandeld."
-
-#: includes/class-wc-trackship-admin.php:839 includes/views/logs.php:54
+#: includes/class-wc-trackship-admin.php:846 includes/views/logs.php:54
 msgid "Type"
 msgstr "Type"
 
-#: includes/class-wc-trackship-front.php:208
-#: includes/class-wc-trackship-front.php:226
+#: includes/class-wc-trackship-front.php:218
+#: includes/class-wc-trackship-front.php:236
 msgid "Unable to locate the order."
 msgstr "Kan de bestelling niet vinden."
 
-#: includes/class-wc-trackship-front.php:214
+#: includes/class-wc-trackship-front.php:224
 msgid "Unable to locate the order. or Invalid order key"
 msgstr "Kan de bestelling niet vinden. of Ongeldige bestelsleutel"
 
-#: includes/class-wc-trackship-actions.php:714
+#: includes/class-wc-trackship-actions.php:711
 msgid "Unauthorized"
 msgstr "ongeautoriseerd"
 
-#: includes/class-wc-trackship-actions.php:624
-#: includes/class-wc-trackship-actions.php:690 includes/views/shipments.php:36
+#: includes/class-wc-trackship-actions.php:621
+#: includes/class-wc-trackship-actions.php:687 includes/views/shipments.php:36
 msgid "Unknown"
 msgstr "Onbekend"
 
 #: includes/trackship-email-manager.php:339
-#: includes/customizer/class-trackship-email-preview.php:178
+#: includes/customizer/class-trackship-email-preview.php:181
 msgid "Unsubscribe"
 msgstr "Uitschrijven"
 
@@ -1573,7 +1713,7 @@ msgstr "Uitschrijven"
 msgid "Updated at"
 msgstr "Bijgewerkt op"
 
-#: includes/class-wc-trackship-admin.php:796
+#: includes/class-wc-trackship-admin.php:799
 msgid "UPGRADE TO PRO"
 msgstr "UPGRADEN NAAR PRO"
 
@@ -1581,15 +1721,15 @@ msgstr "UPGRADEN NAAR PRO"
 msgid "Upgrade to Pro"
 msgstr "Upgraden naar Pro"
 
-#: includes/class-wc-trackship-admin.php:781
+#: includes/class-wc-trackship-admin.php:784
 msgid "Upgrade to TrackShip Pro"
 msgstr "Upgrade naar TrackShip Pro"
 
-#: includes/class-wc-trackship-admin.php:438
+#: includes/class-wc-trackship-admin.php:441
 msgid "Use Villa Theme Email Customizer Template"
 msgstr "Gebruik de Villa Theme Email Customizer Template"
 
-#: includes/class-wc-trackship-actions.php:741
+#: includes/class-wc-trackship-actions.php:738
 msgid "User not found for this key"
 msgstr "Gebruiker niet gevonden voor deze sleutel"
 
@@ -1601,9 +1741,13 @@ msgstr "Controleer de DB-structuur"
 msgid "Verify if all TrackShip database tables are present."
 msgstr "Controleer of alle TrackShip-databasetabellen aanwezig zijn."
 
-#: includes/views/dashboard.php:283
+#: includes/views/dashboard.php:301
 msgid "View detailed stats"
 msgstr "Bekijk gedetailleerde statistieken"
+
+#: includes/views/notifications.php:32 includes/views/settings.php:65
+msgid "View Documentation"
+msgstr "Bekijk documentatie"
 
 #: includes/views/front/layout1_tracking_details.php:168
 #: includes/views/front/preview_tracking_page.php:173
@@ -1615,7 +1759,7 @@ msgstr "minder bekijken"
 msgid "view more"
 msgstr "Bekijk meer"
 
-#: includes/class-wc-trackship-actions.php:949
+#: includes/class-wc-trackship-actions.php:946
 msgid "View Shipment log"
 msgstr "Zendingslog bekijken"
 
@@ -1624,18 +1768,26 @@ msgstr "Zendingslog bekijken"
 msgid "View your order details"
 msgstr "Bekijk uw bestelgegevens"
 
+#: includes/views/trackship-integration.php:24
+msgid "Watch demo video"
+msgstr "Bekijk demovideo"
+
+#: includes/views/trackship-integration.php:28
+msgid "Watch Video"
+msgstr "Bekijk video"
+
 #. %s: search for a orders
 #: includes/views/tools.php:14
 #, php-format
 #| msgid ""
-#| "We detected %1$s Shipped orders from the last 30 days that were not sent to "
-#| "TrackShip, you can bulk send them to TrackShip"
+#| "We detected %1$s Shipped orders from the last 30 days that were not sent "
+#| "to TrackShip, you can bulk send them to TrackShip"
 msgid ""
 "We detected %1$s Shipments from the last 30 days that were not sent to "
 "TrackShip, you can bulk send them to TrackShip"
 msgstr ""
-"We hebben %1$s Verzonden bestellingen van de afgelopen 30 dagen gedetecteerd"
-" die niet naar TrackShip zijn verzonden. U kunt ze in bulk naar TrackShip "
+"We hebben %1$s Verzonden bestellingen van de afgelopen 30 dagen gedetecteerd "
+"die niet naar TrackShip zijn verzonden. U kunt ze in bulk naar TrackShip "
 "verzenden"
 
 #. %s: search for a count
@@ -1654,7 +1806,7 @@ msgid "We detected %d On Hold shipments:"
 msgstr "We hebben %d zendingen in de wacht gedetecteerd:"
 
 #. %s: replace with Partially Shipped order count
-#: includes/class-wc-trackship-admin.php:912
+#: includes/class-wc-trackship-admin.php:919
 #, php-format
 msgid ""
 "We detected %s orders that use the Delivered order status, You can reassign "
@@ -1664,7 +1816,7 @@ msgstr ""
 "deze orders opnieuw toewijzen aan een andere status."
 
 #. %s: search for a total_orders
-#: includes/class-wc-trackship-admin.php:553
+#: includes/class-wc-trackship-admin.php:556
 #, php-format
 #| msgid ""
 #| "We detected %s Shipped orders from the last 30 days that were not sent to "
@@ -1676,14 +1828,6 @@ msgstr ""
 "We hebben %s Verzonden bestellingen van de afgelopen 30 dagen gedetecteerd "
 "die niet naar TrackShip zijn verzonden. U kunt ze in bulk naar TrackShip "
 "verzenden"
-
-#: includes/views/setup.php:16
-msgid ""
-"We'll enable Fulfillments for you. This step can't be reverted from "
-"TrackShip (WooCommerce controls it)."
-msgstr ""
-"We schakelen de verzendservice voor je in. Deze stap kan niet ongedaan "
-"worden gemaakt via TrackShip (WooCommerce beheert dit)."
 
 #: includes/customizer/trackship-customizer.php:527
 msgid "Widget Background color"
@@ -1721,58 +1865,55 @@ msgstr "Widget-indeling"
 msgid "Widget Style"
 msgstr "Widgetstijl"
 
-#: includes/views/setup.php:8
+#: includes/views/content.php:33
+msgid "WooCommerce Fulfillment"
+msgstr "WooCommerce Fulfillment"
+
+#: includes/views/setup.php:14
 msgid "WooCommerce Fulfillments"
 msgstr "WooCommerce Fulfillment"
 
-#: includes/views/setup.php:23
-msgid "WooCommerce Fulfillments enabled"
-msgstr "WooCommerce Fulfillment ingeschakeld"
+#: includes/views/setup.php:28
+msgid "WooCommerce Fulfillments Enabled"
+msgstr "WooCommerce Fulfillments ingeschakeld"
 
 #: includes/customizer/trackship-customizer.php:969
 #: includes/customizer/trackship-customizer.php:1009
 msgid "You are customizing"
 msgstr "Je bent aan het aanpassen"
 
-#. %s: search for a tag
-#: includes/smswoo/admin-html/settings_tab.php:22
-#, php-format
-#| msgid ""
-#| "You can edit the SMS provider from the SMS for WooCommerce %1$ssettings%2$s"
-msgid ""
-"You can edit the SMS gateways from the SMS for WooCommerce %1$ssettings%2$s"
-msgstr ""
-"U kunt de sms-provider bewerken vanuit de sms voor WooCommerce "
-"%1$ssettings%2$s"
-
-#: includes/class-wc-trackship-front.php:390
+#: includes/class-wc-trackship-front.php:400
 msgid "You have been unsubscribed from shipment status emails."
 msgstr "U bent afgemeld voor e-mails over de verzendstatus."
 
-#. %s: search for a tag
-#: trackship-for-woocommerce.php:133
-#, php-format
+#: includes/views/map-providers.php:82
 msgid ""
-"You must have a %1$sShipment Tracking plugin%2$s installed to use TrackShip "
-"for WooCommerce."
-msgstr ""
-"U moet een %1$sShipment Tracking-plug-in%2$s hebben geïnstalleerd om "
-"TrackShip voor WooCommerce te gebruiken."
+"You have the AST PRO plugin activated. The shipping provider name mapping is "
+"done on the shipping provider settings in AST PRO."
+msgstr "De AST PRO-plugin is geactiveerd. De mapping van vervoerdersnamen gebeurt in de vervoerdersinstellingen van AST PRO."
 
-#: includes/views/dashboard.php:238
+#: includes/smswoo/admin-html/settings_tab.php:28
 msgid ""
-"You must have a Shipment Tracking plugin installed to use TrackShip for "
-"WooCommerce."
-msgstr ""
-"Om TrackShip voor WooCommerce te kunnen gebruiken, moet er een plug-in voor "
-"het volgen van zendingen zijn geïnstalleerd."
+"You have the SMS for WooCommerce plugin activated. Configure your SMS "
+"gateways and credentials directly from that plugin's settings."
+msgstr "De SMS for WooCommerce-plugin is geactiveerd. Configureer je SMS-gateways en inloggegevens rechtstreeks vanuit de instellingen van die plugin."
+
+#: trackship-for-woocommerce.php:137
+msgid ""
+"You must have a Shipment Tracking extension installed and active to use "
+"TrackShip for WooCommerce."
+msgstr "Je moet een extensie voor zendingtracking geïnstalleerd en actief hebben om TrackShip for WooCommerce te gebruiken."
+
+#: includes/views/dashboard.php:334
+msgid "You're all caught up."
+msgstr "Alles is bijgewerkt."
 
 #: includes/class-wc-trackship-install.php:336
 #, php-format
 msgid "Your order #%s is %s"
 msgstr "Uw bestelling #%s is %s"
 
-#: includes/class-wc-trackship-front.php:365
+#: includes/class-wc-trackship-front.php:375
 msgid ""
 "Your order is being processed, the tracking details will be available once "
 "it's Shipped."
@@ -1780,122 +1921,15 @@ msgstr ""
 "Uw bestelling wordt verwerkt, de trackinggegevens zijn beschikbaar zodra "
 "deze is verzonden."
 
-#: includes/class-wc-trackship-actions.php:159
-#: includes/smswoo/class-smswoo-admin.php:446
+#: includes/views/trackship-integration.php:20
+msgid "Your Post-Shipping & Delivery Autopilot"
+msgstr "Jouw autopiloot voor na verzending en levering"
+
+#: includes/class-wc-trackship-actions.php:156
+#: includes/smswoo/class-smswoo-admin.php:448
 msgid "Your settings have been successfully saved."
 msgstr "Uw instellingen zijn succesvol opgeslagen."
 
-#: includes/views/dashboard.php:253
-msgid "A live snapshot of your shipments across the selected period."
-msgstr "Een live momentopname van uw zendingen over de geselecteerde periode."
-
-#: includes/views/dashboard.php:357 includes/views/dashboard.php:424
-#: includes/views/dashboard.php:465
-msgid "All time"
-msgstr "Altijd"
-
-#: includes/views/dashboard.php:48
-msgid "Available for Pickup"
-msgstr "Beschikbaar voor ophalen"
-
-#: includes/views/dashboard.php:470
-msgid "Avg transit"
-msgstr "Gem. transit"
-
-#: includes/views/dashboard.php:273
-msgid "Avg. Transit Time"
-msgstr "Gem. transittijd"
-
-#: includes/views/dashboard.php:469
-msgid "Carrier"
-msgstr "Vervoerder"
-
-#: includes/views/dashboard.php:464
-msgid "Carrier Performance"
-msgstr "Vervoerderprestaties"
-
-#: includes/views/dashboard.php:423
-msgid "Carriers & Destinations"
-msgstr "Vervoerders & bestemmingen"
-
-#: includes/views/dashboard.php:340
-msgid "Connected with TrackShip account"
-msgstr "Verbonden met TrackShip-account"
-
-#: includes/views/dashboard.php:334
-msgid "Current Plan"
-msgstr "Huidig plan"
-
-#: includes/views/dashboard.php:272 includes/views/dashboard.php:479
-msgid "days"
-msgstr "dagen"
-
-#: includes/views/dashboard.php:278
-msgid "Delivered Rate"
-msgstr "Leveringspercentage"
-
-#: includes/views/dashboard.php:398
-msgid "Last 12 months"
-msgstr "Laatste 12 maanden"
-
-#: includes/views/dashboard.php:440 includes/views/dashboard.php:488
-msgid "No carrier data yet."
-msgstr "Nog geen vervoerdersgegevens."
-
-#: includes/views/dashboard.php:456
-msgid "No destination data yet."
-msgstr "Nog geen bestemmingsgegevens."
-
-#: includes/views/dashboard.php:471
-msgid "On-time"
-msgstr "Op tijd"
-
-#: includes/views/logs.php:37
-msgid "Order id, Email, Phone number"
-msgstr "Bestelnummer, e-mail, telefoonnummer"
-
-#: includes/views/dashboard.php:46
-msgid "Out for Delivery"
-msgstr "Onderweg voor bezorging"
-
-#: includes/views/dashboard.php:47
-msgid "Pre-Transit"
-msgstr "Vóór transit"
-
-#: includes/views/dashboard.php:49
-msgid "Return to Sender"
-msgstr "Terugsturen naar afzender"
-
-#: includes/views/map-providers.php:12 includes/views/settings.php:68
-#: includes/views/tracking-page.php:12
-#: includes/smswoo/admin-html/settings_tab.php:11
-msgid "Save"
-msgstr "Opslaan"
-
-#: includes/views/dashboard.php:356
-msgid "Shipment Status"
-msgstr "Verzendstatus"
-
-#: includes/views/dashboard.php:397
-msgid "Shipments Over Time"
-msgstr "Zendingen in de loop van de tijd"
-
-#: includes/views/header2.php:87
-msgid "Support"
-msgstr "Ondersteuning"
-
-#: includes/views/dashboard.php:428
-msgid "Top Carriers"
-msgstr "Topvervoerders"
-
-#: includes/views/dashboard.php:444
-msgid "Top Destinations"
-msgstr "Topbestemmingen"
-
-#: includes/views/header2.php:70
-msgid "TrackShip navigation"
-msgstr "TrackShip-navigatie"
-
-#: includes/views/dashboard.php:316
-msgid "You're all caught up."
-msgstr "Alles is bijgewerkt."
+#: includes/views/map-providers.php:31
+msgid "Your shipping provider"
+msgstr "Jouw vervoerder"

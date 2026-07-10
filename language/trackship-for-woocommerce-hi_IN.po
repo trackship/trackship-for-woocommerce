@@ -1,10 +1,9 @@
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: TrackShip for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-23 07:09+0000\n"
-"PO-Revision-Date: 2026-03-27 07:18+0000\n"
+"PO-Revision-Date: 2026-07-10 05:04+0000\n"
 "Last-Translator: \n"
 "Language-Team: Hindi\n"
 "Language: hi_IN\n"
@@ -16,7 +15,11 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.8.3; wp-6.9.4; php-8.3.30\n"
 
-#: includes/smswoo/class-smswoo-admin.php:367
+#: includes/views/dashboard.php:271
+msgid "A live snapshot of your shipments across the selected period."
+msgstr "चयनित अवधि में आपके शिपमेंट का लाइव स्नैपशॉट।"
+
+#: includes/smswoo/class-smswoo-admin.php:369
 msgid "Access Token"
 msgstr "एक्सेस टोकन"
 
@@ -24,11 +27,11 @@ msgstr "एक्सेस टोकन"
 msgid "Account Dashboard"
 msgstr "खाता डैशबोर्ड"
 
-#: includes/smswoo/class-smswoo-admin.php:297
+#: includes/smswoo/class-smswoo-admin.php:299
 msgid "Account SID"
 msgstr "खाता एसआईडी"
 
-#: includes/views/dashboard.php:293
+#: includes/views/dashboard.php:311
 msgid "Action Needed"
 msgstr "कार्रवाई आवश्यक"
 
@@ -48,19 +51,19 @@ msgstr "सक्रिय विलम्बित शिपमेंट"
 msgid "Active Shipments"
 msgstr "सक्रिय शिपमेंट"
 
-#: includes/views/map-providers.php:53
+#: includes/views/map-providers.php:67
 msgid "Add mapping"
 msgstr "मैपिंग जोड़ें"
 
-#: includes/smswoo/class-smswoo-admin.php:521
+#: includes/smswoo/class-smswoo-admin.php:523
 msgid "Add template id for this SMS"
 msgstr "इस एसएमएस के लिए टेम्पलेट आईडी जोड़ें"
 
-#: includes/smswoo/class-smswoo-admin.php:524
+#: includes/smswoo/class-smswoo-admin.php:526
 msgid "Add template langauge for this SMS"
 msgstr "इस SMS के लिए टेम्पलेट भाषा जोड़ें"
 
-#: includes/smswoo/class-smswoo-admin.php:522
+#: includes/smswoo/class-smswoo-admin.php:524
 msgid ""
 "Add template variables that used for this SMS, add variables like this:- "
 "{shipment_status}, {tracking_number}"
@@ -68,15 +71,15 @@ msgstr ""
 "इस एसएमएस के लिए उपयोग किए गए टेम्प्लेट वेरिएबल जोड़ें, इस तरह वेरिएबल "
 "जोड़ें:- {शिपमेंट_स्टैटस}, {ट्रैकिंग_नंबर}"
 
-#: includes/html/class-wc-trackship-html.php:130
+#: includes/html/class-wc-trackship-html.php:137
 msgid "Add the [trackship-track-order] shortcode in the selected page."
 msgstr "चयनित पृष्ठ में [wcast-track-order] शोर्टकोड जोड़ें।"
 
-#: includes/views/notifications.php:24
+#: includes/views/notifications.php:25 includes/views/notifications.php:95
 msgid "Admin Notifications"
 msgstr "व्यवस्थापक सूचनाएं"
 
-#: includes/smswoo/class-smswoo-admin.php:382
+#: includes/smswoo/class-smswoo-admin.php:384
 msgid "Admin Phone Number"
 msgstr "व्यवस्थापक फ़ोन नंबर"
 
@@ -92,11 +95,16 @@ msgstr "सभी शिपमेंट"
 msgid "All shipping providers"
 msgstr "सभी शिपिंग प्रदाता"
 
+#: includes/views/dashboard.php:347 includes/views/dashboard.php:414
+#: includes/views/dashboard.php:455
+msgid "All time"
+msgstr "सब समय"
+
 #: includes/views/logs.php:31
 msgid "All Types"
 msgstr "सभी प्रकार के"
 
-#: includes/class-wc-trackship-admin.php:415
+#: includes/class-wc-trackship-admin.php:418
 msgid ""
 "Allow users to opt-out of receiving Shipment status notifications on the "
 "Tracking page and Shipment status emails."
@@ -124,23 +132,23 @@ msgid ""
 "An error has occurred: Clicksend is not supported for phone number "
 "validation on checkout, Please contact support"
 msgstr ""
-"एक त्रुटि हुई: चेकआउट पर फ़ोन नंबर सत्यापन के लिए क्लिकसेंड समर्थित नहीं है,"
-" कृपया समर्थन से संपर्क करें"
+"एक त्रुटि हुई: चेकआउट पर फ़ोन नंबर सत्यापन के लिए क्लिकसेंड समर्थित नहीं है, "
+"कृपया समर्थन से संपर्क करें"
 
 #: includes/class-wc-trackship-admin.php:218 includes/views/header2.php:50
 msgid "Analytics"
 msgstr "एनालिटिक्स"
 
-#: includes/smswoo/class-smswoo-admin.php:337
-#: includes/smswoo/class-smswoo-admin.php:359
+#: includes/smswoo/class-smswoo-admin.php:339
+#: includes/smswoo/class-smswoo-admin.php:361
 msgid "API Authorization Key"
 msgstr "एपीआई प्राधिकरण कुंजी"
 
-#: includes/smswoo/class-smswoo-admin.php:330
+#: includes/smswoo/class-smswoo-admin.php:332
 msgid "API key"
 msgstr "एपीआई कुंजी"
 
-#: includes/smswoo/class-smswoo-admin.php:323
+#: includes/smswoo/class-smswoo-admin.php:325
 msgid "API Username"
 msgstr "एपीआई उपयोगकर्ता नाम"
 
@@ -148,27 +156,40 @@ msgstr "एपीआई उपयोगकर्ता नाम"
 msgid "Apply"
 msgstr "आवेदन करना"
 
-#: includes/smswoo/class-smswoo-admin.php:304
+#: includes/smswoo/class-smswoo-admin.php:306
 msgid "Auth Token"
 msgstr "प्रामाणिक टोकन"
 
-#: includes/class-wc-trackship-admin.php:398
+#: includes/views/trackship-integration.php:75
+msgid "Auto-Track Shipments"
+msgstr "शिपमेंट ऑटो-ट्रैक करें"
+
+#: includes/class-wc-trackship-admin.php:401
 msgid "Auto-track these order statuses"
 msgstr "इन ऑर्डर की स्थिति को स्वचालित रूप से ट्रैक करें"
 
-#: includes/views/dashboard.php:329
+#: includes/views/trackship-integration.php:76
+msgid ""
+"Automatically track shipments across 1,000+ carriers without any manual work."
+msgstr "बिना किसी मैनुअल काम के 1,000+ कैरियर्स पर शिपमेंट स्वचालित रूप से ट्रैक करें।"
+
+#: includes/views/dashboard.php:241
 msgid "Available Balance"
 msgstr "उपलब्ध शेष राशि"
 
-#: includes/class-wc-trackship-actions.php:627
-#: includes/class-wc-trackship-actions.php:678
-#: includes/class-wc-trackship-admin.php:1248
+#: includes/class-wc-trackship-actions.php:624
+#: includes/class-wc-trackship-actions.php:675
+#: includes/class-wc-trackship-admin.php:1269
 #: includes/class-wc-trackship-install.php:312
 #: includes/customizer/trackship-customizer.php:212
 #: includes/customizer/trackship-customizer.php:791
-#: includes/smswoo/class-smswoo-admin.php:547 includes/views/shipments.php:31
+#: includes/smswoo/class-smswoo-admin.php:549 includes/views/shipments.php:31
 msgid "Available For Pickup"
 msgstr "बटोरने के लिए उपलब्ध"
+
+#: includes/views/dashboard.php:48
+msgid "Available for Pickup"
+msgstr "पिकअप के लिए उपलब्ध"
 
 #: includes/class-wc-trackship-install.php:319
 #: includes/customizer/trackship-customizer.php:798
@@ -187,6 +208,18 @@ msgstr "उपलब्ध प्लेसहोल्डर:"
 #: includes/customizer/trackship-customizer.php:826
 msgid "Available variables:"
 msgstr "उपलब्ध चर:"
+
+#: includes/views/dashboard.php:460
+msgid "Avg transit"
+msgstr "औसत ट्रांज़िट"
+
+#: includes/views/dashboard.php:291
+msgid "Avg. Transit Time"
+msgstr "औसत ट्रांज़िट समय"
+
+#: includes/views/trackship-integration.php:82
+msgid "Branded Notifications"
+msgstr "ब्रांडेड सूचनाएं"
 
 #: includes/views/shipments.php:121
 msgid "Bulk actions"
@@ -210,20 +243,36 @@ msgstr "बटन त्रिज्या"
 msgid "Button text"
 msgstr "टेक्स्ट बटन"
 
-#: includes/class-wc-trackship-actions.php:631
+#: includes/class-wc-trackship-actions.php:628
 msgid "Cancelled"
 msgstr "रद्द"
 
-#: includes/class-wc-trackship-actions.php:632
-#: includes/class-wc-trackship-actions.php:711 includes/views/shipments.php:40
+#: includes/views/dashboard.php:459
+msgid "Carrier"
+msgstr "वाहक"
+
+#: includes/views/map-providers.php:81
+msgid "Carrier mapping managed by AST PRO"
+msgstr "कैरियर मैपिंग AST PRO द्वारा प्रबंधित है"
+
+#: includes/views/dashboard.php:454
+msgid "Carrier Performance"
+msgstr "वाहक प्रदर्शन"
+
+#: includes/class-wc-trackship-actions.php:629
+#: includes/class-wc-trackship-actions.php:708 includes/views/shipments.php:40
 msgid "Carrier Unsupported"
 msgstr "वाहक असमर्थित"
 
-#: includes/class-wc-trackship-admin.php:716
+#: includes/views/dashboard.php:413
+msgid "Carriers & Destinations"
+msgstr "वाहक और गंतव्य"
+
+#: includes/class-wc-trackship-admin.php:719
 msgid "Change order status to"
 msgstr "ऑर्डर की स्थिति बदलें"
 
-#: includes/class-wc-trackship-admin.php:712
+#: includes/class-wc-trackship-admin.php:715
 msgid "Change status: "
 msgstr "स्थिति बदलें:"
 
@@ -231,19 +280,30 @@ msgstr "स्थिति बदलें:"
 msgid "Classic"
 msgstr "क्लासिक"
 
-#: includes/class-wc-trackship-admin.php:926
+#: includes/class-wc-trackship-admin.php:933
+#: includes/views/trackship-integration.php:37
 msgid "Close"
 msgstr "बंद करना"
 
-#: trackship-for-woocommerce.php:300
+#: trackship-for-woocommerce.php:309
 msgid "Connect a Store"
 msgstr "एक स्टोर कनेक्ट करें"
 
-#: includes/views/trackship-integration.php:27
-msgid "Connect your store"
-msgstr "अपना स्टोर कनेक्ट करें"
+#: includes/views/trackship-integration.php:23
+msgid "Connect Store"
+msgstr "स्टोर कनेक्ट करें"
 
-#: includes/class-wc-trackship-actions.php:723
+#: includes/views/trackship-integration.php:21
+msgid ""
+"Connect your store to TrackShip to auto-track shipments, automate order "
+"workflows, and give customers a superior post-purchase experience."
+msgstr "शिपमेंट को ऑटो-ट्रैक करने, ऑर्डर वर्कफ़्लो को स्वचालित करने और ग्राहकों को बेहतरीन पोस्ट-परचेज़ अनुभव देने के लिए अपने स्टोर को TrackShip से कनेक्ट करें।"
+
+#: includes/views/dashboard.php:256
+msgid "Connected with TrackShip account"
+msgstr "TrackShip खाते से जुड़ा"
+
+#: includes/class-wc-trackship-actions.php:720
 msgid "Connection Issue"
 msgstr "कनेक्शन समस्या"
 
@@ -255,26 +315,35 @@ msgstr "सामग्री प्रदर्शन"
 msgid "Content Type & Text"
 msgstr "सामग्री प्रकार और पाठ"
 
-#: includes/class-wc-trackship-front.php:591
+#: includes/class-wc-trackship-front.php:601
 #: includes/views/front/tracking_page_header.php:52
 msgid "Copy Tracking page link"
 msgstr "ट्रैकिंग पेज कॉपी करें"
+
+#: includes/views/dashboard.php:249
+msgid "Current Plan"
+msgstr "वर्तमान योजना"
 
 #: includes/views/shipments.php:173
 msgid "Customer"
 msgstr "ग्राहक"
 
-#: includes/html/class-wc-trackship-html.php:77
+#: includes/html/class-wc-trackship-html.php:79
 msgid "Customize"
 msgstr "अनुकूलित करें"
 
-#: includes/html/class-wc-trackship-html.php:147
+#: includes/html/class-wc-trackship-html.php:156
 msgid "Customize the Tracking Widget"
 msgstr "ट्रैकिंग विजेट को अनुकूलित करें"
 
 #: includes/class-wc-trackship-admin.php:212 includes/views/header2.php:35
 msgid "Dashboard"
 msgstr "डैशबोर्ड"
+
+#: includes/shipments/class-wc-trackship-shipments.php:109
+#: includes/views/dashboard.php:290 includes/views/dashboard.php:469
+msgid "days"
+msgstr "दिन"
 
 #: includes/views/tools.php:18
 msgid "Delete notifications logs"
@@ -284,36 +353,40 @@ msgstr "अधिसूचना लॉग हटाएं"
 msgid "Delete notifications logs more than 30 days"
 msgstr "30 दिनों से अधिक के नोटिफिकेशन लॉग हटाएं"
 
-#: includes/class-wc-trackship-actions.php:717
+#: includes/class-wc-trackship-actions.php:714
 msgid "Deleted"
 msgstr "हटाए गए"
 
-#: includes/class-wc-trackship-actions.php:629
-#: includes/class-wc-trackship-actions.php:672
-#: includes/class-wc-trackship-admin.php:634
-#: includes/class-wc-trackship-admin.php:652
-#: includes/class-wc-trackship-admin.php:704
-#: includes/class-wc-trackship-admin.php:1284
+#: includes/class-wc-trackship-actions.php:626
+#: includes/class-wc-trackship-actions.php:669
+#: includes/class-wc-trackship-admin.php:637
+#: includes/class-wc-trackship-admin.php:655
+#: includes/class-wc-trackship-admin.php:707
+#: includes/class-wc-trackship-admin.php:1305
 #: includes/class-wc-trackship-install.php:318
 #: includes/customizer/trackship-customizer.php:218
 #: includes/customizer/trackship-customizer.php:797
-#: includes/smswoo/class-smswoo-admin.php:553 includes/views/dashboard.php:44
+#: includes/smswoo/class-smswoo-admin.php:555 includes/views/dashboard.php:44
 #: includes/views/dashboard.php:163 includes/views/shipments.php:29
 msgid "Delivered"
 msgstr "पहुंचा दिया"
 
 #. %s: search number of order
-#: includes/class-wc-trackship-admin.php:640
+#: includes/class-wc-trackship-admin.php:643
 #, php-format
 msgid "Delivered <span class=\"count\">(%s)</span>"
 msgid_plural "Delivered <span class=\"count\">(%s)</span>"
 msgstr[0] "वितरित <span class=\"count\">(%s)</span>"
 msgstr[1] "वितरित <span class=\"count\">(%s)</span>"
 
-#: includes/class-wc-trackship-front.php:654
+#: includes/class-wc-trackship-front.php:664
 #: includes/views/front/preview_enhanced_tracking_page.php:75
 msgid "Delivered on"
 msgstr "सौंप दिया"
+
+#: includes/views/dashboard.php:296
+msgid "Delivered Rate"
+msgstr "डिलीवरी दर"
 
 #: includes/views/front/tracking_page_header.php:82
 msgid "Delivery Date"
@@ -323,13 +396,13 @@ msgstr "डिलीवरी की तारीख"
 msgid "Delivery date"
 msgstr "डिलीवरी की तारीख"
 
-#: includes/class-wc-trackship-actions.php:630
-#: includes/class-wc-trackship-actions.php:687
-#: includes/class-wc-trackship-admin.php:1260
+#: includes/class-wc-trackship-actions.php:627
+#: includes/class-wc-trackship-actions.php:684
+#: includes/class-wc-trackship-admin.php:1281
 #: includes/class-wc-trackship-install.php:314
 #: includes/customizer/trackship-customizer.php:214
 #: includes/customizer/trackship-customizer.php:793
-#: includes/smswoo/class-smswoo-admin.php:549 includes/views/shipments.php:32
+#: includes/smswoo/class-smswoo-admin.php:551 includes/views/shipments.php:32
 msgid "Delivery Failure"
 msgstr "प्रसव विफलता"
 
@@ -353,6 +426,10 @@ msgstr "गंतव्य विवरण"
 #: includes/views/front/preview_enhanced_tracking_page.php:117
 msgid "Details"
 msgstr "विवरण"
+
+#: includes/views/setup.php:31
+msgid "Disable Fulfillments"
+msgstr "Fulfillments निष्क्रिय करें"
 
 #: includes/customizer/trackship-customizer.php:360
 #: includes/customizer/trackship-customizer.php:379
@@ -380,7 +457,7 @@ msgstr "शिपिंग प्रदाता लोगो प्रदर्
 msgid "Display TrackShip branding"
 msgstr "ट्रैकशिप ब्रांडिंग प्रदर्शित करें"
 
-#: trackship-for-woocommerce.php:303 includes/views/header2.php:83
+#: trackship-for-woocommerce.php:312 includes/views/header2.php:85
 msgid "Docs"
 msgstr "डॉक्स"
 
@@ -404,12 +481,12 @@ msgstr "ईमेल शीर्षक"
 
 #: includes/customizer/trackship-customizer.php:302
 #: includes/customizer/trackship-customizer.php:303
-#: includes/views/notifications.php:16
+#: includes/views/notifications.php:17 includes/views/notifications.php:56
 #: includes/views/front/preview_tracking_page.php:205
 msgid "Email Notifications"
 msgstr "ईमेल सूचनाएं"
 
-#: includes/class-wc-trackship-front.php:968
+#: includes/class-wc-trackship-front.php:978
 msgid "Email notifications"
 msgstr "ईमेल सूचनाएं"
 
@@ -431,7 +508,7 @@ msgstr "ईमेल"
 msgid "Enable %1$s email"
 msgstr "%1$s ईमेल सक्षम करें"
 
-#: includes/class-wc-trackship-admin.php:422
+#: includes/class-wc-trackship-admin.php:425
 msgid ""
 "Enable a Custom Order Status Delivered that will be set automatically when "
 "all the order shipments are delivered"
@@ -439,7 +516,7 @@ msgstr ""
 "डिलीवर की गई कस्टम ऑर्डर स्थिति सक्षम करें जो सभी ऑर्डर शिपमेंट डिलीवर होने "
 "पर स्वचालित रूप से सेट हो जाएगी"
 
-#: includes/class-wc-trackship-admin.php:406
+#: includes/class-wc-trackship-admin.php:409
 msgid "Enable a shipment status filter on orders admin"
 msgstr "आदेश व्यवस्थापक पर शिपमेंट स्थिति फ़िल्टर सक्षम करें"
 
@@ -447,15 +524,15 @@ msgstr "आदेश व्यवस्थापक पर शिपमेंट
 msgid "Enable email"
 msgstr "ईमेल सक्षम करें"
 
-#: includes/views/setup.php:20
+#: includes/views/setup.php:17
 msgid "Enable Fulfillments"
 msgstr "पूर्ति सक्षम करें"
 
-#: includes/class-wc-trackship-admin.php:419
+#: includes/class-wc-trackship-admin.php:422
 msgid "Enable Order Delivery Automation"
 msgstr "ऑर्डर डिलीवरी ऑटोमेशन सक्षम करें"
 
-#: includes/class-wc-trackship-admin.php:429
+#: includes/class-wc-trackship-admin.php:432
 msgid "Enable shipment status notification for order created by Amazon"
 msgstr "Amazon द्वारा बनाए गए ऑर्डर के लिए शिपमेंट स्थिति सूचना सक्षम करें"
 
@@ -463,24 +540,20 @@ msgstr "Amazon द्वारा बनाए गए ऑर्डर के ल
 msgid "Enable tracking # link to carrier"
 msgstr "कैरियर के लिए # लिंक ट्रैकिंग सक्षम करें"
 
-#: includes/class-wc-trackship-admin.php:1210
+#: includes/class-wc-trackship-admin.php:1231
 msgid "Enable Tracking Page"
 msgstr "ट्रैकिंग पेज सक्षम करें"
 
-#: includes/class-wc-trackship-admin.php:412
+#: includes/class-wc-trackship-admin.php:415
 msgid "Enable unsubscribe (opt-out) from Shipment status notifications"
 msgstr "शिपमेंट स्थिति सूचनाओं से सदस्यता समाप्त (ऑप्ट-आउट) सक्षम करें"
 
-#: includes/views/setup.php:15
-msgid "Enable WooCommerce Fulfillments"
-msgstr "WooCommerce Fulfillments को सक्षम करें"
-
-#: includes/smswoo/class-smswoo-admin.php:383
-#: includes/smswoo/class-smswoo-admin.php:384
+#: includes/smswoo/class-smswoo-admin.php:385
+#: includes/smswoo/class-smswoo-admin.php:386
 msgid "Enter admin phone number with country code."
 msgstr "देश कोड के साथ व्यवस्थापक फ़ोन नंबर दर्ज करें."
 
-#: includes/class-wc-trackship-front.php:654
+#: includes/class-wc-trackship-front.php:664
 #: templates/emails/tracking-info.php:50
 #: includes/views/front/preview_enhanced_tracking_page.php:75
 #: includes/views/front/preview_tracking_page.php:87
@@ -488,13 +561,13 @@ msgstr "देश कोड के साथ व्यवस्थापक फ�
 msgid "Est. Delivery Date"
 msgstr "EST। डिलीवरी की तारीख"
 
-#: includes/class-wc-trackship-actions.php:634
-#: includes/class-wc-trackship-actions.php:684
-#: includes/class-wc-trackship-admin.php:1272
+#: includes/class-wc-trackship-actions.php:631
+#: includes/class-wc-trackship-actions.php:681
+#: includes/class-wc-trackship-admin.php:1293
 #: includes/class-wc-trackship-install.php:316
 #: includes/customizer/trackship-customizer.php:216
 #: includes/customizer/trackship-customizer.php:795
-#: includes/smswoo/class-smswoo-admin.php:551 includes/views/dashboard.php:50
+#: includes/smswoo/class-smswoo-admin.php:553 includes/views/dashboard.php:50
 #: includes/views/shipments.php:27
 msgid "Exception"
 msgstr "अपवाद"
@@ -503,19 +576,19 @@ msgstr "अपवाद"
 msgid "Exception shipment"
 msgstr "अपवाद शिपमेंट"
 
-#: includes/views/notifications.php:100
+#: includes/views/notifications.php:119
 msgid "Exception Shipments"
 msgstr "अपवाद शिपमेंट"
 
-#: includes/class-wc-trackship-admin.php:790
+#: includes/class-wc-trackship-admin.php:793
 msgid "Exception Shipments Notifications"
 msgstr "अपवाद शिपमेंट अधिसूचनाएँ"
 
-#: includes/class-wc-trackship-actions.php:729 includes/views/shipments.php:33
+#: includes/class-wc-trackship-actions.php:726 includes/views/shipments.php:33
 msgid "Expired"
 msgstr "समय सीमा समाप्त"
 
-#: includes/class-wc-trackship-actions.php:640
+#: includes/class-wc-trackship-actions.php:637
 msgid "Filter by shipment status"
 msgstr "शिपमेंट स्थिति के अनुसार फ़िल्टर करें"
 
@@ -523,25 +596,23 @@ msgstr "शिपमेंट स्थिति के अनुसार फ�
 msgid "Font color"
 msgstr "लिपि का रंग"
 
-#: includes/views/setup.php:11
+#: includes/views/setup.php:15
 msgid ""
-"Fulfillments let TrackShip read shipment data natively and keep tracking in "
-"sync."
-msgstr ""
-"फुलफिलमेंट्स ट्रैकशिप को शिपमेंट डेटा को मूल रूप से पढ़ने और ट्रैकिंग को "
-"सिंक्रनाइज़ रखने की अनुमति देते हैं।"
+"Fulfillments let TrackShip read shipment data natively from WooCommerce and "
+"keep tracking in sync automatically — no extra configuration needed."
+msgstr "Fulfillments TrackShip को WooCommerce से शिपमेंट डेटा सीधे पढ़ने और ट्रैकिंग को स्वचालित रूप से सिंक रखने देता है — किसी अतिरिक्त कॉन्फ़िगरेशन की आवश्यकता नहीं।"
 
 #: includes/customizer/trackship-customizer.php:709
 msgid "General options"
 msgstr "आम विकल्प"
 
-#: includes/views/settings.php:44 includes/views/settings.php:64
+#: includes/views/settings.php:45 includes/views/settings.php:98
 msgid "General Settings"
 msgstr "सामान्य सेटिंग्स"
 
-#: includes/class-wc-trackship-actions.php:557
-#: includes/class-wc-trackship-actions.php:979
-#: includes/class-wc-trackship-admin.php:554 includes/views/tools.php:14
+#: includes/class-wc-trackship-actions.php:554
+#: includes/class-wc-trackship-actions.php:976
+#: includes/class-wc-trackship-admin.php:557 includes/views/tools.php:14
 msgid "Get Shipment Status"
 msgstr "शिपमेंट स्थिति प्राप्त करें"
 
@@ -549,12 +620,26 @@ msgstr "शिपमेंट स्थिति प्राप्त करे
 msgid "Get shipment status"
 msgstr "शिपमेंट स्थिति प्राप्त करें"
 
-#: includes/views/setup.php:18
+#: includes/views/trackship-integration.php:19
+msgid "Get started for Free"
+msgstr "मुफ़्त में शुरू करें"
+
+#: includes/views/notifications.php:36 includes/views/settings.php:69
+msgid "Get Support"
+msgstr "सहायता प्राप्त करें"
+
+#: includes/views/trackship-integration.php:90
 msgid ""
-"Heads up: This is a one-way step. You must enable Fulfillments to continue."
-msgstr ""
-"ध्यान दें: यह एकतरफा प्रक्रिया है। आगे बढ़ने के लिए आपको फुलफिलमेंट्स को "
-"सक्षम करना होगा।"
+"Give customers a branded tracking page to follow their shipment in real time."
+msgstr "ग्राहकों को रीयल टाइम में शिपमेंट फॉलो करने के लिए ब्रांडेड ट्रैकिंग पेज दें।"
+
+#: includes/views/map-providers.php:84
+msgid "Go to AST PRO Shipping Providers"
+msgstr "AST PRO शिपिंग प्रदाताओं पर जाएं"
+
+#: includes/smswoo/admin-html/settings_tab.php:30
+msgid "Go to SMS for WooCommerce Settings"
+msgstr "SMS for WooCommerce सेटिंग्स पर जाएं"
 
 #: includes/class-wc-trackship-install.php:338
 #, php-format
@@ -587,13 +672,13 @@ msgid "Hide tracking events"
 msgstr "ट्रैकिंग ईवेंट छुपाएं"
 
 #. %s: search for a tag
-#: includes/smswoo/class-smswoo-admin.php:247
-#: includes/smswoo/class-smswoo-admin.php:252
-#: includes/smswoo/class-smswoo-admin.php:257
-#: includes/smswoo/class-smswoo-admin.php:262
-#: includes/smswoo/class-smswoo-admin.php:267
-#: includes/smswoo/class-smswoo-admin.php:272
-#: includes/smswoo/class-smswoo-admin.php:277
+#: includes/smswoo/class-smswoo-admin.php:249
+#: includes/smswoo/class-smswoo-admin.php:254
+#: includes/smswoo/class-smswoo-admin.php:259
+#: includes/smswoo/class-smswoo-admin.php:264
+#: includes/smswoo/class-smswoo-admin.php:269
+#: includes/smswoo/class-smswoo-admin.php:274
+#: includes/smswoo/class-smswoo-admin.php:279
 #, php-format
 msgid "How to find your %s credential"
 msgstr "अपना %s क्रेडेंशियल कैसे खोजें"
@@ -603,7 +688,7 @@ msgstr "अपना %s क्रेडेंशियल कैसे खोज
 msgid "Icons"
 msgstr "माउस"
 
-#: includes/class-wc-trackship-admin.php:441
+#: includes/class-wc-trackship-admin.php:444
 msgid ""
 "If you disable it, TrackShip emails will use the WooCommerce default design "
 "instead of the Villa theme's customized email layout."
@@ -611,35 +696,22 @@ msgstr ""
 "यदि आप इसे अक्षम करते हैं, तो ट्रैकशिप ईमेल विला थीम के अनुकूलित ईमेल लेआउट "
 "के बजाय WooCommerce डिफ़ॉल्ट डिज़ाइन का उपयोग करेंगे।"
 
-#: includes/class-wc-trackship-actions.php:626
-#: includes/class-wc-trackship-actions.php:663
-#: includes/class-wc-trackship-admin.php:1242
+#: includes/class-wc-trackship-actions.php:623
+#: includes/class-wc-trackship-actions.php:660
+#: includes/class-wc-trackship-admin.php:1263
 #: includes/class-wc-trackship-install.php:311
 #: includes/customizer/trackship-customizer.php:211
 #: includes/customizer/trackship-customizer.php:790
-#: includes/smswoo/class-smswoo-admin.php:546 includes/views/dashboard.php:45
+#: includes/smswoo/class-smswoo-admin.php:548 includes/views/dashboard.php:45
 #: includes/views/shipments.php:24
 msgid "In Transit"
 msgstr "रास्ते में"
 
-#: includes/views/dashboard.php:239
-msgid ""
-"Include shipment tracking details in your WooCommerce orders, enabling "
-"customers to effortlessly monitor their orders. Shipment tracking "
-"information will be accessible within customers' accounts, located in the "
-"order section, and will also be included in the WooCommerce order completion"
-" email."
-msgstr ""
-"अपने WooCommerce ऑर्डर में शिपमेंट ट्रैकिंग विवरण शामिल करें, जिससे ग्राहक "
-"आसानी से अपने ऑर्डर की निगरानी कर सकें। शिपमेंट ट्रैकिंग जानकारी ऑर्डर "
-"अनुभाग में स्थित ग्राहकों के खातों में पहुंच योग्य होगी, और WooCommerce "
-"ऑर्डर पूर्णता ईमेल में भी शामिल की जाएगी।"
+#: trackship-for-woocommerce.php:139
+msgid "Install Shipment Tracking extension"
+msgstr "शिपमेंट ट्रैकिंग एक्सटेंशन इंस्टॉल करें"
 
-#: includes/views/dashboard.php:242
-msgid "Install Shipment Tracking plugin"
-msgstr "शिपमेंट ट्रैकिंग प्लगइन स्थापित करें"
-
-#: includes/class-wc-trackship-actions.php:720
+#: includes/class-wc-trackship-actions.php:717
 msgid "Insufficient Balance"
 msgstr "अपर्याप्त शेषराशि"
 
@@ -647,12 +719,20 @@ msgstr "अपर्याप्त शेषराशि"
 msgid "Integrations"
 msgstr "एकीकरण"
 
-#: includes/class-wc-trackship-actions.php:702 includes/views/shipments.php:39
+#: includes/class-wc-trackship-actions.php:699 includes/views/shipments.php:39
 msgid "Invalid Carrier"
 msgstr "अमान्य वाहक"
 
-#: includes/class-wc-trackship-actions.php:635
-#: includes/class-wc-trackship-actions.php:699 includes/views/shipments.php:38
+#: includes/class-wc-trackship-front.php:136
+msgid "Invalid order key."
+msgstr "अमान्य ऑर्डर कुंजी।"
+
+#: includes/class-wc-trackship-front.php:129
+msgid "Invalid order."
+msgstr "अमान्य ऑर्डर।"
+
+#: includes/class-wc-trackship-actions.php:632
+#: includes/class-wc-trackship-actions.php:696 includes/views/shipments.php:38
 msgid "Invalid Tracking"
 msgstr "अमान्य ट्रैकिंग"
 
@@ -662,18 +742,22 @@ msgstr "अमान्य ट्रैकिंग"
 msgid "Items in this shipment"
 msgstr "इस शिपमेंट में आइटम"
 
-#: includes/class-wc-trackship-front.php:703
+#: includes/class-wc-trackship-front.php:713
 #: includes/views/front/preview_enhanced_tracking_page.php:83
 msgid "Journey"
 msgstr "यात्रा"
 
-#: includes/smswoo/class-smswoo-admin.php:283
+#: includes/smswoo/class-smswoo-admin.php:285
 msgid "Key"
 msgstr "चाबी"
 
-#: includes/class-wc-trackship-actions.php:696 includes/views/shipments.php:37
+#: includes/class-wc-trackship-actions.php:693 includes/views/shipments.php:37
 msgid "Label Cancelled"
 msgstr "लेबल रद्द किया गया"
+
+#: includes/views/dashboard.php:388
+msgid "Last 12 months"
+msgstr "अंतिम 12 महीने"
 
 #: includes/views/dashboard.php:178
 msgid "Last 30 days"
@@ -683,7 +767,7 @@ msgstr "पिछले 30 दिनों में"
 msgid "Last 60 days"
 msgstr "पिछले 60 दिन"
 
-#: includes/class-wc-trackship-actions.php:930
+#: includes/class-wc-trackship-actions.php:927
 msgid "Last event date: "
 msgstr "अंतिम घटना तिथि:"
 
@@ -691,7 +775,7 @@ msgstr "अंतिम घटना तिथि:"
 msgid "Late shipment"
 msgstr "देर से शिपमेंट"
 
-#: includes/views/notifications.php:72 includes/views/shipments.php:34
+#: includes/views/notifications.php:104 includes/views/shipments.php:34
 msgid "Late Shipments"
 msgstr "देर से शिपमेंट"
 
@@ -699,7 +783,7 @@ msgstr "देर से शिपमेंट"
 msgid "Late Shipments for last 30 days"
 msgstr "पिछले 30 दिनों में देरी से शिपमेंट"
 
-#: includes/class-wc-trackship-admin.php:789
+#: includes/class-wc-trackship-admin.php:792
 msgid "Late Shipments Notifications"
 msgstr "देर से शिपमेंट सूचनाएं"
 
@@ -711,7 +795,12 @@ msgstr "नवीनतम घटना"
 msgid "Latest Event Date"
 msgstr "नवीनतम घटना तिथि"
 
-#: includes/views/setup.php:12
+#: includes/views/notifications.php:30 includes/views/settings.php:63
+msgid "Learn how to configure TrackShip for best results."
+msgstr "सर्वोत्तम परिणामों के लिए TrackShip को कॉन्फ़िगर करना सीखें।"
+
+#: trackship-for-woocommerce.php:141 includes/views/setup.php:18
+#: includes/views/setup.php:32
 msgid "Learn more →"
 msgstr "और जानें →"
 
@@ -724,12 +813,12 @@ msgstr "कड़ियाँ रंग"
 msgid "Logs"
 msgstr "लॉग्स"
 
-#: includes/views/map-providers.php:9 includes/views/settings.php:56
+#: includes/views/map-providers.php:11 includes/views/settings.php:57
 #| msgid "Map Shipping Providers"
 msgid "Map Shipping Carriers"
 msgstr "मानचित्र नौवहन प्रदाता"
 
-#: includes/class-wc-trackship-admin.php:739
+#: includes/class-wc-trackship-admin.php:742
 msgid "Mark order as delivered"
 msgstr "ऑर्डर को डिलीवर के रूप में चिह्नित करें"
 
@@ -749,13 +838,13 @@ msgstr "महीना आज तक"
 msgid "More info"
 msgstr "और जानकारी"
 
-#: includes/class-wc-trackship-actions.php:426
-#: includes/class-wc-trackship-actions.php:939
-#: includes/html/class-wc-trackship-html.php:130
+#: includes/class-wc-trackship-actions.php:423
+#: includes/class-wc-trackship-actions.php:936
+#: includes/html/class-wc-trackship-html.php:137
 msgid "more info"
 msgstr "और जानकारी"
 
-#: includes/views/dashboard.php:315
+#: includes/views/dashboard.php:333
 msgid "No action needed for Shipments"
 msgstr "शिपमेंट के लिए किसी कार्रवाई की आवश्यकता नहीं है"
 
@@ -772,6 +861,14 @@ msgstr "कोई जवाब नहीं"
 msgid "No answer code"
 msgstr "कोई उत्तर कोड नहीं"
 
+#: includes/views/dashboard.php:430 includes/views/dashboard.php:478
+msgid "No carrier data yet."
+msgstr "अभी तक कोई वाहक डेटा नहीं।"
+
+#: includes/views/dashboard.php:446
+msgid "No destination data yet."
+msgstr "अभी तक कोई गंतव्य डेटा नहीं।"
+
 #: includes/smswoo/services/class-smswoo-twilio.php:183
 msgid "No response code"
 msgstr "कोई प्रतिक्रिया कोड नहीं"
@@ -784,24 +881,24 @@ msgstr "कोई प्रतिक्रिया कोड नहीं"
 msgid "Notifications"
 msgstr "सूचनाएं"
 
-#: includes/class-wc-trackship-admin.php:830
+#: includes/class-wc-trackship-admin.php:837
 msgid "Notifications detail"
 msgstr "अधिसूचना विवरण"
 
-#: includes/smswoo/class-smswoo-admin.php:311
+#: includes/smswoo/class-smswoo-admin.php:313
 msgid "Notifications Type (SMS/WhatsApp)"
 msgstr "अधिसूचना प्रकार (एसएमएस/व्हाट्सएप)"
 
-#: includes/class-wc-trackship-admin.php:456
+#: includes/class-wc-trackship-admin.php:459
 msgid "Number of days for late shipments"
 msgstr "देर से शिपमेंट के लिए दिनों की संख्या"
 
-#: includes/class-wc-trackship-actions.php:666
-#: includes/class-wc-trackship-admin.php:1266
+#: includes/class-wc-trackship-actions.php:663
+#: includes/class-wc-trackship-admin.php:1287
 #: includes/class-wc-trackship-install.php:315
 #: includes/customizer/trackship-customizer.php:215
 #: includes/customizer/trackship-customizer.php:794
-#: includes/smswoo/class-smswoo-admin.php:550 includes/views/dashboard.php:51
+#: includes/smswoo/class-smswoo-admin.php:552 includes/views/dashboard.php:51
 #: includes/views/shipments.php:28
 msgid "On Hold"
 msgstr "होल्ड पर"
@@ -810,13 +907,17 @@ msgstr "होल्ड पर"
 msgid "On Hold shipment"
 msgstr "शिपमेंट रुका हुआ है"
 
-#: includes/views/notifications.php:128
+#: includes/views/notifications.php:134
 msgid "On Hold Shipments"
 msgstr "होल्ड शिपमेंट पर"
 
-#: includes/class-wc-trackship-admin.php:791
+#: includes/class-wc-trackship-admin.php:794
 msgid "On Hold Shipments Notifications"
 msgstr "होल्ड शिपमेंट अधिसूचनाएँ"
+
+#: includes/views/dashboard.php:461
+msgid "On-time"
+msgstr "समय पर"
 
 #: includes/views/logs.php:50 includes/views/shipments.php:160
 #: includes/views/front/tracking_page_header.php:43
@@ -843,11 +944,15 @@ msgstr "ईमेल ऑर्डर करें"
 msgid "Order ID"
 msgstr "आदेश ID"
 
-#: includes/class-wc-trackship-actions.php:732
+#: includes/class-wc-trackship-actions.php:729
 msgid "Order id not found"
 msgstr "आदेश आईडी नहीं मिला"
 
-#: includes/class-wc-trackship-admin.php:834
+#: includes/views/logs.php:37
+msgid "Order id, Email, Phone number"
+msgstr "ऑर्डर आईडी, ईमेल, फ़ोन नंबर"
+
+#: includes/class-wc-trackship-admin.php:841
 #: templates/emails/exception-shipment-email.php:16
 #: templates/emails/late-shipment-email.php:16
 #: templates/emails/on-hold-shipment-email.php:16
@@ -855,7 +960,7 @@ msgstr "आदेश आईडी नहीं मिला"
 msgid "Order Number"
 msgstr "क्रम संख्या"
 
-#: includes/class-wc-trackship-front.php:362
+#: includes/class-wc-trackship-front.php:372
 msgid "Order Processing"
 msgstr "आदेश प्रसंस्करण"
 
@@ -869,55 +974,59 @@ msgstr "ऑर्डर ट्रैकिंग नंबर।"
 msgid "Origin Details"
 msgstr "मूल विवरण"
 
-#: includes/html/class-wc-trackship-html.php:124
+#: includes/html/class-wc-trackship-html.php:131
 #: includes/views/dashboard.php:66 includes/views/dashboard.php:86
 msgid "Other"
 msgstr "अन्य"
 
-#: includes/class-wc-trackship-actions.php:628
-#: includes/class-wc-trackship-actions.php:675
-#: includes/class-wc-trackship-admin.php:1254
+#: includes/class-wc-trackship-actions.php:625
+#: includes/class-wc-trackship-actions.php:672
+#: includes/class-wc-trackship-admin.php:1275
 #: includes/class-wc-trackship-install.php:313
 #: includes/customizer/trackship-customizer.php:213
 #: includes/customizer/trackship-customizer.php:792
-#: includes/smswoo/class-smswoo-admin.php:548 includes/views/shipments.php:25
+#: includes/smswoo/class-smswoo-admin.php:550 includes/views/shipments.php:25
 msgid "Out For Delivery"
 msgstr "डिलिवरी के लिए रवाना"
 
-#: includes/class-wc-trackship-front.php:700
+#: includes/views/dashboard.php:46
+msgid "Out for Delivery"
+msgstr "डिलीवरी के लिए निकला"
+
+#: includes/class-wc-trackship-front.php:710
 #: includes/views/front/preview_enhanced_tracking_page.php:80
 msgid "Overview"
 msgstr "अवलोकन"
 
-#: includes/class-wc-trackship-actions.php:623
-#: includes/class-wc-trackship-actions.php:705 includes/views/shipments.php:42
+#: includes/class-wc-trackship-actions.php:620
+#: includes/class-wc-trackship-actions.php:702 includes/views/shipments.php:42
 msgid "Pending Update"
 msgstr "अद्यतन लंबित"
 
-#: includes/class-wc-trackship-actions.php:425
-#: includes/class-wc-trackship-actions.php:937
+#: includes/class-wc-trackship-actions.php:422
+#: includes/class-wc-trackship-actions.php:934
 #| msgid ""
-#| "Pending TrackShip is a temporary status that will display for a few minutes "
-#| "until we update the order with the first tracking event from the shipping "
-#| "provider. Please refresh the orders admin in 2-3 minutes."
+#| "Pending TrackShip is a temporary status that will display for a few "
+#| "minutes until we update the order with the first tracking event from the "
+#| "shipping provider. Please refresh the orders admin in 2-3 minutes."
 msgid ""
 "Pending Update is a temporary status that will display for a few minutes "
 "until we update the order with the first tracking event from the shipping "
 "provider. Please refresh the orders admin in 2-3 minutes."
 msgstr ""
-"लंबित अपडेट एक अस्थायी स्थिति है जो कुछ मिनटों तक प्रदर्शित होगी जब तक कि हम"
-" शिपिंग प्रदाता से पहले ट्रैकिंग इवेंट के साथ ऑर्डर अपडेट नहीं कर देते। "
-"कृपया 2-3 मिनट में ऑर्डर व्यवस्थापक को ताज़ा करें।"
+"लंबित अपडेट एक अस्थायी स्थिति है जो कुछ मिनटों तक प्रदर्शित होगी जब तक कि हम "
+"शिपिंग प्रदाता से पहले ट्रैकिंग इवेंट के साथ ऑर्डर अपडेट नहीं कर देते। कृपया "
+"2-3 मिनट में ऑर्डर व्यवस्थापक को ताज़ा करें।"
 
 #: includes/customizer/trackship-customizer.php:219
 msgid "Pickup Reminder"
 msgstr "पिकअप अनुस्मारक"
 
-#: includes/class-wc-trackship-admin.php:1291
+#: includes/class-wc-trackship-admin.php:1312
 msgid "Pickup reminder"
 msgstr "पिकअप अनुस्मारक"
 
-#: includes/smswoo/class-smswoo-admin.php:228
+#: includes/smswoo/class-smswoo-admin.php:230
 #| msgid "Please choose SMS provider from Dropown."
 msgid "Please choose SMS gateway from Dropown."
 msgstr "कृपया ड्रॉपडाउन से एसएमएस प्रदाता चुनें।"
@@ -936,33 +1045,32 @@ msgstr ""
 "कृपया WooCommerce के लिए ट्रैकशिप के लिए %1$sWooCommerce%2$s स्थापित और "
 "सक्रिय करें!"
 
-#: includes/views/map-providers.php:56
-#: includes/smswoo/admin-html/settings_tab.php:20
-msgid "Please note: "
-msgstr "कृपया ध्यान दें:"
-
 #: includes/class-wc-trackship-admin.php:125
 msgid "Please refresh the page and try again."
 msgstr "पृष्ठ को रीफ्रेश करें और पुन: प्रयास करें।"
 
-#: includes/class-wc-trackship-front.php:366
+#: includes/class-wc-trackship-front.php:376
 msgid "Please try again after you receive the shipping confirmation email."
 msgstr "कृपया शिपिंग पुष्टिकरण ईमेल प्राप्त करने के बाद पुन: प्रयास करें।"
 
-#: includes/class-wc-trackship-front.php:557
-#: includes/class-wc-trackship-front.php:622
+#: includes/class-wc-trackship-front.php:567
+#: includes/class-wc-trackship-front.php:632
 #: templates/tracking/tracking-form.php:127
 #: includes/views/front/preview_enhanced_tracking_page.php:164
 #: includes/views/front/preview_tracking_page.php:216
 msgid "Powered by "
 msgstr "द्वारा संचालित"
 
-#: includes/class-wc-trackship-actions.php:625
-#: includes/class-wc-trackship-actions.php:669 includes/views/shipments.php:26
+#: includes/class-wc-trackship-actions.php:622
+#: includes/class-wc-trackship-actions.php:666 includes/views/shipments.php:26
 msgid "Pre Transit"
 msgstr "पूर्व पारगमन"
 
-#: includes/class-wc-trackship-admin.php:785
+#: includes/views/dashboard.php:47
+msgid "Pre-Transit"
+msgstr "पूर्व-ट्रांज़िट"
+
+#: includes/class-wc-trackship-admin.php:788
 msgid "Priority Support"
 msgstr "प्राथमिकता समर्थन"
 
@@ -971,43 +1079,57 @@ msgstr "प्राथमिकता समर्थन"
 msgid "Progress bar"
 msgstr "प्रगति पट्टी"
 
-#: includes/class-wc-trackship-admin.php:818
+#: includes/class-wc-trackship-admin.php:821
 msgid "Providers list Updated"
 msgstr "प्रदाताओं की सूची अपडेट की गई"
 
-#: includes/class-wc-trackship-admin.php:461
-#: includes/class-wc-trackship-admin.php:483
-#: includes/class-wc-trackship-admin.php:505
+#: includes/views/notifications.php:29 includes/views/settings.php:62
+msgid "Quick Help"
+msgstr "त्वरित सहायता"
+
+#: includes/class-wc-trackship-admin.php:464
+#: includes/class-wc-trackship-admin.php:486
+#: includes/class-wc-trackship-admin.php:508
 msgid "Recipient(s)"
 msgstr "प्राप्तकर्ता"
 
-#: includes/class-wc-trackship-admin.php:787
+#: includes/class-wc-trackship-admin.php:790
 msgid "Remove TrackShip’s branding"
 msgstr "ट्रैकशिप की ब्रांडिंग हटाएं"
 
-#: includes/class-wc-trackship-actions.php:633
-#: includes/class-wc-trackship-actions.php:681
-#: includes/class-wc-trackship-admin.php:1278
+#: includes/class-wc-trackship-actions.php:630
+#: includes/class-wc-trackship-actions.php:678
+#: includes/class-wc-trackship-admin.php:1299
 #: includes/class-wc-trackship-install.php:317
 #: includes/customizer/trackship-customizer.php:217
 #: includes/customizer/trackship-customizer.php:796
-#: includes/smswoo/class-smswoo-admin.php:552 includes/views/shipments.php:30
+#: includes/smswoo/class-smswoo-admin.php:554 includes/views/shipments.php:30
 msgid "Return To Sender"
+msgstr "प्रेषक को वापस करें"
+
+#: includes/views/dashboard.php:49
+msgid "Return to Sender"
 msgstr "प्रेषक को वापस करें"
 
 #: includes/views/dashboard.php:149
 msgid "Return To Sender for last 30 days"
 msgstr "पिछले 30 दिनों के लिए प्रेषक के पास लौटें"
 
-#: trackship-for-woocommerce.php:305
+#: trackship-for-woocommerce.php:313
 msgid "Review"
 msgstr "समीक्षा"
 
-#: includes/smswoo/class-smswoo-admin.php:506
-#: includes/views/notifications.php:75 includes/views/notifications.php:103
-#: includes/views/notifications.php:131
+#: includes/smswoo/class-smswoo-admin.php:508
+#: includes/views/notifications.php:106 includes/views/notifications.php:121
+#: includes/views/notifications.php:136
 msgid "Save & close"
 msgstr "सहेजे बंद करें"
+
+#: includes/views/map-providers.php:15 includes/views/settings.php:102
+#: includes/views/tracking-page.php:13
+#: includes/smswoo/admin-html/settings_tab.php:13
+msgid "Save changes"
+msgstr "परिवर्तन सहेजें"
 
 #: includes/customizer/trackship-customizer.php:104
 msgid "Saved"
@@ -1021,36 +1143,41 @@ msgstr "खोज"
 msgid "Search by Tracking Number, Shipping carrier, Order number"
 msgstr "ट्रैकिंग नंबर, शिपिंग कैरियर, ऑर्डर नंबर द्वारा खोजें"
 
-#: includes/smswoo/class-smswoo-admin.php:290
+#: includes/smswoo/class-smswoo-admin.php:292
 msgid "Secret"
 msgstr "गुप्त"
 
-#: includes/class-wc-trackship-front.php:260
+#: includes/class-wc-trackship-front.php:270
 msgid "Security verification failed, please refresh page and try again."
-msgstr ""
-"सुरक्षा सत्यापन विफल, कृपया पृष्ठ को रीफ्रेश करें और पुनः प्रयास करें।"
+msgstr "सुरक्षा सत्यापन विफल, कृपया पृष्ठ को रीफ्रेश करें और पुनः प्रयास करें।"
 
-#: includes/class-wc-trackship-admin.php:916
-#: includes/class-wc-trackship-admin.php:979
+#: includes/class-wc-trackship-admin.php:923
+#: includes/class-wc-trackship-admin.php:989
 msgid "Select"
 msgstr "चुनना"
 
-#: includes/class-wc-trackship-admin.php:1216
+#: includes/class-wc-trackship-admin.php:1237
 msgid "Select tracking page:"
 msgstr "ट्रैकिंग पृष्ठ चुनें:"
 
-#: includes/class-wc-trackship-admin.php:467
-#: includes/class-wc-trackship-admin.php:489
-#: includes/class-wc-trackship-admin.php:511
+#: includes/class-wc-trackship-admin.php:470
+#: includes/class-wc-trackship-admin.php:492
+#: includes/class-wc-trackship-admin.php:514
 msgid "Send email at"
 msgstr "ईमेल भेजें"
 
-#: includes/class-wc-trackship-admin.php:1285
-#: includes/smswoo/class-smswoo-admin.php:499
+#: includes/class-wc-trackship-admin.php:1306
+#: includes/smswoo/class-smswoo-admin.php:501
 msgid "Send only when all shipments for the order are delivered"
 msgstr "केवल तभी भेजें जब ऑर्डर के लिए सभी शिपमेंट डिलीवर हो जाएं"
 
-#: includes/smswoo/class-smswoo-admin.php:374
+#: includes/views/trackship-integration.php:83
+msgid ""
+"Send proactive shipment status emails that reduce \"Where is my order?\" "
+"support tickets."
+msgstr "सक्रिय शिपमेंट स्टेटस ईमेल भेजें जो \"मेरा ऑर्डर कहाँ है?\" सपोर्ट टिकट कम करते हैं।"
+
+#: includes/smswoo/class-smswoo-admin.php:376
 msgid "Sender phone number / Sender ID"
 msgstr "प्रेषक फोन नंबर / प्रेषक आईडी"
 
@@ -1062,14 +1189,10 @@ msgstr "भेज दिया"
 msgid "Set Pickup reminder notifications(in days)"
 msgstr "पिकअप अनुस्मारक सूचनाएं सेट करें (दिनों में)"
 
-#: trackship-for-woocommerce.php:300 includes/class-wc-trackship-admin.php:220
+#: trackship-for-woocommerce.php:309 includes/class-wc-trackship-admin.php:220
 #: includes/views/content.php:13 includes/views/header2.php:55
 msgid "Settings"
 msgstr "समायोजन"
-
-#: includes/views/content.php:33
-msgid "Setup"
-msgstr "स्थापित करना"
 
 #: includes/views/shipments.php:170
 msgid "Ship City"
@@ -1088,7 +1211,7 @@ msgid "Ship to"
 msgstr "यहां भेजें"
 
 #. %s: search for a tag
-#: includes/class-wc-trackship-front.php:486
+#: includes/class-wc-trackship-front.php:496
 #, php-format
 msgid "Shipment %1$s"
 msgstr "शिपमेंट %1$s"
@@ -1098,19 +1221,22 @@ msgstr "शिपमेंट %1$s"
 msgid "Shipment Progress"
 msgstr "शिपमेंट प्रगति"
 
-#: includes/class-wc-trackship-actions.php:351
-#: includes/class-wc-trackship-admin.php:835 includes/views/logs.php:51
-#: includes/views/shipments.php:166
-#: templates/emails/late-shipment-email.php:17
+#: includes/views/dashboard.php:346
+msgid "Shipment Status"
+msgstr "शिपमेंट स्थिति"
+
+#: includes/class-wc-trackship-actions.php:348
+#: includes/class-wc-trackship-admin.php:842 includes/views/logs.php:51
+#: includes/views/shipments.php:166 templates/emails/late-shipment-email.php:17
 msgid "Shipment status"
 msgstr "शिपमेंट स्थिति"
 
-#: includes/class-wc-trackship-admin.php:214 includes/views/dashboard.php:379
+#: includes/class-wc-trackship-admin.php:214 includes/views/dashboard.php:369
 #: includes/views/header2.php:40
 msgid "Shipments"
 msgstr "लदान"
 
-#: includes/class-wc-trackship-admin.php:788
+#: includes/class-wc-trackship-admin.php:791
 msgid "Shipments Dashboard"
 msgstr "शिपमेंट डैशबोर्ड"
 
@@ -1119,11 +1245,15 @@ msgid ""
 "shipments from the last 30 days that haven't been automatically tracked. To "
 "start tracking these past orders, simply click here"
 msgstr ""
-"पिछले 30 दिनों के शिपमेंट जिन्हें स्वचालित रूप से ट्रैक नहीं किया गया है। इन"
-" पिछले ऑर्डर को ट्रैक करना शुरू करने के लिए, बस यहाँ क्लिक करें"
+"पिछले 30 दिनों के शिपमेंट जिन्हें स्वचालित रूप से ट्रैक नहीं किया गया है। इन "
+"पिछले ऑर्डर को ट्रैक करना शुरू करने के लिए, बस यहाँ क्लिक करें"
 
-#: includes/class-wc-trackship-actions.php:693
-#: includes/class-wc-trackship-actions.php:708
+#: includes/views/dashboard.php:387
+msgid "Shipments Over Time"
+msgstr "समय के साथ शिपमेंट"
+
+#: includes/class-wc-trackship-actions.php:690
+#: includes/class-wc-trackship-actions.php:705
 #: templates/emails/tracking-info.php:81
 #: includes/views/front/enhanced_tracking_events.php:18
 #: includes/views/front/tracking_page_header.php:64
@@ -1142,11 +1272,11 @@ msgstr "शिप किए गए उत्पाद हेडर टेक्�
 msgid "Shipping & Delivery"
 msgstr "शिपिंग और वितरण"
 
-#: includes/class-wc-trackship-admin.php:792
+#: includes/class-wc-trackship-admin.php:795
 msgid "Shipping & Delivery Analytics"
 msgstr "शिपिंग और डिलीवरी एनालिटिक्स"
 
-#: includes/views/dashboard.php:252
+#: includes/views/dashboard.php:270
 msgid "Shipping & Delivery Overview"
 msgstr "नौवहन और वितरण अवलोकन"
 
@@ -1168,14 +1298,13 @@ msgstr "शिपिंग वाहक"
 msgid "Shipping days"
 msgstr "शिपिंग दिन"
 
-#: includes/views/map-providers.php:24
 #: templates/emails/exception-shipment-email.php:17
 #: templates/emails/late-shipment-email.php:18
 #: templates/emails/on-hold-shipment-email.php:17
 msgid "Shipping provider"
 msgstr "शिपिंग प्रदाता"
 
-#: includes/class-wc-trackship-actions.php:738
+#: includes/class-wc-trackship-actions.php:735
 msgid "Shipping provider not found"
 msgstr "शिपिंग प्रदाता नहीं मिला"
 
@@ -1203,18 +1332,6 @@ msgstr "केवल आदेश विवरण दिखाएं"
 msgid "show only Tracking details"
 msgstr "केवल ट्रैकिंग विवरण दिखाएं"
 
-#. %s: search for a count
-#: includes/views/map-providers.php:58
-#, php-format
-msgid ""
-"Since AST PRO is installed, the shipping provider name mapping is done on "
-"the shipping provider settings (WooCommerce > Shipment Tracking > "
-"%1$sShipping Providers%2$s)"
-msgstr ""
-"चूंकि एएसटी प्रो स्थापित है, शिपिंग प्रदाता नाम मैपिंग शिपिंग प्रदाता "
-"सेटिंग्स पर किया जाता है (WooCommerce > शिपमेंट ट्रैकिंग > %1$sशिपिंग "
-"प्रदाता%2$s)"
-
 #: includes/customizer/trackship-customizer.php:415
 #: includes/customizer/trackship-customizer.php:651
 msgid "Single icon"
@@ -1224,25 +1341,29 @@ msgstr "सिंगल आइकन"
 msgid "SMS"
 msgstr "एसएमएस"
 
-#: includes/smswoo/class-smswoo-admin.php:227
-#: includes/smswoo/class-smswoo-admin.php:235
+#: includes/smswoo/class-smswoo-admin.php:229
+#: includes/smswoo/class-smswoo-admin.php:237
 msgid "SMS gateways"
 msgstr "एसएमएस गेटवे"
 
-#: includes/class-wc-trackship-admin.php:786
-#: includes/views/notifications.php:20
+#: includes/class-wc-trackship-admin.php:789
+#: includes/views/notifications.php:21 includes/views/notifications.php:150
 msgid "SMS Notifications"
 msgstr "एसएमएस सूचनाएं"
 
-#: includes/class-wc-trackship-front.php:972
+#: includes/class-wc-trackship-front.php:982
 #: includes/views/front/preview_tracking_page.php:209
 msgid "SMS notifications"
 msgstr "एसएमएस सूचनाएं"
 
-#: includes/class-wc-trackship-admin.php:1306 includes/views/settings.php:52
-#: includes/smswoo/admin-html/settings_tab.php:8
+#: includes/class-wc-trackship-admin.php:1327 includes/views/settings.php:53
+#: includes/smswoo/admin-html/settings_tab.php:9
 msgid "SMS Settings"
 msgstr "एसएमएस सेटिंग्स"
+
+#: includes/smswoo/admin-html/settings_tab.php:27
+msgid "SMS Settings managed by SMS for WooCommerce"
+msgstr "SMS सेटिंग्स SMS for WooCommerce द्वारा प्रबंधित हैं"
 
 #: includes/api/class-trackship-rest-api-controller.php:331
 msgid "Sorry, you are not allowed to create resources."
@@ -1257,25 +1378,25 @@ msgstr "क्षमा करें, आप संसाधनों को स
 msgid "Sorry, you cannot view this resource."
 msgstr "क्षमा करें, आप इस संसाधन को नहीं देख सकते."
 
-#: includes/class-wc-trackship-actions.php:726
+#: includes/class-wc-trackship-actions.php:723
 msgid "SSL Error"
 msgstr "एसएसएल त्रुटि"
 
-#: includes/class-wc-trackship-admin.php:793
+#: includes/class-wc-trackship-admin.php:796
 #| msgid "Starting from $11 a month"
 msgid "Starting from $9 a month"
 msgstr "9 डॉलर प्रति माह से शुरू"
 
-#: includes/class-wc-trackship-admin.php:840 includes/views/logs.php:55
+#: includes/class-wc-trackship-admin.php:847 includes/views/logs.php:55
 msgid "Status"
 msgstr "स्थिति"
 
-#: includes/class-wc-trackship-actions.php:747
+#: includes/class-wc-trackship-actions.php:744
 #| msgid "Store is conneted with different account"
 msgid "Store is connected with different account"
 msgstr "स्टोर अलग खाते से जुड़ा हुआ है"
 
-#: includes/class-wc-trackship-actions.php:744
+#: includes/class-wc-trackship-actions.php:741
 msgid "Store is not Connected to TrackShip"
 msgstr "स्टोर ट्रैकशिप से कनेक्ट नहीं है"
 
@@ -1283,12 +1404,20 @@ msgstr "स्टोर ट्रैकशिप से कनेक्ट न�
 msgid "Style & Colors"
 msgstr "शैली और रंग"
 
-#: includes/class-wc-trackship-admin.php:812
-#: includes/class-wc-trackship-admin.php:820
+#: includes/views/header2.php:89
+msgid "Support"
+msgstr "सहायता"
+
+#: includes/views/map-providers.php:71
+msgid "Sync providers"
+msgstr "प्रदाता सिंक करें"
+
+#: includes/class-wc-trackship-admin.php:815
+#: includes/class-wc-trackship-admin.php:823
 msgid "Sync TrackShip Providers"
 msgstr "सिंक ट्रैकशिप प्रदाता"
 
-#: includes/class-wc-trackship-admin.php:816
+#: includes/class-wc-trackship-admin.php:819
 msgid ""
 "Syncing the TrackShip providers list add or updates the pre-set TrackShip "
 "providers and will not effect custom shipping providers."
@@ -1300,15 +1429,15 @@ msgstr ""
 msgid "Tabs display"
 msgstr "टैब प्रदर्शित करते हैं"
 
-#: includes/smswoo/class-smswoo-admin.php:521
+#: includes/smswoo/class-smswoo-admin.php:523
 msgid "Template ID"
 msgstr "टेम्पलेट आईडी"
 
-#: includes/smswoo/class-smswoo-admin.php:524
+#: includes/smswoo/class-smswoo-admin.php:526
 msgid "Template Language"
 msgstr "टेम्पलेट भाषा"
 
-#: includes/smswoo/class-smswoo-admin.php:522
+#: includes/smswoo/class-smswoo-admin.php:524
 msgid "Template variables"
 msgstr "टेम्पलेट चर"
 
@@ -1333,8 +1462,8 @@ msgstr "निम्नलिखित शिपमेंट देर से �
 msgid "The following shipments are On Hold:"
 msgstr "निम्नलिखित शिपमेंट होल्ड पर हैं:"
 
-#: includes/class-wc-trackship-front.php:284
 #: includes/class-wc-trackship-front.php:294
+#: includes/class-wc-trackship-front.php:304
 msgid ""
 "The order/shipment you're trying to track has not been shipped yet or the "
 "order number entered is incorrect."
@@ -1342,7 +1471,7 @@ msgstr ""
 "जिस ऑर्डर/शिपमेंट को आप ट्रैक करने का प्रयास कर रहे हैं, वह अभी तक शिप नहीं "
 "किया गया है या दर्ज किया गया ऑर्डर नंबर गलत है।"
 
-#: includes/class-wc-trackship-actions.php:544
+#: includes/class-wc-trackship-actions.php:541
 msgid ""
 "The shipment status updates will run in the background, please refresh the "
 "page in a few minutes."
@@ -1350,11 +1479,11 @@ msgstr ""
 "शिपमेंट स्थिति अपडेट पृष्ठभूमि में चलेंगे, कृपया कुछ मिनटों में पृष्ठ को "
 "रीफ्रेश करें।"
 
-#: includes/views/map-providers.php:22
+#: includes/views/map-providers.php:26
 msgid ""
 "This feature lets you align shipping providers from external shipping "
 "services with those on TrackShip. You can match the names of the Shipping "
-"Providers you receive from your shipping company with TrackShip’s provider "
+"Providers you receive from your shipping company with TrackShip's provider "
 "names."
 msgstr ""
 "यह सुविधा आपको बाहरी शिपिंग सेवाओं के शिपिंग प्रदाताओं को ट्रैकशिप पर मौजूद "
@@ -1362,15 +1491,15 @@ msgstr ""
 "प्राप्त शिपिंग प्रदाताओं के नामों को ट्रैकशिप के प्रदाता नामों से मिला सकते "
 "हैं।"
 
-#: includes/smswoo/class-smswoo-admin.php:375
+#: includes/smswoo/class-smswoo-admin.php:377
 msgid "This field appears as a from or Sender ID"
 msgstr "यह फ़ील्ड प्रेषक या प्रेषक आईडी के रूप में प्रकट होता है"
 
-#: includes/class-wc-trackship-admin.php:837 includes/views/logs.php:52
+#: includes/class-wc-trackship-admin.php:844 includes/views/logs.php:52
 msgid "Time"
 msgstr "समय"
 
-#: includes/class-wc-trackship-admin.php:838 includes/views/logs.php:53
+#: includes/class-wc-trackship-admin.php:845 includes/views/logs.php:53
 msgid "To"
 msgstr "प्रति"
 
@@ -1390,14 +1519,22 @@ msgstr ""
 msgid "Tools"
 msgstr "उपकरण"
 
+#: includes/views/dashboard.php:418
+msgid "Top Carriers"
+msgstr "शीर्ष वाहक"
+
+#: includes/views/dashboard.php:434
+msgid "Top Destinations"
+msgstr "शीर्ष गंतव्य"
+
 #: includes/views/dashboard.php:155
 msgid "Total Shipments"
 msgstr "कुल शिपमेंट"
 
-#: includes/class-wc-trackship-actions.php:417
-#: includes/class-wc-trackship-actions.php:423
-#: includes/class-wc-trackship-actions.php:935
-#: includes/class-wc-trackship-actions.php:946
+#: includes/class-wc-trackship-actions.php:414
+#: includes/class-wc-trackship-actions.php:420
+#: includes/class-wc-trackship-actions.php:932
+#: includes/class-wc-trackship-actions.php:943
 msgid "Track"
 msgstr "संकरा रास्ता"
 
@@ -1423,7 +1560,7 @@ msgstr "अपने आर्डर को ट्रेक करें"
 msgid "Tracker type"
 msgstr "ट्रैकर प्रकार"
 
-#: includes/class-wc-trackship-admin.php:1305
+#: includes/class-wc-trackship-admin.php:1326
 msgid "Tracking Analytics"
 msgstr "ट्रैकिंग एनालिटिक्स"
 
@@ -1435,7 +1572,7 @@ msgstr "ट्रैकिंग इवेंट डिस्प्ले"
 msgid "Tracking information is not available, please try again later."
 msgstr "ट्रैकिंग जानकारी उपलब्ध नहीं है, कृपया बाद में पुन: प्रयास करें।"
 
-#: includes/class-wc-trackship-admin.php:399
+#: includes/class-wc-trackship-admin.php:402
 msgid ""
 "Tracking is sent to TrackShip when the order change to the selected status. "
 "Choose default (Completed/Shipped or Partially Shipped) or custom statuses "
@@ -1461,7 +1598,7 @@ msgstr "ट्रैकिंग मुद्दे"
 msgid "Tracking Issues for last 30 days"
 msgstr "पिछले 30 दिनों की ट्रैकिंग संबंधी समस्याएँ"
 
-#: includes/class-wc-trackship-admin.php:836 includes/views/shipments.php:164
+#: includes/class-wc-trackship-admin.php:843 includes/views/shipments.php:164
 #: templates/emails/exception-shipment-email.php:18
 #: templates/emails/late-shipment-email.php:19
 #: templates/emails/on-hold-shipment-email.php:18
@@ -1470,13 +1607,14 @@ msgstr "पिछले 30 दिनों की ट्रैकिंग स�
 msgid "Tracking Number"
 msgstr "ट्रैकिंग नंबर"
 
-#: includes/class-wc-trackship-actions.php:735
+#: includes/class-wc-trackship-actions.php:732
 msgid "Tracking number not found"
 msgstr "ट्रैकिंग नंबर नहीं मिला"
 
 #: includes/customizer/trackship-customizer.php:332
 #: includes/customizer/trackship-customizer.php:616
-#: includes/views/settings.php:48 includes/views/tracking-page.php:8
+#: includes/views/settings.php:49 includes/views/tracking-page.php:9
+#: includes/views/trackship-integration.php:89
 msgid "Tracking Page"
 msgstr "ट्रैकिंग पेज"
 
@@ -1501,18 +1639,28 @@ msgstr ""
 "स्वचालित करता है और आपको अपने ग्राहकों को एक बेहतर पोस्ट-खरीद अनुभव प्रदान "
 "करने की अनुमति देता है।"
 
-#: includes/views/setup.php:10
-msgid "TrackShip is compatible with WooCommerce Fulfillments"
-msgstr "TrackShip, WooCommerce Fulfillments के साथ संगत है।"
+#: trackship-for-woocommerce.php:135
+msgid "TrackShip for WooCommerce requires a Shipment Tracking extension."
+msgstr "TrackShip for WooCommerce के लिए शिपमेंट ट्रैकिंग एक्सटेंशन आवश्यक है।"
+
+#: includes/views/setup.php:29
+msgid ""
+"TrackShip is syncing fulfillment-based shipments automatically. All new "
+"fulfillments will be tracked in real time."
+msgstr "TrackShip फुलफिलमेंट-आधारित शिपमेंट स्वचालित रूप से सिंक कर रहा है। सभी नए फुलफिलमेंट रीयल टाइम में ट्रैक होंगे।"
 
 #: includes/views/logs.php:13
 msgid "TrackShip logs table does not exist, Please try after few minutes"
 msgstr ""
 "TrackShip लॉग तालिका मौजूद नहीं है, कृपया कुछ मिनटों के बाद प्रयास करें"
 
-#: includes/views/map-providers.php:25
-msgid "TrackShip Provider"
-msgstr "ट्रैकशिप प्रदाता"
+#: includes/views/header2.php:71
+msgid "TrackShip navigation"
+msgstr "TrackShip नेविगेशन"
+
+#: includes/views/map-providers.php:33
+msgid "TrackShip provider"
+msgstr "TrackShip प्रदाता"
 
 #: includes/views/dashboard.php:15 includes/views/shipments.php:8
 msgid "TrackShip Shipments database table does not exist."
@@ -1522,35 +1670,30 @@ msgstr "ट्रैकशिप शिपमेंट्स डेटाबे�
 msgid "TrackShip Shipments meta database table does not exist."
 msgstr "ट्रैकशिप शिपमेंट मेटा डेटाबेस तालिका मौजूद नहीं है."
 
-#: includes/views/setup.php:24
-msgid "TrackShip will now sync fulfillment-based shipments automatically."
-msgstr ""
-"TrackShip अब पूर्ति-आधारित शिपमेंट को स्वचालित रूप से सिंक्रनाइज़ करेगा।"
-
-#: includes/class-wc-trackship-admin.php:839 includes/views/logs.php:54
+#: includes/class-wc-trackship-admin.php:846 includes/views/logs.php:54
 msgid "Type"
 msgstr "प्रकार"
 
-#: includes/class-wc-trackship-front.php:208
-#: includes/class-wc-trackship-front.php:226
+#: includes/class-wc-trackship-front.php:218
+#: includes/class-wc-trackship-front.php:236
 msgid "Unable to locate the order."
 msgstr "आदेश का पता लगाने में असमर्थ।"
 
-#: includes/class-wc-trackship-front.php:214
+#: includes/class-wc-trackship-front.php:224
 msgid "Unable to locate the order. or Invalid order key"
 msgstr "आदेश का पता लगाने में असमर्थ। या अमान्य आदेश कुंजी"
 
-#: includes/class-wc-trackship-actions.php:714
+#: includes/class-wc-trackship-actions.php:711
 msgid "Unauthorized"
 msgstr "अनधिकृत"
 
-#: includes/class-wc-trackship-actions.php:624
-#: includes/class-wc-trackship-actions.php:690 includes/views/shipments.php:36
+#: includes/class-wc-trackship-actions.php:621
+#: includes/class-wc-trackship-actions.php:687 includes/views/shipments.php:36
 msgid "Unknown"
 msgstr "अनजान"
 
 #: includes/trackship-email-manager.php:339
-#: includes/customizer/class-trackship-email-preview.php:178
+#: includes/customizer/class-trackship-email-preview.php:181
 msgid "Unsubscribe"
 msgstr "सदस्यता रद्द"
 
@@ -1558,7 +1701,7 @@ msgstr "सदस्यता रद्द"
 msgid "Updated at"
 msgstr "पर अद्यतन किया गया"
 
-#: includes/class-wc-trackship-admin.php:796
+#: includes/class-wc-trackship-admin.php:799
 msgid "UPGRADE TO PRO"
 msgstr "प्रो में अपग्रेड"
 
@@ -1566,15 +1709,15 @@ msgstr "प्रो में अपग्रेड"
 msgid "Upgrade to Pro"
 msgstr "प्रो में अपग्रेड"
 
-#: includes/class-wc-trackship-admin.php:781
+#: includes/class-wc-trackship-admin.php:784
 msgid "Upgrade to TrackShip Pro"
 msgstr "ट्रैकशिप प्रो में अपग्रेड करें"
 
-#: includes/class-wc-trackship-admin.php:438
+#: includes/class-wc-trackship-admin.php:441
 msgid "Use Villa Theme Email Customizer Template"
 msgstr "विला थीम ईमेल कस्टमाइज़र टेम्पलेट का उपयोग करें"
 
-#: includes/class-wc-trackship-actions.php:741
+#: includes/class-wc-trackship-actions.php:738
 msgid "User not found for this key"
 msgstr "इस कुंजी के लिए उपयोक्ता नहीं मिला"
 
@@ -1586,9 +1729,13 @@ msgstr "डीबी संरचना सत्यापित करें"
 msgid "Verify if all TrackShip database tables are present."
 msgstr "सत्यापित करें कि सभी ट्रैकशिप डेटाबेस तालिकाएँ मौजूद हैं या नहीं।"
 
-#: includes/views/dashboard.php:283
+#: includes/views/dashboard.php:301
 msgid "View detailed stats"
 msgstr "विस्तृत आँकड़े देखें"
+
+#: includes/views/notifications.php:32 includes/views/settings.php:65
+msgid "View Documentation"
+msgstr "दस्तावेज़ देखें"
 
 #: includes/views/front/layout1_tracking_details.php:168
 #: includes/views/front/preview_tracking_page.php:173
@@ -1600,7 +1747,7 @@ msgstr "कम देखें"
 msgid "view more"
 msgstr "और देखो"
 
-#: includes/class-wc-trackship-actions.php:949
+#: includes/class-wc-trackship-actions.php:946
 msgid "View Shipment log"
 msgstr "शिपमेंट लॉग देखें"
 
@@ -1609,18 +1756,26 @@ msgstr "शिपमेंट लॉग देखें"
 msgid "View your order details"
 msgstr "अपना ऑर्डर विवरण देखें"
 
+#: includes/views/trackship-integration.php:24
+msgid "Watch demo video"
+msgstr "डेमो वीडियो देखें"
+
+#: includes/views/trackship-integration.php:28
+msgid "Watch Video"
+msgstr "वीडियो देखें"
+
 #. %s: search for a orders
 #: includes/views/tools.php:14
 #, php-format
 #| msgid ""
-#| "We detected %1$s Shipped orders from the last 30 days that were not sent to "
-#| "TrackShip, you can bulk send them to TrackShip"
+#| "We detected %1$s Shipped orders from the last 30 days that were not sent "
+#| "to TrackShip, you can bulk send them to TrackShip"
 msgid ""
 "We detected %1$s Shipments from the last 30 days that were not sent to "
 "TrackShip, you can bulk send them to TrackShip"
 msgstr ""
-"हमने पिछले 30 दिनों के %1$s शिपमेंट का पता लगाया है जो ट्रैकशिप पर नहीं भेजे"
-" गए थे, आप उन्हें ट्रैकशिप पर थोक में भेज सकते हैं"
+"हमने पिछले 30 दिनों के %1$s शिपमेंट का पता लगाया है जो ट्रैकशिप पर नहीं भेजे "
+"गए थे, आप उन्हें ट्रैकशिप पर थोक में भेज सकते हैं"
 
 #. %s: search for a count
 #: includes/class-wc-trackship-exception-shipments.php:170
@@ -1638,7 +1793,7 @@ msgid "We detected %d On Hold shipments:"
 msgstr "हमने %d ऑन होल्ड शिपमेंट का पता लगाया:"
 
 #. %s: replace with Partially Shipped order count
-#: includes/class-wc-trackship-admin.php:912
+#: includes/class-wc-trackship-admin.php:919
 #, php-format
 msgid ""
 "We detected %s orders that use the Delivered order status, You can reassign "
@@ -1648,7 +1803,7 @@ msgstr ""
 "करते हैं, आप इन ऑर्डर को किसी भिन्न स्थिति में पुनः असाइन कर सकते हैं"
 
 #. %s: search for a total_orders
-#: includes/class-wc-trackship-admin.php:553
+#: includes/class-wc-trackship-admin.php:556
 #, php-format
 #| msgid ""
 #| "We detected %s Shipped orders from the last 30 days that were not sent to "
@@ -1659,14 +1814,6 @@ msgid ""
 msgstr ""
 "हमने पिछले 30 दिनों के %s शिप किए गए ऑर्डर का पता लगाया है जो ट्रैकशिप को "
 "नहीं भेजे गए थे, आप उन्हें ट्रैकशिप पर बल्क भेज सकते हैं"
-
-#: includes/views/setup.php:16
-msgid ""
-"We'll enable Fulfillments for you. This step can't be reverted from "
-"TrackShip (WooCommerce controls it)."
-msgstr ""
-"हम आपके लिए फुलफिलमेंट्स को सक्षम कर देंगे। ट्रैकशिप से इस चरण को वापस नहीं "
-"लिया जा सकता (इसे वूकॉमर्स नियंत्रित करता है)।"
 
 #: includes/customizer/trackship-customizer.php:527
 msgid "Widget Background color"
@@ -1704,58 +1851,55 @@ msgstr "विजेट लेआउट"
 msgid "Widget Style"
 msgstr "विजेट शैली"
 
-#: includes/views/setup.php:8
+#: includes/views/content.php:33
+msgid "WooCommerce Fulfillment"
+msgstr "WooCommerce Fulfillment"
+
+#: includes/views/setup.php:14
 msgid "WooCommerce Fulfillments"
 msgstr "वूकॉमर्स फुलफिलमेंट्स"
 
-#: includes/views/setup.php:23
-msgid "WooCommerce Fulfillments enabled"
-msgstr "WooCommerce Fulfillments सक्षम"
+#: includes/views/setup.php:28
+msgid "WooCommerce Fulfillments Enabled"
+msgstr "WooCommerce Fulfillments सक्षम है"
 
 #: includes/customizer/trackship-customizer.php:969
 #: includes/customizer/trackship-customizer.php:1009
 msgid "You are customizing"
 msgstr "आप अनुकूलित कर रहे हैं"
 
-#. %s: search for a tag
-#: includes/smswoo/admin-html/settings_tab.php:22
-#, php-format
-#| msgid ""
-#| "You can edit the SMS provider from the SMS for WooCommerce %1$ssettings%2$s"
-msgid ""
-"You can edit the SMS gateways from the SMS for WooCommerce %1$ssettings%2$s"
-msgstr ""
-"आप WooCommerce %1$ssettings%2$s . के लिए SMS से SMS प्रदाता को संपादित कर "
-"सकते हैं"
-
-#: includes/class-wc-trackship-front.php:390
+#: includes/class-wc-trackship-front.php:400
 msgid "You have been unsubscribed from shipment status emails."
 msgstr "आपको शिपमेंट स्थिति ईमेल से सदस्यता समाप्त कर दी गई है।"
 
-#. %s: search for a tag
-#: trackship-for-woocommerce.php:133
-#, php-format
+#: includes/views/map-providers.php:82
 msgid ""
-"You must have a %1$sShipment Tracking plugin%2$s installed to use TrackShip "
-"for WooCommerce."
-msgstr ""
-"WooCommerce के लिए TrackShip का उपयोग करने के लिए आपके पास %1$sशिपमेंट "
-"ट्रैकिंग प्लगइन%2$s इंस्टॉल होना चाहिए।"
+"You have the AST PRO plugin activated. The shipping provider name mapping is "
+"done on the shipping provider settings in AST PRO."
+msgstr "आपके पास AST PRO प्लगइन सक्रिय है। शिपिंग प्रदाता नामों की मैपिंग AST PRO की शिपिंग प्रदाता सेटिंग्स में की जाती है।"
 
-#: includes/views/dashboard.php:238
+#: includes/smswoo/admin-html/settings_tab.php:28
 msgid ""
-"You must have a Shipment Tracking plugin installed to use TrackShip for "
-"WooCommerce."
-msgstr ""
-"WooCommerce के लिए ट्रैकशिप का उपयोग करने के लिए आपके पास एक शिपमेंट "
-"ट्रैकिंग प्लगइन स्थापित होना चाहिए।"
+"You have the SMS for WooCommerce plugin activated. Configure your SMS "
+"gateways and credentials directly from that plugin's settings."
+msgstr "आपके पास SMS for WooCommerce प्लगइन सक्रिय है। अपने SMS गेटवे और क्रेडेंशियल सीधे उस प्लगइन की सेटिंग्स से कॉन्फ़िगर करें।"
+
+#: trackship-for-woocommerce.php:137
+msgid ""
+"You must have a Shipment Tracking extension installed and active to use "
+"TrackShip for WooCommerce."
+msgstr "TrackShip for WooCommerce का उपयोग करने के लिए आपके पास शिपमेंट ट्रैकिंग एक्सटेंशन इंस्टॉल और सक्रिय होना चाहिए।"
+
+#: includes/views/dashboard.php:334
+msgid "You're all caught up."
+msgstr "सब कुछ अपडेट है।"
 
 #: includes/class-wc-trackship-install.php:336
 #, php-format
 msgid "Your order #%s is %s"
 msgstr "आपका ऑर्डर #%s %s है"
 
-#: includes/class-wc-trackship-front.php:365
+#: includes/class-wc-trackship-front.php:375
 msgid ""
 "Your order is being processed, the tracking details will be available once "
 "it's Shipped."
@@ -1763,122 +1907,15 @@ msgstr ""
 "आपका आदेश संसाधित किया जा रहा है, इसके शिप हो जाने के बाद ट्रैकिंग विवरण "
 "उपलब्ध होगा।"
 
-#: includes/class-wc-trackship-actions.php:159
-#: includes/smswoo/class-smswoo-admin.php:446
+#: includes/views/trackship-integration.php:20
+msgid "Your Post-Shipping & Delivery Autopilot"
+msgstr "आपका पोस्ट-शिपिंग और डिलीवरी ऑटोपायलट"
+
+#: includes/class-wc-trackship-actions.php:156
+#: includes/smswoo/class-smswoo-admin.php:448
 msgid "Your settings have been successfully saved."
 msgstr "आपकी सेटिंग सफलतापूर्वक सहेज ली गई हैं."
 
-#: includes/views/dashboard.php:253
-msgid "A live snapshot of your shipments across the selected period."
-msgstr "चयनित अवधि में आपके शिपमेंट का लाइव स्नैपशॉट।"
-
-#: includes/views/dashboard.php:357 includes/views/dashboard.php:424
-#: includes/views/dashboard.php:465
-msgid "All time"
-msgstr "सब समय"
-
-#: includes/views/dashboard.php:48
-msgid "Available for Pickup"
-msgstr "पिकअप के लिए उपलब्ध"
-
-#: includes/views/dashboard.php:470
-msgid "Avg transit"
-msgstr "औसत ट्रांज़िट"
-
-#: includes/views/dashboard.php:273
-msgid "Avg. Transit Time"
-msgstr "औसत ट्रांज़िट समय"
-
-#: includes/views/dashboard.php:469
-msgid "Carrier"
-msgstr "वाहक"
-
-#: includes/views/dashboard.php:464
-msgid "Carrier Performance"
-msgstr "वाहक प्रदर्शन"
-
-#: includes/views/dashboard.php:423
-msgid "Carriers & Destinations"
-msgstr "वाहक और गंतव्य"
-
-#: includes/views/dashboard.php:340
-msgid "Connected with TrackShip account"
-msgstr "TrackShip खाते से जुड़ा"
-
-#: includes/views/dashboard.php:334
-msgid "Current Plan"
-msgstr "वर्तमान योजना"
-
-#: includes/views/dashboard.php:272 includes/views/dashboard.php:479
-msgid "days"
-msgstr "दिन"
-
-#: includes/views/dashboard.php:278
-msgid "Delivered Rate"
-msgstr "डिलीवरी दर"
-
-#: includes/views/dashboard.php:398
-msgid "Last 12 months"
-msgstr "अंतिम 12 महीने"
-
-#: includes/views/dashboard.php:440 includes/views/dashboard.php:488
-msgid "No carrier data yet."
-msgstr "अभी तक कोई वाहक डेटा नहीं।"
-
-#: includes/views/dashboard.php:456
-msgid "No destination data yet."
-msgstr "अभी तक कोई गंतव्य डेटा नहीं।"
-
-#: includes/views/dashboard.php:471
-msgid "On-time"
-msgstr "समय पर"
-
-#: includes/views/logs.php:37
-msgid "Order id, Email, Phone number"
-msgstr "ऑर्डर आईडी, ईमेल, फ़ोन नंबर"
-
-#: includes/views/dashboard.php:46
-msgid "Out for Delivery"
-msgstr "डिलीवरी के लिए निकला"
-
-#: includes/views/dashboard.php:47
-msgid "Pre-Transit"
-msgstr "पूर्व-ट्रांज़िट"
-
-#: includes/views/dashboard.php:49
-msgid "Return to Sender"
-msgstr "प्रेषक को वापस करें"
-
-#: includes/views/map-providers.php:12 includes/views/settings.php:68
-#: includes/views/tracking-page.php:12
-#: includes/smswoo/admin-html/settings_tab.php:11
-msgid "Save"
-msgstr "सहेजें"
-
-#: includes/views/dashboard.php:356
-msgid "Shipment Status"
-msgstr "शिपमेंट स्थिति"
-
-#: includes/views/dashboard.php:397
-msgid "Shipments Over Time"
-msgstr "समय के साथ शिपमेंट"
-
-#: includes/views/header2.php:87
-msgid "Support"
-msgstr "सहायता"
-
-#: includes/views/dashboard.php:428
-msgid "Top Carriers"
-msgstr "शीर्ष वाहक"
-
-#: includes/views/dashboard.php:444
-msgid "Top Destinations"
-msgstr "शीर्ष गंतव्य"
-
-#: includes/views/header2.php:70
-msgid "TrackShip navigation"
-msgstr "TrackShip नेविगेशन"
-
-#: includes/views/dashboard.php:316
-msgid "You're all caught up."
-msgstr "सब कुछ अपडेट है।"
+#: includes/views/map-providers.php:31
+msgid "Your shipping provider"
+msgstr "आपका शिपिंग प्रदाता"
