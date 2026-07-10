@@ -128,7 +128,7 @@ class Trackship_For_Woocommerce {
 			return;
 		}
 		$install_url = esc_url( admin_url( 'plugin-install.php?tab=search&s=AST&plugin-search-input=Search+Plugins' ) );
-		$docs_url    = 'https://docs.trackship.com/docs/trackship-for-woocommerce/getting-started/requirements/#shipment-tracking-plugin';
+		$docs_url = 'https://docs.trackship.com/docs/trackship-for-woocommerce/getting-started/requirements/#shipment-tracking-plugin';
 		?>
 		<div class="notice notice-error">
 			<p>

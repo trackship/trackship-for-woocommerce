@@ -2,8 +2,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-$date_format = get_option( 'date_format' ) ? get_option( 'date_format' ) :  'F j, Y';
-$time_format = get_option( 'time_format' ) ? get_option( 'time_format' ) :  'g:i a';
+$date_format = get_option( 'date_format' ) ? get_option( 'date_format' ) : 'F j, Y';
+$time_format = get_option( 'time_format' ) ? get_option( 'time_format' ) : 'g:i a';
 
 $class = 1 == $hide_tracking_events ? 'checked' : '';
 $fronted = isset( $_POST['fronted'] ) ? sanitize_text_field($_POST['fronted']) : '';

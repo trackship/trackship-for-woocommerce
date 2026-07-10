@@ -16,41 +16,9 @@ body.trackship_page_trackship-for-woocommerce {
 .woocommerce_page_trackship-for-woocommerce #wpbody-content {
 	padding-bottom: 40px;
 }
-.zorem-layout {
+.trackship-layout {
 	margin: 0;
 	padding: 0;
-}
-.zorem-layout__header {
-	background: #fff;
-	display: flex;
-	justify-content: space-between;
-	flex-direction: row;
-	box-sizing: border-box;
-	border-bottom: 1px solid #fff;
-	width: 100%;
-	z-index: 1001;
-	align-items: center;
-	height: 60px;
-	padding: 15px 20px;
-}
-.zorem-layout__header .zorem-layout__header-breadcrumbs {
-	font-size: 14px;
-	font-weight: 600;
-	flex: 1 auto;
-	line-height: 30px;
-}
-.zorem-layout__header a {
-	text-decoration: none;
-	color: #3858e9;
-}
-.zorem-layout__header .dashicons-arrow-right-alt2 {
-	font-size: 14px;
-	padding-top: 3px;
-}
-.zorem-layout__header .zorem-layout__header-breadcrumbs span+span:before {
-	content: " / ";
-	color: #555d66;
-	margin: 0 2px;
 }
 .trackship_admin_content {
 	vertical-align: top;
@@ -62,7 +30,7 @@ body.trackship_page_trackship-for-woocommerce {
 	display: table;
 	width: 100%;
 }
-.woocommerce table.form-table {
+table.form-table {
 	margin: 0;
 	position: relative;
 	table-layout: fixed;
@@ -70,24 +38,9 @@ body.trackship_page_trackship-for-woocommerce {
 input.tab_input {
 	display: none;
 }
-label.tab_label, label.inner_tab_label {
-	text-decoration: none;
-	padding: 15px;
-	font-size: 14px;
-	color: #3c4858;
-	display: inline-block;
-	line-height: 1;
-	outline: none;
-	font-weight: 500;
-	cursor: pointer;
-}
 label.tab_label a {
 	text-decoration: none;
 	color: #3c4858;
-}
-.menu_devider {
-	border-top: 1px solid #e0e0e0;
-	margin-bottom: 15px;
 }
 section.inner_tab_section {
 	display: none;
@@ -107,30 +60,16 @@ section#content_trackship_settings, section#content_trackship_notifications, sec
 .trackship_other_page_fieldset {
 	padding-top: 10px;
 }
-.woocommerce.trackship_admin_layout table.form-table th {
+.trackship_admin_layout table.form-table th {
 	padding: 15px;
 }
-.woocommerce.trackship_admin_layout table.form-table th label {
+.trackship_admin_layout table.form-table th label {
 	font-weight: 500;
 	color: #444;
 	cursor: auto;
 }
 .open_tracking_details {
 	cursor: pointer;
-}
-.wp-core-ui .button-primary.btn_ts_sidebar {
-	background: #fafafa;
-	color: #3c4858;
-	border: 1px solid #bdbdbd;
-	font-size: 13px;
-	box-shadow: none;
-}
-.form-table.shipment-status-email-table .enable .button-primary.btn_ts_sidebar {
-	color: #3858e9;
-}
-.button-primary.btn_ts_sidebar.ts_customizer_btn {
-	border: 1px solid #3858e9;
-	color: #3858e9;
 }
 .trackship_admin_layout table.form-table {
 	border: 0;
@@ -151,17 +90,13 @@ section#content_trackship_settings, section#content_trackship_notifications, sec
 	padding: 15px;
 	font-weight: 400;
 }
-.zorem_admin_layout h1.table-heading:after {
-	content: '';
-	clear: both;
-}
-.woocommerce.trackship_admin_layout table.form-table.heading-table td {
+.trackship_admin_layout table.form-table.heading-table td {
 	padding: 0;
 }
 .trackship_admin_layout h3 {
 	margin: 1em 0;
 }
-.woocommerce.trackship_admin_layout table.form-table.heading-table td h3 {
+.trackship_admin_layout table.form-table.heading-table td h3 {
 	margin: 10px 0;
 	color: #3c4858;
 	font-weight: 600;
@@ -182,9 +117,6 @@ table.form-table.tracking_page_heading td:last-child {
 }
 .spinner.active {
 	visibility: visible;
-}
-.woocommerce.trackship_admin_layout table.form-table td.button-column {
-	padding: 5px 15px;
 }
 .trackship_admin_content div.submit {
 	padding: 0;
@@ -370,7 +302,7 @@ span.view_shipment_log {
 .trackship_admin_content .form-table .wp-color-result.button {
 	margin: 0 6px 0px 0;
 }
-.woocommerce.trackship_admin_layout table.form-table select {
+.trackship_admin_layout table.form-table select {
 	width: auto;
 	max-width: 400px;
 	min-width: 200px;
@@ -383,18 +315,18 @@ span.view_shipment_log {
 #wc_ts_border_color {
 	width: 80px;
 }
-.woocommerce .trackship_admin_content table.form-table th label .woocommerce-help-tip {
+.trackship_admin_content table.form-table th label .woocommerce-help-tip {
 	margin: -4px 0 0 5px;
 	position: relative;
 	font-size: 21px;
 	color: #005B9A;
 }
-.woocommerce.trackship_admin_layout input.tab_input:checked + label, .trackship_tab_name input.tab_input:checked + label {
+.trackship_admin_layout input.tab_input:checked + label, .trackship_tab_name input.tab_input:checked + label {
 	color: #124fd6;
 	border-bottom: 3px solid #124fd6;
 	margin-top: 3px;
 }
-.woocommerce.trackship_admin_layout input.inner_tab_input:checked + label {
+.trackship_admin_layout input.inner_tab_input:checked + label {
 	color: #124fd6;
 }
 label.tab_label.first_label {
@@ -403,7 +335,7 @@ label.tab_label.first_label {
 .rtl label.tab_label.first_label {
 	margin: 0 20px 0 0;
 }
-.woocommerce.trackship_admin_layout table.form-table.heading-table td h3.tracking_page_heading {
+.trackship_admin_layout table.form-table.heading-table td h3.tracking_page_heading {
 	display: inline-block;
 	vertical-align: top;
 	margin-left: 25px;
@@ -418,23 +350,12 @@ label.tab_label.first_label {
 	height: 35px;
 	padding: 0 20px;
 }
-.wp-core-ui .btn_large {
-	line-height: 33px;
-	padding: 0px 15px;
-	font-size: 13px;
-	font-weight: 600;
-	height: auto;
-}
 .wp-core-ui .btn_green2:hover, .wp-core-ui .btn_green2:focus {
 	background: #3858e9;
 	border-color: #3858e9;
 	color: #fff;
 	text-shadow: none;
 	box-shadow: inset 0 0 0 100px rgba(0,0,0,0.2);
-}
-.wp-core-ui .btn_large .dashicons {
-	vertical-align: middle;
-	margin-left: 5px;
 }
 .settings_ul {
 	margin-top: 0;
@@ -472,7 +393,7 @@ label.tab_label.first_label {
 	border-spacing: 0;
 	margin-top: 0 !important;
 }
-.woocommerce.trackship_admin_layout table.form-table.shipment-status-email-table td {
+.trackship_admin_layout table.form-table.shipment-status-email-table td {
 	padding: 15px;
 	border: 1px solid #e0e0e0;
 	background: #fff;
@@ -481,20 +402,20 @@ tr.admin_notifications_tr.open td {
 	border-bottom-left-radius: 0 !important;
 	border-bottom-right-radius: 0 !important;
 }
-.admin_notifications_tr .woocommerce-save-button, .admin_notifications_tr.open .shipment_status_toggle, .admin_notifications_tr.open .edit_customizer_a {
+.admin_notifications_tr .trackship-save-button, .admin_notifications_tr.open .shipment_status_toggle, .admin_notifications_tr.open .edit_customizer_a {
 	display: none;
 }
-.admin_notifications_tr.open .woocommerce-save-button, .admin_notifications_tr .shipment_status_toggle, .admin_notifications_tr .edit_customizer_a {
+.admin_notifications_tr.open .trackship-save-button, .admin_notifications_tr .shipment_status_toggle, .admin_notifications_tr .edit_customizer_a {
 	display: inline-block;
 }
-.woocommerce.trackship_admin_layout table.form-table.shipment-status-email-table tr {
+.trackship_admin_layout table.form-table.shipment-status-email-table tr {
 	background: #fff;
 	cursor: pointer;
 }
 .shipment_status_toggle label {
 	vertical-align: text-top;
 }
-.woocommerce table.form-table .shipment-status-label.woocommerce-help-tip {
+table.form-table .shipment-status-label.woocommerce-help-tip {
 	font-size: 14px;
 	padding: 0 1em;
 	line-height: 2.2em;
@@ -502,7 +423,7 @@ tr.admin_notifications_tr.open td {
 	width: auto;
 	height: auto;
 }
-.woocommerce table.form-table .shipment-status-label.woocommerce-help-tip:after {
+table.form-table .shipment-status-label.woocommerce-help-tip:after {
 	content: "";
 }
 .form-table.shipment-status-email-table .edit_customizer_a {
@@ -546,29 +467,137 @@ tr.admin_notifications_tr.open td {
 	float: none;
 	margin: 0px 10px 0;
 }
+/* Map provider - info banner */
+.ts-mapping-note {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	background: #f0f4ff;
+	border-left: 3px solid var(--tsd-blue);
+	border-radius: 0 6px 6px 0;
+	padding: 12px 16px;
+	margin-bottom: 20px;
+}
+.ts-mapping-note .dashicons {
+	color: var(--tsd-blue);
+	margin-top: 1px;
+	flex-shrink: 0;
+}
+.ts-mapping-note p {
+	margin: 0;
+	font-size: 13px;
+	color: var(--tsd-ink);
+	line-height: 1.5;
+}
+
+/* Map provider - table */
 .trackship_admin_layout table.form-table.map-provider-table {
-	max-width: 700px;
+	width: 100%;
+	max-width: 100%;
+	border-collapse: collapse;
+}
+.trackship_admin_layout table.form-table.map-provider-table thead tr.ptw_provider_border {
+	background: var(--tsd-surface, #f8faff);
+	border-bottom: 1px solid var(--tsd-line);
 }
 .trackship_admin_layout table.form-table.map-provider-table th {
-	padding: 6px 15px 6px 0;
+	padding: 10px 16px;
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--tsd-muted);
+}
+.form-table.fixed.map-provider-table tbody tr {
+	border-bottom: 1px solid var(--tsd-line);
+	transition: background 0.15s;
+}
+.form-table.fixed.map-provider-table tbody tr:hover {
+	background: #fafbff;
 }
 .form-table.fixed.map-provider-table td {
-	padding: 10px 10px 10px 0;
+	padding: 12px 16px;
+	vertical-align: middle;
 }
-.add_custom_mapping_h3 {
+
+/* equal-width columns, fixed connector in the middle */
+.trackship_admin_layout table.form-table.map-provider-table th:first-child,
+.form-table.fixed.map-provider-table td:first-child { width: calc(50% - 28px); }
+.trackship_admin_layout table.form-table.map-provider-table th:last-child,
+.form-table.fixed.map-provider-table td:last-child { width: calc(50% - 28px); }
+
+/* connector arrow column */
+.form-table.fixed.map-provider-table .ts-mapping-arrow-col,
+.trackship_admin_layout table.form-table.map-provider-table th.ts-mapping-arrow-col {
+	width: 56px;
+	text-align: center;
+	padding: 12px 4px;
+}
+.form-table.fixed.map-provider-table .ts-mapping-arrow-col .dashicons {
+	color: var(--tsd-blue);
+	opacity: 0.4;
+	font-size: 20px;
+	width: 20px;
+	height: 20px;
+}
+
+/* select + trash column */
+.form-table.fixed.map-provider-table .ts-mapping-select-col {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	border-bottom: none;
+}
+.form-table.fixed.map-provider-table .ts-mapping-select-col select {
+	flex: 1;
+	min-width: 0;
+	width: 100%;
+}
+.form-table.fixed.map-provider-table .ts-mapping-select-col .select2-container {
+	flex: 1 !important;
+	width: auto !important;
+	min-width: 0 !important;
+}
+.form-table.fixed.map-provider-table .ts-mapping-select-col .select2-container .select2-selection--single {
+	height: 36px;
+	border: 1px solid var(--tsd-line);
+	border-radius: 8px;
+	background: #fff;
+}
+.form-table.fixed.map-provider-table .ts-mapping-select-col .select2-selection--single .select2-selection__rendered {
+	line-height: 36px;
+	padding-left: 12px;
+	font-size: 13px;
+	color: var(--tsd-ink);
+}
+.form-table.fixed.map-provider-table .ts-mapping-select-col .select2-selection--single .select2-selection__arrow {
+	height: 36px;
+}
+
+table.form-table.map-provider-table .map_shipping_provider_text {
+	width: 100%;
+}
+.remove_custom_maping_row {
+	color: var(--tsd-muted);
+	margin: 0;
 	cursor: pointer;
+	flex-shrink: 0;
+	transition: color 0.15s;
+}
+.remove_custom_maping_row:hover {
+	color: #dc2626;
+}
+
+/* Map provider - footer actions */
+.ts-mapping-footer {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-top: 16px;
 }
 .add_custom_mapping {
 	color: #3c4858;
 	text-decoration: unset;
-}
-.woocommerce table.form-table.map-provider-table .map_shipping_provider_text {
-	width: 100%;
-}
-.remove_custom_maping_row {
-	color: #3c4758;
-	margin: 4px;
-	cursor: pointer;
 }
 .log_search_bar {
 	float: right;
@@ -592,35 +621,14 @@ span.filter_data .dashicons {
 .filter_data:nth-child(2) {
 	margin: 0 8px;
 }
-.woocommerce.trackship_admin_layout .form-table.shipment-status-email-table tr td:first-child {
+.trackship_admin_layout .form-table.shipment-status-email-table tr td:first-child {
 	border-right: 0;
 	border-radius: 3px 0 0 3px;
 	width: 70%;
 }
-.woocommerce.trackship_admin_layout .form-table.shipment-status-email-table tr td:nth-child(2) {
+.trackship_admin_layout .form-table.shipment-status-email-table tr td:nth-child(2) {
 	border-left: 0;
 	border-radius: 0 3px 3px 0;
-}
-.fullfillment_dashboard .fullfillment_table thead td {
-	text-align: right;
-}
-.fullfillment_header {
-	display: flex;
-	border-bottom: 1px solid #e0e0e0;
-}
-.fullfillment_header .fullfillment_header_h2 {
-	padding: 15px 20px;
-	margin: 0;
-	color: #6e708c;
-	font-size: 20px;
-	justify-content: space-between;
-	flex-direction: row;
-	box-sizing: border-box;
-	width: 100%;
-	align-items: center;
-}
-.fullfillment_dashboard h3 {
-	color: #6e708c;
 }
 .heading_panel div.heading_panel_save .spinner {
 	float: none;
@@ -639,13 +647,7 @@ span.filter_data .dashicons {
 .rtl .trackship_admin_content .inner_tab_section select {
 	background: #fafafa url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%206l5%205%205-5%202%201-7%207-7-7%202-1z%22%20fill%3D%22%23555%22%2F%3E%3C%2Fsvg%3E) no-repeat left 5px top 55%;
 }
-.rtl .woocommerce.trackship_admin_layout .form-table.shipment-status-email-table tr td:nth-child(2) {
-	text-align: left;
-}
-.rtl .fullfillment_dashboard .fullfillment_table thead th {
-	text-align: right;
-}
-.rtl .fullfillment_dashboard .fullfillment_table thead td {
+.rtl .trackship_admin_layout .form-table.shipment-status-email-table tr td:nth-child(2) {
 	text-align: left;
 }
 .rtl .shipment_search_bar {
@@ -656,19 +658,6 @@ span.filter_data .dashicons {
 }
 .rtl .heading_panel div.heading_panel_save {
 	float: left;
-}
-.rtl .fullfillment_dashboard .fullfillment_dashboard_section {
-	margin: 0 0 15px 15px;
-}
-.rtl .ts_activity-panel-wrapper {
-	left: 0;
-	right: auto;
-}
-.rtl .zorem-layout__header .zorem-layout__header-breadcrumbs {
-	padding: 0 30px 0 0;
-}
-.rtl .ts4wc_logo_header {
-	margin: 0 20px 0 0;
 }
 .rtl .tsh-header__brand {
 	margin-right: 0;
@@ -681,148 +670,6 @@ span.filter_data .dashicons {
 .rtl .ts_integration_image {
 	margin: 0 0 0 15px;
 }
-/** Header help button CSS Start**/
-.zorem-layout__header * {
-	box-sizing: border-box;
-}
-.ts_activity-panel-tabs {
-	display: flex;
-	height: 50px;
-	justify-content: flex-end;
-}
-.trackship_admin_layout .ts_activity-panel-tabs {
-	position: absolute;
-	right: 0;
-}
-.rtl .trackship_admin_layout .ts_activity-panel-tabs {
-	left: 0;
-	right: auto;
-}
-.ts_activity-panel-tabs .dashicons {
-	width: 24px;
-	height: 24px;
-	font-size: 24px;
-	color: #124fd6;
-}
-.ts_activity-panel-tabs label {
-	color: #005b9a;
-}
-.ts_activity-panel-tabs .ts_activity-panel-tab {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	position: relative;
-	border: none;
-	outline: none;
-	cursor: pointer;
-	max-width: -webkit-min-content;
-	max-width: min-content;
-	min-width: 80px;
-	width: 100%;
-	color: #757575;
-	white-space: nowrap;
-	height: 50px;
-	background: transparent;
-}
-.zorem-layout .ts_activity-panel {
-	display: contents;
-}
-.ts_activity-panel-tabs .ts_activity-panel-tab:before {
-	background-color: #005b9a;
-	bottom: 0;
-	content: "";
-	height: 0;
-	opacity: 0;
-	transition-property: height, opacity;
-	transition-duration: .3s;
-	transition-timing-function: ease-in-out;
-	left: 0;
-	position: absolute;
-	right: 0;
-}
-.ts_activity-panel-tabs .ts_activity-panel-tab:hover {
-	background-color: #f0f0f0;
-	box-shadow: none;
-}
-.ts_activity-panel-tabs .ts_activity-panel-tab.is-active {
-	color: #1e1e1e;
-	box-shadow: none;
-}
-.ts_activity-panel-tabs .ts_activity-panel-tab.is-active:before {
-	height: 3px;
-	opacity: 1;
-}
-.ts_activity-panel-wrapper {
-	background: #f0f0f0;
-	width: 220px;
-	transition-property: transform box-shadow;
-	transition-duration: .3s;
-	transition-timing-function: ease-in-out;
-	position: absolute;
-	right: 0;
-	z-index: 1000;
-	overflow-x: hidden;
-	overflow-y: auto;
-	visibility: hidden;
-	opacity: 0;
-	margin-top: 50px;
-}
-.ts_activity-panel-wrapper.is-open {
-	box-shadow: 0 12px 12px 0 rgb(85 93 102 / 30%);
-}
-.ts_activity-panel-wrapper.is-switching {
-	animation: tabSwitch;
-	animation-duration: .3s;
-	visibility: visible;
-	opacity: 1;
-}
-.woocommerce-list {
-	margin: 0;
-	padding: 0;
-}
-.woocommerce-list__item {
-	display: flex;
-	align-items: center;
-	margin-bottom: 0;
-	background-color: #fff;
-	border: 0 !important;
-}
-.woocommerce-list__item:not(:first-child) {
-	border-top: 1px solid #f0f0f0;
-}
-.woocommerce-list__item.has-action {
-	cursor: pointer;
-}
-.woocommerce-list__item > .woocommerce-list__item-inner {
-	text-decoration: none;
-	width: 100%;
-	display: flex;
-	align-items: center;
-	padding: 0;
-}
-.woocommerce-list__item .woocommerce-list__item-before {
-	display: flex;
-	align-items: center;
-}
-.woocommerce-list__item .woocommerce-list__item-title {
-	color: #3c4758;
-}
-.woocommerce-list-Text {
-	box-sizing: border-box;
-	margin: 0px;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-	font-weight: 600;
-	font-size: 14px;
-	line-height: 20px;
-}
-
-@media (min-width: 783px) {
-.ts_activity-panel-header {
-	padding: 16px 24px;
-}
-}
-/** Header help button CSS End**/
 
 /* =====================================================================
 TrackShip Admin Header — inline nav design (all plugin pages)
@@ -1012,9 +859,6 @@ input[type=checkbox].tgl {
 	left: 55%;
 	background: #09d3ac;
 }
-.rtl .woocommerce-list__item .woocommerce-list__item-before {
-	margin: 0 0 0 20px;
-}
 /** Toggle CSS End**/
 /*** Snackbar css START ***/
 /* Animations to bouncein the snackbar in and out */
@@ -1198,9 +1042,6 @@ opacity: 1;
 .popuprow .popup_body {
 	padding: 20px 25px;
 }
-.popup_body .sync_message {
-	margin-top: 0;
-}
 .popuprow .popup_body .synch_result {
 	display: none;
 	margin: 0;
@@ -1214,65 +1055,60 @@ opacity: 1;
 	left: 0;
 }
 /* TrackShip Dashboard CSS*/
-button.button-primary.button-trackship.tools-ts-button {
-	float: none;
-}
-#content_trackship_status .trackship-notice {
-	border-bottom: 1px solid #e0e0e0;
-}
 .trackship-notice p span.dashicons {
 	float: right;
 	margin-top: 7px;
 	font-weight: 600;
 	cursor: pointer;
 }
-.tools_tab, .setup_tab {
-	max-width: 1000px;
-	width: 100%;
-}
 .tools_tab .inner_div {
-	border: 1px solid #e0e0e0;
-	border-radius: 5px;
 	background: #fff;
 	margin-bottom: 15px;
+	border: 1px solid var(--tsd-line);
+	border-radius: var(--tsd-radius);
+	box-shadow: var(--tsd-shadow);
+	padding: 16px 20px;
+	display: flex;
 }
-.tools_tab h3 {
+.tools_tab .inner_div p {
+	color: var(--tsd-ink);
 	margin: 0;
-}
-.p15 {
-	padding: 15px;
-}
-.mb0 {
-	margin-bottom: 0 !important;
-}
-.trackship-notice p, .trackship-verify-table p {
-	margin: 0;
-	line-height: 35px;
-}
-button.tools-ts-button {
-	box-shadow: none;
-	font-size: 14px;
-	line-height: 32px;
-	height: 35px;
-	padding: 0 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
 }
 .form-table td p {
 	margin: 0;
 }
 .wp-core-ui .button-trackship {
-	background: #3858e9;
-	border-color: #3858e9;
+	background: var(--tsd-blue);
+	border-color: var(--tsd-blue);
+	color: #fff;
+	border-radius: 8px;
+}
+.wp-core-ui .btn_outline {
+	border-color: var(--tsd-blue) !important;
+	background: transparent !important;
+	color: var(--tsd-blue) !important;
+	border-radius: 8px;
+}
+.wp-core-ui .button.button-trackship .dashicons {
+	vertical-align: middle;
+	line-height: 1;
 }
 .wp-core-ui .button-trackship-red, .wp-core-ui .button-trackship-red.focus, .wp-core-ui .button-trackship-red.hover, .wp-core-ui .button-trackship-red:focus, .wp-core-ui .button-trackship-red:hover {
 	background: #f44336;
 	border-color: #f44336;
 	color: #fff;
+	border-radius: 8px;
 }
 .wp-core-ui .button-trackship.focus, .wp-core-ui .button-trackship.hover, .wp-core-ui .button-trackship:focus, .wp-core-ui .button-trackship:hover {
-	background: #3858e9;
-	border-color: #3858e9;
+	background: var(--tsd-blue);
+	border-color: var(--tsd-blue);
 	outline: none;
 	box-shadow: none;
+	color: #fff;
 }
 .settings_ul .settings_radio_li>label, .settings_ul .multiple_select_li>label {
 	width: auto;
@@ -1320,16 +1156,8 @@ input.tab_input, input.inner_tab_input {
 .shipment-status-email-table tr td.status-label-column img {
 	vertical-align: middle;
 }
-.wp-core-ui .btn_outline {
-	border-color: #3858e9 !important;
-	background: transparent !important;
-	color: #3858e9 !important;
-}
 label.setting_ul_tgl_checkbox_label {
 	margin: 0 5px;
-}
-.section_mapping_content p.map_providers_note {
-	margin-top: 0;
 }
 input#late_shipments_days, input#exception_shipments_days, input#on_hold_shipments_days {
 	width: 50px;
@@ -1391,14 +1219,6 @@ div.admin_notifiations_content tr input, div.admin_notifiations_content tr td se
 	align-items: center;
 	gap: 4px;
 	line-height: 1;
-}
-.ts-connect-link {
-	font-size: 13px;
-	color: var(--tsd-blue);
-	text-decoration: none;
-}
-.ts-connect-link:hover {
-	text-decoration: underline;
 }
 .ts-video-modal {
 	position: fixed;
@@ -1523,17 +1343,7 @@ div.admin_notifiations_content tr input, div.admin_notifiations_content tr td se
 	box-shadow: 0 4px 16px rgba(18,78,214,.12);
 	transform: translateY(-2px);
 }
-button.button-primary.add_custom_mapping_h3, button.button-primary.add_custom_mapping_h3:hover {
-	margin-top: 10px;
-	color: #3858e9 !important;
-	background: #fafafa !important;
-	border-color: #3858e9 !important;
-}
-span.dashicons.dashicons-plus.ptw-dashicons {
-	margin-top: 6px;
-	margin-left: 7px;
-}
-.woocommerce table.form-table.map-provider-table .select2-container {
+table.form-table.map-provider-table .select2-container {
 	min-width: 0px!important;
 }
 #trackship-tracking-items small.last-update-on {
@@ -1562,15 +1372,8 @@ input#late_shipments_email_to, input#exception_shipments_email_to, input#on_hold
 	max-width: 500px;
 	width: 100%;
 }
-.woocommerce.trackship_admin_layout table.form-table td p.description {
+.trackship_admin_layout table.form-table td p.description {
 	margin-bottom: 0;
-}
-.wp-core-ui .connect-your-store {
-	line-height: 38px;
-	padding: 0px 10px 0 15px;
-	font-size: 16px;
-	font-weight: 400;
-	height: 40px;
 }
 .ts-shipment-status-div {
 	margin-top: 10px;
@@ -1602,16 +1405,6 @@ span.admin_tracking_page_close .dashicons {
 	height: 30px;
 	width: 30px;
 	padding: 15px;
-}
-.ts4wc_logo {
-	width: 100px;
-	float: right;
-	margin-top: 10px;
-}
-.ts4wc_logo_header {
-	width: 150px;
-	vertical-align: middle;
-	margin-left: 20px;
 }
 .trackship_admin_content .inner_tab_section input {
 	border-color: #e0e0e0;
@@ -1659,23 +1452,8 @@ span.log_search_bar span.dashicons-no, .shipment_search_bar span.dashicons-no {
 span.shipment_search_bar {
 	width: 100%;
 }
-.serch_button {
-	height: 40px;
-	border: 1px solid #e0e0e0;
-	background: #fff;
-	color: #3858e9;
-	padding: 0 16px;
-	border-radius: 5px;
-	cursor: pointer;
-	font-weight: 600;
-}
-.content_trackship_logs .serch_button {
-	float: right;
-}
-.shipment-status-sms-section .smswoo-shipment-sendto .button-primary.woocommerce-save-button.button-smswoo {
-	background: #3858e9;
-	border-color: #3858e9;
-	padding: 0 10px;
+.shipment-status-sms-section .smswoo-shipment-sendto .button-primary.trackship-save-button.button-smswoo {
+	border-radius: 8px;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__rendered li {
 	border-radius: 10px;
@@ -1718,13 +1496,6 @@ body #admin_tracking_widget .tracking-detail .shipment-content, body #admin_trac
 	border-spacing: 0 10px;
 	margin-top: -10px !important;
 }
-.analytics_link {
-	padding: 15px;
-	border-top: 1px solid #f5f5f5;
-	width: 100%;
-	bottom: 0;
-	position: absolute;
-}
 span.dashicons.dashicons-update.update_shipping_provider {
 	width: 26px;
 	height: 26px;
@@ -1733,11 +1504,6 @@ span.dashicons.dashicons-update.update_shipping_provider {
 	color: #3858e9;
 	margin: 0 10px;
 	cursor: pointer;
-}
-.tracking_notification_log_delete p {
-	line-height: 35px;
-	display: inline-block;
-	margin: 0;
 }
 /** Accordion Design **/
 section#content_trackship_settings.inner_tab_section, section#content_trackship_notifications.inner_tab_section {
@@ -1786,11 +1552,11 @@ section#content_trackship_settings.inner_tab_section, section#content_trackship_
 .inner_tab_section .panel_content.section_mapping_content {
 	padding: 20px;
 }
+.inner_tab_section .panel_content.section_mapping_content .ts-plugin-redirect-card {
+	padding: 10px;
+}
 .inner_tab_section .panel_content.section_admin_notifications_content {
 	padding: 0 15px;
-}
-.section_mapping_content .map-provider-table p {
-	margin: 0 0 13px 0;
 }
 .inner_tab_section .heading_panel .ts-notif-status-icon {
 	width: 32px;
@@ -1845,7 +1611,6 @@ section#content_trackship_settings.inner_tab_section, section#content_trackship_
 	height: 100%;
 	display: block;
 }
-
 
 /* --- Account summary bar --- */
 .tsd-account-bar {
@@ -2737,19 +2502,8 @@ TrackShip Shipments Page — modern design
 .trackship_page_trackship-shipments .bulk_action_button {
 	line-height: 1;
 	height: 40px;
-	padding: 0 30px;
-	background: var(--tsd-blue);
-	border: 1px solid var(--tsd-blue);
-	border-radius: 8px;
 	font-size: 14px;
-	font-weight: 600;
-	color: #fff;
-	cursor: pointer;
-	transition: opacity .18s;
-	font-family: inherit;
 }
-.trackship_page_trackship-shipments .bulk_action_button:hover:not(:disabled) { opacity: .86; }
-.trackship_page_trackship-shipments .bulk_action_button:disabled { opacity: .38; cursor: not-allowed; }
 
 /* ---- Active filter chips ---- */
 .trackship_page_trackship-shipments .filters_div {
@@ -3255,25 +3009,6 @@ TrackShip Logs Page
 	color: var(--tsd-ink);
 	background: rgba(107, 114, 128, .12);
 }
-.trackship_page_trackship-logs button.serch_button {
-	height: 36px;
-	padding: 0 16px;
-	border: none;
-	border-radius: 8px;
-	background: var(--tsd-blue);
-	color: #fff;
-	font-size: 13px;
-	font-weight: 500;
-	cursor: pointer;
-	font-family: inherit;
-	white-space: nowrap;
-	transition: background .18s;
-	flex-shrink: 0;
-	float: none !important;
-}
-.trackship_page_trackship-logs button.serch_button:hover {
-	background: #0f3fb5;
-}
 
 /* ---- DataTable wrapper card ---- */
 .trackship_page_trackship-logs .dt-container {
@@ -3440,20 +3175,11 @@ TrackShip Settings Page (trackship-for-woocommerce)
 .trackship_page_trackship-for-woocommerce label.tab_label:hover {
 	color: var(--tsd-ink) !important;
 }
-.trackship_page_trackship-for-woocommerce .woocommerce.trackship_admin_layout input.tab_input:checked + label.tab_label {
+.trackship_page_trackship-for-woocommerce .trackship_admin_layout input.tab_input:checked + label.tab_label {
 	color: var(--tsd-blue) !important;
 	border-bottom: 2px solid var(--tsd-blue) !important;
 	margin-top: 0 !important;
 }
-/* Hide the hamburger/activity panel */
-.trackship_page_trackship-for-woocommerce .ts_activity-panel {
-	display: none !important;
-}
-/* Remove old divider (sub-tab bar now has its own border-bottom) */
-.trackship_page_trackship-for-woocommerce .menu_devider {
-	display: none;
-}
-
 /* ---- Tab section content area ---- */
 .trackship_page_trackship-for-woocommerce #content_trackship_settings,
 .trackship_page_trackship-for-woocommerce #content_trackship_notifications,
@@ -3531,28 +3257,6 @@ TrackShip Settings Page (trackship-for-woocommerce)
 	border-color: #c5cadd !important;
 	background: #fafbff !important;
 }
-/* "Save & close" button: hidden when collapsed, shown when active */
-/* Right side of the header (arrow / spinner / save button) — reserve the button's
-height in the closed state too, so the header doesn't grow when opened */
-.trackship_page_trackship-for-woocommerce .accordion_container .heading_panel .heading_panel_save {
-	float: none;
-	display: inline-flex;
-	align-items: center;
-	gap: 10px;
-	min-height: 40px;
-}
-.trackship_page_trackship-for-woocommerce .accordion_container .heading_panel .button-primary {
-	display: inline-flex !important;
-	align-items: center;
-	height: 34px;
-	padding: 0 14px;
-	font-size: 13px;
-	border-radius: 8px;
-	background: var(--tsd-blue) !important;
-	border-color: var(--tsd-blue) !important;
-	box-shadow: none !important;
-}
-
 /* ---- Settings: two-column sidebar layout ---- */
 .trackship_page_trackship-for-woocommerce .ts-settings-layout {
 	display: flex;
@@ -3592,7 +3296,7 @@ height in the closed state too, so the header doesn't grow when opened */
 	display: flex;
 	align-items: flex-start;
 	gap: 16px;
-	padding: 28px 32px;
+	padding: 30px;
 }
 .ts-plugin-redirect-card__icon {
 	flex-shrink: 0;
@@ -3705,9 +3409,6 @@ height in the closed state too, so the header doesn't grow when opened */
 .trackship_page_trackship-for-woocommerce .ts-settings-main .accordion_container .heading_panel:hover {
 	border-color: var(--tsd-line) !important;
 	background: #fff !important;
-}
-.trackship_page_trackship-for-woocommerce .ts-settings-main .accordion_container .heading_panel .button-primary {
-	display: inline-flex !important;
 }
 
 /* ---- Settings panels: rows & controls ---- */
@@ -3909,7 +3610,7 @@ height in the closed state too, so the header doesn't grow when opened */
 	border-spacing: 0;
 	margin-top: 0 !important;
 }
-.trackship_page_trackship-for-woocommerce .woocommerce.trackship_admin_layout table.form-table.shipment-status-email-table td {
+.trackship_page_trackship-for-woocommerce .trackship_admin_layout table.form-table.shipment-status-email-table td {
 	border: 0;
 	border-bottom: 1px solid var(--tsd-line);
 	padding: 10px 16px;
@@ -3923,8 +3624,8 @@ height in the closed state too, so the header doesn't grow when opened */
 	background: #fafbfe;
 }
 /* Strip the per-row corner radii from the old strip design */
-.trackship_page_trackship-for-woocommerce .woocommerce.trackship_admin_layout .form-table.shipment-status-email-table tr td:first-child,
-.trackship_page_trackship-for-woocommerce .woocommerce.trackship_admin_layout .form-table.shipment-status-email-table tr td:nth-child(2) {
+.trackship_page_trackship-for-woocommerce .trackship_admin_layout .form-table.shipment-status-email-table tr td:first-child,
+.trackship_page_trackship-for-woocommerce .trackship_admin_layout .form-table.shipment-status-email-table tr td:nth-child(2) {
 	border-radius: 0;
 }
 .trackship_page_trackship-for-woocommerce .shipment-status-email-table tr td.status-label-column strong {
@@ -3970,72 +3671,6 @@ height in the closed state too, so the header doesn't grow when opened */
 .trackship_page_trackship-for-woocommerce .form-table.shipment-status-email-table .edit_customizer_a:hover {
 	color: var(--tsd-ink);
 }
-/* ---- Tools tab: full-width action cards ---- */
-.trackship_page_trackship-for-woocommerce .tools_tab {
-	max-width: 100% !important;
-}
-.trackship_page_trackship-for-woocommerce .tools_tab .inner_div {
-	background: #fff;
-	border: 1px solid var(--tsd-line) !important;
-	border-radius: var(--tsd-radius) !important;
-	box-shadow: var(--tsd-shadow);
-	padding: 16px 20px !important;
-	margin-bottom: 10px;
-	max-width: 100% !important;
-	width: 100%;
-	box-sizing: border-box;
-	display: flex;
-	align-items: center;
-	gap: 16px;
-}
-.trackship_page_trackship-for-woocommerce .tools_tab .inner_div p {
-	font-size: 13px;
-	color: var(--tsd-ink);
-	margin: 0;
-	flex: 1;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	width: 100%;
-}
-.trackship_page_trackship-for-woocommerce .tools_tab .tools-ts-button {
-	flex-shrink: 0;
-	height: 36px;
-	padding: 0 16px;
-	border-radius: 8px !important;
-	font-size: 13px;
-	font-weight: 500;
-	white-space: nowrap;
-	cursor: pointer;
-}
-.trackship_page_trackship-for-woocommerce .tools_tab .button-trackship {
-	background: var(--tsd-blue) !important;
-	border-color: var(--tsd-blue) !important;
-	color: #fff !important;
-}
-.trackship_page_trackship-for-woocommerce .tools_tab .button-trackship:hover {
-	background: #0f3fb5 !important;
-	border-color: #0f3fb5 !important;
-}
-.trackship_page_trackship-for-woocommerce .tools_tab .button-trackship-red {
-	background: #ef4444 !important;
-	border-color: #ef4444 !important;
-	color: #fff !important;
-}
-.trackship_page_trackship-for-woocommerce .tools_tab .button-trackship-red:hover {
-	background: #dc2626 !important;
-	border-color: #dc2626 !important;
-}
-
-/* ---- Integrations: improved card style ---- */
-.trackship_page_trackship-for-woocommerce .ts_integrations_row .ts-grid-item {
-	border: 1px solid var(--tsd-line) !important;
-	border-radius: var(--tsd-radius) !important;
-	box-shadow: var(--tsd-shadow);
-	padding: 16px 20px;
-	margin: 0 12px 12px 0;
-	transition: box-shadow .18s, border-color .18s;
-}
 .trackship_page_trackship-for-woocommerce .ts_integrations_row .ts-grid-item:hover {
 	box-shadow: 0 4px 16px rgba(18,78,214,.10);
 	border-color: #c5cadd !important;
@@ -4054,14 +3689,15 @@ End TrackShip Settings Page
 }
 /* Each integration box/card */
 .ts_integrations_row .ts-grid-item {
-	padding: 14px;
 	background: #ffffff;
-	border: 1px solid #e0e0e0;
-	border-radius: 3px;
-	margin: 0 14px 14px 0;
 	display: flex;
 	align-items: center;
-	transition: background 0.2s ease, box-shadow 0.2s ease;
+	border: 1px solid var(--tsd-line);
+	border-radius: var(--tsd-radius);
+	box-shadow: var(--tsd-shadow);
+	padding: 16px 20px;
+	margin: 0 12px 12px 0;
+	transition: box-shadow .18s, border-color .18s;
 }
 /* Hover effect for cards */
 .ts_integrations_row .ts-grid-item:hover {
@@ -4152,48 +3788,7 @@ End TrackShip Settings Page
 	🔷 Iintegrations LAYOUT END
 	========================================================== */
 
-@media (min-width: 992px) {
-.col-lg-6 {
-	-webkit-box-flex: 0;
-	-ms-flex: 0 0 50%;
-	flex: 0 0 50%;
-	max-width: 50%;
-}
-.tab_inner_container .tools_tab_ts4wc.tools_tab button.button-primary.tools-ts-button {
-	float: right;
-}
-.rtl .tab_inner_container .tools_tab_ts4wc.tools_tab button.button-primary.tools-ts-button {
-	float: left;
-}
-}
-@media (max-width: 992px) {
-	.tab_inner_container .tools_tab_ts4wc.tools_tab button.button-primary.tools-ts-button {
-		display: block;
-	}
-}
-
-@media screen and (min-width: 768px) and (max-width: 1269px) {
-.ts_col_4 {
-	max-width: 50%;
-	-ms-flex-preferred-size: 50%;
-	flex-basis: 50%;
-}
-}
-
 @media screen and (max-width: 768px) {
-.ts_col_4 {
-	max-width: 100%;
-	-ms-flex-preferred-size: 100%;
-	flex-basis: 100%;
-}
-.ts_col_6 {
-	max-width: 100%;
-	-ms-flex-preferred-size: 100%;
-	flex-basis: 100%;
-}
-span.select_t_layout_section {
-	width: 46%;
-}
 .shipment-status-email-table.form-table td {
 	display: table-cell;
 }
@@ -4205,10 +3800,6 @@ select#tracking_page_id {
 	display: block;
 	margin-top: 10px;
 }
-label.inner_tab_label {
-	padding: 15px 14px;
-	font-size: 13px;
-}
 #admin_tracking_widget .popuprow {
 	margin-top: 50px;
 }
@@ -4219,19 +3810,6 @@ select#tracking_page_id {
 	margin-left: 0;
 	display: block;
 	margin-top: 10px;
-}
-label.inner_tab_label {
-	padding: 15px 14px;
-	font-size: 13px;
-}
-}
-
-@media screen and (max-width: 700px) {
-.tab_inner_container .fullfillment_dashboard {
-	display: block;
-}
-.fullfillment_dashboard .fullfillment_dashboard_section {
-	width: 100%;
 }
 }
 

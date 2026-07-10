@@ -17,13 +17,13 @@ if ( $db_status['missing_tables'] || $db_status['missing_columns'] ) {
 		<p>Some database tables or columns are missing:</p>
 		<?php echo $db_status['missing_tables'] ? '<p><strong>Missing tables:-</strong> ' . esc_html( implode( ', ', $db_status['missing_tables'] ) ) . '.</p>' : ''; ?>
 		<?php echo $db_status['missing_columns'] ? '<p><strong>Missing columns:-</strong> ' . esc_html( implode( ', ', $db_status['missing_columns'] ) ) . '.</p>' : ''; ?>
-		<a class="button button-primary" href="<?php echo esc_url( $url ); ?>">Upgrade Database</a>
+		<a class="button button-trackship" href="<?php echo esc_url( $url ); ?>">Upgrade Database</a>
 	</div>
 	<?php
 }
 
 /* Active page detection --------------------------------------------- */
-$page_slug         = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$page_slug = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 $is_analytics_page = (
 	'wc-admin' === $page_slug &&
 	isset( $_GET['path'] ) && // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -32,28 +32,28 @@ $is_analytics_page = (
 
 $tsh_nav_items = array(
 	array(
-		'label'  => __( 'Dashboard', 'trackship-for-woocommerce' ),
-		'url'    => admin_url( 'admin.php?page=trackship-dashboard' ),
-		'active' => ( 'trackship-dashboard' === $page_slug ),
+		'label'	=> __( 'Dashboard', 'trackship-for-woocommerce' ),
+		'url'	=> admin_url( 'admin.php?page=trackship-dashboard' ),
+		'active'=> ( 'trackship-dashboard' === $page_slug ),
 	),
 	array(
-		'label'  => __( 'Shipments', 'trackship-for-woocommerce' ),
-		'url'    => admin_url( 'admin.php?page=trackship-shipments' ),
+		'label' => __( 'Shipments', 'trackship-for-woocommerce' ),
+		'url'	=> admin_url( 'admin.php?page=trackship-shipments' ),
 		'active' => ( 'trackship-shipments' === $page_slug ),
 	),
 	array(
-		'label'  => __( 'Logs', 'trackship-for-woocommerce' ),
-		'url'    => admin_url( 'admin.php?page=trackship-logs' ),
+		'label'	=> __( 'Logs', 'trackship-for-woocommerce' ),
+		'url'	=> admin_url( 'admin.php?page=trackship-logs' ),
 		'active' => ( 'trackship-logs' === $page_slug ),
 	),
 	array(
-		'label'  => __( 'Analytics', 'trackship-for-woocommerce' ),
-		'url'    => admin_url( 'admin.php?page=wc-admin&path=/analytics/trackship-analytics' ),
+		'label'	=> __( 'Analytics', 'trackship-for-woocommerce' ),
+		'url'	=> admin_url( 'admin.php?page=wc-admin&path=/analytics/trackship-analytics' ),
 		'active' => $is_analytics_page,
 	),
 	array(
-		'label'  => __( 'Settings', 'trackship-for-woocommerce' ),
-		'url'    => admin_url( 'admin.php?page=trackship-for-woocommerce' ),
+		'label'	=> __( 'Settings', 'trackship-for-woocommerce' ),
+		'url'	=> admin_url( 'admin.php?page=trackship-for-woocommerce' ),
 		'active' => ( 'trackship-for-woocommerce' === $page_slug ),
 	),
 );

@@ -13,7 +13,7 @@
 })( jQuery );
 
 /*ajax call for settings tab form save*/
-jQuery(document).on("click", ".zorem_plugin_setting_tab_form .woocommerce-save-button", function(){
+jQuery(document).on("click", ".zorem_plugin_setting_tab_form .trackship-save-button", function(){
 	'use strict';
 	save_sms_settings();
 	return false;
@@ -50,10 +50,6 @@ function save_sms_settings(){
 			} else {
 				jQuery(document).trackship_snackbar( response.message );
 			}
-			jQuery( '.heading_panel' ).removeClass( 'active' );
-			jQuery( '.heading_panel' ).siblings( '.panel_content' ).removeClass('active').slideUp( 'slow' );
-			jQuery( '.heading_panel' ).find('span.dashicons').addClass('dashicons-arrow-right-alt2');
-			jQuery( '.heading_panel' ).find('button.button-primary').hide();
 		},
 		error: function(response) {
 			console.log(response);

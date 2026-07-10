@@ -226,7 +226,7 @@ class WC_Trackship_Admin {
 	*/
 	public function settings_page_callback() {
 		?>
-		<div class="zorem-layout">
+		<div class="trackship-layout">
 			<?php include 'views/header2.php'; ?>
 			<?php include 'views/content.php'; ?>
 		</div>
@@ -238,7 +238,7 @@ class WC_Trackship_Admin {
 	*/
 	public function shipments_page_callback() {
 		?>
-		<div class="zorem-layout">
+		<div class="trackship-layout">
 			<?php include 'views/header2.php'; ?>
 			<?php $this->get_trackship_notice_msg(); ?>
 			<div class="trackship_admin_content">
@@ -257,7 +257,7 @@ class WC_Trackship_Admin {
 	*/
 	public function logs_page_callback() {
 		?>
-		<div class="zorem-layout">
+		<div class="trackship-layout">
 			<?php include 'views/header2.php'; ?>
 			<?php $this->get_trackship_notice_msg(); ?>
 			<div class="trackship_admin_content">
@@ -280,7 +280,7 @@ class WC_Trackship_Admin {
 			trackship_for_woocommerce()->ts_install->update_database_check();
 		}
 		?>
-		<div class="zorem-layout">
+		<div class="trackship-layout">
 			<?php
 			include 'views/header2.php';
 			?>
@@ -290,7 +290,7 @@ class WC_Trackship_Admin {
 						<?php if ( is_trackship_connected() ) { ?>
 							<?php include 'views/dashboard.php'; ?>
 						<?php } else { ?>
-							<div class="woocommerce trackship_admin_layout">
+							<div class="trackship_admin_layout">
 								<div class="trackship_admin_content" >
 									<div class="trackship_nav_div">
 										<?php include 'views/trackship-integration.php'; ?>
@@ -796,7 +796,7 @@ class WC_Trackship_Admin {
 							<p style="font-size: 16px;"><?php esc_html_e( 'Starting from $9 a month', 'trackship-for-woocommerce' ); ?></p>
 						</ul>
 						<div>
-							<a href="https://my.trackship.com/?utm_source=wpadmin&utm_medium=TS4WC&utm_campaign=shipment"><button class="button-primary button-trackship btn_large" style="font-size: 17px; padding: 8px 30px; background-color: #09d3ac;border-color:#09d3ac;"><?php esc_html_e( 'UPGRADE TO PRO', 'trackship-for-woocommerce' ); ?><span style="line-height: 18px;" class="dashicons dashicons-arrow-right-alt2"></span></button></a>
+							<a href="https://my.trackship.com/?utm_source=wpadmin&utm_medium=TS4WC&utm_campaign=shipment"><button class="button button-trackship" style="font-size: 17px; background-color: #09d3ac;border-color:#09d3ac;"><?php esc_html_e( 'UPGRADE TO PRO', 'trackship-for-woocommerce' ); ?><span style="line-height: 18px;margin-left: 5px;" class="dashicons dashicons-arrow-right-alt2"></span></button></a>
 						</div>
 					</div>
 					<div style="position: relative; width: 100%;">
@@ -981,7 +981,10 @@ class WC_Trackship_Admin {
 		?>
 		<tr>
 			<td><input type="text" class="map_shipping_provider_text" name="detected_provider[]"></td>
-			<td>
+			<td class="ts-mapping-arrow-col">
+				<span class="dashicons dashicons-arrow-right-alt2"></span>
+			</td>
+			<td class="ts-mapping-select-col">
 				<select name="ts_provider[]" class="select2">
 					<option value=""><?php esc_html_e( 'Select', 'trackship-for-woocommerce' ); ?></option>
 					<?php foreach ( $ts_shippment_providers as $ts_provider ) { ?>

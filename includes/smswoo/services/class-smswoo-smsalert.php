@@ -16,8 +16,8 @@ if ( ! class_exists( 'SMSWOO_SMSAlert' ) ) {
 	/**
 	 * SMS Alert
 	 *
-	 * @class   SMSWOO_SMSAlert
-	 * @since   
+	 * @class SMSWOO_SMSAlert
+	 * @since
 	 *
 	 */
 	class SMSWOO_SMSAlert extends SMSWOO_Sms_Gateway {
@@ -29,12 +29,12 @@ if ( ! class_exists( 'SMSWOO_SMSAlert' ) ) {
 		/**
 		 * Constructor
 		 *
-		 * @since  
-		 * @return  void
+		 * @since
+		 * @return void
 		 */
 		public function __construct() {
 
-			$this->_smsalert_api_key    = get_option( 'smswoo_smsalert_key' );
+			$this->_smsalert_api_key = get_option( 'smswoo_smsalert_key' );
 
 			parent::__construct();
 
@@ -43,14 +43,14 @@ if ( ! class_exists( 'SMSWOO_SMSAlert' ) ) {
 		/**
 		 * Send SMS
 		 *
-		 * @since   
+		 * @since
 		 *
-		 * @param   $to_phone     string
-		 * @param   $message      string
-		 * @param   $country_code string
+		 * @param $to_phone string
+		 * @param $message string
+		 * @param $country_code string
 		 *
-		 * @return  void
-		 * @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
+		 * @return void
+		 * @throws Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
 		 */
 		public function send( $to_phone, $message, $country_code ) {
 			
@@ -79,7 +79,7 @@ if ( ! class_exists( 'SMSWOO_SMSAlert' ) ) {
 
 			$wp_remote_http_args = array(
 				'method' => 'POST',
-				'body'   => http_build_query($args),
+				'body' => http_build_query($args),
 			);
 
 			$endpoint = 'https://www.smsalert.co.in/api/push.json';
@@ -120,12 +120,12 @@ if ( ! class_exists( 'SMSWOO_SMSAlert' ) ) {
 		/**
 		 * Send SMS
 		 *
-		 * @since   1.0
+		 * @since 1.0
 		 *
-		 * @param   $to_phone     string
+		 * @param $to_phone string
 		 *
-		 * @return  void
-		 * @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
+		 * @return void
+		 * @throws Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
 		 */
 		public function validate_number( $to_phone ) {
 			

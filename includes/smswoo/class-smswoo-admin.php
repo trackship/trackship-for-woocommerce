@@ -116,8 +116,8 @@ class TSWC_SMSWoo_Admin {
 
 				<?php if ( 'checkbox' == $array['type'] ) { ?>
 					<?php
-					$default  = isset( $array['default'] ) ? 1 : 0;
-					$checked  = get_option( $id, $default ) ? 'checked' : '';
+					$default = isset( $array['default'] ) ? 1 : 0;
+					$checked = get_option( $id, $default ) ? 'checked' : '';
 					$disabled = ( isset( $array['disabled'] ) && true == $array['disabled'] ) ? 'disabled' : '';
 					if ( $disabled ) { $checked = ''; }
 					?>
@@ -505,7 +505,7 @@ class TSWC_SMSWoo_Admin {
 							<?php } ?>
 						</div>
 						<span class="smswoo-right smswoo-mr20 smswoo-shipment-sendto">
-							<button name="save" class="button-primary woocommerce-save-button button-smswoo hide button-trackship" type="submit" value="Save changes"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
+							<button name="save" class="button trackship-save-button button-smswoo hide button-trackship" type="submit" value="Save changes"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
 							<span class="smswoo-inlineblock">
 								<input type="hidden" name="<?php echo esc_attr($enabled_customer); ?>" value="0"/>
 								<input type="checkbox" id="<?php echo esc_attr($enabled_customer); ?>" name="<?php echo esc_attr($enabled_customer); ?>" class="tgl tgl-flat smswoo-shipment-checkbox" value="1" <?php echo $checked_customer ? 'checked' : ''; ?> data-row_class="enable_customer" />

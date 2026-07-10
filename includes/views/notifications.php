@@ -103,7 +103,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<img class="ts-notif-status-icon" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/late-shipment.png">
 					<strong><?php esc_html_e( 'Late Shipments', 'trackship-for-woocommerce' ); ?></strong>
 					<div class="heading_panel_save">
-						<button name="save" class="button-primary woocommerce-save-button btn_large" type="submit" value="Save & close"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
+						<button name="save" class="button button-trackship trackship-save-button" type="submit" value="Save & close"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
 						<?php trackship_for_woocommerce()->html->get_tgl_checkbox( 'late_shipments_email_enable', array( 'type' => 'tgl_checkbox', 'class' => 'shipment_status_toggle', 'settings' => 'late_shipments_email_settings' ) ); ?>
 						<a class="edit_customizer_a dashicons dashicons-admin-generic"></a>
 					</div>
@@ -118,7 +118,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<img class="ts-notif-status-icon" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/failure.png">
 					<strong><?php esc_html_e( 'Exception Shipments', 'trackship-for-woocommerce' ); ?></strong>
 					<div class="heading_panel_save">
-						<button name="save" class="button-primary woocommerce-save-button btn_large" type="submit" value="Save & close"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
+						<button name="save" class="button button-trackship trackship-save-button" type="submit" value="Save & close"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
 						<?php trackship_for_woocommerce()->html->get_tgl_checkbox( 'exception_admin_email_enable', array( 'type' => 'tgl_checkbox', 'class' => 'shipment_status_toggle', 'settings' => 'exception_admin_email' ) ); ?>
 						<a class="edit_customizer_a dashicons dashicons-admin-generic"></a>
 					</div>
@@ -133,7 +133,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<img class="ts-notif-status-icon" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/css/icons/on-hold.png">
 					<strong><?php esc_html_e( 'On Hold Shipments', 'trackship-for-woocommerce' ); ?></strong>
 					<div class="heading_panel_save">
-						<button name="save" class="button-primary woocommerce-save-button btn_large" type="submit" value="Save & close"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
+						<button name="save" class="button button-trackship trackship-save-button" type="submit" value="Save & close"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
 						<?php trackship_for_woocommerce()->html->get_tgl_checkbox( 'on_hold_admin_email_enable', array( 'type' => 'tgl_checkbox', 'class' => 'shipment_status_toggle', 'settings' => 'on_hold_admin_email' ) ); ?>
 						<a class="edit_customizer_a dashicons dashicons-admin-generic"></a>
 					</div>

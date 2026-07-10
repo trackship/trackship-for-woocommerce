@@ -11,11 +11,11 @@ if ( !get_trackship_settings( 'wc_admin_notice', '') ) {
 }
 $url = 'https://api.trackship.com/v1/user-plan/get';
 $args = array(
-	'body'    => json_encode( [ 'user_key' => get_trackship_key() ] ),
+	'body' => json_encode( [ 'user_key' => get_trackship_key() ] ),
 	'headers' => array( 'Content-Type' => 'application/json' ),
 	'timeout' => 15,
 );
-$response  = wp_remote_post( $url, $args );
+$response = wp_remote_post( $url, $args );
 $plan_data = ( ! is_wp_error( $response ) && 200 === wp_remote_retrieve_response_code( $response ) )
 	? json_decode( wp_remote_retrieve_body( $response ) )
 	: null;
@@ -98,7 +98,7 @@ $section = isset( $_GET['section'] ) ? sanitize_text_field( $_GET['section'] ) :
 						<strong><?php esc_html_e( 'General Settings', 'trackship-for-woocommerce' ); ?></strong>
 						<div class="heading_panel_save">
 							<div class="spinner"></div>
-							<button name="save" class="button-primary button-trackship btn_large woocommerce-save-button" type="submit" value="Save changes">
+							<button name="save" class="button button-trackship trackship-save-button" type="submit" value="Save changes">
 								<?php esc_html_e( 'Save changes', 'trackship-for-woocommerce' ); ?>
 							</button>
 							<?php wp_nonce_field( 'wc_trackship_form', 'wc_trackship_form_nonce' ); ?>

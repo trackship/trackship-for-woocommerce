@@ -41,28 +41,28 @@ $return_to_sender_shipment = $results['return_to_sender_shipment'];
 $tsd_status_rows = $wpdb->get_results( "SELECT shipment_status status, COUNT(*) c FROM {$wpdb->prefix}trackship_shipment GROUP BY shipment_status", ARRAY_A );
 
 $tsd_status_map = array(
-	'delivered'            => array( __( 'Delivered', 'trackship-for-woocommerce' ),            '#16a34a' ),
-	'in_transit'           => array( __( 'In Transit', 'trackship-for-woocommerce' ),           '#2563eb' ),
-	'out_for_delivery'     => array( __( 'Out for Delivery', 'trackship-for-woocommerce' ),     '#0ea5b7' ),
-	'pre_transit'          => array( __( 'Pre-Transit', 'trackship-for-woocommerce' ),          '#6366f1' ),
+	'delivered'			=> array( __( 'Delivered', 'trackship-for-woocommerce' ),		'#16a34a' ),
+	'in_transit'		=> array( __( 'In Transit', 'trackship-for-woocommerce' ),		'#2563eb' ),
+	'out_for_delivery'	=> array( __( 'Out for Delivery', 'trackship-for-woocommerce' ),	'#0ea5b7' ),
+	'pre_transit'		=> array( __( 'Pre-Transit', 'trackship-for-woocommerce' ),		'#6366f1' ),
 	'available_for_pickup' => array( __( 'Available for Pickup', 'trackship-for-woocommerce' ), '#09d3ac' ),
-	'return_to_sender'     => array( __( 'Return to Sender', 'trackship-for-woocommerce' ),     '#7c3aed' ),
-	'exception'            => array( __( 'Exception', 'trackship-for-woocommerce' ),            '#dc2626' ),
-	'on_hold'              => array( __( 'On Hold', 'trackship-for-woocommerce' ),              '#f59e0b' ),
+	'return_to_sender'	=> array( __( 'Return to Sender', 'trackship-for-woocommerce' ),	'#7c3aed' ),
+	'exception'			=> array( __( 'Exception', 'trackship-for-woocommerce' ),		'#dc2626' ),
+	'on_hold'			=> array( __( 'On Hold', 'trackship-for-woocommerce' ),			'#f59e0b' ),
 );
 
-$tsd_status       = array();
+$tsd_status = array();
 $tsd_status_total = 0;
 foreach ( (array) $tsd_status_rows as $r ) {
-	$c                 = (int) $r['c'];
+	$c = (int) $r['c'];
 	$tsd_status_total += $c;
-	$st                = $r['status'];
+	$st = $r['status'];
 	if ( isset( $tsd_status_map[ $st ] ) ) {
-		$k     = $st;
+		$k = $st;
 		$label = $tsd_status_map[ $st ][0];
 		$color = $tsd_status_map[ $st ][1];
 	} else {
-		$k     = '_other';
+		$k = '_other';
 		$label = __( 'Other', 'trackship-for-woocommerce' );
 		$color = '#94a3b8';
 	}
@@ -88,12 +88,12 @@ if ( count( $tsd_status ) > 6 ) {
 	$tsd_status = $tsd_keep;
 }
 
-$tsd_carriers  = $wpdb->get_results( "SELECT shipping_provider p, COUNT(*) c FROM {$wpdb->prefix}trackship_shipment WHERE shipping_provider <> '' AND shipping_provider IS NOT NULL GROUP BY shipping_provider ORDER BY c DESC LIMIT 5", ARRAY_A );
+$tsd_carriers = $wpdb->get_results( "SELECT shipping_provider p, COUNT(*) c FROM {$wpdb->prefix}trackship_shipment WHERE shipping_provider <> '' AND shipping_provider IS NOT NULL GROUP BY shipping_provider ORDER BY c DESC LIMIT 5", ARRAY_A );
 $tsd_countries = $wpdb->get_results( "SELECT shipping_country co, COUNT(*) c FROM {$wpdb->prefix}trackship_shipment WHERE shipping_country <> '' AND shipping_country IS NOT NULL GROUP BY shipping_country ORDER BY c DESC LIMIT 5", ARRAY_A );
 
-$tsd_kpi           = $wpdb->get_row( "SELECT COUNT(*) total, SUM(shipment_status='delivered') delivered, AVG(NULLIF(shipping_length,'')) avg_len, SUM(shipment_status='delivered' AND est_delivery_date IS NOT NULL AND last_event_time IS NOT NULL AND DATE(last_event_time) <= est_delivery_date) ontime, SUM(shipment_status='delivered' AND est_delivery_date IS NOT NULL) delivered_with_est FROM {$wpdb->prefix}trackship_shipment", ARRAY_A );
-$tsd_avg_transit   = ! empty( $tsd_kpi['avg_len'] ) ? round( (float) $tsd_kpi['avg_len'], 1 ) : 0;
-$tsd_ontime_pct    = ! empty( $tsd_kpi['delivered_with_est'] ) ? round( 100 * $tsd_kpi['ontime'] / $tsd_kpi['delivered_with_est'] ) : 0;
+$tsd_kpi = $wpdb->get_row( "SELECT COUNT(*) total, SUM(shipment_status='delivered') delivered, AVG(NULLIF(shipping_length,'')) avg_len, SUM(shipment_status='delivered' AND est_delivery_date IS NOT NULL AND last_event_time IS NOT NULL AND DATE(last_event_time) <= est_delivery_date) ontime, SUM(shipment_status='delivered' AND est_delivery_date IS NOT NULL) delivered_with_est FROM {$wpdb->prefix}trackship_shipment", ARRAY_A );
+$tsd_avg_transit = ! empty( $tsd_kpi['avg_len'] ) ? round( (float) $tsd_kpi['avg_len'], 1 ) : 0;
+$tsd_ontime_pct = ! empty( $tsd_kpi['delivered_with_est'] ) ? round( 100 * $tsd_kpi['ontime'] / $tsd_kpi['delivered_with_est'] ) : 0;
 $tsd_delivered_pct = ! empty( $tsd_kpi['total'] ) ? round( 100 * $tsd_kpi['delivered'] / $tsd_kpi['total'] ) : 0;
 
 /* Carrier performance (avg transit + on-time, top 5 by volume). */
@@ -101,15 +101,15 @@ $tsd_carrier_perf = $wpdb->get_results( "SELECT shipping_provider p, COUNT(*) to
 
 /* Shipments over time — 12 months ending at the most recent shipment month. */
 $tsd_max_ship = $wpdb->get_var( "SELECT MAX(shipping_date) FROM {$wpdb->prefix}trackship_shipment WHERE shipping_date IS NOT NULL" );
-$tsd_base     = strtotime( gmdate( 'Y-m-01', $tsd_max_ship ? strtotime( $tsd_max_ship ) : time() ) );
-$tsd_trend    = array();
+$tsd_base = strtotime( gmdate( 'Y-m-01', $tsd_max_ship ? strtotime( $tsd_max_ship ) : time() ) );
+$tsd_trend = array();
 for ( $i = 11; $i >= 0; $i-- ) {
 	$ts = strtotime( "-$i month", $tsd_base );
 	$tsd_trend[ gmdate( 'Y-m', $ts ) ] = array( 'label' => date_i18n( 'M', $ts ), 'year' => gmdate( 'Y', $ts ), 'count' => 0 );
 }
 reset( $tsd_trend );
 $tsd_trend_start = key( $tsd_trend ) . '-01';
-$tsd_trend_rows  = $wpdb->get_results( $wpdb->prepare( "SELECT DATE_FORMAT(shipping_date, '%%Y-%%m') ym, COUNT(*) c FROM {$wpdb->prefix}trackship_shipment WHERE shipping_date >= %s GROUP BY ym", $tsd_trend_start ), ARRAY_A );
+$tsd_trend_rows = $wpdb->get_results( $wpdb->prepare( "SELECT DATE_FORMAT(shipping_date, '%%Y-%%m') ym, COUNT(*) c FROM {$wpdb->prefix}trackship_shipment WHERE shipping_date >= %s GROUP BY ym", $tsd_trend_start ), ARRAY_A );
 foreach ( (array) $tsd_trend_rows as $r ) {
 	if ( isset( $tsd_trend[ $r['ym'] ] ) ) {
 		$tsd_trend[ $r['ym'] ]['count'] = (int) $r['c'];
@@ -187,17 +187,17 @@ $array = array(
 );
 $url = 'https://api.trackship.com/v1/user-plan/get';
 $args = array(
-	'body'    => json_encode( [ 'user_key' => get_trackship_key() ] ),
+	'body' => json_encode( [ 'user_key' => get_trackship_key() ] ),
 	'headers' => array( 'Content-Type' => 'application/json' ),
 	'timeout' => 15,
 );
-$response  = wp_remote_post( $url, $args );
+$response = wp_remote_post( $url, $args );
 $plan_data = ( ! is_wp_error( $response ) && 200 === wp_remote_retrieve_response_code( $response ) )
 	? json_decode( wp_remote_retrieve_body( $response ) )
 	: null;
-$current_plan    = ! empty( $plan_data->subscription_plan ) ? $plan_data->subscription_plan : get_option( 'user_plan', '' );
-$current_balance = ! empty( $plan_data->tracker_balance )   ? $plan_data->tracker_balance   : get_option( 'trackers_balance', '' );
-$plan_period     = ! empty( $plan_data->period )            ? $plan_data->period             : get_option( 'plan_period', '' );
+$current_plan = ! empty( $plan_data->subscription_plan ) ? $plan_data->subscription_plan : get_option( 'user_plan', '' );
+$current_balance = ! empty( $plan_data->tracker_balance ) ? $plan_data->tracker_balance : get_option( 'trackers_balance', '' );
+$plan_period = ! empty( $plan_data->period ) ? $plan_data->period : get_option( 'plan_period', '' );
 if ( $plan_data ) {
 	update_option( 'user_plan', $current_plan );
 	update_option( 'trackers_balance', $current_balance );
@@ -217,15 +217,15 @@ $connected_email = ( $plan_data && ! empty( $plan_data->email ) ) ? $plan_data->
 <?php
 /* Inline SVG icon map keeps the dashboard self-contained and lets CSS recolor icons. */
 $tsd_stat_icons = array(
-	'total_shipment'     => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>',
-	'active_shipment'    => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>',
+	'total_shipment' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>',
+	'active_shipment' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg>',
 	'delivered_shipment' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.8 10A10 10 0 1 1 17 3.34"/><path d="m9 11 3 3L22 4"/></svg>',
-	'tracking_issues'    => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>',
+	'tracking_issues' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>',
 );
 $tsd_action_meta = array(
-	'unsent_shipments' => array( 'tone' => 'blue',   'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>' ),
-	'late_shipment'    => array( 'tone' => 'amber',  'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' ),
-	'tracking_issues'  => array( 'tone' => 'red',    'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>' ),
+	'unsent_shipments' => array( 'tone' => 'blue', 'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>' ),
+	'late_shipment' => array( 'tone' => 'amber', 'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' ),
+	'tracking_issues' => array( 'tone' => 'red', 'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>' ),
 	'return_to_sender' => array( 'tone' => 'purple', 'icon' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>' ),
 );
 ?>
@@ -316,8 +316,8 @@ $tsd_action_meta = array(
 					<?php if ( $value['count'] > 0 ) { ?>
 						<?php
 						$tsd_has_action = true;
-						$shipment_link  = $value['link'] ?? admin_url( 'admin.php?page=trackship-shipments&status=' . $key );
-						$tsd_meta       = $tsd_action_meta[ $key ] ?? array( 'tone' => 'blue', 'icon' => '' );
+						$shipment_link = $value['link'] ?? admin_url( 'admin.php?page=trackship-shipments&status=' . $key );
+						$tsd_meta = $tsd_action_meta[ $key ] ?? array( 'tone' => 'blue', 'icon' => '' );
 						?>
 						<a class="tsd-action tsd-action--<?php echo esc_attr( $tsd_meta['tone'] ); ?>" href="<?php echo esc_url( $shipment_link ); ?>">
 							<span class="tsd-action__icon"><?php echo $tsd_meta['icon']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
@@ -353,7 +353,7 @@ $tsd_action_meta = array(
 						<g transform="rotate(-90 90 90)">
 							<?php
 							$tsd_circ = 2 * M_PI * 70;
-							$tsd_off  = 0;
+							$tsd_off = 0;
 							foreach ( $tsd_status as $seg ) {
 								$len = $tsd_status_total ? ( $seg['count'] / $tsd_status_total ) * $tsd_circ : 0;
 								?>
@@ -463,9 +463,9 @@ $tsd_action_meta = array(
 				<?php if ( $tsd_carrier_perf ) { ?>
 					<?php foreach ( $tsd_carrier_perf as $row ) { ?>
 						<?php
-						$ot_val  = $row['del_est'] > 0 ? round( 100 * $row['ontime'] / $row['del_est'] ) : null;
-						$ot_txt  = null === $ot_val ? '&mdash;' : $ot_val . '%';
-						$ot_cls  = null === $ot_val ? 'is-na' : ( $ot_val >= 90 ? 'is-good' : ( $ot_val >= 75 ? 'is-mid' : 'is-low' ) );
+						$ot_val = $row['del_est'] > 0 ? round( 100 * $row['ontime'] / $row['del_est'] ) : null;
+						$ot_txt = null === $ot_val ? '&mdash;' : $ot_val . '%';
+						$ot_cls = null === $ot_val ? 'is-na' : ( $ot_val >= 90 ? 'is-good' : ( $ot_val >= 75 ? 'is-mid' : 'is-low' ) );
 						$avg_txt = $row['avg_len'] ? round( $row['avg_len'], 1 ) . ' ' . __( 'days', 'trackship-for-woocommerce' ) : '&mdash;';
 						?>
 						<div class="tsd-perf__row">

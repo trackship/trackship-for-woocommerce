@@ -140,7 +140,7 @@ jQuery(document).ready(function(){
 });
 
 function setting_change_trigger() {	
-	jQuery(".woocommerce-save-button").removeAttr("disabled").html('Save');
+	jQuery(".trackship-save-button").removeAttr("disabled").html('Save');
 	jQuery('.zoremmail-back-wordpress-title').addClass('back_to_notice');
 }
 
@@ -411,7 +411,6 @@ jQuery(document).on("click", "#zoremmail_email_options .button-trackship", funct
 				jQuery(document).zorem_snackbar( "Settings Successfully Saved." );
 				jQuery('.pending_color_event, .pending_change_event, .pending_keyup_event').empty();
 				jQuery('iframe').attr('src', jQuery('iframe').attr('src'));
-				jQuery('.button-trackship .woocommerce-save-button').attr("disabled");
 				jQuery('.zoremmail-back-wordpress-title').removeClass('back_to_notice');
 			} else {
 				if( response.permission === "false" ){

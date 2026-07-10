@@ -335,7 +335,7 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 		
 			foreach ( $plugins as $k => $v ) {
 				// Take care of formatting the data how we want it.
-				$formatted         = array();
+				$formatted = array();
 				$formatted['name'] = strip_tags( $v['Name'] );
 				if ( isset( $v['Version'] ) ) {
 					$formatted['version'] = strip_tags( $v['Version'] );

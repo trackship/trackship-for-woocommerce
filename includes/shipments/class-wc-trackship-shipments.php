@@ -62,7 +62,7 @@ class WC_Trackship_Shipments {
 		// Enqueue WooCommerce's Flatpickr and style
 		wp_enqueue_script('moment-js', 'https://cdn.jsdelivr.net/momentjs/latest/moment.min.js', array('jquery'), null, true);
 		wp_enqueue_script( 'ts_daterangepicker', 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js', array('jquery', 'moment-js'), '5.37.0', true );
-    	wp_enqueue_style( 'ts_daterangepicker', 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css', array(), '5.37.0' );
+		wp_enqueue_style( 'ts_daterangepicker', 'https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css', array(), '5.37.0' );
 		
 		// Rubik font
 		wp_enqueue_style( 'custom-google-fonts', 'https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap', array(), trackship_for_woocommerce()->version );

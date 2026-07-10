@@ -44,10 +44,10 @@ $class = $ts4wc_preview ? 'hide' : '';
 			<tbody>
 				<?php
 				foreach ( $order->get_items() as $item_id => $item ) :
-					$product       = $item->get_product();
-					$sku           = '';
+					$product = $item->get_product();
+					$sku = '';
 					$purchase_note = '';
-					$image         = '';
+					$image = '';
 					$image_size = array( 64, 64 );
 				
 					$product_name = $item->get_name();
@@ -86,10 +86,10 @@ $class = $ts4wc_preview ? 'hide' : '';
 								do_action( 'woocommerce_order_item_meta_end', $item_id, $item, $order, $plain_text );
 							}
 							?>
-						</td>	
+						</td>
 					</tr>
 				<?php endforeach; ?>
-			</tbody>			
+			</tbody>
 		</table>
 	</div>
 </div>

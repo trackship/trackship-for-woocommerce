@@ -6,11 +6,11 @@ wp_enqueue_script( 'trackship_script' );
 
 $store_url = get_site_url();
 $connect_url = add_query_arg( array(
-	'utm_source'  => 'wpadmin',
-	'utm_campaign'=> 'tspage',
-	'store_url'   => $store_url,
-	'type'        => 'wc',
-	'token'       => md5( $store_url ),
+	'utm_source'	=> 'wpadmin',
+	'utm_campaign'	=> 'tspage',
+	'store_url'		=> $store_url,
+	'type'			=> 'wc',
+	'token'			=> md5( $store_url ),
 ), 'https://my.trackship.com' );
 ?>
 <div class="ts-connect-page">
@@ -42,9 +42,9 @@ $connect_url = add_query_arg( array(
 	</div>
 	<script>
 	(function($){
-		var modal  = $('#ts-video-modal');
+		var modal = $('#ts-video-modal');
 		var iframe = $('#ts-video-iframe');
-		var src    = 'https://www.youtube.com/embed/QDKV2Irqz9M?autoplay=1';
+		var src = 'https://www.youtube.com/embed/QDKV2Irqz9M?autoplay=1';
 
 		$('.ts-connect-video-trigger').on('click keypress', function(e){
 			if ( e.type === 'keypress' && e.which !== 13 ) return;

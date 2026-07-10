@@ -130,8 +130,8 @@ class WOO_Fulfillment_Tracking_TS4WC {
 	/**
 	 * Returns the provider image, handling WC 10.6 (class name string) and WC 10.7+ (instantiated object).
 	 *
-	 * @param array|false $providers        Result of get_providers().
-	 * @param string      $shipment_provider Provider slug.
+	 * @param array|false $providers Result of get_providers().
+	 * @param string $shipment_provider Provider slug.
 	 * @return string|null
 	 */
 	private function get_provider_image( $providers, $shipment_provider ) {

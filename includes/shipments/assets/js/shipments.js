@@ -56,13 +56,13 @@ jQuery(document).ready(function() {
 			format: 'YYYY-MM-DD'
 		},
 		ranges: {
-		   'Today': [moment(), moment()],
-		   'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-		   'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-		   'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-		   'This Month': [moment().startOf('month'), moment().endOf('month')],
-		   'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-		   'Last 6 Month': [moment().subtract(6, 'month'), moment()]
+			'Today': [moment(), moment()],
+			'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+			'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+			'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+			'This Month': [moment().startOf('month'), moment().endOf('month')],
+			'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+			'Last 6 Month': [moment().subtract(6, 'month'), moment()]
 		}
 	}, function(start, end, label) {
 		jQuery('#shipment_start_date_range').val(start.format('YYYY-MM-DD'));
@@ -230,8 +230,8 @@ jQuery(document).ready(function() {
 				'data': 'shipment_length',
 				"mRender": function(data, type, full) {
 					var late_shipment = full.shipment_length.cond ? '<span class="dashicons dashicons-info ' + full.shipment_length.late_class + ' late_shipment"></span>' : '';
-					var extraClass    = full.shipment_length.cond ? ' trackship-tip' : '';
-					var titleAttr     = full.shipment_length.cond ? ' title="This shipment has been in transit for ' + full.shipment_length.shipping_length + ' and may be late."' : '';
+					var extraClass = full.shipment_length.cond ? ' trackship-tip' : '';
+					var titleAttr = full.shipment_length.cond ? ' title="This shipment has been in transit for ' + full.shipment_length.shipping_length + ' and may be late."' : '';
 					return '<span class="shipment_length ' + full.shipment_length.late_class + extraClass + '"' + titleAttr + '>' + late_shipment + full.shipment_length.shipping_length + '</span>';
 				},
 			},	

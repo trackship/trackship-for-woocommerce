@@ -95,8 +95,8 @@ input[type="checkbox"].all_checkboxes::before {
 }
 input[type="checkbox"].shipment_checkbox:checked,
 input[type="checkbox"].all_checkboxes:checked {
-	background-color: #2271b1 !important;
-	border-color: #2271b1 !important;
+	background-color: var(--tsd-blue);
+	border-color: var(--tsd-blue);
 	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
 	background-repeat: no-repeat;
 	background-position: center;
@@ -323,11 +323,6 @@ table.dataTable tbody .shipment_status_label.pending_trackship:before {
 }
 table.dataTable tbody .shipment_status_label.unknown:before {
 	background: #8a2f1b;
-}
-.wp-core-ui .btn_green2.bulk_action_submit {
-	line-height: 27px;
-	height: 30px;
-	vertical-align: top;
 }
 .trackship_admin_content select {
 	vertical-align: top;

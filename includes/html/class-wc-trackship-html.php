@@ -153,7 +153,7 @@ class WC_Trackship_Html {
 			<?php } ?>
 			<?php if ( isset($array['customize_link']) ) { ?>
 				<div class="ts-setting-row__control">
-					<a href="<?php echo esc_url( $array['customize_link'] ); ?>" class="button-primary btn_ts_sidebar ts_customizer_btn"><?php esc_html_e( 'Customize the Tracking Widget', 'trackship-for-woocommerce' ); ?></a>
+					<a href="<?php echo esc_url( $array['customize_link'] ); ?>" class="button btn_outline"><?php esc_html_e( 'Customize the Tracking Widget', 'trackship-for-woocommerce' ); ?></a>
 				</div>
 			<?php } ?>
 		</li>

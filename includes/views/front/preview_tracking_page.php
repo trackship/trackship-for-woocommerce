@@ -93,9 +93,9 @@
 			if ( in_array( $status, array( 'in_transit', 'on_hold', 'failure' ) ) ) {
 				$width = '30%';
 			} elseif ( in_array( $status, array( 'out_for_delivery', 'available_for_pickup', 'return_to_sender', 'exception' ) ) ) {
-				$width = '60%';			
+				$width = '60%';
 			} elseif ( 'delivered' == $status ) {
-				$width = '100%';				
+				$width = '100%';
 			} else {
 				$width = '0';
 			}
@@ -117,7 +117,7 @@
 			</div>
 			<div class="content_panel tracking-details tracking_events_details">
 				<div class="preview_tracking_events <?php echo 0 != $hide_tracking_events ? 'hide' : ''; ?> tracking_events_0">
-					<div class="tracking_details_by_date">			
+					<div class="tracking_details_by_date">
 						<ul class="timeline">
 							<li>
 								<strong>October 1, 2020 07:59</strong>
@@ -129,17 +129,17 @@
 							</li> 
 							<li>
 								<strong>October 1, 2020 00:10</strong>
-								<p>Arrived at USPS Regional Destination Facility - SPRINGFIELD MA NETWORK DISTRIBUTION CENTER,  - <span>SPRINGFIELD MA NETWORK DISTRIBUTION CENTER</span></p>
+								<p>Arrived at USPS Regional Destination Facility - SPRINGFIELD MA NETWORK DISTRIBUTION CENTER, - <span>SPRINGFIELD MA NETWORK DISTRIBUTION CENTER</span></p>
 							</li>
 							<li>
 								<strong>September 30, 2020 00:00</strong>
 								<p>In Transit to Next Facility<span></span></p>
-							</li>   
+							</li>
 							<li>
 								<strong>September 29, 2020 13:12</strong>
 								<p>USPS in possession of item - SHELDON, WI - <span>SHELDON</span></p>
 							</li>
-						</ul>							
+						</ul>
 					</div>
 				</div>
 				<div class="preview_tracking_events <?php echo 2 != $hide_tracking_events ? 'hide' : ''; ?> tracking_events_2">
@@ -152,22 +152,22 @@
 							<li>
 								<strong>October 1, 2020 07:48</strong>
 								<p>Arrived at Post Office - HARTFORD, CT - <span>HARTFORD</span></p>
-							</li> 				
-						</ul>			
+							</li>
+						</ul>
 						<ul class="timeline old-details" style="display:none;">
 							<li>
 								<strong>October 1, 2020 00:10</strong>
-								<p>Arrived at USPS Regional Destination Facility - SPRINGFIELD MA NETWORK DISTRIBUTION CENTER,  - <span>SPRINGFIELD MA NETWORK DISTRIBUTION CENTER</span></p>
+								<p>Arrived at USPS Regional Destination Facility - SPRINGFIELD MA NETWORK DISTRIBUTION CENTER, - <span>SPRINGFIELD MA NETWORK DISTRIBUTION CENTER</span></p>
 							</li>
 							<li>
 								<strong>September 30, 2020 00:00</strong>
 								<p>In Transit to Next Facility<span></span></p>
-							</li>   
+							</li>
 							<li>
 								<strong>September 29, 2020 13:12</strong>
 								<p>USPS in possession of item - SHELDON, WI - <span>SHELDON</span></p>
 							</li>
-						</ul>							
+						</ul>
 					</div>
 					<span class="view_old_details view_more_class" style="display: inline;"><?php esc_html_e( 'view more', 'trackship-for-woocommerce' ); ?></span>
 					<span class="hide_old_details view_more_class" style="display: none;"><?php esc_html_e( 'view less', 'trackship-for-woocommerce' ); ?></span>

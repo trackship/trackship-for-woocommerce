@@ -121,7 +121,7 @@ $provider_count = array_combine($provider_array, $provider_count_array);
 		<option><?php esc_html_e( 'Bulk actions', 'trackship-for-woocommerce' ); ?></option>
 		<option value="get_shipment_status"><?php esc_html_e( 'Get shipment status', 'trackship-for-woocommerce' ); ?></option>
 	</select>
-	<button class="bulk_action_button button-trackship button-primary" type="button"><?php esc_html_e( 'Apply', 'trackship-for-woocommerce' ); ?></button>
+	<button class="bulk_action_button button-trackship button" type="button"><?php esc_html_e( 'Apply', 'trackship-for-woocommerce' ); ?></button>
 </div>
 <div class="filters_div">
 	<span class="filter_data status_filter"><span class="status_name"></span><span class="dashicons dashicons-no-alt"></span></span>
@@ -150,7 +150,7 @@ $provider_count = array_combine($provider_array, $provider_count_array);
 </div>
 <div class="trackship_admin_content">
 	<section class="trackship_analytics_section">
-		<div class="woocommerce trackship_admin_layout">
+		<div class="trackship_admin_layout">
 			<div class="">
 				<input type="hidden" id="nonce_trackship_shipments" value="<?php echo esc_attr( wp_create_nonce( '_trackship_shipments' ) ); ?>">
 				<table class="widefat dataTable fixed fullfilments_table hover" cellspacing="0" id="active_shipments_table" style="width: 100%;">
