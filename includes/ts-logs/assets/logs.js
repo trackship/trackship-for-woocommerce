@@ -13,6 +13,30 @@
 	};
 })( jQuery );
 
+/* Skeleton overlay for DataTables (shared between shipments & logs) */
+window.ts_dt_toggle_skeleton = window.ts_dt_toggle_skeleton || function( tableId, show, cols ) {
+	var $wrap = jQuery( tableId + '_wrapper' );
+	var $scroll = $wrap.find( '.table_scroll' );
+	if ( ! $scroll.length ) { $scroll = $wrap; }
+	if ( show ) {
+		if ( $scroll.find( '.ts-dt-skeleton' ).length ) { return; }
+		// match the current table height so the overlay covers it fully and doesn't jump
+		var curHeight = $scroll.outerHeight();
+		var rowCount = $scroll.find( 'tbody tr' ).length;
+		if ( ! rowCount || rowCount < 6 ) { rowCount = 10; }
+		var rows = '';
+		for ( var r = 0; r < rowCount; r++ ) {
+			var cells = '';
+			for ( var c = 0; c < cols; c++ ) { cells += '<span class="ts-dt-skeleton__cell"></span>'; }
+			rows += '<div class="ts-dt-skeleton__row">' + cells + '</div>';
+		}
+		$scroll.addClass( 'ts-dt-loading' ).append( '<div class="ts-dt-skeleton">' + rows + '</div>' );
+		if ( curHeight > 100 ) { $scroll.css( 'min-height', curHeight + 'px' ); }
+	} else {
+		$scroll.removeClass( 'ts-dt-loading' ).css( 'min-height', '' ).find( '.ts-dt-skeleton' ).remove();
+	}
+};
+
 jQuery(document).ready(function() {
 	'use strict';
 	var url;
@@ -94,11 +118,16 @@ jQuery(document).ready(function() {
 				'orderable': false,
 				'data': 'action_button',
 				"mRender":function(data,type,full) {
-					return '<span class="get_log_detail dashicons dashicons-visibility" data-rowid="' + full.id + '" data-orderid="' + full.order_id + '"></span>';
+					return '<button type="button" class="get_log_detail ts-view-btn" data-rowid="' + full.id + '" data-orderid="' + full.order_id + '">' + trackship_logs_i18n.view + '</button>';
 				},
 			},
 		],
 	});
+
+	jQuery("#trackship_notifications_logs").on('processing.dt', function(e, settings, processing){
+		window.ts_dt_toggle_skeleton('#trackship_notifications_logs', processing, 7);
+	});
+	window.ts_dt_toggle_skeleton('#trackship_notifications_logs', true, 7);
 
 	jQuery(document).on("click", ".serch_button", function(){
 		jQuery(document).ajax_loader("#trackship_notifications_logs");
@@ -131,7 +160,12 @@ jQuery(document).ready(function() {
 jQuery(document).on("click", ".trackship_logs .get_log_detail", function(){
 	var order_id = jQuery(this).data('orderid');
 	var rowid = jQuery(this).data('rowid');
-	
+	var popup = jQuery('.trackship_logs_details');
+
+	// open immediately with skeleton placeholders
+	popup.find('.popup_body span').empty();
+	popup.addClass('is-loading').show();
+
 	var ajax_data = {
 		action: 'log_details_popup',
 		order_id: order_id,
@@ -143,14 +177,17 @@ jQuery(document).on("click", ".trackship_logs .get_log_detail", function(){
 		data: ajax_data,
 		type: 'POST',
 		success: function(response) {
-			jQuery('.trackship_logs_details .order_id span').html(response.order_number);
-			jQuery('.trackship_logs_details .shipment_status span').html(response.shipment_status);
-			jQuery('.trackship_logs_details .tracking_number span').html(response.tracking_number);
-			jQuery('.trackship_logs_details .time span').html(response.date);
-			jQuery('.trackship_logs_details .to span').html(response.to);
-			jQuery('.trackship_logs_details .type span').html(response.type);
-			jQuery('.trackship_logs_details .status span').html(response.status_msg);
-			jQuery('.trackship_logs_details').show();
+			popup.find('.order_id span').html(response.order_number);
+			popup.find('.shipment_status span').html(response.shipment_status);
+			popup.find('.tracking_number span').html(response.tracking_number);
+			popup.find('.time span').html(response.date);
+			popup.find('.to span').html(response.to);
+			popup.find('.type span').html(response.type);
+			popup.find('.status span').html(response.status_msg);
+			popup.removeClass('is-loading');
+		},
+		error: function() {
+			popup.removeClass('is-loading').hide();
 		},
 	});
 });

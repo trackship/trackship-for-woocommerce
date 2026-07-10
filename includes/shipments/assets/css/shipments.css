@@ -116,15 +116,25 @@ input[type="checkbox"].all_checkboxes:checked {
 	width: auto;
 	margin-top: 10px;
 }
-table.dataTable tbody td span.get_log_detail {
-	color: #09d3ac;
-	display: block;
-	line-height: 20px;
+table.dataTable tbody td button.get_log_detail.ts-view-btn {
 	float: right;
-	font-size: 24px;
-	padding-right: 25px;
+	margin-right: 15px;
+	padding: 4px 14px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.4;
+	color: var(--tsd-blue, #124ed6);
+	background: transparent;
+	border: 1px solid rgba(18, 78, 214, 0.35);
+	border-radius: 6px;
 	cursor: pointer;
+	transition: color 0.15s, background 0.15s, border-color 0.15s;
 }
+table.dataTable tbody td button.get_log_detail.ts-view-btn:hover {
+	background: rgba(18, 78, 214, 0.08);
+	border-color: var(--tsd-blue, #124ed6);
+}
+
 .more_info_shipment:hover .popover__content {
 	z-index: 10;
 	opacity: 1;

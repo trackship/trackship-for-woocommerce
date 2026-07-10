@@ -479,6 +479,12 @@ jQuery(document).on("click", ".remove_custom_maping_row, #add_custom_mapping_btn
 });
 
 jQuery(document).on("click", ".metabox_get_shipment_status", function () {
+	var $btn = jQuery(this);
+	if ( $btn.hasClass('is-loading') ) { return; }
+	var originalText = $btn.text();
+	$btn.addClass('is-loading').prop('disabled', true)
+		.html('<span class="ts-btn-spinner"></span>' + originalText);
+
 	var data = {
 		action: 'metabox_get_shipment_status',
 		order_id: woocommerce_admin_meta_boxes.post_id,
@@ -497,13 +503,34 @@ jQuery(document).on("click", ".metabox_get_shipment_status", function () {
 			} else {
 				jQuery(document).trackship_snackbar_warning(response.data.msg);
 			}
+			$btn.removeClass('is-loading').prop('disabled', false).text(originalText);
 		},
 		error: function (jqXHR, exception) {
+			$btn.removeClass('is-loading').prop('disabled', false).text(originalText);
 		}
 	});
 });
 
 jQuery(document).on("click", ".open_tracking_details", function () {
+	var closeBtn = '<span class="admin_tracking_page_close popupclose"><span class="dashicons dashicons-no-alt"></span></span>';
+
+	// open immediately with a skeleton placeholder
+	var skeleton = '<div class="ts-tw-skeleton">' +
+			'<div class="ts-tw-skeleton__head">' +
+				'<span class="ts-tw-skeleton__line ts-tw-skeleton__line--title"></span>' +
+				'<span class="ts-tw-skeleton__line ts-tw-skeleton__line--sub"></span>' +
+			'</div>' +
+			'<div class="ts-tw-skeleton__bar"></div>' +
+			'<div class="ts-tw-skeleton__events">' +
+				'<div class="ts-tw-skeleton__event"><span class="ts-tw-skeleton__dot"></span><span class="ts-tw-skeleton__line ts-tw-skeleton__line--lg"></span><span class="ts-tw-skeleton__line ts-tw-skeleton__line--sm"></span></div>' +
+				'<div class="ts-tw-skeleton__event"><span class="ts-tw-skeleton__dot"></span><span class="ts-tw-skeleton__line ts-tw-skeleton__line--lg"></span><span class="ts-tw-skeleton__line ts-tw-skeleton__line--sm"></span></div>' +
+				'<div class="ts-tw-skeleton__event"><span class="ts-tw-skeleton__dot"></span><span class="ts-tw-skeleton__line ts-tw-skeleton__line--lg"></span><span class="ts-tw-skeleton__line ts-tw-skeleton__line--sm"></span></div>' +
+				'<div class="ts-tw-skeleton__event"><span class="ts-tw-skeleton__dot"></span><span class="ts-tw-skeleton__line ts-tw-skeleton__line--lg"></span><span class="ts-tw-skeleton__line ts-tw-skeleton__line--sm"></span></div>' +
+			'</div>' +
+		'</div>';
+	jQuery("#admin_tracking_widget .popuprow").html(closeBtn + skeleton);
+	jQuery("#admin_tracking_widget").show();
+
 	var data = {
 		action: 'get_admin_tracking_widget',
 		order_id: jQuery(this).data('orderid'),
@@ -517,15 +544,15 @@ jQuery(document).on("click", ".open_tracking_details", function () {
 		data: data,
 		type: 'POST',
 		success: function (response) {
-			var html = '<span class="admin_tracking_page_close popupclose"><span class="dashicons dashicons-no-alt"></span></span>' + response;
+			var html = closeBtn + response;
 			jQuery("#admin_tracking_widget .popuprow").html(html);
-			jQuery("#admin_tracking_widget").show();
 			jQuery('.shipment-header .ts_from_input:checked').trigger('change');
 			jQuery('.heading_panel.checked').trigger('click');
 			jQuery('.enhanced_tracking_detail .tracking_number_wrap.checked').trigger('click');
 			jQuery(".trackship-tip").tipTip();
 		},
 		error: function (response, jqXHR, exception) {
+			jQuery("#admin_tracking_widget").hide();
 			trackship_js_error(response, jqXHR, exception)
 		}
 	});

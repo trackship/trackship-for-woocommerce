@@ -33,8 +33,32 @@ function shipment_js_error(response, jqXHR, exception) {
 			}
 		});
 		return this;
-	}; 
+	};
 })( jQuery );
+
+/* Skeleton overlay for DataTables (shared between shipments & logs) */
+window.ts_dt_toggle_skeleton = window.ts_dt_toggle_skeleton || function( tableId, show, cols ) {
+	var $wrap = jQuery( tableId + '_wrapper' );
+	var $scroll = $wrap.find( '.table_scroll' );
+	if ( ! $scroll.length ) { $scroll = $wrap; }
+	if ( show ) {
+		if ( $scroll.find( '.ts-dt-skeleton' ).length ) { return; }
+		// match the current table height so the overlay covers it fully and doesn't jump
+		var curHeight = $scroll.outerHeight();
+		var rowCount = $scroll.find( 'tbody tr' ).length;
+		if ( ! rowCount || rowCount < 6 ) { rowCount = 10; }
+		var rows = '';
+		for ( var r = 0; r < rowCount; r++ ) {
+			var cells = '';
+			for ( var c = 0; c < cols; c++ ) { cells += '<span class="ts-dt-skeleton__cell"></span>'; }
+			rows += '<div class="ts-dt-skeleton__row">' + cells + '</div>';
+		}
+		$scroll.addClass( 'ts-dt-loading' ).append( '<div class="ts-dt-skeleton">' + rows + '</div>' );
+		if ( curHeight > 100 ) { $scroll.css( 'min-height', curHeight + 'px' ); }
+	} else {
+		$scroll.removeClass( 'ts-dt-loading' ).css( 'min-height', '' ).find( '.ts-dt-skeleton' ).remove();
+	}
+};
 
 jQuery('.shipping_date').on('apply.daterangepicker', function(ev, picker) {
 	jQuery(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD')).trigger("change");
@@ -255,6 +279,11 @@ jQuery(document).ready(function() {
 		],
 	});	
 	
+	jQuery("#active_shipments_table").on('processing.dt', function(e, settings, processing){
+		window.ts_dt_toggle_skeleton('#active_shipments_table', processing, 8);
+	});
+	window.ts_dt_toggle_skeleton('#active_shipments_table', true, 8);
+
 	var html = jQuery('.shipments_custom_data.custom_data').html();
 	jQuery('.shipments_custom_data.custom_data').remove();
 	jQuery('.shipments_custom_data').append(html);

@@ -60,6 +60,9 @@ class WC_Trackship_Logs {
 		}
 		
 		wp_enqueue_script( 'trackship_log_script', trackship_for_woocommerce()->plugin_dir_url() . '/includes/ts-logs/assets/logs.js', array( 'jquery' ), trackship_for_woocommerce()->version, true );
+		wp_localize_script( 'trackship_log_script', 'trackship_logs_i18n', array(
+			'view' => __( 'View', 'trackship-for-woocommerce' ),
+		) );
 
 	}
 

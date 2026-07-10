@@ -1016,6 +1016,128 @@ opacity: 1;
 	color: var(--tsd-ink, #1f2540);
 	word-break: break-word;
 }
+
+/* Skeleton loading state for log detail popup */
+@keyframes ts-skeleton-shimmer {
+	0% { background-position: 200% 0; }
+	100% { background-position: -200% 0; }
+}
+.popupwrapper.trackship_logs_details.is-loading .popup_body span {
+	display: block;
+	height: 13px;
+	border-radius: 4px;
+	background: linear-gradient(90deg, #eef1f7 25%, #f8f9fc 50%, #eef1f7 75%);
+	background-size: 200% 100%;
+	animation: ts-skeleton-shimmer 1.4s ease infinite;
+}
+.popupwrapper.trackship_logs_details.is-loading .popup_body div:nth-child(odd) span { width: 45%; }
+.popupwrapper.trackship_logs_details.is-loading .popup_body div:nth-child(even) span { width: 65%; }
+.popupwrapper.trackship_logs_details.is-loading .popup_body .status span { width: 80%; }
+
+/* Skeleton loading state for admin tracking widget popup */
+.ts-tw-skeleton {
+	padding: 24px;
+}
+.ts-tw-skeleton .ts-tw-skeleton__line,
+.ts-tw-skeleton .ts-tw-skeleton__dot,
+.ts-tw-skeleton .ts-tw-skeleton__bar {
+	display: block;
+	border-radius: 4px;
+	background: linear-gradient(90deg, #eef1f7 25%, #f8f9fc 50%, #eef1f7 75%);
+	background-size: 200% 100%;
+	animation: ts-skeleton-shimmer 1.4s ease infinite;
+}
+.ts-tw-skeleton__head {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin-bottom: 20px;
+}
+.ts-tw-skeleton__line--title { width: 55%; height: 18px; }
+.ts-tw-skeleton__line--sub { width: 35%; height: 12px; }
+.ts-tw-skeleton__bar {
+	width: 100%;
+	height: 8px;
+	border-radius: 999px;
+	margin-bottom: 26px;
+}
+.ts-tw-skeleton__events {
+	display: flex;
+	flex-direction: column;
+	gap: 22px;
+}
+.ts-tw-skeleton__event {
+	display: grid;
+	grid-template-columns: 16px 1fr;
+	grid-template-rows: auto auto;
+	column-gap: 14px;
+	row-gap: 8px;
+	align-items: center;
+}
+.ts-tw-skeleton__dot {
+	grid-row: 1 / span 2;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+}
+.ts-tw-skeleton__line--lg { width: 70%; height: 13px; }
+.ts-tw-skeleton__line--sm { width: 45%; height: 11px; }
+
+/* Skeleton overlay for DataTables (shipments & logs) */
+.table_scroll {
+	position: relative;
+}
+/* keep enough height on the very first (empty) load so the overlay fills the area */
+.table_scroll.ts-dt-loading {
+	min-height: 460px;
+}
+.ts-dt-skeleton {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1100;
+	background: #fff;
+	padding: 4px 0;
+	overflow: hidden;
+}
+.ts-dt-skeleton__row {
+	display: flex;
+	gap: 24px;
+	padding: 15px 20px;
+	border-bottom: 1px solid #f0f2f5;
+}
+.ts-dt-skeleton__cell {
+	flex: 1;
+	height: 14px;
+	border-radius: 4px;
+	background: linear-gradient(90deg, #eef1f7 25%, #f8f9fc 50%, #eef1f7 75%);
+	background-size: 200% 100%;
+	animation: ts-skeleton-shimmer 1.4s ease infinite;
+}
+.ts-dt-skeleton__cell:nth-child(3n) { flex: 0.6; }
+.ts-dt-skeleton__cell:nth-child(4n) { flex: 1.4; }
+
+/* Button loading state (metabox "Get Shipment Status" etc.) */
+.metabox_get_shipment_status.is-loading {
+	opacity: 0.9;
+	cursor: default;
+}
+.ts-btn-spinner {
+	display: inline-block;
+	width: 13px;
+	height: 13px;
+	margin-right: 7px;
+	vertical-align: -2px;
+	border: 2px solid rgba(18, 78, 214, 0.25);
+	border-top-color: var(--tsd-blue, #124ed6);
+	border-radius: 50%;
+	animation: ts-btn-spin 0.6s linear infinite;
+}
+@keyframes ts-btn-spin {
+	to { transform: rotate(360deg); }
+}
 .popuprow .popup_header {
 	border-bottom: 1px solid #e0e0e0;
 	padding: 15px 20px;
@@ -1086,12 +1208,19 @@ opacity: 1;
 	border-color: var(--tsd-blue);
 	color: #fff;
 	border-radius: 8px;
+	transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 .wp-core-ui .btn_outline {
 	border-color: var(--tsd-blue) !important;
 	background: transparent !important;
 	color: var(--tsd-blue) !important;
 	border-radius: 8px;
+}
+.wp-core-ui .btn_outline:hover, .wp-core-ui .btn_outline:focus {
+	background: rgba(18, 78, 214, 0.08) !important;
+	border-color: var(--tsd-blue, #124ed6) !important;
+	color: var(--tsd-blue) !important;
+	box-shadow: none;
 }
 .wp-core-ui .button.button-trackship .dashicons {
 	vertical-align: middle;
@@ -1104,11 +1233,12 @@ opacity: 1;
 	border-radius: 8px;
 }
 .wp-core-ui .button-trackship.focus, .wp-core-ui .button-trackship.hover, .wp-core-ui .button-trackship:focus, .wp-core-ui .button-trackship:hover {
-	background: var(--tsd-blue);
-	border-color: var(--tsd-blue);
-	outline: none;
-	box-shadow: none;
+	background: #0f3fae;
+	border-color: #0f3fae;
 	color: #fff;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(18, 78, 214, 0.30);
+	outline: none;
 }
 .settings_ul .settings_radio_li>label, .settings_ul .multiple_select_li>label {
 	width: auto;
