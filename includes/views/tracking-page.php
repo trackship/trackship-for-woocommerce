@@ -5,11 +5,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 <form method="post" id="trackship_tracking_page_form" action="" enctype="multipart/form-data">
 	<div class="heading_panel section_tracking_page_heading <?php echo 'tracking' == $section ? 'checked' : ''; ?>">
+		<span class="dashicons dashicons-location-alt ts-heading-icon"></span>
 		<strong><?php esc_html_e( 'Tracking Page', 'trackship-for-woocommerce' ); ?></strong>
 		<div class="heading_panel_save">
 			<div class="spinner"></div>
-			<button name="save" class="button-primary button-trackship btn_large woocommerce-save-button" type="submit" value="Save">
-				<?php esc_html_e( 'Save', 'trackship-for-woocommerce' ); ?>
+			<button name="save" class="button button-trackship trackship-save-button" type="submit" value="Save changes">
+				<?php esc_html_e( 'Save changes', 'trackship-for-woocommerce' ); ?>
 			</button>
 			<?php wp_nonce_field( 'trackship_tracking_page_form', 'trackship_tracking_page_form_nonce' ); ?>
 			<input type="hidden" name="action" value="trackship_tracking_page_form_update">

@@ -60,24 +60,30 @@ class WC_Trackship_Logs {
 		}
 		
 		wp_enqueue_script( 'trackship_log_script', trackship_for_woocommerce()->plugin_dir_url() . '/includes/ts-logs/assets/logs.js', array( 'jquery' ), trackship_for_woocommerce()->version, true );
+		wp_localize_script( 'trackship_log_script', 'trackship_logs_i18n', array(
+			'view' => __( 'View', 'trackship-for-woocommerce' ),
+		) );
 
 	}
 
 	public function get_trackship_logs() {
-		
+
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error( array( 'message' => 'You are not allowed' ) );
+		}
 		check_ajax_referer( '_trackship_logs', 'ajax_nonce' );
 		
 		global $wpdb;
 		// Sanitize and validate input
-		$p_start  = absint( $_POST['start'] ?? 0 );
+		$p_start = absint( $_POST['start'] ?? 0 );
 		$p_length = absint( $_POST['length'] ?? 25 );
-		$limit    = "LIMIT {$p_start}, {$p_length}";
+		$limit = "LIMIT {$p_start}, {$p_length}";
 		
 		$search_bar = sanitize_text_field( $_POST['search_bar'] ?? '');
 		$shipment_status = sanitize_text_field( $_POST['shipment_status'] ?? '');
 		$log_type = sanitize_text_field( $_POST['log_type'] ?? '');
 
-		$where  = [];
+		$where = [];
 		$params = [];
 
 		// Search bar filtering with placeholders
@@ -92,13 +98,13 @@ class WC_Trackship_Logs {
 
 		// Filter by shipment_status
 		if ( $shipment_status ) {
-			$where[]  = "shipment_status = %s";
+			$where[] = "shipment_status = %s";
 			$params[] = $shipment_status;
 		}
 
 		// Filter by log type
 		if ( $log_type ) {
-			$where[]  = "type = %s";
+			$where[] = "type = %s";
 			$params[] = $log_type;
 		}
 
@@ -164,6 +170,9 @@ class WC_Trackship_Logs {
 	}
 
 	public function log_details_popup() {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			wp_send_json_error( array( 'message' => 'You are not allowed' ) );
+		}
 		check_ajax_referer( '_trackship_logs', 'security' );
 		global $wpdb;
 		$order_id = sanitize_text_field($_POST['order_id'] ?? '');

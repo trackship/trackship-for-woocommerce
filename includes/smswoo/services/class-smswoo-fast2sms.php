@@ -16,8 +16,8 @@ if ( ! class_exists( 'SMSWOO_Fast2sms' ) ) {
 	/**
 	 * Fats2SMS
 	 *
-	 * @class   SMSWOO_Fast2sms
-	 * @since   1.0
+	 * @class SMSWOO_Fast2sms
+	 * @since 1.0
 	 *
 	 */
 	class SMSWOO_Fast2sms extends SMSWOO_Sms_Gateway {
@@ -29,12 +29,12 @@ if ( ! class_exists( 'SMSWOO_Fast2sms' ) ) {
 		/**
 		 * Constructor
 		 *
-		 * @since   1.0
-		 * @return  void
+		 * @since 1.0
+		 * @return void
 		 */
 		public function __construct() {
 
-			$this->_fast2sms_api_key    = get_option( 'smswoo_fast2sms_key' );
+			$this->_fast2sms_api_key = get_option( 'smswoo_fast2sms_key' );
 
 			parent::__construct();
 
@@ -43,14 +43,14 @@ if ( ! class_exists( 'SMSWOO_Fast2sms' ) ) {
 		/**
 		 * Send SMS
 		 *
-		 * @since   1.0
+		 * @since 1.0
 		 *
-		 * @param   $to_phone     string
-		 * @param   $message      string
-		 * @param   $country_code string
+		 * @param $to_phone string
+		 * @param $message string
+		 * @param $country_code string
 		 *
-		 * @return  void
-		 * @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
+		 * @return void
+		 * @throws Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
 		 */
 		public function send( $to_phone, $message, $country_code ) {
 			
@@ -83,7 +83,7 @@ if ( ! class_exists( 'SMSWOO_Fast2sms' ) ) {
 
 			$wp_remote_http_args = array(
 				'method' => 'GET',
-				'body'   => $args,
+				'body' => $args,
 			);
 
 			$endpoint = 'https://www.fast2sms.com/dev/bulkV2';
@@ -122,12 +122,12 @@ if ( ! class_exists( 'SMSWOO_Fast2sms' ) ) {
 		/**
 		 * Send SMS
 		 *
-		 * @since   1.0
+		 * @since 1.0
 		 *
-		 * @param   $to_phone     string
+		 * @param $to_phone string
 		 *
-		 * @return  void
-		 * @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
+		 * @return void
+		 * @throws Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
 		 */
 		public function validate_number( $to_phone ) {
 			

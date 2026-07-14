@@ -2,8 +2,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-$date_format = get_option( 'date_format' ) ? get_option( 'date_format' ) :  'F j, Y';
-$time_format = get_option( 'time_format' ) ? get_option( 'time_format' ) :  'g:i a';
+$date_format = get_option( 'date_format' ) ? get_option( 'date_format' ) : 'F j, Y';
+$time_format = get_option( 'time_format' ) ? get_option( 'time_format' ) : 'g:i a';
 ?>
 <div class="tracking_widget_tracking_events_section">
 	<?php

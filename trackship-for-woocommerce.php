@@ -2,14 +2,14 @@
 /**
  * Plugin Name: TrackShip for WooCommerce
  * Description: TrackShip for WooCommerce integrates TrackShip into your WooCommerce Store and auto-tracks your orders, automates your post-shipping workflow and allows you to provide a superior Post-Purchase experience to your customers.
- * Version: 2.0.5
+ * Version: 2.0.6
  * Author: TrackShip
  * Author URI: https://trackship.com/
  * License: GPL-2.0+
  * License URI:
  * Text Domain: trackship-for-woocommerce
  * Domain Path: /language/
- * WC tested up to: 10.8.1
+ * WC tested up to: 10.9.4
  * Requires Plugins: woocommerce
 */
 
@@ -24,7 +24,7 @@ class Trackship_For_Woocommerce {
 	 *
 	 * @var string
 	*/
-	public $version = '2.0.5';
+	public $version = '2.0.6';
 	public $plugin_path;
 	public $ts_install;
 	public $ts_actions;
@@ -128,7 +128,7 @@ class Trackship_For_Woocommerce {
 			return;
 		}
 		$install_url = esc_url( admin_url( 'plugin-install.php?tab=search&s=AST&plugin-search-input=Search+Plugins' ) );
-		$docs_url    = 'https://docs.trackship.com/docs/trackship-for-woocommerce/getting-started/requirements/#shipment-tracking-plugin';
+		$docs_url = 'https://docs.trackship.com/docs/trackship-for-woocommerce/getting-started/requirements/#shipment-tracking-plugin';
 		?>
 		<div class="notice notice-error">
 			<p>
@@ -310,7 +310,6 @@ class Trackship_For_Woocommerce {
 		$links = array_merge( array(
 			'<a href="' . esc_url( $admin_url ) . '">' . esc_html__( $name ) . '</a>',
 			'<a href="https://docs.trackship.com/docs/trackship-for-woocommerce/">' . __( 'Docs', 'trackship-for-woocommerce' ) . '</a>',
-			'<a href="https://wordpress.org/support/plugin/trackship-for-woocommerce/#new-topic-0">' . __( 'Support' ) . '</a>',
 			'<a href="https://wordpress.org/support/plugin/trackship-for-woocommerce/reviews/#new-post">' . __( 'Review', 'trackship-for-woocommerce' ) . '</a>'
 		), $links );
 		return $links;

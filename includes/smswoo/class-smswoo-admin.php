@@ -62,153 +62,155 @@ class TSWC_SMSWoo_Admin {
 	* get html of fields
 	*/
 	public function get_html( $arrays ) {
-		$checked = '';
 		?>
 		<ul class="settings_ul">
 			<?php foreach ( (array) $arrays as $id => $array ) { ?>
 
 				<?php if ( 'dropdown_button' == $array['type'] ) { ?>
-					<li class="<?php echo esc_html($array['type']); ?>_row <?php echo esc_html($array['class']); ?> dis_block">
-						<label for="<?php echo esc_html($id); ?>"><?php esc_html_e( $array['title'] ); ?>
-							<?php if ( isset($array['tooltip']) ) { ?>
-								<span class="dashicons dashicons-editor-help trackship-tip" title="<?php esc_html_e( $array['tooltip'] ); ?>"></span>
+					<li class="<?php echo esc_html( $array['type'] ); ?>_row <?php echo esc_html( $array['class'] ); ?> ts-setting-row ts-setting-row--dropdown">
+						<div class="ts-setting-row__label">
+							<span class="ts-setting-row__title"><?php echo esc_html( $array['title'] ); ?></span>
+							<?php if ( isset( $array['tooltip'] ) ) { ?>
+								<span class="ts-setting-row__desc"><?php echo esc_html( $array['tooltip'] ); ?></span>
 							<?php } ?>
-						</label>
-						<?php $value = get_option($id); ?>
-						<select id="<?php echo esc_html($id); ?>" name="<?php echo esc_html($id); ?>" >
-							<?php foreach ( (array) $array['options'] as $key => $val ) { ?>
-								<?php $imgpath = isset( $array[ 'img_path_24x24' ][ $key ] ) ? $array[ 'img_path_24x24' ][ $key ] : ''; ?>
-								<option value="<?php echo esc_html($key); ?>" image_path="<?php echo esc_url($imgpath); ?>" <?php echo ( $value == ( string ) $key ) ? 'selected' : ''; ?> ><?php echo esc_html($val); ?></option>
+						</div>
+						<div class="ts-setting-row__control ts-setting-row__control--stack">
+							<?php $value = get_option( $id ); ?>
+							<select id="<?php echo esc_html( $id ); ?>" name="<?php echo esc_html( $id ); ?>">
+								<?php foreach ( (array) $array['options'] as $key => $val ) { ?>
+									<?php $imgpath = isset( $array['img_path_24x24'][ $key ] ) ? $array['img_path_24x24'][ $key ] : ''; ?>
+									<option value="<?php echo esc_html( $key ); ?>" image_path="<?php echo esc_url( $imgpath ); ?>" <?php echo ( $value == (string) $key ) ? 'selected' : ''; ?>><?php echo esc_html( $val ); ?></option>
+								<?php } ?>
+							</select>
+							<?php foreach ( $array['link'] as $key1 => $links ) { ?>
+								<p class="link_row smswoo_sms_provider <?php echo esc_html( $key1 ); ?>_sms_provider" style="margin:0;">
+									<a href="<?php echo esc_url( $links['link'] ); ?>" target="_blank"><?php echo esc_html( $links['title'] ); ?></a>
+								</p>
 							<?php } ?>
-						</select>
-						<br>
-						<?php foreach ( $array['link'] as $key1 => $links ) { ?>
-							<p valign="top" class="link_row smswoo_sms_provider <?php echo esc_html($key1); ?>_sms_provider" style="margin:0;">
-								<a href="<?php echo esc_url($links['link']); ?>" target="_blank"><?php echo esc_html($links['title']); ?></a>
-							</p>
-						<?php } ?>
-					</li>
-					<?php continue; ?>
-				<?php } ?>
-				
-				<?php if ( 'link' == $array['type'] ) { ?>
-					<li class="<?php echo esc_html($array['type']); ?>_row <?php echo esc_html($array['class']); ?>">
-						<a href="<?php echo esc_url($array['link']); ?>" target="_blank"><?php echo esc_html($array['title']); ?></a>
-					</li>
-					<?php continue; ?>
-				<?php } ?>
-				
-				<?php if ( 'button' == $array['type'] ) { ?>
-					<li class="<?php echo esc_html($array['type']); ?>_row <?php echo esc_html($array['class']); ?>">
-						<fieldset>
-							<button class="button-primary btn_green2 button-smswoo <?php echo esc_html($array['button_class']); ?>" id="<?php echo esc_html($id); ?>" type="button"><?php echo esc_html($array['title']); ?></button>
-							<div class="spinner test_sms_spinner"></div>
-						</fieldset>
+						</div>
 					</li>
 					<?php continue; ?>
 				<?php } ?>
 
-				<li class="<?php echo esc_html($array['type']); ?>_row <?php echo esc_html($array['class']); ?> <?php echo 'checkbox' != $array['type'] ? 'dis_block' : ''; ?>">
+				<?php if ( 'link' == $array['type'] ) { ?>
+					<li class="<?php echo esc_html( $array['type'] ); ?>_row <?php echo esc_html( $array['class'] ); ?>">
+						<a href="<?php echo esc_url( $array['link'] ); ?>" target="_blank"><?php echo esc_html( $array['title'] ); ?></a>
+					</li>
+					<?php continue; ?>
+				<?php } ?>
+
+				<?php if ( 'button' == $array['type'] ) { ?>
+					<li class="<?php echo esc_html( $array['type'] ); ?>_row <?php echo esc_html( $array['class'] ); ?> ts-setting-row">
+						<?php if ( ! empty( $array['title'] ) ) { ?>
+							<div class="ts-setting-row__label">
+								<span class="ts-setting-row__title"><?php echo esc_html( $array['title'] ); ?></span>
+							</div>
+						<?php } ?>
+						<div class="ts-setting-row__control">
+							<button class="button-primary btn_green2 button-smswoo <?php echo esc_html( $array['button_class'] ); ?>" id="<?php echo esc_html( $id ); ?>" type="button"><?php echo esc_html( $array['title'] ); ?></button>
+							<div class="spinner test_sms_spinner"></div>
+						</div>
+					</li>
+					<?php continue; ?>
+				<?php } ?>
+
+				<?php if ( 'checkbox' == $array['type'] ) { ?>
 					<?php
-					if ( 'checkbox' == $array['type'] ) {	
-						$default = isset( $array['default'] ) ? 1 : 0;
-						if ( get_option( $id, $default ) ) {
-							$checked = 'checked';
-						} else {
-							$checked = '';
-						} 
-						
-						if ( isset( $array['disabled'] ) && true == $array['disabled'] ) {
-							$disabled = 'disabled';
-							$checked = '';
-						} else {
-							$disabled = '';
-						}
-						?>
-						<input type="hidden" name="<?php echo esc_attr($id); ?>" value="0"/>
-						<input class="tgl tgl-flat" type="checkbox" id="<?php echo esc_attr($id); ?>" name="<?php echo esc_attr($id); ?>" <?php echo esc_attr($checked); ?> value="1" <?php echo esc_attr($disabled); ?>/>
-						<label class="tgl-btn" for="<?php echo esc_html($id); ?>">
-						</label>
-					<?php } ?>
-					<?php if ( 'desc' != $array['type'] ) { ?>										
-						<label for="<?php echo esc_html($id); ?>" class=""><?php echo esc_html($array['title']); ?><?php echo isset( $array['title_link'] ) ? esc_html( $array['title_link'] ) : ''; ?>
+					$default = isset( $array['default'] ) ? 1 : 0;
+					$checked = get_option( $id, $default ) ? 'checked' : '';
+					$disabled = ( isset( $array['disabled'] ) && true == $array['disabled'] ) ? 'disabled' : '';
+					if ( $disabled ) { $checked = ''; }
+					?>
+					<li class="checkbox_row <?php echo esc_html( $array['class'] ); ?> ts-setting-row ts-setting-row--toggle">
+						<div class="ts-setting-row__label">
+							<span class="ts-setting-row__title"><?php echo esc_html( $array['title'] ); ?></span>
 							<?php if ( isset( $array['tooltip'] ) ) { ?>
-								<span class="dashicons dashicons-editor-help trackship-tip" title="<?php echo esc_html($array['tooltip']); ?>"></span>
+								<span class="ts-setting-row__desc"><?php echo esc_html( $array['tooltip'] ); ?></span>
 							<?php } ?>
-						</label>
-					<?php } ?>
-					<?php if ( 'textarea' == $array['type'] ) { ?>
-						<fieldset>
-							<textarea rows="3" cols="20" class="input-text regular-input" type="textarea" name="<?php echo esc_html($id); ?>" id="<?php echo esc_html($id); ?>"	placeholder="<?php echo isset( $array['placeholder'] ) ? esc_html( $array['placeholder'] ) : ''; ?>"><?php echo esc_html(get_option( $id, isset( $array['default'] ) ? $array['default'] : false )); ?></textarea>
-						</fieldset>
-					<?php } elseif ( isset( $array['type'] ) && 'dropdown' == $array['type'] ) { ?>
-						<?php
-						if ( isset( $array['multiple'] ) ) {
-							$multiple = 'multiple';
-							$field_id = $array['multiple'];
-						} else {
-							$multiple = '';
-							$field_id = $id;
-						}
-						?>
-						<fieldset>
-							<select class="select select2" id="<?php echo esc_html($field_id); ?>" name="<?php echo esc_html($id); ?>" <?php echo esc_html($multiple); ?>>
+						</div>
+						<div class="ts-setting-row__control">
+							<input type="hidden" name="<?php echo esc_attr( $id ); ?>" value="0"/>
+							<input class="tgl tgl-flat" type="checkbox" id="<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( $id ); ?>" <?php echo esc_attr( $checked ); ?> value="1" <?php echo esc_attr( $disabled ); ?>/>
+							<label class="tgl-btn" for="<?php echo esc_html( $id ); ?>"></label>
+						</div>
+					</li>
+					<?php continue; ?>
+				<?php } ?>
+
+				<?php if ( 'title' == $array['type'] || 'dummyfield' == $array['type'] ) { ?>
+					<?php continue; ?>
+				<?php } ?>
+
+				<?php if ( 'desc' == $array['type'] ) { ?>
+					<li class="desc_row <?php echo esc_html( $array['class'] ); ?>">
+						<p class="ts-setting-row__desc"><?php echo esc_html( $array['title'] ); ?></p>
+					</li>
+					<?php continue; ?>
+				<?php } ?>
+
+				<li class="<?php echo esc_html( $array['type'] ); ?>_row <?php echo esc_html( $array['class'] ); ?> ts-setting-row ts-setting-row--dropdown">
+					<div class="ts-setting-row__label">
+						<span class="ts-setting-row__title"><?php echo esc_html( $array['title'] ); ?><?php echo isset( $array['title_link'] ) ? esc_html( $array['title_link'] ) : ''; ?></span>
+						<?php if ( isset( $array['tooltip'] ) ) { ?>
+							<span class="ts-setting-row__desc"><?php echo esc_html( $array['tooltip'] ); ?></span>
+						<?php } ?>
+					</div>
+					<div class="ts-setting-row__control ts-setting-row__control--stack">
+						<?php if ( 'textarea' == $array['type'] ) { ?>
+							<textarea rows="3" cols="20" class="input-text regular-input" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" placeholder="<?php echo isset( $array['placeholder'] ) ? esc_html( $array['placeholder'] ) : ''; ?>"><?php echo esc_html( get_option( $id, isset( $array['default'] ) ? $array['default'] : false ) ); ?></textarea>
+						<?php } elseif ( 'dropdown' == $array['type'] ) { ?>
+							<?php
+							if ( isset( $array['multiple'] ) ) {
+								$multiple = 'multiple';
+								$field_id = $array['multiple'];
+							} else {
+								$multiple = '';
+								$field_id = $id;
+							}
+							?>
+							<select class="select select2" id="<?php echo esc_html( $field_id ); ?>" name="<?php echo esc_html( $id ); ?>" <?php echo esc_html( $multiple ); ?>>
 								<?php foreach ( (array) $array['options'] as $key => $val ) { ?>
 									<?php
 									if ( isset( $array['multiple'] ) ) {
-										$selected = in_array( $key, ( array ) $this->data->$field_id ) ? 'selected' : '';
+										$selected = in_array( $key, (array) $this->data->$field_id ) ? 'selected' : '';
 									} else {
-										$selected = get_option($id) == ( string ) $key ? 'selected' : '';
+										$selected = get_option( $id ) == (string) $key ? 'selected' : '';
 									}
 									?>
-									<option value="<?php echo esc_html($key); ?>" <?php echo esc_html($selected); ?> ><?php echo esc_html($val); ?></option>
+									<option value="<?php echo esc_html( $key ); ?>" <?php echo esc_html( $selected ); ?>><?php echo esc_html( $val ); ?></option>
 								<?php } ?>
-								<p class="description"><?php echo isset( $array['desc'] ) ? esc_html($array['desc']) : ''; ?></p>
-							</select> 
-							<br>
-							<?php if ( isset( $array['desc'] ) && !empty( $array['desc'] ) ) { ?>
-								<p class="description"><?php echo esc_html($array['desc']); ?></p>
-							<?php } ?>
+							</select>
 							<?php if ( isset( $array['link'] ) ) { ?>
-								<?php foreach ( $array['link'] as $key1 => $links) { ?>
-								<p valign="top" class="link_row <?php echo esc_html($links['class']); ?>">
-									<a href= "<?php echo esc_url($links['link']); ?>" target="_blank"><?php echo esc_html($links['title']); ?></a>
-								</p>
+								<?php foreach ( $array['link'] as $key1 => $links ) { ?>
+									<p class="link_row <?php echo esc_html( $links['class'] ); ?>" style="margin:0;">
+										<a href="<?php echo esc_url( $links['link'] ); ?>" target="_blank"><?php echo esc_html( $links['title'] ); ?></a>
+									</p>
 								<?php } ?>
 							<?php } ?>
-						</fieldset>
-					<?php } elseif ( 'title' == $array['type'] ) { ?>
-					<?php } elseif ( 'checkbox' == $array['type'] ) { ?>
-					<?php } elseif ( 'label' == $array['type'] ) { ?>
-						<fieldset>
-						<label><?php echo esc_html($array['value']); ?></label>
-						</fieldset>
-					<?php } elseif ( 'radio' == $array['type'] ) { ?>
-						<fieldset>
+						<?php } elseif ( 'label' == $array['type'] ) { ?>
+							<span><?php echo esc_html( $array['value'] ); ?></span>
+						<?php } elseif ( 'radio' == $array['type'] ) { ?>
 							<ul>
 								<?php foreach ( (array) $array['options'] as $key => $val ) { ?>
-									<li><label class="label_product_visibility"><input name="product_visibility" value="<?php echo esc_html($key); ?>" type="radio" style="" class="product_visibility" <?php echo $product_visibility == $key ? 'checked' : ''; ?><?php echo esc_html($val); ?><br></label></li>
+									<li><label><input name="product_visibility" value="<?php echo esc_html( $key ); ?>" type="radio" class="product_visibility" <?php echo $product_visibility == $key ? 'checked' : ''; ?>> <?php echo esc_html( $val ); ?></label></li>
 								<?php } ?>
 							</ul>
-						</fieldset>
-					<?php } elseif ( 'dummyfield' == $array['type'] ) { ?>
-					<?php } elseif ( 'time' == $array['type'] ) { ?>
-						<fieldset>
-							<input id="time_schedule_from" name="time_schedule_from" type="text" class="time" value="<?php echo esc_html(get_option('time_schedule_from')); ?>" /> - 
-							<input id="time_schedule_to" name="time_schedule_to" type="text" class="time" value="<?php echo esc_html(get_option('time_schedule_to')); ?>" />
-						</fieldset>
-					<?php } else { ?>
-						<fieldset>
-							<input class="input-text regular-input " type="text" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" style="" value="<?php echo esc_html(get_option( $id, isset($array['default']) ? $array['default'] : false )); ?>" placeholder="<?php echo isset( $array['placeholder'] ) ? esc_html( $array['placeholder'] ) : ''; ?>">
-							<?php if ( isset( $array['desc'] ) && !empty( $array['desc'] ) ) { ?>
-								<p class="description" style="margin:0;"><?php echo isset( $array['desc'] ) ? esc_html( $array['desc'] ) : ''; ?></p>
-							<?php } ?>
-						</fieldset>
-					<?php } ?>
+						<?php } elseif ( 'time' == $array['type'] ) { ?>
+							<span>
+								<input id="time_schedule_from" name="time_schedule_from" type="text" class="time" value="<?php echo esc_html( get_option( 'time_schedule_from' ) ); ?>"> -
+								<input id="time_schedule_to" name="time_schedule_to" type="text" class="time" value="<?php echo esc_html( get_option( 'time_schedule_to' ) ); ?>">
+							</span>
+						<?php } else { ?>
+							<input class="input-text regular-input" type="text" name="<?php echo esc_html( $id ); ?>" id="<?php echo esc_html( $id ); ?>" value="<?php echo esc_html( get_option( $id, isset( $array['default'] ) ? $array['default'] : false ) ); ?>" placeholder="<?php echo isset( $array['placeholder'] ) ? esc_html( $array['placeholder'] ) : ''; ?>">
+						<?php } ?>
+						<?php if ( isset( $array['desc'] ) && ! empty( $array['desc'] ) ) { ?>
+							<p class="ts-setting-row__desc" style="margin:0;"><?php echo esc_html( $array['desc'] ); ?></p>
+						<?php } ?>
+					</div>
 				</li>
 			<?php } ?>
 		</ul>
-		<?php 
+		<?php
 	}
 	
 	/**
@@ -503,7 +505,7 @@ class TSWC_SMSWoo_Admin {
 							<?php } ?>
 						</div>
 						<span class="smswoo-right smswoo-mr20 smswoo-shipment-sendto">
-							<button name="save" class="button-primary woocommerce-save-button button-smswoo hide button-trackship" type="submit" value="Save changes"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
+							<button name="save" class="button trackship-save-button button-smswoo hide button-trackship" type="submit" value="Save changes"><?php esc_html_e( 'Save & close', 'trackship-for-woocommerce' ); ?></button>
 							<span class="smswoo-inlineblock">
 								<input type="hidden" name="<?php echo esc_attr($enabled_customer); ?>" value="0"/>
 								<input type="checkbox" id="<?php echo esc_attr($enabled_customer); ?>" name="<?php echo esc_attr($enabled_customer); ?>" class="tgl tgl-flat smswoo-shipment-checkbox" value="1" <?php echo $checked_customer ? 'checked' : ''; ?> data-row_class="enable_customer" />

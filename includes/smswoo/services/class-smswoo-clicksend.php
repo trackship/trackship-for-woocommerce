@@ -23,13 +23,13 @@ if ( ! class_exists( 'SMSWOO_Clicksend' ) ) {
 		/**
 		* Constructor
 		*
-		* @since   1.0
-		* @return  void
+		* @since 1.0
+		* @return void
 		*/
 		public function __construct() {
 
-			$this->_clicksend_username    = get_option( 'smswoo_clicksend_username' );
-			$this->_clicksend_key    = get_option( 'smswoo_clicksend_key' );
+			$this->_clicksend_username = get_option( 'smswoo_clicksend_username' );
+			$this->_clicksend_key = get_option( 'smswoo_clicksend_key' );
 
 			parent::__construct();
 
@@ -38,14 +38,14 @@ if ( ! class_exists( 'SMSWOO_Clicksend' ) ) {
 		/**
 		* Send SMS
 		*
-		* @since   1.0
+		* @since 1.0
 		*
-		* @param   $to_phone     string
-		* @param   $message      string
-		* @param   $country_code string
+		* @param $to_phone string
+		* @param $message string
+		* @param $country_code string
 		*
-		* @return  void
-		* @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
+		* @return void
+		* @throws Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
 		*/
 		public function send( $to_phone, $message, $country_code ) {
 
@@ -108,9 +108,9 @@ if ( ! class_exists( 'SMSWOO_Clicksend' ) ) {
 		/**
 		 * Phone number validation
 		 *
-		 * @since   1.0
+		 * @since 1.0
 		 *
-		 * @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
+		 * @throws Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
 		 */
 		public function validate_number( $to_phone ) {
 			

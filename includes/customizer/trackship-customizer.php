@@ -101,7 +101,7 @@ class TS4WC_Admin_Customizer {
 							<a class="zoremmail-back-wordpress-link" href="<?php echo esc_html( $back_link ); ?>"><span class="zoremmail-back-wordpress-title dashicons dashicons-no-alt"></span></a>
 						</button>
 						<span class="wcts-save-content">
-							<button name="save" class="button-primary button-trackship btn_large woocommerce-save-button" type="submit" value="Saved" disabled><?php esc_html_e( 'Saved', 'trackship-for-woocommerce' ); ?></button>
+							<button name="save" class="button button-trackship trackship-save-button" type="submit" value="Saved" disabled><?php esc_html_e( 'Saved', 'trackship-for-woocommerce' ); ?></button>
 							<?php wp_nonce_field( 'trackship_customizer_options_actions', 'trackship_customizer_options_nonce_field' ); ?>
 							<input type="hidden" name="action" value="save_trackship_customizer">
 						</span>
@@ -1341,7 +1341,7 @@ class TS4WC_Admin_Customizer {
 			$shipment_status = $this->shipment_status();
 			foreach ( $shipment_status as $slug => $label ) {
 				foreach ( $email_settings[$slug] as $key => $val ) {
-					$val = in_array( $key, array( 'content', 'heading' ) ) ?  wp_kses_post( wp_unslash( $_POST['email_settings'][$slug][$key] ) ) : $val;
+					$val = in_array( $key, array( 'content', 'heading' ) ) ? wp_kses_post( wp_unslash( $_POST['email_settings'][$slug][$key] ) ) : $val;
 					update_trackship_email_settings( $slug, $key, $val );
 				}
 			}

@@ -33,8 +33,32 @@ function shipment_js_error(response, jqXHR, exception) {
 			}
 		});
 		return this;
-	}; 
+	};
 })( jQuery );
+
+/* Skeleton overlay for DataTables (shared between shipments & logs) */
+window.ts_dt_toggle_skeleton = window.ts_dt_toggle_skeleton || function( tableId, show, cols ) {
+	var $wrap = jQuery( tableId + '_wrapper' );
+	var $scroll = $wrap.find( '.table_scroll' );
+	if ( ! $scroll.length ) { $scroll = $wrap; }
+	if ( show ) {
+		if ( $scroll.find( '.ts-dt-skeleton' ).length ) { return; }
+		// match the current table height so the overlay covers it fully and doesn't jump
+		var curHeight = $scroll.outerHeight();
+		var rowCount = $scroll.find( 'tbody tr' ).length;
+		if ( ! rowCount || rowCount < 6 ) { rowCount = 10; }
+		var rows = '';
+		for ( var r = 0; r < rowCount; r++ ) {
+			var cells = '';
+			for ( var c = 0; c < cols; c++ ) { cells += '<span class="ts-dt-skeleton__cell"></span>'; }
+			rows += '<div class="ts-dt-skeleton__row">' + cells + '</div>';
+		}
+		$scroll.addClass( 'ts-dt-loading' ).append( '<div class="ts-dt-skeleton">' + rows + '</div>' );
+		if ( curHeight > 100 ) { $scroll.css( 'min-height', curHeight + 'px' ); }
+	} else {
+		$scroll.removeClass( 'ts-dt-loading' ).css( 'min-height', '' ).find( '.ts-dt-skeleton' ).remove();
+	}
+};
 
 jQuery('.shipping_date').on('apply.daterangepicker', function(ev, picker) {
 	jQuery(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD')).trigger("change");
@@ -56,13 +80,13 @@ jQuery(document).ready(function() {
 			format: 'YYYY-MM-DD'
 		},
 		ranges: {
-		   'Today': [moment(), moment()],
-		   'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-		   'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-		   'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-		   'This Month': [moment().startOf('month'), moment().endOf('month')],
-		   'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-		   'Last 6 Month': [moment().subtract(6, 'month'), moment()]
+			'Today': [moment(), moment()],
+			'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+			'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+			'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+			'This Month': [moment().startOf('month'), moment().endOf('month')],
+			'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+			'Last 6 Month': [moment().subtract(6, 'month'), moment()]
 		}
 	}, function(start, end, label) {
 		jQuery('#shipment_start_date_range').val(start.format('YYYY-MM-DD'));
@@ -230,8 +254,8 @@ jQuery(document).ready(function() {
 				'data': 'shipment_length',
 				"mRender": function(data, type, full) {
 					var late_shipment = full.shipment_length.cond ? '<span class="dashicons dashicons-info ' + full.shipment_length.late_class + ' late_shipment"></span>' : '';
-					var extraClass    = full.shipment_length.cond ? ' trackship-tip' : '';
-					var titleAttr     = full.shipment_length.cond ? ' title="This shipment has been in transit for ' + full.shipment_length.shipping_length + ' and may be late."' : '';
+					var extraClass = full.shipment_length.cond ? ' trackship-tip' : '';
+					var titleAttr = full.shipment_length.cond ? ' title="This shipment has been in transit for ' + full.shipment_length.shipping_length + ' and may be late."' : '';
 					return '<span class="shipment_length ' + full.shipment_length.late_class + extraClass + '"' + titleAttr + '>' + late_shipment + full.shipment_length.shipping_length + '</span>';
 				},
 			},	
@@ -255,6 +279,11 @@ jQuery(document).ready(function() {
 		],
 	});	
 	
+	jQuery("#active_shipments_table").on('processing.dt', function(e, settings, processing){
+		window.ts_dt_toggle_skeleton('#active_shipments_table', processing, 8);
+	});
+	window.ts_dt_toggle_skeleton('#active_shipments_table', true, 8);
+
 	var html = jQuery('.shipments_custom_data.custom_data').html();
 	jQuery('.shipments_custom_data.custom_data').remove();
 	jQuery('.shipments_custom_data').append(html);
@@ -459,8 +488,8 @@ jQuery(document).on("change", ".shipment_checkbox", function(){
 
 jQuery(document).on("click", ".dashboard_input_tab .tab_input", function(){
 	'use strict';
-	jQuery(document).ajax_loader(".fullfillment_dashboard_section_content");
-	
+	jQuery('.fullfillment_dashboard_section_content .tsd-stat__value').html('<span class="tsd-skeleton"></span>');
+
 	var selected_option = jQuery( this ).data('tab');
 	var ajax_data = {
 		action: 'dashboard_page_count_query',
@@ -481,7 +510,6 @@ jQuery(document).on("click", ".dashboard_input_tab .tab_input", function(){
 			jQuery('.tsd-stat--avg_transit .tsd-stat__value').html(avgTransit + '<small>' + (shipments_script.days || 'days') + '</small>');
 			var deliveredRate = response.delivered_rate ? response.delivered_rate : 0;
 			jQuery('.tsd-stat--delivered_rate .tsd-stat__value').html(deliveredRate + '<small>%</small>');
-			jQuery(".fullfillment_dashboard_section_content").unblock();
 		},
 		error: function(response, jqXHR, exception) {
 			shipment_js_error(response, jqXHR, exception)

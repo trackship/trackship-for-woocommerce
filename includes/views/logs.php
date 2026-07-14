@@ -36,12 +36,12 @@ $url_search = isset( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
 	<span class="log_search_bar">
 		<input type="text" id="search_bar" name="search_bar" placeholder="<?php esc_attr_e( 'Order id, Email, Phone number', 'trackship-for-woocommerce' ); ?>" value="<?php echo esc_attr( $url_search ); ?>">
 		<span class="dashicons dashicons-no"></span>
-		<button class="serch_button" type="button"><?php esc_html_e( 'Search', 'trackship-for-woocommerce' ); ?></button>
+		<button class="button button-trackship serch_button" type="button"><?php esc_html_e( 'Search', 'trackship-for-woocommerce' ); ?></button>
 	</span>
 </div>
 <div class="trackship_admin_content">	
 	<section class="trackship_logs_section">
-		<div class="woocommerce trackship_admin_layout">
+		<div class="trackship_admin_layout">
 			<div class="">
 				<input type="hidden" id="nonce_trackship_logs" value="<?php echo esc_attr(wp_create_nonce( '_trackship_logs' )); ?>">
 				<table class="widefat dataTable fixed trackship_logs hover" cellspacing="0" id="trackship_notifications_logs" style="width: 100%;">

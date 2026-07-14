@@ -4,10 +4,10 @@
 
 		init: function () {
 
-			$("#wc_trackship_form").on('click', '.woocommerce-save-button', this.save_trackship_form);
-			$("#trackship_tracking_page_form").on('click', '.woocommerce-save-button', this.save_tracking_page_form);
-			$("#trackship_mapping_form").on('click', '.woocommerce-save-button', this.save_trackship_mapping_form);
-			$("#trackship_late_shipments_form").on('click', '.woocommerce-save-button', this.save_trackship_late_shipments_form);
+			$("#wc_trackship_form").on('click', '.trackship-save-button', this.save_trackship_form);
+			$("#trackship_tracking_page_form").on('click', '.trackship-save-button', this.save_tracking_page_form);
+			$("#trackship_mapping_form").on('click', '.trackship-save-button', this.save_trackship_mapping_form);
+			$("#trackship_late_shipments_form").on('click', '.trackship-save-button', this.save_trackship_late_shipments_form);
 			$(".tipTip").tipTip();
 
 		},
@@ -131,8 +131,6 @@ jQuery(document).ready(function () {
 jQuery(document).on("click", ".trackship_admin_content .trackship_nav_div .tab_input", function () {
 	"use strict";
 	var tab = jQuery(this).data('tab');
-	var label = jQuery(this).data('label');
-	jQuery('.zorem-layout__header .header-breadcrumbs-last').text(label);
 
 	// Get the current URL parameters
 	var urlParams = new URLSearchParams(window.location.search);
@@ -443,9 +441,9 @@ jQuery(document).on("click", ".ts_video_popup .popupclose", function () {
 	jQuery('.ts_video_popup').hide();
 });
 
-jQuery(document).on("click", ".add_custom_mapping_h3", function () {
+jQuery(document).on("click", "#add_custom_mapping_btn", function () {
 	var spinner = jQuery('#trackship_mapping_form').find(".add-custom-mapping.spinner").addClass("active");
-	
+
 	jQuery(this).prop('disabled', true);
 
 	var ajax_data = {
@@ -460,11 +458,11 @@ jQuery(document).on("click", ".add_custom_mapping_h3", function () {
 			jQuery(".map-provider-table .ptw_provider_border").show();
 			jQuery('.map-provider-table .select2').select2();
 			spinner.removeClass("active");
-			jQuery('.add_custom_mapping_h3').prop('disabled', false);
+			jQuery('#add_custom_mapping_btn').prop('disabled', false);
 		},
 		error: function (response, jqXHR, exception) {
 			trackship_js_error(response, jqXHR, exception);
-			jQuery('.add_custom_mapping_h3').prop('disabled', false);
+			jQuery('#add_custom_mapping_btn').prop('disabled', false);
 		}
 	});
 	return false;
@@ -474,13 +472,19 @@ jQuery(document).on("click", ".remove_custom_maping_row", function () {
 	jQuery(this).closest('tr').remove();
 });
 
-jQuery(document).on("click", ".remove_custom_maping_row, .add_custom_mapping_h3", function () {
+jQuery(document).on("click", ".remove_custom_maping_row, #add_custom_mapping_btn", function () {
 	if ( ! jQuery('.map-provider-table tbody').find('tr').length ) {
 		jQuery(".map-provider-table .ptw_provider_border").hide();
 	}
 });
 
 jQuery(document).on("click", ".metabox_get_shipment_status", function () {
+	var $btn = jQuery(this);
+	if ( $btn.hasClass('is-loading') ) { return; }
+	var originalText = $btn.text();
+	$btn.addClass('is-loading').prop('disabled', true)
+		.html('<span class="ts-btn-spinner"></span>' + originalText);
+
 	var data = {
 		action: 'metabox_get_shipment_status',
 		order_id: woocommerce_admin_meta_boxes.post_id,
@@ -499,13 +503,34 @@ jQuery(document).on("click", ".metabox_get_shipment_status", function () {
 			} else {
 				jQuery(document).trackship_snackbar_warning(response.data.msg);
 			}
+			$btn.removeClass('is-loading').prop('disabled', false).text(originalText);
 		},
 		error: function (jqXHR, exception) {
+			$btn.removeClass('is-loading').prop('disabled', false).text(originalText);
 		}
 	});
 });
 
 jQuery(document).on("click", ".open_tracking_details", function () {
+	var closeBtn = '<span class="admin_tracking_page_close popupclose"><span class="dashicons dashicons-no-alt"></span></span>';
+
+	// open immediately with a skeleton placeholder
+	var skeleton = '<div class="ts-tw-skeleton">' +
+			'<div class="ts-tw-skeleton__head">' +
+				'<span class="ts-tw-skeleton__line ts-tw-skeleton__line--title"></span>' +
+				'<span class="ts-tw-skeleton__line ts-tw-skeleton__line--sub"></span>' +
+			'</div>' +
+			'<div class="ts-tw-skeleton__bar"></div>' +
+			'<div class="ts-tw-skeleton__events">' +
+				'<div class="ts-tw-skeleton__event"><span class="ts-tw-skeleton__dot"></span><span class="ts-tw-skeleton__line ts-tw-skeleton__line--lg"></span><span class="ts-tw-skeleton__line ts-tw-skeleton__line--sm"></span></div>' +
+				'<div class="ts-tw-skeleton__event"><span class="ts-tw-skeleton__dot"></span><span class="ts-tw-skeleton__line ts-tw-skeleton__line--lg"></span><span class="ts-tw-skeleton__line ts-tw-skeleton__line--sm"></span></div>' +
+				'<div class="ts-tw-skeleton__event"><span class="ts-tw-skeleton__dot"></span><span class="ts-tw-skeleton__line ts-tw-skeleton__line--lg"></span><span class="ts-tw-skeleton__line ts-tw-skeleton__line--sm"></span></div>' +
+				'<div class="ts-tw-skeleton__event"><span class="ts-tw-skeleton__dot"></span><span class="ts-tw-skeleton__line ts-tw-skeleton__line--lg"></span><span class="ts-tw-skeleton__line ts-tw-skeleton__line--sm"></span></div>' +
+			'</div>' +
+		'</div>';
+	jQuery("#admin_tracking_widget .popuprow").html(closeBtn + skeleton);
+	jQuery("#admin_tracking_widget").show();
+
 	var data = {
 		action: 'get_admin_tracking_widget',
 		order_id: jQuery(this).data('orderid'),
@@ -519,15 +544,15 @@ jQuery(document).on("click", ".open_tracking_details", function () {
 		data: data,
 		type: 'POST',
 		success: function (response) {
-			var html = '<span class="admin_tracking_page_close popupclose"><span class="dashicons dashicons-no-alt"></span></span>' + response;
+			var html = closeBtn + response;
 			jQuery("#admin_tracking_widget .popuprow").html(html);
-			jQuery("#admin_tracking_widget").show();
 			jQuery('.shipment-header .ts_from_input:checked').trigger('change');
 			jQuery('.heading_panel.checked').trigger('click');
 			jQuery('.enhanced_tracking_detail .tracking_number_wrap.checked').trigger('click');
 			jQuery(".trackship-tip").tipTip();
 		},
 		error: function (response, jqXHR, exception) {
+			jQuery("#admin_tracking_widget").hide();
 			trackship_js_error(response, jqXHR, exception)
 		}
 	});
@@ -636,6 +661,13 @@ function copyTextToClipboard(text) {
 }
 
 jQuery(document).on("click", ".tracking_notification_log_delete .delete_notification", function () {
+	jQuery(".tracking_notification_log_delete").block({
+		message: null,
+		overlayCSS: {
+			background: "#fff",
+			opacity: .6
+		}
+	});
 	var ajax_data = {
 		action: 'remove_trackship_logs',
 		security: jQuery('#ts_tools').val()
@@ -646,9 +678,11 @@ jQuery(document).on("click", ".tracking_notification_log_delete .delete_notifica
 		type: 'POST',
 		dataType: "json",
 		success: function (response) {
+			jQuery(".tracking_notification_log_delete").unblock();
 			jQuery(document).trackship_snackbar('Notifications logs deleted more than 30 days.');
 		},
 		error: function (response, jqXHR, exception) {
+			jQuery(".tracking_notification_log_delete").unblock();
 			trackship_js_error(response, jqXHR, exception)
 		}
 	});
@@ -656,6 +690,13 @@ jQuery(document).on("click", ".tracking_notification_log_delete .delete_notifica
 });
 
 jQuery(document).on("click", ".trackship-verify-table .verify_database_table", function () {
+	jQuery(".trackship-verify-table").block({
+		message: null,
+		overlayCSS: {
+			background: "#fff",
+			opacity: .6
+		}
+	});
 	var ajax_data = {
 		action: 'verify_database_table',
 		security: jQuery('#ts_tools').val()
@@ -666,6 +707,7 @@ jQuery(document).on("click", ".trackship-verify-table .verify_database_table", f
 		type: 'POST',
 		dataType: "json",
 		success: function (response) {
+			jQuery(".trackship-verify-table").unblock();
 			jQuery(document).trackship_snackbar('Database table verified successfully');
 			jQuery('.db_upgrade').hide();
 			var urlParams = new URLSearchParams(window.location.search); //// Get the current URL parameters
@@ -674,6 +716,7 @@ jQuery(document).on("click", ".trackship-verify-table .verify_database_table", f
 			window.history.pushState({ path: newUrl }, '', newUrl);
 		},
 		error: function (response, jqXHR, exception) {
+			jQuery(".trackship-verify-table").unblock();
 			trackship_js_error(response, jqXHR, exception)
 		}
 	});
@@ -684,7 +727,7 @@ jQuery(document).on("click", ".trackship-notice p span.dashicons", function () {
 	var date = new Date();
 	date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000));
 	expires = "; expires=" + date.toUTCString();
-	var cookies = document.cookie = "Notice=delete " + expires;
+	document.cookie = "Notice=delete " + expires;
 	jQuery('.trackship_notice_msg').hide();
 });
 
@@ -695,20 +738,6 @@ jQuery(document).on('click', '.inner_tab_section .heading_panel.section_sms_head
 		jQuery('.panel_content.section_sms_content .outer_form_table').addClass('smswoo_active');
 	} else if ( jQuery.inArray( shipments_script.user_plan, ['Complimentary 100', 'Complimentary 150', 'Free 20', "No active plan", "Trial Ended"] ) !== -1) {
 		jQuery('.panel_content.section_sms_content').find( 'select, input' ).attr('disabled', true);
-	}
-});
-
-
-jQuery(document).on("click", "#activity-panel-tab-help", function () {
-	jQuery(this).addClass('is-active');
-	jQuery('.ts_activity-panel-wrapper').addClass('is-open is-switching');
-});
-
-jQuery(document).on("click", function ( event ) {
-	var $trigger = jQuery(".ts_activity-panel");
-	if ($trigger !== event.target && !$trigger.has(event.target).length) {
-		jQuery('#activity-panel-tab-help').removeClass('is-active');
-		jQuery('.ts_activity-panel-wrapper').removeClass('is-open is-switching');
 	}
 });
 
@@ -842,7 +871,7 @@ jQuery(document).ready(function ($) {
 
 	// Sidebar nav click (scoped to settings layout only)
 	$(document).on('click', '.ts-settings-layout .ts-nav-item', function () {
-		var $item  = $(this);
+		var $item = $(this);
 		var target = $item.data('target');
 
 		$('.ts-settings-layout .ts-nav-item').removeClass('active');

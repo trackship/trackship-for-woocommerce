@@ -351,7 +351,7 @@ class TSWC_SMSWoo_SMS_Notification {
 	 */
 	public function user_subscribed_sms( $order_id ) {
 		if ( get_trackship_settings( 'enable_email_widget' ) ) {
-			$order       = wc_get_order( $order_id );
+			$order = wc_get_order( $order_id );
 			$receive_sms = $order->get_meta( '_smswoo_receive_sms', true );
 			return 'no' == $receive_sms ? false : true;
 		} else {

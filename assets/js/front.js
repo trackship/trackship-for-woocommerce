@@ -232,6 +232,7 @@ jQuery(document).on("change", ".unsubscribe_emails_checkbox, .unsubscribe_sms_ch
 	var ajax_data = {
 		action: 'save_unsunscribe_email_notifications_data',
 		order_id: jQuery('.order_id_field').val(),
+		order_key: jQuery('.unsubscribe_order_key').val(),
 		security: jQuery('.unsubscribe_emails_nonce').val(),
 		checkbox: checkbox,
 		lable:jQuery(this).data('lable')

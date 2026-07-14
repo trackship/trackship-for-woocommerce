@@ -94,8 +94,8 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		foreach ($hooks as $hook) {
 			$timestamp = wp_next_scheduled($hook);
 			$ts_cron[$hook] = array(
-				'next_run'    => $timestamp ? gmdate('Y-m-d H:i:s', $timestamp + wc_timezone_offset()) : 'Not scheduled',
-				'has_action'  => has_action($hook) ? 'yes' : 'no',
+				'next_run' => $timestamp ? gmdate('Y-m-d H:i:s', $timestamp + wc_timezone_offset()) : 'Not scheduled',
+				'has_action' => has_action($hook) ? 'yes' : 'no',
 			);
 		}
 		

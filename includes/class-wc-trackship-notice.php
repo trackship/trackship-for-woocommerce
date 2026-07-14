@@ -72,7 +72,7 @@ class WC_TrackShip_Admin_Notice {
 
 		foreach ($notice_types as $param => $setting_key) {
 			$value = sanitize_text_field($_GET[$param] ?? '');
-			if ( 'true' ===  $value ) {
+			if ( 'true' === $value ) {
 				update_trackship_settings($setting_key, 'true');
 			}
 		}
@@ -219,6 +219,10 @@ class WC_TrackShip_Admin_Notice {
 
 	public function trackship_store_connect_notice () {
 		if ( is_trackship_connected() ) {
+			return;
+		}
+		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( 'trackship-dashboard' === $page ) {
 			return;
 		}
 		$store_url = get_site_url();

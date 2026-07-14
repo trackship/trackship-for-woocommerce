@@ -25,12 +25,12 @@ if ( ! class_exists( 'SMSWOO_Nexmo' ) ) {
 		/**
 		 * Constructor
 		 *
-		 * @since   1.0
-		 * @return  void
+		 * @since 1.0
+		 * @return void
 		 */
 		public function __construct() {
 
-			$this->_nexmo_api_key    = get_option( 'smswoo_nexmo_key' );
+			$this->_nexmo_api_key = get_option( 'smswoo_nexmo_key' );
 			$this->_nexmo_api_secret = get_option( 'smswoo_nexmo_secret' );
 
 			parent::__construct();
@@ -40,14 +40,14 @@ if ( ! class_exists( 'SMSWOO_Nexmo' ) ) {
 		/**
 		 * Send SMS
 		 *
-		 * @since   1.0
+		 * @since 1.0
 		 *
-		 * @param   $to_phone     string
-		 * @param   $message      string
-		 * @param   $country_code string
+		 * @param $to_phone string
+		 * @param $message string
+		 * @param $country_code string
 		 *
-		 * @return  void
-		 * @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
+		 * @return void
+		 * @throws Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
 		 */
 		public function send( $to_phone, $message, $country_code ) {
 
@@ -76,7 +76,7 @@ if ( ! class_exists( 'SMSWOO_Nexmo' ) ) {
 
 			$wp_remote_http_args = array(
 				'method' => 'POST',
-				'body'   => $args,
+				'body' => $args,
 				'header' => 'Content-type: application/x-www-form-urlencoded\r\n' .
 							'Content-Length: ' . strlen( $args ) . '\r\n'
 			);
@@ -119,8 +119,8 @@ if ( ! class_exists( 'SMSWOO_Nexmo' ) ) {
 		 *
 		 * @param $to_phone string
 		 *
-		 * @return  void
-		 * @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
+		 * @return void
+		 * @throws Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
 		 */
 		public function validate_number( $to_phone ) {
 
@@ -134,7 +134,7 @@ if ( ! class_exists( 'SMSWOO_Nexmo' ) ) {
 
 			$wp_remote_http_args = array(
 				'method' => 'POST',
-				'body'   => $args,
+				'body' => $args,
 				'header' => 'Content-type: application/x-www-form-urlencoded\r\n' .
 							'Content-Length: ' . strlen( $args ) . '\r\n'
 			);

@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 'settings';
 ?>
-<div class="woocommerce trackship_admin_layout">
+<div class="trackship_admin_layout">
 	<div class="trackship_admin_content" >
 		<div class="trackship_nav_div">
 			<?php
@@ -61,7 +61,6 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 					</label>
 				<?php } ?>
 			</div>
-			<div class="menu_devider"></div>
 			<?php $this->get_trackship_notice_msg(); ?>
 			<?php foreach ( $array as $key => $val ) { ?>
 				<?php if ( $val[ 'show' ] ) { ?>

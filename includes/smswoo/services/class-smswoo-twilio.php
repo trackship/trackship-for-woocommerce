@@ -24,12 +24,12 @@ if ( ! class_exists( 'SMSWOO_Twilio' ) ) {
 		/**
 		 * Constructor
 		 *
-		 * @since   1.0
-		 * @return  void
+		 * @since 1.0
+		 * @return void
 		 */
 		public function __construct() {
 
-			$this->_twilio_sid        = get_option( 'smswoo_twilio_account_sid' );
+			$this->_twilio_sid = get_option( 'smswoo_twilio_account_sid' );
 			$this->_twilio_auth_token = get_option( 'smswoo_twilio_auth_token' );
 
 			parent::__construct();
@@ -39,14 +39,14 @@ if ( ! class_exists( 'SMSWOO_Twilio' ) ) {
 		/**
 		 * Send SMS
 		 *
-		 * @since   1.0
+		 * @since 1.0
 		 *
-		 * @param   $to_phone     string
-		 * @param   $message      string
-		 * @param   $country_code string
+		 * @param $to_phone string
+		 * @param $message string
+		 * @param $country_code string
 		 *
-		 * @return  void
-		 * @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
+		 * @return void
+		 * @throws Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
 		 */
 		public function send( $to_phone, $message, $country_code ) {
 			
@@ -63,23 +63,23 @@ if ( ! class_exists( 'SMSWOO_Twilio' ) ) {
 			}
 
 			$wp_remote_http_args = array(
-				'method'      => 'POST',
-				'timeout'     => '10',
-				'redirection' => 0,
-				'httpversion' => '1.0',
-				'sslverify'   => true,
-				'blocking'    => true,
-				'headers'     => array(
+				'method'		=> 'POST',
+				'timeout'		=> '10',
+				'redirection'	=> 0,
+				'httpversion'	=> '1.0',
+				'sslverify'		=> true,
+				'blocking'		=> true,
+				'headers'		=> array(
 					'Authorization' => sprintf( 'Basic %s', base64_encode( $this->_twilio_sid . ':' . $this->_twilio_auth_token ) )
 				),
-				'body'        => http_build_query(
+				'body'	=> http_build_query(
 					array(
-						'From' => 'enable_whatsapp' == get_option('enable_twilio_whatsapp') ? 'whatsapp:' . $from : $from,
-						'To'   => 'enable_whatsapp' == get_option('enable_twilio_whatsapp') ? 'whatsapp:' . $to_phone : $to_phone,
-						'Body' => $message,
+						'From'	=> 'enable_whatsapp' == get_option('enable_twilio_whatsapp') ? 'whatsapp:' . $from : $from,
+						'To'	=> 'enable_whatsapp' == get_option('enable_twilio_whatsapp') ? 'whatsapp:' . $to_phone : $to_phone,
+						'Body'	=> $message,
 					)
 				),
-				'cookies'     => array()
+				'cookies' => array()
 			);
 
 			$endpoint = str_replace( '{sid}', $this->_twilio_sid, 'https://api.twilio.com/2010-04-01/Accounts/{sid}/Messages.json' );
@@ -125,12 +125,12 @@ if ( ! class_exists( 'SMSWOO_Twilio' ) ) {
 		/**
 		 * Send SMS
 		 *
-		 * @since   1.0
+		 * @since 1.0
 		 *
-		 * @param   $to_phone     string
+		 * @param $to_phone string
 		 *
-		 * @return  void
-		 * @throws  Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
+		 * @return void
+		 * @throws Exception for WP HTTP API error, no response, HTTP status code is not 201 or if HTTP status code not set
 		 */
 		public function validate_number( $to_phone ) {
 			
@@ -138,16 +138,16 @@ if ( ! class_exists( 'SMSWOO_Twilio' ) ) {
 
 
 			$wp_remote_http_args = array(
-				'method'      => 'GET',
-				'timeout'     => '10',
-				'redirection' => 0,
-				'httpversion' => '1.0',
-				'sslverify'   => true,
-				'blocking'    => true,
-				'headers'     => array(
+				'method'		=> 'GET',
+				'timeout'		=> '10',
+				'redirection'	=> 0,
+				'httpversion'	=> '1.0',
+				'sslverify'		=> true,
+				'blocking'		=> true,
+				'headers' 		=> array(
 					'Authorization' => sprintf( 'Basic %s', base64_encode( $this->_twilio_sid . ':' . $this->_twilio_auth_token ) )
 				),
-				'cookies'     => array()
+				'cookies'	=> array()
 			);
 
 			$endpoint = str_replace( '{to_phone}', $to_phone, 'https://lookups.twilio.com/v1/PhoneNumbers/{to_phone}?Type=carrier' );
@@ -190,11 +190,11 @@ if ( ! class_exists( 'SMSWOO_Twilio' ) ) {
 		/**
 		 * Check if customer country supports Alphanumeric Sender ID
 		 *
-		 * @since   1.0
+		 * @since 1.0
 		 *
-		 * @param   $country_code string
+		 * @param $country_code string
 		 *
-		 * @return  boolean
+		 * @return boolean
 		 */
 		private function country_support_asid( $country_code ) {
 
