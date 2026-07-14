@@ -1,10 +1,10 @@
-=== TrackShip for WooCommerce  ===
+=== TrackShip for WooCommerce ===
 Contributors: TrackShip
 Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order tracking, tracking
 Requires at least: 6.2
-Tested up to: 7.0
+Tested up to: 7.0.1
 Requires PHP: 7.4
-Stable tag: 2.0.5
+Stable tag: 2.0.6
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,6 +154,15 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 13. You can view TrackShip Analytics and filter results by time range, shipment status, or provider.
 
 == Changelog ==
+= 2.0.6 - 2026-07-08 =
+* Enhancement - Redesigned admin interface across Dashboard, Settings, Notifications, and SMS settings pages with modernized layouts, sidebar navigation, quick help sections, and a new account summary bar.
+* Enhancement - Standardized settings fields to use a consistent row-based layout for improved readability and organization.
+* Enhancement - Updated onboarding process design.
+* Security - Added `manage_woocommerce` capability checks to administrative AJAX endpoints to prevent unauthorized access.
+* Security - Strengthened email unsubscribe endpoint by validating order ID and requiring `order_key` for authentication, ensuring only the order owner can modify email preferences.
+* Compatibility - Verified compatibility with WooCommerce version 10.9.4.
+* Compatibility - Verified compatibility with WordPress version 7.0.1.
+
 = 2.0.5 - 2026-06-21 =
 * Enhancement - Revamped admin interface and dashboard with modern UI, including expanded analytics for shipments, carrier performance, and historical trends.
 * New - Added WooCommerce Fulfillments tab for improved shipment management.
@@ -190,5 +199,8 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 For a complete changelog history, please visit our [documentation](https://docs.trackship.com/docs/trackship-for-woocommerce/changelog/).
 
 == Upgrade Notice ==
+= 2.0.6 =
+Redesigned admin interface with modernized layouts and sidebar navigation. Security hardening for admin AJAX endpoints and email unsubscribe feature.
+
 = 2.0.5 =
 Revamped admin interface with modern UI and enhanced analytics. Added WooCommerce Fulfillments tab. Fixed product name display in email templates.
