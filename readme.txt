@@ -154,7 +154,7 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 13. You can view TrackShip Analytics and filter results by time range, shipment status, or provider.
 
 == Changelog ==
-= 2.0.6 - 2026-07-08 =
+= 2.0.6 - 2026-07-13 =
 * Enhancement - Redesigned admin interface across Dashboard, Settings, Notifications, and SMS settings pages with modernized layouts, sidebar navigation, quick help sections, and a new account summary bar.
 * Enhancement - Standardized settings fields to use a consistent row-based layout for improved readability and organization.
 * Enhancement - Updated onboarding process design.
