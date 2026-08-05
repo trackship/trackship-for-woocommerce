@@ -162,7 +162,7 @@ class WC_TrackShip_Admin_Notice {
 				<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
 				<h3>Limited-time offer: 3,600 Shipments/year for just $240!</h3>
 				<p>Upgrade to TrackShip Pro and give buyers the branded, worry-free tracking experience they love.</p>
-				<p>🎁 Use coupon code <strong>GROW240</strong> to get 3,600 shipments/year for just <strong>$240</strong> <em>(regular price $290, save $50)</em>! <em>(Valid till August 31, 2026)</em></p>
+				<p>🎁 Use coupon code <strong>GROW240</strong> to get 3,600 shipments/year for just <strong>$240</strong> for your first year <em>(regular price $290, save $50)</em>! <em>(Valid till August 31, 2026)</em></p>
 				<p style="padding:0;">
 					<a class="button button-primary" target="_blank" href="<?php echo esc_url( $url ); ?>">Upgrade to Pro</a>
 					<a class="button" href="<?php echo esc_url( $dismissable_url ); ?>">Dismiss</a>
