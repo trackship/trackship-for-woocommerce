@@ -2,9 +2,9 @@
 Contributors: TrackShip
 Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order tracking, tracking
 Requires at least: 6.2
-Tested up to: 7.0.1
+Tested up to: 7.0.2
 Requires PHP: 7.4
-Stable tag: 2.0.6
+Stable tag: 2.0.7
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -154,7 +154,11 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 13. You can view TrackShip Analytics and filter results by time range, shipment status, or provider.
 
 == Changelog ==
-= 2.0.6 - 2026-07-08 =
+= 2.0.7 - 2026-08-05 =
+* Compatibility - Verified compatibility with WooCommerce version 11.0.0.
+* Compatibility - Verified compatibility with WordPress version 7.0.2.
+
+= 2.0.6 - 2026-07-13 =
 * Enhancement - Redesigned admin interface across Dashboard, Settings, Notifications, and SMS settings pages with modernized layouts, sidebar navigation, quick help sections, and a new account summary bar.
 * Enhancement - Standardized settings fields to use a consistent row-based layout for improved readability and organization.
 * Enhancement - Updated onboarding process design.

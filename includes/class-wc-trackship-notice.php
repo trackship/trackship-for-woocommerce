@@ -66,7 +66,7 @@ class WC_TrackShip_Admin_Notice {
 
 		$notice_types = [
 			'ts-review-ignore' => 'ts_review_ignore_141',
-			'ts-upgrade-ignore' => 'ts_popup_ignore204',
+			'ts-upgrade-ignore' => 'ts_popup_ignore207',
 			'ts-fulfillments-ignore' => 'ts_fulfillments_ignore',
 		];
 
@@ -128,10 +128,10 @@ class WC_TrackShip_Admin_Notice {
 	* Display admin notice on Upgrade TrackShip plan
 	*/
 	public function trackship_upgrade_notice () {
-		if ( get_trackship_settings( 'ts_popup_ignore204', '') ) {
+		if ( get_trackship_settings( 'ts_popup_ignore207', '') ) {
 			return;
 		}
-		if ( current_time( 'timestamp' ) > strtotime( '2026-07-15 23:59:59' ) ) {
+		if ( current_time( 'timestamp' ) > strtotime( '2026-08-31 23:59:59' ) ) {
 			return;
 		}
 		$user_plan = get_option( 'user_plan' );
@@ -160,9 +160,9 @@ class WC_TrackShip_Admin_Notice {
 
 			<div class="notice notice-success is-dismissible trackship-dismissable-notice" role="region">
 				<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
-				<h3>Limited-time offer: 1,200 Shipments/year for just $110!</h3>
+				<h3>Limited-time offer: 3,600 Shipments/year for just $240!</h3>
 				<p>Upgrade to TrackShip Pro and give buyers the branded, worry-free tracking experience they love.</p>
-				<p>🎁 Use coupon code <strong>MINI110</strong> to get 1,200 shipments/year for just <strong>$110</strong> <em>(regular price $150)</em>! <em>(Valid till July 15, 2026)</em></p>
+				<p>🎁 Use coupon code <strong>GROW240</strong> to get 3,600 shipments/year for just <strong>$240</strong> for your first year <em>(regular price $290, save $50)</em>! <em>(Valid till August 31, 2026)</em></p>
 				<p style="padding:0;">
 					<a class="button button-primary" target="_blank" href="<?php echo esc_url( $url ); ?>">Upgrade to Pro</a>
 					<a class="button" href="<?php echo esc_url( $dismissable_url ); ?>">Dismiss</a>
