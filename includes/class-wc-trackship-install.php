@@ -455,12 +455,6 @@ class WC_Trackship_Install {
 		if ( version_compare( get_option( 'trackship_db' ), '1.41', '<' ) ) {
 			update_trackship_settings( 'trackship_db', '1.41' );
 			update_option( 'trackship_db', '1.41' );
-			$this->create_shipment_table();
-			$this->create_shipment_meta_table();
-			$this->check_column_exists();
-
-			$this->create_shipping_provider_table();
-			$this->update_shipping_providers();
 			
 			// Indexes to check and create
 			$indexes_to_check = [
@@ -495,24 +489,13 @@ class WC_Trackship_Install {
 			delete_trackship_settings( 'ts_popup_ignore139' );
 		}
 
-		// TS4WC version 2.0.1
-		if ( version_compare( get_option( 'trackship_db' ), '1.43', '<' ) ) {
-			update_trackship_settings( 'trackship_db', '1.43' );
-			update_option( 'trackship_db', '1.43' );
-			$this->create_shipment_table();
-			$this->create_shipment_meta_table();
-			$this->check_column_exists();
-
-			$this->create_shipping_provider_table();
-			$this->update_shipping_providers();
-		}
-
-		// TS4WC version 2.0.5
-		if ( version_compare( get_option( 'trackship_db' ), '1.44', '<' ) ) {
+		// TS4WC version 2.0.7
+		if ( version_compare( get_option( 'trackship_db' ), '1.45', '<' ) ) {
 			delete_trackship_settings( 'ts_popup_ignore203_v2' );
 			delete_trackship_settings( 'ts_popup_ignore203' );
-			update_trackship_settings( 'trackship_db', '1.44' );
-			update_option( 'trackship_db', '1.44' );
+			delete_trackship_settings( 'ts_popup_ignore204' );
+			update_trackship_settings( 'trackship_db', '1.45' );
+			update_option( 'trackship_db', '1.45' );
 			$this->create_shipment_table();
 			$this->create_shipment_meta_table();
 			$this->check_column_exists();
