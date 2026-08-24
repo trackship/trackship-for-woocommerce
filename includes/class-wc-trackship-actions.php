@@ -952,7 +952,7 @@ class WC_Trackship_Actions {
 			$tracking_provider = ! empty( $item['formatted_tracking_provider'] ) ? $item['formatted_tracking_provider'] : ( !empty( $item['tracking_provider'] ) ? $item['tracking_provider'] : $item['custom_tracking_provider'] ) ;
 			$tracking_provider = apply_filters( 'convert_provider_name_to_slug', $tracking_provider );
 			
-			$bool = apply_filters( 'exclude_to_send_data_for_provider', true, $tracking_provider );
+			$bool = apply_filters( 'exclude_to_send_data_for_provider', true, $tracking_provider, $order_id );
 			if ( !$bool ) {
 				return;
 			}
@@ -1237,7 +1237,7 @@ class WC_Trackship_Actions {
 			}
 			$tracking_provider = apply_filters( 'convert_provider_name_to_slug', $tracking_provider );
 			
-			$bool = apply_filters( 'exclude_to_send_data_for_provider', true, $tracking_provider );
+			$bool = apply_filters( 'exclude_to_send_data_for_provider', true, $tracking_provider, $order_id );
 			if ( !$bool ) {
 				continue;
 			}
