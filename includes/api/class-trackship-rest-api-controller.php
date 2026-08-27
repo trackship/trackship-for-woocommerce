@@ -111,7 +111,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		$version_info['trackship_db'] = get_option( 'trackship_db' );
 		$version_info['trackship_key'] = get_trackship_key();
 		
-		if ( function_exists( 'wc_advanced_shipment_tracking' ) ) {
+		if ( class_exists( 'Zorem_Woocommerce_Advanced_Shipment_Tracking' ) ) {
 			$plugin.= '-ast-free';
 			$version_info['ast-free'] = wc_advanced_shipment_tracking()->version;
 		}

@@ -19,7 +19,6 @@ class WC_TrackShip_Email_Manager {
 	}
 
 	public function ts_status_change_trigger ( $order_id, $old_status, $new_status, $tracking_number ) {
-		$order = wc_get_order( $order_id );
 		$tracking_items = trackship_for_woocommerce()->get_tracking_items( $order_id );
 
 		foreach ( ( array ) $tracking_items as $key => $tracking_item ) {
