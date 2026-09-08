@@ -35,7 +35,7 @@ if ( $orders ) :
 	</table>
 	<div>
 		<a href="<?php echo esc_url( admin_url() ); ?>admin.php?page=trackship-shipments&status=exception"><button class="all_exception_ship">View all Exception shipments</button></a>
-	</div>	
+	</div>
 	<style>
 		table.exception_shipment tr td, table.exception_shipment tr th{border:1px solid #e0e0e0;}
 		button.all_exception_ship {font-weight: normal;border-radius: 3px;text-decoration: none;color: #fff;background: #3c4758;margin-top: 15px;padding: 12px 20px;border: 0;}

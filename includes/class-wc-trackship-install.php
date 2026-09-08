@@ -363,7 +363,7 @@ class WC_Trackship_Install {
 				'pickupreminder' => 'pickup_reminder',
 			);
 
-			foreach	( $all_statuses as $key2 => $slug ) {
+			foreach ( $all_statuses as $key2 => $slug ) {
 				$email_settings = 'wcast_' . $key2 . '_email_settings';
 				$value = '';
 				$enable = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, 'wcast_enable_' . $key2 . '_email', '' );
@@ -650,7 +650,7 @@ class WC_Trackship_Install {
 		global $wpdb;
 		$table = $wpdb->prefix . 'trackship_shipment_meta';
 		if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $table ) ) ) {
-			$charset_collate = $wpdb->get_charset_collate();			
+			$charset_collate = $wpdb->get_charset_collate();
 			$sql = "CREATE TABLE {$wpdb->prefix}trackship_shipment_meta (
 				`meta_id` BIGINT(20),
 				`origin_country` VARCHAR(20) ,

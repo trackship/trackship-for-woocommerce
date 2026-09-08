@@ -39,7 +39,7 @@ $url_search = isset( $_GET['s'] ) ? sanitize_text_field( $_GET['s'] ) : '';
 		<button class="button button-trackship serch_button" type="button"><?php esc_html_e( 'Search', 'trackship-for-woocommerce' ); ?></button>
 	</span>
 </div>
-<div class="trackship_admin_content">	
+<div class="trackship_admin_content">
 	<section class="trackship_logs_section">
 		<div class="trackship_admin_layout">
 			<div class="">

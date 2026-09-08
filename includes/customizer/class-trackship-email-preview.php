@@ -14,7 +14,7 @@ class TSWC_Email_Customizer_Preview {
 
 	public $status;
 
-	// Get our default values	
+	// Get our default values
 	public function __construct( $status = 'in_transit' ) {
 		$this->status = $status;
 	}

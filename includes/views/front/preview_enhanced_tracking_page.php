@@ -1,4 +1,4 @@
-<style>	
+<style> 
 	html, body {
 		background-color: #f7f7f7 !important;
 		margin-top: 0px !important;
@@ -24,7 +24,7 @@
 		.col.enhanced_tracking_detail, div.est_delivery_section, div.tracking_widget_tracking_events_section, .enhanced_tracking_detail .enhanced_heading, .enhanced_tracking_detail .enhanced_content, div.last_mile_tracking_number, .enhanced_content .shipping_from_to , .enhanced_content ul.tpi_product_tracking_ul li, .enhanced_tracking_content {
 			border-color: <?php echo esc_html( $border_color ); ?>;
 		}
-	<?php }	?>
+	<?php } ?>
 	<?php if ( $background_color ) { ?>
 		.col.enhanced_tracking_detail {
 			background: <?php echo esc_html( $background_color ); ?>;
@@ -33,7 +33,7 @@
 	<?php if ( $font_color ) { ?>
 		body .col.enhanced_tracking_detail, body .enhanced_content label {
 			color: <?php echo esc_html( $font_color ); ?>;
-		}				
+		}
 		span.accordian-arrow.ts-right {
 			border-color: <?php echo esc_html( $font_color ); ?>;
 		}
@@ -133,7 +133,7 @@
 					</div>
 					<ul class="tpi_product_tracking_ul">
 						<li>
-							<img width="50" height="50" src="<?php echo esc_html( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/dummy-product-image.jpg" loading="lazy">	
+							<img width="50" height="50" src="<?php echo esc_html( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/dummy-product-image.jpg" loading="lazy"> 
 							<span>
 								<a target="_blank" href="#">A Study in Scarlet</a>
 								x 1

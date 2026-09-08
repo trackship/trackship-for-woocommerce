@@ -331,7 +331,7 @@ class WC_Trackship_Shipments {
 	}
 
 	/*
-	* get shiment status single order	
+	* get shiment status single order
 	*/
 	public function get_shipment_status_from_shipments() {
 		check_ajax_referer( '_trackship_shipments', 'security' );

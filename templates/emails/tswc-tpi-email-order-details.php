@@ -65,7 +65,7 @@ $class = $ts4wc_preview ? 'hide' : '';
 									echo ' x ';
 									esc_html_e( $products_list->qty );
 									?>
-								</td>	
+								</td>
 							</tr>
 						<?php } ?>
 					<?php } ?>

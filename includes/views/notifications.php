@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="outer_form_table ts_notifications_outer_table">
 	<?php
 	$late_shipments_email_enable = get_trackship_settings( 'late_shipments_email_enable' );
-	$tab_type = isset( $_GET['tab'] ) ? sanitize_text_field($_GET['tab']) : '';	
+	$tab_type = isset( $_GET['tab'] ) ? sanitize_text_field($_GET['tab']) : ''; 
 	
 	$ts_notifications = $this->trackship_shipment_status_notifications_data();
 	?>

@@ -16,7 +16,7 @@ class WOO_Omnisend_TS4WC {
 	 * Initialize the main plugin function
 	*/
 	public function __construct() {
-		$this->init();	
+		$this->init();
 	}
 	
 	/**

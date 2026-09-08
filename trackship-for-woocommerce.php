@@ -522,7 +522,7 @@ if ( ! function_exists( 'trackship_for_woocommerce' ) ) {
 	 * @version 1.0.0
 	 *
 	 * @return Trackship_For_Woocommerce
-	*/	
+	*/
 	function trackship_for_woocommerce() {
 		static $instance;
 	

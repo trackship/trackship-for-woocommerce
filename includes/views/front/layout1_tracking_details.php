@@ -43,7 +43,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 	<?php } ?>
 	<div class="content_panel tracking-details tracking_events_details">
 		<?php
-		if ( empty( $trackind_detail_by_status_rev ) ) {				
+		if ( empty( $trackind_detail_by_status_rev ) ) {
 			$pending_message = __( 'Tracking information is not available, please try again later.', 'trackship-for-woocommerce' );
 			?>
 			<p class="pending_message"><?php esc_html_e( apply_filters( 'trackship_pending_status_message', $pending_message, $tracker->ep_status ) ); ?></p>
@@ -53,7 +53,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 					<?php if ( !empty( $trackind_destination_detail_by_status_rev ) ) { ?>
 						<div class="tracking_destination_details_by_date">
 							<h4 style=""><?php esc_html_e( 'Destination Details', 'trackship-for-woocommerce' ); ?></h4>
-							<ul class="timeline new-details">	
+							<ul class="timeline new-details">
 								<?php
 								$a = 1; 
 								foreach ( $trackind_destination_detail_by_status_rev as $key => $value ) { 
@@ -76,11 +76,11 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 										</p>
 									</li>
 								<?php $a++; } ?>
-							</ul>	
+							</ul>
 							
-							<ul class="timeline old-details" style="display:none;">	
+							<ul class="timeline old-details" style="display:none;"> 
 								<?php 
-								$a = 1;	
+								$a = 1; 
 								foreach ( $trackind_destination_detail_by_status_rev as $key => $value ) {
 									if ( $a <= 1 ) {
 										$a++;
@@ -102,7 +102,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 										</p>
 									</li>
 								<?php $a++; } ?>
-							</ul>	
+							</ul>
 						</div>
 					<?php } ?>
 					<div class="tracking_details_by_date">
@@ -111,7 +111,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 							<h4 class="" style=""><?php esc_html_e( 'Origin Details', 'trackship-for-woocommerce' ); ?></h4>
 						<?php } ?> 
 						
-						<ul class="timeline new-details">	
+						<ul class="timeline new-details">
 							<?php
 							$a = 1; 
 							foreach ( $trackind_detail_by_status_rev as $key => $value ) { 
@@ -134,11 +134,11 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 									</p>
 								</li>
 							<?php $a++; } ?>
-						</ul>	
+						</ul>
 						
-						<ul class="timeline old-details" style="display:none;">	
+						<ul class="timeline old-details" style="display:none;"> 
 							<?php 
-							$a = 1;	
+							$a = 1; 
 							foreach ( $trackind_detail_by_status_rev as $key => $value ) {
 								if ( $a <= 1 ) {
 									$a++;
@@ -160,7 +160,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 									</p>
 								</li>
 							<?php $a++; } ?>
-						</ul>	
+						</ul>
 						
 					</div>
 					<div class="view_hide_old_details_div">
@@ -217,7 +217,7 @@ if ( ( !is_admin() && get_trackship_settings( 'enable_email_widget' ) ) || ( 'ye
 								</p>
 							</li>
 						<?php } ?>
-					</ul>	
+					</ul>
 				</div>
 			<?php } ?>
 		<?php } ?>

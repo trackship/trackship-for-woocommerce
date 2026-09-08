@@ -94,7 +94,7 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 				'args'					=> $this->get_collection_params(),
 			),
 		) );
-	}		
+	}
 
 	/**
 	 * Check whether a given request has permission to read order shipment-trackings.
@@ -162,7 +162,7 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 		// Build response object
 		$data = (object) [
 			'totals'	=> $totals,
-			'intervals'	=> $intervals,
+			'intervals' => $intervals,
 		];
 
 		// Fill missing intervals
@@ -208,7 +208,7 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 			if ( $next_start > $end_datetime ) {
 				$interval_end = $end_datetime->format( 'Y-m-d H:i:s' );
 			} else {
-				$prev_end_timestamp	= (int) $next_start->format( 'U' ) - 1;
+				$prev_end_timestamp = (int) $next_start->format( 'U' ) - 1;
 				$prev_end			= new \DateTime();
 				$prev_end->setTimestamp( $prev_end_timestamp );
 				$prev_end->setTimezone( $local_tz );
@@ -216,7 +216,7 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 			}
 			if ( array_key_exists( $time_id, $time_ids ) ) {
 				// For interval present in the db for this time frame, just fill in dates.
-				$record	= &$data->intervals[ $time_ids[ $time_id ] ];
+				$record = &$data->intervals[ $time_ids[ $time_id ] ];
 				$shipments_data = array(
 					'total_shipments' => (int) $record->total_shipments,
 					'active_shipments' => (int) $record->active_shipments,
@@ -284,7 +284,7 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 		";
 	
 		return $wpdb->get_var( $sql );
-	}	
+	}
 
 	/**
 	 * Get data by Shipments
@@ -298,7 +298,7 @@ class WC_Ts_Analytics_REST_API_Controller extends WC_REST_Controller {
 			'hour'	=> '%Y-%m-%d %H',
 			'day'	=> '%Y-%m-%d',
 			'week'	=> '%Y-%u',
-			'month'	=> '%Y-%m',
+			'month' => '%Y-%m',
 			'year'	=> '%Y',
 		];
 		$db_format = $interval_formats[ $interval ] ?? '%Y-%m-%d';

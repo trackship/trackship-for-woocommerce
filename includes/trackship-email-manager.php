@@ -367,7 +367,7 @@ class WC_TrackShip_Email_Manager {
 
 	/**
 	 * Code for format email heading
-	 */	
+	 */ 
 	public function email_heading( $string, $order_id, $order ) {
 		$customer_email = $order->get_billing_email();
 		$first_name = $order->get_billing_first_name();
@@ -391,7 +391,7 @@ class WC_TrackShip_Email_Manager {
 	
 	/**
 	 * Code for format recipients 
-	 */	
+	 */ 
 	public function email_to( $string, $order, $order_id ) {
 		$customer_email = $order ? $order->get_billing_email() : '';
 		$admin_email = get_option('admin_email');
@@ -427,7 +427,7 @@ class WC_TrackShip_Email_Manager {
 			$email_content = str_replace( '{customer_company_name}', $company_name, $email_content );
 		} else {
 			$email_content = str_replace( '{customer_company_name}', '', $email_content );
-		}	 
+		}
 		
 		if ( isset( $username ) ) {
 			$email_content = str_replace( '{customer_username}', $username, $email_content );

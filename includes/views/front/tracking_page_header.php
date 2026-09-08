@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<li>
 						<span class="tracking_page_provider_name"><?php echo esc_html( apply_filters( 'ast_provider_title', $tracking_provider ) ); ?></span>
 						<?php if ( $ts_link_to_carrier && $tracking_link ) { ?>
-							<a href="<?php echo esc_url( $tracking_link ); ?>" target="blank"><strong><?php esc_html_e( $tracking_number ); ?></strong></a>	
+							<a href="<?php echo esc_url( $tracking_link ); ?>" target="blank"><strong><?php esc_html_e( $tracking_number ); ?></strong></a> 
 						<?php } else { ?>
 							<strong><?php esc_html_e( $tracking_number ); ?></strong>
 						<?php } ?>
