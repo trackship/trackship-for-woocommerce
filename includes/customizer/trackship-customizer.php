@@ -930,19 +930,6 @@ class TS4WC_Admin_Customizer {
 			'show'		=> true,
 			'class'		=> 'pickup_reminder_sub_menu all_status_submenu pickup_reminder_days',
 		);
-		$settings[ 'email_settings[common_settings][email_trackship_branding]' ] = array(
-			'title'		=> esc_html__( 'Display TrackShip branding', 'trackship-for-woocommerce' ),
-			'default'	=> $show_trackship_branding,
-			'type'		=> 'checkbox',
-			'id_name'	=> 'email_trackship_branding',
-			'option_name'=> 'trackship_email_settings',
-			'option_type'=> 'array',
-			'show'		=> true,
-			'class'		=> '',
-			'required' 	=> 'pro',
-			'plan'		=> in_array( get_option( 'user_plan' ), array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended' ) ),
-		);
-
 		if ( 'tracking_page' == $type ) {
 			unset( $settings['email_notifications'] );
 		} else {

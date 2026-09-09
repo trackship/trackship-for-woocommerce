@@ -247,21 +247,19 @@ jQuery(document).on("change", ".zoremmail-checkbox.ts4wc_provider_logo", functio
 	jQuery('.pending_change_event').append(pend_change.includes('&#shipping_provider_logo') ? '' : '&#shipping_provider_logo');
 });
 
-// TrackShip branding for Tracking page and Email
-jQuery(document).on("change", "#email_trackship_branding, #show_trackship_branding", function () {
+// TrackShip branding for Tracking page
+jQuery(document).on("change", "#show_trackship_branding", function () {
 	if (jQuery(this).prop("checked") == true) {
 		jQuery("#tracking_widget_privew").contents().find( '.trackship_branding, .enhanced_trackship_branding' ).show();
-		jQuery("#email_trackship_branding, #show_trackship_branding").prop('checked', true);
 	} else {
 		if ( jQuery.inArray( trackship_customizer.user_plan, ['Complimentary 100', 'Complimentary 150', 'Free 20', "No active plan", 'Trial Ended'] ) !== -1 ) {
 			jQuery("#tracking_widget_privew").contents().find( '.trackship_branding, .enhanced_trackship_branding' ).show();
 		} else {
 			jQuery("#tracking_widget_privew").contents().find( '.trackship_branding, .enhanced_trackship_branding' ).hide();
 		}
-		jQuery("#email_trackship_branding, #show_trackship_branding").prop('checked', false);
 	}
 	var pend_change = jQuery(".pending_change_event").text();
-	jQuery('.pending_change_event').append(pend_change.includes('&#email_trackship_branding') ? '' : '&#email_trackship_branding');
+	jQuery('.pending_change_event').append(pend_change.includes('&#show_trackship_branding') ? '' : '&#show_trackship_branding');
 });
 
 jQuery(document).on( "click", ".email_placeholder", function(){
