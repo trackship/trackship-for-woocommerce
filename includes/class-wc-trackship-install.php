@@ -503,6 +503,19 @@ class WC_Trackship_Install {
 			$this->create_shipping_provider_table();
 			$this->update_shipping_providers();
 		}
+
+		if ( version_compare( get_option( 'trackship_db' ), '1.46', '<' ) ) {
+			// Remove legacy/orphaned settings left in trackship_settings on sites that
+			// jumped versions (the earlier delete migrations were version-gated and skipped).
+			delete_trackship_settings( 'wc_ast_use_tracking_page' ); // superseded by ts_tracking_page
+			delete_trackship_settings( 'wc_ast_trackship_page_id' ); // superseded by tracking_page_id
+			delete_trackship_settings( 'wc_ast_show_shipment_status_filter' ); // superseded by wc_ts_shipment_status_filter
+			delete_trackship_settings( 'exclude_start_date' ); // unused (removed feature)
+			delete_trackship_settings( 'exclude_end_date' ); // unused (removed feature)
+
+			update_trackship_settings( 'trackship_db', '1.46' );
+			update_option( 'trackship_db', '1.46' );
+		}
 	}
 
 	public function update_trackship_providers() {

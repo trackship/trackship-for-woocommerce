@@ -42,6 +42,7 @@ class Trackship_For_Woocommerce {
 	public $wc_admin_notice;
 	public $smswoo_admin;
 	public $smswoo_init;
+	public $mcp_abilities;
 	public $wot_ts;
 	public $kly_ts;
 	public $omn_ts;
@@ -148,9 +149,15 @@ class Trackship_For_Woocommerce {
 	* init when class loaded
 	*/
 	public function init() {
-		
+
 		add_action( 'init', array( $this, 'on_plugins_loaded' ) );
-		
+
+		// Register MCP abilities hooks early — before the Abilities registry initializes
+		// (which happens lazily on/after `init`). Registering later (init@10) misses the
+		// wp_abilities_api_init / _categories_init actions. No-op if the Abilities API is absent.
+		require_once $this->get_plugin_path() . '/includes/mcp/class-trackship-abilities.php';
+		$this->mcp_abilities = Trackship_Abilities::get_instance();
+
 		add_action( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'tsw_plugin_action_links' ) );
 
 		add_filter( 'yith_wcbm_add_badge_tags_in_wp_kses_allowed_html', '__return_true' );

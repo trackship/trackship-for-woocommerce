@@ -324,7 +324,23 @@ class WC_Trackship_Admin {
 		check_ajax_referer( 'ts_tools', 'security' );
 		$start_date = isset( $_POST['selected_option'] ) ? wc_clean( $_POST['selected_option'] ) : '';
 		$end_date = gmdate( 'Y-m-d' );
-		
+
+		wp_send_json( $this->get_analytics_summary( $start_date, $end_date ) );
+	}
+
+	/**
+	* Aggregate shipment analytics for a shipping-date range.
+	* Shared by the dashboard AJAX handler and the MCP layer.
+	*
+	* @param string $start_date Range start (Y-m-d).
+	* @param string $end_date Range end (Y-m-d). Defaults to today.
+	* @return array total_shipment, active_shipment, delivered_shipment, tracking_issues, avg_transit, delivered_rate.
+	*/
+	public function get_analytics_summary( $start_date, $end_date = '' ) {
+
+		$start_date = $start_date ? $start_date : '';
+		$end_date = $end_date ? $end_date : gmdate( 'Y-m-d' );
+
 		global $wpdb;
 		$result = $wpdb->get_row( $wpdb->prepare("
 			SELECT
@@ -339,8 +355,7 @@ class WC_Trackship_Admin {
 				$start_date, $end_date, $start_date, $end_date, $start_date, $end_date
 		), ARRAY_A);
 
-		// print_r($wpdb->last_query);
-		wp_send_json($result);
+		return $result;
 	}
 
 	public function get_settings_html( $arrays ) {

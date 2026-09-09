@@ -72,40 +72,79 @@ class WC_Trackship_Logs {
 			wp_send_json_error( array( 'message' => 'You are not allowed' ) );
 		}
 		check_ajax_referer( '_trackship_logs', 'ajax_nonce' );
-		
+
+		$args = array(
+			'start' => absint( $_POST['start'] ?? 0 ),
+			'length' => absint( $_POST['length'] ?? 25 ),
+			'search' => sanitize_text_field( $_POST['search_bar'] ?? '' ),
+			'shipment_status' => sanitize_text_field( $_POST['shipment_status'] ?? '' ),
+			'type' => sanitize_text_field( $_POST['log_type'] ?? '' ),
+		);
+
+		$query = $this->query_notifications( $args );
+
+		$obj_result = new \stdclass();
+		$obj_result->draw = isset( $_POST['draw'] ) ? intval( wc_clean( $_POST['draw'] ) ) : '';
+		$obj_result->recordsTotal = intval( $query['total'] );
+		$obj_result->recordsFiltered = intval( $query['total'] );
+		$obj_result->data = $query['items'];
+		$obj_result->is_success = true;
+		echo json_encode( $obj_result );
+		exit;
+	}
+
+	/**
+	* Query notification (email/SMS) logs with normalized filters.
+	* Shared by the admin AJAX handler and the MCP layer.
+	*
+	* @param array $args {
+	* @type int $start Offset (default 0).
+	* @type int $length Page size (default 25).
+	* @type string $search Free-text search (order id/number, recipient, tracking).
+	* @type string $shipment_status Exact shipment status slug filter.
+	* @type string $type 'Email' | 'SMS' log type filter.
+	* }
+	* @return array [ 'items' => stdClass[], 'total' => int ]
+	*/
+	public function query_notifications( array $args ) {
+
 		global $wpdb;
-		// Sanitize and validate input
-		$p_start = absint( $_POST['start'] ?? 0 );
-		$p_length = absint( $_POST['length'] ?? 25 );
+
+		$args = wp_parse_args( $args, array(
+			'start' => 0,
+			'length' => 25,
+			'search' => '',
+			'shipment_status' => '',
+			'type' => '',
+		) );
+
+		$p_start = absint( $args['start'] );
+		$p_length = absint( $args['length'] );
 		$limit = "LIMIT {$p_start}, {$p_length}";
-		
-		$search_bar = sanitize_text_field( $_POST['search_bar'] ?? '');
-		$shipment_status = sanitize_text_field( $_POST['shipment_status'] ?? '');
-		$log_type = sanitize_text_field( $_POST['log_type'] ?? '');
 
 		$where = [];
 		$params = [];
 
 		// Search bar filtering with placeholders
-		if ( $search_bar ) {
-			$like_search = '%' . $wpdb->esc_like( $search_bar ) . '%';
+		if ( $args['search'] ) {
+			$like_search = '%' . $wpdb->esc_like( $args['search'] ) . '%';
 			$where[] = "(order_id = %s OR order_number = %s OR `to` LIKE %s OR tracking_number = %s)";
-			$params = array_merge( $params, [ $search_bar, $search_bar, $like_search, $search_bar ] );
+			$params = array_merge( $params, [ $args['search'], $args['search'], $like_search, $args['search'] ] );
 		}
 
 		// Fixed log type or sms_type filtering
 		$where[] = "(type = 'Email' OR sms_type = 'shipment_status')";
 
 		// Filter by shipment_status
-		if ( $shipment_status ) {
+		if ( $args['shipment_status'] ) {
 			$where[] = "shipment_status = %s";
-			$params[] = $shipment_status;
+			$params[] = $args['shipment_status'];
 		}
 
 		// Filter by log type
-		if ( $log_type ) {
+		if ( $args['type'] ) {
 			$where[] = "type = %s";
-			$params[] = $log_type;
+			$params[] = $args['type'];
 		}
 
 		// Compile WHERE clause
@@ -121,23 +160,23 @@ class WC_Trackship_Logs {
 
 		// Data query
 		$data_sql = "
-			SELECT * 
+			SELECT *
 			FROM {$wpdb->prefix}zorem_email_sms_log
 			{$where_sql}
 			ORDER BY `date` DESC
 			{$limit}
 		";
 		$order_query = $wpdb->get_results( $data_sql );
-		
+
 		$result = array();
 		$i = 0;
 		$current_time = strtotime(current_time( 'Y-m-d H:i:s' ));
-		
+
 		foreach ( $order_query as $key => $value ) {
 
 			$notification_time = strtotime( $value->date );
 			$time_diff = $current_time - $notification_time;
-			
+
 			if ( in_array( $value->status_msg, array( 'Settings disabled' ) ) ) {
 				$msg = 'Settings disabled';
 			} elseif ( $value->status ) {
@@ -155,18 +194,14 @@ class WC_Trackship_Logs {
 			$result[$i]->to = $value->to;
 			$result[$i]->type = 'Email' == $value->type ? 'Email' : 'SMS';
 			$result[$i]->status = $msg;
-			
+
 			$i++;
 		}
 
-		$obj_result = new \stdclass();
-		$obj_result->draw = isset($_POST['draw']) ? intval( wc_clean($_POST['draw']) ) : '';
-		$obj_result->recordsTotal = intval( $sum );
-		$obj_result->recordsFiltered = intval( $sum );
-		$obj_result->data = $result;
-		$obj_result->is_success = true;
-		echo json_encode($obj_result);
-		exit;
+		return array(
+			'items' => $result,
+			'total' => intval( $sum ),
+		);
 	}
 
 	public function log_details_popup() {
