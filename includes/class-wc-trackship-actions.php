@@ -1266,6 +1266,7 @@ class WC_Trackship_Actions {
 			$args = array(
 				'pending_status' => 'pending_trackship',
 				'fulfillment_id' => $tracking_item['fulfillment_id'] ?? '',
+				'shipping_provider'	=> $tracking_provider,
 			);
 			trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_item['tracking_number'], $args );
 		}
