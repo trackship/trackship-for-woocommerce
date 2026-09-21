@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: TrackShip for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-03-28 04:53+0000\n"
-"PO-Revision-Date: 2026-07-10 05:04+0000\n"
+"PO-Revision-Date: 2026-09-21 11:22+0000\n"
 "Last-Translator: \n"
 "Language-Team: Croatian\n"
 "Language: hr\n"
@@ -16,9 +16,117 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.8.3; wp-6.9.4; php-8.3.30\n"
 
+#: includes/mcp/class-trackship-mcp-selftest.php:994
+msgid " and "
+msgstr "i"
+
+#. 1: security plugin name, 2: HTTP status.
+#: includes/mcp/class-trackship-mcp-selftest.php:788
+#, php-format
+msgid "%1$s refused this request (%2$d) before it reached the plugin."
+msgstr "%1$s je odbio ovaj zahtjev (%2$d) prije nego što je stigao do dodatka."
+
+#. %s: the CDN's name, e.g. Cloudflare.
+#: includes/mcp/class-trackship-mcp-selftest.php:463
+#, php-format
+msgid ""
+"%1$s turned it away before it reached your site, so nothing here can undo it."
+" In %1$s, look under Security for bot protection — Bot Fight Mode is the "
+"usual one — and turn that off, or add a rule that skips it for this address."
+msgstr ""
+"%1$s ga je odbacio prije nego što je stigao na vašu stranicu, tako da ništa "
+"ovdje ne može poništiti. U %1$s, pogledajte pod Sigurnost za zaštitu od "
+"botova - Način borbe protiv botova je uobičajeni način - i isključite ga ili "
+"dodajte pravilo koje ga preskače za ovu adresu."
+
+#. %d: how many connections were turned off.
+#: includes/mcp/class-trackship-mcp-keys.php:239
+msgid ""
+"%d connection turned off. It will ask to sign in again next time it is used."
+msgid_plural ""
+"%d connections turned off. Each will ask to sign in again next time it is "
+"used."
+msgstr[0] ""
+"%d veza je isključena. Sljedeći put kada se koristi, tražit će se ponovna "
+"prijava."
+msgstr[1] ""
+"%d veza isključeno. Svaka će tražiti ponovnu prijavu sljedeći put kada se "
+"koristi."
+msgstr[2] ""
+
+#. %s: how long ago, e.g. "2 hours".
+#. %s: a length of time, e.g. "2 hours".
+#: includes/mcp/ui-helpers.php:634 includes/mcp/ui-helpers.php:711
+#: includes/mcp/ui-helpers.php:1303
+#, php-format
+msgid "%s ago"
+msgstr "prije %s"
+
+#. %s: security plugin name.
+#: includes/mcp/class-trackship-mcp-selftest.php:489
+#, php-format
+msgid ""
+"%s sent the refusal: open it and take the Python and Perl entries out of its "
+"bad-bot or user agent list."
+msgstr ""
+"%s je poslao odbijanje: otvorite ga i uklonite unose za Python i Perl s "
+"popisa loših botova ili korisničkih agenata."
+
+#. 1: last characters of the key, 2: how long ago it was entered.
+#: includes/mcp/ui-helpers.php:596
+#, php-format
+msgid ""
+"A key ending %1$s was entered here %2$s ago, and your setup steps are below. "
+"Enter another to replace it."
+msgstr ""
+"Ključ koji završava na %1$s unesen je ovdje prije %2$s, a vaši koraci za "
+"postavljanje navedeni su u nastavku. Unesite drugi da biste ga zamijenili."
+
 #: includes/views/dashboard.php:271
 msgid "A live snapshot of your shipments across the selected period."
 msgstr "Živi snimak vaših pošiljki u odabranom razdoblju."
+
+#: includes/mcp/class-trackship-abilities.php:410
+msgid "A maximum of 50 orders can be resynced per call."
+msgstr "Maksimalno 50 narudžbi može se ponovno sinkronizirati po pozivu."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:483
+msgid ""
+"A plain file on this site is served to that same caller without complaint, "
+"so the refusal is coming from inside WordPress — a security plugin, not your "
+"host and not .htaccess. Turn your security plugins off one at a time and "
+"test again; the one that lets it through is the one with the list."
+msgstr ""
+"Obična datoteka na ovoj stranici poslužuje se istom pozivatelju bez "
+"prigovora, tako da odbijanje dolazi iz WordPressa - sigurnosnog dodatka, a "
+"ne vašeg hosta i ne .htaccess datoteke. Isključite sigurnosne dodatke jedan "
+"po jedan i ponovno testirajte; onaj koji je propušta je onaj s popisa."
+
+#: includes/mcp/ui-helpers.php:945
+msgid ""
+"A WooCommerce key opens the whole store — orders, products, customers — "
+"because the key belongs to WooCommerce and cannot be narrowed. Your own link "
+"reaches only what this plugin adds."
+msgstr ""
+"WooCommerce ključ otvara cijelu trgovinu - narudžbe, proizvode, kupce - jer "
+"ključ pripada WooCommerceu i ne može se suziti. Vaša vlastita poveznica "
+"doseže samo ono što ovaj dodatak dodaje."
+
+#: includes/views/ai-assistant.php:49
+msgid ""
+"A WooCommerce key opens the whole store — orders, products, customers — not "
+"just tracking. Your link above reaches TrackShip and nothing else."
+msgstr ""
+"WooCommerce ključ otvara cijelu trgovinu - narudžbe, proizvode, kupce - ne "
+"samo praćenje. Vaša gornja poveznica vodi do TrackShipa i ničega drugog."
+
+#: includes/mcp/ui-helpers.php:1115
+msgid "About this key"
+msgstr "O ovom ključu"
+
+#: includes/mcp/ui-helpers.php:785
+msgid "Access"
+msgstr "Pristup"
 
 #: includes/smswoo/class-smswoo-admin.php:369
 msgid "Access Token"
@@ -32,14 +140,20 @@ msgstr "Nadzorna ploča računa"
 msgid "Account SID"
 msgstr "SID računa"
 
+#: includes/mcp/ui-helpers.php:673 includes/mcp/ui-helpers.php:783
+#: includes/mcp/ui-helpers.php:1277
+msgid "Acting as"
+msgstr "Djelujući kao"
+
 #: includes/views/dashboard.php:311
 msgid "Action Needed"
 msgstr "Potrebna akcija"
 
-#: includes/views/logs.php:56 includes/views/shipments.php:177
+#: includes/views/logs.php:56 includes/views/shipments.php:179
 msgid "Actions"
 msgstr "Radnje"
 
+#: includes/mcp/ui-helpers.php:717 includes/mcp/ui-helpers.php:1315
 #: includes/views/dashboard.php:159
 msgid "Active"
 msgstr "Aktivan"
@@ -52,9 +166,17 @@ msgstr "Aktivne kasne isporuke"
 msgid "Active Shipments"
 msgstr "Aktivne pošiljke"
 
+#: includes/views/shipments.php:196
+msgid "Add a note for this shipment"
+msgstr "Dodajte napomenu za ovu pošiljku"
+
 #: includes/views/map-providers.php:67
 msgid "Add mapping"
 msgstr "Dodaj mapiranje"
+
+#: includes/shipments/class-wc-trackship-shipments.php:111
+msgid "Add note"
+msgstr "Dodaj bilješku"
 
 #: includes/smswoo/class-smswoo-admin.php:523
 msgid "Add template id for this SMS"
@@ -76,6 +198,44 @@ msgstr ""
 msgid "Add the [trackship-track-order] shortcode in the selected page."
 msgstr "Dodajte kratki kod [trackship-track-order] na odabranu stranicu."
 
+#: includes/mcp/ui-helpers.php:259
+msgid "Add to Cursor"
+msgstr "Dodaj kursoru"
+
+#: includes/mcp/class-trackship-abilities.php:234
+msgid ""
+"Add, replace or clear the internal note on one shipment (shown in the "
+"Shipment notes column of the TrackShip Shipments page; never sent to the "
+"customer). Identify the shipment by \"shipment_id\", or by \"order_id\" plus "
+"\"tracking_number\" when the order has more than one shipment. \"note\" "
+"replaces the existing note; an empty string clears it. Max 1000 characters. "
+"To read notes use get-shipment or list-shipments, which return shipment_id "
+"and shipment_note. Confirm the wording with the user first."
+msgstr ""
+"Dodajte, zamijenite ili izbrišite internu napomenu na jednoj pošiljci "
+"(prikazano u stupcu Napomene o otpremi na stranici TrackShip pošiljke; "
+"nikada se ne šalje kupcu). Pošiljku identificirajte pomoću \"shipment_id\" "
+"ili pomoću \"order_id\" plus \"tracking_number\" kada narudžba ima više od "
+"jedne pošiljke. \"note\" zamjenjuje postojeću napomenu; prazan niz je briše. "
+"Najviše 1000 znakova. Za čitanje napomena upotrijebite get-shipment ili list-"
+"shipments, koji vraćaju shipment_id i shipment_note. Prvo potvrdite tekst s "
+"korisnikom."
+
+#: includes/mcp/class-trackship-abilities.php:206
+msgid ""
+"Add/update or remove shipping carrier mappings. \"set\" is a map of detected "
+"provider name => TrackShip provider slug (ts_slug); \"remove\" is a list of "
+"detected provider names to delete. Each ts_slug is validated against the "
+"known TrackShip provider list; unknown slugs are skipped. This changes store "
+"configuration — confirm with the user first."
+msgstr ""
+"Dodaj/ažuriraj ili ukloni mapiranja prijevoznika. \"set\" je mapa otkrivenog "
+"naziva pružatelja usluga => TrackShip provider slug (ts_slug); \"remove\" je "
+"popis otkrivenih naziva pružatelja usluga za brisanje. Svaki ts_slug se "
+"provjerava u odnosu na poznati popis TrackShip provider-a; nepoznati slug-"
+"ovi se preskaču. Ovo mijenja konfiguraciju trgovine - prvo potvrdite s "
+"korisnikom."
+
 #: includes/views/notifications.php:25 includes/views/notifications.php:95
 msgid "Admin Notifications"
 msgstr "Obavijesti administratora"
@@ -83,6 +243,29 @@ msgstr "Obavijesti administratora"
 #: includes/smswoo/class-smswoo-admin.php:384
 msgid "Admin Phone Number"
 msgstr "Telefonski broj administratora"
+
+#: includes/mcp/class-trackship-abilities.php:131
+msgid ""
+"Aggregate shipment metrics for a date range: total, active, delivered, "
+"tracking issues, average transit days and delivered rate."
+msgstr ""
+"Agregirani pokazatelji pošiljki za određeni datumski raspon: ukupno, aktivno,"
+" isporučeno, problemi s praćenjem, prosječni dani prijevoza i stopa isporuke."
+
+#: includes/mcp/screen.php:115 includes/mcp/screen.php:140
+#: includes/views/ai-assistant.php:21 includes/views/ai-assistant.php:32
+#: includes/views/content.php:33
+msgid "AI Assistant"
+msgstr "AI asistent"
+
+#: includes/mcp/class-trackship-mcp-keys.php:408
+msgid "AI assistant"
+msgstr "AI asistent"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:925
+msgid "All In One WP Security → Firewall → PHP rules → nG firewall rules"
+msgstr ""
+"Sve u jednom WP sigurnost → Vatrozid → PHP pravila → nG pravila vatrozida"
 
 #: includes/views/logs.php:23
 msgid "All Notifications"
@@ -92,7 +275,7 @@ msgstr "Sve obavijesti"
 msgid "All Shipments"
 msgstr "Sve pošiljke"
 
-#: includes/views/shipments.php:109
+#: includes/views/shipments.php:110
 msgid "All shipping providers"
 msgstr "Svi pružatelji usluga dostave"
 
@@ -105,13 +288,30 @@ msgstr "Sve vrijeme"
 msgid "All Types"
 msgstr "Svi tipovi"
 
-#: includes/class-wc-trackship-admin.php:418
+#: includes/mcp/screen.php:144 includes/views/ai-assistant.php:37
+msgid "Allow the AI to make changes"
+msgstr "Dopustite umjetnoj inteligenciji da napravi promjene"
+
+#: includes/class-wc-trackship-admin.php:433
 msgid ""
 "Allow users to opt-out of receiving Shipment status notifications on the "
 "Tracking page and Shipment status emails."
 msgstr ""
 "Omogućuje korisnicima da isključe primanje obavijesti o statusu pošiljke na "
 "stranici za praćenje i e-poruke o statusu pošiljke."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:454
+msgid "Allowing the URL will not help."
+msgstr "Dopuštanje URL-a neće pomoći."
+
+#: includes/mcp/ui-helpers.php:783
+msgid "an account that no longer exists"
+msgstr "račun koji više ne postoji"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:570
+#: includes/mcp/class-trackship-mcp-selftest.php:725
+msgid "an AI client"
+msgstr "klijent umjetne inteligencije"
 
 #: includes/smswoo/services/class-smswoo-msg91.php:157
 #: includes/smswoo/services/class-smswoo-twilio.php:110
@@ -136,9 +336,21 @@ msgstr ""
 "Došlo je do pogreške: Clicksend nije podržan za provjeru telefonskog broja "
 "prilikom naplate, obratite se podršci"
 
+#: includes/mcp/class-trackship-mcp-woo-key.php:515
+msgid "an unnamed app"
+msgstr "neimenovana aplikacija"
+
 #: includes/class-wc-trackship-admin.php:218 includes/views/header2.php:50
 msgid "Analytics"
 msgstr "Analitika"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:683
+msgid ""
+"Anyone whose assistant has connected to this store before can still "
+"reconnect: the step that gets refused only happens the first time."
+msgstr ""
+"Svatko čiji se asistent već povezao s ovom trgovinom i dalje se može ponovno "
+"povezati: korak koji je odbijen događa se samo prvi put."
 
 #: includes/smswoo/class-smswoo-admin.php:339
 #: includes/smswoo/class-smswoo-admin.php:361
@@ -153,19 +365,36 @@ msgstr "API ključ"
 msgid "API Username"
 msgstr "API korisničko ime"
 
-#: includes/views/shipments.php:124
+#: includes/mcp/ui-helpers.php:674 includes/mcp/ui-helpers.php:1278
+#: includes/mcp/ui-helpers.php:1452
+msgid "App"
+msgstr "Aplikacija"
+
+#: includes/views/shipments.php:125
 msgid "Apply"
 msgstr "primijeniti"
+
+#: includes/views/ai-assistant.php:42
+msgid "Ask Claude: which shipments are late?"
+msgstr "Pitajte Claudea: koje pošiljke kasne?"
+
+#: includes/mcp/screen.php:160 includes/mcp/screen.php:162
+msgid "Audit Log"
+msgstr "Zapisnik revizije"
 
 #: includes/smswoo/class-smswoo-admin.php:306
 msgid "Auth Token"
 msgstr "Auth Token"
 
+#: includes/mcp/class-trackship-mcp-server.php:214
+msgid "Authentication required."
+msgstr "Potrebna je autentifikacija."
+
 #: includes/views/trackship-integration.php:75
 msgid "Auto-Track Shipments"
 msgstr "Automatsko praćenje pošiljaka"
 
-#: includes/class-wc-trackship-admin.php:401
+#: includes/class-wc-trackship-admin.php:416
 msgid "Auto-track these order statuses"
 msgstr "Automatsko praćenje ovih statusa narudžbi"
 
@@ -178,9 +407,9 @@ msgstr "Automatski pratite pošiljke kod 1.000+ dostavljača bez ručnog rada."
 msgid "Available Balance"
 msgstr "Dostupno Stanje"
 
-#: includes/class-wc-trackship-actions.php:624
-#: includes/class-wc-trackship-actions.php:675
-#: includes/class-wc-trackship-admin.php:1269
+#: includes/class-wc-trackship-actions.php:632
+#: includes/class-wc-trackship-actions.php:683
+#: includes/class-wc-trackship-admin.php:1284
 #: includes/class-wc-trackship-install.php:312
 #: includes/customizer/trackship-customizer.php:212
 #: includes/customizer/trackship-customizer.php:791
@@ -218,11 +447,23 @@ msgstr "Prosj. tranzit"
 msgid "Avg. Transit Time"
 msgstr "Prosječno tranzitno vrijeme"
 
+#: includes/mcp/class-trackship-mcp-selftest.php:924
+msgid "Block user-agents"
+msgstr "Blokiraj korisničke agente"
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:790
+msgid ""
+"Both halves of the key are needed. Copy them from WooCommerce before leaving "
+"that screen — the secret is shown once."
+msgstr ""
+"Potrebne su obje polovice ključa. Kopirajte ih iz WooCommercea prije nego "
+"što napustite taj zaslon — tajni kod se prikazuje jednom."
+
 #: includes/views/trackship-integration.php:82
 msgid "Branded Notifications"
 msgstr "Brendirane obavijesti"
 
-#: includes/views/shipments.php:121
+#: includes/views/shipments.php:122
 msgid "Bulk actions"
 msgstr "Skupne akcije"
 
@@ -244,9 +485,37 @@ msgstr "Radijus gumba"
 msgid "Button text"
 msgstr "Tekst gumba"
 
-#: includes/class-wc-trackship-actions.php:628
+#. %s: how long ago.
+#: includes/mcp/class-trackship-mcp-selftest.php:697
+#, php-format
+msgid ""
+"Callers are reaching your link but none has been let in. The last was %s ago."
+msgstr ""
+"Pozivatelji dolaze na vašu vezu, ali nitko nije pušten unutra. Posljednji je "
+"bio prije %s."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:926
+#: includes/views/shipments.php:199
+msgid "Cancel"
+msgstr "Otkazati"
+
+#: includes/class-wc-trackship-actions.php:636
 msgid "Cancelled"
 msgstr "Otkazano"
+
+#: includes/mcp/ui-helpers.php:194
+msgid "Cannot send an API key header either. Use your own link for ChatGPT."
+msgstr ""
+"Nije moguće poslati ni zaglavlje API ključa. Upotrijebite vlastitu vezu za "
+"ChatGPT."
+
+#: includes/mcp/ui-helpers.php:188
+msgid ""
+"Cannot send an API key header. Use your own link for claude.ai and for "
+"phones."
+msgstr ""
+"Nije moguće poslati zaglavlje API ključa. Koristite vlastitu vezu za claude."
+"ai i za telefone."
 
 #: includes/views/dashboard.php:459
 msgid "Carrier"
@@ -260,8 +529,8 @@ msgstr "Mapiranjem dostavljača upravlja AST PRO"
 msgid "Carrier Performance"
 msgstr "Učinak prijevoznika"
 
-#: includes/class-wc-trackship-actions.php:629
-#: includes/class-wc-trackship-actions.php:708 includes/views/shipments.php:40
+#: includes/class-wc-trackship-actions.php:637
+#: includes/class-wc-trackship-actions.php:716 includes/views/shipments.php:40
 msgid "Carrier Unsupported"
 msgstr "Prijenosnik nije podržan"
 
@@ -269,44 +538,129 @@ msgstr "Prijenosnik nije podržan"
 msgid "Carriers & Destinations"
 msgstr "Prijevoznici i odredišta"
 
-#: includes/class-wc-trackship-admin.php:719
+#: includes/class-wc-trackship-admin.php:734
 msgid "Change order status to"
 msgstr "Promijeni status narudžbe u"
 
-#: includes/class-wc-trackship-admin.php:715
+#: includes/class-wc-trackship-admin.php:730
 msgid "Change status: "
 msgstr "Promjena statusa: "
+
+#: includes/mcp/ui-helpers.php:1451
+msgid "Channel"
+msgstr "Kanal"
+
+#: includes/mcp/ui-helpers.php:193 includes/mcp/ui-helpers.php:228
+msgid "ChatGPT"
+msgstr "ChatGPT"
+
+#: includes/mcp/ui-helpers.php:1630
+msgid ""
+"Checks whether an AI assistant can actually reach your link, and says what "
+"stopped it if not."
+msgstr ""
+"Provjerava može li AI asistent doista doći do vaše veze i ako ne može, kaže "
+"što ju je zaustavilo."
+
+#: includes/mcp/ui-helpers.php:1587 includes/views/ai-assistant.php:41
+msgid "Choose Add custom connector, give it any name, and paste your link."
+msgstr ""
+"Odaberite Dodaj prilagođeni konektor, dajte mu bilo koji naziv i zalijepite "
+"vezu."
 
 #: includes/customizer/trackship-customizer.php:621
 msgid "Classic"
 msgstr "klasična"
 
-#: includes/class-wc-trackship-admin.php:933
+#: includes/mcp/ui-helpers.php:211 includes/mcp/ui-helpers.php:234
+msgid "Claude Desktop"
+msgstr "Claude Desktop"
+
+#: includes/mcp/ui-helpers.php:187 includes/mcp/ui-helpers.php:222
+msgid "claude.ai"
+msgstr "claude.ai"
+
+#: includes/class-wc-trackship-admin.php:948
 #: includes/views/trackship-integration.php:37
 msgid "Close"
 msgstr "Zatvoriti"
 
-#: trackship-for-woocommerce.php:309
+#: includes/mcp/screen.php:674
+msgid "Close menu"
+msgstr "Zatvori izbornik"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:846
+msgid "Close this tab and go back to the app."
+msgstr "Zatvorite ovu karticu i vratite se u aplikaciju."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:927
+msgid "Connect"
+msgstr "Poveži se"
+
+#. 1: the AI app's name, 2: the store's name.
+#: includes/mcp/class-trackship-mcp-oauth.php:898
+#, php-format
+msgid "Connect %1$s to %2$s"
+msgstr "Poveži %1$s s %2$s"
+
+#: trackship-for-woocommerce.php:333
 msgid "Connect a Store"
 msgstr "Povežite trgovinu"
+
+#: includes/views/ai-assistant.php:34
+msgid "Connect Claude to your shipments"
+msgstr "Povežite Claudea sa svojim pošiljkama"
+
+#: includes/mcp/screen.php:138
+msgid "Connect Claude to your store"
+msgstr "Povežite Claudea sa svojom trgovinom"
 
 #: includes/views/trackship-integration.php:23
 msgid "Connect Store"
 msgstr "Poveži trgovinu"
 
+#: includes/mcp/class-trackship-mcp-oauth.php:828
+#: includes/mcp/class-trackship-mcp-oauth.php:888
+msgid "Connect your AI assistant"
+msgstr "Povežite svog AI asistenta"
+
 #: includes/views/trackship-integration.php:21
 msgid ""
 "Connect your store to TrackShip to auto-track shipments, automate order "
 "workflows, and give customers a superior post-purchase experience."
-msgstr "Povežite svoju trgovinu s TrackShipom za automatsko praćenje pošiljaka, automatizaciju tijekova narudžbi i vrhunsko iskustvo kupaca nakon kupnje."
+msgstr ""
+"Povežite svoju trgovinu s TrackShipom za automatsko praćenje pošiljaka, "
+"automatizaciju tijekova narudžbi i vrhunsko iskustvo kupaca nakon kupnje."
+
+#: includes/mcp/ui-helpers.php:675 includes/mcp/ui-helpers.php:1279
+msgid "Connected"
+msgstr "Povezano"
+
+#. %s: how long ago this app last ran a tool, e.g. "5 mins".
+#: includes/mcp/ui-helpers.php:379
+#, php-format
+msgid "Connected and working — last used %s ago."
+msgstr "Povezano i radi — zadnji put korišteno prije %s."
 
 #: includes/views/dashboard.php:256
 msgid "Connected with TrackShip account"
 msgstr "Povezano s TrackShip računom"
 
-#: includes/class-wc-trackship-actions.php:720
+#: includes/class-wc-trackship-actions.php:728
 msgid "Connection Issue"
 msgstr "Problem s vezom"
+
+#: includes/mcp/ui-helpers.php:996
+msgid "Connection key"
+msgstr "Ključ za povezivanje"
+
+#: includes/mcp/ui-helpers.php:1030
+msgid "Consumer key"
+msgstr "Ključ potrošača"
+
+#: includes/mcp/ui-helpers.php:1031
+msgid "Consumer secret"
+msgstr "Potrošačka tajna"
 
 #: includes/customizer/trackship-customizer.php:858
 msgid "Content Display"
@@ -316,16 +670,51 @@ msgstr "Prikaz sadržaja"
 msgid "Content Type & Text"
 msgstr "Vrsta sadržaja i tekst"
 
+#: includes/mcp/ui-helpers.php:442 includes/mcp/ui-helpers.php:451
+#: includes/mcp/ui-helpers.php:1610
+msgid "Copied"
+msgstr "Kopirano"
+
+#: includes/mcp/ui-helpers.php:1612
+msgid "Copy"
+msgstr "Kopirati"
+
+#: includes/mcp/ui-helpers.php:214
+msgid "Copy config"
+msgstr "Kopiraj konfiguraciju"
+
+#: includes/mcp/ui-helpers.php:443 includes/mcp/ui-helpers.php:452
+#: includes/mcp/ui-helpers.php:1611
+msgid "Copy failed — press Ctrl+C"
+msgstr "Kopiranje nije uspjelo — pritisnite Ctrl+C"
+
 #: includes/class-wc-trackship-front.php:601
 #: includes/views/front/tracking_page_header.php:52
 msgid "Copy Tracking page link"
 msgstr "Kopiraj vezu stranice za praćenje"
 
+#: includes/mcp/ui-helpers.php:453
+msgid "Copy URL"
+msgstr "Kopiraj URL"
+
+#: includes/shipments/class-wc-trackship-shipments.php:115
+#: includes/shipments/class-wc-trackship-shipments.php:517
+msgid "Could not save the shipment note."
+msgstr "Nije moguće spremiti otpremnicu."
+
+#: includes/mcp/ui-helpers.php:1024
+msgid "Create a key in WooCommerce"
+msgstr "Izradite ključ u WooCommerceu"
+
 #: includes/views/dashboard.php:249
 msgid "Current Plan"
 msgstr "Trenutni plan"
 
-#: includes/views/shipments.php:173
+#: includes/mcp/ui-helpers.php:256
+msgid "Cursor"
+msgstr "Kursor"
+
+#: includes/views/shipments.php:175
 msgid "Customer"
 msgstr "Kupac"
 
@@ -341,10 +730,18 @@ msgstr "Prilagodite Widget za praćenje"
 msgid "Dashboard"
 msgstr "Nadzorna ploča"
 
-#: includes/shipments/class-wc-trackship-shipments.php:109
+#: includes/shipments/class-wc-trackship-shipments.php:110
 #: includes/views/dashboard.php:290 includes/views/dashboard.php:469
 msgid "days"
 msgstr "dana"
+
+#: includes/mcp/screen.php:166
+msgid "Days of history to keep. Default is 30."
+msgstr "Broj dana povijesti za čuvanje. Zadano je 30."
+
+#: includes/mcp/ui-helpers.php:555 includes/mcp/ui-helpers.php:899
+msgid "Delete"
+msgstr "Izbrisati"
 
 #: includes/views/tools.php:18
 msgid "Delete notifications logs"
@@ -354,16 +751,41 @@ msgstr "Brisanje zapisa obavijesti"
 msgid "Delete notifications logs more than 30 days"
 msgstr "Izbrišite zapise obavijesti više od 30 dana"
 
-#: includes/class-wc-trackship-actions.php:714
+#: includes/mcp/ui-helpers.php:740
+msgid "Delete this key"
+msgstr "Izbriši ovaj ključ"
+
+#: includes/mcp/ui-helpers.php:738
+msgid ""
+"Delete this key in WooCommerce? Every app using it stops working immediately,"
+" and a new key has to be made before anything can connect again. If you gave "
+"this key to something other than an AI assistant, that stops too. This "
+"cannot be undone."
+msgstr ""
+"Izbrisati ovaj ključ u WooCommerceu? Svaka aplikacija koja ga koristi odmah "
+"prestaje raditi i mora se napraviti novi ključ prije nego što se išta "
+"ponovno može povezati. Ako ste ovaj ključ dali nečemu drugom osim AI "
+"asistentu, i to prestaje raditi. Ovo se ne može poništiti."
+
+#: includes/class-wc-trackship-actions.php:722
 msgid "Deleted"
 msgstr "Izbrisano"
 
-#: includes/class-wc-trackship-actions.php:626
-#: includes/class-wc-trackship-actions.php:669
-#: includes/class-wc-trackship-admin.php:637
-#: includes/class-wc-trackship-admin.php:655
-#: includes/class-wc-trackship-admin.php:707
-#: includes/class-wc-trackship-admin.php:1305
+#. %d: the WordPress user id of a deleted account.
+#: includes/mcp/ui-helpers.php:1296
+msgid "Deleted account #%d"
+msgstr "Izbrisani račun #%d"
+
+#: includes/mcp/ui-helpers.php:739
+msgid "Deleting…"
+msgstr "Brisanje…"
+
+#: includes/class-wc-trackship-actions.php:634
+#: includes/class-wc-trackship-actions.php:677
+#: includes/class-wc-trackship-admin.php:652
+#: includes/class-wc-trackship-admin.php:670
+#: includes/class-wc-trackship-admin.php:722
+#: includes/class-wc-trackship-admin.php:1320
 #: includes/class-wc-trackship-install.php:318
 #: includes/customizer/trackship-customizer.php:218
 #: includes/customizer/trackship-customizer.php:797
@@ -373,7 +795,7 @@ msgid "Delivered"
 msgstr "Isporučeno"
 
 #. %s: search number of order
-#: includes/class-wc-trackship-admin.php:643
+#: includes/class-wc-trackship-admin.php:658
 #, php-format
 msgid "Delivered <span class=\"count\">(%s)</span>"
 msgid_plural "Delivered <span class=\"count\">(%s)</span>"
@@ -394,13 +816,13 @@ msgstr "Stopa dostave"
 msgid "Delivery Date"
 msgstr "Datum dostave"
 
-#: includes/views/shipments.php:175
+#: includes/views/shipments.php:177
 msgid "Delivery date"
 msgstr "Datum dostave"
 
-#: includes/class-wc-trackship-actions.php:627
-#: includes/class-wc-trackship-actions.php:684
-#: includes/class-wc-trackship-admin.php:1281
+#: includes/class-wc-trackship-actions.php:635
+#: includes/class-wc-trackship-actions.php:692
+#: includes/class-wc-trackship-admin.php:1296
 #: includes/class-wc-trackship-install.php:314
 #: includes/customizer/trackship-customizer.php:214
 #: includes/customizer/trackship-customizer.php:793
@@ -408,7 +830,7 @@ msgstr "Datum dostave"
 msgid "Delivery Failure"
 msgstr "Neuspješna isporuka"
 
-#: includes/views/shipments.php:176
+#: includes/views/shipments.php:178
 msgid "Delivery number"
 msgstr "Broj za dostavu"
 
@@ -455,17 +877,20 @@ msgid "Display Shipping provider logo"
 msgstr "Prikaz logotipa dostavljača"
 
 #: includes/customizer/trackship-customizer.php:696
-#: includes/customizer/trackship-customizer.php:934
 msgid "Display TrackShip branding"
 msgstr "Prikaz robne marke TrackShip"
 
-#: trackship-for-woocommerce.php:312 includes/views/header2.php:85
+#: trackship-for-woocommerce.php:336 includes/views/header2.php:85
 msgid "Docs"
 msgstr "dokumenti"
 
 #: includes/views/integrations.php:20
 msgid "Documentation"
 msgstr "Dokumentacija"
+
+#: includes/shipments/class-wc-trackship-shipments.php:112
+msgid "Edit note"
+msgstr "Uredi bilješku"
 
 #: templates/tracking/tracking-form.php:111
 msgid "Email address"
@@ -504,13 +929,13 @@ msgstr "Vrsta e-pošte"
 msgid "Emails"
 msgstr "E-pošta"
 
-#: includes/customizer/trackship-customizer.php:1144
+#: includes/customizer/trackship-customizer.php:1131
 #, php-format
 #| msgid "Enable  %1$s email"
 msgid "Enable %1$s email"
 msgstr "Omogući %1$s e-poštu"
 
-#: includes/class-wc-trackship-admin.php:425
+#: includes/class-wc-trackship-admin.php:440
 msgid ""
 "Enable a Custom Order Status Delivered that will be set automatically when "
 "all the order shipments are delivered"
@@ -518,7 +943,7 @@ msgstr ""
 "Omogućite prilagođeni status narudžbe Isporučeno koji će se automatski "
 "postaviti kada sve pošiljke narudžbe budu isporučene"
 
-#: includes/class-wc-trackship-admin.php:409
+#: includes/class-wc-trackship-admin.php:424
 msgid "Enable a shipment status filter on orders admin"
 msgstr "Omogućite filtar statusa pošiljke u administratoru narudžbi"
 
@@ -530,24 +955,32 @@ msgstr "Omogući e-poštu"
 msgid "Enable Fulfillments"
 msgstr "Omogući ispunjenja"
 
-#: includes/class-wc-trackship-admin.php:422
+#: includes/class-wc-trackship-admin.php:437
 msgid "Enable Order Delivery Automation"
 msgstr "Omogućite automatizaciju isporuke narudžbi"
 
-#: includes/class-wc-trackship-admin.php:432
+#: includes/class-wc-trackship-admin.php:447
 msgid "Enable shipment status notification for order created by Amazon"
 msgstr ""
 "Omogućite obavijest o statusu pošiljke za narudžbu koju je izradio Amazon"
+
+#: includes/mcp/screen.php:142
+msgid "Enable the connection"
+msgstr "Omogući vezu"
+
+#: includes/views/ai-assistant.php:36
+msgid "Enable the TrackShip connection"
+msgstr "Omogućite TrackShip vezu"
 
 #: includes/customizer/trackship-customizer.php:659
 msgid "Enable tracking # link to carrier"
 msgstr "Omogući praćenje # veze do operatera"
 
-#: includes/class-wc-trackship-admin.php:1231
+#: includes/class-wc-trackship-admin.php:1246
 msgid "Enable Tracking Page"
 msgstr "Omogući stranicu za praćenje"
 
-#: includes/class-wc-trackship-admin.php:415
+#: includes/class-wc-trackship-admin.php:430
 msgid "Enable unsubscribe (opt-out) from Shipment status notifications"
 msgstr "Omogućite odjavu (isključivanje) od obavijesti o statusu pošiljke"
 
@@ -555,6 +988,23 @@ msgstr "Omogućite odjavu (isključivanje) od obavijesti o statusu pošiljke"
 #: includes/smswoo/class-smswoo-admin.php:386
 msgid "Enter admin phone number with country code."
 msgstr "Unesite telefonski broj administratora s pozivnim brojem zemlje."
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:627
+msgid "Enter your WooCommerce key above to see what this route offers."
+msgstr ""
+"Unesite svoj WooCommerce ključ iznad kako biste vidjeli što ova ruta nudi."
+
+#: includes/mcp/screen.php:165
+msgid ""
+"Entries older than this are deleted automatically once a day. Set 0 to keep "
+"everything."
+msgstr ""
+"Unosi stariji od ovog se automatski brišu jednom dnevno. Postavite 0 da "
+"biste sve sačuvali."
+
+#: includes/mcp/ui-helpers.php:1455
+msgid "Error"
+msgstr "Pogreška"
 
 #: includes/class-wc-trackship-front.php:664
 #: templates/emails/tracking-info.php:50
@@ -564,9 +1014,46 @@ msgstr "Unesite telefonski broj administratora s pozivnim brojem zemlje."
 msgid "Est. Delivery Date"
 msgstr "procjena Datum dostave"
 
-#: includes/class-wc-trackship-actions.php:631
-#: includes/class-wc-trackship-actions.php:681
-#: includes/class-wc-trackship-admin.php:1293
+#: includes/mcp/screen.php:163
+msgid "Every action taken by an AI assistant, with the result and any error."
+msgstr ""
+"Svaka radnja koju poduzme AI asistent, s rezultatom i svakom pogreškom."
+
+#: includes/mcp/ui-helpers.php:949
+msgid ""
+"Every app connected with this key. They all act as the same account, because "
+"that is all a WooCommerce key can be."
+msgstr ""
+"Svaka aplikacija povezana s ovim ključem. Svi djeluju kao isti račun, jer to "
+"je sve što WooCommerce ključ može biti."
+
+#: includes/mcp/screen.php:152
+msgid ""
+"Everyone who has connected an AI assistant to your link. Turn any one of "
+"them off without affecting the rest."
+msgstr ""
+"Svi koji su povezali AI asistenta s vašom vezom. Isključite bilo kojeg od "
+"njih bez utjecaja na ostale."
+
+#: includes/mcp/ui-helpers.php:948
+msgid ""
+"Everyone who uses this key is this one account — the route has no way to "
+"tell them apart. Your own link above does, and can turn one person off."
+msgstr ""
+"Svi koji koriste ovaj ključ su ovaj jedan račun - ruta ih ne može "
+"razlikovati. Vaša gornja poveznica to čini i može odbiti jednu osobu."
+
+#: includes/mcp/ui-helpers.php:946
+msgid ""
+"Everything an assistant can reach through WooCommerce MCP — WooCommerce's "
+"own tools, plus the ones this plugin adds."
+msgstr ""
+"Sve što asistent može dosegnuti putem WooCommerce MCP-a — WooCommerceovi "
+"vlastiti alati, plus oni koje ovaj dodatak dodaje."
+
+#: includes/class-wc-trackship-actions.php:639
+#: includes/class-wc-trackship-actions.php:689
+#: includes/class-wc-trackship-admin.php:1308
 #: includes/class-wc-trackship-install.php:316
 #: includes/customizer/trackship-customizer.php:216
 #: includes/customizer/trackship-customizer.php:795
@@ -583,27 +1070,80 @@ msgstr "Iznimna pošiljka"
 msgid "Exception Shipments"
 msgstr "Iznimne pošiljke"
 
-#: includes/class-wc-trackship-admin.php:793
+#: includes/class-wc-trackship-admin.php:808
 msgid "Exception Shipments Notifications"
 msgstr "Obavijesti o iznimnim pošiljkama"
 
-#: includes/class-wc-trackship-actions.php:726 includes/views/shipments.php:33
+#: includes/class-wc-trackship-actions.php:734 includes/views/shipments.php:33
 msgid "Expired"
 msgstr "Istekao"
 
-#: includes/class-wc-trackship-actions.php:637
+#: includes/class-wc-trackship-actions.php:645
 msgid "Filter by shipment status"
 msgstr "Filtrirajte prema statusu pošiljke"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:503
+msgid ""
+"Find your bad-bot or user agent list, in a security plugin or at your host, "
+"and take the Python and Perl entries out of it."
+msgstr ""
+"Pronađite popis loših botova ili korisničkih agenata u sigurnosnom dodatku "
+"ili na hostingu i uklonite unose za Python i Perl iz njega."
+
+#: includes/mcp/ui-helpers.php:1646
+msgid "Fix this for me"
+msgstr "Popravi mi ovo"
+
+#: includes/mcp/class-trackship-mcp-htaccess.php:390
+msgid ""
+"Fixed, and checked: a caller that was being refused a moment ago now gets "
+"through. Try connecting your AI assistant again."
+msgstr ""
+"Ispravljeno i provjereno: pozivatelj koji je prije trenutak bio odbijen sada "
+"se javlja. Pokušajte ponovno spojiti svog AI asistenta."
+
+#: includes/mcp/ui-helpers.php:1644
+msgid "Fixing…"
+msgstr "Popravljanje…"
 
 #: includes/customizer/trackship-customizer.php:537
 msgid "Font color"
 msgstr "Boja fonta"
 
+#: includes/mcp/ui-helpers.php:1088
+msgid "Forget key"
+msgstr "Zaboravi ključ"
+
+#: includes/mcp/ui-helpers.php:1086
+msgid ""
+"Forget the stored key? The setup steps will be hidden until you paste it "
+"again. Nothing is deleted in WooCommerce."
+msgstr ""
+"Zaboravili ste pohranjeni ključ? Koraci postavljanja bit će skriveni dok ga "
+"ponovno ne zalijepite. Ništa se ne briše u WooCommerceu."
+
+#: includes/mcp/ui-helpers.php:1081
+msgid "Forget this key"
+msgstr "Zaboravi ovaj ključ"
+
+#. %s: how long ago.
+#: includes/mcp/class-trackship-mcp-selftest.php:584
+#, php-format
+msgid "Found it. Wordfence blocked a request to your link %s ago."
+msgstr "Pronađeno. Wordfence je blokirao zahtjev za vašu poveznicu prije %s."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:399
+msgid "Found it. Your server refuses callers by name."
+msgstr "Pronađeno. Vaš poslužitelj odbija pozivatelje po imenu."
+
 #: includes/views/setup.php:15
 msgid ""
 "Fulfillments let TrackShip read shipment data natively from WooCommerce and "
 "keep tracking in sync automatically — no extra configuration needed."
-msgstr "Fulfillments omogućuje TrackShipu čitanje podataka o pošiljkama izravno iz WooCommercea i automatsku sinkronizaciju praćenja — bez dodatne konfiguracije."
+msgstr ""
+"Fulfillments omogućuje TrackShipu čitanje podataka o pošiljkama izravno iz "
+"WooCommercea i automatsku sinkronizaciju praćenja — bez dodatne "
+"konfiguracije."
 
 #: includes/customizer/trackship-customizer.php:709
 msgid "General options"
@@ -613,28 +1153,72 @@ msgstr "Opće opcije"
 msgid "General Settings"
 msgstr "Opće postavke"
 
-#: includes/class-wc-trackship-actions.php:554
-#: includes/class-wc-trackship-actions.php:976
-#: includes/class-wc-trackship-admin.php:557 includes/views/tools.php:14
+#: includes/mcp/class-trackship-abilities.php:102
+msgid ""
+"Get a single shipment by WooCommerce order id, including full tracking event "
+"history. For a list of many shipments use list-shipments instead."
+msgstr ""
+"Dobijte pojedinačnu pošiljku prema WooCommerce ID-u narudžbe, uključujući "
+"potpunu povijest praćenja. Za popis više pošiljki koristite list-shipments."
+
+#: includes/mcp/class-trackship-abilities.php:130
+msgid "Get analytics summary"
+msgstr "Preuzmite sažetak analitike"
+
+#: includes/mcp/class-trackship-abilities.php:165
+msgid "Get carrier mappings"
+msgstr "Preuzmite mapiranja operatera"
+
+#: includes/mcp/class-trackship-abilities.php:101
+msgid "Get shipment"
+msgstr "Preuzmite pošiljku"
+
+#: includes/class-wc-trackship-actions.php:562
+#: includes/class-wc-trackship-actions.php:994
+#: includes/class-wc-trackship-admin.php:572 includes/views/tools.php:14
 msgid "Get Shipment Status"
 msgstr "Dobijte status pošiljke"
 
-#: includes/views/shipments.php:122
+#: includes/views/shipments.php:123
 msgid "Get shipment status"
 msgstr "Dobijte status pošiljke"
+
+#: includes/mcp/class-trackship-abilities.php:219
+msgid "Get shipment status (send tracking to TrackShip)"
+msgstr "Dobivanje statusa pošiljke (slanje praćenja na TrackShip)"
+
+#: includes/mcp/class-trackship-abilities.php:158
+msgid "Get shipment status email settings"
+msgstr "Postavke e-pošte za primanje statusa pošiljke"
 
 #: includes/views/trackship-integration.php:19
 msgid "Get started for Free"
 msgstr "Započnite besplatno"
 
-#: includes/views/notifications.php:36 includes/views/settings.php:69
+#: includes/mcp/screen.php:171 includes/views/notifications.php:36
+#: includes/views/settings.php:69
 msgid "Get Support"
 msgstr "Zatraži podršku"
+
+#: includes/mcp/class-trackship-abilities.php:151
+msgid "Get TrackShip settings"
+msgstr "Preuzmite postavke TrackShipa"
 
 #: includes/views/trackship-integration.php:90
 msgid ""
 "Give customers a branded tracking page to follow their shipment in real time."
-msgstr "Pružite kupcima brendiranu stranicu za praćenje pošiljke u stvarnom vremenu."
+msgstr ""
+"Pružite kupcima brendiranu stranicu za praćenje pošiljke u stvarnom vremenu."
+
+#: includes/mcp/screen.php:143
+msgid ""
+"Gives you one link an AI assistant can connect to, from claude.ai in a "
+"browser, a phone or a desktop app. Whoever adds it signs in with their own "
+"store account."
+msgstr ""
+"Daje vam jednu poveznicu na koju se AI asistent može povezati, s claude.ai u "
+"pregledniku, telefonu ili desktop aplikaciji. Tko god je doda, prijavljuje "
+"se sa svojim vlastitim računom u trgovini."
 
 #: includes/views/map-providers.php:84
 msgid "Go to AST PRO Shipping Providers"
@@ -643,6 +1227,31 @@ msgstr "Idi na AST PRO dostavljače"
 #: includes/smswoo/admin-html/settings_tab.php:30
 msgid "Go to SMS for WooCommerce Settings"
 msgstr "Idi na postavke SMS for WooCommerce"
+
+#. 1: security plugin name, 2: URL path to allow.
+#: includes/mcp/class-trackship-mcp-selftest.php:616
+#, php-format
+msgid ""
+"Have you connected an AI assistant yet? If not, nothing is wrong - connect "
+"it and test again. If you have, %1$s is the likely cause: open its blocked-"
+"request log, find the refusal, and allow what it names. The path is %2$s."
+msgstr ""
+"Jeste li već spojili AI asistenta? Ako niste, ništa nije u redu - spojite ga "
+"i ponovno testirajte. Ako jeste, vjerojatni uzrok je %1$s: otvorite njegov "
+"zapisnik blokiranih zahtjeva, pronađite odbijanje i dopustite ono što "
+"imenuje. Putanja je %2$s."
+
+#. %s: URL path to allow.
+#: includes/mcp/class-trackship-mcp-selftest.php:629
+#, php-format
+msgid ""
+"Have you connected an AI assistant yet? If not, nothing is wrong - connect "
+"it and test again. If you have, something in front of WordPress is stopping "
+"it: your host, your CDN, or a security rule. The path to allow is %s."
+msgstr ""
+"Jeste li već spojili AI asistenta? Ako niste, ništa nije u redu - spojite ga "
+"i ponovno testirajte. Ako jeste, nešto ispred WordPressa ga sprječava: vaš "
+"host, vaš CDN ili sigurnosno pravilo. Putanja za dopuštanje je %s."
 
 #: includes/class-wc-trackship-install.php:338
 #, php-format
@@ -693,7 +1302,15 @@ msgstr "Kako pronaći svoju %s vjerodajnicu"
 msgid "Icons"
 msgstr "Ikone"
 
-#: includes/class-wc-trackship-admin.php:444
+#: includes/mcp/class-trackship-mcp-oauth.php:860
+msgid ""
+"If the app still does not ask, remove the connection there and add it again "
+"— your link has not changed."
+msgstr ""
+"Ako aplikacija i dalje ne pita, uklonite vezu tamo i ponovno je dodajte - "
+"vaša se veza nije promijenila."
+
+#: includes/class-wc-trackship-admin.php:459
 msgid ""
 "If you disable it, TrackShip emails will use the WooCommerce default design "
 "instead of the Villa theme's customized email layout."
@@ -701,9 +1318,31 @@ msgstr ""
 "Ako ga onemogućite, TrackShip e-poruke će koristiti zadani WooCommerce "
 "dizajn umjesto prilagođenog izgleda e-pošte teme Villa."
 
-#: includes/class-wc-trackship-actions.php:623
-#: includes/class-wc-trackship-actions.php:660
-#: includes/class-wc-trackship-admin.php:1263
+#. %s: the caller's address.
+#: includes/mcp/class-trackship-mcp-selftest.php:702
+#, php-format
+msgid ""
+"If you have not finished connecting an AI assistant yet, this is what that "
+"looks like — press Connect in it and sign in. If you have, it is holding an "
+"older link: copy the link above into it again. The last caller was %s."
+msgstr ""
+"Ako još niste završili s povezivanjem AI asistenta, to izgleda ovako - "
+"pritisnite Poveži se u njemu i prijavite se. Ako jeste, sadrži stariju "
+"poveznicu: ponovno kopirajte gornju poveznicu u njega. Posljednji pozivatelj "
+"bio je %s."
+
+#: includes/mcp/ui-helpers.php:212
+msgid ""
+"In Claude Desktop: Settings > Developer > Edit Config. Paste this inside "
+"\"mcpServers\", save, and restart Claude Desktop."
+msgstr ""
+"U Claude Desktopu: Postavke > Razvojni programer > Uredi konfiguraciju. "
+"Zalijepite ovo unutar \"mcpServers\", spremite i ponovno pokrenite Claude "
+"Desktop."
+
+#: includes/class-wc-trackship-actions.php:631
+#: includes/class-wc-trackship-actions.php:668
+#: includes/class-wc-trackship-admin.php:1278
 #: includes/class-wc-trackship-install.php:311
 #: includes/customizer/trackship-customizer.php:211
 #: includes/customizer/trackship-customizer.php:790
@@ -712,11 +1351,15 @@ msgstr ""
 msgid "In Transit"
 msgstr "U tranzitu"
 
-#: trackship-for-woocommerce.php:139
+#: includes/mcp/ui-helpers.php:371
+msgid "In use"
+msgstr "U upotrebi"
+
+#: trackship-for-woocommerce.php:140
 msgid "Install Shipment Tracking extension"
 msgstr "Instaliraj ekstenziju za praćenje pošiljaka"
 
-#: includes/class-wc-trackship-actions.php:717
+#: includes/class-wc-trackship-actions.php:725
 msgid "Insufficient Balance"
 msgstr "Nedovoljno stanje"
 
@@ -724,7 +1367,7 @@ msgstr "Nedovoljno stanje"
 msgid "Integrations"
 msgstr "Integracije"
 
-#: includes/class-wc-trackship-actions.php:699 includes/views/shipments.php:39
+#: includes/class-wc-trackship-actions.php:707 includes/views/shipments.php:39
 msgid "Invalid Carrier"
 msgstr "Nevažeći prijevoznik"
 
@@ -736,10 +1379,68 @@ msgstr "Nevažeći ključ narudžbe."
 msgid "Invalid order."
 msgstr "Nevažeća narudžba."
 
-#: includes/class-wc-trackship-actions.php:632
-#: includes/class-wc-trackship-actions.php:696 includes/views/shipments.php:38
+#: includes/class-wc-trackship-actions.php:640
+#: includes/class-wc-trackship-actions.php:704 includes/views/shipments.php:38
 msgid "Invalid Tracking"
 msgstr "Nevažeće praćenje"
+
+#. %s: the AI app's name, e.g. Cursor.
+#: includes/mcp/ui-helpers.php:435
+#, php-format
+msgid "Is %s installed?"
+msgstr "Je li %s instaliran?"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:851
+msgid ""
+"It has to be started by the app, not from here — so ask the app to connect "
+"again. Nothing was shared, and nothing is broken."
+msgstr ""
+"Mora ga pokrenuti aplikacija, a ne odavde — stoga zatražite od aplikacije da "
+"se ponovno poveže. Ništa nije podijeljeno i ništa nije pokvareno."
+
+#. %s: URL path to allow.
+#: includes/mcp/class-trackship-mcp-selftest.php:808
+#, php-format
+msgid ""
+"It is none of the security plugins this test knows, so it is your host, your "
+"CDN, or a rule in .htaccess. Ask them to allow the path %s, and to check "
+"whether they filter callers by name."
+msgstr ""
+"Nijedan od sigurnosnih dodataka koje ovaj test poznaje nije, pa je to vaš "
+"host, vaš CDN ili pravilo u .htaccess datoteci. Zamolite ih da dopuste "
+"putanju %s i da provjere filtriraju li pozivatelje po imenu."
+
+#. 1: the setting's name, 2: where to find it.
+#: includes/mcp/class-trackship-mcp-selftest.php:477
+#, php-format
+msgid ""
+"It is this one: turn off %1$s, under %2$s. That is the only change needed — "
+"every other rule there keeps working, and so does everyone already connected."
+msgstr ""
+"Radi se o ovome: isključite %1$s, pod %2$s. To je jedina potrebna promjena - "
+"svako drugo pravilo tamo nastavlja raditi, kao i svi koji su već povezani."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:923
+msgid ""
+"It will be able to do what your own account can do on this store, and you "
+"can turn it off at any time from the AI Assistant screen."
+msgstr ""
+"Moći će raditi ono što vaš vlastiti račun može u ovoj trgovini, a možete ga "
+"isključiti u bilo kojem trenutku na zaslonu AI Assistant."
+
+#. %s: URL path to allow.
+#: includes/mcp/class-trackship-mcp-selftest.php:794
+#, php-format
+msgid ""
+"It will refuse your AI assistant the same way. In its firewall settings, "
+"allow the path %s. If that does not do it, the rule is matching something "
+"other than the path - look for user agent or bot blocking too, and read its "
+"blocked-request log for the exact rule."
+msgstr ""
+"Na isti će način odbiti vašeg AI asistenta. U postavkama vatrozida dopustite "
+"putanju %s. Ako to ne riješi problem, pravilo se podudara s nečim drugim "
+"osim putanje - potražite i blokiranje korisničkog agenta ili bota te "
+"pročitajte njegov zapisnik blokiranih zahtjeva za točno pravilo."
 
 #: includes/class-wc-trackship-install.php:446
 #: includes/views/front/layout1_tracking_details.php:13
@@ -747,16 +1448,30 @@ msgstr "Nevažeće praćenje"
 msgid "Items in this shipment"
 msgstr "Stavke u ovoj pošiljci"
 
+#. 1: the rule Wordfence reported, 2: the caller's user agent, 3: URL path to allow.
+#: includes/mcp/class-trackship-mcp-selftest.php:589
+#, php-format
+msgid ""
+"Its reason: %1$s. The caller was %2$s. In Wordfence, allow %3$s or allow "
+"that caller, then test again."
+msgstr ""
+"Razlog: %1$s. Pozivatelj je bio %2$s. U Wordfenceu, dopustite %3$s ili "
+"dopustite tog pozivatelja, a zatim ponovno testirajte."
+
 #: includes/class-wc-trackship-front.php:713
 #: includes/views/front/preview_enhanced_tracking_page.php:83
 msgid "Journey"
 msgstr "Putovanje"
 
+#: includes/mcp/screen.php:164
+msgid "Keep entries for"
+msgstr "Zadrži unose za"
+
 #: includes/smswoo/class-smswoo-admin.php:285
 msgid "Key"
 msgstr "Ključ"
 
-#: includes/class-wc-trackship-actions.php:693 includes/views/shipments.php:37
+#: includes/class-wc-trackship-actions.php:701 includes/views/shipments.php:37
 msgid "Label Cancelled"
 msgstr "Oznaka otkazana"
 
@@ -772,9 +1487,14 @@ msgstr "Zadnjih 30 dana"
 msgid "Last 60 days"
 msgstr "Zadnjih 60 dana"
 
-#: includes/class-wc-trackship-actions.php:927
+#: includes/class-wc-trackship-actions.php:935
 msgid "Last event date: "
 msgstr "Datum zadnjeg događaja:"
+
+#: includes/mcp/ui-helpers.php:676 includes/mcp/ui-helpers.php:786
+#: includes/mcp/ui-helpers.php:1280
+msgid "Last used"
+msgstr "Zadnje korišteno"
 
 #: includes/class-wc-trackship-late-shipments.php:176
 msgid "Late shipment"
@@ -788,46 +1508,130 @@ msgstr "Kasne isporuke"
 msgid "Late Shipments for last 30 days"
 msgstr "Kasne isporuke u zadnjih 30 dana"
 
-#: includes/class-wc-trackship-admin.php:792
+#: includes/class-wc-trackship-admin.php:807
 msgid "Late Shipments Notifications"
 msgstr "Obavijesti o kasnim isporukama"
 
-#: includes/views/shipments.php:172
+#: includes/views/shipments.php:174
 msgid "Latest Event"
 msgstr "Najnoviji događaj"
 
-#: includes/views/shipments.php:171
+#: includes/views/shipments.php:173
 msgid "Latest Event Date"
 msgstr "Najnoviji datum događaja"
 
-#: includes/views/notifications.php:30 includes/views/settings.php:63
+#: includes/views/ai-assistant.php:51 includes/views/notifications.php:30
+#: includes/views/settings.php:63
 msgid "Learn how to configure TrackShip for best results."
 msgstr "Saznajte kako konfigurirati TrackShip za najbolje rezultate."
 
-#: trackship-for-woocommerce.php:141 includes/views/setup.php:18
+#: includes/mcp/screen.php:169
+msgid "Learn how to connect an AI assistant and what it can do."
+msgstr "Naučite kako povezati AI asistenta i što on može učiniti."
+
+#: trackship-for-woocommerce.php:142 includes/views/setup.php:18
 #: includes/views/setup.php:32
 msgid "Learn more →"
 msgstr "Saznajte više →"
+
+#: includes/views/ai-assistant.php:33
+msgid ""
+"Let an AI assistant read and update your shipment tracking, notifications "
+"and TrackShip settings. Changes save as you make them."
+msgstr ""
+"Neka AI asistent čita i ažurira postavke praćenja vaše pošiljke, obavijesti "
+"i TrackShip-a. Promjene se spremaju čim ih napravite."
+
+#: includes/mcp/screen.php:141
+msgid ""
+"Let an AI assistant work with this store. Changes save as you make them."
+msgstr ""
+"Neka AI asistent radi s ovom trgovinom. Promjene se spremaju čim ih "
+"napravite."
 
 #: includes/customizer/trackship-customizer.php:449
 #: includes/customizer/trackship-customizer.php:568
 msgid "Links color"
 msgstr "Boja linkova"
 
+#: includes/mcp/class-trackship-abilities.php:114
+msgid "List notifications"
+msgstr "Obavijesti s popisa"
+
+#: includes/mcp/class-trackship-abilities.php:115
+msgid ""
+"List sent shipment notification logs (Email/SMS) with optional filters and "
+"pagination. Returns recipient, type, shipment status and delivery result "
+"(Sent/Failed)."
+msgstr ""
+"Prikaži zapisnike poslanih obavijesti o pošiljci (e-pošta/SMS) s opcionalnim "
+"filterima i paginacijom. Vraća primatelja, vrstu, status pošiljke i rezultat "
+"dostave (Poslano/Neuspješno)."
+
+#: includes/mcp/class-trackship-abilities.php:81
+msgid "List shipments"
+msgstr "Popis pošiljki"
+
+#: includes/mcp/class-trackship-abilities.php:144
+msgid "List shipping providers"
+msgstr "Navedite pružatelje usluga dostave"
+
+#: includes/mcp/class-trackship-abilities.php:82
+msgid ""
+"List TrackShip shipments with optional filters (status, provider, date range,"
+" free-text search) and pagination. Returns shipment status, tracking number, "
+"carrier, dates and last event. For a single shipment with its full event "
+"history use get-shipment instead."
+msgstr ""
+"Prikaži TrackShip pošiljke s dodatnim filterima (status, pružatelj usluga, "
+"raspon datuma, pretraživanje slobodnog teksta) i paginacijom. Vraća status "
+"pošiljke, broj za praćenje, prijevoznika, datume i posljednji događaj. Za "
+"pojedinačnu pošiljku s potpunom poviješću događaja koristite get-shipment."
+
+#: includes/mcp/class-trackship-abilities.php:145
+msgid ""
+"List TrackShip supported shipping providers (carrier display name and slug). "
+"Use the slug when filtering list-shipments by provider or when setting "
+"carrier mappings."
+msgstr ""
+"Navedite pružatelje usluga dostave koje TrackShip podržava (prikazni naziv "
+"prijevoznika i slug). Koristite slug prilikom filtriranja popisa pošiljki "
+"prema pružatelju usluga ili prilikom postavljanja mapiranja prijevoznika."
+
 #: includes/class-wc-trackship-admin.php:216 includes/views/header2.php:45
 msgid "Logs"
 msgstr "Dnevnici"
+
+#. %s: the AI app's name, e.g. Cursor.
+#: includes/mcp/ui-helpers.php:420
+#, php-format
+msgid ""
+"Make %s sign in again? Its connection is turned off here, so the next time "
+"it calls it has to ask you to sign in. Nothing else is affected."
+msgstr ""
+"Želite li da se %s ponovno prijavi? Njegova veza je ovdje isključena, pa će "
+"vas sljedeći put kada pozove morati pitati za prijavu. Ništa drugo nije "
+"pogođeno."
+
+#: includes/mcp/ui-helpers.php:591
+msgid ""
+"Make one in WooCommerce, then paste both halves here. Copy them before you "
+"leave that screen — the secret is shown once and never again."
+msgstr ""
+"Napravite jedan u WooCommerceu, a zatim zalijepite obje polovice ovdje. "
+"Kopirajte ih prije nego što napustite taj ekran — tajna se prikazuje jednom "
+"i nikad više."
 
 #: includes/views/map-providers.php:11 includes/views/settings.php:57
 #| msgid "Map Shipping Providers"
 msgid "Map Shipping Carriers"
 msgstr "Mapirajte pružatelje usluga dostave"
 
-#: includes/class-wc-trackship-admin.php:742
+#: includes/class-wc-trackship-admin.php:757
 msgid "Mark order as delivered"
 msgstr "Označi narudžbu kao isporučenu"
 
-#: includes/customizer/trackship-customizer.php:1176
+#: includes/customizer/trackship-customizer.php:1163
 msgid "Mockup Order"
 msgstr "Narudžba modela"
 
@@ -843,11 +1647,27 @@ msgstr "Za mjesec dana"
 msgid "More info"
 msgstr "Više informacija"
 
-#: includes/class-wc-trackship-actions.php:423
-#: includes/class-wc-trackship-actions.php:936
+#: includes/class-wc-trackship-actions.php:431
+#: includes/class-wc-trackship-actions.php:944
 #: includes/html/class-wc-trackship-html.php:137
 msgid "more info"
 msgstr "više informacija"
+
+#: includes/mcp/ui-helpers.php:784
+msgid "Named"
+msgstr "Imenovano"
+
+#: includes/mcp/ui-helpers.php:1306
+msgid "never"
+msgstr "nikada"
+
+#: includes/mcp/ui-helpers.php:630
+msgid "never — nothing has connected with it yet"
+msgstr "nikad — još ništa nije povezano s tim"
+
+#: includes/mcp/ui-helpers.php:1500
+msgid "Newer"
+msgstr "Novije"
 
 #: includes/views/dashboard.php:333
 msgid "No action needed for Shipments"
@@ -870,13 +1690,127 @@ msgstr "Nema koda odgovora"
 msgid "No carrier data yet."
 msgstr "Još nema podataka o prijevozniku."
 
+#: includes/mcp/ui-helpers.php:784
+msgid "no description"
+msgstr "bez opisa"
+
 #: includes/views/dashboard.php:446
 msgid "No destination data yet."
 msgstr "Još nema podataka o odredištu."
 
+#: includes/mcp/class-trackship-abilities.php:424
+msgid "No email settings changes provided."
+msgstr "Nisu navedene promjene postavki e-pošte."
+
 #: includes/smswoo/services/class-smswoo-twilio.php:183
 msgid "No response code"
 msgstr "Nema koda odgovora"
+
+#: includes/mcp/class-trackship-abilities.php:433
+msgid "No settings changes provided."
+msgstr "Nisu navedene promjene postavki."
+
+#: includes/mcp/class-trackship-abilities.php:330
+msgid "No shipment found for that order id."
+msgstr "Za taj ID narudžbe nije pronađena pošiljka."
+
+#: includes/mcp/class-trackship-abilities.php:466
+msgid "No shipment found for that shipment id, order id or tracking number."
+msgstr ""
+"Nije pronađena pošiljka za taj ID pošiljke, ID narudžbe ili broj za praćenje."
+
+#: includes/mcp/screen.php:150 includes/mcp/ui-helpers.php:538
+msgid "No tools are available on this connection yet."
+msgstr "Za ovu vezu još nisu dostupni alati."
+
+#: includes/mcp/ui-helpers.php:1253
+msgid ""
+"Nobody has connected yet. Anyone you give the link to appears here once they "
+"connect, and you can turn any of them off without affecting the others."
+msgstr ""
+"Nitko se još nije povezao. Svatko kome date vezu pojavit će se ovdje nakon "
+"što se poveže, a možete isključiti bilo kojeg od njih bez utjecaja na ostale."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:267
+msgid ""
+"Not a firewall - something answered, it just answered wrongly. Send that "
+"number to support; it says what went wrong."
+msgstr ""
+"Nije vatrozid - nešto je odgovorilo, samo je odgovorilo krivo. Pošaljite taj "
+"broj podršci; piše što je pošlo po zlu."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:591
+msgid "not recorded"
+msgstr "nije zabilježeno"
+
+#: includes/mcp/ui-helpers.php:447
+msgid "Not supported"
+msgstr "Nije podržano"
+
+#: includes/mcp/ui-helpers.php:1628
+msgid "Not working in your AI app?"
+msgstr "Ne radi u vašoj AI aplikaciji?"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:566
+msgid ""
+"Nothing has used this link — but your tools are being used, through "
+"WooCommerce MCP."
+msgstr ""
+"Ništa nije koristilo ovu poveznicu — ali vaši se alati koriste putem "
+"WooCommerce MCP-a."
+
+#: includes/mcp/ui-helpers.php:658
+msgid ""
+"Nothing is connected with this key yet. Set up an app with the steps above "
+"and it will appear here."
+msgstr ""
+"Još ništa nije povezano s ovim ključem. Postavite aplikaciju slijedeći gore "
+"navedene korake i on će se pojaviti ovdje."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:501
+msgid ""
+"Nothing signed it, so it is an .htaccess rule or your host. Find the bad-bot "
+"or user agent list and take the Python and Perl entries out of it."
+msgstr ""
+"Ništa ga nije potpisalo, pa je to .htaccess pravilo ili vaš host. Pronađite "
+"popis bad-botova ili korisničkih agenata i uklonite Python i Perl unose iz "
+"njega."
+
+#. %s: the security plugin that writes .htaccess rules.
+#: includes/mcp/class-trackship-mcp-selftest.php:498
+#, php-format
+msgid ""
+"Nothing signed the refusal, so it came from .htaccess — and on this store %s "
+"is what writes rules there. Open it, find the bad-bot or user agent list, "
+"and take the Python and Perl entries out of it."
+msgstr ""
+"Ništa nije potpisalo odbijanje, pa je došlo iz .htaccess - a na ovoj "
+"trgovini %s tamo piše pravila. Otvorite ga, pronađite popis bad-botova ili "
+"korisničkog agenta i uklonite Python i Perl unose iz njega."
+
+#: includes/mcp/ui-helpers.php:1418
+msgid ""
+"Nothing yet. Once an AI assistant reads or updates anything on this store, "
+"every action it takes will be listed here."
+msgstr ""
+"Još ništa. Nakon što AI asistent pročita ili ažurira bilo što u ovoj "
+"trgovini, ovdje će biti navedena svaka radnja koju poduzme."
+
+#: includes/views/ai-assistant.php:50
+msgid ""
+"Nothing yet. Once an AI assistant reads or updates your shipments, every "
+"action it takes will be listed here."
+msgstr ""
+"Još ništa. Nakon što AI asistent pročita ili ažurira vaše pošiljke, ovdje će "
+"biti navedena svaka poduzeta radnja."
+
+#: includes/mcp/screen.php:167
+msgid ""
+"Nothing yet. Once an AI assistant works on this store, every action it takes "
+"will be listed here."
+msgstr ""
+"Još ništa. Nakon što AI asistent počne raditi na ovoj trgovini, ovdje će "
+"biti navedena svaka radnja koju poduzme."
 
 #: includes/views/content.php:18
 #: includes/views/front/enhanced_shipment_details_notifications.php:40
@@ -886,7 +1820,7 @@ msgstr "Nema koda odgovora"
 msgid "Notifications"
 msgstr "Obavijesti"
 
-#: includes/class-wc-trackship-admin.php:837
+#: includes/class-wc-trackship-admin.php:852
 msgid "Notifications detail"
 msgstr "Detalji obavijesti"
 
@@ -894,12 +1828,40 @@ msgstr "Detalji obavijesti"
 msgid "Notifications Type (SMS/WhatsApp)"
 msgstr "Vrsta obavijesti (SMS/WhatsApp)"
 
-#: includes/class-wc-trackship-admin.php:459
+#: includes/class-wc-trackship-admin.php:474
 msgid "Number of days for late shipments"
 msgstr "Broj dana zakašnjele pošiljke"
 
-#: includes/class-wc-trackship-actions.php:663
-#: includes/class-wc-trackship-admin.php:1287
+#: includes/mcp/ui-helpers.php:1473
+msgid "OK"
+msgstr "U REDU"
+
+#: includes/mcp/ui-helpers.php:1503
+msgid "Older"
+msgstr "Stariji"
+
+#: includes/views/ai-assistant.php:38
+msgid ""
+"On by default, so this URL offers the same tools as WooCommerce MCP. Turn it "
+"off to make the URL read-only — the AI can then look up shipments and "
+"notifications but not change settings, mappings, or resync tracking."
+msgstr ""
+"Uključeno prema zadanim postavkama, tako da ovaj URL nudi iste alate kao i "
+"WooCommerce MCP. Isključite ga kako biste URL učinili samo za čitanje - "
+"umjetna inteligencija tada može pretraživati pošiljke i obavijesti, ali ne "
+"može mijenjati postavke, mapiranja ili ponovno sinkronizirati praćenje."
+
+#: includes/mcp/screen.php:145
+msgid ""
+"On by default. Turn it off to make the link read-only — the AI can then look "
+"things up but not change them."
+msgstr ""
+"Uključeno prema zadanim postavkama. Isključite ga kako bi poveznica bila "
+"samo za čitanje — umjetna inteligencija tada može pretraživati stvari, ali "
+"ih ne može mijenjati."
+
+#: includes/class-wc-trackship-actions.php:671
+#: includes/class-wc-trackship-admin.php:1302
 #: includes/class-wc-trackship-install.php:315
 #: includes/customizer/trackship-customizer.php:215
 #: includes/customizer/trackship-customizer.php:794
@@ -916,7 +1878,7 @@ msgstr "Pošiljka na čekanju"
 msgid "On Hold Shipments"
 msgstr "Pošiljke na čekanju"
 
-#: includes/class-wc-trackship-admin.php:794
+#: includes/class-wc-trackship-admin.php:809
 msgid "On Hold Shipments Notifications"
 msgstr "Obavijesti o otpremama na čekanju"
 
@@ -924,12 +1886,87 @@ msgstr "Obavijesti o otpremama na čekanju"
 msgid "On-time"
 msgstr "Na vrijeme"
 
-#: includes/views/logs.php:50 includes/views/shipments.php:160
+#: includes/mcp/class-trackship-mcp-oauth.php:941
+msgid "Only accounts that can manage this store can connect an assistant."
+msgstr ""
+"Samo računi koji mogu upravljati ovom trgovinom mogu povezati asistenta."
+
+#: includes/mcp/ui-helpers.php:944
+msgid ""
+"Only needed if you connect through WooCommerce MCP instead of your own link."
+msgstr ""
+"Potrebno samo ako se povezujete putem WooCommerce MCP-a umjesto vlastite "
+"poveznice."
+
+#: includes/views/ai-assistant.php:48
+msgid ""
+"Only needed if you connect through WooCommerce MCP instead of your TrackShip "
+"link."
+msgstr ""
+"Potrebno samo ako se povezujete putem WooCommerce MCP-a umjesto TrackShip "
+"poveznice."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:856
+msgid "Open All In One WP Security firewall"
+msgstr "Otvorite All In One WP Security vatrozid"
+
+#: includes/mcp/ui-helpers.php:1586 includes/views/ai-assistant.php:40
+msgid "Open claude.ai and go to Settings, then Connectors."
+msgstr "Otvorite claude.ai i idite na Postavke, a zatim na Konektori."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:877
+msgid "Open NinjaFirewall settings"
+msgstr "Otvorite postavke NinjaFirewalla"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:870
+msgid "Open Solid Security settings"
+msgstr "Otvorite postavke Solid Securityja"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:863
+msgid "Open Sucuri firewall settings"
+msgstr "Otvorite postavke Sucuri vatrozida"
+
+#. %s: the setting's name.
+#: includes/mcp/class-trackship-mcp-selftest.php:835
+#, php-format
+msgid "Open the %s setting"
+msgstr "Otvori postavku %s"
+
+#: includes/mcp/ui-helpers.php:986
+msgid "Open WooCommerce feature settings"
+msgstr "Otvori postavke značajki WooCommercea"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:844
+msgid "Open Wordfence firewall settings"
+msgstr "Otvorite postavke Wordfence vatrozida"
+
+#. %s: the AI app's name, e.g. Cursor.
+#: includes/mcp/ui-helpers.php:431
+#, php-format
+msgid "Opening %s…"
+msgstr "Otvaranje %s…"
+
+#: includes/mcp/ui-helpers.php:257
+msgid "Opens Cursor and adds the server."
+msgstr "Otvara Cursor i dodaje poslužitelj."
+
+#: includes/shipments/class-wc-trackship-shipments.php:113
+#: includes/views/logs.php:50 includes/views/shipments.php:161
 #: includes/views/front/tracking_page_header.php:43
 msgid "Order"
 msgstr "Narudžba"
 
-#: includes/views/shipments.php:161
+#. 1: order id, 2: comma-separated tracking numbers.
+#: includes/mcp/class-trackship-abilities.php:473
+#, php-format
+msgid ""
+"Order %1$d has more than one shipment. Ask which one and call again with "
+"tracking_number: %2$s."
+msgstr ""
+"Narudžba %1$d ima više od jedne pošiljke. Pitajte koju i ponovno nazovite s "
+"brojem za praćenje: %2$s."
+
+#: includes/views/shipments.php:162
 msgid "Order date"
 msgstr "Datum narudžbe"
 
@@ -949,7 +1986,7 @@ msgstr "Naručite e-poštom"
 msgid "Order ID"
 msgstr "ID narudžbe"
 
-#: includes/class-wc-trackship-actions.php:729
+#: includes/class-wc-trackship-actions.php:737
 msgid "Order id not found"
 msgstr "Narudžba nije pronađena"
 
@@ -957,7 +1994,7 @@ msgstr "Narudžba nije pronađena"
 msgid "Order id, Email, Phone number"
 msgstr "ID narudžbe, e-pošta, broj telefona"
 
-#: includes/class-wc-trackship-admin.php:841
+#: includes/class-wc-trackship-admin.php:856
 #: templates/emails/exception-shipment-email.php:16
 #: templates/emails/late-shipment-email.php:16
 #: templates/emails/on-hold-shipment-email.php:16
@@ -984,9 +2021,9 @@ msgstr "Pojedinosti o podrijetlu"
 msgid "Other"
 msgstr "ostalo"
 
-#: includes/class-wc-trackship-actions.php:625
-#: includes/class-wc-trackship-actions.php:672
-#: includes/class-wc-trackship-admin.php:1275
+#: includes/class-wc-trackship-actions.php:633
+#: includes/class-wc-trackship-actions.php:680
+#: includes/class-wc-trackship-admin.php:1290
 #: includes/class-wc-trackship-install.php:313
 #: includes/customizer/trackship-customizer.php:213
 #: includes/customizer/trackship-customizer.php:792
@@ -1003,13 +2040,23 @@ msgstr "U dostavi"
 msgid "Overview"
 msgstr "Pregled"
 
-#: includes/class-wc-trackship-actions.php:620
-#: includes/class-wc-trackship-actions.php:702 includes/views/shipments.php:42
+#. 1: current page number, 2: total pages, 3: total number of entries.
+#: includes/mcp/ui-helpers.php:1490
+#, php-format
+msgid "Page %1$d of %2$d — %3$d entries"
+msgstr "Stranica %1$d od %2$d — %3$d unosa"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:933
+msgid "Password"
+msgstr "Lozinka"
+
+#: includes/class-wc-trackship-actions.php:628
+#: includes/class-wc-trackship-actions.php:710 includes/views/shipments.php:42
 msgid "Pending Update"
 msgstr "Ažuriranje na čekanju"
 
-#: includes/class-wc-trackship-actions.php:422
-#: includes/class-wc-trackship-actions.php:934
+#: includes/class-wc-trackship-actions.php:430
+#: includes/class-wc-trackship-actions.php:942
 #| msgid ""
 #| "Pending TrackShip is a temporary status that will display for a few "
 #| "minutes until we update the order with the first tracking event from the "
@@ -1027,7 +2074,7 @@ msgstr ""
 msgid "Pickup Reminder"
 msgstr "Podsjetnik za preuzimanje"
 
-#: includes/class-wc-trackship-admin.php:1312
+#: includes/class-wc-trackship-admin.php:1327
 msgid "Pickup reminder"
 msgstr "Podsjetnik za preuzimanje"
 
@@ -1041,7 +2088,7 @@ msgid "Please connect your store with trackship.com."
 msgstr "Povežite svoju trgovinu s trackship.com."
 
 #. %s: search for a tag
-#: trackship-for-woocommerce.php:115
+#: trackship-for-woocommerce.php:116
 #, php-format
 msgid ""
 "Please install and activate %1$sWooCommerce%2$s for TrackShip for "
@@ -1066,8 +2113,8 @@ msgstr "Pokušajte ponovno nakon što primite e-poruku s potvrdom o otpremi."
 msgid "Powered by "
 msgstr "Powered by"
 
-#: includes/class-wc-trackship-actions.php:622
-#: includes/class-wc-trackship-actions.php:666 includes/views/shipments.php:26
+#: includes/class-wc-trackship-actions.php:630
+#: includes/class-wc-trackship-actions.php:674 includes/views/shipments.php:26
 msgid "Pre Transit"
 msgstr "Prije tranzita"
 
@@ -1075,7 +2122,12 @@ msgstr "Prije tranzita"
 msgid "Pre-Transit"
 msgstr "Pretransit"
 
-#: includes/class-wc-trackship-admin.php:788
+#: includes/mcp/ui-helpers.php:1598
+msgid "Press Connect and sign in with your store account. Once only."
+msgstr ""
+"Pritisnite Poveži se i prijavite se sa svojim računom trgovine. Samo jednom."
+
+#: includes/class-wc-trackship-admin.php:803
 msgid "Priority Support"
 msgstr "Prioritetna podrška"
 
@@ -1084,27 +2136,129 @@ msgstr "Prioritetna podrška"
 msgid "Progress bar"
 msgstr "Traka za napredak"
 
-#: includes/class-wc-trackship-admin.php:821
+#: includes/mcp/class-trackship-abilities.php:443
+msgid "Provide \"note\" (use an empty string to clear the note)."
+msgstr "Navedite \"napomenu\" (koristite prazan niz za brisanje napomene)."
+
+#: includes/mcp/class-trackship-abilities.php:389
+msgid "Provide \"set\" and/or \"remove\"."
+msgstr "Navedite \"postavi\" i/ili \"ukloni\"."
+
+#: includes/mcp/class-trackship-abilities.php:421
+msgid "Provide a status group."
+msgstr "Navedite statusnu grupu."
+
+#: includes/mcp/class-trackship-abilities.php:407
+msgid "Provide order_id or order_ids."
+msgstr "Navedite order_id ili order_ids."
+
+#: includes/mcp/class-trackship-abilities.php:462
+msgid ""
+"Provide shipment_id, or order_id (with tracking_number if the order has "
+"several shipments)."
+msgstr ""
+"Navedite shipping_id ili order_id (s tracking_numberom ako narudžba ima "
+"nekoliko pošiljki)."
+
+#: includes/class-wc-trackship-admin.php:836
 msgid "Providers list Updated"
 msgstr "Popis pružatelja usluga ažuriran"
 
-#: includes/views/notifications.php:29 includes/views/settings.php:62
+#: includes/mcp/screen.php:168 includes/views/notifications.php:29
+#: includes/views/settings.php:62
 msgid "Quick Help"
 msgstr "Brza pomoć"
 
-#: includes/class-wc-trackship-admin.php:464
-#: includes/class-wc-trackship-admin.php:486
-#: includes/class-wc-trackship-admin.php:508
+#: includes/mcp/ui-helpers.php:561 includes/mcp/ui-helpers.php:905
+msgid "Read"
+msgstr "Čitaj"
+
+#: includes/mcp/class-trackship-abilities.php:152
+msgid ""
+"Read all TrackShip settings (the full settings option). Reading is "
+"unrestricted; writes are limited to a safe whitelist via update-settings."
+msgstr ""
+"Pročitajte sve postavke TrackShip-a (opcija punih postavki). Čitanje nije "
+"ograničeno; pisanje je ograničeno na sigurnu bijelu listu putem postavki "
+"ažuriranja."
+
+#: includes/mcp/ui-helpers.php:779
+msgid "Read and write"
+msgstr "Čitaj i piši"
+
+#: includes/mcp/ui-helpers.php:777
+msgid "Read only"
+msgstr "Samo za čitanje"
+
+#: includes/mcp/class-trackship-abilities.php:159
+msgid ""
+"Read the shipment-status email customizer settings (per-status email design: "
+"colors, headings, content, enable flags). Nested as status => { property: "
+"value }. Edit with update-email-settings."
+msgstr ""
+"Pročitajte postavke alata za prilagođavanje e-pošte o statusu pošiljke "
+"(dizajn e-pošte po statusu: boje, naslovi, sadržaj, omogućite zastavice). "
+"Ugniježđeno kao status => { svojstvo: vrijednost }. Uredite s update-email-"
+"settings."
+
+#: includes/mcp/class-trackship-abilities.php:166
+msgid ""
+"Read the shipping carrier mappings (your external/detected provider name → "
+"the TrackShip provider it maps to), including the resolved TrackShip "
+"provider display name. Edit with update-carrier-mappings."
+msgstr ""
+"Pročitajte mapiranja prijevoznika (naziv vašeg vanjskog/otkrivenog "
+"pružatelja usluga → pružatelj usluga TrackShip na kojeg se mapira), "
+"uključujući razriješeni prikazni naziv pružatelja usluga TrackShip. Uredite "
+"s update-carrier-mappings."
+
+#: includes/class-wc-trackship-admin.php:479
+#: includes/class-wc-trackship-admin.php:501
+#: includes/class-wc-trackship-admin.php:523
 msgid "Recipient(s)"
 msgstr "Primatelj(i)"
 
-#: includes/class-wc-trackship-admin.php:790
+#: includes/mcp/ui-helpers.php:1473
+msgid "Refused"
+msgstr "Odbijeno"
+
+#: includes/class-wc-trackship-admin.php:805
 msgid "Remove TrackShip’s branding"
 msgstr "Uklonite robnu marku TrackShipa"
 
-#: includes/class-wc-trackship-actions.php:630
-#: includes/class-wc-trackship-actions.php:678
-#: includes/class-wc-trackship-admin.php:1299
+#: includes/mcp/ui-helpers.php:1082
+msgid ""
+"Removes the key from this site so the steps above are no longer shown. The "
+"key itself keeps working until you delete it in WooCommerce."
+msgstr ""
+"Uklanja ključ s ove stranice tako da se gornji koraci više ne prikazuju. Sam "
+"ključ nastavlja raditi dok ga ne izbrišete u WooCommerceu."
+
+#: includes/mcp/ui-helpers.php:1044
+msgid ""
+"Replace the key this site is using? The one stored now is dropped, and any "
+"app set up with it stops working until you set it up again with the new one. "
+"The old key is not deleted in WooCommerce."
+msgstr ""
+"Zamijeniti ključ koji ova web-lokacija koristi? Onaj koji je trenutno "
+"pohranjen briše se i svaka aplikacija postavljena s njim prestaje raditi dok "
+"ga ponovno ne postavite s novim. Stari ključ se ne briše u WooCommerceu."
+
+#: includes/mcp/ui-helpers.php:422
+msgid "Reset"
+msgstr "Resetiraj"
+
+#: includes/mcp/ui-helpers.php:417
+msgid "Resetting…"
+msgstr "Resetovanje…"
+
+#: includes/mcp/ui-helpers.php:1454
+msgid "Result"
+msgstr "Proizlaziti"
+
+#: includes/class-wc-trackship-actions.php:638
+#: includes/class-wc-trackship-actions.php:686
+#: includes/class-wc-trackship-admin.php:1314
 #: includes/class-wc-trackship-install.php:317
 #: includes/customizer/trackship-customizer.php:217
 #: includes/customizer/trackship-customizer.php:796
@@ -1120,9 +2274,17 @@ msgstr "Vrati pošiljatelju"
 msgid "Return To Sender for last 30 days"
 msgstr "Vrati pošiljatelju zadnjih 30 dana"
 
-#: trackship-for-woocommerce.php:313
+#: trackship-for-woocommerce.php:337
 msgid "Review"
 msgstr "Pregled"
+
+#: includes/mcp/ui-helpers.php:1326
+msgid "Revoke"
+msgstr "Opozvati"
+
+#: includes/mcp/ui-helpers.php:1315
+msgid "Revoked"
+msgstr "Opozvano"
 
 #: includes/smswoo/class-smswoo-admin.php:508
 #: includes/views/notifications.php:106 includes/views/notifications.php:121
@@ -1136,6 +2298,10 @@ msgstr "Spremi i zatvori"
 msgid "Save changes"
 msgstr "Spremi promjene"
 
+#: includes/views/shipments.php:200
+msgid "Save note"
+msgstr "Spremi bilješku"
+
 #: includes/customizer/trackship-customizer.php:104
 msgid "Saved"
 msgstr "Spremljeno"
@@ -1144,7 +2310,7 @@ msgstr "Spremljeno"
 msgid "Search"
 msgstr "traži"
 
-#: includes/views/shipments.php:132
+#: includes/views/shipments.php:133
 msgid "Search by Tracking Number, Shipping carrier, Order number"
 msgstr "Pretraživanje prema broju za praćenje, prijevozniku, broju narudžbe"
 
@@ -1157,22 +2323,26 @@ msgid "Security verification failed, please refresh page and try again."
 msgstr ""
 "Sigurnosna provjera nije uspjela, osvježite stranicu i pokušajte ponovno."
 
-#: includes/class-wc-trackship-admin.php:923
-#: includes/class-wc-trackship-admin.php:989
+#: includes/mcp/class-trackship-mcp-selftest.php:848
+msgid "See what Wordfence blocked"
+msgstr "Pogledajte što je Wordfence blokirao"
+
+#: includes/class-wc-trackship-admin.php:938
+#: includes/class-wc-trackship-admin.php:1004
 msgid "Select"
 msgstr "Odaberite"
 
-#: includes/class-wc-trackship-admin.php:1237
+#: includes/class-wc-trackship-admin.php:1252
 msgid "Select tracking page:"
 msgstr "Odaberite stranicu za praćenje:"
 
-#: includes/class-wc-trackship-admin.php:470
-#: includes/class-wc-trackship-admin.php:492
-#: includes/class-wc-trackship-admin.php:514
+#: includes/class-wc-trackship-admin.php:485
+#: includes/class-wc-trackship-admin.php:507
+#: includes/class-wc-trackship-admin.php:529
 msgid "Send email at"
 msgstr "Pošalji e-poštu na"
 
-#: includes/class-wc-trackship-admin.php:1306
+#: includes/class-wc-trackship-admin.php:1321
 #: includes/smswoo/class-smswoo-admin.php:501
 msgid "Send only when all shipments for the order are delivered"
 msgstr "Šalje tek kada su sve pošiljke za narudžbu isporučene"
@@ -1181,7 +2351,9 @@ msgstr "Šalje tek kada su sve pošiljke za narudžbu isporučene"
 msgid ""
 "Send proactive shipment status emails that reduce \"Where is my order?\" "
 "support tickets."
-msgstr "Šaljite proaktivne e-poruke o statusu pošiljke koje smanjuju upite „Gdje je moja narudžba?“."
+msgstr ""
+"Šaljite proaktivne e-poruke o statusu pošiljke koje smanjuju upite „Gdje je "
+"moja narudžba?“."
 
 #: includes/smswoo/class-smswoo-admin.php:376
 msgid "Sender phone number / Sender ID"
@@ -1195,24 +2367,50 @@ msgstr "Poslano"
 msgid "Set Pickup reminder notifications(in days)"
 msgstr "Postavi obavijesti o podsjetniku za preuzimanje (u danima)"
 
-#: trackship-for-woocommerce.php:309 includes/class-wc-trackship-admin.php:220
+#: trackship-for-woocommerce.php:333 includes/class-wc-trackship-admin.php:220
 #: includes/views/content.php:13 includes/views/header2.php:55
 msgid "Settings"
 msgstr "postavke"
 
-#: includes/views/shipments.php:170
+#: includes/mcp/ui-helpers.php:223
+msgid "Settings > Connectors > Add custom connector, then paste the URL."
+msgstr ""
+"Postavke > Konektori > Dodaj prilagođeni konektor, a zatim zalijepite URL."
+
+#: includes/mcp/ui-helpers.php:235
+msgid ""
+"Settings > Connectors > Add custom connector, then paste the URL. No config "
+"file to edit."
+msgstr ""
+"Postavke > Konektori > Dodaj prilagođeni konektor, a zatim zalijepite URL. "
+"Nema konfiguracijske datoteke za uređivanje."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:855
+msgid "Settings, Connectors, then Connect on this store."
+msgstr "Postavke, Konektori, a zatim Poveži se u ovoj trgovini."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:856
+msgid "Settings, Connectors, then Connect. Or restart the app."
+msgstr ""
+"Postavke, Konektori, a zatim Poveži se. Ili ponovno pokrenite aplikaciju."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:857
+msgid "Settings, MCP, then the refresh arrow on this server."
+msgstr "Postavke, MCP, a zatim strelica za osvježavanje na ovom poslužitelju."
+
+#: includes/views/shipments.php:172
 msgid "Ship City"
 msgstr "Brod Grad"
 
-#: includes/views/shipments.php:167
+#: includes/views/shipments.php:169
 msgid "Ship from"
 msgstr "Brod iz"
 
-#: includes/views/shipments.php:169
+#: includes/views/shipments.php:171
 msgid "Ship State"
 msgstr "Država broda"
 
-#: includes/views/shipments.php:168
+#: includes/views/shipments.php:170
 msgid "Ship to"
 msgstr "Poslati nekome"
 
@@ -1221,6 +2419,22 @@ msgstr "Poslati nekome"
 #, php-format
 msgid "Shipment %1$s"
 msgstr "Pošiljka %1$s"
+
+#: includes/shipments/class-wc-trackship-shipments.php:504
+msgid "Shipment not found."
+msgstr "Pošiljka nije pronađena."
+
+#: includes/views/shipments.php:191
+msgid "Shipment note"
+msgstr "Otpremnica"
+
+#: includes/shipments/class-wc-trackship-shipments.php:114
+msgid "Shipment note saved."
+msgstr "Otpremnica spremljena."
+
+#: includes/views/shipments.php:168
+msgid "Shipment notes"
+msgstr "Otpremnice"
 
 #: includes/views/front/layout1_tracking_details.php:12
 #: includes/views/front/preview_tracking_page.php:115
@@ -1231,18 +2445,24 @@ msgstr "Tijek isporuke"
 msgid "Shipment Status"
 msgstr "Status pošiljke"
 
-#: includes/class-wc-trackship-actions.php:348
-#: includes/class-wc-trackship-admin.php:842 includes/views/logs.php:51
-#: includes/views/shipments.php:166 templates/emails/late-shipment-email.php:17
+#: includes/class-wc-trackship-actions.php:356
+#: includes/class-wc-trackship-admin.php:857 includes/views/logs.php:51
+#: includes/views/shipments.php:167 templates/emails/late-shipment-email.php:17
 msgid "Shipment status"
 msgstr "Status pošiljke"
+
+#: includes/mcp/class-trackship-abilities.php:63
+msgid ""
+"Shipment tracking, notifications and settings from TrackShip for WooCommerce."
+msgstr ""
+"Praćenje pošiljki, obavijesti i postavke iz TrackShip-a za WooCommerce."
 
 #: includes/class-wc-trackship-admin.php:214 includes/views/dashboard.php:369
 #: includes/views/header2.php:40
 msgid "Shipments"
 msgstr "Pošiljke"
 
-#: includes/class-wc-trackship-admin.php:791
+#: includes/class-wc-trackship-admin.php:806
 msgid "Shipments Dashboard"
 msgstr "Nadzorna ploča za pošiljke"
 
@@ -1258,15 +2478,15 @@ msgstr ""
 msgid "Shipments Over Time"
 msgstr "Pošiljke u vremenu"
 
-#: includes/class-wc-trackship-actions.php:690
-#: includes/class-wc-trackship-actions.php:705
+#: includes/class-wc-trackship-actions.php:698
+#: includes/class-wc-trackship-actions.php:713
 #: templates/emails/tracking-info.php:81
 #: includes/views/front/enhanced_tracking_events.php:18
 #: includes/views/front/tracking_page_header.php:64
 msgid "Shipped"
 msgstr "Otpremljeno"
 
-#: includes/views/shipments.php:162
+#: includes/views/shipments.php:163
 msgid "Shipped date"
 msgstr "Datum otpreme"
 
@@ -1278,7 +2498,7 @@ msgstr "Tekst zaglavlja otpremljenih proizvoda"
 msgid "Shipping & Delivery"
 msgstr "Slanje i dostava"
 
-#: includes/class-wc-trackship-admin.php:795
+#: includes/class-wc-trackship-admin.php:810
 msgid "Shipping & Delivery Analytics"
 msgstr "Analitika otpreme i isporuke"
 
@@ -1294,7 +2514,7 @@ msgstr "Adresa za dostavu"
 msgid "Shipping address header text"
 msgstr "Tekst zaglavlja adrese za dostavu"
 
-#: includes/views/shipments.php:165
+#: includes/views/shipments.php:166
 msgid "Shipping carrier"
 msgstr "Prijevoznik"
 
@@ -1310,11 +2530,11 @@ msgstr "Dani dostave"
 msgid "Shipping provider"
 msgstr "Pružatelj usluge dostave"
 
-#: includes/class-wc-trackship-actions.php:735
+#: includes/class-wc-trackship-actions.php:743
 msgid "Shipping provider not found"
 msgstr "Dobavljač nije pronađen"
 
-#: includes/views/shipments.php:174
+#: includes/views/shipments.php:176
 msgid "Shipping time"
 msgstr "Vrijeme isporuke"
 
@@ -1338,6 +2558,36 @@ msgstr "prikaži samo detalje narudžbe"
 msgid "show only Tracking details"
 msgstr "prikaži samo detalje praćenja"
 
+#: includes/mcp/ui-helpers.php:1354
+msgid "Sign everyone out"
+msgstr "Odjavite sve"
+
+#: includes/mcp/ui-helpers.php:1353
+msgid ""
+"Sign everyone out? Every AI assistant stops working until each person "
+"connects again. Your link does not change."
+msgstr ""
+"Odjaviti sve? Svaki AI asistent prestaje raditi dok se svaka osoba ponovno "
+"ne poveže. Vaša veza se ne mijenja."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:936
+msgid "Sign in"
+msgstr "Prijava"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:561
+msgid "Sign in to continue."
+msgstr "Prijavite se za nastavak."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:930
+msgid "Sign in with your store account to connect it."
+msgstr "Prijavite se sa svojim računom trgovine kako biste ga povezali."
+
+#. %s: the signed-in account's email address.
+#: includes/mcp/class-trackship-mcp-oauth.php:917
+#, php-format
+msgid "Signed in as %s"
+msgstr "Prijavljen kao %s"
+
 #: includes/customizer/trackship-customizer.php:415
 #: includes/customizer/trackship-customizer.php:651
 msgid "Single icon"
@@ -1352,7 +2602,7 @@ msgstr "SMS"
 msgid "SMS gateways"
 msgstr "SMS pristupnici"
 
-#: includes/class-wc-trackship-admin.php:789
+#: includes/class-wc-trackship-admin.php:804
 #: includes/views/notifications.php:21 includes/views/notifications.php:150
 msgid "SMS Notifications"
 msgstr "SMS obavijesti"
@@ -1362,7 +2612,7 @@ msgstr "SMS obavijesti"
 msgid "SMS notifications"
 msgstr "SMS obavijesti"
 
-#: includes/class-wc-trackship-admin.php:1327 includes/views/settings.php:53
+#: includes/class-wc-trackship-admin.php:1342 includes/views/settings.php:53
 #: includes/smswoo/admin-html/settings_tab.php:9
 msgid "SMS Settings"
 msgstr "SMS postavke"
@@ -1370,6 +2620,11 @@ msgstr "SMS postavke"
 #: includes/smswoo/admin-html/settings_tab.php:27
 msgid "SMS Settings managed by SMS for WooCommerce"
 msgstr "SMS postavkama upravlja SMS for WooCommerce"
+
+#. %d: HTTP status.
+#: includes/mcp/class-trackship-mcp-selftest.php:803
+msgid "Something refused this request (%d) before it reached the plugin."
+msgstr "Nešto je odbilo ovaj zahtjev (%d) prije nego što je stigao do dodatka."
 
 #: includes/api/class-trackship-rest-api-controller.php:331
 msgid "Sorry, you are not allowed to create resources."
@@ -1384,27 +2639,38 @@ msgstr "Nažalost, ne možete navesti resurse."
 msgid "Sorry, you cannot view this resource."
 msgstr "Nažalost, ne možete vidjeti ovaj resurs."
 
-#: includes/class-wc-trackship-actions.php:723
+#: includes/class-wc-trackship-actions.php:731
 msgid "SSL Error"
 msgstr "SSL greška"
 
-#: includes/class-wc-trackship-admin.php:796
+#: includes/class-wc-trackship-admin.php:811
 #| msgid "Starting from $11 a month"
 msgid "Starting from $9 a month"
 msgstr "Već od 9 dolara mjesečno"
 
-#: includes/class-wc-trackship-admin.php:847 includes/views/logs.php:55
+#: includes/class-wc-trackship-admin.php:862 includes/mcp/ui-helpers.php:677
+#: includes/mcp/ui-helpers.php:1281 includes/views/logs.php:55
 msgid "Status"
 msgstr "Status"
 
-#: includes/class-wc-trackship-actions.php:744
+#: includes/class-wc-trackship-actions.php:752
 #| msgid "Store is conneted with different account"
 msgid "Store is connected with different account"
 msgstr "Trgovina je povezana s drugim računom"
 
-#: includes/class-wc-trackship-actions.php:741
+#: includes/class-wc-trackship-actions.php:749
 msgid "Store is not Connected to TrackShip"
 msgstr "Trgovina nije povezana s TrackShipom"
+
+#: includes/mcp/ui-helpers.php:1045
+msgid ""
+"Store this key on the site? It is kept encrypted so your setup steps survive "
+"a reload, and it opens the whole store — orders, products, customers — to "
+"whatever you connect with it."
+msgstr ""
+"Pohraniti ovaj ključ na web-mjestu? Čuva se šifrirano tako da vaši koraci "
+"postavljanja prežive ponovno učitavanje i otvara cijelu trgovinu - narudžbe, "
+"proizvode, kupce - svemu što povežete s njim."
 
 #: includes/customizer/trackship-customizer.php:370
 msgid "Style & Colors"
@@ -1414,16 +2680,34 @@ msgstr "Stil i boje"
 msgid "Support"
 msgstr "Podrška"
 
+#: includes/mcp/class-trackship-mcp-selftest.php:204
+msgid "Switch it on, then test."
+msgstr "Uključite ga, a zatim testirajte."
+
+#: includes/mcp/screen.php:139 includes/views/ai-assistant.php:35
+msgid "Switch on, copy your link, paste it into Claude. Nothing to install."
+msgstr ""
+"Uključite, kopirajte poveznicu i zalijepite je u Claude. Nema ništa za "
+"instalirati."
+
+#: includes/mcp/screen.php:302
+msgid ""
+"Switch on, then paste the URL that appears into your AI assistant as a "
+"custom connector."
+msgstr ""
+"Uključite, a zatim zalijepite URL koji se pojavljuje u vašem AI asistentu "
+"kao prilagođeni konektor."
+
 #: includes/views/map-providers.php:71
 msgid "Sync providers"
 msgstr "Sinkroniziraj dostavljače"
 
-#: includes/class-wc-trackship-admin.php:815
-#: includes/class-wc-trackship-admin.php:823
+#: includes/class-wc-trackship-admin.php:830
+#: includes/class-wc-trackship-admin.php:838
 msgid "Sync TrackShip Providers"
 msgstr "Sinkronizacija TrackShip pružatelja usluga"
 
-#: includes/class-wc-trackship-admin.php:819
+#: includes/class-wc-trackship-admin.php:834
 msgid ""
 "Syncing the TrackShip providers list add or updates the pre-set TrackShip "
 "providers and will not effect custom shipping providers."
@@ -1448,6 +2732,99 @@ msgstr "Jezik predloška"
 msgid "Template variables"
 msgstr "Varijable predloška"
 
+#: includes/mcp/ui-helpers.php:1653
+msgid "Test my link"
+msgstr "Testiraj moju vezu"
+
+#: includes/mcp/ui-helpers.php:1652
+msgid "Testing…"
+msgstr "Testiranje…"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:479
+msgid ""
+"That AI app asked to be sent somewhere it has not registered. Nothing has "
+"been shared."
+msgstr ""
+"Ta AI aplikacija tražila je da bude poslana negdje gdje nije registrirana. "
+"Ništa nije podijeljeno."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:475
+msgid ""
+"That AI app is not registered with this store. Remove the connection and add "
+"it again."
+msgstr ""
+"Ta AI aplikacija nije registrirana u ovoj trgovini. Uklonite vezu i ponovno "
+"je dodajte."
+
+#: includes/mcp/class-trackship-mcp-keys.php:90
+msgid "That connection could not be turned off. Reload the page and try again."
+msgstr ""
+"Ta se veza nije mogla isključiti. Ponovno učitajte stranicu i pokušajte "
+"ponovno."
+
+#. %d: the HTTP status still coming back.
+#: includes/mcp/class-trackship-mcp-htaccess.php:405
+msgid ""
+"That did not do it — the link answered %d, so the rule is not one this file "
+"can reach. It is your host or your CDN. Ask them to stop filtering callers "
+"by name for this site. The change has been undone and nothing is left behind."
+msgstr ""
+"To nije uspjelo — poveznica je odgovorila %d, tako da pravilo nije ono do "
+"kojeg ova datoteka može doći. To je vaš domaćin ili vaš CDN. Zamolite ih da "
+"prestanu filtrirati pozivatelje po imenu za ovu stranicu. Promjena je "
+"poništena i ništa nije ostalo iza."
+
+#: includes/views/ai-assistant.php:45
+msgid ""
+"That is everything TrackShip adds — shipments, notifications, carrier "
+"mappings and settings. No customer payment details."
+msgstr ""
+"To je sve što TrackShip dodaje - pošiljke, obavijesti, mapiranje "
+"prijevoznika i postavke. Nema podataka o plaćanju kupaca."
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:938
+msgid ""
+"That key was already gone from WooCommerce. This site has stopped offering "
+"it."
+msgstr ""
+"Taj ključ je već nestao s WooCommercea. Ova stranica ga je prestala nuditi."
+
+#: includes/mcp/class-trackship-mcp-registry.php:140
+msgid "That tool cannot be run right now."
+msgstr "Taj alat se trenutno ne može pokrenuti."
+
+#: includes/mcp/class-trackship-mcp-registry.php:126
+msgid "That tool is not available on this connection."
+msgstr "Taj alat nije dostupan na ovoj vezi."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:542
+msgid "That username or password was not right."
+msgstr "To korisničko ime ili lozinka nisu bili ispravni."
+
+#: includes/mcp/class-trackship-mcp-htaccess.php:172
+msgid ""
+"The .htaccess file cannot be written on this server, so this has to be "
+"changed by hand or by your host."
+msgstr ""
+"Datoteka .htaccess ne može se zapisati na ovom poslužitelju, pa se to mora "
+"promijeniti ručno ili od strane vašeg hosting provajdera."
+
+#: includes/mcp/class-trackship-mcp-htaccess.php:194
+msgid ""
+"The .htaccess file could not be updated. Your host may have made it read-"
+"only."
+msgstr ""
+"Datoteku .htaccess nije moguće ažurirati. Vaš davatelj usluge hostinga možda "
+"ju je postavio samo za čitanje."
+
+#: includes/mcp/class-trackship-mcp-server.php:200
+msgid "The account this connection belongs to no longer exists."
+msgstr "Račun kojem pripada ova veza više ne postoji."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:203
+msgid "The connection is switched off."
+msgstr "Veza je isključena."
+
 #: includes/customizer/trackship-customizer.php:689
 msgid ""
 "The delivery tracking number will display if the shipment is getting a "
@@ -1456,6 +2833,14 @@ msgid ""
 msgstr ""
 "Broj za praćenje isporuke prikazat će se ako pošiljka dobije drugačiji broj "
 "za praćenje u zemlji odredišta od lokalne poštanske službe (tj. 4PX -> USPS)"
+
+#: includes/mcp/class-trackship-mcp-htaccess.php:371
+msgid ""
+"The exception has been removed. Your security plugin now applies to this "
+"link exactly as it does to the rest of the site."
+msgstr ""
+"Iznimka je uklonjena. Vaš sigurnosni dodatak sada se primjenjuje na ovu "
+"poveznicu točno kao i na ostatak web-mjesta."
 
 #: includes/class-wc-trackship-exception-shipments.php:173
 msgid "The following shipments are exception:"
@@ -1469,6 +2854,46 @@ msgstr "Sljedeće pošiljke kasne:"
 msgid "The following shipments are On Hold:"
 msgstr "Sljedeće pošiljke su na čekanju:"
 
+#: includes/mcp/class-trackship-mcp-woo-key.php:937
+msgid ""
+"The key is deleted. Nothing can connect with it now — make a new one when "
+"you need to set an app up again."
+msgstr ""
+"Ključ je izbrisan. Ništa se sada ne može povezati s njim — napravite novi "
+"kada ponovno trebate postaviti aplikaciju."
+
+#: includes/mcp/ui-helpers.php:666
+msgid "the key owner"
+msgstr "vlasnik ključa"
+
+#. 1: the app's name, 2: how long ago.
+#: includes/mcp/class-trackship-mcp-selftest.php:569
+#, php-format
+msgid ""
+"The last was %1$s, %2$s ago. That route works and there is nothing to fix. "
+"Use the link on this screen only if you also want to connect from claude.ai "
+"or a phone, which WooCommerce MCP cannot do."
+msgstr ""
+"Zadnji put prije %1$s, %2$s. Ta ruta radi i nema se što popravljati. "
+"Koristite poveznicu na ovom zaslonu samo ako se želite povezati i s claude."
+"ai ili telefona, što WooCommerce MCP ne može."
+
+#. 1: the app's name or user agent, 2: how long ago.
+#: includes/mcp/class-trackship-mcp-selftest.php:724
+#, php-format
+msgid ""
+"The last was %1$s, %2$s ago. Whether your AI assistant is still connected is "
+"held at its end, not here - if it reports an error, add the link to it again."
+msgstr ""
+"Zadnje je bilo prije %1$s, %2$s. Podaci o tome je li vaš AI asistent još "
+"uvijek povezan nalaze se na njegovom kraju, a ne ovdje - ako prijavi grešku, "
+"ponovno dodajte vezu do njega."
+
+#. %d: the HTTP status code the link answered with.
+#: includes/mcp/class-trackship-mcp-selftest.php:266
+msgid "The link answered with %d instead of the expected reply."
+msgstr "Veza je odgovorila s %d umjesto očekivanog odgovora."
+
 #: includes/class-wc-trackship-front.php:294
 #: includes/class-wc-trackship-front.php:304
 msgid ""
@@ -1478,13 +2903,102 @@ msgstr ""
 "Narudžba/pošiljka koju pokušavate pratiti još nije otpremljena ili je "
 "uneseni broj narudžbe netočan."
 
-#: includes/class-wc-trackship-actions.php:541
+#: includes/mcp/ui-helpers.php:1162
+msgid ""
+"The same link for everyone. Whoever adds it signs in with their own store "
+"account, and you can turn any one of them off on its own."
+msgstr ""
+"Ista poveznica za sve. Tko god je doda, prijavljuje se sa svojim računom "
+"trgovine, a bilo koju od njih možete zasebno isključiti."
+
+#. 1: HTTP status, 2: the user agent that was refused.
+#: includes/mcp/class-trackship-mcp-selftest.php:449
+#, php-format
+msgid ""
+"The same request was refused (%1$d) when it called itself %2$s, which is the "
+"kind of name AI services use."
+msgstr ""
+"Isti zahtjev je odbijen (%1$d) kada se sam nazvao %2$s, što je vrsta imena "
+"koju koriste usluge umjetne inteligencije."
+
+#: includes/class-wc-trackship-actions.php:549
 msgid ""
 "The shipment status updates will run in the background, please refresh the "
 "page in a few minutes."
 msgstr ""
 "Ažuriranja statusa pošiljke odvijat će se u pozadini, osvježite stranicu za "
 "nekoliko minuta."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:218
+msgid "The test could not run: this store cannot call its own link."
+msgstr ""
+"Test se nije mogao pokrenuti: ova trgovina ne može pozvati vlastitu vezu."
+
+#. 1: HTTP status code, 2: message from WooCommerce.
+#: includes/mcp/class-trackship-mcp-woo-key.php:686
+#, php-format
+msgid "The WooCommerce MCP route answered with %1$d: %2$s"
+msgstr "WooCommerce MCP ruta je odgovorena s %1$d: %2$s"
+
+#. %d: HTTP status code.
+#: includes/mcp/class-trackship-mcp-woo-key.php:688
+msgid "The WooCommerce MCP route answered with %d."
+msgstr "WooCommerce MCP ruta je odgovorila s %d."
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:693
+msgid "The WooCommerce MCP route answered, but not with a tool list."
+msgstr "WooCommerce MCP ruta je odgovorila, ali ne s popisom alata."
+
+#: includes/mcp/class-trackship-mcp-keys.php:175
+msgid ""
+"There was nothing to turn off — the app will be asked to sign in anyway."
+msgstr ""
+"Nije bilo ništa za isključiti — aplikacija će ionako biti zamoljena za "
+"prijavu."
+
+#: includes/mcp/class-trackship-mcp-keys.php:247
+msgid "There was nothing to turn off."
+msgstr "Nije bilo ništa za isključiti."
+
+#: includes/mcp/ui-helpers.php:742
+msgid ""
+"They cannot be turned off one at a time — each is the same account, and an "
+"app that still has the key opens a new session on its next request. Deleting "
+"the key ends all of them, and a new one must be made to connect again."
+msgstr ""
+"Ne mogu se isključiti jedan po jedan - svaki je isti račun, a aplikacija "
+"koja još uvijek ima ključ otvara novu sesiju pri sljedećem zahtjevu. "
+"Brisanjem ključa prekidaju se svi, a za ponovno povezivanje potrebno je "
+"napraviti novi."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:568
+msgid ""
+"This account cannot manage the store, so it cannot connect an assistant here."
+" Sign in with an account that can."
+msgstr ""
+"Ovaj račun ne može upravljati trgovinom, pa stoga ne može povezati asistenta "
+"ovdje. Prijavite se s računom koji to može."
+
+#: includes/mcp/ui-helpers.php:1645
+msgid ""
+"This adds four lines to your .htaccess file so requests to this plugin, and "
+"nothing else, skip your bad-bot rules. Nothing else on your site changes, "
+"and no rule is deleted. A copy of the file is kept, and the change is undone "
+"automatically if it turns out not to help. Continue?"
+msgstr ""
+"Ovo dodaje četiri retka vašoj .htaccess datoteci, tako da zahtjevi upućeni "
+"ovom dodatku, i ništa drugo, preskaču vaša pravila za loše botove. Ništa se "
+"drugo na vašoj web stranici ne mijenja i nijedno pravilo se ne briše. Kopija "
+"datoteke se čuva, a promjena se automatski poništava ako se ispostavi da ne "
+"pomaže. Nastaviti?"
+
+#: includes/mcp/class-trackship-mcp-server.php:184
+msgid "This connection has been turned off. Connect again to get a new one."
+msgstr "Ova je veza isključena. Ponovno se povežite da biste dobili novu."
+
+#: includes/mcp/class-trackship-mcp-registry.php:133
+msgid "This connection is not allowed to manage TrackShip."
+msgstr "Ovoj vezi nije dopušteno upravljanje TrackShipom."
 
 #: includes/views/map-providers.php:26
 msgid ""
@@ -1502,11 +3016,41 @@ msgstr ""
 msgid "This field appears as a from or Sender ID"
 msgstr "Ovo polje se pojavljuje kao pošiljatelj ili ID pošiljatelja"
 
-#: includes/class-wc-trackship-admin.php:844 includes/views/logs.php:52
+#: includes/mcp/class-trackship-mcp-oauth.php:836
+msgid "This is already connected"
+msgstr "Ovo je već povezano"
+
+#: includes/mcp/ui-helpers.php:770
+msgid ""
+"This key no longer exists in WooCommerce — it has been deleted there, so "
+"nothing can connect with it. Make a new one and paste it above."
+msgstr ""
+"Ovaj ključ više ne postoji u WooCommerceu — tamo je izbrisan, tako da se "
+"ništa ne može povezati s njim. Napravite novi i zalijepite ga gore."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:850
+msgid "This sign-in expired"
+msgstr "Ova prijava je istekla"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:130
+msgid "This store"
+msgstr "Ova trgovina"
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:801
+msgid ""
+"Those do not look like a WooCommerce key. The consumer key starts with ck_ "
+"and the consumer secret with cs_ — check you have one of each, the right way "
+"round."
+msgstr ""
+"To ne izgleda kao WooCommerce ključ. Ključ potrošača počinje s ck_, a tajni "
+"kod potrošača s cs_ - provjerite imate li po jedan od svakog, ispravno "
+"obrnuto."
+
+#: includes/class-wc-trackship-admin.php:859 includes/views/logs.php:52
 msgid "Time"
 msgstr "Vrijeme"
 
-#: includes/class-wc-trackship-admin.php:845 includes/views/logs.php:53
+#: includes/class-wc-trackship-admin.php:860 includes/views/logs.php:53
 msgid "To"
 msgstr "Do"
 
@@ -1522,6 +3066,10 @@ msgid ""
 msgstr ""
 "Da biste pratili svoju narudžbu, unesite broj za praćenje koji ste primili u "
 "e-poruci s potvrdom otpreme"
+
+#: includes/mcp/ui-helpers.php:1450
+msgid "Tool"
+msgstr "Alat"
 
 #: includes/views/content.php:28
 msgid "Tools"
@@ -1539,10 +3087,10 @@ msgstr "Vodeća odredišta"
 msgid "Total Shipments"
 msgstr "Ukupne pošiljke"
 
-#: includes/class-wc-trackship-actions.php:414
-#: includes/class-wc-trackship-actions.php:420
-#: includes/class-wc-trackship-actions.php:932
-#: includes/class-wc-trackship-actions.php:943
+#: includes/class-wc-trackship-actions.php:422
+#: includes/class-wc-trackship-actions.php:428
+#: includes/class-wc-trackship-actions.php:940
+#: includes/class-wc-trackship-actions.php:951
 msgid "Track"
 msgstr "Staza"
 
@@ -1568,7 +3116,7 @@ msgstr "Pratite svoju narudžbu"
 msgid "Tracker type"
 msgstr "Vrsta tragača"
 
-#: includes/class-wc-trackship-admin.php:1326
+#: includes/class-wc-trackship-admin.php:1341
 msgid "Tracking Analytics"
 msgstr "Praćenje analitike"
 
@@ -1580,7 +3128,7 @@ msgstr "Prikaz događaja praćenja"
 msgid "Tracking information is not available, please try again later."
 msgstr "Informacije o praćenju nisu dostupne, pokušajte ponovno kasnije."
 
-#: includes/class-wc-trackship-admin.php:402
+#: includes/class-wc-trackship-admin.php:417
 msgid ""
 "Tracking is sent to TrackShip when the order change to the selected status. "
 "Choose default (Completed/Shipped or Partially Shipped) or custom statuses "
@@ -1605,7 +3153,7 @@ msgstr "Problemi s praćenjem"
 msgid "Tracking Issues for last 30 days"
 msgstr "Praćenje problema u zadnjih 30 dana"
 
-#: includes/class-wc-trackship-admin.php:843 includes/views/shipments.php:164
+#: includes/class-wc-trackship-admin.php:858 includes/views/shipments.php:165
 #: templates/emails/exception-shipment-email.php:18
 #: templates/emails/late-shipment-email.php:19
 #: templates/emails/on-hold-shipment-email.php:18
@@ -1614,7 +3162,7 @@ msgstr "Praćenje problema u zadnjih 30 dana"
 msgid "Tracking Number"
 msgstr "Broj za pračenje"
 
-#: includes/class-wc-trackship-actions.php:732
+#: includes/class-wc-trackship-actions.php:740
 msgid "Tracking number not found"
 msgstr "Broj za praćenje nije pronađen"
 
@@ -1645,7 +3193,7 @@ msgstr ""
 "automatski prati vaše narudžbe, automatizira vaš tijek rada nakon otpreme i "
 "omogućuje vam da svojim kupcima pružite vrhunsko iskustvo nakon kupnje."
 
-#: trackship-for-woocommerce.php:135
+#: trackship-for-woocommerce.php:136
 msgid "TrackShip for WooCommerce requires a Shipment Tracking extension."
 msgstr "TrackShip for WooCommerce zahtijeva ekstenziju za praćenje pošiljaka."
 
@@ -1653,12 +3201,18 @@ msgstr "TrackShip for WooCommerce zahtijeva ekstenziju za praćenje pošiljaka."
 msgid ""
 "TrackShip is syncing fulfillment-based shipments automatically. All new "
 "fulfillments will be tracked in real time."
-msgstr "TrackShip automatski sinkronizira pošiljke temeljene na fulfillmentima. Svi novi fulfillmenti pratit će se u stvarnom vremenu."
+msgstr ""
+"TrackShip automatski sinkronizira pošiljke temeljene na fulfillmentima. Svi "
+"novi fulfillmenti pratit će se u stvarnom vremenu."
 
 #: includes/views/logs.php:13
 msgid "TrackShip logs table does not exist, Please try after few minutes"
 msgstr ""
 "TrackShip zapisnička tablica ne postoji, pokušajte nakon nekoliko minuta"
+
+#: includes/views/ai-assistant.php:22
+msgid "TrackShip MCP"
+msgstr "TrackShip MCP"
 
 #: includes/views/header2.php:71
 msgid "TrackShip navigation"
@@ -1676,7 +3230,62 @@ msgstr "Tablica baze podataka TrackShip Shipments ne postoji."
 msgid "TrackShip Shipments meta database table does not exist."
 msgstr "Tablica meta baze podataka TrackShip Shipments ne postoji."
 
-#: includes/class-wc-trackship-admin.php:846 includes/views/logs.php:54
+#: includes/mcp/class-trackship-abilities.php:220
+msgid ""
+"Trigger \"Get Shipment Status\" for one or more orders: sends their tracking "
+"info to TrackShip and schedules a status refresh. Accepts \"order_id\" "
+"(single) or \"order_ids\" (array, max 50). This is a state-changing action "
+"that consumes a TrackShip tracking credit per shipped order — confirm with "
+"the user first. Orders that are not shipped are skipped."
+msgstr ""
+"Pokreni \"Dohvati status pošiljke\" za jednu ili više narudžbi: šalje "
+"podatke o njihovom praćenju TrackShip-u i zakazuje osvježavanje statusa. "
+"Prihvaća \"order_id\" (jedan) ili \"order_ids\" (niz, maksimalno 50). Ovo je "
+"radnja promjene stanja koja troši TrackShip kredit za praćenje po poslanoj "
+"narudžbi - prvo potvrdite s korisnikom. Narudžbe koje nisu poslane se "
+"preskaču."
+
+#. %s: the person's email address.
+#: includes/mcp/ui-helpers.php:1324
+#, php-format
+msgid ""
+"Turn off this connection for %s? Their AI assistant stops working straight "
+"away. Everyone else is unaffected."
+msgstr ""
+"Isključiti ovu vezu za %s? Njihov AI asistent odmah prestaje raditi. Nitko "
+"drugi nije pogođen."
+
+#: includes/mcp/screen.php:146
+msgid ""
+"Turn off to make the connection URL read-only. WooCommerce MCP is not "
+"affected — it signs in a real store user instead."
+msgstr ""
+"Isključite da bi URL veze bio samo za čitanje. WooCommerce MCP nije pogođen -"
+" umjesto toga prijavljuje pravog korisnika trgovine."
+
+#: includes/mcp/ui-helpers.php:229
+msgid ""
+"Turn on Developer mode in the ChatGPT settings first, then add the URL as a "
+"connector. OpenAI still ships this as a developer feature, so it is not on "
+"every plan yet."
+msgstr ""
+"Prvo uključite način rada za razvojne programere u postavkama ChatGPT-a, a "
+"zatim dodajte URL kao konektor. OpenAI i dalje isporučuje ovu značajku za "
+"razvojne programere, tako da još nije uključena u svaki plan."
+
+#: includes/mcp/class-trackship-mcp-keys.php:95
+msgid "Turned off. Everyone else is still connected."
+msgstr "Isključeno. Svi ostali su još uvijek povezani."
+
+#: includes/mcp/class-trackship-mcp-keys.php:174
+msgid "Turned off. The app will ask you to sign in again."
+msgstr "Isključeno. Aplikacija će vas tražiti da se ponovno prijavite."
+
+#: includes/mcp/ui-helpers.php:1321 includes/mcp/ui-helpers.php:1352
+msgid "Turning off…"
+msgstr "Isključivanje…"
+
+#: includes/class-wc-trackship-admin.php:861 includes/views/logs.php:54
 msgid "Type"
 msgstr "Tip"
 
@@ -1689,25 +3298,69 @@ msgstr "Nije moguće pronaći narudžbu."
 msgid "Unable to locate the order. or Invalid order key"
 msgstr "Nije moguće pronaći narudžbu. ili Nevažeći ključ narudžbe"
 
-#: includes/class-wc-trackship-actions.php:711
+#: includes/class-wc-trackship-actions.php:719
 msgid "Unauthorized"
 msgstr "Neovlašteno"
 
-#: includes/class-wc-trackship-actions.php:621
-#: includes/class-wc-trackship-actions.php:687 includes/views/shipments.php:36
+#: includes/class-wc-trackship-actions.php:629
+#: includes/class-wc-trackship-actions.php:695 includes/views/shipments.php:36
 msgid "Unknown"
 msgstr "Nepoznato"
 
-#: includes/trackship-email-manager.php:339
+#: includes/mcp/screen.php:338
+msgid "Unknown setting."
+msgstr "Nepoznata postavka."
+
+#: includes/trackship-email-manager.php:333
 #: includes/customizer/class-trackship-email-preview.php:181
 msgid "Unsubscribe"
 msgstr "Odjavi pretplatu"
 
-#: includes/views/shipments.php:163
+#: includes/mcp/class-trackship-abilities.php:205
+msgid "Update carrier mappings"
+msgstr "Ažuriranje mapiranja operatera"
+
+#: includes/mcp/class-trackship-abilities.php:174
+msgid ""
+"Update one or more writable TrackShip settings. Only whitelisted keys are "
+"accepted. This changes store configuration — confirm with the user first. "
+"Allowed keys: "
+msgstr ""
+"Ažurirajte jednu ili više postavki TrackShip-a u koje se može pisati. "
+"Prihvaćaju se samo ključevi s bijele liste. Ovo mijenja konfiguraciju "
+"trgovine - prvo potvrdite s korisnikom. Dopušteni ključevi:"
+
+#: includes/mcp/class-trackship-abilities.php:191
+msgid ""
+"Update per-status email customizer settings for one status group. Provide "
+"\"status\" (e.g. delivered, in_transit, common_settings) and \"changes\" "
+"(property => value). Only whitelisted email properties are accepted (colors, "
+"labels, button, toggles, subject/heading/content). This changes email design "
+"— confirm with the user first."
+msgstr ""
+"Ažurirajte postavke prilagođavanja e-pošte po statusu za jednu grupu statusa."
+" Navedite \"status\" (npr. isporučeno, u_prijevozu, uobičajene_postavke) i "
+"\"promjene\" (svojstvo => vrijednost). Prihvaćaju se samo svojstva e-pošte s "
+"bijele liste (boje, oznake, gumb, prekidači, predmet/naslov/sadržaj). Ovo "
+"mijenja dizajn e-pošte - prvo potvrdite s korisnikom."
+
+#: includes/mcp/class-trackship-abilities.php:233
+msgid "Update shipment note"
+msgstr "Ažuriranje otpremnice"
+
+#: includes/mcp/class-trackship-abilities.php:190
+msgid "Update shipment status email settings"
+msgstr "Ažuriranje postavki e-pošte o statusu pošiljke"
+
+#: includes/mcp/class-trackship-abilities.php:173
+msgid "Update TrackShip settings"
+msgstr "Ažuriranje postavki TrackShipa"
+
+#: includes/views/shipments.php:164
 msgid "Updated at"
 msgstr "Ažurirano u"
 
-#: includes/class-wc-trackship-admin.php:799
+#: includes/class-wc-trackship-admin.php:814
 msgid "UPGRADE TO PRO"
 msgstr "NADOGRADI NA PRO"
 
@@ -1715,17 +3368,41 @@ msgstr "NADOGRADI NA PRO"
 msgid "Upgrade to Pro"
 msgstr "Nadogradi na pro"
 
-#: includes/class-wc-trackship-admin.php:784
+#: includes/class-wc-trackship-admin.php:799
 msgid "Upgrade to TrackShip Pro"
 msgstr "Nadogradite na TrackShip Pro"
 
-#: includes/class-wc-trackship-admin.php:441
+#: includes/mcp/ui-helpers.php:1049
+msgid "Use this key"
+msgstr "Koristite ovaj ključ"
+
+#: includes/mcp/ui-helpers.php:1357
+msgid ""
+"Use this when an app will not ask to sign in again — removing it inside the "
+"app is not enough, because the app keeps its own copy of the connection."
+msgstr ""
+"Koristite ovo kada aplikacija ne traži ponovnu prijavu — uklanjanje unutar "
+"aplikacije nije dovoljno jer aplikacija čuva vlastitu kopiju veze."
+
+#: includes/class-wc-trackship-admin.php:456
 msgid "Use Villa Theme Email Customizer Template"
 msgstr "Koristite predložak za prilagođavanje e-pošte teme Villa"
 
-#: includes/class-wc-trackship-actions.php:738
+#: includes/mcp/ui-helpers.php:1453
+msgid "User"
+msgstr "Korisnik"
+
+#: includes/class-wc-trackship-actions.php:746
 msgid "User not found for this key"
 msgstr "Korisnik nije pronađen za ovaj ključ"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:931
+msgid "Username or email"
+msgstr "Korisničko ime ili e-pošta"
+
+#: includes/mcp/ui-helpers.php:1662
+msgid "Using ChatGPT, or an app instead of claude.ai?"
+msgstr "Koristite ChatGPT ili aplikaciju umjesto claude.ai?"
 
 #: includes/views/tools.php:25
 msgid "Verify DB Structure"
@@ -1735,11 +3412,16 @@ msgstr "Provjerite strukturu baze podataka"
 msgid "Verify if all TrackShip database tables are present."
 msgstr "Provjerite jesu li prisutne sve tablice baze podataka TrackShip."
 
+#: includes/ts-logs/class-wc-trackship-logs.php:64
+msgid "View"
+msgstr "Pogled"
+
 #: includes/views/dashboard.php:301
 msgid "View detailed stats"
 msgstr "Pogledajte detaljnu statistiku"
 
-#: includes/views/notifications.php:32 includes/views/settings.php:65
+#: includes/mcp/screen.php:170 includes/views/notifications.php:32
+#: includes/views/settings.php:65
 msgid "View Documentation"
 msgstr "Pogledaj dokumentaciju"
 
@@ -1753,7 +3435,7 @@ msgstr "pogledajte manje"
 msgid "view more"
 msgstr "vidi više"
 
-#: includes/class-wc-trackship-actions.php:946
+#: includes/class-wc-trackship-actions.php:954
 msgid "View Shipment log"
 msgstr "Pregledajte dnevnik pošiljki"
 
@@ -1799,7 +3481,7 @@ msgid "We detected %d On Hold shipments:"
 msgstr "Otkrili smo %d pošiljke na čekanju:"
 
 #. %s: replace with Partially Shipped order count
-#: includes/class-wc-trackship-admin.php:919
+#: includes/class-wc-trackship-admin.php:934
 #, php-format
 msgid ""
 "We detected %s orders that use the Delivered order status, You can reassign "
@@ -1809,7 +3491,7 @@ msgstr ""
 "narudžbama možete dodijeliti drugi status"
 
 #. %s: search for a total_orders
-#: includes/class-wc-trackship-admin.php:556
+#: includes/class-wc-trackship-admin.php:571
 #, php-format
 #| msgid ""
 #| "We detected %s Shipped orders from the last 30 days that were not sent to "
@@ -1820,6 +3502,30 @@ msgid ""
 msgstr ""
 "Otkrili smo %s otpremljenih narudžbi iz zadnjih 30 dana koje nisu poslane na "
 "TrackShip, možete ih skupno poslati na TrackShip"
+
+#: includes/mcp/screen.php:148
+msgid "What Claude can do"
+msgstr "Što Claude može učiniti"
+
+#: includes/mcp/screen.php:161
+msgid "What the AI did"
+msgstr "Što je umjetna inteligencija učinila"
+
+#: includes/mcp/ui-helpers.php:1128
+msgid "What this key can do"
+msgstr "Što ovaj ključ može učiniti"
+
+#: includes/mcp/ui-helpers.php:1449
+msgid "When"
+msgstr "Kada"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:853
+msgid "Where to press"
+msgstr "Gdje pritisnuti"
+
+#: includes/mcp/screen.php:151 includes/mcp/ui-helpers.php:1104
+msgid "Who is connected"
+msgstr "Tko je povezan"
 
 #: includes/customizer/trackship-customizer.php:527
 msgid "Widget Background color"
@@ -1857,7 +3563,11 @@ msgstr "Izgled widgeta"
 msgid "Widget Style"
 msgstr "Stil widgeta"
 
-#: includes/views/content.php:33
+#: includes/mcp/screen.php:153
+msgid "Woo MCP"
+msgstr "Woo MCP"
+
+#: includes/views/content.php:38
 msgid "WooCommerce Fulfillment"
 msgstr "WooCommerce Fulfillment"
 
@@ -1869,10 +3579,131 @@ msgstr "Ispunjenja WooCommerce zahtjeva"
 msgid "WooCommerce Fulfillments Enabled"
 msgstr "WooCommerce Fulfillments omogućen"
 
-#: includes/customizer/trackship-customizer.php:969
-#: includes/customizer/trackship-customizer.php:1009
+#: includes/mcp/ui-helpers.php:884 includes/mcp/ui-helpers.php:947
+msgid "WooCommerce is not exposing any tools on this route yet."
+msgstr "WooCommerce još ne nudi nikakve alate na ovoj ruti."
+
+#: includes/mcp/screen.php:155 includes/mcp/ui-helpers.php:1376
+msgid "WooCommerce MCP"
+msgstr "WooCommerce MCP"
+
+#: includes/mcp/screen.php:299
+msgid ""
+"WooCommerce MCP already gives these tools to AI assistants on a computer. "
+"Switch this on as well only if you also want to connect from claude.ai or a "
+"phone, which WooCommerce MCP cannot do."
+msgstr ""
+"WooCommerce MCP već pruža ove alate AI asistentima na računalu. Uključite i "
+"ovo samo ako se želite povezati i s claude.ai ili telefona, što WooCommerce "
+"MCP ne može."
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:682
+msgid ""
+"WooCommerce MCP did not open a session, so its tool list could not be read."
+msgstr ""
+"WooCommerce MCP nije otvorio sesiju, pa se njegov popis alata nije mogao "
+"pročitati."
+
+#: includes/mcp/ui-helpers.php:943
+msgid ""
+"WooCommerce MCP is switched off in WooCommerce, so this route is not "
+"answering at all. Your own link is unaffected."
+msgstr ""
+"WooCommerce MCP je isključen u WooCommerceu, tako da ova ruta uopće ne "
+"odgovara. Vaša vlastita poveznica ostaje nepromijenjena."
+
+#: includes/views/ai-assistant.php:47
+msgid ""
+"WooCommerce MCP is switched off in WooCommerce, so this route is not "
+"answering at all. Your TrackShip link is unaffected."
+msgstr ""
+"WooCommerce MCP je isključen u WooCommerceu, tako da ova ruta uopće ne "
+"odgovara. Vaša TrackShip poveznica nije pogođena."
+
+#: includes/views/ai-assistant.php:44
+msgid ""
+"WooCommerce MCP needs WordPress 6.9 or newer. The link above works either "
+"way."
+msgstr ""
+"WooCommerce MCP treba WordPress 6.9 ili noviji. Gornja poveznica radi u oba "
+"slučaja."
+
+#. %s: message from WooCommerce.
+#: includes/mcp/class-trackship-mcp-woo-key.php:691
+#, php-format
+msgid "WooCommerce MCP said: %s"
+msgstr "WooCommerce MCP je rekao: %s"
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:680
+msgid ""
+"WooCommerce refused the key. Check it is still there in WooCommerce, and "
+"that it has Read/Write access."
+msgstr ""
+"WooCommerce je odbio ključ. Provjerite je li još uvijek u WooCommerceu i ima "
+"li pristup za čitanje/pisanje."
+
+#: includes/mcp/screen.php:156
+msgid "WooCommerce's own AI connection. Your tools are already on it."
+msgstr "WooCommerceova vlastita AI veza. Vaši alati su već na njoj."
+
+#: includes/views/ai-assistant.php:46
+msgid ""
+"WooCommerce's own AI connection. Your TrackShip tools are already on it."
+msgstr "WooCommerceova vlastita AI veza. Vaši TrackShip alati su već na njoj."
+
+#: includes/mcp/screen.php:154
+msgid "WooCommerce's own route"
+msgstr "WooCommerceova vlastita ruta"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:682
+msgid ""
+"Working for whoever is already connected — but somebody connecting for the "
+"first time will be turned away."
+msgstr ""
+"Radim za svakoga tko je već povezan - ali netko tko se prvi put povezuje bit "
+"će odbijen."
+
+#: includes/mcp/ui-helpers.php:1048 includes/mcp/ui-helpers.php:1087
+msgid "Working…"
+msgstr "Radim…"
+
+#: includes/mcp/ui-helpers.php:558 includes/mcp/ui-helpers.php:902
+msgid "Write"
+msgstr "Pisati"
+
+#: includes/mcp/ui-helpers.php:778
+msgid "Write only"
+msgstr "Samo pisanje"
+
+#. %s: the store's name.
+#: includes/mcp/class-trackship-mcp-oauth.php:841
+#, php-format
+msgid ""
+"You approved this sign-in a moment ago, so %s already sent your AI app what "
+"it needs. Nothing else is needed here."
+msgstr ""
+"Odobrili ste ovu prijavu prije trenutak, tako da je %s već poslao vašoj AI "
+"aplikaciji što joj je potrebno. Ovdje nije potrebno ništa više."
+
+#: includes/customizer/trackship-customizer.php:956
+#: includes/customizer/trackship-customizer.php:996
 msgid "You are customizing"
 msgstr "Vi se prilagođavate"
+
+#: includes/mcp/class-trackship-mcp-htaccess.php:358
+#: includes/mcp/class-trackship-mcp-keys.php:81
+#: includes/mcp/class-trackship-mcp-keys.php:160
+#: includes/mcp/class-trackship-mcp-keys.php:227
+#: includes/mcp/class-trackship-mcp-selftest.php:141
+#: includes/mcp/class-trackship-mcp-woo-key.php:779
+#: includes/mcp/class-trackship-mcp-woo-key.php:903
+#: includes/mcp/class-trackship-mcp-woo-key.php:927 includes/mcp/screen.php:318
+msgid "You are not allowed to do that."
+msgstr "To ti nije dopušteno."
+
+#: includes/shipments/class-wc-trackship-shipments.php:476
+msgid "You are not allowed to edit shipment notes."
+msgstr "Nije vam dopušteno uređivanje otpremnica."
 
 #: includes/class-wc-trackship-front.php:400
 msgid "You have been unsubscribed from shipment status emails."
@@ -1882,23 +3713,66 @@ msgstr "Otkazali ste pretplatu na e-poruke o statusu pošiljke."
 msgid ""
 "You have the AST PRO plugin activated. The shipping provider name mapping is "
 "done on the shipping provider settings in AST PRO."
-msgstr "Aktiviran je dodatak AST PRO. Mapiranje naziva dostavljača obavlja se u postavkama dostavljača u AST PRO."
+msgstr ""
+"Aktiviran je dodatak AST PRO. Mapiranje naziva dostavljača obavlja se u "
+"postavkama dostavljača u AST PRO."
 
 #: includes/smswoo/admin-html/settings_tab.php:28
 msgid ""
 "You have the SMS for WooCommerce plugin activated. Configure your SMS "
 "gateways and credentials directly from that plugin's settings."
-msgstr "Aktiviran je dodatak SMS for WooCommerce. Konfigurirajte SMS pristupnike i vjerodajnice izravno iz postavki tog dodatka."
+msgstr ""
+"Aktiviran je dodatak SMS for WooCommerce. Konfigurirajte SMS pristupnike i "
+"vjerodajnice izravno iz postavki tog dodatka."
 
-#: trackship-for-woocommerce.php:137
+#: trackship-for-woocommerce.php:138
 msgid ""
 "You must have a Shipment Tracking extension installed and active to use "
 "TrackShip for WooCommerce."
-msgstr "Morate imati instaliranu i aktivnu ekstenziju za praćenje pošiljaka da biste koristili TrackShip for WooCommerce."
+msgstr ""
+"Morate imati instaliranu i aktivnu ekstenziju za praćenje pošiljaka da biste "
+"koristili TrackShip for WooCommerce."
 
 #: includes/views/dashboard.php:334
 msgid "You're all caught up."
 msgstr "Sve je aktualno."
+
+#: includes/mcp/screen.php:295
+msgid "Your connection URL is below."
+msgstr "URL vaše veze nalazi se u nastavku."
+
+#: includes/mcp/screen.php:292
+msgid ""
+"Your connection URL is below. Set Settings > Permalinks to anything other "
+"than Plain for a cleaner URL."
+msgstr ""
+"URL vaše veze nalazi se u nastavku. Za pregledniji URL postavite Postavke > "
+"Permalinks na bilo što osim Obično."
+
+#. %s: the error WordPress reported.
+#: includes/mcp/class-trackship-mcp-selftest.php:220
+#, php-format
+msgid ""
+"Your host reported: %s. That is a networking problem on the server, not your "
+"link and not your AI assistant."
+msgstr ""
+"Vaš domaćin je prijavio: %s. To je mrežni problem na poslužitelju, a ne na "
+"vašoj vezi i ne na vašem AI asistentu."
+
+#: includes/mcp/screen.php:116 includes/mcp/ui-helpers.php:1377
+#: includes/mcp/ui-helpers.php:1378 includes/mcp/ui-helpers.php:1558
+msgid "Your link"
+msgstr "Vaša poveznica"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:721
+msgid ""
+"Your link answers correctly, and callers from outside are getting through."
+msgstr "Vaša veza ispravno odgovara i pozivatelji izvana se javljaju."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:613
+#: includes/mcp/class-trackship-mcp-selftest.php:626
+msgid "Your link works, but nothing from outside has ever reached it."
+msgstr "Tvoj link radi, ali ništa izvana nikad nije stiglo do njega."
 
 #: includes/class-wc-trackship-install.php:336
 #, php-format
@@ -1913,6 +3787,10 @@ msgstr ""
 "Vaša se narudžba obrađuje, pojedinosti o praćenju bit će dostupne nakon "
 "slanja."
 
+#: includes/mcp/screen.php:137
+msgid "Your own link"
+msgstr "Vaša vlastita poveznica"
+
 #: includes/views/trackship-integration.php:20
 msgid "Your Post-Shipping & Delivery Autopilot"
 msgstr "Vaš autopilot nakon slanja i dostave"
@@ -1925,3 +3803,11 @@ msgstr "Vaše postavke su uspješno spremljene."
 #: includes/views/map-providers.php:31
 msgid "Your shipping provider"
 msgstr "Vaš dostavljač"
+
+#: includes/mcp/class-trackship-mcp-server.php:383
+msgid "Your store"
+msgstr "Vaša trgovina"
+
+#: includes/mcp/ui-helpers.php:1020
+msgid "Your WooCommerce key"
+msgstr "Vaš WooCommerce ključ"
