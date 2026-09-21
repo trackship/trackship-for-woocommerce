@@ -29,6 +29,11 @@ $menu_tab = isset( $_GET[ 'tab' ] ) ? sanitize_text_field( $_GET[ 'tab' ] ) : 's
 					'slug'	=> 'tools',
 					'show'	=> true,
 				),
+				'ai-assistant' => array(
+					'label'	=> __( 'AI Assistant', 'trackship-for-woocommerce' ),
+					'slug'	=> 'ai-assistant',
+					'show'	=> function_exists( 'trackship_mcp_render_screen' ),
+				),
 				'setup' => array(
 					'label'	=> __( 'WooCommerce Fulfillment', 'trackship-for-woocommerce' ),
 					'slug'	=> 'setup',

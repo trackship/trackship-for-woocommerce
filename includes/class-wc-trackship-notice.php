@@ -108,7 +108,7 @@ class WC_TrackShip_Admin_Notice {
 			padding: 9px;
 			text-decoration: none;
 		}
-		</style>	
+		</style>
 		<div class="notice notice-success is-dismissible trackship-dismissable-notice">
 			<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
 			<p>Hi there!<br> I hope you're enjoying the TrackShip for WooCommerce plugin and finding it valuable for your business. Your feedback is incredibly important to us, and it helps us continue to enhance and refine the plugin. If you could spare a moment, I'd be grateful if you could share your experience by leaving a review on <a href="<?php echo esc_url($url); ?>" target="_blank">WordPress.org</a>. Your insights help us grow and improve, making TrackShip even better for you and others.</p>
@@ -243,7 +243,7 @@ class WC_TrackShip_Admin_Notice {
 			margin: 0;
 			padding-bottom: 10px;
 		}
-		</style>	
+		</style>
 		<div class="notice notice-success notice-trackship">
 			<h3>Turn shipping into a loyalty booster.</h3>
 			<p>Connect your store to TrackShip and give customers real-time updates, fewer “Where is my order?” messages, and more repeat sales this shopping season.</p>

@@ -49,7 +49,17 @@ class WC_TrackShip_Api_Call {
 				$tracking_provider = apply_filters( 'convert_provider_name_to_slug', $tracking_provider );
 				$tracking_provider = 'fastway-au' == $tracking_provider ? 'aramex-au' : $tracking_provider;
 				
-				$bool = apply_filters( 'exclude_to_send_data_for_provider', true, $tracking_provider );
+				/**
+				 * Filters whether tracking data should be sent to TrackShip for this shipment.
+				 *
+				 * Return false to exclude the order/provider from TrackShip entirely — no tracking
+				 * is sent, no notifications fire, and no tracking credit is used.
+				 *
+				 * @param bool $bool Whether to send the shipment to TrackShip. Default true.
+				 * @param string $tracking_provider Shipping provider slug.
+				 * @param int $order_id WooCommerce order id.
+				 */
+				$bool = apply_filters( 'exclude_to_send_data_for_provider', true, $tracking_provider, $order_id );
 				if ( !$bool ) {
 					continue;
 				}

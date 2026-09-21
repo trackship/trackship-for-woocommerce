@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: TrackShip for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-02-20 05:21+0000\n"
-"PO-Revision-Date: 2026-07-10 05:04+0000\n"
+"PO-Revision-Date: 2026-09-21 11:26+0000\n"
 "Last-Translator: \n"
 "Language-Team: German (Formal)\n"
 "Language: de_DE_formal\n"
@@ -15,9 +15,122 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.8.3; wp-6.9.4; php-8.3.30\n"
 
+#: includes/mcp/class-trackship-mcp-selftest.php:994
+msgid " and "
+msgstr " Und "
+
+#. 1: security plugin name, 2: HTTP status.
+#: includes/mcp/class-trackship-mcp-selftest.php:788
+#, php-format
+msgid "%1$s refused this request (%2$d) before it reached the plugin."
+msgstr ""
+"%1$s hat diese Anfrage (%2$d) abgelehnt, bevor sie das Plugin erreichte."
+
+#. %s: the CDN's name, e.g. Cloudflare.
+#: includes/mcp/class-trackship-mcp-selftest.php:463
+#, php-format
+msgid ""
+"%1$s turned it away before it reached your site, so nothing here can undo it."
+" In %1$s, look under Security for bot protection — Bot Fight Mode is the "
+"usual one — and turn that off, or add a rule that skips it for this address."
+msgstr ""
+"%1$s hat die Anfrage blockiert, bevor sie Ihre Website erreichte. Daher kann "
+"hier nichts rückgängig gemacht werden. Suchen Sie in %1$s unter „Sicherheit“ "
+"nach dem Bot-Schutz – üblicherweise ist der Bot-Kampfmodus aktiviert – und "
+"deaktivieren Sie diesen oder fügen Sie eine Regel hinzu, die ihn für diese "
+"Adresse umgeht."
+
+#. %d: how many connections were turned off.
+#: includes/mcp/class-trackship-mcp-keys.php:239
+msgid ""
+"%d connection turned off. It will ask to sign in again next time it is used."
+msgid_plural ""
+"%d connections turned off. Each will ask to sign in again next time it is "
+"used."
+msgstr[0] ""
+"Die %d-Verbindung wurde getrennt. Sie werden beim nächsten Start "
+"aufgefordert, sich erneut anzumelden."
+msgstr[1] ""
+"%d Verbindungen wurden deaktiviert. Bei der nächsten Nutzung werden Sie "
+"jeweils aufgefordert, sich erneut anzumelden."
+
+#. %s: how long ago, e.g. "2 hours".
+#. %s: a length of time, e.g. "2 hours".
+#: includes/mcp/ui-helpers.php:634 includes/mcp/ui-helpers.php:711
+#: includes/mcp/ui-helpers.php:1303
+#, php-format
+msgid "%s ago"
+msgstr "%s vor"
+
+#. %s: security plugin name.
+#: includes/mcp/class-trackship-mcp-selftest.php:489
+#, php-format
+msgid ""
+"%s sent the refusal: open it and take the Python and Perl entries out of its "
+"bad-bot or user agent list."
+msgstr ""
+"%s hat die Ablehnung gesendet: Öffnen Sie sie und entfernen Sie die Python- "
+"und Perl-Einträge aus ihrer Liste der schädlichen Bots bzw. Benutzeragenten."
+
+#. 1: last characters of the key, 2: how long ago it was entered.
+#: includes/mcp/ui-helpers.php:596
+#, php-format
+msgid ""
+"A key ending %1$s was entered here %2$s ago, and your setup steps are below. "
+"Enter another to replace it."
+msgstr ""
+"Vor %2$s wurde hier ein Schlüssel mit der Endung %1$s eingegeben. Ihre "
+"Einrichtungsschritte finden Sie unten. Geben Sie einen anderen Schlüssel ein,"
+" um ihn zu ersetzen."
+
 #: includes/views/dashboard.php:271
 msgid "A live snapshot of your shipments across the selected period."
 msgstr "Eine Live-Übersicht Ihrer Sendungen im ausgewählten Zeitraum."
+
+#: includes/mcp/class-trackship-abilities.php:410
+msgid "A maximum of 50 orders can be resynced per call."
+msgstr "Pro Anruf können maximal 50 Bestellungen neu synchronisiert werden."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:483
+msgid ""
+"A plain file on this site is served to that same caller without complaint, "
+"so the refusal is coming from inside WordPress — a security plugin, not your "
+"host and not .htaccess. Turn your security plugins off one at a time and "
+"test again; the one that lets it through is the one with the list."
+msgstr ""
+"Eine einfache Datei auf dieser Website wird dem gleichen Aufrufer problemlos "
+"zugestellt. Die Blockierung liegt also an WordPress selbst – genauer gesagt "
+"an einem Sicherheits-Plugin – und nicht an Ihrem Hosting-Anbieter oder der ."
+"htaccess-Datei. Deaktivieren Sie Ihre Sicherheits-Plugins nacheinander und "
+"testen Sie erneut. Das Plugin, das die Datei zulässt, ist dasjenige mit der "
+"entsprechenden Liste."
+
+#: includes/mcp/ui-helpers.php:945
+msgid ""
+"A WooCommerce key opens the whole store — orders, products, customers — "
+"because the key belongs to WooCommerce and cannot be narrowed. Your own link "
+"reaches only what this plugin adds."
+msgstr ""
+"Ein WooCommerce-Schlüssel öffnet den gesamten Shop – Bestellungen, Produkte, "
+"Kunden –, da er zu WooCommerce gehört und nicht eingeschränkt werden kann. "
+"Ihr eigener Link greift nur auf die Inhalte zu, die dieses Plugin hinzufügt."
+
+#: includes/views/ai-assistant.php:49
+msgid ""
+"A WooCommerce key opens the whole store — orders, products, customers — not "
+"just tracking. Your link above reaches TrackShip and nothing else."
+msgstr ""
+"Ein WooCommerce-Schlüssel öffnet den gesamten Shop – Bestellungen, Produkte, "
+"Kunden – nicht nur die Sendungsverfolgung. Ihr obiger Link führt "
+"ausschließlich zu TrackShip."
+
+#: includes/mcp/ui-helpers.php:1115
+msgid "About this key"
+msgstr "Über diesen Schlüssel"
+
+#: includes/mcp/ui-helpers.php:785
+msgid "Access"
+msgstr "Zugang"
 
 #: includes/smswoo/class-smswoo-admin.php:369
 msgid "Access Token"
@@ -31,14 +144,20 @@ msgstr "Benutzerkonto Übersicht"
 msgid "Account SID"
 msgstr "Konto-SID"
 
+#: includes/mcp/ui-helpers.php:673 includes/mcp/ui-helpers.php:783
+#: includes/mcp/ui-helpers.php:1277
+msgid "Acting as"
+msgstr "Als"
+
 #: includes/views/dashboard.php:311
 msgid "Action Needed"
 msgstr "Maßnahmen erforderlich"
 
-#: includes/views/logs.php:56 includes/views/shipments.php:177
+#: includes/views/logs.php:56 includes/views/shipments.php:179
 msgid "Actions"
 msgstr "Aktionen"
 
+#: includes/mcp/ui-helpers.php:717 includes/mcp/ui-helpers.php:1315
 #: includes/views/dashboard.php:159
 msgid "Active"
 msgstr "Aktiv"
@@ -51,9 +170,17 @@ msgstr "Aktive verspätete Lieferungen"
 msgid "Active Shipments"
 msgstr "Aktive Sendungen"
 
+#: includes/views/shipments.php:196
+msgid "Add a note for this shipment"
+msgstr "Fügen Sie eine Notiz zu dieser Sendung hinzu."
+
 #: includes/views/map-providers.php:67
 msgid "Add mapping"
 msgstr "Zuordnung hinzufügen"
+
+#: includes/shipments/class-wc-trackship-shipments.php:111
+msgid "Add note"
+msgstr "Notiz hinzufügen"
 
 #: includes/smswoo/class-smswoo-admin.php:523
 msgid "Add template id for this SMS"
@@ -77,6 +204,44 @@ msgstr ""
 "Fügen Sie den Shortcode [trackship-track-order] auf der ausgewählten Seite "
 "hinzu."
 
+#: includes/mcp/ui-helpers.php:259
+msgid "Add to Cursor"
+msgstr "Zum Cursor hinzufügen"
+
+#: includes/mcp/class-trackship-abilities.php:234
+msgid ""
+"Add, replace or clear the internal note on one shipment (shown in the "
+"Shipment notes column of the TrackShip Shipments page; never sent to the "
+"customer). Identify the shipment by \"shipment_id\", or by \"order_id\" plus "
+"\"tracking_number\" when the order has more than one shipment. \"note\" "
+"replaces the existing note; an empty string clears it. Max 1000 characters. "
+"To read notes use get-shipment or list-shipments, which return shipment_id "
+"and shipment_note. Confirm the wording with the user first."
+msgstr ""
+"Interne Notizen zu einer Sendung hinzufügen, ersetzen oder löschen "
+"(angezeigt in der Spalte „Sendungsnotizen“ auf der Seite „Sendungen "
+"verfolgen“; werden nie an den Kunden gesendet). Die Sendung wird anhand der "
+"„shipment_id“ oder, bei mehreren Sendungen, anhand der „order_id“ plus "
+"„tracking_number“ identifiziert. „note“ ersetzt die bestehende Notiz; eine "
+"leere Zeichenkette löscht sie. Maximal 1000 Zeichen. Notizen können mit „get-"
+"shipment“ oder „list-shipments“ gelesen werden, die „shipment_id“ und "
+"„shipment_note“ zurückgeben. Den Text vorher mit dem Benutzer abstimmen."
+
+#: includes/mcp/class-trackship-abilities.php:206
+msgid ""
+"Add/update or remove shipping carrier mappings. \"set\" is a map of detected "
+"provider name => TrackShip provider slug (ts_slug); \"remove\" is a list of "
+"detected provider names to delete. Each ts_slug is validated against the "
+"known TrackShip provider list; unknown slugs are skipped. This changes store "
+"configuration — confirm with the user first."
+msgstr ""
+"Versanddienstleister-Zuordnungen hinzufügen/aktualisieren oder entfernen. "
+"„set“ ist eine Zuordnung von erkanntem Anbieternamen zu TrackShip-Anbieter-"
+"Slug (ts_slug); „remove“ ist eine Liste der zu löschenden Anbieternamen. "
+"Jeder ts_slug wird mit der bekannten TrackShip-Anbieterliste abgeglichen; "
+"unbekannte Slugs werden übersprungen. Dies ändert die Shop-Konfiguration – "
+"vorher mit dem Benutzer abklären."
+
 #: includes/views/notifications.php:25 includes/views/notifications.php:95
 msgid "Admin Notifications"
 msgstr "Admin-Benachrichtigungen"
@@ -84,6 +249,29 @@ msgstr "Admin-Benachrichtigungen"
 #: includes/smswoo/class-smswoo-admin.php:384
 msgid "Admin Phone Number"
 msgstr "Admin-Telefonnummer"
+
+#: includes/mcp/class-trackship-abilities.php:131
+msgid ""
+"Aggregate shipment metrics for a date range: total, active, delivered, "
+"tracking issues, average transit days and delivered rate."
+msgstr ""
+"Aggregierte Sendungsmetriken für einen Datumsbereich: Gesamtmenge, aktive "
+"Sendungen, zugestellte Sendungen, Sendungsverfolgungsprobleme, "
+"durchschnittliche Transitdauer und Zustellrate."
+
+#: includes/mcp/screen.php:115 includes/mcp/screen.php:140
+#: includes/views/ai-assistant.php:21 includes/views/ai-assistant.php:32
+#: includes/views/content.php:33
+msgid "AI Assistant"
+msgstr "KI-Assistent"
+
+#: includes/mcp/class-trackship-mcp-keys.php:408
+msgid "AI assistant"
+msgstr "KI-Assistent"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:925
+msgid "All In One WP Security → Firewall → PHP rules → nG firewall rules"
+msgstr "All-in-One-WP-Sicherheit → Firewall → PHP-Regeln → nG-Firewall-Regeln"
 
 #: includes/views/logs.php:23
 msgid "All Notifications"
@@ -93,7 +281,7 @@ msgstr "Alle Benachrichtigungen"
 msgid "All Shipments"
 msgstr "Alle Sendungen"
 
-#: includes/views/shipments.php:109
+#: includes/views/shipments.php:110
 msgid "All shipping providers"
 msgstr "Alle Versanddienstleister"
 
@@ -106,7 +294,11 @@ msgstr "Gesamte Zeit"
 msgid "All Types"
 msgstr "Alle Arten"
 
-#: includes/class-wc-trackship-admin.php:418
+#: includes/mcp/screen.php:144 includes/views/ai-assistant.php:37
+msgid "Allow the AI to make changes"
+msgstr "Erlauben Sie der KI, Änderungen vorzunehmen."
+
+#: includes/class-wc-trackship-admin.php:433
 msgid ""
 "Allow users to opt-out of receiving Shipment status notifications on the "
 "Tracking page and Shipment status emails."
@@ -114,6 +306,19 @@ msgstr ""
 "Ermöglichen Sie Benutzern, den Erhalt von Benachrichtigungen zum "
 "Sendungsstatus auf der Sendungsverfolgungsseite und von E-Mails zum "
 "Sendungsstatus abzulehnen."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:454
+msgid "Allowing the URL will not help."
+msgstr "Das Zulassen der URL wird nicht helfen."
+
+#: includes/mcp/ui-helpers.php:783
+msgid "an account that no longer exists"
+msgstr "ein Konto, das nicht mehr existiert"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:570
+#: includes/mcp/class-trackship-mcp-selftest.php:725
+msgid "an AI client"
+msgstr "ein KI-Client"
 
 #: includes/smswoo/services/class-smswoo-msg91.php:157
 #: includes/smswoo/services/class-smswoo-twilio.php:110
@@ -139,9 +344,22 @@ msgstr ""
 "Telefonnummer beim Checkout nicht unterstützt. Bitte wenden Sie sich an den "
 "Support"
 
+#: includes/mcp/class-trackship-mcp-woo-key.php:515
+msgid "an unnamed app"
+msgstr "eine unbenannte App"
+
 #: includes/class-wc-trackship-admin.php:218 includes/views/header2.php:50
 msgid "Analytics"
 msgstr "Analytik"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:683
+msgid ""
+"Anyone whose assistant has connected to this store before can still "
+"reconnect: the step that gets refused only happens the first time."
+msgstr ""
+"Jeder, dessen Assistent sich schon einmal mit diesem Geschäft verbunden hat, "
+"kann die Verbindung erneut herstellen: Der Schritt, der abgelehnt wird, "
+"erfolgt nur beim ersten Mal."
 
 #: includes/smswoo/class-smswoo-admin.php:339
 #: includes/smswoo/class-smswoo-admin.php:361
@@ -156,34 +374,53 @@ msgstr "API-Schlüssel"
 msgid "API Username"
 msgstr "API-Benutzername"
 
-#: includes/views/shipments.php:124
+#: includes/mcp/ui-helpers.php:674 includes/mcp/ui-helpers.php:1278
+#: includes/mcp/ui-helpers.php:1452
+msgid "App"
+msgstr "App"
+
+#: includes/views/shipments.php:125
 msgid "Apply"
 msgstr "Anwenden"
+
+#: includes/views/ai-assistant.php:42
+msgid "Ask Claude: which shipments are late?"
+msgstr "Frag Claude: Welche Lieferungen sind verspätet?"
+
+#: includes/mcp/screen.php:160 includes/mcp/screen.php:162
+msgid "Audit Log"
+msgstr "Audit-Protokoll"
 
 #: includes/smswoo/class-smswoo-admin.php:306
 msgid "Auth Token"
 msgstr "Authentifizierungstoken"
 
+#: includes/mcp/class-trackship-mcp-server.php:214
+msgid "Authentication required."
+msgstr "Authentifizierung erforderlich."
+
 #: includes/views/trackship-integration.php:75
 msgid "Auto-Track Shipments"
 msgstr "Sendungen automatisch verfolgen"
 
-#: includes/class-wc-trackship-admin.php:401
+#: includes/class-wc-trackship-admin.php:416
 msgid "Auto-track these order statuses"
 msgstr "Automatische Verfolgung dieser Bestellstatus"
 
 #: includes/views/trackship-integration.php:76
 msgid ""
 "Automatically track shipments across 1,000+ carriers without any manual work."
-msgstr "Verfolgen Sie Sendungen automatisch bei über 1.000 Versanddienstleistern – ganz ohne manuelle Arbeit."
+msgstr ""
+"Verfolgen Sie Sendungen automatisch bei über 1.000 Versanddienstleistern – "
+"ganz ohne manuelle Arbeit."
 
 #: includes/views/dashboard.php:241
 msgid "Available Balance"
 msgstr "Verfügbares Guthaben"
 
-#: includes/class-wc-trackship-actions.php:624
-#: includes/class-wc-trackship-actions.php:675
-#: includes/class-wc-trackship-admin.php:1269
+#: includes/class-wc-trackship-actions.php:632
+#: includes/class-wc-trackship-actions.php:683
+#: includes/class-wc-trackship-admin.php:1284
 #: includes/class-wc-trackship-install.php:312
 #: includes/customizer/trackship-customizer.php:212
 #: includes/customizer/trackship-customizer.php:791
@@ -221,11 +458,24 @@ msgstr "Ø Transit"
 msgid "Avg. Transit Time"
 msgstr "Ø Transitzeit"
 
+#: includes/mcp/class-trackship-mcp-selftest.php:924
+msgid "Block user-agents"
+msgstr "Benutzeragenten blockieren"
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:790
+msgid ""
+"Both halves of the key are needed. Copy them from WooCommerce before leaving "
+"that screen — the secret is shown once."
+msgstr ""
+"Beide Hälften des Schlüssels werden benötigt. Kopieren Sie diese aus "
+"WooCommerce, bevor Sie die Seite verlassen – das Geheimnis wird nur einmal "
+"angezeigt."
+
 #: includes/views/trackship-integration.php:82
 msgid "Branded Notifications"
 msgstr "Benachrichtigungen im eigenen Branding"
 
-#: includes/views/shipments.php:121
+#: includes/views/shipments.php:122
 msgid "Bulk actions"
 msgstr "Massenaktionen"
 
@@ -247,9 +497,37 @@ msgstr "Knopfradius"
 msgid "Button text"
 msgstr "Schaltflächentext"
 
-#: includes/class-wc-trackship-actions.php:628
+#. %s: how long ago.
+#: includes/mcp/class-trackship-mcp-selftest.php:697
+#, php-format
+msgid ""
+"Callers are reaching your link but none has been let in. The last was %s ago."
+msgstr ""
+"Anrufer erreichen Ihren Link, aber niemand wurde durchgelassen. Der letzte "
+"Anruf erfolgte vor %s."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:926
+#: includes/views/shipments.php:199
+msgid "Cancel"
+msgstr "Stornieren"
+
+#: includes/class-wc-trackship-actions.php:636
 msgid "Cancelled"
 msgstr "Abgesagt"
+
+#: includes/mcp/ui-helpers.php:194
+msgid "Cannot send an API key header either. Use your own link for ChatGPT."
+msgstr ""
+"Es kann auch kein API-Schlüssel-Header gesendet werden. Verwenden Sie Ihren "
+"eigenen Link für ChatGPT."
+
+#: includes/mcp/ui-helpers.php:188
+msgid ""
+"Cannot send an API key header. Use your own link for claude.ai and for "
+"phones."
+msgstr ""
+"Es kann kein API-Schlüssel-Header gesendet werden. Verwenden Sie Ihren "
+"eigenen Link für claude.ai und für Telefone."
 
 #: includes/views/dashboard.php:459
 msgid "Carrier"
@@ -263,8 +541,8 @@ msgstr "Carrier-Zuordnung wird von AST PRO verwaltet"
 msgid "Carrier Performance"
 msgstr "Spediteur-Leistung"
 
-#: includes/class-wc-trackship-actions.php:629
-#: includes/class-wc-trackship-actions.php:708 includes/views/shipments.php:40
+#: includes/class-wc-trackship-actions.php:637
+#: includes/class-wc-trackship-actions.php:716 includes/views/shipments.php:40
 msgid "Carrier Unsupported"
 msgstr "Mobilfunkanbieter wird nicht unterstützt"
 
@@ -272,44 +550,130 @@ msgstr "Mobilfunkanbieter wird nicht unterstützt"
 msgid "Carriers & Destinations"
 msgstr "Spediteure & Ziele"
 
-#: includes/class-wc-trackship-admin.php:719
+#: includes/class-wc-trackship-admin.php:734
 msgid "Change order status to"
 msgstr "Bestellstatus ändern in"
 
-#: includes/class-wc-trackship-admin.php:715
+#: includes/class-wc-trackship-admin.php:730
 msgid "Change status: "
 msgstr "Status ändern:"
+
+#: includes/mcp/ui-helpers.php:1451
+msgid "Channel"
+msgstr "Kanal"
+
+#: includes/mcp/ui-helpers.php:193 includes/mcp/ui-helpers.php:228
+msgid "ChatGPT"
+msgstr "ChatGPT"
+
+#: includes/mcp/ui-helpers.php:1630
+msgid ""
+"Checks whether an AI assistant can actually reach your link, and says what "
+"stopped it if not."
+msgstr ""
+"Prüft, ob ein KI-Assistent Ihren Link tatsächlich erreichen kann, und gibt "
+"gegebenenfalls die Ursache an."
+
+#: includes/mcp/ui-helpers.php:1587 includes/views/ai-assistant.php:41
+msgid "Choose Add custom connector, give it any name, and paste your link."
+msgstr ""
+"Wählen Sie „Benutzerdefinierten Konnektor hinzufügen“, geben Sie ihm einen "
+"beliebigen Namen und fügen Sie Ihren Link ein."
 
 #: includes/customizer/trackship-customizer.php:621
 msgid "Classic"
 msgstr "Klassisch"
 
-#: includes/class-wc-trackship-admin.php:933
+#: includes/mcp/ui-helpers.php:211 includes/mcp/ui-helpers.php:234
+msgid "Claude Desktop"
+msgstr "Claude Desktop"
+
+#: includes/mcp/ui-helpers.php:187 includes/mcp/ui-helpers.php:222
+msgid "claude.ai"
+msgstr "claude.ai"
+
+#: includes/class-wc-trackship-admin.php:948
 #: includes/views/trackship-integration.php:37
 msgid "Close"
 msgstr "Schließen"
 
-#: trackship-for-woocommerce.php:309
+#: includes/mcp/screen.php:674
+msgid "Close menu"
+msgstr "Menü schließen"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:846
+msgid "Close this tab and go back to the app."
+msgstr "Schließen Sie diesen Tab und kehren Sie zur App zurück."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:927
+msgid "Connect"
+msgstr "Verbinden"
+
+#. 1: the AI app's name, 2: the store's name.
+#: includes/mcp/class-trackship-mcp-oauth.php:898
+#, php-format
+msgid "Connect %1$s to %2$s"
+msgstr "Verbinde %1$s mit %2$s"
+
+#: trackship-for-woocommerce.php:333
 msgid "Connect a Store"
 msgstr "Verbinden Sie einen Shop"
+
+#: includes/views/ai-assistant.php:34
+msgid "Connect Claude to your shipments"
+msgstr "Verbinden Sie Claude mit Ihren Sendungen"
+
+#: includes/mcp/screen.php:138
+msgid "Connect Claude to your store"
+msgstr "Verbinden Sie Claude mit Ihrem Geschäft"
 
 #: includes/views/trackship-integration.php:23
 msgid "Connect Store"
 msgstr "Shop verbinden"
 
+#: includes/mcp/class-trackship-mcp-oauth.php:828
+#: includes/mcp/class-trackship-mcp-oauth.php:888
+msgid "Connect your AI assistant"
+msgstr "Verbinden Sie Ihren KI-Assistenten"
+
 #: includes/views/trackship-integration.php:21
 msgid ""
 "Connect your store to TrackShip to auto-track shipments, automate order "
 "workflows, and give customers a superior post-purchase experience."
-msgstr "Verbinden Sie Ihren Shop mit TrackShip, um Sendungen automatisch zu verfolgen, Bestell-Workflows zu automatisieren und Kunden ein erstklassiges Erlebnis nach dem Kauf zu bieten."
+msgstr ""
+"Verbinden Sie Ihren Shop mit TrackShip, um Sendungen automatisch zu "
+"verfolgen, Bestell-Workflows zu automatisieren und Kunden ein erstklassiges "
+"Erlebnis nach dem Kauf zu bieten."
+
+#: includes/mcp/ui-helpers.php:675 includes/mcp/ui-helpers.php:1279
+msgid "Connected"
+msgstr "Verbunden"
+
+#. %s: how long ago this app last ran a tool, e.g. "5 mins".
+#: includes/mcp/ui-helpers.php:379
+#, php-format
+msgid "Connected and working — last used %s ago."
+msgstr "Verbunden und funktionsfähig – zuletzt vor %s verwendet."
 
 #: includes/views/dashboard.php:256
 msgid "Connected with TrackShip account"
 msgstr "Mit TrackShip-Konto verbunden"
 
-#: includes/class-wc-trackship-actions.php:720
+#: includes/class-wc-trackship-actions.php:728
 msgid "Connection Issue"
 msgstr "Verbindungsproblem"
+
+#: includes/mcp/ui-helpers.php:996
+msgid "Connection key"
+msgstr "Verbindungsschlüssel"
+
+#: includes/mcp/ui-helpers.php:1030
+msgid "Consumer key"
+msgstr "Verbraucherschlüssel"
+
+#: includes/mcp/ui-helpers.php:1031
+msgid "Consumer secret"
+msgstr "Verbrauchergeheimnis"
 
 #: includes/customizer/trackship-customizer.php:858
 msgid "Content Display"
@@ -319,16 +683,51 @@ msgstr "Inhaltsanzeige"
 msgid "Content Type & Text"
 msgstr "Inhaltstyp und Text"
 
+#: includes/mcp/ui-helpers.php:442 includes/mcp/ui-helpers.php:451
+#: includes/mcp/ui-helpers.php:1610
+msgid "Copied"
+msgstr "Kopiert"
+
+#: includes/mcp/ui-helpers.php:1612
+msgid "Copy"
+msgstr "Kopie"
+
+#: includes/mcp/ui-helpers.php:214
+msgid "Copy config"
+msgstr "Konfiguration kopieren"
+
+#: includes/mcp/ui-helpers.php:443 includes/mcp/ui-helpers.php:452
+#: includes/mcp/ui-helpers.php:1611
+msgid "Copy failed — press Ctrl+C"
+msgstr "Kopiervorgang fehlgeschlagen – drücken Sie Strg+C"
+
 #: includes/class-wc-trackship-front.php:601
 #: includes/views/front/tracking_page_header.php:52
 msgid "Copy Tracking page link"
 msgstr "Link zur Tracking-Seite kopieren"
 
+#: includes/mcp/ui-helpers.php:453
+msgid "Copy URL"
+msgstr "URL kopieren"
+
+#: includes/shipments/class-wc-trackship-shipments.php:115
+#: includes/shipments/class-wc-trackship-shipments.php:517
+msgid "Could not save the shipment note."
+msgstr "Der Lieferschein konnte nicht gespeichert werden."
+
+#: includes/mcp/ui-helpers.php:1024
+msgid "Create a key in WooCommerce"
+msgstr "Erstellen Sie einen Schlüssel in WooCommerce."
+
 #: includes/views/dashboard.php:249
 msgid "Current Plan"
 msgstr "Aktueller Plan"
 
-#: includes/views/shipments.php:173
+#: includes/mcp/ui-helpers.php:256
+msgid "Cursor"
+msgstr "Cursor"
+
+#: includes/views/shipments.php:175
 msgid "Customer"
 msgstr "Kunde"
 
@@ -344,10 +743,19 @@ msgstr "Passen Sie das Tracking-Widget an"
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: includes/shipments/class-wc-trackship-shipments.php:109
+#: includes/shipments/class-wc-trackship-shipments.php:110
 #: includes/views/dashboard.php:290 includes/views/dashboard.php:469
 msgid "days"
 msgstr "Tage"
+
+#: includes/mcp/screen.php:166
+msgid "Days of history to keep. Default is 30."
+msgstr ""
+"Tage voller Geschichte, die festgehalten werden sollen. Standardwert: 30."
+
+#: includes/mcp/ui-helpers.php:555 includes/mcp/ui-helpers.php:899
+msgid "Delete"
+msgstr "Löschen"
 
 #: includes/views/tools.php:18
 msgid "Delete notifications logs"
@@ -357,16 +765,43 @@ msgstr "Benachrichtigungsprotokolle löschen"
 msgid "Delete notifications logs more than 30 days"
 msgstr "Benachrichtigungsprotokolle löschen, die mehr als 30 Tage zurückliegen"
 
-#: includes/class-wc-trackship-actions.php:714
+#: includes/mcp/ui-helpers.php:740
+msgid "Delete this key"
+msgstr "Diesen Schlüssel löschen"
+
+#: includes/mcp/ui-helpers.php:738
+msgid ""
+"Delete this key in WooCommerce? Every app using it stops working immediately,"
+" and a new key has to be made before anything can connect again. If you gave "
+"this key to something other than an AI assistant, that stops too. This "
+"cannot be undone."
+msgstr ""
+"Wird dieser Schlüssel in WooCommerce gelöscht? Dann funktionieren alle Apps, "
+"die ihn verwenden, sofort nicht mehr, und ein neuer Schlüssel muss erstellt "
+"werden, bevor eine Verbindung wiederhergestellt werden kann. Falls Sie "
+"diesen Schlüssel einer anderen Anwendung als einem KI-Assistenten zugewiesen "
+"haben, funktioniert auch diese nicht mehr. Dieser Vorgang kann nicht "
+"rückgängig gemacht werden."
+
+#: includes/class-wc-trackship-actions.php:722
 msgid "Deleted"
 msgstr "Gelöscht"
 
-#: includes/class-wc-trackship-actions.php:626
-#: includes/class-wc-trackship-actions.php:669
-#: includes/class-wc-trackship-admin.php:637
-#: includes/class-wc-trackship-admin.php:655
-#: includes/class-wc-trackship-admin.php:707
-#: includes/class-wc-trackship-admin.php:1305
+#. %d: the WordPress user id of a deleted account.
+#: includes/mcp/ui-helpers.php:1296
+msgid "Deleted account #%d"
+msgstr "Gelöschtes Konto #%d"
+
+#: includes/mcp/ui-helpers.php:739
+msgid "Deleting…"
+msgstr "Löschen…"
+
+#: includes/class-wc-trackship-actions.php:634
+#: includes/class-wc-trackship-actions.php:677
+#: includes/class-wc-trackship-admin.php:652
+#: includes/class-wc-trackship-admin.php:670
+#: includes/class-wc-trackship-admin.php:722
+#: includes/class-wc-trackship-admin.php:1320
 #: includes/class-wc-trackship-install.php:318
 #: includes/customizer/trackship-customizer.php:218
 #: includes/customizer/trackship-customizer.php:797
@@ -376,7 +811,7 @@ msgid "Delivered"
 msgstr "Zugestellt"
 
 #. %s: search number of order
-#: includes/class-wc-trackship-admin.php:643
+#: includes/class-wc-trackship-admin.php:658
 #, php-format
 msgid "Delivered <span class=\"count\">(%s)</span>"
 msgid_plural "Delivered <span class=\"count\">(%s)</span>"
@@ -396,13 +831,13 @@ msgstr "Zustellrate"
 msgid "Delivery Date"
 msgstr "Zustelldatum"
 
-#: includes/views/shipments.php:175
+#: includes/views/shipments.php:177
 msgid "Delivery date"
 msgstr "Zustelldatum"
 
-#: includes/class-wc-trackship-actions.php:627
-#: includes/class-wc-trackship-actions.php:684
-#: includes/class-wc-trackship-admin.php:1281
+#: includes/class-wc-trackship-actions.php:635
+#: includes/class-wc-trackship-actions.php:692
+#: includes/class-wc-trackship-admin.php:1296
 #: includes/class-wc-trackship-install.php:314
 #: includes/customizer/trackship-customizer.php:214
 #: includes/customizer/trackship-customizer.php:793
@@ -410,7 +845,7 @@ msgstr "Zustelldatum"
 msgid "Delivery Failure"
 msgstr "Zustellungsfehler"
 
-#: includes/views/shipments.php:176
+#: includes/views/shipments.php:178
 msgid "Delivery number"
 msgstr "Liefernummer"
 
@@ -457,17 +892,20 @@ msgid "Display Shipping provider logo"
 msgstr "Logo des Versanddienstleisters anzeigen"
 
 #: includes/customizer/trackship-customizer.php:696
-#: includes/customizer/trackship-customizer.php:934
 msgid "Display TrackShip branding"
 msgstr "Zeigen Sie das TrackSship-Branding an"
 
-#: trackship-for-woocommerce.php:312 includes/views/header2.php:85
+#: trackship-for-woocommerce.php:336 includes/views/header2.php:85
 msgid "Docs"
 msgstr "Dokumentation"
 
 #: includes/views/integrations.php:20
 msgid "Documentation"
 msgstr "Dokumentation"
+
+#: includes/shipments/class-wc-trackship-shipments.php:112
+msgid "Edit note"
+msgstr "Bearbeitungshinweis"
 
 #: templates/tracking/tracking-form.php:111
 msgid "Email address"
@@ -506,13 +944,13 @@ msgstr "E-Mail-Typ"
 msgid "Emails"
 msgstr "E-Mails"
 
-#: includes/customizer/trackship-customizer.php:1144
+#: includes/customizer/trackship-customizer.php:1131
 #, php-format
 #| msgid "Enable  %1$s email"
 msgid "Enable %1$s email"
 msgstr "%1$s E-Mail aktivieren"
 
-#: includes/class-wc-trackship-admin.php:425
+#: includes/class-wc-trackship-admin.php:440
 msgid ""
 "Enable a Custom Order Status Delivered that will be set automatically when "
 "all the order shipments are delivered"
@@ -520,7 +958,7 @@ msgstr ""
 "Aktivieren Sie einen benutzerdefinierten Auftragsstatus geliefert, der "
 "automatisch festgelegt wird, wenn alle Auftragssendungen zugestellt wurden"
 
-#: includes/class-wc-trackship-admin.php:409
+#: includes/class-wc-trackship-admin.php:424
 msgid "Enable a shipment status filter on orders admin"
 msgstr "Aktivieren Sie einen Sendungsstatusfilter im Bestell-Admin"
 
@@ -532,25 +970,33 @@ msgstr "E-Mail aktivieren"
 msgid "Enable Fulfillments"
 msgstr "Auftragsabwicklung aktivieren"
 
-#: includes/class-wc-trackship-admin.php:422
+#: includes/class-wc-trackship-admin.php:437
 msgid "Enable Order Delivery Automation"
 msgstr "Aktivieren Sie die Auftragslieferungsautomatisierung"
 
-#: includes/class-wc-trackship-admin.php:432
+#: includes/class-wc-trackship-admin.php:447
 msgid "Enable shipment status notification for order created by Amazon"
 msgstr ""
 "Aktivieren Sie die Versandstatusbenachrichtigung für eine von Amazon "
 "erstellte Bestellung"
 
+#: includes/mcp/screen.php:142
+msgid "Enable the connection"
+msgstr "Verbindung aktivieren"
+
+#: includes/views/ai-assistant.php:36
+msgid "Enable the TrackShip connection"
+msgstr "Aktivieren Sie die TrackShip-Verbindung."
+
 #: includes/customizer/trackship-customizer.php:659
 msgid "Enable tracking # link to carrier"
 msgstr "Tracking #-Link zum Spediteur aktivieren"
 
-#: includes/class-wc-trackship-admin.php:1231
+#: includes/class-wc-trackship-admin.php:1246
 msgid "Enable Tracking Page"
 msgstr "Tracking-Seite aktivieren"
 
-#: includes/class-wc-trackship-admin.php:415
+#: includes/class-wc-trackship-admin.php:430
 msgid "Enable unsubscribe (opt-out) from Shipment status notifications"
 msgstr ""
 "Aktivieren Sie das Abbestellen (Opt-out) von Versandstatusbenachrichtigungen"
@@ -560,6 +1006,24 @@ msgstr ""
 msgid "Enter admin phone number with country code."
 msgstr "Geben Sie die Telefonnummer des Administrators mit Landesvorwahl ein."
 
+#: includes/mcp/class-trackship-mcp-woo-key.php:627
+msgid "Enter your WooCommerce key above to see what this route offers."
+msgstr ""
+"Geben Sie oben Ihren WooCommerce-Schlüssel ein, um zu sehen, was diese Route "
+"bietet."
+
+#: includes/mcp/screen.php:165
+msgid ""
+"Entries older than this are deleted automatically once a day. Set 0 to keep "
+"everything."
+msgstr ""
+"Einträge, die älter als dieser Wert sind, werden einmal täglich automatisch "
+"gelöscht. Geben Sie 0 ein, um alle Einträge zu behalten."
+
+#: includes/mcp/ui-helpers.php:1455
+msgid "Error"
+msgstr "Fehler"
+
 #: includes/class-wc-trackship-front.php:664
 #: templates/emails/tracking-info.php:50
 #: includes/views/front/preview_enhanced_tracking_page.php:75
@@ -568,9 +1032,46 @@ msgstr "Geben Sie die Telefonnummer des Administrators mit Landesvorwahl ein."
 msgid "Est. Delivery Date"
 msgstr "Geschätzter Liefertermin"
 
-#: includes/class-wc-trackship-actions.php:631
-#: includes/class-wc-trackship-actions.php:681
-#: includes/class-wc-trackship-admin.php:1293
+#: includes/mcp/screen.php:163
+msgid "Every action taken by an AI assistant, with the result and any error."
+msgstr "Jede Aktion eines KI-Assistenten, mit Ergebnis und etwaigen Fehlern."
+
+#: includes/mcp/ui-helpers.php:949
+msgid ""
+"Every app connected with this key. They all act as the same account, because "
+"that is all a WooCommerce key can be."
+msgstr ""
+"Alle Apps, die mit diesem Schlüssel verbunden sind. Sie alle fungieren als "
+"dasselbe Konto, denn mehr kann ein WooCommerce-Schlüssel nicht sein."
+
+#: includes/mcp/screen.php:152
+msgid ""
+"Everyone who has connected an AI assistant to your link. Turn any one of "
+"them off without affecting the rest."
+msgstr ""
+"Alle, die einen KI-Assistenten mit Ihrem Link verbunden haben. Deaktivieren "
+"Sie einen davon, ohne die anderen zu beeinträchtigen."
+
+#: includes/mcp/ui-helpers.php:948
+msgid ""
+"Everyone who uses this key is this one account — the route has no way to "
+"tell them apart. Your own link above does, and can turn one person off."
+msgstr ""
+"Alle, die diesen Schlüssel verwenden, gehören zu diesem einen Konto – die "
+"Route kann sie nicht unterscheiden. Ihr eigener Link oben kann das und "
+"könnte eine Person abschrecken."
+
+#: includes/mcp/ui-helpers.php:946
+msgid ""
+"Everything an assistant can reach through WooCommerce MCP — WooCommerce's "
+"own tools, plus the ones this plugin adds."
+msgstr ""
+"Alles, worauf ein Assistent über das WooCommerce MCP zugreifen kann – die "
+"eigenen Tools von WooCommerce sowie die, die dieses Plugin hinzufügt."
+
+#: includes/class-wc-trackship-actions.php:639
+#: includes/class-wc-trackship-actions.php:689
+#: includes/class-wc-trackship-admin.php:1308
 #: includes/class-wc-trackship-install.php:316
 #: includes/customizer/trackship-customizer.php:216
 #: includes/customizer/trackship-customizer.php:795
@@ -587,27 +1088,81 @@ msgstr "Ausnahmeversand"
 msgid "Exception Shipments"
 msgstr "Ausnahmesendungen"
 
-#: includes/class-wc-trackship-admin.php:793
+#: includes/class-wc-trackship-admin.php:808
 msgid "Exception Shipments Notifications"
 msgstr "Benachrichtigungen über Ausnahmesendungen"
 
-#: includes/class-wc-trackship-actions.php:726 includes/views/shipments.php:33
+#: includes/class-wc-trackship-actions.php:734 includes/views/shipments.php:33
 msgid "Expired"
 msgstr "Abgelaufen"
 
-#: includes/class-wc-trackship-actions.php:637
+#: includes/class-wc-trackship-actions.php:645
 msgid "Filter by shipment status"
 msgstr "Nach Sendungsstatus filtern"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:503
+msgid ""
+"Find your bad-bot or user agent list, in a security plugin or at your host, "
+"and take the Python and Perl entries out of it."
+msgstr ""
+"Suchen Sie Ihre Liste der schädlichen Bots oder User-Agents in einem "
+"Sicherheits-Plugin oder bei Ihrem Host und entfernen Sie die Einträge für "
+"Python und Perl daraus."
+
+#: includes/mcp/ui-helpers.php:1646
+msgid "Fix this for me"
+msgstr "Repariere das bitte für mich."
+
+#: includes/mcp/class-trackship-mcp-htaccess.php:390
+msgid ""
+"Fixed, and checked: a caller that was being refused a moment ago now gets "
+"through. Try connecting your AI assistant again."
+msgstr ""
+"Behoben und geprüft: Ein Anrufer, der vorhin abgewiesen wurde, kommt jetzt "
+"durch. Versuchen Sie erneut, Ihren KI-Assistenten zu verbinden."
+
+#: includes/mcp/ui-helpers.php:1644
+msgid "Fixing…"
+msgstr "Festsetzung…"
 
 #: includes/customizer/trackship-customizer.php:537
 msgid "Font color"
 msgstr "Schriftfarbe"
 
+#: includes/mcp/ui-helpers.php:1088
+msgid "Forget key"
+msgstr "Schlüssel vergessen"
+
+#: includes/mcp/ui-helpers.php:1086
+msgid ""
+"Forget the stored key? The setup steps will be hidden until you paste it "
+"again. Nothing is deleted in WooCommerce."
+msgstr ""
+"Haben Sie den gespeicherten Schlüssel vergessen? Die Einrichtungsschritte "
+"werden ausgeblendet, bis Sie ihn erneut einfügen. In WooCommerce werden "
+"keine Daten gelöscht."
+
+#: includes/mcp/ui-helpers.php:1081
+msgid "Forget this key"
+msgstr "Vergiss diesen Schlüssel"
+
+#. %s: how long ago.
+#: includes/mcp/class-trackship-mcp-selftest.php:584
+#, php-format
+msgid "Found it. Wordfence blocked a request to your link %s ago."
+msgstr "Gefunden. Wordfence hat vor %s eine Anfrage an Ihren Link blockiert."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:399
+msgid "Found it. Your server refuses callers by name."
+msgstr "Gefunden. Ihr Server weist Anrufer mit Namen ab."
+
 #: includes/views/setup.php:15
 msgid ""
 "Fulfillments let TrackShip read shipment data natively from WooCommerce and "
 "keep tracking in sync automatically — no extra configuration needed."
-msgstr "Mit Fulfillments liest TrackShip Versanddaten direkt aus WooCommerce und hält das Tracking automatisch synchron – ohne zusätzliche Konfiguration."
+msgstr ""
+"Mit Fulfillments liest TrackShip Versanddaten direkt aus WooCommerce und "
+"hält das Tracking automatisch synchron – ohne zusätzliche Konfiguration."
 
 #: includes/customizer/trackship-customizer.php:709
 msgid "General options"
@@ -617,28 +1172,74 @@ msgstr "Allgemeine Optionen"
 msgid "General Settings"
 msgstr "Allgemeine Einstellungen"
 
-#: includes/class-wc-trackship-actions.php:554
-#: includes/class-wc-trackship-actions.php:976
-#: includes/class-wc-trackship-admin.php:557 includes/views/tools.php:14
+#: includes/mcp/class-trackship-abilities.php:102
+msgid ""
+"Get a single shipment by WooCommerce order id, including full tracking event "
+"history. For a list of many shipments use list-shipments instead."
+msgstr ""
+"Rufen Sie eine einzelne Sendung anhand der WooCommerce-Bestellnummer ab, "
+"inklusive des vollständigen Sendungsverlaufs. Für eine Liste mehrerer "
+"Sendungen verwenden Sie stattdessen den Befehl „list-shipments“."
+
+#: includes/mcp/class-trackship-abilities.php:130
+msgid "Get analytics summary"
+msgstr "Analytics-Zusammenfassung abrufen"
+
+#: includes/mcp/class-trackship-abilities.php:165
+msgid "Get carrier mappings"
+msgstr "Netzbetreiberzuordnungen abrufen"
+
+#: includes/mcp/class-trackship-abilities.php:101
+msgid "Get shipment"
+msgstr "Lieferung erhalten"
+
+#: includes/class-wc-trackship-actions.php:562
+#: includes/class-wc-trackship-actions.php:994
+#: includes/class-wc-trackship-admin.php:572 includes/views/tools.php:14
 msgid "Get Shipment Status"
 msgstr "Lieferstatus abrufen"
 
-#: includes/views/shipments.php:122
+#: includes/views/shipments.php:123
 msgid "Get shipment status"
 msgstr "Sendungsstatus abrufen"
+
+#: includes/mcp/class-trackship-abilities.php:219
+msgid "Get shipment status (send tracking to TrackShip)"
+msgstr "Sendungsstatus abrufen (Sendungsverfolgung an TrackShip senden)"
+
+#: includes/mcp/class-trackship-abilities.php:158
+msgid "Get shipment status email settings"
+msgstr "Einstellungen für E-Mails zum Sendungsstatus"
 
 #: includes/views/trackship-integration.php:19
 msgid "Get started for Free"
 msgstr "Kostenlos starten"
 
-#: includes/views/notifications.php:36 includes/views/settings.php:69
+#: includes/mcp/screen.php:171 includes/views/notifications.php:36
+#: includes/views/settings.php:69
 msgid "Get Support"
 msgstr "Support erhalten"
+
+#: includes/mcp/class-trackship-abilities.php:151
+msgid "Get TrackShip settings"
+msgstr "TrackShip-Einstellungen abrufen"
 
 #: includes/views/trackship-integration.php:90
 msgid ""
 "Give customers a branded tracking page to follow their shipment in real time."
-msgstr "Bieten Sie Kunden eine gebrandete Tracking-Seite, um ihre Sendung in Echtzeit zu verfolgen."
+msgstr ""
+"Bieten Sie Kunden eine gebrandete Tracking-Seite, um ihre Sendung in "
+"Echtzeit zu verfolgen."
+
+#: includes/mcp/screen.php:143
+msgid ""
+"Gives you one link an AI assistant can connect to, from claude.ai in a "
+"browser, a phone or a desktop app. Whoever adds it signs in with their own "
+"store account."
+msgstr ""
+"Sie erhalten einen Link, mit dem sich ein KI-Assistent verbinden kann – von "
+"claude.ai aus im Browser, auf dem Smartphone oder in der Desktop-App. Wer "
+"ihn hinzufügt, meldet sich mit seinem eigenen Store-Konto an."
 
 #: includes/views/map-providers.php:84
 msgid "Go to AST PRO Shipping Providers"
@@ -647,6 +1248,33 @@ msgstr "Zu den AST PRO-Versanddienstleistern"
 #: includes/smswoo/admin-html/settings_tab.php:30
 msgid "Go to SMS for WooCommerce Settings"
 msgstr "Zu den SMS for WooCommerce-Einstellungen"
+
+#. 1: security plugin name, 2: URL path to allow.
+#: includes/mcp/class-trackship-mcp-selftest.php:616
+#, php-format
+msgid ""
+"Have you connected an AI assistant yet? If not, nothing is wrong - connect "
+"it and test again. If you have, %1$s is the likely cause: open its blocked-"
+"request log, find the refusal, and allow what it names. The path is %2$s."
+msgstr ""
+"Haben Sie bereits einen KI-Assistenten verbunden? Falls nicht, ist alles in "
+"Ordnung – verbinden Sie ihn und testen Sie erneut. Falls ja, ist %1$s "
+"wahrscheinlich die Ursache: Öffnen Sie das Protokoll blockierter Anfragen, "
+"suchen Sie die entsprechende Ablehnung und erlauben Sie die darin genannte "
+"Anfrage. Der Pfad lautet %2$s."
+
+#. %s: URL path to allow.
+#: includes/mcp/class-trackship-mcp-selftest.php:629
+#, php-format
+msgid ""
+"Have you connected an AI assistant yet? If not, nothing is wrong - connect "
+"it and test again. If you have, something in front of WordPress is stopping "
+"it: your host, your CDN, or a security rule. The path to allow is %s."
+msgstr ""
+"Haben Sie bereits einen KI-Assistenten verbunden? Falls nicht, ist alles in "
+"Ordnung – verbinden Sie ihn und testen Sie erneut. Falls ja, blockiert etwas "
+"vor WordPress die Verbindung: Ihr Hosting-Anbieter, Ihr CDN oder eine "
+"Sicherheitsregel. Der zuzulassende Pfad lautet %s."
 
 #: includes/class-wc-trackship-install.php:338
 #, php-format
@@ -697,7 +1325,15 @@ msgstr "So finden Sie Ihre %s-Anmeldeinformationen"
 msgid "Icons"
 msgstr "Symbole"
 
-#: includes/class-wc-trackship-admin.php:444
+#: includes/mcp/class-trackship-mcp-oauth.php:860
+msgid ""
+"If the app still does not ask, remove the connection there and add it again "
+"— your link has not changed."
+msgstr ""
+"Falls die App weiterhin nicht fragt, entfernen Sie die Verbindung dort und "
+"fügen Sie sie erneut hinzu – Ihre Verknüpfung hat sich nicht geändert."
+
+#: includes/class-wc-trackship-admin.php:459
 msgid ""
 "If you disable it, TrackShip emails will use the WooCommerce default design "
 "instead of the Villa theme's customized email layout."
@@ -706,9 +1342,31 @@ msgstr ""
 "Standarddesign anstelle des benutzerdefinierten E-Mail-Layouts des Villa-"
 "Themas."
 
-#: includes/class-wc-trackship-actions.php:623
-#: includes/class-wc-trackship-actions.php:660
-#: includes/class-wc-trackship-admin.php:1263
+#. %s: the caller's address.
+#: includes/mcp/class-trackship-mcp-selftest.php:702
+#, php-format
+msgid ""
+"If you have not finished connecting an AI assistant yet, this is what that "
+"looks like — press Connect in it and sign in. If you have, it is holding an "
+"older link: copy the link above into it again. The last caller was %s."
+msgstr ""
+"Falls Sie den KI-Assistenten noch nicht verbunden haben, sieht das so aus: "
+"Klicken Sie auf „Verbinden“ und melden Sie sich an. Falls Sie ihn bereits "
+"verbunden haben, ist ein älterer Link vorhanden: Kopieren Sie den obigen "
+"Link erneut hinein. Der letzte Anrufer war %s."
+
+#: includes/mcp/ui-helpers.php:212
+msgid ""
+"In Claude Desktop: Settings > Developer > Edit Config. Paste this inside "
+"\"mcpServers\", save, and restart Claude Desktop."
+msgstr ""
+"In Claude Desktop: Einstellungen > Entwickler > Konfiguration bearbeiten. "
+"Fügen Sie dies in \"mcpServers\" ein, speichern Sie und starten Sie Claude "
+"Desktop neu."
+
+#: includes/class-wc-trackship-actions.php:631
+#: includes/class-wc-trackship-actions.php:668
+#: includes/class-wc-trackship-admin.php:1278
 #: includes/class-wc-trackship-install.php:311
 #: includes/customizer/trackship-customizer.php:211
 #: includes/customizer/trackship-customizer.php:790
@@ -717,11 +1375,15 @@ msgstr ""
 msgid "In Transit"
 msgstr "In Transit"
 
-#: trackship-for-woocommerce.php:139
+#: includes/mcp/ui-helpers.php:371
+msgid "In use"
+msgstr "Im Einsatz"
+
+#: trackship-for-woocommerce.php:140
 msgid "Install Shipment Tracking extension"
 msgstr "Shipment-Tracking-Erweiterung installieren"
 
-#: includes/class-wc-trackship-actions.php:717
+#: includes/class-wc-trackship-actions.php:725
 msgid "Insufficient Balance"
 msgstr "Unzureichendes Guthaben"
 
@@ -729,7 +1391,7 @@ msgstr "Unzureichendes Guthaben"
 msgid "Integrations"
 msgstr "Integrationen"
 
-#: includes/class-wc-trackship-actions.php:699 includes/views/shipments.php:39
+#: includes/class-wc-trackship-actions.php:707 includes/views/shipments.php:39
 msgid "Invalid Carrier"
 msgstr "Ungültiger Träger"
 
@@ -741,10 +1403,73 @@ msgstr "Ungültiger Bestellschlüssel."
 msgid "Invalid order."
 msgstr "Ungültige Bestellung."
 
-#: includes/class-wc-trackship-actions.php:632
-#: includes/class-wc-trackship-actions.php:696 includes/views/shipments.php:38
+#: includes/class-wc-trackship-actions.php:640
+#: includes/class-wc-trackship-actions.php:704 includes/views/shipments.php:38
 msgid "Invalid Tracking"
 msgstr "Ungültiges Tracking"
+
+#. %s: the AI app's name, e.g. Cursor.
+#: includes/mcp/ui-helpers.php:435
+#, php-format
+msgid "Is %s installed?"
+msgstr "Ist %s installiert?"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:851
+msgid ""
+"It has to be started by the app, not from here — so ask the app to connect "
+"again. Nothing was shared, and nothing is broken."
+msgstr ""
+"Die Verbindung muss von der App gestartet werden, nicht von hier – bitten "
+"Sie die App also, die Verbindung erneut herzustellen. Es wurden keine Daten "
+"übertragen, und es ist nichts kaputt."
+
+#. %s: URL path to allow.
+#: includes/mcp/class-trackship-mcp-selftest.php:808
+#, php-format
+msgid ""
+"It is none of the security plugins this test knows, so it is your host, your "
+"CDN, or a rule in .htaccess. Ask them to allow the path %s, and to check "
+"whether they filter callers by name."
+msgstr ""
+"Es liegt an keinem der Sicherheits-Plugins, die dieser Test kennt. "
+"Vermutlich liegt es an Ihrem Hoster, Ihrem CDN oder einer Regel in Ihrer ."
+"htaccess-Datei. Bitten Sie diese, den Pfad %s freizugeben und zu prüfen, ob "
+"sie Anrufer anhand ihres Namens filtern."
+
+#. 1: the setting's name, 2: where to find it.
+#: includes/mcp/class-trackship-mcp-selftest.php:477
+#, php-format
+msgid ""
+"It is this one: turn off %1$s, under %2$s. That is the only change needed — "
+"every other rule there keeps working, and so does everyone already connected."
+msgstr ""
+"Es geht um Folgendes: Deaktivieren Sie %1$s unter %2$s. Das ist die einzige "
+"notwendige Änderung – alle anderen Regeln funktionieren weiterhin, und auch "
+"alle bereits verbundenen Nutzer."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:923
+msgid ""
+"It will be able to do what your own account can do on this store, and you "
+"can turn it off at any time from the AI Assistant screen."
+msgstr ""
+"Es wird in der Lage sein, das zu tun, was Ihr eigenes Konto in diesem Shop "
+"kann, und Sie können es jederzeit über den KI-Assistenten-Bildschirm "
+"deaktivieren."
+
+#. %s: URL path to allow.
+#: includes/mcp/class-trackship-mcp-selftest.php:794
+#, php-format
+msgid ""
+"It will refuse your AI assistant the same way. In its firewall settings, "
+"allow the path %s. If that does not do it, the rule is matching something "
+"other than the path - look for user agent or bot blocking too, and read its "
+"blocked-request log for the exact rule."
+msgstr ""
+"Es wird Ihren KI-Assistenten auf dieselbe Weise ablehnen. Erlauben Sie in "
+"den Firewall-Einstellungen den Pfad %s. Falls das nicht hilft, bezieht sich "
+"die Regel auf etwas anderes als den Pfad – prüfen Sie auch, ob "
+"Benutzeragenten oder Bots blockiert werden, und lesen Sie das Protokoll "
+"blockierter Anfragen, um die genaue Regel zu finden."
 
 #: includes/class-wc-trackship-install.php:446
 #: includes/views/front/layout1_tracking_details.php:13
@@ -752,16 +1477,30 @@ msgstr "Ungültiges Tracking"
 msgid "Items in this shipment"
 msgstr "Artikel in dieser Sendung"
 
+#. 1: the rule Wordfence reported, 2: the caller's user agent, 3: URL path to allow.
+#: includes/mcp/class-trackship-mcp-selftest.php:589
+#, php-format
+msgid ""
+"Its reason: %1$s. The caller was %2$s. In Wordfence, allow %3$s or allow "
+"that caller, then test again."
+msgstr ""
+"Grund: %1$s. Der Aufrufer war %2$s. Erlauben Sie in Wordfence %3$s oder "
+"erlauben Sie diesen Aufrufer und testen Sie dann erneut."
+
 #: includes/class-wc-trackship-front.php:713
 #: includes/views/front/preview_enhanced_tracking_page.php:83
 msgid "Journey"
 msgstr "Reise"
 
+#: includes/mcp/screen.php:164
+msgid "Keep entries for"
+msgstr "Einträge aufbewahren für"
+
 #: includes/smswoo/class-smswoo-admin.php:285
 msgid "Key"
 msgstr "Schlüssel"
 
-#: includes/class-wc-trackship-actions.php:693 includes/views/shipments.php:37
+#: includes/class-wc-trackship-actions.php:701 includes/views/shipments.php:37
 msgid "Label Cancelled"
 msgstr "Etikett storniert"
 
@@ -777,9 +1516,14 @@ msgstr "Letzte 30 Tage"
 msgid "Last 60 days"
 msgstr "Letzte 60 Tage"
 
-#: includes/class-wc-trackship-actions.php:927
+#: includes/class-wc-trackship-actions.php:935
 msgid "Last event date: "
 msgstr "Datum des letzten Ereignisses"
+
+#: includes/mcp/ui-helpers.php:676 includes/mcp/ui-helpers.php:786
+#: includes/mcp/ui-helpers.php:1280
+msgid "Last used"
+msgstr "Zuletzt verwendet"
 
 #: includes/class-wc-trackship-late-shipments.php:176
 msgid "Late shipment"
@@ -793,46 +1537,134 @@ msgstr "Verspätete Lieferungen"
 msgid "Late Shipments for last 30 days"
 msgstr "Verspätete Lieferungen in den letzten 30 Tagen"
 
-#: includes/class-wc-trackship-admin.php:792
+#: includes/class-wc-trackship-admin.php:807
 msgid "Late Shipments Notifications"
 msgstr "Benachrichtigungen über verspätete Lieferungen"
 
-#: includes/views/shipments.php:172
+#: includes/views/shipments.php:174
 msgid "Latest Event"
 msgstr "Letztes Ereignis"
 
-#: includes/views/shipments.php:171
+#: includes/views/shipments.php:173
 msgid "Latest Event Date"
 msgstr "Letztes Veranstaltungsdatum"
 
-#: includes/views/notifications.php:30 includes/views/settings.php:63
+#: includes/views/ai-assistant.php:51 includes/views/notifications.php:30
+#: includes/views/settings.php:63
 msgid "Learn how to configure TrackShip for best results."
 msgstr "Erfahren Sie, wie Sie TrackShip für beste Ergebnisse konfigurieren."
 
-#: trackship-for-woocommerce.php:141 includes/views/setup.php:18
+#: includes/mcp/screen.php:169
+msgid "Learn how to connect an AI assistant and what it can do."
+msgstr ""
+"Erfahren Sie, wie Sie einen KI-Assistenten anschließen und was dieser alles "
+"kann."
+
+#: trackship-for-woocommerce.php:142 includes/views/setup.php:18
 #: includes/views/setup.php:32
 msgid "Learn more →"
 msgstr "Mehr erfahren →"
+
+#: includes/views/ai-assistant.php:33
+msgid ""
+"Let an AI assistant read and update your shipment tracking, notifications "
+"and TrackShip settings. Changes save as you make them."
+msgstr ""
+"Lassen Sie einen KI-Assistenten Ihre Sendungsverfolgung, Benachrichtigungen "
+"und TrackShip-Einstellungen lesen und aktualisieren. Änderungen werden "
+"sofort gespeichert."
+
+#: includes/mcp/screen.php:141
+msgid ""
+"Let an AI assistant work with this store. Changes save as you make them."
+msgstr ""
+"Lassen Sie einen KI-Assistenten mit diesem Shop arbeiten. Änderungen werden "
+"sofort gespeichert."
 
 #: includes/customizer/trackship-customizer.php:449
 #: includes/customizer/trackship-customizer.php:568
 msgid "Links color"
 msgstr "Linkfarbe"
 
+#: includes/mcp/class-trackship-abilities.php:114
+msgid "List notifications"
+msgstr "Listenbenachrichtigungen"
+
+#: includes/mcp/class-trackship-abilities.php:115
+msgid ""
+"List sent shipment notification logs (Email/SMS) with optional filters and "
+"pagination. Returns recipient, type, shipment status and delivery result "
+"(Sent/Failed)."
+msgstr ""
+"Listet die Protokolle der versendeten Versandbenachrichtigungen (E-Mail/SMS) "
+"mit optionalen Filtern und Paginierung auf. Gibt Empfänger, Art, "
+"Versandstatus und Zustellergebnis (Senden/Fehlgeschlagen) zurück."
+
+#: includes/mcp/class-trackship-abilities.php:81
+msgid "List shipments"
+msgstr "Sendungen auflisten"
+
+#: includes/mcp/class-trackship-abilities.php:144
+msgid "List shipping providers"
+msgstr "Liste der Versanddienstleister"
+
+#: includes/mcp/class-trackship-abilities.php:82
+msgid ""
+"List TrackShip shipments with optional filters (status, provider, date range,"
+" free-text search) and pagination. Returns shipment status, tracking number, "
+"carrier, dates and last event. For a single shipment with its full event "
+"history use get-shipment instead."
+msgstr ""
+"TrackShip-Sendungen mit optionalen Filtern (Status, Anbieter, Datumsbereich, "
+"Freitextsuche) und Seitennummerierung auflisten. Gibt Sendungsstatus, "
+"Sendungsnummer, Spediteur, Datum und letztes Ereignis zurück. Für eine "
+"einzelne Sendung mit vollständigem Ereignisverlauf verwenden Sie stattdessen "
+"die Funktion „Sendung abrufen“."
+
+#: includes/mcp/class-trackship-abilities.php:145
+msgid ""
+"List TrackShip supported shipping providers (carrier display name and slug). "
+"Use the slug when filtering list-shipments by provider or when setting "
+"carrier mappings."
+msgstr ""
+"Liste der von TrackShip unterstützten Versanddienstleister (Anzeigename und "
+"Slug). Verwenden Sie den Slug beim Filtern der Sendungsliste nach Anbieter "
+"oder beim Festlegen von Versanddienstleisterzuordnungen."
+
 #: includes/class-wc-trackship-admin.php:216 includes/views/header2.php:45
 msgid "Logs"
 msgstr "Protokolle"
+
+#. %s: the AI app's name, e.g. Cursor.
+#: includes/mcp/ui-helpers.php:420
+#, php-format
+msgid ""
+"Make %s sign in again? Its connection is turned off here, so the next time "
+"it calls it has to ask you to sign in. Nothing else is affected."
+msgstr ""
+"Soll %s sich erneut anmelden? Die Verbindung ist hier deaktiviert, daher "
+"werden Sie beim nächsten Aufruf zur Anmeldung aufgefordert. Ansonsten ist "
+"nichts beeinträchtigt."
+
+#: includes/mcp/ui-helpers.php:591
+msgid ""
+"Make one in WooCommerce, then paste both halves here. Copy them before you "
+"leave that screen — the secret is shown once and never again."
+msgstr ""
+"Erstelle eine Datei in WooCommerce und füge dann beide Hälften hier ein. "
+"Kopiere sie, bevor du die Seite verlässt – das Geheimnis wird nur einmal "
+"angezeigt."
 
 #: includes/views/map-providers.php:11 includes/views/settings.php:57
 #| msgid "Map Shipping Providers"
 msgid "Map Shipping Carriers"
 msgstr "Versandanbieter zuordnen"
 
-#: includes/class-wc-trackship-admin.php:742
+#: includes/class-wc-trackship-admin.php:757
 msgid "Mark order as delivered"
 msgstr "Bestellung als geliefert markieren"
 
-#: includes/customizer/trackship-customizer.php:1176
+#: includes/customizer/trackship-customizer.php:1163
 msgid "Mockup Order"
 msgstr "Mockup-Bestellung"
 
@@ -848,11 +1680,27 @@ msgstr "Diesen Monat"
 msgid "More info"
 msgstr "Mehr Info"
 
-#: includes/class-wc-trackship-actions.php:423
-#: includes/class-wc-trackship-actions.php:936
+#: includes/class-wc-trackship-actions.php:431
+#: includes/class-wc-trackship-actions.php:944
 #: includes/html/class-wc-trackship-html.php:137
 msgid "more info"
 msgstr "Mehr Info"
+
+#: includes/mcp/ui-helpers.php:784
+msgid "Named"
+msgstr "Namens"
+
+#: includes/mcp/ui-helpers.php:1306
+msgid "never"
+msgstr "niemals"
+
+#: includes/mcp/ui-helpers.php:630
+msgid "never — nothing has connected with it yet"
+msgstr "noch nie – bisher hat sich nichts damit verbunden."
+
+#: includes/mcp/ui-helpers.php:1500
+msgid "Newer"
+msgstr "Neuer"
 
 #: includes/views/dashboard.php:333
 msgid "No action needed for Shipments"
@@ -875,13 +1723,131 @@ msgstr "Kein Antwortcode"
 msgid "No carrier data yet."
 msgstr "Noch keine Spediteur-Daten."
 
+#: includes/mcp/ui-helpers.php:784
+msgid "no description"
+msgstr "keine Beschreibung"
+
 #: includes/views/dashboard.php:446
 msgid "No destination data yet."
 msgstr "Noch keine Zieldaten."
 
+#: includes/mcp/class-trackship-abilities.php:424
+msgid "No email settings changes provided."
+msgstr "Es wurden keine Änderungen an den E-Mail-Einstellungen vorgenommen."
+
 #: includes/smswoo/services/class-smswoo-twilio.php:183
 msgid "No response code"
 msgstr "Kein Antwortcode"
+
+#: includes/mcp/class-trackship-abilities.php:433
+msgid "No settings changes provided."
+msgstr "Es wurden keine Einstellungsänderungen vorgenommen."
+
+#: includes/mcp/class-trackship-abilities.php:330
+msgid "No shipment found for that order id."
+msgstr "Für diese Bestellnummer wurde keine Sendung gefunden."
+
+#: includes/mcp/class-trackship-abilities.php:466
+msgid "No shipment found for that shipment id, order id or tracking number."
+msgstr ""
+"Für diese Sendungs-ID, Bestell-ID oder Sendungsverfolgungsnummer wurde keine "
+"Sendung gefunden."
+
+#: includes/mcp/screen.php:150 includes/mcp/ui-helpers.php:538
+msgid "No tools are available on this connection yet."
+msgstr "Für diese Verbindung sind noch keine Tools verfügbar."
+
+#: includes/mcp/ui-helpers.php:1253
+msgid ""
+"Nobody has connected yet. Anyone you give the link to appears here once they "
+"connect, and you can turn any of them off without affecting the others."
+msgstr ""
+"Bisher hat sich noch niemand verbunden. Sobald sich jemand verbindet, "
+"erscheint er hier, dem Sie den Link geben. Sie können jeden einzelnen "
+"Kontakt deaktivieren, ohne die anderen zu beeinträchtigen."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:267
+msgid ""
+"Not a firewall - something answered, it just answered wrongly. Send that "
+"number to support; it says what went wrong."
+msgstr ""
+"Es liegt nicht an der Firewall – irgendetwas hat geantwortet, nur leider "
+"falsch. Schicken Sie diese Nummer an den Support; dort steht, was "
+"schiefgelaufen ist."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:591
+msgid "not recorded"
+msgstr "nicht aufgezeichnet"
+
+#: includes/mcp/ui-helpers.php:447
+msgid "Not supported"
+msgstr "Nicht unterstützt"
+
+#: includes/mcp/ui-helpers.php:1628
+msgid "Not working in your AI app?"
+msgstr "Funktioniert nicht in Ihrer KI-App?"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:566
+msgid ""
+"Nothing has used this link — but your tools are being used, through "
+"WooCommerce MCP."
+msgstr ""
+"Dieser Link wurde bisher nicht genutzt – Ihre Tools werden aber über das "
+"WooCommerce MCP verwendet."
+
+#: includes/mcp/ui-helpers.php:658
+msgid ""
+"Nothing is connected with this key yet. Set up an app with the steps above "
+"and it will appear here."
+msgstr ""
+"Dieser Schlüssel ist noch nicht verknüpft. Richten Sie eine App gemäß den "
+"obigen Schritten ein, dann wird sie hier angezeigt."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:501
+msgid ""
+"Nothing signed it, so it is an .htaccess rule or your host. Find the bad-bot "
+"or user agent list and take the Python and Perl entries out of it."
+msgstr ""
+"Es wurde nichts signiert, daher handelt es sich um eine .htaccess-Regel oder "
+"Ihren Host. Suchen Sie die Liste der schädlichen Bots oder User-Agents und "
+"entfernen Sie die Einträge für Python und Perl daraus."
+
+#. %s: the security plugin that writes .htaccess rules.
+#: includes/mcp/class-trackship-mcp-selftest.php:498
+#, php-format
+msgid ""
+"Nothing signed the refusal, so it came from .htaccess — and on this store %s "
+"is what writes rules there. Open it, find the bad-bot or user agent list, "
+"and take the Python and Perl entries out of it."
+msgstr ""
+"Da keine Signatur die Ablehnung verursacht hat, stammt sie aus der .htaccess-"
+"Datei – und in diesem Shop werden dort die Regeln von %s festgelegt. Öffnen "
+"Sie die Datei, suchen Sie die Liste der unerwünschten Bots oder User-Agents "
+"und entfernen Sie die Einträge für Python und Perl."
+
+#: includes/mcp/ui-helpers.php:1418
+msgid ""
+"Nothing yet. Once an AI assistant reads or updates anything on this store, "
+"every action it takes will be listed here."
+msgstr ""
+"Noch nichts. Sobald ein KI-Assistent etwas in diesem Shop liest oder "
+"aktualisiert, werden alle Aktionen hier aufgelistet."
+
+#: includes/views/ai-assistant.php:50
+msgid ""
+"Nothing yet. Once an AI assistant reads or updates your shipments, every "
+"action it takes will be listed here."
+msgstr ""
+"Noch nichts. Sobald ein KI-Assistent Ihre Sendungen liest oder aktualisiert, "
+"werden alle seine Aktionen hier aufgelistet."
+
+#: includes/mcp/screen.php:167
+msgid ""
+"Nothing yet. Once an AI assistant works on this store, every action it takes "
+"will be listed here."
+msgstr ""
+"Noch nichts. Sobald ein KI-Assistent in diesem Geschäft zum Einsatz kommt, "
+"werden alle seine Aktionen hier aufgelistet."
 
 #: includes/views/content.php:18
 #: includes/views/front/enhanced_shipment_details_notifications.php:40
@@ -891,7 +1857,7 @@ msgstr "Kein Antwortcode"
 msgid "Notifications"
 msgstr "Benachrichtigungen"
 
-#: includes/class-wc-trackship-admin.php:837
+#: includes/class-wc-trackship-admin.php:852
 msgid "Notifications detail"
 msgstr "Benachrichtigungsdetails"
 
@@ -899,12 +1865,41 @@ msgstr "Benachrichtigungsdetails"
 msgid "Notifications Type (SMS/WhatsApp)"
 msgstr "Benachrichtigungstyp (SMS/WhatsApp)"
 
-#: includes/class-wc-trackship-admin.php:459
+#: includes/class-wc-trackship-admin.php:474
 msgid "Number of days for late shipments"
 msgstr "Anzahl der Tage für verspätete Lieferungen"
 
-#: includes/class-wc-trackship-actions.php:663
-#: includes/class-wc-trackship-admin.php:1287
+#: includes/mcp/ui-helpers.php:1473
+msgid "OK"
+msgstr "OK"
+
+#: includes/mcp/ui-helpers.php:1503
+msgid "Older"
+msgstr "Älter"
+
+#: includes/views/ai-assistant.php:38
+msgid ""
+"On by default, so this URL offers the same tools as WooCommerce MCP. Turn it "
+"off to make the URL read-only — the AI can then look up shipments and "
+"notifications but not change settings, mappings, or resync tracking."
+msgstr ""
+"Diese Funktion ist standardmäßig aktiviert, sodass diese URL dieselben Tools "
+"wie das WooCommerce MCP bietet. Deaktivieren Sie sie, um die URL "
+"schreibgeschützt zu machen – die KI kann dann Sendungen und "
+"Benachrichtigungen abrufen, aber keine Einstellungen, Zuordnungen ändern "
+"oder die Sendungsverfolgung neu synchronisieren."
+
+#: includes/mcp/screen.php:145
+msgid ""
+"On by default. Turn it off to make the link read-only — the AI can then look "
+"things up but not change them."
+msgstr ""
+"Standardmäßig aktiviert. Deaktivieren Sie diese Funktion, um den Link "
+"schreibgeschützt zu machen – die KI kann dann Informationen nachschlagen, "
+"aber nicht ändern."
+
+#: includes/class-wc-trackship-actions.php:671
+#: includes/class-wc-trackship-admin.php:1302
 #: includes/class-wc-trackship-install.php:315
 #: includes/customizer/trackship-customizer.php:215
 #: includes/customizer/trackship-customizer.php:794
@@ -921,7 +1916,7 @@ msgstr "Sendung in der Warteschleife"
 msgid "On Hold Shipments"
 msgstr "In der Warteschleife liegende Sendungen"
 
-#: includes/class-wc-trackship-admin.php:794
+#: includes/class-wc-trackship-admin.php:809
 msgid "On Hold Shipments Notifications"
 msgstr "Benachrichtigungen über zurückgestellte Sendungen"
 
@@ -929,12 +1924,90 @@ msgstr "Benachrichtigungen über zurückgestellte Sendungen"
 msgid "On-time"
 msgstr "Pünktlich"
 
-#: includes/views/logs.php:50 includes/views/shipments.php:160
+#: includes/mcp/class-trackship-mcp-oauth.php:941
+msgid "Only accounts that can manage this store can connect an assistant."
+msgstr ""
+"Nur Accounts, die diesen Shop verwalten können, können einen Assistenten "
+"verbinden."
+
+#: includes/mcp/ui-helpers.php:944
+msgid ""
+"Only needed if you connect through WooCommerce MCP instead of your own link."
+msgstr ""
+"Nur erforderlich, wenn Sie die Verbindung über das WooCommerce MCP anstatt "
+"über Ihren eigenen Link herstellen."
+
+#: includes/views/ai-assistant.php:48
+msgid ""
+"Only needed if you connect through WooCommerce MCP instead of your TrackShip "
+"link."
+msgstr ""
+"Nur erforderlich, wenn Sie die Verbindung über das WooCommerce MCP anstatt "
+"über Ihren TrackShip-Link herstellen."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:856
+msgid "Open All In One WP Security firewall"
+msgstr "Öffnen Sie die All-in-One-Firewall von WP Security"
+
+#: includes/mcp/ui-helpers.php:1586 includes/views/ai-assistant.php:40
+msgid "Open claude.ai and go to Settings, then Connectors."
+msgstr ""
+"Öffnen Sie claude.ai und gehen Sie zu Einstellungen, dann zu Konnektoren."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:877
+msgid "Open NinjaFirewall settings"
+msgstr "NinjaFirewall-Einstellungen öffnen"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:870
+msgid "Open Solid Security settings"
+msgstr "Solid Security-Einstellungen öffnen"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:863
+msgid "Open Sucuri firewall settings"
+msgstr "Sucuri-Firewall-Einstellungen öffnen"
+
+#. %s: the setting's name.
+#: includes/mcp/class-trackship-mcp-selftest.php:835
+#, php-format
+msgid "Open the %s setting"
+msgstr "Öffnen Sie die %s-Einstellung"
+
+#: includes/mcp/ui-helpers.php:986
+msgid "Open WooCommerce feature settings"
+msgstr "WooCommerce-Funktionseinstellungen öffnen"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:844
+msgid "Open Wordfence firewall settings"
+msgstr "Wordfence-Firewall-Einstellungen öffnen"
+
+#. %s: the AI app's name, e.g. Cursor.
+#: includes/mcp/ui-helpers.php:431
+#, php-format
+msgid "Opening %s…"
+msgstr "Öffnung %s…"
+
+#: includes/mcp/ui-helpers.php:257
+msgid "Opens Cursor and adds the server."
+msgstr "Öffnet Cursor und fügt den Server hinzu."
+
+#: includes/shipments/class-wc-trackship-shipments.php:113
+#: includes/views/logs.php:50 includes/views/shipments.php:161
 #: includes/views/front/tracking_page_header.php:43
 msgid "Order"
 msgstr "Bestellung"
 
-#: includes/views/shipments.php:161
+#. 1: order id, 2: comma-separated tracking numbers.
+#: includes/mcp/class-trackship-abilities.php:473
+#, php-format
+msgid ""
+"Order %1$d has more than one shipment. Ask which one and call again with "
+"tracking_number: %2$s."
+msgstr ""
+"Bestellung %1$d besteht aus mehreren Teillieferungen. Bitte fragen Sie nach "
+"der jeweiligen Teillieferung und rufen Sie erneut mit der Sendungsnummer "
+"%2$s an."
+
+#: includes/views/shipments.php:162
 msgid "Order date"
 msgstr "Bestelldatum"
 
@@ -954,7 +2027,7 @@ msgstr "E-Mail der Bestellung"
 msgid "Order ID"
 msgstr "Bestell-ID"
 
-#: includes/class-wc-trackship-actions.php:729
+#: includes/class-wc-trackship-actions.php:737
 msgid "Order id not found"
 msgstr "Bestell-ID nicht gefunden"
 
@@ -962,7 +2035,7 @@ msgstr "Bestell-ID nicht gefunden"
 msgid "Order id, Email, Phone number"
 msgstr "Bestell-ID, E-Mail, Telefonnummer"
 
-#: includes/class-wc-trackship-admin.php:841
+#: includes/class-wc-trackship-admin.php:856
 #: templates/emails/exception-shipment-email.php:16
 #: templates/emails/late-shipment-email.php:16
 #: templates/emails/on-hold-shipment-email.php:16
@@ -989,9 +2062,9 @@ msgstr "Ursprungsdetails"
 msgid "Other"
 msgstr "Andere"
 
-#: includes/class-wc-trackship-actions.php:625
-#: includes/class-wc-trackship-actions.php:672
-#: includes/class-wc-trackship-admin.php:1275
+#: includes/class-wc-trackship-actions.php:633
+#: includes/class-wc-trackship-actions.php:680
+#: includes/class-wc-trackship-admin.php:1290
 #: includes/class-wc-trackship-install.php:313
 #: includes/customizer/trackship-customizer.php:213
 #: includes/customizer/trackship-customizer.php:792
@@ -1008,13 +2081,23 @@ msgstr "Zur Zustellung unterwegs"
 msgid "Overview"
 msgstr "Überblick"
 
-#: includes/class-wc-trackship-actions.php:620
-#: includes/class-wc-trackship-actions.php:702 includes/views/shipments.php:42
+#. 1: current page number, 2: total pages, 3: total number of entries.
+#: includes/mcp/ui-helpers.php:1490
+#, php-format
+msgid "Page %1$d of %2$d — %3$d entries"
+msgstr "Seite %1$d von %2$d — %3$d Einträgen"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:933
+msgid "Password"
+msgstr "Passwort"
+
+#: includes/class-wc-trackship-actions.php:628
+#: includes/class-wc-trackship-actions.php:710 includes/views/shipments.php:42
 msgid "Pending Update"
 msgstr "Ausstehende Aktualisierung"
 
-#: includes/class-wc-trackship-actions.php:422
-#: includes/class-wc-trackship-actions.php:934
+#: includes/class-wc-trackship-actions.php:430
+#: includes/class-wc-trackship-actions.php:942
 #| msgid ""
 #| "Pending TrackShip is a temporary status that will display for a few "
 #| "minutes until we update the order with the first tracking event from the "
@@ -1033,7 +2116,7 @@ msgstr ""
 msgid "Pickup Reminder"
 msgstr "Abholerinnerung"
 
-#: includes/class-wc-trackship-admin.php:1312
+#: includes/class-wc-trackship-admin.php:1327
 msgid "Pickup reminder"
 msgstr "Abholerinnerung"
 
@@ -1047,7 +2130,7 @@ msgid "Please connect your store with trackship.com."
 msgstr "Bitte verbinden Sie Ihren Shop mit trackship.com."
 
 #. %s: search for a tag
-#: trackship-for-woocommerce.php:115
+#: trackship-for-woocommerce.php:116
 #, php-format
 msgid ""
 "Please install and activate %1$sWooCommerce%2$s for TrackShip for "
@@ -1074,8 +2157,8 @@ msgstr ""
 msgid "Powered by "
 msgstr "Bereitgestellt von"
 
-#: includes/class-wc-trackship-actions.php:622
-#: includes/class-wc-trackship-actions.php:666 includes/views/shipments.php:26
+#: includes/class-wc-trackship-actions.php:630
+#: includes/class-wc-trackship-actions.php:674 includes/views/shipments.php:26
 msgid "Pre Transit"
 msgstr "Vor dem Transit"
 
@@ -1083,7 +2166,13 @@ msgstr "Vor dem Transit"
 msgid "Pre-Transit"
 msgstr "Vor dem Transit"
 
-#: includes/class-wc-trackship-admin.php:788
+#: includes/mcp/ui-helpers.php:1598
+msgid "Press Connect and sign in with your store account. Once only."
+msgstr ""
+"Klicken Sie auf „Verbinden“ und melden Sie sich mit Ihrem Kundenkonto an. "
+"Nur einmal."
+
+#: includes/class-wc-trackship-admin.php:803
 msgid "Priority Support"
 msgstr "Priorisierter Support"
 
@@ -1092,27 +2181,133 @@ msgstr "Priorisierter Support"
 msgid "Progress bar"
 msgstr "Fortschrittsanzeige"
 
-#: includes/class-wc-trackship-admin.php:821
+#: includes/mcp/class-trackship-abilities.php:443
+msgid "Provide \"note\" (use an empty string to clear the note)."
+msgstr ""
+"Geben Sie eine \"Notiz\" an (verwenden Sie eine leere Zeichenkette, um die "
+"Notiz zu löschen)."
+
+#: includes/mcp/class-trackship-abilities.php:389
+msgid "Provide \"set\" and/or \"remove\"."
+msgstr "Geben Sie \"set\" und/oder \"remove\" an."
+
+#: includes/mcp/class-trackship-abilities.php:421
+msgid "Provide a status group."
+msgstr "Geben Sie eine Statusgruppe an."
+
+#: includes/mcp/class-trackship-abilities.php:407
+msgid "Provide order_id or order_ids."
+msgstr "Geben Sie order_id oder order_ids an."
+
+#: includes/mcp/class-trackship-abilities.php:462
+msgid ""
+"Provide shipment_id, or order_id (with tracking_number if the order has "
+"several shipments)."
+msgstr ""
+"Bitte geben Sie die shipment_id oder die order_id (ggf. mit tracking_number, "
+"falls die Bestellung aus mehreren Teillieferungen besteht) an."
+
+#: includes/class-wc-trackship-admin.php:836
 msgid "Providers list Updated"
 msgstr "Anbieterliste aktualisiert"
 
-#: includes/views/notifications.php:29 includes/views/settings.php:62
+#: includes/mcp/screen.php:168 includes/views/notifications.php:29
+#: includes/views/settings.php:62
 msgid "Quick Help"
 msgstr "Schnellhilfe"
 
-#: includes/class-wc-trackship-admin.php:464
-#: includes/class-wc-trackship-admin.php:486
-#: includes/class-wc-trackship-admin.php:508
+#: includes/mcp/ui-helpers.php:561 includes/mcp/ui-helpers.php:905
+msgid "Read"
+msgstr "Lesen"
+
+#: includes/mcp/class-trackship-abilities.php:152
+msgid ""
+"Read all TrackShip settings (the full settings option). Reading is "
+"unrestricted; writes are limited to a safe whitelist via update-settings."
+msgstr ""
+"Lesen Sie alle TrackShip-Einstellungen (die Option „Vollständige "
+"Einstellungen“). Das Lesen ist uneingeschränkt möglich; Schreibvorgänge sind "
+"über die Update-Einstellungen auf eine sichere Whitelist beschränkt."
+
+#: includes/mcp/ui-helpers.php:779
+msgid "Read and write"
+msgstr "Lesen und Schreiben"
+
+#: includes/mcp/ui-helpers.php:777
+msgid "Read only"
+msgstr "Nur lesen"
+
+#: includes/mcp/class-trackship-abilities.php:159
+msgid ""
+"Read the shipment-status email customizer settings (per-status email design: "
+"colors, headings, content, enable flags). Nested as status => { property: "
+"value }. Edit with update-email-settings."
+msgstr ""
+"Lesen Sie die Einstellungen zur Anpassung der E-Mail-Bestätigung zum "
+"Sendungsstatus (Design der Status-E-Mail: Farben, Überschriften, Inhalt, "
+"Aktivierungsflags). Verschachtelt als Status => { Eigenschaft: Wert }. "
+"Bearbeiten Sie die Einstellungen mit update-email-settings."
+
+#: includes/mcp/class-trackship-abilities.php:166
+msgid ""
+"Read the shipping carrier mappings (your external/detected provider name → "
+"the TrackShip provider it maps to), including the resolved TrackShip "
+"provider display name. Edit with update-carrier-mappings."
+msgstr ""
+"Lesen Sie die Zuordnungen der Versanddienstleister (Ihr externer/erkannter "
+"Anbietername → der zugehörige TrackShip-Anbieter), einschließlich des "
+"angezeigten Namens des aufgelösten TrackShip-Anbieters. Bearbeiten Sie diese "
+"mit dem Befehl „update-carrier-mappings“."
+
+#: includes/class-wc-trackship-admin.php:479
+#: includes/class-wc-trackship-admin.php:501
+#: includes/class-wc-trackship-admin.php:523
 msgid "Recipient(s)"
 msgstr "Empfänger"
 
-#: includes/class-wc-trackship-admin.php:790
+#: includes/mcp/ui-helpers.php:1473
+msgid "Refused"
+msgstr "Abgelehnt"
+
+#: includes/class-wc-trackship-admin.php:805
 msgid "Remove TrackShip’s branding"
 msgstr "Entfernen Sie das Branding von TrackSship"
 
-#: includes/class-wc-trackship-actions.php:630
-#: includes/class-wc-trackship-actions.php:678
-#: includes/class-wc-trackship-admin.php:1299
+#: includes/mcp/ui-helpers.php:1082
+msgid ""
+"Removes the key from this site so the steps above are no longer shown. The "
+"key itself keeps working until you delete it in WooCommerce."
+msgstr ""
+"Entfernt den Schlüssel von dieser Website, sodass die oben genannten "
+"Schritte nicht mehr angezeigt werden. Der Schlüssel selbst bleibt so lange "
+"funktionsfähig, bis Sie ihn in WooCommerce löschen."
+
+#: includes/mcp/ui-helpers.php:1044
+msgid ""
+"Replace the key this site is using? The one stored now is dropped, and any "
+"app set up with it stops working until you set it up again with the new one. "
+"The old key is not deleted in WooCommerce."
+msgstr ""
+"Soll der Schlüssel dieser Website ersetzt werden? Der aktuell gespeicherte "
+"Schlüssel wird gelöscht, und alle damit eingerichteten Anwendungen "
+"funktionieren nicht mehr, bis sie mit dem neuen Schlüssel neu eingerichtet "
+"werden. Der alte Schlüssel wird in WooCommerce nicht gelöscht."
+
+#: includes/mcp/ui-helpers.php:422
+msgid "Reset"
+msgstr "Zurücksetzen"
+
+#: includes/mcp/ui-helpers.php:417
+msgid "Resetting…"
+msgstr "Zurücksetzen…"
+
+#: includes/mcp/ui-helpers.php:1454
+msgid "Result"
+msgstr "Ergebnis"
+
+#: includes/class-wc-trackship-actions.php:638
+#: includes/class-wc-trackship-actions.php:686
+#: includes/class-wc-trackship-admin.php:1314
 #: includes/class-wc-trackship-install.php:317
 #: includes/customizer/trackship-customizer.php:217
 #: includes/customizer/trackship-customizer.php:796
@@ -1128,9 +2323,17 @@ msgstr "Rücksendung"
 msgid "Return To Sender for last 30 days"
 msgstr "Zurück an Absender für die letzten 30 Tage"
 
-#: trackship-for-woocommerce.php:313
+#: trackship-for-woocommerce.php:337
 msgid "Review"
 msgstr "Rezension"
+
+#: includes/mcp/ui-helpers.php:1326
+msgid "Revoke"
+msgstr "Widerrufen"
+
+#: includes/mcp/ui-helpers.php:1315
+msgid "Revoked"
+msgstr "Widerrufen"
 
 #: includes/smswoo/class-smswoo-admin.php:508
 #: includes/views/notifications.php:106 includes/views/notifications.php:121
@@ -1144,6 +2347,10 @@ msgstr "Speichern & schließen"
 msgid "Save changes"
 msgstr "Änderungen speichern"
 
+#: includes/views/shipments.php:200
+msgid "Save note"
+msgstr "Notiz speichern"
+
 #: includes/customizer/trackship-customizer.php:104
 msgid "Saved"
 msgstr "Gespeichert"
@@ -1152,7 +2359,7 @@ msgstr "Gespeichert"
 msgid "Search"
 msgstr "Suchen"
 
-#: includes/views/shipments.php:132
+#: includes/views/shipments.php:133
 msgid "Search by Tracking Number, Shipping carrier, Order number"
 msgstr "Suche nach Sendungsverfolgungsnummer, Spediteur, Bestellnummer"
 
@@ -1166,22 +2373,26 @@ msgstr ""
 "Sicherheitsüberprüfung fehlgeschlagen, bitte aktualisieren Sie die Seite und "
 "versuchen Sie es erneut."
 
-#: includes/class-wc-trackship-admin.php:923
-#: includes/class-wc-trackship-admin.php:989
+#: includes/mcp/class-trackship-mcp-selftest.php:848
+msgid "See what Wordfence blocked"
+msgstr "Sehen Sie, was Wordfence blockiert hat."
+
+#: includes/class-wc-trackship-admin.php:938
+#: includes/class-wc-trackship-admin.php:1004
 msgid "Select"
 msgstr "Wählen"
 
-#: includes/class-wc-trackship-admin.php:1237
+#: includes/class-wc-trackship-admin.php:1252
 msgid "Select tracking page:"
 msgstr "Tracking-Seite auswählen:"
 
-#: includes/class-wc-trackship-admin.php:470
-#: includes/class-wc-trackship-admin.php:492
-#: includes/class-wc-trackship-admin.php:514
+#: includes/class-wc-trackship-admin.php:485
+#: includes/class-wc-trackship-admin.php:507
+#: includes/class-wc-trackship-admin.php:529
 msgid "Send email at"
 msgstr "E-Mail senden an"
 
-#: includes/class-wc-trackship-admin.php:1306
+#: includes/class-wc-trackship-admin.php:1321
 #: includes/smswoo/class-smswoo-admin.php:501
 msgid "Send only when all shipments for the order are delivered"
 msgstr "Nur senden, wenn alle Sendungen für die Bestellung geliefert wurden"
@@ -1190,7 +2401,9 @@ msgstr "Nur senden, wenn alle Sendungen für die Bestellung geliefert wurden"
 msgid ""
 "Send proactive shipment status emails that reduce \"Where is my order?\" "
 "support tickets."
-msgstr "Senden Sie proaktive E-Mails zum Sendungsstatus und reduzieren Sie „Wo ist meine Bestellung?“-Supportanfragen."
+msgstr ""
+"Senden Sie proaktive E-Mails zum Sendungsstatus und reduzieren Sie „Wo ist "
+"meine Bestellung?“-Supportanfragen."
 
 #: includes/smswoo/class-smswoo-admin.php:376
 msgid "Sender phone number / Sender ID"
@@ -1204,24 +2417,51 @@ msgstr "Versendet"
 msgid "Set Pickup reminder notifications(in days)"
 msgstr "Benachrichtigungen zur Abholerinnerung festlegen (in Tagen)"
 
-#: trackship-for-woocommerce.php:309 includes/class-wc-trackship-admin.php:220
+#: trackship-for-woocommerce.php:333 includes/class-wc-trackship-admin.php:220
 #: includes/views/content.php:13 includes/views/header2.php:55
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: includes/views/shipments.php:170
+#: includes/mcp/ui-helpers.php:223
+msgid "Settings > Connectors > Add custom connector, then paste the URL."
+msgstr ""
+"Einstellungen > Konnektoren > Benutzerdefinierten Konnektor hinzufügen, dann "
+"die URL einfügen."
+
+#: includes/mcp/ui-helpers.php:235
+msgid ""
+"Settings > Connectors > Add custom connector, then paste the URL. No config "
+"file to edit."
+msgstr ""
+"Einstellungen > Konnektoren > Benutzerdefinierten Konnektor hinzufügen, dann "
+"die URL einfügen. Keine Konfigurationsdatei zum Bearbeiten."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:855
+msgid "Settings, Connectors, then Connect on this store."
+msgstr "Einstellungen, Konnektoren, dann in diesem Shop verbinden."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:856
+msgid "Settings, Connectors, then Connect. Or restart the app."
+msgstr ""
+"Einstellungen, Konnektoren, dann Verbinden. Oder starten Sie die App neu."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:857
+msgid "Settings, MCP, then the refresh arrow on this server."
+msgstr "Einstellungen, MCP, dann den Aktualisierungspfeil auf diesem Server."
+
+#: includes/views/shipments.php:172
 msgid "Ship City"
 msgstr "Schiffsstadt"
 
-#: includes/views/shipments.php:167
+#: includes/views/shipments.php:169
 msgid "Ship from"
 msgstr "Liefern von"
 
-#: includes/views/shipments.php:169
+#: includes/views/shipments.php:171
 msgid "Ship State"
 msgstr "Schiffsstaat"
 
-#: includes/views/shipments.php:168
+#: includes/views/shipments.php:170
 msgid "Ship to"
 msgstr "Verschicken an"
 
@@ -1230,6 +2470,22 @@ msgstr "Verschicken an"
 #, php-format
 msgid "Shipment %1$s"
 msgstr "Sendung %1$s"
+
+#: includes/shipments/class-wc-trackship-shipments.php:504
+msgid "Shipment not found."
+msgstr "Sendung nicht gefunden."
+
+#: includes/views/shipments.php:191
+msgid "Shipment note"
+msgstr "Lieferschein"
+
+#: includes/shipments/class-wc-trackship-shipments.php:114
+msgid "Shipment note saved."
+msgstr "Lieferschein gespeichert."
+
+#: includes/views/shipments.php:168
+msgid "Shipment notes"
+msgstr "Versandbelege"
 
 #: includes/views/front/layout1_tracking_details.php:12
 #: includes/views/front/preview_tracking_page.php:115
@@ -1240,18 +2496,25 @@ msgstr "Versandfortschritt"
 msgid "Shipment Status"
 msgstr "Sendungsstatus"
 
-#: includes/class-wc-trackship-actions.php:348
-#: includes/class-wc-trackship-admin.php:842 includes/views/logs.php:51
-#: includes/views/shipments.php:166 templates/emails/late-shipment-email.php:17
+#: includes/class-wc-trackship-actions.php:356
+#: includes/class-wc-trackship-admin.php:857 includes/views/logs.php:51
+#: includes/views/shipments.php:167 templates/emails/late-shipment-email.php:17
 msgid "Shipment status"
 msgstr "Sendungsstatus"
+
+#: includes/mcp/class-trackship-abilities.php:63
+msgid ""
+"Shipment tracking, notifications and settings from TrackShip for WooCommerce."
+msgstr ""
+"Sendungsverfolgung, Benachrichtigungen und Einstellungen von TrackShip für "
+"WooCommerce."
 
 #: includes/class-wc-trackship-admin.php:214 includes/views/dashboard.php:369
 #: includes/views/header2.php:40
 msgid "Shipments"
 msgstr "Sendungen"
 
-#: includes/class-wc-trackship-admin.php:791
+#: includes/class-wc-trackship-admin.php:806
 msgid "Shipments Dashboard"
 msgstr "Versand-Dashboard"
 
@@ -1268,15 +2531,15 @@ msgstr ""
 msgid "Shipments Over Time"
 msgstr "Sendungen im Zeitverlauf"
 
-#: includes/class-wc-trackship-actions.php:690
-#: includes/class-wc-trackship-actions.php:705
+#: includes/class-wc-trackship-actions.php:698
+#: includes/class-wc-trackship-actions.php:713
 #: templates/emails/tracking-info.php:81
 #: includes/views/front/enhanced_tracking_events.php:18
 #: includes/views/front/tracking_page_header.php:64
 msgid "Shipped"
 msgstr "Versendet"
 
-#: includes/views/shipments.php:162
+#: includes/views/shipments.php:163
 msgid "Shipped date"
 msgstr "Versanddatum"
 
@@ -1288,7 +2551,7 @@ msgstr "Kopfzeilentext für versendete Produkte"
 msgid "Shipping & Delivery"
 msgstr "Versand & Lieferung"
 
-#: includes/class-wc-trackship-admin.php:795
+#: includes/class-wc-trackship-admin.php:810
 msgid "Shipping & Delivery Analytics"
 msgstr "Versand- und Lieferanalysen"
 
@@ -1304,7 +2567,7 @@ msgstr "Versandadresse"
 msgid "Shipping address header text"
 msgstr "Kopfzeilentext der Lieferadresse"
 
-#: includes/views/shipments.php:165
+#: includes/views/shipments.php:166
 msgid "Shipping carrier"
 msgstr "Spediteur"
 
@@ -1320,11 +2583,11 @@ msgstr "Versand Tage"
 msgid "Shipping provider"
 msgstr "Versandanbieter"
 
-#: includes/class-wc-trackship-actions.php:735
+#: includes/class-wc-trackship-actions.php:743
 msgid "Shipping provider not found"
 msgstr "Versandanbieter nicht gefunden"
 
-#: includes/views/shipments.php:174
+#: includes/views/shipments.php:176
 msgid "Shipping time"
 msgstr "Lieferdauer"
 
@@ -1348,6 +2611,36 @@ msgstr "nur Bestelldetails anzeigen"
 msgid "show only Tracking details"
 msgstr "nur Tracking-Details anzeigen"
 
+#: includes/mcp/ui-helpers.php:1354
+msgid "Sign everyone out"
+msgstr "Alle abmelden"
+
+#: includes/mcp/ui-helpers.php:1353
+msgid ""
+"Sign everyone out? Every AI assistant stops working until each person "
+"connects again. Your link does not change."
+msgstr ""
+"Alle abmelden? Alle KI-Assistenten funktionieren erst wieder, wenn sich alle "
+"Personen erneut anmelden. Ihre Verbindung bleibt unverändert."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:936
+msgid "Sign in"
+msgstr "anmelden"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:561
+msgid "Sign in to continue."
+msgstr "Melden Sie sich an, um fortzufahren."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:930
+msgid "Sign in with your store account to connect it."
+msgstr "Melden Sie sich mit Ihrem Shop-Konto an, um es zu verbinden."
+
+#. %s: the signed-in account's email address.
+#: includes/mcp/class-trackship-mcp-oauth.php:917
+#, php-format
+msgid "Signed in as %s"
+msgstr "Angemeldet als %s"
+
 #: includes/customizer/trackship-customizer.php:415
 #: includes/customizer/trackship-customizer.php:651
 msgid "Single icon"
@@ -1362,7 +2655,7 @@ msgstr "SMS"
 msgid "SMS gateways"
 msgstr "SMS-Gateways"
 
-#: includes/class-wc-trackship-admin.php:789
+#: includes/class-wc-trackship-admin.php:804
 #: includes/views/notifications.php:21 includes/views/notifications.php:150
 msgid "SMS Notifications"
 msgstr "SMS-Benachrichtigungen"
@@ -1372,7 +2665,7 @@ msgstr "SMS-Benachrichtigungen"
 msgid "SMS notifications"
 msgstr "SMS-Benachrichtigungen"
 
-#: includes/class-wc-trackship-admin.php:1327 includes/views/settings.php:53
+#: includes/class-wc-trackship-admin.php:1342 includes/views/settings.php:53
 #: includes/smswoo/admin-html/settings_tab.php:9
 msgid "SMS Settings"
 msgstr "SMS-Einstellungen"
@@ -1380,6 +2673,12 @@ msgstr "SMS-Einstellungen"
 #: includes/smswoo/admin-html/settings_tab.php:27
 msgid "SMS Settings managed by SMS for WooCommerce"
 msgstr "SMS-Einstellungen werden von SMS for WooCommerce verwaltet"
+
+#. %d: HTTP status.
+#: includes/mcp/class-trackship-mcp-selftest.php:803
+msgid "Something refused this request (%d) before it reached the plugin."
+msgstr ""
+"Etwas hat diese Anfrage (%d) abgelehnt, bevor sie das Plugin erreichte."
 
 #: includes/api/class-trackship-rest-api-controller.php:331
 msgid "Sorry, you are not allowed to create resources."
@@ -1394,27 +2693,39 @@ msgstr "Es ist Ihnen leider nicht möglich, Ressourcen aufzulisten."
 msgid "Sorry, you cannot view this resource."
 msgstr "Leider können Sie diese Ressource nicht anzeigen."
 
-#: includes/class-wc-trackship-actions.php:723
+#: includes/class-wc-trackship-actions.php:731
 msgid "SSL Error"
 msgstr "SSL-Fehler"
 
-#: includes/class-wc-trackship-admin.php:796
+#: includes/class-wc-trackship-admin.php:811
 #| msgid "Starting from $11 a month"
 msgid "Starting from $9 a month"
 msgstr "Ab 9 Dollar pro Monat"
 
-#: includes/class-wc-trackship-admin.php:847 includes/views/logs.php:55
+#: includes/class-wc-trackship-admin.php:862 includes/mcp/ui-helpers.php:677
+#: includes/mcp/ui-helpers.php:1281 includes/views/logs.php:55
 msgid "Status"
 msgstr "Status"
 
-#: includes/class-wc-trackship-actions.php:744
+#: includes/class-wc-trackship-actions.php:752
 #| msgid "Store is conneted with different account"
 msgid "Store is connected with different account"
 msgstr "Der Shop ist mit einem anderen Konto verbunden."
 
-#: includes/class-wc-trackship-actions.php:741
+#: includes/class-wc-trackship-actions.php:749
 msgid "Store is not Connected to TrackShip"
 msgstr "Der Shop ist nicht mit TrackShip verbunden"
+
+#: includes/mcp/ui-helpers.php:1045
+msgid ""
+"Store this key on the site? It is kept encrypted so your setup steps survive "
+"a reload, and it opens the whole store — orders, products, customers — to "
+"whatever you connect with it."
+msgstr ""
+"Speichern Sie diesen Schlüssel auf der Website? Er wird verschlüsselt "
+"aufbewahrt, sodass Ihre Einrichtungsschritte auch nach einem Neuladen "
+"erhalten bleiben, und er öffnet den gesamten Shop – Bestellungen, Produkte, "
+"Kunden – für alles, was Sie damit verbinden."
 
 #: includes/customizer/trackship-customizer.php:370
 msgid "Style & Colors"
@@ -1424,16 +2735,34 @@ msgstr "Stil & Farben"
 msgid "Support"
 msgstr "Support"
 
+#: includes/mcp/class-trackship-mcp-selftest.php:204
+msgid "Switch it on, then test."
+msgstr "Schalten Sie es ein und testen Sie es dann."
+
+#: includes/mcp/screen.php:139 includes/views/ai-assistant.php:35
+msgid "Switch on, copy your link, paste it into Claude. Nothing to install."
+msgstr ""
+"Einschalten, Link kopieren, in Claude einfügen. Keine Installation "
+"erforderlich."
+
+#: includes/mcp/screen.php:302
+msgid ""
+"Switch on, then paste the URL that appears into your AI assistant as a "
+"custom connector."
+msgstr ""
+"Schalten Sie das Programm ein und fügen Sie anschließend die angezeigte URL "
+"als benutzerdefinierten Konnektor in Ihren KI-Assistenten ein."
+
 #: includes/views/map-providers.php:71
 msgid "Sync providers"
 msgstr "Versanddienstleister synchronisieren"
 
-#: includes/class-wc-trackship-admin.php:815
-#: includes/class-wc-trackship-admin.php:823
+#: includes/class-wc-trackship-admin.php:830
+#: includes/class-wc-trackship-admin.php:838
 msgid "Sync TrackShip Providers"
 msgstr "TrackShip-Anbieter synchronisieren"
 
-#: includes/class-wc-trackship-admin.php:819
+#: includes/class-wc-trackship-admin.php:834
 msgid ""
 "Syncing the TrackShip providers list add or updates the pre-set TrackShip "
 "providers and will not effect custom shipping providers."
@@ -1458,6 +2787,101 @@ msgstr "Vorlagensprache"
 msgid "Template variables"
 msgstr "Vorlagenvariablen"
 
+#: includes/mcp/ui-helpers.php:1653
+msgid "Test my link"
+msgstr "Teste meinen Link"
+
+#: includes/mcp/ui-helpers.php:1652
+msgid "Testing…"
+msgstr "Testen…"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:479
+msgid ""
+"That AI app asked to be sent somewhere it has not registered. Nothing has "
+"been shared."
+msgstr ""
+"Die KI-App bat darum, an einen Ort gesendet zu werden, an dem sie nicht "
+"registriert ist. Es wurden keine Daten weitergegeben."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:475
+msgid ""
+"That AI app is not registered with this store. Remove the connection and add "
+"it again."
+msgstr ""
+"Diese KI-App ist in diesem Store nicht registriert. Trennen Sie die "
+"Verbindung und fügen Sie sie erneut hinzu."
+
+#: includes/mcp/class-trackship-mcp-keys.php:90
+msgid "That connection could not be turned off. Reload the page and try again."
+msgstr ""
+"Diese Verbindung konnte nicht getrennt werden. Laden Sie die Seite neu und "
+"versuchen Sie es erneut."
+
+#. %d: the HTTP status still coming back.
+#: includes/mcp/class-trackship-mcp-htaccess.php:405
+msgid ""
+"That did not do it — the link answered %d, so the rule is not one this file "
+"can reach. It is your host or your CDN. Ask them to stop filtering callers "
+"by name for this site. The change has been undone and nothing is left behind."
+msgstr ""
+"Das hat nicht funktioniert – der Link antwortete mit %d, die Regel ist also "
+"für diese Datei nicht anwendbar. Es liegt an Ihrem Webhost oder Ihrem CDN. "
+"Bitten Sie diese, die Filterung von Anrufern anhand ihres Namens für diese "
+"Website zu deaktivieren. Die Änderung wurde rückgängig gemacht und es sind "
+"keine Spuren mehr vorhanden."
+
+#: includes/views/ai-assistant.php:45
+msgid ""
+"That is everything TrackShip adds — shipments, notifications, carrier "
+"mappings and settings. No customer payment details."
+msgstr ""
+"Das ist alles, was TrackShip hinzufügt – Sendungen, Benachrichtigungen, "
+"Spediteurzuordnungen und Einstellungen. Keine Kundenzahlungsdaten."
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:938
+msgid ""
+"That key was already gone from WooCommerce. This site has stopped offering "
+"it."
+msgstr ""
+"Dieser Schlüssel war bei WooCommerce bereits nicht mehr verfügbar. Diese "
+"Website bietet ihn nicht mehr an."
+
+#: includes/mcp/class-trackship-mcp-registry.php:140
+msgid "That tool cannot be run right now."
+msgstr "Dieses Tool kann momentan nicht ausgeführt werden."
+
+#: includes/mcp/class-trackship-mcp-registry.php:126
+msgid "That tool is not available on this connection."
+msgstr "Dieses Tool ist über diese Verbindung nicht verfügbar."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:542
+msgid "That username or password was not right."
+msgstr "Der Benutzername oder das Passwort war falsch."
+
+#: includes/mcp/class-trackship-mcp-htaccess.php:172
+msgid ""
+"The .htaccess file cannot be written on this server, so this has to be "
+"changed by hand or by your host."
+msgstr ""
+"Die .htaccess-Datei kann auf diesem Server nicht beschrieben werden, daher "
+"muss sie entweder manuell oder von Ihrem Host geändert werden."
+
+#: includes/mcp/class-trackship-mcp-htaccess.php:194
+msgid ""
+"The .htaccess file could not be updated. Your host may have made it read-"
+"only."
+msgstr ""
+"Die .htaccess-Datei konnte nicht aktualisiert werden. Ihr Hosting-Anbieter "
+"hat sie möglicherweise schreibgeschützt."
+
+#: includes/mcp/class-trackship-mcp-server.php:200
+msgid "The account this connection belongs to no longer exists."
+msgstr "Das Konto, zu dem diese Verbindung gehört, existiert nicht mehr."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:203
+msgid "The connection is switched off."
+msgstr "Die Verbindung ist unterbrochen."
+
 #: includes/customizer/trackship-customizer.php:689
 msgid ""
 "The delivery tracking number will display if the shipment is getting a "
@@ -1466,6 +2890,14 @@ msgid ""
 msgstr ""
 "Die Sendungsnummer wird angezeigt, wenn die Sendung im Zielland eine andere "
 "Sendungsnummer vom örtlichen Postdienst erhält (z. B. 4PX -> USPS)."
+
+#: includes/mcp/class-trackship-mcp-htaccess.php:371
+msgid ""
+"The exception has been removed. Your security plugin now applies to this "
+"link exactly as it does to the rest of the site."
+msgstr ""
+"Die Ausnahme wurde entfernt. Ihr Sicherheits-Plugin gilt nun für diesen Link "
+"genauso wie für den Rest der Website."
 
 #: includes/class-wc-trackship-exception-shipments.php:173
 msgid "The following shipments are exception:"
@@ -1479,6 +2911,47 @@ msgstr "Die folgenden Sendungen sind verspätet:"
 msgid "The following shipments are On Hold:"
 msgstr "Die folgenden Sendungen liegen in der Warteschleife:"
 
+#: includes/mcp/class-trackship-mcp-woo-key.php:937
+msgid ""
+"The key is deleted. Nothing can connect with it now — make a new one when "
+"you need to set an app up again."
+msgstr ""
+"Der Schlüssel wurde gelöscht. Nichts kann sich jetzt damit verbinden – "
+"erstellen Sie einen neuen, wenn Sie erneut eine App einrichten müssen."
+
+#: includes/mcp/ui-helpers.php:666
+msgid "the key owner"
+msgstr "der Schlüsselbesitzer"
+
+#. 1: the app's name, 2: how long ago.
+#: includes/mcp/class-trackship-mcp-selftest.php:569
+#, php-format
+msgid ""
+"The last was %1$s, %2$s ago. That route works and there is nothing to fix. "
+"Use the link on this screen only if you also want to connect from claude.ai "
+"or a phone, which WooCommerce MCP cannot do."
+msgstr ""
+"Die letzte Verbindung wurde vor %1$s, %2$s hergestellt. Diese Route "
+"funktioniert und es gibt nichts zu reparieren. Verwenden Sie den Link auf "
+"dieser Seite nur, wenn Sie sich auch von claude.ai oder einem Telefon aus "
+"verbinden möchten, was mit dem WooCommerce MCP nicht möglich ist."
+
+#. 1: the app's name or user agent, 2: how long ago.
+#: includes/mcp/class-trackship-mcp-selftest.php:724
+#, php-format
+msgid ""
+"The last was %1$s, %2$s ago. Whether your AI assistant is still connected is "
+"held at its end, not here - if it reports an error, add the link to it again."
+msgstr ""
+"Die letzte Verbindung wurde vor %1$s, %2$s hergestellt. Ob Ihr KI-Assistent "
+"noch verbunden ist, wird von ihm selbst geprüft, nicht hier. Falls ein "
+"Fehler gemeldet wird, fügen Sie die Verbindung bitte erneut hinzu."
+
+#. %d: the HTTP status code the link answered with.
+#: includes/mcp/class-trackship-mcp-selftest.php:266
+msgid "The link answered with %d instead of the expected reply."
+msgstr "Der Link antwortete mit %d anstelle der erwarteten Antwort."
+
 #: includes/class-wc-trackship-front.php:294
 #: includes/class-wc-trackship-front.php:304
 msgid ""
@@ -1488,13 +2961,108 @@ msgstr ""
 "Die Bestellung/Sendung, die Sie verfolgen möchten, wurde noch nicht "
 "versendet oder die eingegebene Bestellnummer ist falsch."
 
-#: includes/class-wc-trackship-actions.php:541
+#: includes/mcp/ui-helpers.php:1162
+msgid ""
+"The same link for everyone. Whoever adds it signs in with their own store "
+"account, and you can turn any one of them off on its own."
+msgstr ""
+"Derselbe Link für alle. Wer ihn hinzufügt, meldet sich mit seinem eigenen "
+"Shop-Konto an, und man kann jeden einzelnen davon deaktivieren."
+
+#. 1: HTTP status, 2: the user agent that was refused.
+#: includes/mcp/class-trackship-mcp-selftest.php:449
+#, php-format
+msgid ""
+"The same request was refused (%1$d) when it called itself %2$s, which is the "
+"kind of name AI services use."
+msgstr ""
+"Die gleiche Anfrage wurde abgelehnt (%1$d), als sie sich %2$s nannte, was "
+"die Art von Namen ist, die KI-Dienste verwenden."
+
+#: includes/class-wc-trackship-actions.php:549
 msgid ""
 "The shipment status updates will run in the background, please refresh the "
 "page in a few minutes."
 msgstr ""
 "Die Sendungsstatusaktualisierungen werden im Hintergrund ausgeführt, bitte "
 "aktualisieren Sie die Seite in einigen Minuten."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:218
+msgid "The test could not run: this store cannot call its own link."
+msgstr ""
+"Der Test konnte nicht ausgeführt werden: Dieser Shop kann seinen eigenen "
+"Link nicht aufrufen."
+
+#. 1: HTTP status code, 2: message from WooCommerce.
+#: includes/mcp/class-trackship-mcp-woo-key.php:686
+#, php-format
+msgid "The WooCommerce MCP route answered with %1$d: %2$s"
+msgstr "Die WooCommerce MCP-Route antwortete mit %1$d: %2$s"
+
+#. %d: HTTP status code.
+#: includes/mcp/class-trackship-mcp-woo-key.php:688
+msgid "The WooCommerce MCP route answered with %d."
+msgstr "Die WooCommerce MCP-Route antwortete mit %d."
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:693
+msgid "The WooCommerce MCP route answered, but not with a tool list."
+msgstr ""
+"Die WooCommerce MCP-Route führte zum Ziel, allerdings ohne Angabe von Tools."
+
+#: includes/mcp/class-trackship-mcp-keys.php:175
+msgid ""
+"There was nothing to turn off — the app will be asked to sign in anyway."
+msgstr ""
+"Es gab nichts zu deaktivieren – die App fordert die Anmeldung ohnehin an."
+
+#: includes/mcp/class-trackship-mcp-keys.php:247
+msgid "There was nothing to turn off."
+msgstr "Es gab nichts, was man abschalten konnte."
+
+#: includes/mcp/ui-helpers.php:742
+msgid ""
+"They cannot be turned off one at a time — each is the same account, and an "
+"app that still has the key opens a new session on its next request. Deleting "
+"the key ends all of them, and a new one must be made to connect again."
+msgstr ""
+"Sie lassen sich nicht einzeln deaktivieren – es handelt sich immer um "
+"dasselbe Konto, und eine App, die den Schlüssel noch besitzt, öffnet bei der "
+"nächsten Anfrage eine neue Sitzung. Durch das Löschen des Schlüssels werden "
+"alle Verbindungen beendet, und ein neuer Schlüssel muss erstellt werden, um "
+"die Verbindung wiederherzustellen."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:568
+msgid ""
+"This account cannot manage the store, so it cannot connect an assistant here."
+" Sign in with an account that can."
+msgstr ""
+"Dieses Konto kann den Shop nicht verwalten und daher auch keinen Assistenten "
+"hinzufügen. Melden Sie sich mit einem Konto an, das diese Berechtigung "
+"besitzt."
+
+#: includes/mcp/ui-helpers.php:1645
+msgid ""
+"This adds four lines to your .htaccess file so requests to this plugin, and "
+"nothing else, skip your bad-bot rules. Nothing else on your site changes, "
+"and no rule is deleted. A copy of the file is kept, and the change is undone "
+"automatically if it turns out not to help. Continue?"
+msgstr ""
+"Dadurch werden Ihrer .htaccess-Datei vier Zeilen hinzugefügt, sodass "
+"Anfragen an dieses Plugin (und keine anderen) Ihre Regeln für unerwünschte "
+"Bots umgehen. An Ihrer Website ändert sich nichts weiter, und es wird keine "
+"Regel gelöscht. Eine Kopie der Datei wird gespeichert, und die Änderung wird "
+"automatisch rückgängig gemacht, falls sie sich als nicht hilfreich erweist. "
+"Fortfahren?"
+
+#: includes/mcp/class-trackship-mcp-server.php:184
+msgid "This connection has been turned off. Connect again to get a new one."
+msgstr ""
+"Diese Verbindung wurde deaktiviert. Stellen Sie erneut eine Verbindung her, "
+"um eine neue zu erhalten."
+
+#: includes/mcp/class-trackship-mcp-registry.php:133
+msgid "This connection is not allowed to manage TrackShip."
+msgstr "Diese Verbindung darf TrackShip nicht verwalten."
 
 #: includes/views/map-providers.php:26
 msgid ""
@@ -1512,11 +3080,42 @@ msgstr ""
 msgid "This field appears as a from or Sender ID"
 msgstr "Dieses Feld wird als Absender- oder Absender-ID angezeigt"
 
-#: includes/class-wc-trackship-admin.php:844 includes/views/logs.php:52
+#: includes/mcp/class-trackship-mcp-oauth.php:836
+msgid "This is already connected"
+msgstr "Diese Verbindung besteht bereits."
+
+#: includes/mcp/ui-helpers.php:770
+msgid ""
+"This key no longer exists in WooCommerce — it has been deleted there, so "
+"nothing can connect with it. Make a new one and paste it above."
+msgstr ""
+"Dieser Schlüssel existiert nicht mehr in WooCommerce – er wurde dort "
+"gelöscht, daher kann nichts mehr darauf zugreifen. Erstellen Sie einen neuen "
+"Schlüssel und fügen Sie ihn oben ein."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:850
+msgid "This sign-in expired"
+msgstr "Diese Anmeldung ist abgelaufen."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:130
+msgid "This store"
+msgstr "Dieser Laden"
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:801
+msgid ""
+"Those do not look like a WooCommerce key. The consumer key starts with ck_ "
+"and the consumer secret with cs_ — check you have one of each, the right way "
+"round."
+msgstr ""
+"Das sieht nicht nach einem WooCommerce-Schlüssel aus. Der "
+"Verbraucherschlüssel beginnt mit ck_ und das Verbrauchergeheimnis mit cs_ – "
+"prüfen Sie, ob Sie jeweils einen in der richtigen Reihenfolge haben."
+
+#: includes/class-wc-trackship-admin.php:859 includes/views/logs.php:52
 msgid "Time"
 msgstr "Zeit"
 
-#: includes/class-wc-trackship-admin.php:845 includes/views/logs.php:53
+#: includes/class-wc-trackship-admin.php:860 includes/views/logs.php:53
 msgid "To"
 msgstr "Zu"
 
@@ -1534,6 +3133,10 @@ msgstr ""
 "Um Ihre Bestellung zu verfolgen, geben Sie bitte die Sendungsnummer ein, die "
 "Sie in der Versandbestätigungs-E-Mail erhalten haben:"
 
+#: includes/mcp/ui-helpers.php:1450
+msgid "Tool"
+msgstr "Werkzeug"
+
 #: includes/views/content.php:28
 msgid "Tools"
 msgstr "Werkzeuge"
@@ -1550,10 +3153,10 @@ msgstr "Top-Ziele"
 msgid "Total Shipments"
 msgstr "Sendungen insgesamt"
 
-#: includes/class-wc-trackship-actions.php:414
-#: includes/class-wc-trackship-actions.php:420
-#: includes/class-wc-trackship-actions.php:932
-#: includes/class-wc-trackship-actions.php:943
+#: includes/class-wc-trackship-actions.php:422
+#: includes/class-wc-trackship-actions.php:428
+#: includes/class-wc-trackship-actions.php:940
+#: includes/class-wc-trackship-actions.php:951
 msgid "Track"
 msgstr "Verfolgen"
 
@@ -1579,7 +3182,7 @@ msgstr "Verfolgen Sie Ihre Bestellung"
 msgid "Tracker type"
 msgstr "Tracker-Typ"
 
-#: includes/class-wc-trackship-admin.php:1326
+#: includes/class-wc-trackship-admin.php:1341
 msgid "Tracking Analytics"
 msgstr "Tracking-Analytics"
 
@@ -1593,7 +3196,7 @@ msgstr ""
 "Tracking-Informationen sind nicht verfügbar, bitte versuchen Sie es später "
 "erneut."
 
-#: includes/class-wc-trackship-admin.php:402
+#: includes/class-wc-trackship-admin.php:417
 msgid ""
 "Tracking is sent to TrackShip when the order change to the selected status. "
 "Choose default (Completed/Shipped or Partially Shipped) or custom statuses "
@@ -1620,7 +3223,7 @@ msgstr "Tracking-Probleme"
 msgid "Tracking Issues for last 30 days"
 msgstr "Probleme der letzten 30 Tage verfolgen"
 
-#: includes/class-wc-trackship-admin.php:843 includes/views/shipments.php:164
+#: includes/class-wc-trackship-admin.php:858 includes/views/shipments.php:165
 #: templates/emails/exception-shipment-email.php:18
 #: templates/emails/late-shipment-email.php:19
 #: templates/emails/on-hold-shipment-email.php:18
@@ -1629,7 +3232,7 @@ msgstr "Probleme der letzten 30 Tage verfolgen"
 msgid "Tracking Number"
 msgstr "Sendungsnummer"
 
-#: includes/class-wc-trackship-actions.php:732
+#: includes/class-wc-trackship-actions.php:740
 msgid "Tracking number not found"
 msgstr "Sendungsnummer nicht gefunden"
 
@@ -1661,7 +3264,7 @@ msgstr ""
 "Workflow und ermöglicht es Ihnen, Ihren Kunden ein hervorragendes Post-"
 "Purchase-Erlebnis zu bieten."
 
-#: trackship-for-woocommerce.php:135
+#: trackship-for-woocommerce.php:136
 msgid "TrackShip for WooCommerce requires a Shipment Tracking extension."
 msgstr "TrackShip for WooCommerce benötigt eine Shipment-Tracking-Erweiterung."
 
@@ -1669,13 +3272,19 @@ msgstr "TrackShip for WooCommerce benötigt eine Shipment-Tracking-Erweiterung."
 msgid ""
 "TrackShip is syncing fulfillment-based shipments automatically. All new "
 "fulfillments will be tracked in real time."
-msgstr "TrackShip synchronisiert fulfillment-basierte Sendungen automatisch. Alle neuen Fulfillments werden in Echtzeit verfolgt."
+msgstr ""
+"TrackShip synchronisiert fulfillment-basierte Sendungen automatisch. Alle "
+"neuen Fulfillments werden in Echtzeit verfolgt."
 
 #: includes/views/logs.php:13
 msgid "TrackShip logs table does not exist, Please try after few minutes"
 msgstr ""
 "Die TrackShip-Protokolltabelle existiert nicht. Bitte versuchen Sie es nach "
 "einigen Minuten erneut"
+
+#: includes/views/ai-assistant.php:22
+msgid "TrackShip MCP"
+msgstr "TrackShip MCP"
 
 #: includes/views/header2.php:71
 msgid "TrackShip navigation"
@@ -1693,7 +3302,64 @@ msgstr "Die Datenbanktabelle „TrackShip Shipments“ ist nicht vorhanden."
 msgid "TrackShip Shipments meta database table does not exist."
 msgstr "Die Metadatentabelle für „TrackShip Shipments“ ist nicht vorhanden."
 
-#: includes/class-wc-trackship-admin.php:846 includes/views/logs.php:54
+#: includes/mcp/class-trackship-abilities.php:220
+msgid ""
+"Trigger \"Get Shipment Status\" for one or more orders: sends their tracking "
+"info to TrackShip and schedules a status refresh. Accepts \"order_id\" "
+"(single) or \"order_ids\" (array, max 50). This is a state-changing action "
+"that consumes a TrackShip tracking credit per shipped order — confirm with "
+"the user first. Orders that are not shipped are skipped."
+msgstr ""
+"Die Aktion „Sendungsstatus abrufen“ wird für eine oder mehrere Bestellungen "
+"ausgelöst: Die Sendungsverfolgungsinformationen werden an TrackShip gesendet "
+"und eine Statusaktualisierung geplant. Akzeptiert werden „order_id“ (einzeln)"
+" oder „order_ids“ (Array, maximal 50). Diese zustandsändernde Aktion "
+"verbraucht ein TrackShip-Guthaben pro versendeter Bestellung – bitte vorher "
+"mit dem Nutzer abklären. Nicht versendete Bestellungen werden übersprungen."
+
+#. %s: the person's email address.
+#: includes/mcp/ui-helpers.php:1324
+#, php-format
+msgid ""
+"Turn off this connection for %s? Their AI assistant stops working straight "
+"away. Everyone else is unaffected."
+msgstr ""
+"Diese Verbindung für %s deaktivieren? Deren KI-Assistent funktioniert dann "
+"sofort nicht mehr. Alle anderen sind nicht betroffen."
+
+#: includes/mcp/screen.php:146
+msgid ""
+"Turn off to make the connection URL read-only. WooCommerce MCP is not "
+"affected — it signs in a real store user instead."
+msgstr ""
+"Deaktivieren Sie diese Option, um die Verbindungs-URL schreibgeschützt zu "
+"machen. WooCommerce MCP ist davon nicht betroffen – es meldet stattdessen "
+"einen echten Shop-Benutzer an."
+
+#: includes/mcp/ui-helpers.php:229
+msgid ""
+"Turn on Developer mode in the ChatGPT settings first, then add the URL as a "
+"connector. OpenAI still ships this as a developer feature, so it is not on "
+"every plan yet."
+msgstr ""
+"Aktivieren Sie zunächst den Entwicklermodus in den ChatGPT-Einstellungen und "
+"fügen Sie anschließend die URL als Konnektor hinzu. OpenAI stellt diese "
+"Funktion weiterhin als Entwicklerfunktion bereit, daher ist sie noch nicht "
+"in allen Tarifen enthalten."
+
+#: includes/mcp/class-trackship-mcp-keys.php:95
+msgid "Turned off. Everyone else is still connected."
+msgstr "Ausgeschaltet. Alle anderen sind noch verbunden."
+
+#: includes/mcp/class-trackship-mcp-keys.php:174
+msgid "Turned off. The app will ask you to sign in again."
+msgstr "Deaktiviert. Die App fordert Sie auf, sich erneut anzumelden."
+
+#: includes/mcp/ui-helpers.php:1321 includes/mcp/ui-helpers.php:1352
+msgid "Turning off…"
+msgstr "Ausschalten…"
+
+#: includes/class-wc-trackship-admin.php:861 includes/views/logs.php:54
 msgid "Type"
 msgstr "Typ"
 
@@ -1706,25 +3372,70 @@ msgstr "Bestellung nicht gefunden."
 msgid "Unable to locate the order. or Invalid order key"
 msgstr "Bestellung nicht gefunden oder die Bestellnummer ist ungültig"
 
-#: includes/class-wc-trackship-actions.php:711
+#: includes/class-wc-trackship-actions.php:719
 msgid "Unauthorized"
 msgstr "Nicht befugt"
 
-#: includes/class-wc-trackship-actions.php:621
-#: includes/class-wc-trackship-actions.php:687 includes/views/shipments.php:36
+#: includes/class-wc-trackship-actions.php:629
+#: includes/class-wc-trackship-actions.php:695 includes/views/shipments.php:36
 msgid "Unknown"
 msgstr "Unbekannt"
 
-#: includes/trackship-email-manager.php:339
+#: includes/mcp/screen.php:338
+msgid "Unknown setting."
+msgstr "Unbekannte Einstellung."
+
+#: includes/trackship-email-manager.php:333
 #: includes/customizer/class-trackship-email-preview.php:181
 msgid "Unsubscribe"
 msgstr "Abbestellen"
 
-#: includes/views/shipments.php:163
+#: includes/mcp/class-trackship-abilities.php:205
+msgid "Update carrier mappings"
+msgstr "Aktualisierung der Netzbetreiberzuordnungen"
+
+#: includes/mcp/class-trackship-abilities.php:174
+msgid ""
+"Update one or more writable TrackShip settings. Only whitelisted keys are "
+"accepted. This changes store configuration — confirm with the user first. "
+"Allowed keys: "
+msgstr ""
+"Aktualisieren Sie eine oder mehrere beschreibbare TrackShip-Einstellungen. "
+"Nur zugelassene Schlüssel werden akzeptiert. Dies ändert die Shop-"
+"Konfiguration – bitte vorher mit dem Benutzer abklären. Zulässige Schlüssel:"
+
+#: includes/mcp/class-trackship-abilities.php:191
+msgid ""
+"Update per-status email customizer settings for one status group. Provide "
+"\"status\" (e.g. delivered, in_transit, common_settings) and \"changes\" "
+"(property => value). Only whitelisted email properties are accepted (colors, "
+"labels, button, toggles, subject/heading/content). This changes email design "
+"— confirm with the user first."
+msgstr ""
+"Aktualisieren Sie die E-Mail-Anpassungseinstellungen für eine Statusgruppe. "
+"Geben Sie den Status (z. B. zugestellt, unterwegs, allgemeine Einstellungen) "
+"und die Änderungen (Eigenschaft => Wert) an. Es werden nur zugelassene E-"
+"Mail-Eigenschaften akzeptiert (Farben, Beschriftungen, Schaltflächen, "
+"Umschalter, Betreff/Überschrift/Inhalt). Dies ändert das E-Mail-Design – "
+"stimmen Sie dies vorher mit dem Benutzer ab."
+
+#: includes/mcp/class-trackship-abilities.php:233
+msgid "Update shipment note"
+msgstr "Aktualisierung des Lieferscheins"
+
+#: includes/mcp/class-trackship-abilities.php:190
+msgid "Update shipment status email settings"
+msgstr "Einstellungen für E-Mail-Bestätigungen zum Versandstatus aktualisieren"
+
+#: includes/mcp/class-trackship-abilities.php:173
+msgid "Update TrackShip settings"
+msgstr "TrackShip-Einstellungen aktualisieren"
+
+#: includes/views/shipments.php:164
 msgid "Updated at"
 msgstr "Aktualisiert am"
 
-#: includes/class-wc-trackship-admin.php:799
+#: includes/class-wc-trackship-admin.php:814
 msgid "UPGRADE TO PRO"
 msgstr "UPGRADE AUF PRO"
 
@@ -1732,17 +3443,42 @@ msgstr "UPGRADE AUF PRO"
 msgid "Upgrade to Pro"
 msgstr "Auf Pro upgraden"
 
-#: includes/class-wc-trackship-admin.php:784
+#: includes/class-wc-trackship-admin.php:799
 msgid "Upgrade to TrackShip Pro"
 msgstr "Aktualisieren Sie auf TrackShip Pro"
 
-#: includes/class-wc-trackship-admin.php:441
+#: includes/mcp/ui-helpers.php:1049
+msgid "Use this key"
+msgstr "Verwenden Sie diesen Schlüssel"
+
+#: includes/mcp/ui-helpers.php:1357
+msgid ""
+"Use this when an app will not ask to sign in again — removing it inside the "
+"app is not enough, because the app keeps its own copy of the connection."
+msgstr ""
+"Verwenden Sie diese Option, wenn eine App nicht erneut zur Anmeldung "
+"auffordert – das Entfernen innerhalb der App reicht nicht aus, da die App "
+"eine eigene Kopie der Verbindung behält."
+
+#: includes/class-wc-trackship-admin.php:456
 msgid "Use Villa Theme Email Customizer Template"
 msgstr "Verwenden Sie die E-Mail-Customizer-Vorlage „Villa Theme“"
 
-#: includes/class-wc-trackship-actions.php:738
+#: includes/mcp/ui-helpers.php:1453
+msgid "User"
+msgstr "Benutzer"
+
+#: includes/class-wc-trackship-actions.php:746
 msgid "User not found for this key"
 msgstr "Benutzer für diesen Schlüssel nicht gefunden"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:931
+msgid "Username or email"
+msgstr "Benutzername oder E-Mail-Adresse"
+
+#: includes/mcp/ui-helpers.php:1662
+msgid "Using ChatGPT, or an app instead of claude.ai?"
+msgstr "Nutzt du ChatGPT oder eine andere App anstelle von claude.ai?"
 
 #: includes/views/tools.php:25
 msgid "Verify DB Structure"
@@ -1752,11 +3488,16 @@ msgstr "Überprüfen Sie die DB-Struktur"
 msgid "Verify if all TrackShip database tables are present."
 msgstr "Überprüfen Sie, ob alle TrackShip-Datenbanktabellen vorhanden sind."
 
+#: includes/ts-logs/class-wc-trackship-logs.php:64
+msgid "View"
+msgstr "Sicht"
+
 #: includes/views/dashboard.php:301
 msgid "View detailed stats"
 msgstr "Detaillierte Statistiken anzeigen"
 
-#: includes/views/notifications.php:32 includes/views/settings.php:65
+#: includes/mcp/screen.php:170 includes/views/notifications.php:32
+#: includes/views/settings.php:65
 msgid "View Documentation"
 msgstr "Dokumentation ansehen"
 
@@ -1770,7 +3511,7 @@ msgstr "weniger anzeigen"
 msgid "view more"
 msgstr "mehr anzeigen"
 
-#: includes/class-wc-trackship-actions.php:946
+#: includes/class-wc-trackship-actions.php:954
 msgid "View Shipment log"
 msgstr "Sendungsprotokoll anzeigen"
 
@@ -1817,7 +3558,7 @@ msgid "We detected %d On Hold shipments:"
 msgstr "Wir haben %d Sendungen in der Warteschleife entdeckt:"
 
 #. %s: replace with Partially Shipped order count
-#: includes/class-wc-trackship-admin.php:919
+#: includes/class-wc-trackship-admin.php:934
 #, php-format
 msgid ""
 "We detected %s orders that use the Delivered order status, You can reassign "
@@ -1827,7 +3568,7 @@ msgstr ""
 "Sie können diesen Bestellungen einen anderen Status zuweisen."
 
 #. %s: search for a total_orders
-#: includes/class-wc-trackship-admin.php:556
+#: includes/class-wc-trackship-admin.php:571
 #, php-format
 #| msgid ""
 #| "We detected %s Shipped orders from the last 30 days that were not sent to "
@@ -1839,6 +3580,30 @@ msgstr ""
 "Wir haben in den letzten 30 Tagen %s versendete Bestellungen entdeckt, die "
 "nicht an TrackShip gesendet wurden. Sie können sie in großen Mengen an "
 "TrackShip senden"
+
+#: includes/mcp/screen.php:148
+msgid "What Claude can do"
+msgstr "Was Claude tun kann"
+
+#: includes/mcp/screen.php:161
+msgid "What the AI did"
+msgstr "Was die KI getan hat"
+
+#: includes/mcp/ui-helpers.php:1128
+msgid "What this key can do"
+msgstr "Was dieser Schlüssel bewirken kann"
+
+#: includes/mcp/ui-helpers.php:1449
+msgid "When"
+msgstr "Wann"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:853
+msgid "Where to press"
+msgstr "Wo drücken?"
+
+#: includes/mcp/screen.php:151 includes/mcp/ui-helpers.php:1104
+msgid "Who is connected"
+msgstr "Wer ist verbunden?"
 
 #: includes/customizer/trackship-customizer.php:527
 msgid "Widget Background color"
@@ -1876,7 +3641,11 @@ msgstr "Widget-Layout"
 msgid "Widget Style"
 msgstr "Widget-Stil"
 
-#: includes/views/content.php:33
+#: includes/mcp/screen.php:153
+msgid "Woo MCP"
+msgstr "Woo MCP"
+
+#: includes/views/content.php:38
 msgid "WooCommerce Fulfillment"
 msgstr "WooCommerce Fulfillment"
 
@@ -1888,10 +3657,136 @@ msgstr "WooCommerce Fulfillments"
 msgid "WooCommerce Fulfillments Enabled"
 msgstr "WooCommerce Fulfillments aktiviert"
 
-#: includes/customizer/trackship-customizer.php:969
-#: includes/customizer/trackship-customizer.php:1009
+#: includes/mcp/ui-helpers.php:884 includes/mcp/ui-helpers.php:947
+msgid "WooCommerce is not exposing any tools on this route yet."
+msgstr "WooCommerce stellt auf diesem Weg noch keine Tools zur Verfügung."
+
+#: includes/mcp/screen.php:155 includes/mcp/ui-helpers.php:1376
+msgid "WooCommerce MCP"
+msgstr "WooCommerce MCP"
+
+#: includes/mcp/screen.php:299
+msgid ""
+"WooCommerce MCP already gives these tools to AI assistants on a computer. "
+"Switch this on as well only if you also want to connect from claude.ai or a "
+"phone, which WooCommerce MCP cannot do."
+msgstr ""
+"WooCommerce MCP stellt diese Tools bereits für KI-Assistenten auf einem "
+"Computer bereit. Aktivieren Sie diese Funktion nur dann zusätzlich, wenn Sie "
+"auch von claude.ai oder einem Smartphone aus eine Verbindung herstellen "
+"möchten, was mit WooCommerce MCP nicht möglich ist."
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:682
+msgid ""
+"WooCommerce MCP did not open a session, so its tool list could not be read."
+msgstr ""
+"WooCommerce MCP konnte keine Sitzung öffnen, daher konnte die Werkzeugliste "
+"nicht gelesen werden."
+
+#: includes/mcp/ui-helpers.php:943
+msgid ""
+"WooCommerce MCP is switched off in WooCommerce, so this route is not "
+"answering at all. Your own link is unaffected."
+msgstr ""
+"WooCommerce MCP ist in WooCommerce deaktiviert, daher ist diese Route nicht "
+"erreichbar. Ihr eigener Link ist davon nicht betroffen."
+
+#: includes/views/ai-assistant.php:47
+msgid ""
+"WooCommerce MCP is switched off in WooCommerce, so this route is not "
+"answering at all. Your TrackShip link is unaffected."
+msgstr ""
+"WooCommerce MCP ist in WooCommerce deaktiviert, daher antwortet diese Route "
+"nicht. Ihr TrackShip-Link ist davon nicht betroffen."
+
+#: includes/views/ai-assistant.php:44
+msgid ""
+"WooCommerce MCP needs WordPress 6.9 or newer. The link above works either "
+"way."
+msgstr ""
+"WooCommerce MCP benötigt WordPress 6.9 oder neuer. Der obige Link "
+"funktioniert in beiden Fällen."
+
+#. %s: message from WooCommerce.
+#: includes/mcp/class-trackship-mcp-woo-key.php:691
+#, php-format
+msgid "WooCommerce MCP said: %s"
+msgstr "WooCommerce MCP sagte: %s"
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:680
+msgid ""
+"WooCommerce refused the key. Check it is still there in WooCommerce, and "
+"that it has Read/Write access."
+msgstr ""
+"WooCommerce hat den Schlüssel abgelehnt. Überprüfen Sie, ob er in "
+"WooCommerce noch vorhanden ist und über Lese-/Schreibzugriff verfügt."
+
+#: includes/mcp/screen.php:156
+msgid "WooCommerce's own AI connection. Your tools are already on it."
+msgstr ""
+"WooCommerce verfügt über eine eigene KI-Anbindung. Ihre Tools sind bereits "
+"damit verbunden."
+
+#: includes/views/ai-assistant.php:46
+msgid ""
+"WooCommerce's own AI connection. Your TrackShip tools are already on it."
+msgstr ""
+"WooCommerce nutzt eine eigene KI-Anbindung. Ihre TrackShip-Tools sind "
+"bereits damit verbunden."
+
+#: includes/mcp/screen.php:154
+msgid "WooCommerce's own route"
+msgstr "WooCommerce's eigene Route"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:682
+msgid ""
+"Working for whoever is already connected — but somebody connecting for the "
+"first time will be turned away."
+msgstr ""
+"Wir arbeiten für diejenigen, die bereits einen Anschluss haben – aber jemand,"
+" der sich zum ersten Mal anmeldet, wird abgewiesen."
+
+#: includes/mcp/ui-helpers.php:1048 includes/mcp/ui-helpers.php:1087
+msgid "Working…"
+msgstr "Arbeiten…"
+
+#: includes/mcp/ui-helpers.php:558 includes/mcp/ui-helpers.php:902
+msgid "Write"
+msgstr "Schreiben"
+
+#: includes/mcp/ui-helpers.php:778
+msgid "Write only"
+msgstr "Nur schreiben"
+
+#. %s: the store's name.
+#: includes/mcp/class-trackship-mcp-oauth.php:841
+#, php-format
+msgid ""
+"You approved this sign-in a moment ago, so %s already sent your AI app what "
+"it needs. Nothing else is needed here."
+msgstr ""
+"Sie haben diese Anmeldung vorhin genehmigt, daher hat %s Ihrer KI-App "
+"bereits alle benötigten Daten übermittelt. Es ist nichts weiter erforderlich."
+
+#: includes/customizer/trackship-customizer.php:956
+#: includes/customizer/trackship-customizer.php:996
 msgid "You are customizing"
 msgstr "Sie passen an"
+
+#: includes/mcp/class-trackship-mcp-htaccess.php:358
+#: includes/mcp/class-trackship-mcp-keys.php:81
+#: includes/mcp/class-trackship-mcp-keys.php:160
+#: includes/mcp/class-trackship-mcp-keys.php:227
+#: includes/mcp/class-trackship-mcp-selftest.php:141
+#: includes/mcp/class-trackship-mcp-woo-key.php:779
+#: includes/mcp/class-trackship-mcp-woo-key.php:903
+#: includes/mcp/class-trackship-mcp-woo-key.php:927 includes/mcp/screen.php:318
+msgid "You are not allowed to do that."
+msgstr "Das ist Ihnen nicht erlaubt."
+
+#: includes/shipments/class-wc-trackship-shipments.php:476
+msgid "You are not allowed to edit shipment notes."
+msgstr "Es ist Ihnen nicht gestattet, Lieferscheine zu bearbeiten."
 
 #: includes/class-wc-trackship-front.php:400
 msgid "You have been unsubscribed from shipment status emails."
@@ -1901,23 +3796,70 @@ msgstr "Sie wurden von den Versandstatus-E-Mails abgemeldet."
 msgid ""
 "You have the AST PRO plugin activated. The shipping provider name mapping is "
 "done on the shipping provider settings in AST PRO."
-msgstr "Das AST PRO-Plugin ist aktiviert. Die Zuordnung der Versanddienstleister-Namen erfolgt in den Versanddienstleister-Einstellungen von AST PRO."
+msgstr ""
+"Das AST PRO-Plugin ist aktiviert. Die Zuordnung der Versanddienstleister-"
+"Namen erfolgt in den Versanddienstleister-Einstellungen von AST PRO."
 
 #: includes/smswoo/admin-html/settings_tab.php:28
 msgid ""
 "You have the SMS for WooCommerce plugin activated. Configure your SMS "
 "gateways and credentials directly from that plugin's settings."
-msgstr "Das SMS for WooCommerce-Plugin ist aktiviert. Konfigurieren Sie Ihre SMS-Gateways und Zugangsdaten direkt in den Einstellungen dieses Plugins."
+msgstr ""
+"Das SMS for WooCommerce-Plugin ist aktiviert. Konfigurieren Sie Ihre SMS-"
+"Gateways und Zugangsdaten direkt in den Einstellungen dieses Plugins."
 
-#: trackship-for-woocommerce.php:137
+#: trackship-for-woocommerce.php:138
 msgid ""
 "You must have a Shipment Tracking extension installed and active to use "
 "TrackShip for WooCommerce."
-msgstr "Sie müssen eine Shipment-Tracking-Erweiterung installiert und aktiviert haben, um TrackShip for WooCommerce zu verwenden."
+msgstr ""
+"Sie müssen eine Shipment-Tracking-Erweiterung installiert und aktiviert "
+"haben, um TrackShip for WooCommerce zu verwenden."
 
 #: includes/views/dashboard.php:334
 msgid "You're all caught up."
 msgstr "Alles erledigt."
+
+#: includes/mcp/screen.php:295
+msgid "Your connection URL is below."
+msgstr "Ihre Verbindungs-URL finden Sie unten."
+
+#: includes/mcp/screen.php:292
+msgid ""
+"Your connection URL is below. Set Settings > Permalinks to anything other "
+"than Plain for a cleaner URL."
+msgstr ""
+"Ihre Verbindungs-URL finden Sie unten. Stellen Sie unter „Einstellungen“ > "
+"„Permalinks“ eine andere Option als „Einfach“ ein, um eine übersichtlichere "
+"URL zu erhalten."
+
+#. %s: the error WordPress reported.
+#: includes/mcp/class-trackship-mcp-selftest.php:220
+#, php-format
+msgid ""
+"Your host reported: %s. That is a networking problem on the server, not your "
+"link and not your AI assistant."
+msgstr ""
+"Ihr Host meldete: %s. Das ist ein Netzwerkproblem auf dem Server, nicht auf "
+"Ihre Verbindung und nicht auf Ihren KI-Assistenten."
+
+#: includes/mcp/screen.php:116 includes/mcp/ui-helpers.php:1377
+#: includes/mcp/ui-helpers.php:1378 includes/mcp/ui-helpers.php:1558
+msgid "Your link"
+msgstr "Ihr Link"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:721
+msgid ""
+"Your link answers correctly, and callers from outside are getting through."
+msgstr ""
+"Ihr Link funktioniert einwandfrei, und Anrufer von außerhalb werden "
+"durchgestellt."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:613
+#: includes/mcp/class-trackship-mcp-selftest.php:626
+msgid "Your link works, but nothing from outside has ever reached it."
+msgstr ""
+"Ihr Link funktioniert, aber es ist noch nie etwas von außen darauf gelangt."
 
 #: includes/class-wc-trackship-install.php:336
 #, php-format
@@ -1932,6 +3874,10 @@ msgstr ""
 "Ihre Bestellung wird bearbeitet. Die Tracking-Details sind verfügbar, sobald "
 "Ihre Bestellung versandt wurde."
 
+#: includes/mcp/screen.php:137
+msgid "Your own link"
+msgstr "Ihr eigener Link"
+
 #: includes/views/trackship-integration.php:20
 msgid "Your Post-Shipping & Delivery Autopilot"
 msgstr "Ihr Autopilot für Versand und Zustellung"
@@ -1944,3 +3890,11 @@ msgstr "Ihre Einstellungen wurden erfolgreich gespeichert."
 #: includes/views/map-providers.php:31
 msgid "Your shipping provider"
 msgstr "Ihr Versanddienstleister"
+
+#: includes/mcp/class-trackship-mcp-server.php:383
+msgid "Your store"
+msgstr "Ihr Geschäft"
+
+#: includes/mcp/ui-helpers.php:1020
+msgid "Your WooCommerce key"
+msgstr "Ihr WooCommerce-Schlüssel"

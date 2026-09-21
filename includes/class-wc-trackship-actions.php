@@ -180,6 +180,14 @@ class WC_Trackship_Actions {
 		wp_enqueue_style( 'woocommerce_admin_styles' );
 		wp_enqueue_style( 'trackshipcss' );
 
+		// Shared AI connection screen assets — must be enqueued here (admin_enqueue_scripts),
+		// never during the screen render, or the CSS is silently dropped. This fork styles the
+		// screen with TrackShip's own design tokens (assets/css/trackship.css), so no separate
+		// framework is loaded.
+		if ( 'trackship-for-woocommerce' === $page && function_exists( 'trackship_mcp_enqueue_assets' ) ) {
+			trackship_mcp_enqueue_assets();
+		}
+
 		wp_enqueue_script( 'wp-color-picker' );
 		wp_enqueue_script( 'jquery-blockui' );
 		wp_enqueue_script( 'select2');
@@ -489,7 +497,7 @@ class WC_Trackship_Actions {
 		}
 		$args = array(
 			'status' => 'wc-completed',
-			'limit'	 => 100,
+			'limit' => 100,
 			'date_created' => '>' . ( time() - 2592000 ),
 			'type' => 'shop_order',
 		);
@@ -560,7 +568,7 @@ class WC_Trackship_Actions {
 	*/
 	public function process_order_meta_box_actions_get_shipment_status( $order ) {
 		$this->trigger_trackship_apicall( $order->get_id() );
-	}	
+	}
 	
 	/**
 	 * Add bulk filter for Shipment status in orders list
@@ -757,7 +765,7 @@ class WC_Trackship_Actions {
 				break;
 			case 'on_hold':
 				$html = '<span class="shipment-icon icon-' . $status . '">';
-				break;	
+				break;
 			case 'pre_transit':
 				$html = '<span class="shipment-icon icon-' . $status . '">';
 				break;
@@ -781,7 +789,7 @@ class WC_Trackship_Actions {
 				break;
 			case 'pending_trackship':
 				$html = '<span class="shipment-icon icon-' . $status . '">';
-				break;	
+				break;
 			case 'invalid_user_key':
 				$html = '<span class="shipment-icon icon-' . $status . '">';
 				break;
@@ -933,7 +941,7 @@ class WC_Trackship_Actions {
 								<?php } else { ?> 
 									<?php $tip_text = 'pending_trackship' == $status ? __( 'Pending Update is a temporary status that will display for a few minutes until we update the order with the first tracking event from the shipping provider. Please refresh the orders admin in 2-3 minutes.', 'trackship-for-woocommerce' ) : ''; ?>
 
-									<a href="https://docs.trackship.com/docs/resources/shipment-status-reference/#trackship-status-messages" class="<?php echo 'pending_trackship' == $status ? 'trackship-tip' : ''; ?> <?php echo esc_html( $class ); ?>" title="<?php echo esc_html($tip_text); ?>" target="_blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a>	
+									<a href="https://docs.trackship.com/docs/resources/shipment-status-reference/#trackship-status-messages" class="<?php echo 'pending_trackship' == $status ? 'trackship-tip' : ''; ?> <?php echo esc_html( $class ); ?>" title="<?php echo esc_html($tip_text); ?>" target="_blank"><?php esc_html_e( 'more info', 'trackship-for-woocommerce' ); ?></a> 
 								<?php } ?>
 							<?php } ?>
 						</span>
@@ -952,7 +960,17 @@ class WC_Trackship_Actions {
 			$tracking_provider = ! empty( $item['formatted_tracking_provider'] ) ? $item['formatted_tracking_provider'] : ( !empty( $item['tracking_provider'] ) ? $item['tracking_provider'] : $item['custom_tracking_provider'] ) ;
 			$tracking_provider = apply_filters( 'convert_provider_name_to_slug', $tracking_provider );
 			
-			$bool = apply_filters( 'exclude_to_send_data_for_provider', true, $tracking_provider );
+			/**
+			 * Filters whether tracking data should be sent to TrackShip for this shipment.
+			 *
+			 * Return false to exclude the order/provider from TrackShip entirely — no tracking
+			 * is sent, no notifications fire, and no tracking credit is used.
+			 *
+			 * @param bool $bool Whether to send the shipment to TrackShip. Default true.
+			 * @param string $tracking_provider Shipping provider slug.
+			 * @param int $order_id WooCommerce order id.
+			 */
+			$bool = apply_filters( 'exclude_to_send_data_for_provider', true, $tracking_provider, $order_id );
 			if ( !$bool ) {
 				return;
 			}
@@ -975,7 +993,7 @@ class WC_Trackship_Actions {
 			?>
 			<button type="button" class="button <?php echo !$cond ? 'ts-custom-tool-tip disabled' : 'metabox_get_shipment_status'; ?>" <?php echo !$cond ? 'title="' . esc_attr($title) . '"' : ''; ?>><?php esc_html_e( 'Get Shipment Status', 'trackship-for-woocommerce' ); ?></button>
 			<input type="hidden" id="get_shipment_nonce" value="<?php esc_html_e( wp_create_nonce( 'tswc-' . $order_id ) ); ?>">
-			<div class="ts-shipment-status-div temp-pending_trackship" style="display:none;">	
+			<div class="ts-shipment-status-div temp-pending_trackship" style="display:none;">
 				<span class="open_tracking_details ts-shipment-status shipment-pending_trackship" data-orderid="<?php esc_html_e( $order_id ); ?>" data-tracking_id="<?php esc_html_e( $tracking_id ); ?>" >
 					<span class="shipment-icon icon-pending_trackship">
 						<strong><?php esc_html_e( apply_filters( 'trackship_status_filter', 'pending_trackship' ) ); ?></strong>
@@ -1109,7 +1127,7 @@ class WC_Trackship_Actions {
 					'post_status' => 'publish',
 					'post_author' => 1,
 				);
-				$new_page_id = wp_insert_post($new_page);	
+				$new_page_id = wp_insert_post($new_page);
 				update_trackship_settings( 'tracking_page_id', $new_page_id );
 			}
 			update_option( 'wc_advanced_shipment_tracking_ts_page', '1.0');
@@ -1137,7 +1155,7 @@ class WC_Trackship_Actions {
 	* Return checkbox option value for customizer
 	*/
 	public function get_checkbox_option_value_from_array( $array, $key, $default_value) {
-		$array_data = get_option($array);	
+		$array_data = get_option($array);
 		$value = '';
 		
 		if ( isset( $array_data[$key] ) ) {
@@ -1237,7 +1255,17 @@ class WC_Trackship_Actions {
 			}
 			$tracking_provider = apply_filters( 'convert_provider_name_to_slug', $tracking_provider );
 			
-			$bool = apply_filters( 'exclude_to_send_data_for_provider', true, $tracking_provider );
+			/**
+			 * Filters whether tracking data should be sent to TrackShip for this shipment.
+			 *
+			 * Return false to exclude the order/provider from TrackShip entirely — no tracking
+			 * is sent, no notifications fire, and no tracking credit is used.
+			 *
+			 * @param bool $bool Whether to send the shipment to TrackShip. Default true.
+			 * @param string $tracking_provider Shipping provider slug.
+			 * @param int $order_id WooCommerce order id.
+			 */
+			$bool = apply_filters( 'exclude_to_send_data_for_provider', true, $tracking_provider, $order_id );
 			if ( !$bool ) {
 				continue;
 			}
@@ -1246,6 +1274,7 @@ class WC_Trackship_Actions {
 			$args = array(
 				'pending_status' => 'pending_trackship',
 				'fulfillment_id' => $tracking_item['fulfillment_id'] ?? '',
+				'shipping_provider'	=> $tracking_provider,
 			);
 			trackship_for_woocommerce()->actions->update_shipment_data( $order_id, $tracking_item['tracking_number'], $args );
 		}

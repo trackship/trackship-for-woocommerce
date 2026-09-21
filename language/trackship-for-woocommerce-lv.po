@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: TrackShip for WooCommerce\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-19 09:42+0000\n"
-"PO-Revision-Date: 2026-07-10 05:04+0000\n"
+"PO-Revision-Date: 2026-09-21 11:31+0000\n"
 "Last-Translator: \n"
 "Language-Team: Latvian\n"
 "Language: lv\n"
@@ -16,9 +16,118 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.8.3; wp-6.9.4; php-8.3.30\n"
 
+#: includes/mcp/class-trackship-mcp-selftest.php:994
+msgid " and "
+msgstr "un"
+
+#. 1: security plugin name, 2: HTTP status.
+#: includes/mcp/class-trackship-mcp-selftest.php:788
+#, php-format
+msgid "%1$s refused this request (%2$d) before it reached the plugin."
+msgstr "%1$s noraidīja šo pieprasījumu (%2$d), pirms tas sasniedza spraudni."
+
+#. %s: the CDN's name, e.g. Cloudflare.
+#: includes/mcp/class-trackship-mcp-selftest.php:463
+#, php-format
+msgid ""
+"%1$s turned it away before it reached your site, so nothing here can undo it."
+" In %1$s, look under Security for bot protection — Bot Fight Mode is the "
+"usual one — and turn that off, or add a rule that skips it for this address."
+msgstr ""
+"%1$s to noraidīja, pirms tas sasniedza jūsu vietni, tāpēc nekas šeit to "
+"nevar atsaukt. %1$s sadaļā Drošība meklējiet robotprogrammatūras aizsardzību "
+"— parasti tiek izmantots robotprogrammatūras apkarošanas režīms — un "
+"izslēdziet to vai pievienojiet noteikumu, kas to izlaiž šai adresei."
+
+#. %d: how many connections were turned off.
+#: includes/mcp/class-trackship-mcp-keys.php:239
+msgid ""
+"%d connection turned off. It will ask to sign in again next time it is used."
+msgid_plural ""
+"%d connections turned off. Each will ask to sign in again next time it is "
+"used."
+msgstr[0] ""
+"%d savienojums ir izslēgts. Nākamajā lietošanas reizē tas lūgs pierakstīties "
+"vēlreiz."
+msgstr[1] ""
+"%d savienojumi ir izslēgti. Nākamajā lietošanas reizē katrs no tiem lūgs "
+"pierakstīties vēlreiz."
+msgstr[2] ""
+
+#. %s: how long ago, e.g. "2 hours".
+#. %s: a length of time, e.g. "2 hours".
+#: includes/mcp/ui-helpers.php:634 includes/mcp/ui-helpers.php:711
+#: includes/mcp/ui-helpers.php:1303
+#, php-format
+msgid "%s ago"
+msgstr "pirms %s"
+
+#. %s: security plugin name.
+#: includes/mcp/class-trackship-mcp-selftest.php:489
+#, php-format
+msgid ""
+"%s sent the refusal: open it and take the Python and Perl entries out of its "
+"bad-bot or user agent list."
+msgstr ""
+"%s nosūtīja atteikumu: atveriet to un izņemiet Python un Perl ierakstus no "
+"tā slikto robotu vai lietotāja aģentu saraksta."
+
+#. 1: last characters of the key, 2: how long ago it was entered.
+#: includes/mcp/ui-helpers.php:596
+#, php-format
+msgid ""
+"A key ending %1$s was entered here %2$s ago, and your setup steps are below. "
+"Enter another to replace it."
+msgstr ""
+"Atslēga, kas beidzas %1$s, tika ievadīta šeit pirms %2$s, un iestatīšanas "
+"darbības ir norādītas tālāk. Ievadiet citu, lai to aizstātu."
+
 #: includes/views/dashboard.php:271
 msgid "A live snapshot of your shipments across the selected period."
 msgstr "Tiešraides momentuzņēmums par jūsu sūtījumiem izvēlētajā periodā."
+
+#: includes/mcp/class-trackship-abilities.php:410
+msgid "A maximum of 50 orders can be resynced per call."
+msgstr "Vienā izsaukumā var atkārtoti sinhronizēt ne vairāk kā 50 pasūtījumus."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:483
+msgid ""
+"A plain file on this site is served to that same caller without complaint, "
+"so the refusal is coming from inside WordPress — a security plugin, not your "
+"host and not .htaccess. Turn your security plugins off one at a time and "
+"test again; the one that lets it through is the one with the list."
+msgstr ""
+"Vienkāršs fails šajā vietnē tiek pasniegts tam pašam izsaucējam bez sūdzībām,"
+" tāpēc atteikums nāk no WordPress iekšienes — drošības spraudņa, nevis jūsu "
+"mitināšanas pakalpojuma sniedzēja un nevis .htaccess faila. Izslēdziet "
+"drošības spraudņus pa vienam un pārbaudiet vēlreiz; tas, kas to ielaiž, ir "
+"tas, kuram ir saraksts."
+
+#: includes/mcp/ui-helpers.php:945
+msgid ""
+"A WooCommerce key opens the whole store — orders, products, customers — "
+"because the key belongs to WooCommerce and cannot be narrowed. Your own link "
+"reaches only what this plugin adds."
+msgstr ""
+"WooCommerce atslēga atver visu veikalu — pasūtījumus, produktus, klientus —, "
+"jo atslēga pieder WooCommerce un to nevar sašaurināt. Jūsu pašu saite "
+"sasniedz tikai to, ko pievieno šis spraudnis."
+
+#: includes/views/ai-assistant.php:49
+msgid ""
+"A WooCommerce key opens the whole store — orders, products, customers — not "
+"just tracking. Your link above reaches TrackShip and nothing else."
+msgstr ""
+"WooCommerce atslēga atver visu veikalu — pasūtījumus, produktus, klientus —, "
+"ne tikai izsekošanu. Iepriekš minētā saite ved uz TrackShip un neko citu."
+
+#: includes/mcp/ui-helpers.php:1115
+msgid "About this key"
+msgstr "Par šo atslēgu"
+
+#: includes/mcp/ui-helpers.php:785
+msgid "Access"
+msgstr "Piekļuve"
 
 #: includes/smswoo/class-smswoo-admin.php:369
 msgid "Access Token"
@@ -32,14 +141,20 @@ msgstr "Konta informācijas panelis"
 msgid "Account SID"
 msgstr "Konta SID"
 
+#: includes/mcp/ui-helpers.php:673 includes/mcp/ui-helpers.php:783
+#: includes/mcp/ui-helpers.php:1277
+msgid "Acting as"
+msgstr "Darbojoties kā"
+
 #: includes/views/dashboard.php:311
 msgid "Action Needed"
 msgstr "Nepieciešama darbība"
 
-#: includes/views/logs.php:56 includes/views/shipments.php:177
+#: includes/views/logs.php:56 includes/views/shipments.php:179
 msgid "Actions"
 msgstr "Darbības"
 
+#: includes/mcp/ui-helpers.php:717 includes/mcp/ui-helpers.php:1315
 #: includes/views/dashboard.php:159
 msgid "Active"
 msgstr "Aktīvs"
@@ -52,9 +167,17 @@ msgstr "Aktīvi novēloti sūtījumi"
 msgid "Active Shipments"
 msgstr "Aktīvie sūtījumi"
 
+#: includes/views/shipments.php:196
+msgid "Add a note for this shipment"
+msgstr "Pievienot piezīmi šim sūtījumam"
+
 #: includes/views/map-providers.php:67
 msgid "Add mapping"
 msgstr "Pievienojiet kartēšanu"
+
+#: includes/shipments/class-wc-trackship-shipments.php:111
+msgid "Add note"
+msgstr "Pievienot piezīmi"
 
 #: includes/smswoo/class-smswoo-admin.php:523
 msgid "Add template id for this SMS"
@@ -76,6 +199,44 @@ msgstr ""
 msgid "Add the [trackship-track-order] shortcode in the selected page."
 msgstr "Atlasītajā lapā pievienojiet īskodu [wcast-track-order]."
 
+#: includes/mcp/ui-helpers.php:259
+msgid "Add to Cursor"
+msgstr "Pievienot kursoram"
+
+#: includes/mcp/class-trackship-abilities.php:234
+msgid ""
+"Add, replace or clear the internal note on one shipment (shown in the "
+"Shipment notes column of the TrackShip Shipments page; never sent to the "
+"customer). Identify the shipment by \"shipment_id\", or by \"order_id\" plus "
+"\"tracking_number\" when the order has more than one shipment. \"note\" "
+"replaces the existing note; an empty string clears it. Max 1000 characters. "
+"To read notes use get-shipment or list-shipments, which return shipment_id "
+"and shipment_note. Confirm the wording with the user first."
+msgstr ""
+"Pievienot, aizstāt vai notīrīt iekšējo piezīmi vienam sūtījumam (redzama "
+"TrackShip sūtījumu lapas kolonnā “Sūtījuma piezīmes”; nekad netiek nosūtīta "
+"klientam). Identificēt sūtījumu pēc “shipment_id” vai pēc “order_id” plus "
+"“tracking_number”, ja pasūtījumam ir vairāk nekā viens sūtījums. “note” "
+"aizstāj esošo piezīmi; tukša virkne to notīra. Maks. 1000 rakstzīmes. Lai "
+"lasītu piezīmes, izmantojiet get-shipment vai list-shipments, kas atgriež "
+"shipment_id un shipment_note. Vispirms apstipriniet formulējumu ar lietotāju."
+
+#: includes/mcp/class-trackship-abilities.php:206
+msgid ""
+"Add/update or remove shipping carrier mappings. \"set\" is a map of detected "
+"provider name => TrackShip provider slug (ts_slug); \"remove\" is a list of "
+"detected provider names to delete. Each ts_slug is validated against the "
+"known TrackShip provider list; unknown slugs are skipped. This changes store "
+"configuration — confirm with the user first."
+msgstr ""
+"Pievienot/atjaunināt vai noņemt piegādes pārvadātāja kartējumus. \"set\" ir "
+"noteiktā pakalpojumu sniedzēja nosaukuma karte => TrackShip pakalpojumu "
+"sniedzēja slug (ts_slug); \"remove\" ir noteikto pakalpojumu sniedzēju "
+"nosaukumu saraksts, kas jādzēš. Katrs ts_slug tiek pārbaudīts, salīdzinot ar "
+"zināmo TrackShip pakalpojumu sniedzēju sarakstu; nezināmas slug tiek "
+"izlaistas. Tas maina veikala konfigurāciju — vispirms apstipriniet ar "
+"lietotāju."
+
 #: includes/views/notifications.php:25 includes/views/notifications.php:95
 msgid "Admin Notifications"
 msgstr "Administratora paziņojumi"
@@ -83,6 +244,30 @@ msgstr "Administratora paziņojumi"
 #: includes/smswoo/class-smswoo-admin.php:384
 msgid "Admin Phone Number"
 msgstr "Administratora tālruņa numurs"
+
+#: includes/mcp/class-trackship-abilities.php:131
+msgid ""
+"Aggregate shipment metrics for a date range: total, active, delivered, "
+"tracking issues, average transit days and delivered rate."
+msgstr ""
+"Apkopotie sūtījumu rādītāji noteiktā datumu diapazonā: kopējais, aktīvo, "
+"piegādāto sūtījumu skaits, izsekošanas problēmas, vidējās tranzīta dienas un "
+"piegādes ātrums."
+
+#: includes/mcp/screen.php:115 includes/mcp/screen.php:140
+#: includes/views/ai-assistant.php:21 includes/views/ai-assistant.php:32
+#: includes/views/content.php:33
+msgid "AI Assistant"
+msgstr "Mākslīgā intelekta palīgs"
+
+#: includes/mcp/class-trackship-mcp-keys.php:408
+msgid "AI assistant"
+msgstr "Mākslīgā intelekta palīgs"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:925
+msgid "All In One WP Security → Firewall → PHP rules → nG firewall rules"
+msgstr ""
+"Viss vienā WP drošība → Ugunsmūris → PHP noteikumi → nG ugunsmūra noteikumi"
 
 #: includes/views/logs.php:23
 msgid "All Notifications"
@@ -92,7 +277,7 @@ msgstr "Visi paziņojumi"
 msgid "All Shipments"
 msgstr "Visi sūtījumi"
 
-#: includes/views/shipments.php:109
+#: includes/views/shipments.php:110
 msgid "All shipping providers"
 msgstr "Visi piegādes pakalpojumu sniedzēji"
 
@@ -105,13 +290,30 @@ msgstr "Visu laiku"
 msgid "All Types"
 msgstr "Visi veidi"
 
-#: includes/class-wc-trackship-admin.php:418
+#: includes/mcp/screen.php:144 includes/views/ai-assistant.php:37
+msgid "Allow the AI to make changes"
+msgstr "Ļaujiet mākslīgajam intelektam veikt izmaiņas"
+
+#: includes/class-wc-trackship-admin.php:433
 msgid ""
 "Allow users to opt-out of receiving Shipment status notifications on the "
 "Tracking page and Shipment status emails."
 msgstr ""
 "Ļaujiet lietotājiem atteikties no sūtījuma statusa paziņojumu saņemšanas "
 "lapā Izsekošana un sūtījuma statusa e-pastiem."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:454
+msgid "Allowing the URL will not help."
+msgstr "URL atļaušana nepalīdzēs."
+
+#: includes/mcp/ui-helpers.php:783
+msgid "an account that no longer exists"
+msgstr "konts, kas vairs nepastāv"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:570
+#: includes/mcp/class-trackship-mcp-selftest.php:725
+msgid "an AI client"
+msgstr "mākslīgā intelekta klients"
 
 #: includes/smswoo/services/class-smswoo-msg91.php:157
 #: includes/smswoo/services/class-smswoo-twilio.php:110
@@ -136,9 +338,22 @@ msgstr ""
 "Radās kļūda: funkcija Clicksend netiek atbalstīta tālruņa numura "
 "apstiprināšanai izrakstīšanās laikā. Lūdzu, sazinieties ar atbalsta dienestu"
 
+#: includes/mcp/class-trackship-mcp-woo-key.php:515
+msgid "an unnamed app"
+msgstr "nenosaukta lietotne"
+
 #: includes/class-wc-trackship-admin.php:218 includes/views/header2.php:50
 msgid "Analytics"
 msgstr "Analytics"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:683
+msgid ""
+"Anyone whose assistant has connected to this store before can still "
+"reconnect: the step that gets refused only happens the first time."
+msgstr ""
+"Ikviens, kura asistents jau iepriekš ir izveidojis savienojumu ar šo veikalu,"
+" joprojām var to atkārtoti izveidot savienojumu: darbība, kas tiek noraidīta,"
+" tiek veikta tikai pirmajā reizē."
 
 #: includes/smswoo/class-smswoo-admin.php:339
 #: includes/smswoo/class-smswoo-admin.php:361
@@ -153,34 +368,53 @@ msgstr "API atslēga"
 msgid "API Username"
 msgstr "API lietotājvārds"
 
-#: includes/views/shipments.php:124
+#: includes/mcp/ui-helpers.php:674 includes/mcp/ui-helpers.php:1278
+#: includes/mcp/ui-helpers.php:1452
+msgid "App"
+msgstr "Lietotne"
+
+#: includes/views/shipments.php:125
 msgid "Apply"
 msgstr "Pieteikties"
+
+#: includes/views/ai-assistant.php:42
+msgid "Ask Claude: which shipments are late?"
+msgstr "Pajautājiet Klodam: kuri sūtījumi kavējas?"
+
+#: includes/mcp/screen.php:160 includes/mcp/screen.php:162
+msgid "Audit Log"
+msgstr "Audita žurnāls"
 
 #: includes/smswoo/class-smswoo-admin.php:306
 msgid "Auth Token"
 msgstr "Auth Token"
 
+#: includes/mcp/class-trackship-mcp-server.php:214
+msgid "Authentication required."
+msgstr "Nepieciešama autentifikācija."
+
 #: includes/views/trackship-integration.php:75
 msgid "Auto-Track Shipments"
 msgstr "Automātiska sūtījumu izsekošana"
 
-#: includes/class-wc-trackship-admin.php:401
+#: includes/class-wc-trackship-admin.php:416
 msgid "Auto-track these order statuses"
 msgstr "Automātiski izsekot šos pasūtījumu statusus"
 
 #: includes/views/trackship-integration.php:76
 msgid ""
 "Automatically track shipments across 1,000+ carriers without any manual work."
-msgstr "Automātiski izsekojiet sūtījumus pie vairāk nekā 1000 pārvadātājiem bez manuāla darba."
+msgstr ""
+"Automātiski izsekojiet sūtījumus pie vairāk nekā 1000 pārvadātājiem bez "
+"manuāla darba."
 
 #: includes/views/dashboard.php:241
 msgid "Available Balance"
 msgstr "Pieejamais atlikums"
 
-#: includes/class-wc-trackship-actions.php:624
-#: includes/class-wc-trackship-actions.php:675
-#: includes/class-wc-trackship-admin.php:1269
+#: includes/class-wc-trackship-actions.php:632
+#: includes/class-wc-trackship-actions.php:683
+#: includes/class-wc-trackship-admin.php:1284
 #: includes/class-wc-trackship-install.php:312
 #: includes/customizer/trackship-customizer.php:212
 #: includes/customizer/trackship-customizer.php:791
@@ -218,11 +452,23 @@ msgstr "Vid. tranzīts"
 msgid "Avg. Transit Time"
 msgstr "Vidējais tranzīta laiks"
 
+#: includes/mcp/class-trackship-mcp-selftest.php:924
+msgid "Block user-agents"
+msgstr "Bloķēt lietotāju aģentus"
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:790
+msgid ""
+"Both halves of the key are needed. Copy them from WooCommerce before leaving "
+"that screen — the secret is shown once."
+msgstr ""
+"Ir nepieciešamas abas atslēgas puses. Pirms aizvēršanas no šī ekrāna "
+"nokopējiet tās no WooCommerce — slepenā atslēga tiek parādīta vienreiz."
+
 #: includes/views/trackship-integration.php:82
 msgid "Branded Notifications"
 msgstr "Zīmola paziņojumi"
 
-#: includes/views/shipments.php:121
+#: includes/views/shipments.php:122
 msgid "Bulk actions"
 msgstr "Lielapjoma darbības"
 
@@ -244,9 +490,36 @@ msgstr "Pogas rādiuss"
 msgid "Button text"
 msgstr "Pogas teksts"
 
-#: includes/class-wc-trackship-actions.php:628
+#. %s: how long ago.
+#: includes/mcp/class-trackship-mcp-selftest.php:697
+#, php-format
+msgid ""
+"Callers are reaching your link but none has been let in. The last was %s ago."
+msgstr ""
+"Zvanītāji sasniedz jūsu saiti, bet neviens nav ielaists. Pēdējo reizi tas "
+"notika pirms %s."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:926
+#: includes/views/shipments.php:199
+msgid "Cancel"
+msgstr "Atcelt"
+
+#: includes/class-wc-trackship-actions.php:636
 msgid "Cancelled"
 msgstr "Atcelts"
+
+#: includes/mcp/ui-helpers.php:194
+msgid "Cannot send an API key header either. Use your own link for ChatGPT."
+msgstr ""
+"Nevar nosūtīt arī API atslēgas galveni. Izmantojiet savu saiti ChatGPT."
+
+#: includes/mcp/ui-helpers.php:188
+msgid ""
+"Cannot send an API key header. Use your own link for claude.ai and for "
+"phones."
+msgstr ""
+"Nevar nosūtīt API atslēgas galveni. Izmantojiet savu saiti claude.ai un "
+"tālruņiem."
 
 #: includes/views/dashboard.php:459
 msgid "Carrier"
@@ -260,8 +533,8 @@ msgstr "Pārvadātāju kartēšanu pārvalda AST PRO"
 msgid "Carrier Performance"
 msgstr "Pārvadātāja veiktspēja"
 
-#: includes/class-wc-trackship-actions.php:629
-#: includes/class-wc-trackship-actions.php:708 includes/views/shipments.php:40
+#: includes/class-wc-trackship-actions.php:637
+#: includes/class-wc-trackship-actions.php:716 includes/views/shipments.php:40
 msgid "Carrier Unsupported"
 msgstr "Mobilo sakaru operators netiek atbalstīts"
 
@@ -269,44 +542,130 @@ msgstr "Mobilo sakaru operators netiek atbalstīts"
 msgid "Carriers & Destinations"
 msgstr "Pārvadātāji un galameērķi"
 
-#: includes/class-wc-trackship-admin.php:719
+#: includes/class-wc-trackship-admin.php:734
 msgid "Change order status to"
 msgstr "Mainīt pasūtījuma statusu uz"
 
-#: includes/class-wc-trackship-admin.php:715
+#: includes/class-wc-trackship-admin.php:730
 msgid "Change status: "
 msgstr "Mainīt statusu: "
+
+#: includes/mcp/ui-helpers.php:1451
+msgid "Channel"
+msgstr "Kanāls"
+
+#: includes/mcp/ui-helpers.php:193 includes/mcp/ui-helpers.php:228
+msgid "ChatGPT"
+msgstr "ČatsGPT"
+
+#: includes/mcp/ui-helpers.php:1630
+msgid ""
+"Checks whether an AI assistant can actually reach your link, and says what "
+"stopped it if not."
+msgstr ""
+"Pārbauda, vai mākslīgā intelekta asistents patiešām var sasniegt jūsu saiti, "
+"un, ja nē, norāda, kas to apturēja."
+
+#: includes/mcp/ui-helpers.php:1587 includes/views/ai-assistant.php:41
+msgid "Choose Add custom connector, give it any name, and paste your link."
+msgstr ""
+"Izvēlieties Pievienot pielāgotu savienotāju, piešķiriet tam jebkuru "
+"nosaukumu un ielīmējiet saiti."
 
 #: includes/customizer/trackship-customizer.php:621
 msgid "Classic"
 msgstr "Klasika"
 
-#: includes/class-wc-trackship-admin.php:933
+#: includes/mcp/ui-helpers.php:211 includes/mcp/ui-helpers.php:234
+msgid "Claude Desktop"
+msgstr "Klods Desktops"
+
+#: includes/mcp/ui-helpers.php:187 includes/mcp/ui-helpers.php:222
+msgid "claude.ai"
+msgstr "claude.ai"
+
+#: includes/class-wc-trackship-admin.php:948
 #: includes/views/trackship-integration.php:37
 msgid "Close"
 msgstr "Aizvērt"
 
-#: trackship-for-woocommerce.php:309
+#: includes/mcp/screen.php:674
+msgid "Close menu"
+msgstr "Aizvērt izvēlni"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:846
+msgid "Close this tab and go back to the app."
+msgstr "Aizveriet šo cilni un atgriezieties lietotnē."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:927
+msgid "Connect"
+msgstr "Savienojuma izveide"
+
+#. 1: the AI app's name, 2: the store's name.
+#: includes/mcp/class-trackship-mcp-oauth.php:898
+#, php-format
+msgid "Connect %1$s to %2$s"
+msgstr "Savienojiet %1$s ar %2$s"
+
+#: trackship-for-woocommerce.php:333
 msgid "Connect a Store"
 msgstr "Pievienojiet veikalu"
+
+#: includes/views/ai-assistant.php:34
+msgid "Connect Claude to your shipments"
+msgstr "Savienojiet Klodu ar savām sūtījumiem"
+
+#: includes/mcp/screen.php:138
+msgid "Connect Claude to your store"
+msgstr "Savienojiet Klodu ar savu veikalu"
 
 #: includes/views/trackship-integration.php:23
 msgid "Connect Store"
 msgstr "Savienot veikalu"
 
+#: includes/mcp/class-trackship-mcp-oauth.php:828
+#: includes/mcp/class-trackship-mcp-oauth.php:888
+msgid "Connect your AI assistant"
+msgstr "Pievienojiet savu mākslīgā intelekta palīgu"
+
 #: includes/views/trackship-integration.php:21
 msgid ""
 "Connect your store to TrackShip to auto-track shipments, automate order "
 "workflows, and give customers a superior post-purchase experience."
-msgstr "Savienojiet savu veikalu ar TrackShip, lai automātiski izsekotu sūtījumus, automatizētu pasūtījumu darbplūsmas un sniegtu klientiem izcilu pēcpirkuma pieredzi."
+msgstr ""
+"Savienojiet savu veikalu ar TrackShip, lai automātiski izsekotu sūtījumus, "
+"automatizētu pasūtījumu darbplūsmas un sniegtu klientiem izcilu pēcpirkuma "
+"pieredzi."
+
+#: includes/mcp/ui-helpers.php:675 includes/mcp/ui-helpers.php:1279
+msgid "Connected"
+msgstr "Savienots"
+
+#. %s: how long ago this app last ran a tool, e.g. "5 mins".
+#: includes/mcp/ui-helpers.php:379
+#, php-format
+msgid "Connected and working — last used %s ago."
+msgstr "Savienots un darbojas — pēdējo reizi lietots pirms %s."
 
 #: includes/views/dashboard.php:256
 msgid "Connected with TrackShip account"
 msgstr "Savienots ar TrackShip kontu"
 
-#: includes/class-wc-trackship-actions.php:720
+#: includes/class-wc-trackship-actions.php:728
 msgid "Connection Issue"
 msgstr "Savienojuma problēma"
+
+#: includes/mcp/ui-helpers.php:996
+msgid "Connection key"
+msgstr "Savienojuma atslēga"
+
+#: includes/mcp/ui-helpers.php:1030
+msgid "Consumer key"
+msgstr "Patērētāja atslēga"
+
+#: includes/mcp/ui-helpers.php:1031
+msgid "Consumer secret"
+msgstr "Patērētāja noslēpums"
 
 #: includes/customizer/trackship-customizer.php:858
 msgid "Content Display"
@@ -316,16 +675,51 @@ msgstr "Satura displejs"
 msgid "Content Type & Text"
 msgstr "Satura veids un teksts"
 
+#: includes/mcp/ui-helpers.php:442 includes/mcp/ui-helpers.php:451
+#: includes/mcp/ui-helpers.php:1610
+msgid "Copied"
+msgstr "Nokopēts"
+
+#: includes/mcp/ui-helpers.php:1612
+msgid "Copy"
+msgstr "Kopēt"
+
+#: includes/mcp/ui-helpers.php:214
+msgid "Copy config"
+msgstr "Kopēt konfigurāciju"
+
+#: includes/mcp/ui-helpers.php:443 includes/mcp/ui-helpers.php:452
+#: includes/mcp/ui-helpers.php:1611
+msgid "Copy failed — press Ctrl+C"
+msgstr "Kopēšana neizdevās — nospiediet Ctrl+C"
+
 #: includes/class-wc-trackship-front.php:601
 #: includes/views/front/tracking_page_header.php:52
 msgid "Copy Tracking page link"
 msgstr "Kopēt izsekošanas lapu"
 
+#: includes/mcp/ui-helpers.php:453
+msgid "Copy URL"
+msgstr "Kopēt URL"
+
+#: includes/shipments/class-wc-trackship-shipments.php:115
+#: includes/shipments/class-wc-trackship-shipments.php:517
+msgid "Could not save the shipment note."
+msgstr "Nevarēja saglabāt sūtījuma pavadzīmi."
+
+#: includes/mcp/ui-helpers.php:1024
+msgid "Create a key in WooCommerce"
+msgstr "Izveidojiet atslēgu pakalpojumā WooCommerce"
+
 #: includes/views/dashboard.php:249
 msgid "Current Plan"
 msgstr "Pašreizējais plāns"
 
-#: includes/views/shipments.php:173
+#: includes/mcp/ui-helpers.php:256
+msgid "Cursor"
+msgstr "Kursors"
+
+#: includes/views/shipments.php:175
 msgid "Customer"
 msgstr "Klients"
 
@@ -341,10 +735,18 @@ msgstr "Pielāgojiet izsekošanas logrīku"
 msgid "Dashboard"
 msgstr "Mērinstrumentu panelis"
 
-#: includes/shipments/class-wc-trackship-shipments.php:109
+#: includes/shipments/class-wc-trackship-shipments.php:110
 #: includes/views/dashboard.php:290 includes/views/dashboard.php:469
 msgid "days"
 msgstr "dienas"
+
+#: includes/mcp/screen.php:166
+msgid "Days of history to keep. Default is 30."
+msgstr "Saglabājamās vēstures dienas. Noklusējuma vērtība ir 30."
+
+#: includes/mcp/ui-helpers.php:555 includes/mcp/ui-helpers.php:899
+msgid "Delete"
+msgstr "Dzēst"
 
 #: includes/views/tools.php:18
 msgid "Delete notifications logs"
@@ -354,16 +756,42 @@ msgstr "Dzēst paziņojumu žurnālus"
 msgid "Delete notifications logs more than 30 days"
 msgstr "Dzēsiet paziņojumu žurnālus vairāk nekā 30 dienu laikā"
 
-#: includes/class-wc-trackship-actions.php:714
+#: includes/mcp/ui-helpers.php:740
+msgid "Delete this key"
+msgstr "Dzēst šo atslēgu"
+
+#: includes/mcp/ui-helpers.php:738
+msgid ""
+"Delete this key in WooCommerce? Every app using it stops working immediately,"
+" and a new key has to be made before anything can connect again. If you gave "
+"this key to something other than an AI assistant, that stops too. This "
+"cannot be undone."
+msgstr ""
+"Vai dzēst šo atslēgu pakalpojumā WooCommerce? Katra lietotne, kas to izmanto,"
+" nekavējoties pārstāj darboties, un pirms atkārtota savienojuma izveides ir "
+"jāizveido jauna atslēga. Ja šo atslēgu piešķīrāt kaut kam citam, nevis "
+"mākslīgā intelekta asistentam, arī tas pārstāj darboties. Šo darbību nevar "
+"atsaukt."
+
+#: includes/class-wc-trackship-actions.php:722
 msgid "Deleted"
 msgstr "Izdzēsts"
 
-#: includes/class-wc-trackship-actions.php:626
-#: includes/class-wc-trackship-actions.php:669
-#: includes/class-wc-trackship-admin.php:637
-#: includes/class-wc-trackship-admin.php:655
-#: includes/class-wc-trackship-admin.php:707
-#: includes/class-wc-trackship-admin.php:1305
+#. %d: the WordPress user id of a deleted account.
+#: includes/mcp/ui-helpers.php:1296
+msgid "Deleted account #%d"
+msgstr "Dzēsts konts #%d"
+
+#: includes/mcp/ui-helpers.php:739
+msgid "Deleting…"
+msgstr "Dzēš…"
+
+#: includes/class-wc-trackship-actions.php:634
+#: includes/class-wc-trackship-actions.php:677
+#: includes/class-wc-trackship-admin.php:652
+#: includes/class-wc-trackship-admin.php:670
+#: includes/class-wc-trackship-admin.php:722
+#: includes/class-wc-trackship-admin.php:1320
 #: includes/class-wc-trackship-install.php:318
 #: includes/customizer/trackship-customizer.php:218
 #: includes/customizer/trackship-customizer.php:797
@@ -373,7 +801,7 @@ msgid "Delivered"
 msgstr "Piegādāts"
 
 #. %s: search number of order
-#: includes/class-wc-trackship-admin.php:643
+#: includes/class-wc-trackship-admin.php:658
 #, php-format
 msgid "Delivered <span class=\"count\">(%s)</span>"
 msgid_plural "Delivered <span class=\"count\">(%s)</span>"
@@ -394,13 +822,13 @@ msgstr "Piegādes rādītājs"
 msgid "Delivery Date"
 msgstr "Piegādes datums"
 
-#: includes/views/shipments.php:175
+#: includes/views/shipments.php:177
 msgid "Delivery date"
 msgstr "Piegādes datums"
 
-#: includes/class-wc-trackship-actions.php:627
-#: includes/class-wc-trackship-actions.php:684
-#: includes/class-wc-trackship-admin.php:1281
+#: includes/class-wc-trackship-actions.php:635
+#: includes/class-wc-trackship-actions.php:692
+#: includes/class-wc-trackship-admin.php:1296
 #: includes/class-wc-trackship-install.php:314
 #: includes/customizer/trackship-customizer.php:214
 #: includes/customizer/trackship-customizer.php:793
@@ -408,7 +836,7 @@ msgstr "Piegādes datums"
 msgid "Delivery Failure"
 msgstr "Piegādes kļūme"
 
-#: includes/views/shipments.php:176
+#: includes/views/shipments.php:178
 msgid "Delivery number"
 msgstr "Piegādes numurs"
 
@@ -455,17 +883,20 @@ msgid "Display Shipping provider logo"
 msgstr "Parādīt piegādes pakalpojumu sniedzēja logotipu"
 
 #: includes/customizer/trackship-customizer.php:696
-#: includes/customizer/trackship-customizer.php:934
 msgid "Display TrackShip branding"
 msgstr "Parādiet TrackShip zīmolu"
 
-#: trackship-for-woocommerce.php:312 includes/views/header2.php:85
+#: trackship-for-woocommerce.php:336 includes/views/header2.php:85
 msgid "Docs"
 msgstr "Dokumenti"
 
 #: includes/views/integrations.php:20
 msgid "Documentation"
 msgstr "Dokumentācija"
+
+#: includes/shipments/class-wc-trackship-shipments.php:112
+msgid "Edit note"
+msgstr "Rediģēt piezīmi"
 
 #: templates/tracking/tracking-form.php:111
 msgid "Email address"
@@ -504,13 +935,13 @@ msgstr "E-pasta veids"
 msgid "Emails"
 msgstr "E-pasti"
 
-#: includes/customizer/trackship-customizer.php:1144
+#: includes/customizer/trackship-customizer.php:1131
 #, php-format
 #| msgid "Enable  %1$s email"
 msgid "Enable %1$s email"
 msgstr "Iespējot %1$s e-pastu"
 
-#: includes/class-wc-trackship-admin.php:425
+#: includes/class-wc-trackship-admin.php:440
 msgid ""
 "Enable a Custom Order Status Delivered that will be set automatically when "
 "all the order shipments are delivered"
@@ -518,7 +949,7 @@ msgstr ""
 "Iespējojiet pielāgotā pasūtījuma statusu Piegādāts, kas tiks iestatīts "
 "automātiski, kad tiks piegādāti visi pasūtījuma sūtījumi"
 
-#: includes/class-wc-trackship-admin.php:409
+#: includes/class-wc-trackship-admin.php:424
 msgid "Enable a shipment status filter on orders admin"
 msgstr "Iespējot sūtījuma statusa filtru pasūtījumu administratoram"
 
@@ -530,23 +961,31 @@ msgstr "Iespējot e-pastu"
 msgid "Enable Fulfillments"
 msgstr "Iespējot izpildes"
 
-#: includes/class-wc-trackship-admin.php:422
+#: includes/class-wc-trackship-admin.php:437
 msgid "Enable Order Delivery Automation"
 msgstr "Iespējot pasūtījumu piegādes automatizāciju"
 
-#: includes/class-wc-trackship-admin.php:432
+#: includes/class-wc-trackship-admin.php:447
 msgid "Enable shipment status notification for order created by Amazon"
 msgstr "Iespējot sūtījuma statusa paziņojumu Amazon izveidotajam pasūtījumam"
+
+#: includes/mcp/screen.php:142
+msgid "Enable the connection"
+msgstr "Iespējojiet savienojumu"
+
+#: includes/views/ai-assistant.php:36
+msgid "Enable the TrackShip connection"
+msgstr "Iespējot TrackShip savienojumu"
 
 #: includes/customizer/trackship-customizer.php:659
 msgid "Enable tracking # link to carrier"
 msgstr "Iespējot izsekošanas # saiti uz mobilo sakaru operatoru"
 
-#: includes/class-wc-trackship-admin.php:1231
+#: includes/class-wc-trackship-admin.php:1246
 msgid "Enable Tracking Page"
 msgstr "Iespējot izsekošanas lapu"
 
-#: includes/class-wc-trackship-admin.php:415
+#: includes/class-wc-trackship-admin.php:430
 msgid "Enable unsubscribe (opt-out) from Shipment status notifications"
 msgstr "Iespējot sūtījuma statusa paziņojumu anulēšanu (atteikšanos)."
 
@@ -554,6 +993,24 @@ msgstr "Iespējot sūtījuma statusa paziņojumu anulēšanu (atteikšanos)."
 #: includes/smswoo/class-smswoo-admin.php:386
 msgid "Enter admin phone number with country code."
 msgstr "Ievadiet administratora tālruņa numuru ar valsts kodu."
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:627
+msgid "Enter your WooCommerce key above to see what this route offers."
+msgstr ""
+"Ievadiet savu WooCommerce atslēgu iepriekš, lai redzētu, ko piedāvā šis "
+"maršruts."
+
+#: includes/mcp/screen.php:165
+msgid ""
+"Entries older than this are deleted automatically once a day. Set 0 to keep "
+"everything."
+msgstr ""
+"Ieraksti, kas vecāki par šo, tiek automātiski dzēsti reizi dienā. Iestatiet "
+"0, lai saglabātu visu."
+
+#: includes/mcp/ui-helpers.php:1455
+msgid "Error"
+msgstr "Kļūda"
 
 #: includes/class-wc-trackship-front.php:664
 #: templates/emails/tracking-info.php:50
@@ -563,9 +1020,48 @@ msgstr "Ievadiet administratora tālruņa numuru ar valsts kodu."
 msgid "Est. Delivery Date"
 msgstr "Apt. Piegādes datums"
 
-#: includes/class-wc-trackship-actions.php:631
-#: includes/class-wc-trackship-actions.php:681
-#: includes/class-wc-trackship-admin.php:1293
+#: includes/mcp/screen.php:163
+msgid "Every action taken by an AI assistant, with the result and any error."
+msgstr ""
+"Katra mākslīgā intelekta asistenta veiktā darbība ar rezultātu un jebkādu "
+"kļūdu."
+
+#: includes/mcp/ui-helpers.php:949
+msgid ""
+"Every app connected with this key. They all act as the same account, because "
+"that is all a WooCommerce key can be."
+msgstr ""
+"Katra lietotne ir saistīta ar šo atslēgu. Tās visas darbojas kā viens un tas "
+"pats konts, jo WooCommerce atslēga var būt tikai viena."
+
+#: includes/mcp/screen.php:152
+msgid ""
+"Everyone who has connected an AI assistant to your link. Turn any one of "
+"them off without affecting the rest."
+msgstr ""
+"Visi, kas ir pievienojuši mākslīgā intelekta palīgu jūsu saitei. Izslēdziet "
+"jebkuru no tiem, neietekmējot pārējos."
+
+#: includes/mcp/ui-helpers.php:948
+msgid ""
+"Everyone who uses this key is this one account — the route has no way to "
+"tell them apart. Your own link above does, and can turn one person off."
+msgstr ""
+"Ikviens, kurš izmanto šo atslēgu, ir šis viens konts — maršruts nekādi nevar "
+"tos atšķirt. Jūsu iepriekš minētā saite to dara, un tā var atslēgt vienu "
+"personu."
+
+#: includes/mcp/ui-helpers.php:946
+msgid ""
+"Everything an assistant can reach through WooCommerce MCP — WooCommerce's "
+"own tools, plus the ones this plugin adds."
+msgstr ""
+"Viss, ko asistents var sasniegt, izmantojot WooCommerce MCP — WooCommerce "
+"pašu rīki, kā arī tie, ko pievieno šis spraudnis."
+
+#: includes/class-wc-trackship-actions.php:639
+#: includes/class-wc-trackship-actions.php:689
+#: includes/class-wc-trackship-admin.php:1308
 #: includes/class-wc-trackship-install.php:316
 #: includes/customizer/trackship-customizer.php:216
 #: includes/customizer/trackship-customizer.php:795
@@ -582,27 +1078,79 @@ msgstr "Izņēmuma sūtījums"
 msgid "Exception Shipments"
 msgstr "Izņēmuma sūtījumi"
 
-#: includes/class-wc-trackship-admin.php:793
+#: includes/class-wc-trackship-admin.php:808
 msgid "Exception Shipments Notifications"
 msgstr "Izņēmuma sūtījumu paziņojumi"
 
-#: includes/class-wc-trackship-actions.php:726 includes/views/shipments.php:33
+#: includes/class-wc-trackship-actions.php:734 includes/views/shipments.php:33
 msgid "Expired"
 msgstr "Beidzies derīguma termiņš"
 
-#: includes/class-wc-trackship-actions.php:637
+#: includes/class-wc-trackship-actions.php:645
 msgid "Filter by shipment status"
 msgstr "Filtrēt pēc sūtījuma statusa"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:503
+msgid ""
+"Find your bad-bot or user agent list, in a security plugin or at your host, "
+"and take the Python and Perl entries out of it."
+msgstr ""
+"Atrodiet savu slikto robotu vai lietotāja aģentu sarakstu drošības spraudnī "
+"vai savā resursdatorā un izņemiet no tā Python un Perl ierakstus."
+
+#: includes/mcp/ui-helpers.php:1646
+msgid "Fix this for me"
+msgstr "Labot šo manā vietā"
+
+#: includes/mcp/class-trackship-mcp-htaccess.php:390
+msgid ""
+"Fixed, and checked: a caller that was being refused a moment ago now gets "
+"through. Try connecting your AI assistant again."
+msgstr ""
+"Izlabots un pārbaudīts: zvanītājs, kuram pirms brīža tika atteikts, tagad "
+"tiek savienots. Mēģiniet vēlreiz savienot savu mākslīgā intelekta asistentu."
+
+#: includes/mcp/ui-helpers.php:1644
+msgid "Fixing…"
+msgstr "Notiek labošana…"
 
 #: includes/customizer/trackship-customizer.php:537
 msgid "Font color"
 msgstr "Fonta krāsa"
 
+#: includes/mcp/ui-helpers.php:1088
+msgid "Forget key"
+msgstr "Aizmirstiet atslēgu"
+
+#: includes/mcp/ui-helpers.php:1086
+msgid ""
+"Forget the stored key? The setup steps will be hidden until you paste it "
+"again. Nothing is deleted in WooCommerce."
+msgstr ""
+"Aizmirsāt saglabāto atslēgu? Iestatīšanas darbības tiks paslēptas, līdz to "
+"vēlreiz ielīmēsiet. WooCommerce platformā nekas netiks dzēsts."
+
+#: includes/mcp/ui-helpers.php:1081
+msgid "Forget this key"
+msgstr "Aizmirstiet šo atslēgu"
+
+#. %s: how long ago.
+#: includes/mcp/class-trackship-mcp-selftest.php:584
+#, php-format
+msgid "Found it. Wordfence blocked a request to your link %s ago."
+msgstr "Atradu. Wordfence bloķēja pieprasījumu uz jūsu saiti pirms %s."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:399
+msgid "Found it. Your server refuses callers by name."
+msgstr "Atradu. Jūsu serveris atsaka zvanītājus nosaukt vārdā."
+
 #: includes/views/setup.php:15
 msgid ""
 "Fulfillments let TrackShip read shipment data natively from WooCommerce and "
 "keep tracking in sync automatically — no extra configuration needed."
-msgstr "Fulfillments ļauj TrackShip nolasīt sūtījumu datus tieši no WooCommerce un automātiski uzturēt izsekošanu sinhronizētu — bez papildu konfigurācijas."
+msgstr ""
+"Fulfillments ļauj TrackShip nolasīt sūtījumu datus tieši no WooCommerce un "
+"automātiski uzturēt izsekošanu sinhronizētu — bez papildu konfigurācijas."
 
 #: includes/customizer/trackship-customizer.php:709
 msgid "General options"
@@ -612,28 +1160,74 @@ msgstr "Vispārīgas iespējas"
 msgid "General Settings"
 msgstr "Vispārīgie iestatījumi"
 
-#: includes/class-wc-trackship-actions.php:554
-#: includes/class-wc-trackship-actions.php:976
-#: includes/class-wc-trackship-admin.php:557 includes/views/tools.php:14
+#: includes/mcp/class-trackship-abilities.php:102
+msgid ""
+"Get a single shipment by WooCommerce order id, including full tracking event "
+"history. For a list of many shipments use list-shipments instead."
+msgstr ""
+"Iegūstiet vienu sūtījumu pēc WooCommerce pasūtījuma ID, ieskaitot pilnu "
+"izsekošanas notikumu vēsturi. Lai iegūtu daudzu sūtījumu sarakstu, "
+"izmantojiet list-shipments."
+
+#: includes/mcp/class-trackship-abilities.php:130
+msgid "Get analytics summary"
+msgstr "Iegūt analīzes kopsavilkumu"
+
+#: includes/mcp/class-trackship-abilities.php:165
+msgid "Get carrier mappings"
+msgstr "Iegūt mobilo sakaru operatoru kartējumus"
+
+#: includes/mcp/class-trackship-abilities.php:101
+msgid "Get shipment"
+msgstr "Saņemt sūtījumu"
+
+#: includes/class-wc-trackship-actions.php:562
+#: includes/class-wc-trackship-actions.php:994
+#: includes/class-wc-trackship-admin.php:572 includes/views/tools.php:14
 msgid "Get Shipment Status"
 msgstr "Saņemiet sūtījuma statusu"
 
-#: includes/views/shipments.php:122
+#: includes/views/shipments.php:123
 msgid "Get shipment status"
 msgstr "Iegūstiet sūtījuma statusu"
+
+#: includes/mcp/class-trackship-abilities.php:219
+msgid "Get shipment status (send tracking to TrackShip)"
+msgstr "Iegūt sūtījuma statusu (nosūtīt izsekošanas informāciju uz TrackShip)"
+
+#: includes/mcp/class-trackship-abilities.php:158
+msgid "Get shipment status email settings"
+msgstr "Iegūt sūtījuma statusa e-pasta iestatījumus"
 
 #: includes/views/trackship-integration.php:19
 msgid "Get started for Free"
 msgstr "Sāciet bez maksas"
 
-#: includes/views/notifications.php:36 includes/views/settings.php:69
+#: includes/mcp/screen.php:171 includes/views/notifications.php:36
+#: includes/views/settings.php:69
 msgid "Get Support"
 msgstr "Saņemt atbalstu"
+
+#: includes/mcp/class-trackship-abilities.php:151
+msgid "Get TrackShip settings"
+msgstr "Iegūt TrackShip iestatījumus"
 
 #: includes/views/trackship-integration.php:90
 msgid ""
 "Give customers a branded tracking page to follow their shipment in real time."
-msgstr "Nodrošiniet klientiem zīmola izsekošanas lapu, lai sekotu sūtījumam reāllaikā."
+msgstr ""
+"Nodrošiniet klientiem zīmola izsekošanas lapu, lai sekotu sūtījumam "
+"reāllaikā."
+
+#: includes/mcp/screen.php:143
+msgid ""
+"Gives you one link an AI assistant can connect to, from claude.ai in a "
+"browser, a phone or a desktop app. Whoever adds it signs in with their own "
+"store account."
+msgstr ""
+"Nodrošina vienu saiti, ar kuru mākslīgā intelekta asistents var izveidot "
+"savienojumu no claude.ai pārlūkprogrammā, tālrunī vai datora lietotnē. "
+"Ikviens, kurš to pievieno, pierakstās ar savu veikala kontu."
 
 #: includes/views/map-providers.php:84
 msgid "Go to AST PRO Shipping Providers"
@@ -642,6 +1236,31 @@ msgstr "Doties uz AST PRO pārvadātājiem"
 #: includes/smswoo/admin-html/settings_tab.php:30
 msgid "Go to SMS for WooCommerce Settings"
 msgstr "Doties uz SMS for WooCommerce iestatījumiem"
+
+#. 1: security plugin name, 2: URL path to allow.
+#: includes/mcp/class-trackship-mcp-selftest.php:616
+#, php-format
+msgid ""
+"Have you connected an AI assistant yet? If not, nothing is wrong - connect "
+"it and test again. If you have, %1$s is the likely cause: open its blocked-"
+"request log, find the refusal, and allow what it names. The path is %2$s."
+msgstr ""
+"Vai jau esi pievienojis mākslīgā intelekta asistentu? Ja nē, viss ir kārtībā "
+"— pievieno to un pārbaudi vēlreiz. Ja tā ir, visticamākais iemesls ir %1$s: "
+"atver tā bloķēto pieprasījumu žurnālu, atrodi atteikumu un atļauj tā "
+"nosaukto pieprasījumu. Ceļš ir %2$s."
+
+#. %s: URL path to allow.
+#: includes/mcp/class-trackship-mcp-selftest.php:629
+#, php-format
+msgid ""
+"Have you connected an AI assistant yet? If not, nothing is wrong - connect "
+"it and test again. If you have, something in front of WordPress is stopping "
+"it: your host, your CDN, or a security rule. The path to allow is %s."
+msgstr ""
+"Vai jau esi pievienojis mākslīgā intelekta palīgu? Ja nē, viss ir kārtībā — "
+"pievieno to un pārbaudi vēlreiz. Ja tā ir, kaut kas WordPress priekšā to "
+"aptur: tavs mitinātājs, CDN vai drošības noteikums. Atļaujamais ceļš ir %s."
 
 #: includes/class-wc-trackship-install.php:338
 #, php-format
@@ -692,7 +1311,15 @@ msgstr "Kā atrast savus %s akreditācijas datus"
 msgid "Icons"
 msgstr "Ikonas"
 
-#: includes/class-wc-trackship-admin.php:444
+#: includes/mcp/class-trackship-mcp-oauth.php:860
+msgid ""
+"If the app still does not ask, remove the connection there and add it again "
+"— your link has not changed."
+msgstr ""
+"Ja lietotne joprojām nejautā, noņemiet savienojumu tur un pievienojiet to "
+"vēlreiz — jūsu saite nav mainījusies."
+
+#: includes/class-wc-trackship-admin.php:459
 msgid ""
 "If you disable it, TrackShip emails will use the WooCommerce default design "
 "instead of the Villa theme's customized email layout."
@@ -700,9 +1327,31 @@ msgstr ""
 "Ja to atspējosiet, TrackShip e-pastos tiks izmantots WooCommerce noklusējuma "
 "dizains, nevis Villa tēmas pielāgotais e-pasta izkārtojums."
 
-#: includes/class-wc-trackship-actions.php:623
-#: includes/class-wc-trackship-actions.php:660
-#: includes/class-wc-trackship-admin.php:1263
+#. %s: the caller's address.
+#: includes/mcp/class-trackship-mcp-selftest.php:702
+#, php-format
+msgid ""
+"If you have not finished connecting an AI assistant yet, this is what that "
+"looks like — press Connect in it and sign in. If you have, it is holding an "
+"older link: copy the link above into it again. The last caller was %s."
+msgstr ""
+"Ja vēl neesat pabeidzis mākslīgā intelekta asistenta pievienošanu, tas "
+"izskatās šādi — nospiediet “Savienot” un piesakieties. Ja esat to izdarījis, "
+"tajā ir vecāka saite: vēlreiz iekopējiet iepriekš minēto saiti. Pēdējais "
+"zvanītājs bija %s."
+
+#: includes/mcp/ui-helpers.php:212
+msgid ""
+"In Claude Desktop: Settings > Developer > Edit Config. Paste this inside "
+"\"mcpServers\", save, and restart Claude Desktop."
+msgstr ""
+"Claude Desktop programmā: Iestatījumi > Izstrādātājs > Rediģēt konfigurāciju."
+" Ielīmējiet šo informāciju mapē \"mcpServers\", saglabājiet un restartējiet "
+"Claude Desktop."
+
+#: includes/class-wc-trackship-actions.php:631
+#: includes/class-wc-trackship-actions.php:668
+#: includes/class-wc-trackship-admin.php:1278
 #: includes/class-wc-trackship-install.php:311
 #: includes/customizer/trackship-customizer.php:211
 #: includes/customizer/trackship-customizer.php:790
@@ -711,11 +1360,15 @@ msgstr ""
 msgid "In Transit"
 msgstr "Tranzītā"
 
-#: trackship-for-woocommerce.php:139
+#: includes/mcp/ui-helpers.php:371
+msgid "In use"
+msgstr "Lietošanā"
+
+#: trackship-for-woocommerce.php:140
 msgid "Install Shipment Tracking extension"
 msgstr "Instalēt sūtījumu izsekošanas paplašinājumu"
 
-#: includes/class-wc-trackship-actions.php:717
+#: includes/class-wc-trackship-actions.php:725
 msgid "Insufficient Balance"
 msgstr "Nepietiekams līdzsvars"
 
@@ -723,7 +1376,7 @@ msgstr "Nepietiekams līdzsvars"
 msgid "Integrations"
 msgstr "Integrācijas"
 
-#: includes/class-wc-trackship-actions.php:699 includes/views/shipments.php:39
+#: includes/class-wc-trackship-actions.php:707 includes/views/shipments.php:39
 msgid "Invalid Carrier"
 msgstr "Nederīgs mobilo sakaru operators"
 
@@ -735,10 +1388,69 @@ msgstr "Nederīga pasūtījuma atslēga."
 msgid "Invalid order."
 msgstr "Nederīgs pasūtījums."
 
-#: includes/class-wc-trackship-actions.php:632
-#: includes/class-wc-trackship-actions.php:696 includes/views/shipments.php:38
+#: includes/class-wc-trackship-actions.php:640
+#: includes/class-wc-trackship-actions.php:704 includes/views/shipments.php:38
 msgid "Invalid Tracking"
 msgstr "Nederīga izsekošana"
+
+#. %s: the AI app's name, e.g. Cursor.
+#: includes/mcp/ui-helpers.php:435
+#, php-format
+msgid "Is %s installed?"
+msgstr "Vai %s ir instalēts?"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:851
+msgid ""
+"It has to be started by the app, not from here — so ask the app to connect "
+"again. Nothing was shared, and nothing is broken."
+msgstr ""
+"Tas ir jāstartē lietotnei, nevis no šejienes — tāpēc lūdziet lietotnei "
+"vēlreiz izveidot savienojumu. Nekas netika koplietots, un nekas nav bojāts."
+
+#. %s: URL path to allow.
+#: includes/mcp/class-trackship-mcp-selftest.php:808
+#, php-format
+msgid ""
+"It is none of the security plugins this test knows, so it is your host, your "
+"CDN, or a rule in .htaccess. Ask them to allow the path %s, and to check "
+"whether they filter callers by name."
+msgstr ""
+"Tas nav neviens no drošības spraudņiem, ko šis tests pazīst, tāpēc tas ir "
+"jūsu resursdators, jūsu CDN vai noteikums .htaccess failā. Palūdziet viņiem "
+"atļaut ceļu %s un pārbaudīt, vai viņi filtrē zvanītājus pēc vārda."
+
+#. 1: the setting's name, 2: where to find it.
+#: includes/mcp/class-trackship-mcp-selftest.php:477
+#, php-format
+msgid ""
+"It is this one: turn off %1$s, under %2$s. That is the only change needed — "
+"every other rule there keeps working, and so does everyone already connected."
+msgstr ""
+"Tas ir šis: izslēdziet %1$s zem %2$s. Tā ir vienīgā nepieciešamā izmaiņa — "
+"visi pārējie noteikumi tur turpina darboties, un tāpat darbojas visi jau "
+"pievienotie noteikumi."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:923
+msgid ""
+"It will be able to do what your own account can do on this store, and you "
+"can turn it off at any time from the AI Assistant screen."
+msgstr ""
+"Tas varēs darīt to pašu, ko jūsu konts šajā veikalā, un jūs to varat jebkurā "
+"laikā izslēgt AI palīga ekrānā."
+
+#. %s: URL path to allow.
+#: includes/mcp/class-trackship-mcp-selftest.php:794
+#, php-format
+msgid ""
+"It will refuse your AI assistant the same way. In its firewall settings, "
+"allow the path %s. If that does not do it, the rule is matching something "
+"other than the path - look for user agent or bot blocking too, and read its "
+"blocked-request log for the exact rule."
+msgstr ""
+"Tas atteiks jūsu mākslīgā intelekta asistentu tādā pašā veidā. Ugunsmūra "
+"iestatījumos atļaujiet ceļu %s. Ja tas neizdodas, noteikums atbilst kaut kam "
+"citam, nevis ceļam — meklējiet arī lietotāja aģenta vai robota bloķēšanu un "
+"izlasiet tā bloķēto pieprasījumu žurnālu, lai atrastu precīzu noteikumu."
 
 #: includes/class-wc-trackship-install.php:446
 #: includes/views/front/layout1_tracking_details.php:13
@@ -746,16 +1458,30 @@ msgstr "Nederīga izsekošana"
 msgid "Items in this shipment"
 msgstr "Preces šajā sūtījumā"
 
+#. 1: the rule Wordfence reported, 2: the caller's user agent, 3: URL path to allow.
+#: includes/mcp/class-trackship-mcp-selftest.php:589
+#, php-format
+msgid ""
+"Its reason: %1$s. The caller was %2$s. In Wordfence, allow %3$s or allow "
+"that caller, then test again."
+msgstr ""
+"Iemesls: %1$s. Izsaucējs bija %2$s. Wordfence lietotnē atļaujiet %3$s vai "
+"atļaujiet šo izsaucēju un pēc tam pārbaudiet vēlreiz."
+
 #: includes/class-wc-trackship-front.php:713
 #: includes/views/front/preview_enhanced_tracking_page.php:83
 msgid "Journey"
 msgstr "Ceļojums"
 
+#: includes/mcp/screen.php:164
+msgid "Keep entries for"
+msgstr "Saglabāt ierakstus"
+
 #: includes/smswoo/class-smswoo-admin.php:285
 msgid "Key"
 msgstr "Atslēga"
 
-#: includes/class-wc-trackship-actions.php:693 includes/views/shipments.php:37
+#: includes/class-wc-trackship-actions.php:701 includes/views/shipments.php:37
 msgid "Label Cancelled"
 msgstr "Etiķete atcelta"
 
@@ -771,9 +1497,14 @@ msgstr "Pēdējās 30 dienas"
 msgid "Last 60 days"
 msgstr "Pēdējās 60 dienas"
 
-#: includes/class-wc-trackship-actions.php:927
+#: includes/class-wc-trackship-actions.php:935
 msgid "Last event date: "
 msgstr "Pēdējā pasākuma datums:"
+
+#: includes/mcp/ui-helpers.php:676 includes/mcp/ui-helpers.php:786
+#: includes/mcp/ui-helpers.php:1280
+msgid "Last used"
+msgstr "Pēdējo reizi izmantots"
 
 #: includes/class-wc-trackship-late-shipments.php:176
 msgid "Late shipment"
@@ -787,46 +1518,132 @@ msgstr "Novēloti sūtījumi"
 msgid "Late Shipments for last 30 days"
 msgstr "Novēloti sūtījumi par pēdējām 30 dienām"
 
-#: includes/class-wc-trackship-admin.php:792
+#: includes/class-wc-trackship-admin.php:807
 msgid "Late Shipments Notifications"
 msgstr "Paziņojumi par novēlotiem sūtījumiem"
 
-#: includes/views/shipments.php:172
+#: includes/views/shipments.php:174
 msgid "Latest Event"
 msgstr "Jaunākais pasākums"
 
-#: includes/views/shipments.php:171
+#: includes/views/shipments.php:173
 msgid "Latest Event Date"
 msgstr "Jaunākais notikuma datums"
 
-#: includes/views/notifications.php:30 includes/views/settings.php:63
+#: includes/views/ai-assistant.php:51 includes/views/notifications.php:30
+#: includes/views/settings.php:63
 msgid "Learn how to configure TrackShip for best results."
 msgstr "Uzziniet, kā konfigurēt TrackShip labākajiem rezultātiem."
 
-#: trackship-for-woocommerce.php:141 includes/views/setup.php:18
+#: includes/mcp/screen.php:169
+msgid "Learn how to connect an AI assistant and what it can do."
+msgstr "Uzziniet, kā pieslēgt mākslīgā intelekta palīgu un ko tas spēj."
+
+#: trackship-for-woocommerce.php:142 includes/views/setup.php:18
 #: includes/views/setup.php:32
 msgid "Learn more →"
 msgstr "Uzziniet vairāk →"
+
+#: includes/views/ai-assistant.php:33
+msgid ""
+"Let an AI assistant read and update your shipment tracking, notifications "
+"and TrackShip settings. Changes save as you make them."
+msgstr ""
+"Ļaujiet mākslīgā intelekta asistentam nolasīt un atjaunināt jūsu sūtījuma "
+"izsekošanas, paziņojumu un TrackShip iestatījumus. Izmaiņas tiek saglabātas, "
+"tiklīdz tās veicat."
+
+#: includes/mcp/screen.php:141
+msgid ""
+"Let an AI assistant work with this store. Changes save as you make them."
+msgstr ""
+"Ļaujiet mākslīgā intelekta asistentam strādāt ar šo veikalu. Izmaiņas tiek "
+"saglabātas, tiklīdz tās tiek veiktas."
 
 #: includes/customizer/trackship-customizer.php:449
 #: includes/customizer/trackship-customizer.php:568
 msgid "Links color"
 msgstr "Saišu krāsa"
 
+#: includes/mcp/class-trackship-abilities.php:114
+msgid "List notifications"
+msgstr "Paziņojumu saraksts"
+
+#: includes/mcp/class-trackship-abilities.php:115
+msgid ""
+"List sent shipment notification logs (Email/SMS) with optional filters and "
+"pagination. Returns recipient, type, shipment status and delivery result "
+"(Sent/Failed)."
+msgstr ""
+"Uzskaitīt nosūtīto sūtījumu paziņojumu žurnālus (e-pasts/SMS) ar papildu "
+"filtriem un lappušu numerāciju. Atgriež saņēmēju, veidu, sūtījuma statusu un "
+"piegādes rezultātu (Nosūtīts/Neizdevās)."
+
+#: includes/mcp/class-trackship-abilities.php:81
+msgid "List shipments"
+msgstr "Sūtījumu saraksts"
+
+#: includes/mcp/class-trackship-abilities.php:144
+msgid "List shipping providers"
+msgstr "Uzskaitiet piegādes pakalpojumu sniedzējus"
+
+#: includes/mcp/class-trackship-abilities.php:82
+msgid ""
+"List TrackShip shipments with optional filters (status, provider, date range,"
+" free-text search) and pagination. Returns shipment status, tracking number, "
+"carrier, dates and last event. For a single shipment with its full event "
+"history use get-shipment instead."
+msgstr ""
+"Uzskaitiet TrackShip sūtījumus ar papildu filtriem (statuss, piegādātājs, "
+"datumu diapazons, brīvā teksta meklēšana) un lappušu numerāciju. Atgriež "
+"sūtījuma statusu, izsekošanas numuru, pārvadātāju, datumus un pēdējo "
+"notikumu. Vienam sūtījumam ar pilnu notikumu vēsturi izmantojiet get-"
+"shipment."
+
+#: includes/mcp/class-trackship-abilities.php:145
+msgid ""
+"List TrackShip supported shipping providers (carrier display name and slug). "
+"Use the slug when filtering list-shipments by provider or when setting "
+"carrier mappings."
+msgstr ""
+"Uzskaitiet TrackShip atbalstītos piegādes pakalpojumu sniedzējus "
+"(pārvadātāja parādāmo nosaukumu un slug). Izmantojiet slug, filtrējot "
+"sūtījumu sarakstu pēc pakalpojumu sniedzēja vai iestatot pārvadātāju "
+"kartējumus."
+
 #: includes/class-wc-trackship-admin.php:216 includes/views/header2.php:45
 msgid "Logs"
 msgstr "Baļķi"
+
+#. %s: the AI app's name, e.g. Cursor.
+#: includes/mcp/ui-helpers.php:420
+#, php-format
+msgid ""
+"Make %s sign in again? Its connection is turned off here, so the next time "
+"it calls it has to ask you to sign in. Nothing else is affected."
+msgstr ""
+"Vai likt %s pierakstīties vēlreiz? Tā savienojums šeit ir izslēgts, tāpēc "
+"nākamreiz, kad tas zvana, tam ir jālūdz pierakstīties. Nekas cits tas netiek "
+"ietekmēts."
+
+#: includes/mcp/ui-helpers.php:591
+msgid ""
+"Make one in WooCommerce, then paste both halves here. Copy them before you "
+"leave that screen — the secret is shown once and never again."
+msgstr ""
+"Izveidojiet vienu WooCommerce un pēc tam ielīmējiet abas puses šeit. Pirms "
+"aizvēršanas nokopējiet tās — noslēpums tiek parādīts vienreiz un nekad vairs."
 
 #: includes/views/map-providers.php:11 includes/views/settings.php:57
 #| msgid "Map Shipping Providers"
 msgid "Map Shipping Carriers"
 msgstr "Karšu piegādes pakalpojumu sniedzēji"
 
-#: includes/class-wc-trackship-admin.php:742
+#: includes/class-wc-trackship-admin.php:757
 msgid "Mark order as delivered"
 msgstr "Atzīmējiet pasūtījumu kā piegādātu"
 
-#: includes/customizer/trackship-customizer.php:1176
+#: includes/customizer/trackship-customizer.php:1163
 msgid "Mockup Order"
 msgstr "Maketu pasūtījums"
 
@@ -842,11 +1659,27 @@ msgstr "Mēnesis līdz šim brīdim"
 msgid "More info"
 msgstr "Vairāk informācijas"
 
-#: includes/class-wc-trackship-actions.php:423
-#: includes/class-wc-trackship-actions.php:936
+#: includes/class-wc-trackship-actions.php:431
+#: includes/class-wc-trackship-actions.php:944
 #: includes/html/class-wc-trackship-html.php:137
 msgid "more info"
 msgstr "vairāk informācijas"
+
+#: includes/mcp/ui-helpers.php:784
+msgid "Named"
+msgstr "Nosaukts"
+
+#: includes/mcp/ui-helpers.php:1306
+msgid "never"
+msgstr "nekad"
+
+#: includes/mcp/ui-helpers.php:630
+msgid "never — nothing has connected with it yet"
+msgstr "nekad — nekas ar to vēl nav bijis saistīts"
+
+#: includes/mcp/ui-helpers.php:1500
+msgid "Newer"
+msgstr "Jaunāks"
 
 #: includes/views/dashboard.php:333
 msgid "No action needed for Shipments"
@@ -869,13 +1702,129 @@ msgstr "Nav atbildes koda"
 msgid "No carrier data yet."
 msgstr "Vēl nav pārvadātāja datu."
 
+#: includes/mcp/ui-helpers.php:784
+msgid "no description"
+msgstr "nav apraksta"
+
 #: includes/views/dashboard.php:446
 msgid "No destination data yet."
 msgstr "Vēl nav galameērķa datu."
 
+#: includes/mcp/class-trackship-abilities.php:424
+msgid "No email settings changes provided."
+msgstr "Nav sniegtas e-pasta iestatījumu izmaiņas."
+
 #: includes/smswoo/services/class-smswoo-twilio.php:183
 msgid "No response code"
 msgstr "Nav atbildes koda"
+
+#: includes/mcp/class-trackship-abilities.php:433
+msgid "No settings changes provided."
+msgstr "Nav sniegtas iestatījumu izmaiņas."
+
+#: includes/mcp/class-trackship-abilities.php:330
+msgid "No shipment found for that order id."
+msgstr "Šim pasūtījuma ID nav atrasts neviens sūtījums."
+
+#: includes/mcp/class-trackship-abilities.php:466
+msgid "No shipment found for that shipment id, order id or tracking number."
+msgstr ""
+"Šim sūtījuma ID, pasūtījuma ID vai izsekošanas numuram netika atrasts "
+"neviens sūtījums."
+
+#: includes/mcp/screen.php:150 includes/mcp/ui-helpers.php:538
+msgid "No tools are available on this connection yet."
+msgstr "Šim savienojumam vēl nav pieejami rīki."
+
+#: includes/mcp/ui-helpers.php:1253
+msgid ""
+"Nobody has connected yet. Anyone you give the link to appears here once they "
+"connect, and you can turn any of them off without affecting the others."
+msgstr ""
+"Neviens vēl nav izveidojis savienojumu. Ikviens, kam sniedzat saiti, tiek "
+"parādīts šeit, tiklīdz tas ir izveidojis savienojumu, un jūs varat izslēgt "
+"jebkuru no viņiem, neietekmējot pārējos."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:267
+msgid ""
+"Not a firewall - something answered, it just answered wrongly. Send that "
+"number to support; it says what went wrong."
+msgstr ""
+"Nav ugunsmūra problēma — kaut kas atbildēja, vienkārši atbildēja nepareizi. "
+"Nosūtiet šo numuru atbalsta dienestam; tur būs pateikts, kas nogāja greizi."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:591
+msgid "not recorded"
+msgstr "nav ierakstīts"
+
+#: includes/mcp/ui-helpers.php:447
+msgid "Not supported"
+msgstr "Nav atbalstīts"
+
+#: includes/mcp/ui-helpers.php:1628
+msgid "Not working in your AI app?"
+msgstr "Nedarbojas jūsu mākslīgā intelekta lietotnē?"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:566
+msgid ""
+"Nothing has used this link — but your tools are being used, through "
+"WooCommerce MCP."
+msgstr ""
+"Neviens nav izmantojis šo saiti, taču jūsu rīki tiek izmantoti, izmantojot "
+"WooCommerce MCP."
+
+#: includes/mcp/ui-helpers.php:658
+msgid ""
+"Nothing is connected with this key yet. Set up an app with the steps above "
+"and it will appear here."
+msgstr ""
+"Ar šo atslēgu vēl nekas nav saistīts. Iestatiet lietotni, veicot iepriekš "
+"minētās darbības, un tā parādīsies šeit."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:501
+msgid ""
+"Nothing signed it, so it is an .htaccess rule or your host. Find the bad-bot "
+"or user agent list and take the Python and Perl entries out of it."
+msgstr ""
+"Nekas to neparakstīja, tāpēc tas ir .htaccess noteikums vai jūsu "
+"resursdators. Atrodiet slikto robotu vai lietotāja aģentu sarakstu un "
+"izņemiet no tā Python un Perl ierakstus."
+
+#. %s: the security plugin that writes .htaccess rules.
+#: includes/mcp/class-trackship-mcp-selftest.php:498
+#, php-format
+msgid ""
+"Nothing signed the refusal, so it came from .htaccess — and on this store %s "
+"is what writes rules there. Open it, find the bad-bot or user agent list, "
+"and take the Python and Perl entries out of it."
+msgstr ""
+"Atteikumu nekas neparakstīja, tāpēc tas nāca no .htaccess faila — un šajā "
+"krātuvē noteikumus raksta %s. Atveriet to, atrodiet slikto robotu vai "
+"lietotāja aģentu sarakstu un izņemiet no tā Python un Perl ierakstus."
+
+#: includes/mcp/ui-helpers.php:1418
+msgid ""
+"Nothing yet. Once an AI assistant reads or updates anything on this store, "
+"every action it takes will be listed here."
+msgstr ""
+"Vēl nekas. Kad mākslīgā intelekta asistents nolasīs vai atjauninās "
+"informāciju šajā veikalā, šeit tiks uzskaitītas visas tā veiktās darbības."
+
+#: includes/views/ai-assistant.php:50
+msgid ""
+"Nothing yet. Once an AI assistant reads or updates your shipments, every "
+"action it takes will be listed here."
+msgstr ""
+"Vēl nekas. Kad mākslīgā intelekta asistents nolasīs vai atjauninās jūsu "
+"sūtījumus, šeit tiks uzskaitītas visas tā veiktās darbības."
+
+#: includes/mcp/screen.php:167
+msgid ""
+"Nothing yet. Once an AI assistant works on this store, every action it takes "
+"will be listed here."
+msgstr ""
+"Vēl nekas. Kad mākslīgā intelekta asistents sāks strādāt ar šo veikalu, šeit "
+"tiks uzskaitītas visas tā veiktās darbības."
 
 #: includes/views/content.php:18
 #: includes/views/front/enhanced_shipment_details_notifications.php:40
@@ -885,7 +1834,7 @@ msgstr "Nav atbildes koda"
 msgid "Notifications"
 msgstr "Paziņojumi"
 
-#: includes/class-wc-trackship-admin.php:837
+#: includes/class-wc-trackship-admin.php:852
 msgid "Notifications detail"
 msgstr "Paziņojumu informācija"
 
@@ -893,12 +1842,39 @@ msgstr "Paziņojumu informācija"
 msgid "Notifications Type (SMS/WhatsApp)"
 msgstr "Paziņojumu veids (SMS/WhatsApp)"
 
-#: includes/class-wc-trackship-admin.php:459
+#: includes/class-wc-trackship-admin.php:474
 msgid "Number of days for late shipments"
 msgstr "Dienu skaits novēlotiem sūtījumiem"
 
-#: includes/class-wc-trackship-actions.php:663
-#: includes/class-wc-trackship-admin.php:1287
+#: includes/mcp/ui-helpers.php:1473
+msgid "OK"
+msgstr "Labi"
+
+#: includes/mcp/ui-helpers.php:1503
+msgid "Older"
+msgstr "Vecāks"
+
+#: includes/views/ai-assistant.php:38
+msgid ""
+"On by default, so this URL offers the same tools as WooCommerce MCP. Turn it "
+"off to make the URL read-only — the AI can then look up shipments and "
+"notifications but not change settings, mappings, or resync tracking."
+msgstr ""
+"Ieslēgts pēc noklusējuma, tāpēc šis URL piedāvā tos pašus rīkus kā "
+"WooCommerce MCP. Izslēdziet to, lai URL būtu tikai lasāms — mākslīgais "
+"intelekts var meklēt sūtījumus un paziņojumus, bet nevar mainīt iestatījumus,"
+" kartējumus vai atkārtoti sinhronizēt izsekošanu."
+
+#: includes/mcp/screen.php:145
+msgid ""
+"On by default. Turn it off to make the link read-only — the AI can then look "
+"things up but not change them."
+msgstr ""
+"Ieslēgts pēc noklusējuma. Izslēdziet to, lai saite būtu tikai lasāma — "
+"mākslīgais intelekts tad var meklēt informāciju, bet nevar to mainīt."
+
+#: includes/class-wc-trackship-actions.php:671
+#: includes/class-wc-trackship-admin.php:1302
 #: includes/class-wc-trackship-install.php:315
 #: includes/customizer/trackship-customizer.php:215
 #: includes/customizer/trackship-customizer.php:794
@@ -915,7 +1891,7 @@ msgstr "Aizturēts sūtījums"
 msgid "On Hold Shipments"
 msgstr "Aizturētie sūtījumi"
 
-#: includes/class-wc-trackship-admin.php:794
+#: includes/class-wc-trackship-admin.php:809
 msgid "On Hold Shipments Notifications"
 msgstr "Paziņojumi par aizturētiem sūtījumiem"
 
@@ -923,12 +1899,87 @@ msgstr "Paziņojumi par aizturētiem sūtījumiem"
 msgid "On-time"
 msgstr "Laikā"
 
-#: includes/views/logs.php:50 includes/views/shipments.php:160
+#: includes/mcp/class-trackship-mcp-oauth.php:941
+msgid "Only accounts that can manage this store can connect an assistant."
+msgstr "Asistentu var pieslēgt tikai konti, kas var pārvaldīt šo veikalu."
+
+#: includes/mcp/ui-helpers.php:944
+msgid ""
+"Only needed if you connect through WooCommerce MCP instead of your own link."
+msgstr ""
+"Nepieciešams tikai tad, ja izveidojat savienojumu, izmantojot WooCommerce "
+"MCP, nevis savu saiti."
+
+#: includes/views/ai-assistant.php:48
+msgid ""
+"Only needed if you connect through WooCommerce MCP instead of your TrackShip "
+"link."
+msgstr ""
+"Nepieciešams tikai tad, ja izveidojat savienojumu, izmantojot WooCommerce "
+"MCP, nevis TrackShip saiti."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:856
+msgid "Open All In One WP Security firewall"
+msgstr "Atveriet visu vienā WP Security ugunsmūri"
+
+#: includes/mcp/ui-helpers.php:1586 includes/views/ai-assistant.php:40
+msgid "Open claude.ai and go to Settings, then Connectors."
+msgstr ""
+"Atveriet claude.ai un dodieties uz Iestatījumi, pēc tam uz Savienotāji."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:877
+msgid "Open NinjaFirewall settings"
+msgstr "Atveriet NinjaFirewall iestatījumus"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:870
+msgid "Open Solid Security settings"
+msgstr "Atveriet Solid Security iestatījumus"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:863
+msgid "Open Sucuri firewall settings"
+msgstr "Atveriet Sucuri ugunsmūra iestatījumus"
+
+#. %s: the setting's name.
+#: includes/mcp/class-trackship-mcp-selftest.php:835
+#, php-format
+msgid "Open the %s setting"
+msgstr "Atvērt iestatījumu %s"
+
+#: includes/mcp/ui-helpers.php:986
+msgid "Open WooCommerce feature settings"
+msgstr "Atvērt WooCommerce funkciju iestatījumus"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:844
+msgid "Open Wordfence firewall settings"
+msgstr "Atveriet Wordfence ugunsmūra iestatījumus"
+
+#. %s: the AI app's name, e.g. Cursor.
+#: includes/mcp/ui-helpers.php:431
+#, php-format
+msgid "Opening %s…"
+msgstr "Atver %s…"
+
+#: includes/mcp/ui-helpers.php:257
+msgid "Opens Cursor and adds the server."
+msgstr "Atver kursoru un pievieno serveri."
+
+#: includes/shipments/class-wc-trackship-shipments.php:113
+#: includes/views/logs.php:50 includes/views/shipments.php:161
 #: includes/views/front/tracking_page_header.php:43
 msgid "Order"
 msgstr "Pasūtiet"
 
-#: includes/views/shipments.php:161
+#. 1: order id, 2: comma-separated tracking numbers.
+#: includes/mcp/class-trackship-abilities.php:473
+#, php-format
+msgid ""
+"Order %1$d has more than one shipment. Ask which one and call again with "
+"tracking_number: %2$s."
+msgstr ""
+"Pasūtījumam %1$d ir vairāk nekā viena piegāde. Pajautājiet, kura, un zvaniet "
+"vēlreiz, norādot izsekošanas numuru: %2$s."
+
+#: includes/views/shipments.php:162
 msgid "Order date"
 msgstr "Pasūtījuma datums"
 
@@ -948,7 +1999,7 @@ msgstr "Pasūtījuma e-pasts"
 msgid "Order ID"
 msgstr "Pasūtījuma ID"
 
-#: includes/class-wc-trackship-actions.php:729
+#: includes/class-wc-trackship-actions.php:737
 msgid "Order id not found"
 msgstr "Pasūtījuma ID nav atrasts"
 
@@ -956,7 +2007,7 @@ msgstr "Pasūtījuma ID nav atrasts"
 msgid "Order id, Email, Phone number"
 msgstr "Pasūtījuma ID, e-pasts, tālrņa numurs"
 
-#: includes/class-wc-trackship-admin.php:841
+#: includes/class-wc-trackship-admin.php:856
 #: templates/emails/exception-shipment-email.php:16
 #: templates/emails/late-shipment-email.php:16
 #: templates/emails/on-hold-shipment-email.php:16
@@ -983,9 +2034,9 @@ msgstr "Sīkāka informācija par izcelsmi"
 msgid "Other"
 msgstr "Cits"
 
-#: includes/class-wc-trackship-actions.php:625
-#: includes/class-wc-trackship-actions.php:672
-#: includes/class-wc-trackship-admin.php:1275
+#: includes/class-wc-trackship-actions.php:633
+#: includes/class-wc-trackship-actions.php:680
+#: includes/class-wc-trackship-admin.php:1290
 #: includes/class-wc-trackship-install.php:313
 #: includes/customizer/trackship-customizer.php:213
 #: includes/customizer/trackship-customizer.php:792
@@ -1002,13 +2053,23 @@ msgstr "Izejot piegādei"
 msgid "Overview"
 msgstr "Pārskats"
 
-#: includes/class-wc-trackship-actions.php:620
-#: includes/class-wc-trackship-actions.php:702 includes/views/shipments.php:42
+#. 1: current page number, 2: total pages, 3: total number of entries.
+#: includes/mcp/ui-helpers.php:1490
+#, php-format
+msgid "Page %1$d of %2$d — %3$d entries"
+msgstr "%1$d. lapa no %2$d — %3$d ieraksti"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:933
+msgid "Password"
+msgstr "Parole"
+
+#: includes/class-wc-trackship-actions.php:628
+#: includes/class-wc-trackship-actions.php:710 includes/views/shipments.php:42
 msgid "Pending Update"
 msgstr "Gaida atjauninājumu"
 
-#: includes/class-wc-trackship-actions.php:422
-#: includes/class-wc-trackship-actions.php:934
+#: includes/class-wc-trackship-actions.php:430
+#: includes/class-wc-trackship-actions.php:942
 #| msgid ""
 #| "Pending TrackShip is a temporary status that will display for a few "
 #| "minutes until we update the order with the first tracking event from the "
@@ -1027,7 +2088,7 @@ msgstr ""
 msgid "Pickup Reminder"
 msgstr "Paņemšanas atgādinājums"
 
-#: includes/class-wc-trackship-admin.php:1312
+#: includes/class-wc-trackship-admin.php:1327
 msgid "Pickup reminder"
 msgstr "Atgādinājums par saņemšanu"
 
@@ -1041,7 +2102,7 @@ msgid "Please connect your store with trackship.com."
 msgstr "Lūdzu, savienojiet savu veikalu ar trackship.com."
 
 #. %s: search for a tag
-#: trackship-for-woocommerce.php:115
+#: trackship-for-woocommerce.php:116
 #, php-format
 msgid ""
 "Please install and activate %1$sWooCommerce%2$s for TrackShip for "
@@ -1067,8 +2128,8 @@ msgstr ""
 msgid "Powered by "
 msgstr "Nodrošina"
 
-#: includes/class-wc-trackship-actions.php:622
-#: includes/class-wc-trackship-actions.php:666 includes/views/shipments.php:26
+#: includes/class-wc-trackship-actions.php:630
+#: includes/class-wc-trackship-actions.php:674 includes/views/shipments.php:26
 msgid "Pre Transit"
 msgstr "Pirms tranzīta"
 
@@ -1076,7 +2137,12 @@ msgstr "Pirms tranzīta"
 msgid "Pre-Transit"
 msgstr "Pirms tranzīta"
 
-#: includes/class-wc-trackship-admin.php:788
+#: includes/mcp/ui-helpers.php:1598
+msgid "Press Connect and sign in with your store account. Once only."
+msgstr ""
+"Nospiediet “Savienot” un piesakieties ar savu veikala kontu. Tikai vienreiz."
+
+#: includes/class-wc-trackship-admin.php:803
 msgid "Priority Support"
 msgstr "Prioritārais atbalsts"
 
@@ -1085,27 +2151,130 @@ msgstr "Prioritārais atbalsts"
 msgid "Progress bar"
 msgstr "Progresa josla"
 
-#: includes/class-wc-trackship-admin.php:821
+#: includes/mcp/class-trackship-abilities.php:443
+msgid "Provide \"note\" (use an empty string to clear the note)."
+msgstr "Norādiet \"piezīmi\" (izmantojiet tukšu virkni, lai notīrītu piezīmi)."
+
+#: includes/mcp/class-trackship-abilities.php:389
+msgid "Provide \"set\" and/or \"remove\"."
+msgstr "Norādiet “iestatīt” un/vai “noņemt”."
+
+#: includes/mcp/class-trackship-abilities.php:421
+msgid "Provide a status group."
+msgstr "Norādiet statusa grupu."
+
+#: includes/mcp/class-trackship-abilities.php:407
+msgid "Provide order_id or order_ids."
+msgstr "Norādiet pasūtījuma_id vai pasūtījuma_ids."
+
+#: includes/mcp/class-trackship-abilities.php:462
+msgid ""
+"Provide shipment_id, or order_id (with tracking_number if the order has "
+"several shipments)."
+msgstr ""
+"Norādiet shipment_id vai order_id (ar izsekošanas numuru, ja pasūtījumam ir "
+"vairākas piegādes)."
+
+#: includes/class-wc-trackship-admin.php:836
 msgid "Providers list Updated"
 msgstr "Pakalpojumu sniedzēju saraksts atjaunināts"
 
-#: includes/views/notifications.php:29 includes/views/settings.php:62
+#: includes/mcp/screen.php:168 includes/views/notifications.php:29
+#: includes/views/settings.php:62
 msgid "Quick Help"
 msgstr "Ātrā palīdzība"
 
-#: includes/class-wc-trackship-admin.php:464
-#: includes/class-wc-trackship-admin.php:486
-#: includes/class-wc-trackship-admin.php:508
+#: includes/mcp/ui-helpers.php:561 includes/mcp/ui-helpers.php:905
+msgid "Read"
+msgstr "Lasīt"
+
+#: includes/mcp/class-trackship-abilities.php:152
+msgid ""
+"Read all TrackShip settings (the full settings option). Reading is "
+"unrestricted; writes are limited to a safe whitelist via update-settings."
+msgstr ""
+"Lasīt visus TrackShip iestatījumus (pilnu iestatījumu opcija). Lasīšana ir "
+"neierobežota; rakstīšana ir ierobežota līdz drošajam baltajam sarakstam, "
+"izmantojot atjaunināšanas iestatījumus."
+
+#: includes/mcp/ui-helpers.php:779
+msgid "Read and write"
+msgstr "Lasīt un rakstīt"
+
+#: includes/mcp/ui-helpers.php:777
+msgid "Read only"
+msgstr "Tikai lasāms"
+
+#: includes/mcp/class-trackship-abilities.php:159
+msgid ""
+"Read the shipment-status email customizer settings (per-status email design: "
+"colors, headings, content, enable flags). Nested as status => { property: "
+"value }. Edit with update-email-settings."
+msgstr ""
+"Izlasiet sūtījuma statusa e-pasta pielāgošanas iestatījumus (katra statusa e-"
+"pasta dizains: krāsas, virsraksti, saturs, karodziņu iespējošana). Ligzdots "
+"kā status => { property: value }. Rediģēt ar update-email-settings."
+
+#: includes/mcp/class-trackship-abilities.php:166
+msgid ""
+"Read the shipping carrier mappings (your external/detected provider name → "
+"the TrackShip provider it maps to), including the resolved TrackShip "
+"provider display name. Edit with update-carrier-mappings."
+msgstr ""
+"Izlasiet piegādes pārvadātāja kartējumus (jūsu ārējā/noteiktā pakalpojumu "
+"sniedzēja nosaukums → TrackShip pakalpojumu sniedzējs, uz kuru tas ir "
+"saistīts), tostarp atrisināto TrackShip pakalpojumu sniedzēja parādāmo "
+"nosaukumu. Rediģējiet, izmantojot update-carrier-mappings."
+
+#: includes/class-wc-trackship-admin.php:479
+#: includes/class-wc-trackship-admin.php:501
+#: includes/class-wc-trackship-admin.php:523
 msgid "Recipient(s)"
 msgstr "Saņēmējs(-i)"
 
-#: includes/class-wc-trackship-admin.php:790
+#: includes/mcp/ui-helpers.php:1473
+msgid "Refused"
+msgstr "Atteicās"
+
+#: includes/class-wc-trackship-admin.php:805
 msgid "Remove TrackShip’s branding"
 msgstr "Noņemiet TrackShip zīmolu"
 
-#: includes/class-wc-trackship-actions.php:630
-#: includes/class-wc-trackship-actions.php:678
-#: includes/class-wc-trackship-admin.php:1299
+#: includes/mcp/ui-helpers.php:1082
+msgid ""
+"Removes the key from this site so the steps above are no longer shown. The "
+"key itself keeps working until you delete it in WooCommerce."
+msgstr ""
+"Noņem atslēgu no šīs vietnes, tāpēc iepriekš minētās darbības vairs netiek "
+"rādītas. Pati atslēga turpina darboties, līdz to izdzēšat pakalpojumā "
+"WooCommerce."
+
+#: includes/mcp/ui-helpers.php:1044
+msgid ""
+"Replace the key this site is using? The one stored now is dropped, and any "
+"app set up with it stops working until you set it up again with the new one. "
+"The old key is not deleted in WooCommerce."
+msgstr ""
+"Vai nomainīt atslēgu, ko izmanto šī vietne? Pašreiz saglabātā atslēga tiek "
+"izdzēsta, un jebkura lietotne, kas ar to iestatīta, pārstāj darboties, līdz "
+"to iestatīsiet vēlreiz ar jauno atslēgu. Vecā atslēga netiek dzēsta "
+"pakalpojumā WooCommerce."
+
+#: includes/mcp/ui-helpers.php:422
+msgid "Reset"
+msgstr "Atiestatīt"
+
+#: includes/mcp/ui-helpers.php:417
+msgid "Resetting…"
+msgstr "Notiek atiestatīšana…"
+
+#: includes/mcp/ui-helpers.php:1454
+msgid "Result"
+msgstr "Rezultāts"
+
+#: includes/class-wc-trackship-actions.php:638
+#: includes/class-wc-trackship-actions.php:686
+#: includes/class-wc-trackship-admin.php:1314
 #: includes/class-wc-trackship-install.php:317
 #: includes/customizer/trackship-customizer.php:217
 #: includes/customizer/trackship-customizer.php:796
@@ -1121,9 +2290,17 @@ msgstr "Atgriezt sūtītājam"
 msgid "Return To Sender for last 30 days"
 msgstr "Atgriezties sūtītājam par pēdējām 30 dienām"
 
-#: trackship-for-woocommerce.php:313
+#: trackship-for-woocommerce.php:337
 msgid "Review"
 msgstr "Pārskats"
+
+#: includes/mcp/ui-helpers.php:1326
+msgid "Revoke"
+msgstr "Atsaukt"
+
+#: includes/mcp/ui-helpers.php:1315
+msgid "Revoked"
+msgstr "Atsaukts"
 
 #: includes/smswoo/class-smswoo-admin.php:508
 #: includes/views/notifications.php:106 includes/views/notifications.php:121
@@ -1137,6 +2314,10 @@ msgstr "Saglabāt un aizvērt"
 msgid "Save changes"
 msgstr "Saglabāt izmaiņas"
 
+#: includes/views/shipments.php:200
+msgid "Save note"
+msgstr "Saglabāt piezīmi"
+
 #: includes/customizer/trackship-customizer.php:104
 msgid "Saved"
 msgstr "Saglabāts"
@@ -1145,7 +2326,7 @@ msgstr "Saglabāts"
 msgid "Search"
 msgstr "Meklēt"
 
-#: includes/views/shipments.php:132
+#: includes/views/shipments.php:133
 msgid "Search by Tracking Number, Shipping carrier, Order number"
 msgstr "Meklēt pēc izsekošanas numura, piegādes pārvadātāja, pasūtījuma numura"
 
@@ -1158,22 +2339,26 @@ msgid "Security verification failed, please refresh page and try again."
 msgstr ""
 "Drošības pārbaude neizdevās. Lūdzu, atsvaidziniet lapu un mēģiniet vēlreiz."
 
-#: includes/class-wc-trackship-admin.php:923
-#: includes/class-wc-trackship-admin.php:989
+#: includes/mcp/class-trackship-mcp-selftest.php:848
+msgid "See what Wordfence blocked"
+msgstr "Skatiet, ko Wordfence bloķēja"
+
+#: includes/class-wc-trackship-admin.php:938
+#: includes/class-wc-trackship-admin.php:1004
 msgid "Select"
 msgstr "Izvēlieties"
 
-#: includes/class-wc-trackship-admin.php:1237
+#: includes/class-wc-trackship-admin.php:1252
 msgid "Select tracking page:"
 msgstr "Izvēlieties izsekošanas lapu:"
 
-#: includes/class-wc-trackship-admin.php:470
-#: includes/class-wc-trackship-admin.php:492
-#: includes/class-wc-trackship-admin.php:514
+#: includes/class-wc-trackship-admin.php:485
+#: includes/class-wc-trackship-admin.php:507
+#: includes/class-wc-trackship-admin.php:529
 msgid "Send email at"
 msgstr "Sūtīt e-pastu uz"
 
-#: includes/class-wc-trackship-admin.php:1306
+#: includes/class-wc-trackship-admin.php:1321
 #: includes/smswoo/class-smswoo-admin.php:501
 msgid "Send only when all shipments for the order are delivered"
 msgstr "Sūtīt tikai tad, kad ir piegādāti visi pasūtījuma sūtījumi"
@@ -1182,7 +2367,9 @@ msgstr "Sūtīt tikai tad, kad ir piegādāti visi pasūtījuma sūtījumi"
 msgid ""
 "Send proactive shipment status emails that reduce \"Where is my order?\" "
 "support tickets."
-msgstr "Sūtiet proaktīvus sūtījuma statusa e-pastus, kas samazina \"Kur ir mans pasūtījums?\" atbalsta pieprasījumus."
+msgstr ""
+"Sūtiet proaktīvus sūtījuma statusa e-pastus, kas samazina \"Kur ir mans "
+"pasūtījums?\" atbalsta pieprasījumus."
 
 #: includes/smswoo/class-smswoo-admin.php:376
 msgid "Sender phone number / Sender ID"
@@ -1196,24 +2383,52 @@ msgstr "Nosūtīts"
 msgid "Set Pickup reminder notifications(in days)"
 msgstr "Iestatīt atgādinājuma paziņojumus par saņemšanu (dienās)"
 
-#: trackship-for-woocommerce.php:309 includes/class-wc-trackship-admin.php:220
+#: trackship-for-woocommerce.php:333 includes/class-wc-trackship-admin.php:220
 #: includes/views/content.php:13 includes/views/header2.php:55
 msgid "Settings"
 msgstr "Iestatījumi"
 
-#: includes/views/shipments.php:170
+#: includes/mcp/ui-helpers.php:223
+msgid "Settings > Connectors > Add custom connector, then paste the URL."
+msgstr ""
+"Iestatījumi > Savienotāji > Pievienot pielāgotu savienotāju un pēc tam "
+"ielīmējiet URL."
+
+#: includes/mcp/ui-helpers.php:235
+msgid ""
+"Settings > Connectors > Add custom connector, then paste the URL. No config "
+"file to edit."
+msgstr ""
+"Iestatījumi > Savienotāji > Pievienot pielāgotu savienotāju un pēc tam "
+"ielīmējiet URL. Nav rediģējama konfigurācijas faila."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:855
+msgid "Settings, Connectors, then Connect on this store."
+msgstr "Iestatījumi, Savienotāji un pēc tam Izveidot savienojumu šajā veikalā."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:856
+msgid "Settings, Connectors, then Connect. Or restart the app."
+msgstr ""
+"Iestatījumi, Savienotāji un pēc tam Izveidot savienojumu. Vai arī "
+"restartējiet lietotni."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:857
+msgid "Settings, MCP, then the refresh arrow on this server."
+msgstr "Iestatījumi, MCP un pēc tam atsvaidzināšanas bultiņa šajā serverī."
+
+#: includes/views/shipments.php:172
 msgid "Ship City"
 msgstr "Kuģu pilsēta"
 
-#: includes/views/shipments.php:167
+#: includes/views/shipments.php:169
 msgid "Ship from"
 msgstr "Sūtīt no"
 
-#: includes/views/shipments.php:169
+#: includes/views/shipments.php:171
 msgid "Ship State"
 msgstr "Kuģa valsts"
 
-#: includes/views/shipments.php:168
+#: includes/views/shipments.php:170
 msgid "Ship to"
 msgstr "Nosūtīt uz"
 
@@ -1222,6 +2437,22 @@ msgstr "Nosūtīt uz"
 #, php-format
 msgid "Shipment %1$s"
 msgstr "Sūtījums %1$s"
+
+#: includes/shipments/class-wc-trackship-shipments.php:504
+msgid "Shipment not found."
+msgstr "Sūtījums nav atrasts."
+
+#: includes/views/shipments.php:191
+msgid "Shipment note"
+msgstr "Sūtījuma pavadzīme"
+
+#: includes/shipments/class-wc-trackship-shipments.php:114
+msgid "Shipment note saved."
+msgstr "Sūtījuma pavadzīme saglabāta."
+
+#: includes/views/shipments.php:168
+msgid "Shipment notes"
+msgstr "Sūtījuma pavadzīmes"
 
 #: includes/views/front/layout1_tracking_details.php:12
 #: includes/views/front/preview_tracking_page.php:115
@@ -1232,18 +2463,25 @@ msgstr "Sūtījuma norise"
 msgid "Shipment Status"
 msgstr "Sūtījuma statuss"
 
-#: includes/class-wc-trackship-actions.php:348
-#: includes/class-wc-trackship-admin.php:842 includes/views/logs.php:51
-#: includes/views/shipments.php:166 templates/emails/late-shipment-email.php:17
+#: includes/class-wc-trackship-actions.php:356
+#: includes/class-wc-trackship-admin.php:857 includes/views/logs.php:51
+#: includes/views/shipments.php:167 templates/emails/late-shipment-email.php:17
 msgid "Shipment status"
 msgstr "Sūtījuma statuss"
+
+#: includes/mcp/class-trackship-abilities.php:63
+msgid ""
+"Shipment tracking, notifications and settings from TrackShip for WooCommerce."
+msgstr ""
+"Sūtījumu izsekošana, paziņojumi un iestatījumi no TrackShip pakalpojumam "
+"WooCommerce."
 
 #: includes/class-wc-trackship-admin.php:214 includes/views/dashboard.php:369
 #: includes/views/header2.php:40
 msgid "Shipments"
 msgstr "Sūtījumi"
 
-#: includes/class-wc-trackship-admin.php:791
+#: includes/class-wc-trackship-admin.php:806
 msgid "Shipments Dashboard"
 msgstr "Sūtījumu informācijas panelis"
 
@@ -1259,15 +2497,15 @@ msgstr ""
 msgid "Shipments Over Time"
 msgstr "Sūtījumi laika gaitā"
 
-#: includes/class-wc-trackship-actions.php:690
-#: includes/class-wc-trackship-actions.php:705
+#: includes/class-wc-trackship-actions.php:698
+#: includes/class-wc-trackship-actions.php:713
 #: templates/emails/tracking-info.php:81
 #: includes/views/front/enhanced_tracking_events.php:18
 #: includes/views/front/tracking_page_header.php:64
 msgid "Shipped"
 msgstr "Nosūtīts"
 
-#: includes/views/shipments.php:162
+#: includes/views/shipments.php:163
 msgid "Shipped date"
 msgstr "Izsūtīšanas datums"
 
@@ -1279,7 +2517,7 @@ msgstr "Nosūtīto produktu galvenes teksts"
 msgid "Shipping & Delivery"
 msgstr "Piegāde un piegāde"
 
-#: includes/class-wc-trackship-admin.php:795
+#: includes/class-wc-trackship-admin.php:810
 msgid "Shipping & Delivery Analytics"
 msgstr "Piegādes un piegādes analīze"
 
@@ -1295,7 +2533,7 @@ msgstr "Piegādes adrese"
 msgid "Shipping address header text"
 msgstr "Piegādes adreses galvenes teksts"
 
-#: includes/views/shipments.php:165
+#: includes/views/shipments.php:166
 msgid "Shipping carrier"
 msgstr "Piegādes pārvadātājs"
 
@@ -1311,11 +2549,11 @@ msgstr "Piegādes dienas"
 msgid "Shipping provider"
 msgstr "Piegādes nodrošinātājs"
 
-#: includes/class-wc-trackship-actions.php:735
+#: includes/class-wc-trackship-actions.php:743
 msgid "Shipping provider not found"
 msgstr "Piegādes nodrošinātājs nav atrasts"
 
-#: includes/views/shipments.php:174
+#: includes/views/shipments.php:176
 msgid "Shipping time"
 msgstr "Piegādes laiks"
 
@@ -1339,6 +2577,36 @@ msgstr "rādīt tikai pasūtījuma informāciju"
 msgid "show only Tracking details"
 msgstr "rādīt tikai izsekošanas informāciju"
 
+#: includes/mcp/ui-helpers.php:1354
+msgid "Sign everyone out"
+msgstr "Izrakstīt visus"
+
+#: includes/mcp/ui-helpers.php:1353
+msgid ""
+"Sign everyone out? Every AI assistant stops working until each person "
+"connects again. Your link does not change."
+msgstr ""
+"Vai izrakstīt visus? Katrs mākslīgā intelekta asistents pārstāj darboties, "
+"līdz katra persona atkal izveido savienojumu. Jūsu saite nemainās."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:936
+msgid "Sign in"
+msgstr "Pierakstīties"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:561
+msgid "Sign in to continue."
+msgstr "Pierakstieties, lai turpinātu."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:930
+msgid "Sign in with your store account to connect it."
+msgstr "Pierakstieties ar savu veikala kontu, lai to savienotu."
+
+#. %s: the signed-in account's email address.
+#: includes/mcp/class-trackship-mcp-oauth.php:917
+#, php-format
+msgid "Signed in as %s"
+msgstr "Pierakstījies kā %s"
+
 #: includes/customizer/trackship-customizer.php:415
 #: includes/customizer/trackship-customizer.php:651
 msgid "Single icon"
@@ -1353,7 +2621,7 @@ msgstr "īsziņa"
 msgid "SMS gateways"
 msgstr "SMS vārtejas"
 
-#: includes/class-wc-trackship-admin.php:789
+#: includes/class-wc-trackship-admin.php:804
 #: includes/views/notifications.php:21 includes/views/notifications.php:150
 msgid "SMS Notifications"
 msgstr "SMS paziņojumi"
@@ -1363,7 +2631,7 @@ msgstr "SMS paziņojumi"
 msgid "SMS notifications"
 msgstr "SMS paziņojumi"
 
-#: includes/class-wc-trackship-admin.php:1327 includes/views/settings.php:53
+#: includes/class-wc-trackship-admin.php:1342 includes/views/settings.php:53
 #: includes/smswoo/admin-html/settings_tab.php:9
 msgid "SMS Settings"
 msgstr "SMS iestatījumi"
@@ -1371,6 +2639,11 @@ msgstr "SMS iestatījumi"
 #: includes/smswoo/admin-html/settings_tab.php:27
 msgid "SMS Settings managed by SMS for WooCommerce"
 msgstr "SMS iestatījumus pārvalda SMS for WooCommerce"
+
+#. %d: HTTP status.
+#: includes/mcp/class-trackship-mcp-selftest.php:803
+msgid "Something refused this request (%d) before it reached the plugin."
+msgstr "Kaut kas noraidīja šo pieprasījumu (%d), pirms tas sasniedza spraudni."
 
 #: includes/api/class-trackship-rest-api-controller.php:331
 msgid "Sorry, you are not allowed to create resources."
@@ -1385,27 +2658,39 @@ msgstr "Atvainojiet, jūs nevarat uzskaitīt resursus."
 msgid "Sorry, you cannot view this resource."
 msgstr "Atvainojiet, jūs nevarat apskatīt šo resursu."
 
-#: includes/class-wc-trackship-actions.php:723
+#: includes/class-wc-trackship-actions.php:731
 msgid "SSL Error"
 msgstr "SSL kļūda"
 
-#: includes/class-wc-trackship-admin.php:796
+#: includes/class-wc-trackship-admin.php:811
 #| msgid "Starting from $11 a month"
 msgid "Starting from $9 a month"
 msgstr "Sākot no 9 ASV dolāriem mēnesī"
 
-#: includes/class-wc-trackship-admin.php:847 includes/views/logs.php:55
+#: includes/class-wc-trackship-admin.php:862 includes/mcp/ui-helpers.php:677
+#: includes/mcp/ui-helpers.php:1281 includes/views/logs.php:55
 msgid "Status"
 msgstr "Statuss"
 
-#: includes/class-wc-trackship-actions.php:744
+#: includes/class-wc-trackship-actions.php:752
 #| msgid "Store is conneted with different account"
 msgid "Store is connected with different account"
 msgstr "Veikals ir saistīts ar citu kontu"
 
-#: includes/class-wc-trackship-actions.php:741
+#: includes/class-wc-trackship-actions.php:749
 msgid "Store is not Connected to TrackShip"
 msgstr "Veikals nav savienots ar TrackShip"
+
+#: includes/mcp/ui-helpers.php:1045
+msgid ""
+"Store this key on the site? It is kept encrypted so your setup steps survive "
+"a reload, and it opens the whole store — orders, products, customers — to "
+"whatever you connect with it."
+msgstr ""
+"Vai glabāt šo atslēgu vietnē? Tā tiek šifrēta, lai iestatīšanas darbības "
+"tiktu ievērotas pēc atkārtotas ielādes, un tā atver visu veikalu — "
+"pasūtījumus, produktus, klientus — visam, ar ko jūs ar to izveidojat "
+"savienojumu."
 
 #: includes/customizer/trackship-customizer.php:370
 msgid "Style & Colors"
@@ -1415,16 +2700,32 @@ msgstr "Stils un krāsas"
 msgid "Support"
 msgstr "Atbalsts"
 
+#: includes/mcp/class-trackship-mcp-selftest.php:204
+msgid "Switch it on, then test."
+msgstr "Ieslēdziet to un pēc tam pārbaudiet."
+
+#: includes/mcp/screen.php:139 includes/views/ai-assistant.php:35
+msgid "Switch on, copy your link, paste it into Claude. Nothing to install."
+msgstr "Ieslēdz, nokopē saiti, ielīmē to Claude. Nav ko instalēt."
+
+#: includes/mcp/screen.php:302
+msgid ""
+"Switch on, then paste the URL that appears into your AI assistant as a "
+"custom connector."
+msgstr ""
+"Ieslēdziet to un pēc tam ielīmējiet parādīto URL savā mākslīgā intelekta "
+"palīgā kā pielāgotu savienotāju."
+
 #: includes/views/map-providers.php:71
 msgid "Sync providers"
 msgstr "Sinhronizēt pārvadātājus"
 
-#: includes/class-wc-trackship-admin.php:815
-#: includes/class-wc-trackship-admin.php:823
+#: includes/class-wc-trackship-admin.php:830
+#: includes/class-wc-trackship-admin.php:838
 msgid "Sync TrackShip Providers"
 msgstr "Sinhronizējiet TrackShip pakalpojumu sniedzējus"
 
-#: includes/class-wc-trackship-admin.php:819
+#: includes/class-wc-trackship-admin.php:834
 msgid ""
 "Syncing the TrackShip providers list add or updates the pre-set TrackShip "
 "providers and will not effect custom shipping providers."
@@ -1449,6 +2750,99 @@ msgstr "Veidnes valoda"
 msgid "Template variables"
 msgstr "Veidnes mainīgie"
 
+#: includes/mcp/ui-helpers.php:1653
+msgid "Test my link"
+msgstr "Pārbaudi manu saiti"
+
+#: includes/mcp/ui-helpers.php:1652
+msgid "Testing…"
+msgstr "Testēšana…"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:479
+msgid ""
+"That AI app asked to be sent somewhere it has not registered. Nothing has "
+"been shared."
+msgstr ""
+"Tā mākslīgā intelekta lietotne lūdza tikt nosūtīta uz citu vietu, kur tā nav "
+"reģistrēta. Nekas nav kopīgots."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:475
+msgid ""
+"That AI app is not registered with this store. Remove the connection and add "
+"it again."
+msgstr ""
+"Šī mākslīgā intelekta lietotne nav reģistrēta šajā veikalā. Noņemiet "
+"savienojumu un pievienojiet to vēlreiz."
+
+#: includes/mcp/class-trackship-mcp-keys.php:90
+msgid "That connection could not be turned off. Reload the page and try again."
+msgstr ""
+"Šo savienojumu nevarēja izslēgt. Ielādējiet lapu atkārtoti un mēģiniet "
+"vēlreiz."
+
+#. %d: the HTTP status still coming back.
+#: includes/mcp/class-trackship-mcp-htaccess.php:405
+msgid ""
+"That did not do it — the link answered %d, so the rule is not one this file "
+"can reach. It is your host or your CDN. Ask them to stop filtering callers "
+"by name for this site. The change has been undone and nothing is left behind."
+msgstr ""
+"Tas neizdevās — saite atbildēja %d, tātad noteikums nav tāds, kādu šis fails "
+"var sasniegt. Tas ir jūsu mitinātāja vai jūsu CDN vaina. Palūdziet viņiem "
+"pārtraukt zvanītāju filtrēšanu pēc vārda šajā vietnē. Izmaiņas ir atsauktas, "
+"un nekas nav palicis aiz muguras."
+
+#: includes/views/ai-assistant.php:45
+msgid ""
+"That is everything TrackShip adds — shipments, notifications, carrier "
+"mappings and settings. No customer payment details."
+msgstr ""
+"Tas ir viss, ko TrackShip pievieno — sūtījumi, paziņojumi, pārvadātāju "
+"kartējumi un iestatījumi. Nav nepieciešama klienta maksājuma informācija."
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:938
+msgid ""
+"That key was already gone from WooCommerce. This site has stopped offering "
+"it."
+msgstr ""
+"Šī atslēga jau bija pazudusi no WooCommerce. Šī vietne vairs to nepiedāvā."
+
+#: includes/mcp/class-trackship-mcp-registry.php:140
+msgid "That tool cannot be run right now."
+msgstr "Šo rīku pašlaik nevar palaist."
+
+#: includes/mcp/class-trackship-mcp-registry.php:126
+msgid "That tool is not available on this connection."
+msgstr "Šis rīks nav pieejams šim savienojumam."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:542
+msgid "That username or password was not right."
+msgstr "Šis lietotājvārds vai parole nebija pareiza."
+
+#: includes/mcp/class-trackship-mcp-htaccess.php:172
+msgid ""
+"The .htaccess file cannot be written on this server, so this has to be "
+"changed by hand or by your host."
+msgstr ""
+".htaccess failu nevar ierakstīt šajā serverī, tāpēc tas ir jāmaina manuāli "
+"vai jūsu resursdatoram."
+
+#: includes/mcp/class-trackship-mcp-htaccess.php:194
+msgid ""
+"The .htaccess file could not be updated. Your host may have made it read-"
+"only."
+msgstr ""
+".htaccess failu nevarēja atjaunināt. Iespējams, jūsu mitināšanas pakalpojums "
+"ir padarījis to tikai lasāmu."
+
+#: includes/mcp/class-trackship-mcp-server.php:200
+msgid "The account this connection belongs to no longer exists."
+msgstr "Konts, kuram pieder šis savienojums, vairs nepastāv."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:203
+msgid "The connection is switched off."
+msgstr "Savienojums ir izslēgts."
+
 #: includes/customizer/trackship-customizer.php:689
 msgid ""
 "The delivery tracking number will display if the shipment is getting a "
@@ -1458,6 +2852,14 @@ msgstr ""
 "Piegādes izsekošanas numurs tiks parādīts, ja sūtījums galamērķa valstī "
 "saņem citu izsekošanas numuru no vietējā pasta pakalpojuma (t.i., 4PX —> "
 "USPS)."
+
+#: includes/mcp/class-trackship-mcp-htaccess.php:371
+msgid ""
+"The exception has been removed. Your security plugin now applies to this "
+"link exactly as it does to the rest of the site."
+msgstr ""
+"Izņēmums ir noņemts. Jūsu drošības spraudnis tagad attiecas uz šo saiti "
+"tieši tāpat kā uz pārējo vietni."
 
 #: includes/class-wc-trackship-exception-shipments.php:173
 msgid "The following shipments are exception:"
@@ -1471,6 +2873,46 @@ msgstr "Nokavēti šādi sūtījumi:"
 msgid "The following shipments are On Hold:"
 msgstr "Aizturēti šādi sūtījumi:"
 
+#: includes/mcp/class-trackship-mcp-woo-key.php:937
+msgid ""
+"The key is deleted. Nothing can connect with it now — make a new one when "
+"you need to set an app up again."
+msgstr ""
+"Atslēga ir izdzēsta. Tagad ar to vairs nevar izveidot savienojumu — "
+"izveidojiet jaunu, kad būs nepieciešams atkārtoti iestatīt lietotni."
+
+#: includes/mcp/ui-helpers.php:666
+msgid "the key owner"
+msgstr "atslēgas īpašnieks"
+
+#. 1: the app's name, 2: how long ago.
+#: includes/mcp/class-trackship-mcp-selftest.php:569
+#, php-format
+msgid ""
+"The last was %1$s, %2$s ago. That route works and there is nothing to fix. "
+"Use the link on this screen only if you also want to connect from claude.ai "
+"or a phone, which WooCommerce MCP cannot do."
+msgstr ""
+"Pēdējais bija pirms %1$s, %2$s. Šis maršruts darbojas, un tur nekas nav "
+"jālabo. Izmantojiet saiti šajā ekrānā tikai tad, ja vēlaties izveidot "
+"savienojumu arī no claude.ai vai tālruņa, ko WooCommerce MCP nevar izdarīt."
+
+#. 1: the app's name or user agent, 2: how long ago.
+#: includes/mcp/class-trackship-mcp-selftest.php:724
+#, php-format
+msgid ""
+"The last was %1$s, %2$s ago. Whether your AI assistant is still connected is "
+"held at its end, not here - if it reports an error, add the link to it again."
+msgstr ""
+"Pēdējais bija pirms %1$s, %2$s. Tas, vai jūsu mākslīgā intelekta asistents "
+"joprojām ir savienots, tiek norādīts tā beigās, nevis šeit — ja tas ziņo par "
+"kļūdu, pievienojiet saiti uz to vēlreiz."
+
+#. %d: the HTTP status code the link answered with.
+#: includes/mcp/class-trackship-mcp-selftest.php:266
+msgid "The link answered with %d instead of the expected reply."
+msgstr "Saite atbildēja ar %d paredzētās atbildes vietā."
+
 #: includes/class-wc-trackship-front.php:294
 #: includes/class-wc-trackship-front.php:304
 msgid ""
@@ -1480,13 +2922,101 @@ msgstr ""
 "Pasūtījums/sūtījums, kuru mēģināt izsekot, vēl nav nosūtīts vai ievadītais "
 "pasūtījuma numurs ir nepareizs."
 
-#: includes/class-wc-trackship-actions.php:541
+#: includes/mcp/ui-helpers.php:1162
+msgid ""
+"The same link for everyone. Whoever adds it signs in with their own store "
+"account, and you can turn any one of them off on its own."
+msgstr ""
+"Viena un tā pati saite visiem. Ikviens, kas to pievieno, piesakās ar savu "
+"veikala kontu, un jūs varat izslēgt jebkuru no tām atsevišķi."
+
+#. 1: HTTP status, 2: the user agent that was refused.
+#: includes/mcp/class-trackship-mcp-selftest.php:449
+#, php-format
+msgid ""
+"The same request was refused (%1$d) when it called itself %2$s, which is the "
+"kind of name AI services use."
+msgstr ""
+"Tas pats pieprasījums tika noraidīts (%1$d), kad tas sevi sauca par %2$s, "
+"kas ir mākslīgā intelekta pakalpojumu izmantotais nosaukums."
+
+#: includes/class-wc-trackship-actions.php:549
 msgid ""
 "The shipment status updates will run in the background, please refresh the "
 "page in a few minutes."
 msgstr ""
 "Sūtījuma statusa atjauninājumi darbosies fonā, lūdzu, atsvaidziniet lapu pēc "
 "dažām minūtēm."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:218
+msgid "The test could not run: this store cannot call its own link."
+msgstr "Testu nevarēja palaist: šis veikals nevar izsaukt savu saiti."
+
+#. 1: HTTP status code, 2: message from WooCommerce.
+#: includes/mcp/class-trackship-mcp-woo-key.php:686
+#, php-format
+msgid "The WooCommerce MCP route answered with %1$d: %2$s"
+msgstr "WooCommerce MCP maršruts atbildēja ar %1$d: %2$s"
+
+#. %d: HTTP status code.
+#: includes/mcp/class-trackship-mcp-woo-key.php:688
+msgid "The WooCommerce MCP route answered with %d."
+msgstr "WooCommerce MCP maršruts atbildēja ar %d."
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:693
+msgid "The WooCommerce MCP route answered, but not with a tool list."
+msgstr "WooCommerce MCP maršruts atbildēja, bet bez rīku saraksta."
+
+#: includes/mcp/class-trackship-mcp-keys.php:175
+msgid ""
+"There was nothing to turn off — the app will be asked to sign in anyway."
+msgstr "Nekas nebija jāizslēdz — lietotnei tik un tā tiks lūgts pierakstīties."
+
+#: includes/mcp/class-trackship-mcp-keys.php:247
+msgid "There was nothing to turn off."
+msgstr "Nebija nekā, ko izslēgt."
+
+#: includes/mcp/ui-helpers.php:742
+msgid ""
+"They cannot be turned off one at a time — each is the same account, and an "
+"app that still has the key opens a new session on its next request. Deleting "
+"the key ends all of them, and a new one must be made to connect again."
+msgstr ""
+"Tos nevar izslēgt pa vienam — katrs ir viens un tas pats konts, un lietotne, "
+"kurai joprojām ir atslēga, nākamajā pieprasījumā atver jaunu sesiju. "
+"Atslēgas dzēšana pārtrauc visus, un, lai atkal izveidotu savienojumu, ir "
+"jāizveido jauna sesija."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:568
+msgid ""
+"This account cannot manage the store, so it cannot connect an assistant here."
+" Sign in with an account that can."
+msgstr ""
+"Šis konts nevar pārvaldīt veikalu, tāpēc šeit nevar pievienot asistentu. "
+"Pierakstieties ar kontu, kas to var."
+
+#: includes/mcp/ui-helpers.php:1645
+msgid ""
+"This adds four lines to your .htaccess file so requests to this plugin, and "
+"nothing else, skip your bad-bot rules. Nothing else on your site changes, "
+"and no rule is deleted. A copy of the file is kept, and the change is undone "
+"automatically if it turns out not to help. Continue?"
+msgstr ""
+"Tas pievieno četras rindiņas jūsu .htaccess failam, tāpēc pieprasījumi šim "
+"spraudnim un nekas cits izlaiž jūsu bad-bot noteikumus. Nekas cits jūsu "
+"vietnē nemainās, un neviens noteikums netiek dzēsts. Faila kopija tiek "
+"saglabāta, un izmaiņas tiek automātiski atsauktas, ja izrādās, ka tās "
+"nepalīdz. Turpināt?"
+
+#: includes/mcp/class-trackship-mcp-server.php:184
+msgid "This connection has been turned off. Connect again to get a new one."
+msgstr ""
+"Šis savienojums ir izslēgts. Izveidojiet savienojumu vēlreiz, lai iegūtu "
+"jaunu."
+
+#: includes/mcp/class-trackship-mcp-registry.php:133
+msgid "This connection is not allowed to manage TrackShip."
+msgstr "Šim savienojumam nav atļauts pārvaldīt TrackShip."
 
 #: includes/views/map-providers.php:26
 msgid ""
@@ -1504,11 +3034,42 @@ msgstr ""
 msgid "This field appears as a from or Sender ID"
 msgstr "Šis lauks tiek parādīts kā sūtītāja vai sūtītāja ID"
 
-#: includes/class-wc-trackship-admin.php:844 includes/views/logs.php:52
+#: includes/mcp/class-trackship-mcp-oauth.php:836
+msgid "This is already connected"
+msgstr "Tas jau ir savienots"
+
+#: includes/mcp/ui-helpers.php:770
+msgid ""
+"This key no longer exists in WooCommerce — it has been deleted there, so "
+"nothing can connect with it. Make a new one and paste it above."
+msgstr ""
+"Šī atslēga vairs nepastāv pakalpojumā WooCommerce — tā tur ir izdzēsta, "
+"tāpēc nekas nevar ar to izveidot savienojumu. Izveidojiet jaunu un "
+"ielīmējiet to augšpusē."
+
+#: includes/mcp/class-trackship-mcp-oauth.php:850
+msgid "This sign-in expired"
+msgstr "Šīs pieteikšanās derīguma termiņš ir beidzies."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:130
+msgid "This store"
+msgstr "Šis veikals"
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:801
+msgid ""
+"Those do not look like a WooCommerce key. The consumer key starts with ck_ "
+"and the consumer secret with cs_ — check you have one of each, the right way "
+"round."
+msgstr ""
+"Tās neizskatās pēc WooCommerce atslēgām. Patērētāja atslēga sākas ar ck_, "
+"bet patērētāja slepenais kods — ar cs_ — pārbaudiet, vai jums ir pa vienai "
+"atslēgai no katras atslēgas, pareizā veidā."
+
+#: includes/class-wc-trackship-admin.php:859 includes/views/logs.php:52
 msgid "Time"
 msgstr "Laiks"
 
-#: includes/class-wc-trackship-admin.php:845 includes/views/logs.php:53
+#: includes/class-wc-trackship-admin.php:860 includes/views/logs.php:53
 msgid "To"
 msgstr "Uz"
 
@@ -1524,6 +3085,10 @@ msgid ""
 msgstr ""
 "Lai izsekotu savam pasūtījumam, lūdzu, ievadiet izsekošanas numuru, ko "
 "saņēmāt piegādes apstiprinājuma e-pastā"
+
+#: includes/mcp/ui-helpers.php:1450
+msgid "Tool"
+msgstr "Rīks"
 
 #: includes/views/content.php:28
 msgid "Tools"
@@ -1541,10 +3106,10 @@ msgstr "Populārākie galameērķi"
 msgid "Total Shipments"
 msgstr "Kopējais sūtījumu skaits"
 
-#: includes/class-wc-trackship-actions.php:414
-#: includes/class-wc-trackship-actions.php:420
-#: includes/class-wc-trackship-actions.php:932
-#: includes/class-wc-trackship-actions.php:943
+#: includes/class-wc-trackship-actions.php:422
+#: includes/class-wc-trackship-actions.php:428
+#: includes/class-wc-trackship-actions.php:940
+#: includes/class-wc-trackship-actions.php:951
 msgid "Track"
 msgstr "Trase"
 
@@ -1570,7 +3135,7 @@ msgstr "Izsekojiet savu pasūtījumu"
 msgid "Tracker type"
 msgstr "Izsekotāja veids"
 
-#: includes/class-wc-trackship-admin.php:1326
+#: includes/class-wc-trackship-admin.php:1341
 msgid "Tracking Analytics"
 msgstr "Izsekošanas analīze"
 
@@ -1582,7 +3147,7 @@ msgstr "Izsekošanas notikumu displejs"
 msgid "Tracking information is not available, please try again later."
 msgstr "Izsekošanas informācija nav pieejama. Lūdzu, vēlāk mēģiniet vēlreiz."
 
-#: includes/class-wc-trackship-admin.php:402
+#: includes/class-wc-trackship-admin.php:417
 msgid ""
 "Tracking is sent to TrackShip when the order change to the selected status. "
 "Choose default (Completed/Shipped or Partially Shipped) or custom statuses "
@@ -1608,7 +3173,7 @@ msgstr "Izsekošanas problēmas"
 msgid "Tracking Issues for last 30 days"
 msgstr "Izsekošanas problēmas pēdējo 30 dienu laikā"
 
-#: includes/class-wc-trackship-admin.php:843 includes/views/shipments.php:164
+#: includes/class-wc-trackship-admin.php:858 includes/views/shipments.php:165
 #: templates/emails/exception-shipment-email.php:18
 #: templates/emails/late-shipment-email.php:19
 #: templates/emails/on-hold-shipment-email.php:18
@@ -1617,7 +3182,7 @@ msgstr "Izsekošanas problēmas pēdējo 30 dienu laikā"
 msgid "Tracking Number"
 msgstr "Izsekošanas numurs"
 
-#: includes/class-wc-trackship-actions.php:732
+#: includes/class-wc-trackship-actions.php:740
 msgid "Tracking number not found"
 msgstr "Izsekošanas numurs nav atrasts"
 
@@ -1648,19 +3213,26 @@ msgstr ""
 "automātiski izseko jūsu pasūtījumus, automatizē pēcnosūtīšanas darbplūsmu un "
 "ļauj klientiem nodrošināt izcilu pēcpirkuma pieredzi."
 
-#: trackship-for-woocommerce.php:135
+#: trackship-for-woocommerce.php:136
 msgid "TrackShip for WooCommerce requires a Shipment Tracking extension."
-msgstr "TrackShip for WooCommerce ir nepieciešams sūtījumu izsekošanas paplašinājums."
+msgstr ""
+"TrackShip for WooCommerce ir nepieciešams sūtījumu izsekošanas paplašinājums."
 
 #: includes/views/setup.php:29
 msgid ""
 "TrackShip is syncing fulfillment-based shipments automatically. All new "
 "fulfillments will be tracked in real time."
-msgstr "TrackShip automātiski sinhronizē fulfillment sūtījumus. Visi jaunie fulfillment tiks izsekoti reāllaikā."
+msgstr ""
+"TrackShip automātiski sinhronizē fulfillment sūtījumus. Visi jaunie "
+"fulfillment tiks izsekoti reāllaikā."
 
 #: includes/views/logs.php:13
 msgid "TrackShip logs table does not exist, Please try after few minutes"
 msgstr "TrackShip žurnālu tabula neeksistē. Lūdzu, mēģiniet pēc dažām minūtēm"
+
+#: includes/views/ai-assistant.php:22
+msgid "TrackShip MCP"
+msgstr "TrackShip MCP"
 
 #: includes/views/header2.php:71
 msgid "TrackShip navigation"
@@ -1678,7 +3250,62 @@ msgstr "TrackShip Shipments datu bāzes tabula nepastāv."
 msgid "TrackShip Shipments meta database table does not exist."
 msgstr "TrackShip Shipments meta datu bāzes tabula nepastāv."
 
-#: includes/class-wc-trackship-admin.php:846 includes/views/logs.php:54
+#: includes/mcp/class-trackship-abilities.php:220
+msgid ""
+"Trigger \"Get Shipment Status\" for one or more orders: sends their tracking "
+"info to TrackShip and schedules a status refresh. Accepts \"order_id\" "
+"(single) or \"order_ids\" (array, max 50). This is a state-changing action "
+"that consumes a TrackShip tracking credit per shipped order — confirm with "
+"the user first. Orders that are not shipped are skipped."
+msgstr ""
+"Aktivizēt \"Iegūt sūtījuma statusu\" vienam vai vairākiem pasūtījumiem: "
+"nosūta to izsekošanas informāciju uz TrackShip un ieplāno statusa "
+"atjaunināšanu. Pieņem \"order_id\" (viens) vai \"order_ids\" (masīvs, ne "
+"vairāk kā 50). Šī ir stāvokļa mainīšanas darbība, kas patērē TrackShip "
+"izsekošanas kredītu par katru nosūtīto pasūtījumu — vispirms apstipriniet ar "
+"lietotāju. Pasūtījumi, kas netiek nosūtīti, tiek izlaisti."
+
+#. %s: the person's email address.
+#: includes/mcp/ui-helpers.php:1324
+#, php-format
+msgid ""
+"Turn off this connection for %s? Their AI assistant stops working straight "
+"away. Everyone else is unaffected."
+msgstr ""
+"Vai izslēgt šo savienojumu lietotājam %s? Viņu mākslīgā intelekta asistents "
+"nekavējoties pārstāj darboties. Pārējie netiek ietekmēti."
+
+#: includes/mcp/screen.php:146
+msgid ""
+"Turn off to make the connection URL read-only. WooCommerce MCP is not "
+"affected — it signs in a real store user instead."
+msgstr ""
+"Izslēdziet šo opciju, lai savienojuma URL būtu tikai lasāms. WooCommerce MCP "
+"netiek ietekmēts — tā vietā tiek pierakstīts īsts veikala lietotājs."
+
+#: includes/mcp/ui-helpers.php:229
+msgid ""
+"Turn on Developer mode in the ChatGPT settings first, then add the URL as a "
+"connector. OpenAI still ships this as a developer feature, so it is not on "
+"every plan yet."
+msgstr ""
+"Vispirms ieslēdziet izstrādātāja režīmu ChatGPT iestatījumos un pēc tam "
+"pievienojiet URL kā savienotāju. OpenAI joprojām nodrošina šo funkciju kā "
+"izstrādātāja funkciju, tāpēc tā vēl nav iekļauta katrā plānā."
+
+#: includes/mcp/class-trackship-mcp-keys.php:95
+msgid "Turned off. Everyone else is still connected."
+msgstr "Izslēgts. Visi pārējie joprojām ir savienoti."
+
+#: includes/mcp/class-trackship-mcp-keys.php:174
+msgid "Turned off. The app will ask you to sign in again."
+msgstr "Izslēgts. Lietotne lūgs jums vēlreiz pierakstīties."
+
+#: includes/mcp/ui-helpers.php:1321 includes/mcp/ui-helpers.php:1352
+msgid "Turning off…"
+msgstr "Izslēdzas…"
+
+#: includes/class-wc-trackship-admin.php:861 includes/views/logs.php:54
 msgid "Type"
 msgstr "Tips"
 
@@ -1691,25 +3318,70 @@ msgstr "Nevar atrast pasūtījumu."
 msgid "Unable to locate the order. or Invalid order key"
 msgstr "Nevar atrast pasūtījumu. vai Nederīga pasūtījuma atslēga"
 
-#: includes/class-wc-trackship-actions.php:711
+#: includes/class-wc-trackship-actions.php:719
 msgid "Unauthorized"
 msgstr "Nesankcionēti"
 
-#: includes/class-wc-trackship-actions.php:621
-#: includes/class-wc-trackship-actions.php:687 includes/views/shipments.php:36
+#: includes/class-wc-trackship-actions.php:629
+#: includes/class-wc-trackship-actions.php:695 includes/views/shipments.php:36
 msgid "Unknown"
 msgstr "Nezināms"
 
-#: includes/trackship-email-manager.php:339
+#: includes/mcp/screen.php:338
+msgid "Unknown setting."
+msgstr "Nezināms iestatījums."
+
+#: includes/trackship-email-manager.php:333
 #: includes/customizer/class-trackship-email-preview.php:181
 msgid "Unsubscribe"
 msgstr "Anulēt abonementu"
 
-#: includes/views/shipments.php:163
+#: includes/mcp/class-trackship-abilities.php:205
+msgid "Update carrier mappings"
+msgstr "Atjaunināt mobilo sakaru operatoru kartējumus"
+
+#: includes/mcp/class-trackship-abilities.php:174
+msgid ""
+"Update one or more writable TrackShip settings. Only whitelisted keys are "
+"accepted. This changes store configuration — confirm with the user first. "
+"Allowed keys: "
+msgstr ""
+"Atjauniniet vienu vai vairākus ierakstāmus TrackShip iestatījumus. Tiek "
+"pieņemtas tikai baltajā sarakstā iekļautās atslēgas. Tas maina veikala "
+"konfigurāciju — vispirms apstipriniet ar lietotāju. Atļautās atslēgas:"
+
+#: includes/mcp/class-trackship-abilities.php:191
+msgid ""
+"Update per-status email customizer settings for one status group. Provide "
+"\"status\" (e.g. delivered, in_transit, common_settings) and \"changes\" "
+"(property => value). Only whitelisted email properties are accepted (colors, "
+"labels, button, toggles, subject/heading/content). This changes email design "
+"— confirm with the user first."
+msgstr ""
+"Atjauniniet e-pasta pielāgošanas iestatījumus katram statusam vienai statusu "
+"grupai. Norādiet \"status\" (piemēram, piegādāts, ceļā, kopējie_iestatījumi) "
+"un \"izmaiņas\" (īpašums => vērtība). Tiek pieņemti tikai baltajā sarakstā "
+"iekļautie e-pasta rekvizīti (krāsas, etiķetes, poga, pārslēgšanas pogas, "
+"tēma/virsraksts/saturs). Tas maina e-pasta dizainu — vispirms apstipriniet "
+"ar lietotāju."
+
+#: includes/mcp/class-trackship-abilities.php:233
+msgid "Update shipment note"
+msgstr "Atjaunināt sūtījuma pavadzīmi"
+
+#: includes/mcp/class-trackship-abilities.php:190
+msgid "Update shipment status email settings"
+msgstr "Atjaunināt sūtījuma statusa e-pasta iestatījumus"
+
+#: includes/mcp/class-trackship-abilities.php:173
+msgid "Update TrackShip settings"
+msgstr "Atjaunināt TrackShip iestatījumus"
+
+#: includes/views/shipments.php:164
 msgid "Updated at"
 msgstr "Atjaunināts plkst"
 
-#: includes/class-wc-trackship-admin.php:799
+#: includes/class-wc-trackship-admin.php:814
 msgid "UPGRADE TO PRO"
 msgstr "JAUNINĀT UZ PRO"
 
@@ -1717,17 +3389,42 @@ msgstr "JAUNINĀT UZ PRO"
 msgid "Upgrade to Pro"
 msgstr "Jauniniet uz Pro"
 
-#: includes/class-wc-trackship-admin.php:784
+#: includes/class-wc-trackship-admin.php:799
 msgid "Upgrade to TrackShip Pro"
 msgstr "Jauniniet uz TrackShip Pro"
 
-#: includes/class-wc-trackship-admin.php:441
+#: includes/mcp/ui-helpers.php:1049
+msgid "Use this key"
+msgstr "Izmantojiet šo atslēgu"
+
+#: includes/mcp/ui-helpers.php:1357
+msgid ""
+"Use this when an app will not ask to sign in again — removing it inside the "
+"app is not enough, because the app keeps its own copy of the connection."
+msgstr ""
+"Izmantojiet šo opciju, ja lietotne nelūgs atkārtoti pierakstīties — ar "
+"savienojuma noņemšanu lietotnē nepietiek, jo lietotne saglabā savu "
+"savienojuma kopiju."
+
+#: includes/class-wc-trackship-admin.php:456
 msgid "Use Villa Theme Email Customizer Template"
 msgstr "Izmantojiet Villa tēmas e-pasta pielāgošanas veidni"
 
-#: includes/class-wc-trackship-actions.php:738
+#: includes/mcp/ui-helpers.php:1453
+msgid "User"
+msgstr "Lietotājs"
+
+#: includes/class-wc-trackship-actions.php:746
 msgid "User not found for this key"
 msgstr "Lietotājs šai atslēgai nav atrasts"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:931
+msgid "Username or email"
+msgstr "Lietotājvārds vai e-pasts"
+
+#: includes/mcp/ui-helpers.php:1662
+msgid "Using ChatGPT, or an app instead of claude.ai?"
+msgstr "Vai izmantojat ChatGPT vai lietotni claude.ai vietā?"
 
 #: includes/views/tools.php:25
 msgid "Verify DB Structure"
@@ -1737,11 +3434,16 @@ msgstr "Pārbaudiet DB struktūru"
 msgid "Verify if all TrackShip database tables are present."
 msgstr "Pārbaudiet, vai ir visas TrackShip datu bāzes tabulas."
 
+#: includes/ts-logs/class-wc-trackship-logs.php:64
+msgid "View"
+msgstr "Skatīt"
+
 #: includes/views/dashboard.php:301
 msgid "View detailed stats"
 msgstr "Skatīt detalizētu statistiku"
 
-#: includes/views/notifications.php:32 includes/views/settings.php:65
+#: includes/mcp/screen.php:170 includes/views/notifications.php:32
+#: includes/views/settings.php:65
 msgid "View Documentation"
 msgstr "Skatīt dokumentāciju"
 
@@ -1755,7 +3457,7 @@ msgstr "skatīt mazāk"
 msgid "view more"
 msgstr "skatīt vairāk"
 
-#: includes/class-wc-trackship-actions.php:946
+#: includes/class-wc-trackship-actions.php:954
 msgid "View Shipment log"
 msgstr "Skatīt sūtījumu žurnālu"
 
@@ -1801,7 +3503,7 @@ msgid "We detected %d On Hold shipments:"
 msgstr "Mēs atklājām %d aizturētu sūtījumu:"
 
 #. %s: replace with Partially Shipped order count
-#: includes/class-wc-trackship-admin.php:919
+#: includes/class-wc-trackship-admin.php:934
 #, php-format
 msgid ""
 "We detected %s orders that use the Delivered order status, You can reassign "
@@ -1811,7 +3513,7 @@ msgstr ""
 "šiem pasūtījumiem citu statusu"
 
 #. %s: search for a total_orders
-#: includes/class-wc-trackship-admin.php:556
+#: includes/class-wc-trackship-admin.php:571
 #, php-format
 #| msgid ""
 #| "We detected %s Shipped orders from the last 30 days that were not sent to "
@@ -1822,6 +3524,30 @@ msgid ""
 msgstr ""
 "Mēs atklājām %s nosūtītus pasūtījumus pēdējo 30 dienu laikā, kas netika "
 "nosūtīti uz TrackShip. Varat tos masveidā nosūtīt uz TrackShip"
+
+#: includes/mcp/screen.php:148
+msgid "What Claude can do"
+msgstr "Ko Klods var izdarīt"
+
+#: includes/mcp/screen.php:161
+msgid "What the AI did"
+msgstr "Ko paveica mākslīgais intelekts"
+
+#: includes/mcp/ui-helpers.php:1128
+msgid "What this key can do"
+msgstr "Ko šī atslēga var darīt"
+
+#: includes/mcp/ui-helpers.php:1449
+msgid "When"
+msgstr "Kad"
+
+#: includes/mcp/class-trackship-mcp-oauth.php:853
+msgid "Where to press"
+msgstr "Kur nospiest"
+
+#: includes/mcp/screen.php:151 includes/mcp/ui-helpers.php:1104
+msgid "Who is connected"
+msgstr "Kas ir saistīts"
 
 #: includes/customizer/trackship-customizer.php:527
 msgid "Widget Background color"
@@ -1859,7 +3585,11 @@ msgstr "Logrīku izkārtojums"
 msgid "Widget Style"
 msgstr "Logrīku stils"
 
-#: includes/views/content.php:33
+#: includes/mcp/screen.php:153
+msgid "Woo MCP"
+msgstr "Woo MCP"
+
+#: includes/views/content.php:38
 msgid "WooCommerce Fulfillment"
 msgstr "WooCommerce Fulfillment"
 
@@ -1871,10 +3601,133 @@ msgstr "WooCommerce pasūtījumu izpildes"
 msgid "WooCommerce Fulfillments Enabled"
 msgstr "WooCommerce Fulfillments ir iespējots"
 
-#: includes/customizer/trackship-customizer.php:969
-#: includes/customizer/trackship-customizer.php:1009
+#: includes/mcp/ui-helpers.php:884 includes/mcp/ui-helpers.php:947
+msgid "WooCommerce is not exposing any tools on this route yet."
+msgstr "WooCommerce vēl nepiedāvā nekādus rīkus šajā maršrutā."
+
+#: includes/mcp/screen.php:155 includes/mcp/ui-helpers.php:1376
+msgid "WooCommerce MCP"
+msgstr "WooCommerce MCP"
+
+#: includes/mcp/screen.php:299
+msgid ""
+"WooCommerce MCP already gives these tools to AI assistants on a computer. "
+"Switch this on as well only if you also want to connect from claude.ai or a "
+"phone, which WooCommerce MCP cannot do."
+msgstr ""
+"WooCommerce MCP jau nodrošina šos rīkus mākslīgā intelekta asistentiem "
+"datorā. Ieslēdziet arī šo rīku tikai tad, ja vēlaties izveidot savienojumu "
+"arī no claude.ai vai tālruņa, ko WooCommerce MCP nevar izdarīt."
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:682
+msgid ""
+"WooCommerce MCP did not open a session, so its tool list could not be read."
+msgstr ""
+"WooCommerce MCP neatvēra sesiju, tāpēc tā rīku sarakstu nevarēja nolasīt."
+
+#: includes/mcp/ui-helpers.php:943
+msgid ""
+"WooCommerce MCP is switched off in WooCommerce, so this route is not "
+"answering at all. Your own link is unaffected."
+msgstr ""
+"WooCommerce MCP ir izslēgts pakalpojumā WooCommerce, tāpēc šis maršruts "
+"vispār neatbild. Jūsu pašu saite netiek ietekmēta."
+
+#: includes/views/ai-assistant.php:47
+msgid ""
+"WooCommerce MCP is switched off in WooCommerce, so this route is not "
+"answering at all. Your TrackShip link is unaffected."
+msgstr ""
+"WooCommerce MCP ir izslēgts pakalpojumā WooCommerce, tāpēc šis maršruts "
+"vispār neatbild. Jūsu TrackShip saite netiek ietekmēta."
+
+#: includes/views/ai-assistant.php:44
+msgid ""
+"WooCommerce MCP needs WordPress 6.9 or newer. The link above works either "
+"way."
+msgstr ""
+"WooCommerce MCP ir nepieciešama WordPress 6.9 vai jaunāka versija. Iepriekš "
+"minētā saite darbojas abos gadījumos."
+
+#. %s: message from WooCommerce.
+#: includes/mcp/class-trackship-mcp-woo-key.php:691
+#, php-format
+msgid "WooCommerce MCP said: %s"
+msgstr "WooCommerce MCP teica: %s"
+
+#: includes/mcp/class-trackship-mcp-woo-key.php:680
+msgid ""
+"WooCommerce refused the key. Check it is still there in WooCommerce, and "
+"that it has Read/Write access."
+msgstr ""
+"WooCommerce atteica atslēgu. Pārbaudiet, vai tā joprojām atrodas WooCommerce "
+"un vai tai ir lasīšanas/rakstīšanas piekļuve."
+
+#: includes/mcp/screen.php:156
+msgid "WooCommerce's own AI connection. Your tools are already on it."
+msgstr ""
+"WooCommerce pašu mākslīgā intelekta savienojums. Jūsu rīki jau ir tajā."
+
+#: includes/views/ai-assistant.php:46
+msgid ""
+"WooCommerce's own AI connection. Your TrackShip tools are already on it."
+msgstr ""
+"WooCommerce pašu mākslīgā intelekta savienojums. Jūsu TrackShip rīki jau ir "
+"tajā iekļauti."
+
+#: includes/mcp/screen.php:154
+msgid "WooCommerce's own route"
+msgstr "WooCommerce paša maršruts"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:682
+msgid ""
+"Working for whoever is already connected — but somebody connecting for the "
+"first time will be turned away."
+msgstr ""
+"Strādāt to cilvēku labā, kuri jau ir izveidojuši savienojumu, bet kāds, kurš "
+"izveido savienojumu pirmo reizi, tiks atraidīts."
+
+#: includes/mcp/ui-helpers.php:1048 includes/mcp/ui-helpers.php:1087
+msgid "Working…"
+msgstr "Strādāju…"
+
+#: includes/mcp/ui-helpers.php:558 includes/mcp/ui-helpers.php:902
+msgid "Write"
+msgstr "Rakstīt"
+
+#: includes/mcp/ui-helpers.php:778
+msgid "Write only"
+msgstr "Tikai rakstīt"
+
+#. %s: the store's name.
+#: includes/mcp/class-trackship-mcp-oauth.php:841
+#, php-format
+msgid ""
+"You approved this sign-in a moment ago, so %s already sent your AI app what "
+"it needs. Nothing else is needed here."
+msgstr ""
+"Jūs pirms brīža apstiprinājāt šo pierakstīšanos, tāpēc %s jau nosūtīja jūsu "
+"mākslīgā intelekta lietotnei nepieciešamo. Šeit nekas cits nav nepieciešams."
+
+#: includes/customizer/trackship-customizer.php:956
+#: includes/customizer/trackship-customizer.php:996
 msgid "You are customizing"
 msgstr "Jūs veicat pielāgošanu"
+
+#: includes/mcp/class-trackship-mcp-htaccess.php:358
+#: includes/mcp/class-trackship-mcp-keys.php:81
+#: includes/mcp/class-trackship-mcp-keys.php:160
+#: includes/mcp/class-trackship-mcp-keys.php:227
+#: includes/mcp/class-trackship-mcp-selftest.php:141
+#: includes/mcp/class-trackship-mcp-woo-key.php:779
+#: includes/mcp/class-trackship-mcp-woo-key.php:903
+#: includes/mcp/class-trackship-mcp-woo-key.php:927 includes/mcp/screen.php:318
+msgid "You are not allowed to do that."
+msgstr "Tev nav atļauts to darīt."
+
+#: includes/shipments/class-wc-trackship-shipments.php:476
+msgid "You are not allowed to edit shipment notes."
+msgstr "Jums nav atļauts rediģēt sūtījuma piezīmes."
 
 #: includes/class-wc-trackship-front.php:400
 msgid "You have been unsubscribed from shipment status emails."
@@ -1884,23 +3737,66 @@ msgstr "Jūs esat anulējis sūtījuma statusa e-pasta ziņojumu abonēšanu."
 msgid ""
 "You have the AST PRO plugin activated. The shipping provider name mapping is "
 "done on the shipping provider settings in AST PRO."
-msgstr "Jums ir aktivizēts AST PRO spraudnis. Pārvadātāju nosaukumu kartēšana notiek AST PRO pārvadātāju iestatījumos."
+msgstr ""
+"Jums ir aktivizēts AST PRO spraudnis. Pārvadātāju nosaukumu kartēšana notiek "
+"AST PRO pārvadātāju iestatījumos."
 
 #: includes/smswoo/admin-html/settings_tab.php:28
 msgid ""
 "You have the SMS for WooCommerce plugin activated. Configure your SMS "
 "gateways and credentials directly from that plugin's settings."
-msgstr "Jums ir aktivizēts SMS for WooCommerce spraudnis. Konfigurējiet SMS vārtejas un akreditācijas datus tieši šī spraudņa iestatījumos."
+msgstr ""
+"Jums ir aktivizēts SMS for WooCommerce spraudnis. Konfigurējiet SMS vārtejas "
+"un akreditācijas datus tieši šī spraudņa iestatījumos."
 
-#: trackship-for-woocommerce.php:137
+#: trackship-for-woocommerce.php:138
 msgid ""
 "You must have a Shipment Tracking extension installed and active to use "
 "TrackShip for WooCommerce."
-msgstr "Lai izmantotu TrackShip for WooCommerce, jābūt instalētam un aktīvam sūtījumu izsekošanas paplašinājumam."
+msgstr ""
+"Lai izmantotu TrackShip for WooCommerce, jābūt instalētam un aktīvam "
+"sūtījumu izsekošanas paplašinājumam."
 
 #: includes/views/dashboard.php:334
 msgid "You're all caught up."
 msgstr "Viss ir kārtībā."
+
+#: includes/mcp/screen.php:295
+msgid "Your connection URL is below."
+msgstr "Jūsu savienojuma URL ir norādīts zemāk."
+
+#: includes/mcp/screen.php:292
+msgid ""
+"Your connection URL is below. Set Settings > Permalinks to anything other "
+"than Plain for a cleaner URL."
+msgstr ""
+"Jūsu savienojuma URL ir norādīts zemāk. Lai iegūtu skaidrāku URL, iestatiet "
+"Iestatījumi > Pastāvīgās saites uz jebkuru citu vērtību, nevis Vienkāršs."
+
+#. %s: the error WordPress reported.
+#: includes/mcp/class-trackship-mcp-selftest.php:220
+#, php-format
+msgid ""
+"Your host reported: %s. That is a networking problem on the server, not your "
+"link and not your AI assistant."
+msgstr ""
+"Jūsu mitinātājs ziņoja: %s. Tā ir tīkla problēma serverī, nevis jūsu saitē "
+"un nevis jūsu mākslīgā intelekta asistentā."
+
+#: includes/mcp/screen.php:116 includes/mcp/ui-helpers.php:1377
+#: includes/mcp/ui-helpers.php:1378 includes/mcp/ui-helpers.php:1558
+msgid "Your link"
+msgstr "Jūsu saite"
+
+#: includes/mcp/class-trackship-mcp-selftest.php:721
+msgid ""
+"Your link answers correctly, and callers from outside are getting through."
+msgstr "Jūsu saite atbild pareizi, un zvanītāji no ārpuses tiek cauri."
+
+#: includes/mcp/class-trackship-mcp-selftest.php:613
+#: includes/mcp/class-trackship-mcp-selftest.php:626
+msgid "Your link works, but nothing from outside has ever reached it."
+msgstr "Tava saite darbojas, bet nekas no ārpuses to nekad nav sasniedzis."
 
 #: includes/class-wc-trackship-install.php:336
 #, php-format
@@ -1915,6 +3811,10 @@ msgstr ""
 "Jūsu pasūtījums tiek apstrādāts, izsekošanas informācija būs pieejama pēc tā "
 "nosūtīšanas."
 
+#: includes/mcp/screen.php:137
+msgid "Your own link"
+msgstr "Jūsu pašu saite"
+
 #: includes/views/trackship-integration.php:20
 msgid "Your Post-Shipping & Delivery Autopilot"
 msgstr "Jūsu autopilots pēc nosūtīšanas un piegādes"
@@ -1927,3 +3827,11 @@ msgstr "Jūsu iestatījumi ir veiksmīgi saglabāti."
 #: includes/views/map-providers.php:31
 msgid "Your shipping provider"
 msgstr "Jūsu pārvadātājs"
+
+#: includes/mcp/class-trackship-mcp-server.php:383
+msgid "Your store"
+msgstr "Jūsu veikals"
+
+#: includes/mcp/ui-helpers.php:1020
+msgid "Your WooCommerce key"
+msgstr "Jūsu WooCommerce atslēga"

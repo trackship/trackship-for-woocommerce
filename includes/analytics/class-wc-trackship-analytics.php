@@ -64,7 +64,7 @@ class WC_Trackship_Analytics {
 
 		// Register route with default namespace wc/v3.
 		$ts_analytics_api_controller = new WC_Ts_Analytics_REST_API_Controller();
-		$ts_analytics_api_controller->register_routes();					
+		$ts_analytics_api_controller->register_routes();
 	}
 
 	public function analytics_script() {

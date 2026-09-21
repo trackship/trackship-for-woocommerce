@@ -263,7 +263,7 @@ class TSWC_SMSWoo_Admin {
 						/* translators: %s: search for a tag */
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'Fast2sms' ),
 						'link' => 'https://docs.trackship.com/docs/trackship-for-woocommerce/setup/sms-notifications/fast2sms/?utm_source=ts4wc&utm_medium=SMS&utm_campaign=settings',
-					),	
+					),
 					'smswoo_msg91' => array(
 						/* translators: %s: search for a tag */
 						'title' => sprintf( __( 'How to find your %s credential', 'trackship-for-woocommerce' ), 'MSG91' ),

@@ -1,10 +1,10 @@
 === TrackShip for WooCommerce ===
-Contributors: TrackShip
-Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order tracking, tracking
+Contributors: TrackShip, brijesh353
+Tags: parcel-tracking, woocommerce-shipment-tracking, order-tracking, tracking, delivery-tracking
 Requires at least: 6.2
-Tested up to: 7.0.2
+Tested up to: 7.1.1
 Requires PHP: 7.4
-Stable tag: 2.0.7
+Stable tag: 2.0.8
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,9 +12,25 @@ TrackShip auto-tracks orders, adds a branded tracking experience to your store a
 
 == Description ==
 
-TrackShip is a shipment tracking and post-purchase experience platform that helps WooCommerce businesses to provide an exceptional post-shipping experience to their customers, it helps to gain loyalty and trust and increase the repeat purchases, which is crucial for any eCommerce business to grow and succeed in the long run.
+TrackShip is a shipment tracking and post-purchase experience platform that helps WooCommerce businesses to provide an exceptional post-shipping experience to their customers, it helps to gain loyalty and trust and increase the repeat purchases, which is crucial for any eCommerce business to grow and succeed in the long run. As a WooCommerce order tracking plugin, TrackShip lets you manage most of your tracking operations from the WordPress admin. Customers get a track your order page on your own store to follow every shipment. Automated shipping notifications keep them informed by email and SMS until their package is delivered.
 
 https://www.youtube.com/watch?v=QDKV2Irqz9M
+
+= Also useful for: =
+* Adding WooCommerce tracking to every order you ship
+* Managing WooCommerce order tracking without leaving the WordPress admin
+* Following each WooCommerce tracking number from shipping to delivery
+* Delivery tracking across 1000+ shipping carriers
+* Package tracking on a branded page in your own store
+* Giving customers a parcel tracker right on your website
+* Courier tracking with carriers around the world
+* Sending customers shipping updates whenever a shipment status changes
+* Sending a WooCommerce order notification email for the shipment statuses you choose
+* Sending SMS order notifications based on shipment and delivery status
+* Using SMS for WooCommerce as your WooCommerce SMS integration
+* Marking shipped orders with a Delivered WooCommerce order status
+* Helping drop shipping stores offer a better post-shipping experience
+* Adding automatic shipment status updates to Advanced Shipment Tracking for WooCommerce
 
 == TrackShip Pricing ==
 
@@ -154,6 +170,16 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 13. You can view TrackShip Analytics and filter results by time range, shipment status, or provider.
 
 == Changelog ==
+= 2.0.8 - 2026-09-21 =
+* New - Added an AI Assistant tab with a built-in MCP server, allowing AI clients to securely connect to your store using OAuth 2.1 with PKCE, including connection management, a connectivity self-test, and an audit log of AI actions.
+* New - Added WordPress Abilities API integration that exposes shipments, analytics, notifications, and settings as MCP tools, shared by the TrackShip MCP server and WooCommerce's native MCP routes.
+* New - Added a Shipment notes column to the shipments table, with a popup to add and edit internal notes on each shipment.
+* New - Added the order ID as a third argument to the `exclude_to_send_data_for_provider` filter, allowing exclusion logic based on the order.
+* Update - Removed the option to display TrackShip branding in emails, branding now appears on the tracking page only.
+* Fix - Improved Advanced Shipment Tracking detection by checking for the plugin's main class instead of a global function.
+* Compatibility - Verified compatibility with WooCommerce version 11.1.1.
+* Compatibility - Verified compatibility with WordPress version 7.1.1.
+
 = 2.0.7 - 2026-08-05 =
 * Compatibility - Verified compatibility with WooCommerce version 11.0.0.
 * Compatibility - Verified compatibility with WordPress version 7.0.2.
@@ -203,8 +229,5 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 For a complete changelog history, please visit our [documentation](https://docs.trackship.com/docs/trackship-for-woocommerce/changelog/).
 
 == Upgrade Notice ==
-= 2.0.6 =
-Redesigned admin interface with modernized layouts and sidebar navigation. Security hardening for admin AJAX endpoints and email unsubscribe feature.
-
-= 2.0.5 =
-Revamped admin interface with modern UI and enhanced analytics. Added WooCommerce Fulfillments tab. Fixed product name display in email templates.
+= 2.0.8 =
+New AI Assistant with a built-in MCP server for secure AI client access, shipment notes on the shipments table, and WordPress Abilities API integration. The option to display TrackShip branding in emails has been removed.

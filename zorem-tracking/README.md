@@ -12,34 +12,34 @@ Within your plugin's codebase, choose a unique function name that will allow eas
 ## Step 3: Configure Admin Menu
 Choose how your plugin's main settings page should be accessible:
 - **Top-Level Menu:**
-  - Select "A custom top-level admin menu."
-  - Specify a unique menu slug (e.g., "my-plugin-settings").
+	- Select "A custom top-level admin menu."
+	- Specify a unique menu slug (e.g., "my-plugin-settings").
 - **Sub Menu:**
-  - Choose a suitable parent menu (settings, tools, users, plugins, appearance, media, posts, comments, or dashboard).
-  - Define a submenu slug (e.g., "my-plugin-settings").
+	- Choose a suitable parent menu (settings, tools, users, plugins, appearance, media, posts, comments, or dashboard).
+	- Define a submenu slug (e.g., "my-plugin-settings").
 - **No Settings Page:**
-  - Choose this option if your plugin doesn't require a settings page.
+	- Choose this option if your plugin doesn't require a settings page.
 
 ## Step 4: Add the Snippet Code
 Copy the provided code and paste it right after the plugin's header comment in your main plugin's PHP file.
 ```php
 if ( ! function_exists( 'zorem_tracking' ) ) {
-    function zorem_tracking() {
-        require_once dirname(__FILE__) . '/zorem-tracking/zorem-tracking.php';
-        $plugin_name = "Plugin Name";
-        $plugin_slug = "plugin-slug";
-        $user_id = "10";
-        $setting_page_type = "top-level";
-        $setting_page_location =  "A submenu under other plugin's top level menu";
-        $parent_menu_type = "";
-        $menu_slug = "menu-slug";
-        $plugin_id = "7";
-        $zorem_tracking = WC_Trackers::get_instance( $plugin_name, $plugin_slug, $user_id,
-            $setting_page_type, $setting_page_location, $parent_menu_type,  $menu_slug, $plugin_id );
+	function zorem_tracking() {
+		require_once dirname(__FILE__) . '/zorem-tracking/zorem-tracking.php';
+		$plugin_name = "Plugin Name";
+		$plugin_slug = "plugin-slug";
+		$user_id = "10";
+		$setting_page_type = "top-level";
+		$setting_page_location = "A submenu under other plugin's top level menu";
+		$parent_menu_type = "";
+		$menu_slug = "menu-slug";
+		$plugin_id = "7";
+		$zorem_tracking = WC_Trackers::get_instance( $plugin_name, $plugin_slug, $user_id,
+			$setting_page_type, $setting_page_location, $parent_menu_type, $menu_slug, $plugin_id );
 
-        return $zorem_tracking;
-    }
-    zorem_tracking();
+		return $zorem_tracking;
+	}
+	zorem_tracking();
 }
 
 ```

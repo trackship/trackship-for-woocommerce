@@ -363,7 +363,7 @@ class WC_Trackship_Install {
 				'pickupreminder' => 'pickup_reminder',
 			);
 
-			foreach	( $all_statuses as $key2 => $slug ) {
+			foreach ( $all_statuses as $key2 => $slug ) {
 				$email_settings = 'wcast_' . $key2 . '_email_settings';
 				$value = '';
 				$enable = trackship_for_woocommerce()->actions->get_option_value_from_array( $email_settings, 'wcast_enable_' . $key2 . '_email', '' );
@@ -489,13 +489,25 @@ class WC_Trackship_Install {
 			delete_trackship_settings( 'ts_popup_ignore139' );
 		}
 
-		// TS4WC version 2.0.7
-		if ( version_compare( get_option( 'trackship_db' ), '1.45', '<' ) ) {
-			delete_trackship_settings( 'ts_popup_ignore203_v2' );
-			delete_trackship_settings( 'ts_popup_ignore203' );
-			delete_trackship_settings( 'ts_popup_ignore204' );
-			update_trackship_settings( 'trackship_db', '1.45' );
-			update_option( 'trackship_db', '1.45' );
+		if ( version_compare( get_option( 'trackship_db' ), '1.46', '<' ) ) {
+			// Remove legacy/orphaned settings left in trackship_settings on sites that
+			// jumped versions (the earlier delete migrations were version-gated and skipped).
+			delete_trackship_settings( 'wc_ast_use_tracking_page' ); // superseded by ts_tracking_page
+			delete_trackship_settings( 'wc_ast_trackship_page_id' ); // superseded by tracking_page_id
+			delete_trackship_settings( 'wc_ast_show_shipment_status_filter' ); // superseded by wc_ts_shipment_status_filter
+			delete_trackship_settings( 'exclude_start_date' ); // unused (removed feature)
+			delete_trackship_settings( 'exclude_end_date' ); // unused (removed feature)
+
+			update_trackship_settings( 'trackship_db', '1.46' );
+			update_option( 'trackship_db', '1.46' );
+		}
+
+		// Shipment notes column on the shipment meta table
+		// TS4WC version 2.0.8
+		if ( version_compare( get_option( 'trackship_db' ), '1.48', '<' ) ) {
+			update_trackship_settings( 'trackship_db', '1.48' );
+			update_option( 'trackship_db', '1.48' );
+			
 			$this->create_shipment_table();
 			$this->create_shipment_meta_table();
 			$this->check_column_exists();
@@ -650,7 +662,7 @@ class WC_Trackship_Install {
 		global $wpdb;
 		$table = $wpdb->prefix . 'trackship_shipment_meta';
 		if ( !$wpdb->query( $wpdb->prepare( 'show tables like %s', $table ) ) ) {
-			$charset_collate = $wpdb->get_charset_collate();			
+			$charset_collate = $wpdb->get_charset_collate();
 			$sql = "CREATE TABLE {$wpdb->prefix}trackship_shipment_meta (
 				`meta_id` BIGINT(20),
 				`origin_country` VARCHAR(20) ,
@@ -662,6 +674,7 @@ class WC_Trackship_Install {
 				`destination_events` LONGTEXT ,
 				`destination_state` VARCHAR(40) ,
 				`destination_city` VARCHAR(40) ,
+				`shipment_note` TEXT ,
 				PRIMARY KEY (`meta_id`),
 				INDEX `meta_id` (`meta_id`)
 			) $charset_collate;";
@@ -716,6 +729,7 @@ class WC_Trackship_Install {
 			'destination_events'	=> ' LONGTEXT',
 			'destination_state'		=> ' VARCHAR(40)',
 			'destination_city'		=> ' VARCHAR(40)',
+			'shipment_note'			=> ' TEXT',
 		);
 		foreach ( $shipment_table_meta as $column_name => $type ) {
 			$columns = $wpdb->get_var( $wpdb->prepare( "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}trackship_shipment_meta' AND COLUMN_NAME = %s", $column_name ));
@@ -806,6 +820,7 @@ class WC_Trackship_Install {
 				'destination_events',
 				'destination_state',
 				'destination_city',
+				'shipment_note',
 			);
 			foreach ($meta_columns as $column) {
 				if ( $wpdb->get_var( "SHOW COLUMNS FROM {$wpdb->prefix}trackship_shipment_meta LIKE '{$column}'" ) != $column ) {

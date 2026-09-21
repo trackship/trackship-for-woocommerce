@@ -55,7 +55,7 @@ if ( ! class_exists( 'SMSWOO_Clicksend' ) ) {
 				$from = $this->_from_number;
 			}
 			
-			$type = empty( apply_filters( 'smswoo_additional_charsets', get_option( 'smswoo_active_charsets', array() ) ) ) ? 'english' : 'unicode';	
+			$type = empty( apply_filters( 'smswoo_additional_charsets', get_option( 'smswoo_active_charsets', array() ) ) ) ? 'english' : 'unicode';
 			
 			$body = array(
 				'messages' => array(

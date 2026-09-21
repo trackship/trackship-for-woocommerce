@@ -111,7 +111,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		$version_info['trackship_db'] = get_option( 'trackship_db' );
 		$version_info['trackship_key'] = get_trackship_key();
 		
-		if ( function_exists( 'wc_advanced_shipment_tracking' ) ) {
+		if ( class_exists( 'Zorem_Woocommerce_Advanced_Shipment_Tracking' ) ) {
 			$plugin.= '-ast-free';
 			$version_info['ast-free'] = wc_advanced_shipment_tracking()->version;
 		}
@@ -149,7 +149,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 		$version_info['trackship_settings']['trackship_map_provider'] = get_option( 'trackship_map_provider', [] );
 		$version_info['trackship_email_settings'] = get_option( 'trackship_email_settings' );
 
-		$database_version	= wc_get_server_database_version();
+		$database_version = wc_get_server_database_version();
 
 		global $wpdb;
 		$shipment_structure = $wpdb->get_results("DESCRIBE {$wpdb->prefix}trackship_shipment");
@@ -207,7 +207,7 @@ class TrackShip_REST_API_Controller extends WC_REST_Controller {
 				continue;
 			}
 			$row = trackship_for_woocommerce()->actions->get_shipment_row( $order_id , $tracking_number );
-			$previous_status = isset( $row->shipment_status ) ? $row->shipment_status : '';	
+			$previous_status = isset( $row->shipment_status ) ? $row->shipment_status : ''; 
 
 			$order = wc_get_order( $order_id );
 			

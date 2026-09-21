@@ -27,7 +27,7 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 		/**
 		 * Initialize the main plugin function
 		*/
-		public function __construct( $plugin_name, $plugin_slug, $user_id, $setting_page_type, $setting_page_location, $parent_menu_type, $menu_slug, $plugin_id ) {				
+		public function __construct( $plugin_name, $plugin_slug, $user_id, $setting_page_type, $setting_page_location, $parent_menu_type, $menu_slug, $plugin_id ) {
 			$this->plugin_name = $plugin_name;
 			$this->plugin_slug = $plugin_slug;
 			$this->user_id = $user_id;
@@ -73,8 +73,8 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 		public function init() {
 			
 			add_action( 'wp_ajax_' . $this->plugin_slug_with_hyphens . '_activate_usage_data', array( $this, 'ast_activate_usage_data_fun') );
-			add_action( 'wp_ajax_' . $this->plugin_slug_with_hyphens . '_skip_usage_data', array( $this, 'ast_skip_usage_data_fun') );	
-			add_action( 'zorem_usage_data_' . $this->plugin_slug_with_hyphens, array( $this, 'send_tracking_data' ) );	
+			add_action( 'wp_ajax_' . $this->plugin_slug_with_hyphens . '_skip_usage_data', array( $this, 'ast_skip_usage_data_fun') );
+			add_action( 'zorem_usage_data_' . $this->plugin_slug_with_hyphens, array( $this, 'send_tracking_data' ) );
 			add_action( 'init' , array( $this, 'load_admin_page' ) );
 			
 			add_action( 'admin_init', array( $this, 'set_unset_usage_data_cron') );
@@ -107,7 +107,7 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 		public function ast_activate_usage_data_fun() {
 			check_ajax_referer( $this->plugin_slug_with_hyphens . '_usage_data_form', $this->plugin_slug_with_hyphens . '_usage_data_form_nonce' );
 		
-			if ( isset( $_POST[ $this->plugin_slug_with_hyphens . '_optin_email_notification' ] ) && 0 == $_POST[ $this->plugin_slug_with_hyphens . '_optin_email_notification' ] && isset( $_POST[ 	$this->plugin_slug_with_hyphens . '_enable_usage_data' ] ) && 0 == $_POST[ $this->plugin_slug_with_hyphens . '_enable_usage_data' ] ) {
+			if ( isset( $_POST[ $this->plugin_slug_with_hyphens . '_optin_email_notification' ] ) && 0 == $_POST[ $this->plugin_slug_with_hyphens . '_optin_email_notification' ] && isset( $_POST[ $this->plugin_slug_with_hyphens . '_enable_usage_data' ] ) && 0 == $_POST[ $this->plugin_slug_with_hyphens . '_enable_usage_data' ] ) {
 				update_option( $this->plugin_slug_with_hyphens . '_usage_data_selector', true );
 				die();
 			}
@@ -122,7 +122,7 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 		
 			$this->set_unset_usage_data_cron();
 		
-			update_option( $this->plugin_slug_with_hyphens . '_usage_data_selector', true );		
+			update_option( $this->plugin_slug_with_hyphens . '_usage_data_selector', true );
 		}
 	
 		public function ast_skip_usage_data_fun() {
@@ -309,11 +309,11 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 			$database_version = wc_get_server_database_version();
 			$server_data['mysql_version'] = $database_version['number'];
 		
-			$server_data['php_max_upload_size']	= size_format( wp_max_upload_size() );
-			$server_data['php_default_timezone']= date_default_timezone_get();
-			$server_data['php_soap']			= class_exists( 'SoapClient' ) ? 'Yes' : 'No';
-			$server_data['php_fsockopen']		= function_exists( 'fsockopen' ) ? 'Yes' : 'No';
-			$server_data['php_curl']			= function_exists( 'curl_init' ) ? 'Yes' : 'No';
+			$server_data['php_max_upload_size'] = size_format( wp_max_upload_size() );
+			$server_data['php_default_timezone'] = date_default_timezone_get();
+			$server_data['php_soap'] = class_exists( 'SoapClient' ) ? 'Yes' : 'No';
+			$server_data['php_fsockopen'] = function_exists( 'fsockopen' ) ? 'Yes' : 'No';
+			$server_data['php_curl'] = function_exists( 'curl_init' ) ? 'Yes' : 'No';
 		
 			return $server_data;
 		}
@@ -362,7 +362,7 @@ if ( !class_exists( 'WC_Trackers' ) ) {
 				'active_plugins' => $active_plugins,
 				'inactive_plugins' => $plugins,
 			);
-		}	
+		}
 	
 		/**
 		 * Get a list of all active shipping methods.

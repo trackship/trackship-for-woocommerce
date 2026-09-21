@@ -46,7 +46,7 @@ if ( $orders ) :
 	</table>
 	<div>
 		<a href="<?php echo esc_url( admin_url() ); ?>admin.php?page=trackship-shipments&status=late_shipment"><button class="all_late_ship">View all late shipments</button></a>
-	</div>	
+	</div>
 	<style>
 		table.late_shipment tr td, table.late_shipment tr th{border:1px solid #e0e0e0;}
 		button.all_late_ship {font-weight: normal;border-radius: 3px;text-decoration: none;color: #fff;background: #3c4758;margin-top: 15px;padding: 12px 20px;border: 0;}

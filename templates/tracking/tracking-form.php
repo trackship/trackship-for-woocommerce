@@ -27,7 +27,7 @@ $form_button_border_radius = get_trackship_settings( 'form_button_border_radius'
 	.order_track_form {
 		background: <?php echo esc_html( $bg_color ); ?>;
 	}
-<?php }	?>
+<?php } ?>
 <?php if ( $border_radius ) { ?>
 	form.order_track_form {
 		border-radius: <?php echo esc_html( $border_radius ); ?>px;

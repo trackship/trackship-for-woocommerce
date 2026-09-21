@@ -1,4 +1,4 @@
-<style>	
+<style> 
 	html, body {
 		background-color: #f7f7f7 !important;
 		margin-top: 0px !important;
@@ -33,7 +33,7 @@
 		body .col.tracking-detail .shipment-header, body .shipment_progress_heading_div, body .tracking-detail .h4-heading, .tracking-detail .tracking_number_wrap {
 			border-bottom: 1px solid <?php echo esc_html( $border_color ); ?>;
 		}
-	<?php }	?>
+	<?php } ?>
 	<?php if ( $background_color ) { ?>
 		body .col.tracking-detail {
 			background: <?php echo esc_html( $background_color ); ?>;
@@ -84,7 +84,7 @@
 				<img class="shipping_to_img" src="<?php echo esc_url( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/arrow.png">
 				<span class="shipping_to">United states</span>
 			</div>
-			<span class="est_delivery_date"><?php esc_html_e( 'Est. Delivery Date', 'trackship-for-woocommerce' ); ?>: <strong>Thursday, Oct 01</strong></span>	
+			<span class="est_delivery_date"><?php esc_html_e( 'Est. Delivery Date', 'trackship-for-woocommerce' ); ?>: <strong>Thursday, Oct 01</strong></span> 
 		</div>
 		<?php
 		if ( in_array( $tracking_page_layout, array( 't_layout_1', 't_layout_3' ) ) ) {
@@ -180,14 +180,14 @@
 			<div class="content_panel product_details">
 				<ul class="tpi_product_tracking_ul">
 					<li>
-						<img width="50" height="50" src="<?php echo esc_html( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/dummy-product-image.jpg" loading="lazy">	
+						<img width="50" height="50" src="<?php echo esc_html( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/dummy-product-image.jpg" loading="lazy"> 
 						<span>
 							<a target="_blank" href="#">A Study in Scarlet</a>
 							 x 1
 						</span>
 					</li>
 					<li>
-						<img width="50" height="50" src="<?php echo esc_html( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/dummy-product-image.jpg" loading="lazy">	
+						<img width="50" height="50" src="<?php echo esc_html( trackship_for_woocommerce()->plugin_dir_url() ); ?>assets/images/dummy-product-image.jpg" loading="lazy"> 
 						<span>
 							<a target="_blank" href="#">A Study in Scarlet</a>
 							 x 1
@@ -227,7 +227,7 @@
 <?php } ?>
 <?php if ( $hide_last_mile ) { ?>
 	.last_mile_tracking_number{display:none;}
-<?php } ?>	
+<?php } ?>
 <?php if ( !$show_trackship_branding ) { ?>
 	.trackship_branding{display:none;}
 <?php } ?>

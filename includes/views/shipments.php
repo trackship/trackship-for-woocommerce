@@ -49,16 +49,17 @@ $columns = array(
 	5 => 'Tracking Number',
 	6 => 'Shipping carrier',
 	7 => 'Shipment status',
-	8 => 'Ship from',
-	9 => 'Ship to',
-	10 => 'Ship State',
-	11 => 'Ship City',
-	12 => 'Latest Event Date',
-	13 => 'Last Event',
-	14 => 'Customer',
-	15 => 'Shipping time',
-	16 => 'Delivery date',
-	17 => 'Delivery number',
+	8 => 'Shipment notes',
+	9 => 'Ship from',
+	10 => 'Ship to',
+	11 => 'Ship State',
+	12 => 'Ship City',
+	13 => 'Latest Event Date',
+	14 => 'Last Event',
+	15 => 'Customer',
+	16 => 'Shipping time',
+	17 => 'Delivery date',
+	18 => 'Delivery number',
 );
 $url_status = isset( $_GET['status'] ) ? sanitize_text_field( $_GET['status'] ) : '';
 $url_provider = isset( $_GET['provider'] ) ? sanitize_text_field( $_GET['provider'] ) : '';
@@ -164,6 +165,7 @@ $provider_count = array_combine($provider_array, $provider_count_array);
 							<th id="columnname" class="manage-column column-destination" scope="col"><?php esc_html_e('Tracking Number', 'trackship-for-woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Shipping carrier', 'trackship-for-woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Shipment status', 'trackship-for-woocommerce'); ?></th>
+							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Shipment notes', 'trackship-for-woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Ship from', 'trackship-for-woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Ship to', 'trackship-for-woocommerce'); ?></th>
 							<th id="columnname" class="manage-column column-columnname" scope="col"><?php esc_html_e('Ship State', 'trackship-for-woocommerce'); ?></th>
@@ -182,4 +184,22 @@ $provider_count = array_combine($provider_array, $provider_count_array);
 			</div>
 		</div>
 	</section>
+</div>
+<div class="popupwrapper ts_shipment_note_popup" style="display:none;">
+	<div class="popuprow">
+		<div class="popup_header">
+			<h3 class="popup_title"><?php esc_html_e( 'Shipment note', 'trackship-for-woocommerce' ); ?></h3>
+			<span class="dashicons dashicons-no-alt popup_close_icon"></span>
+		</div>
+		<div class="popup_body">
+			<p class="ts_note_shipment_info"></p>
+			<textarea id="ts_shipment_note_text" rows="5" maxlength="1000" placeholder="<?php esc_attr_e( 'Add a note for this shipment', 'trackship-for-woocommerce' ); ?>"></textarea>
+			<input type="hidden" id="ts_shipment_note_id" value="">
+			<div class="ts_note_actions">
+				<button type="button" class="button ts_note_cancel"><?php esc_html_e( 'Cancel', 'trackship-for-woocommerce' ); ?></button>
+				<button type="button" class="button button-primary button-trackship ts_note_save"><?php esc_html_e( 'Save note', 'trackship-for-woocommerce' ); ?></button>
+			</div>
+		</div>
+	</div>
+	<div class="popupclose"></div>
 </div>

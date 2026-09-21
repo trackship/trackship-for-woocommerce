@@ -35,7 +35,7 @@ if ( $orders ) :
 	</table>
 	<div>
 		<a href="<?php echo esc_url( admin_url() ); ?>admin.php?page=trackship-shipments&status=on_hold"><button class="all_on_hold_ship">View all On Hold shipments</button></a>
-	</div>	
+	</div>
 	<style>
 		table.on_hold_shipment tr td, table.on_hold_shipment tr th{border:1px solid #e0e0e0;}
 		button.all_on_hold_ship {font-weight: normal;border-radius: 3px;text-decoration: none;color: #fff;background: #3c4758;margin-top: 15px;padding: 12px 20px;border: 0;}

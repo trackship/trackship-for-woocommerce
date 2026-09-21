@@ -44,7 +44,7 @@ class WC_Trackship_Admin {
 
 		add_action( 'admin_footer', array( $this, 'footer_function'), 1 );
 
-		add_action( 'wp_ajax_ts_reassign_order_status', array( $this, 'ts_reassign_order_status' ) );	
+		add_action( 'wp_ajax_ts_reassign_order_status', array( $this, 'ts_reassign_order_status' ) );
 		add_action( 'wp_ajax_add_trackship_mapping_row', array( $this, 'add_trackship_mapping_row' ) );
 		add_action( 'wp_ajax_remove_tracking_event', array( $this, 'remove_tracking_event' ) );
 		add_action( 'wp_ajax_remove_trackship_logs', array( $this, 'remove_trackship_logs' ) );
@@ -53,7 +53,7 @@ class WC_Trackship_Admin {
 		add_action( 'wp_ajax_trackship_mapping_form_update', array( $this, 'trackship_custom_mapping_form_update') );
 		add_action( 'wp_ajax_trackship_integration_form_update', array( $this, 'trackship_integration_form_update_cb') );
 
-		add_filter( 'convert_provider_name_to_slug', array( $this, 'detect_custom_mapping_provider') );	
+		add_filter( 'convert_provider_name_to_slug', array( $this, 'detect_custom_mapping_provider') ); 
 		add_action( 'wp_ajax_ts_late_shipments_email_form_update', array( $this, 'ts_late_shipments_email_form_update_cb' ) );
 		add_action( 'wp_ajax_dashboard_page_count_query', array( $this, 'dashboard_page_count_query' ) );
 		
@@ -324,7 +324,23 @@ class WC_Trackship_Admin {
 		check_ajax_referer( 'ts_tools', 'security' );
 		$start_date = isset( $_POST['selected_option'] ) ? wc_clean( $_POST['selected_option'] ) : '';
 		$end_date = gmdate( 'Y-m-d' );
-		
+
+		wp_send_json( $this->get_analytics_summary( $start_date, $end_date ) );
+	}
+
+	/**
+	* Aggregate shipment analytics for a shipping-date range.
+	* Shared by the dashboard AJAX handler and the MCP layer.
+	*
+	* @param string $start_date Range start (Y-m-d).
+	* @param string $end_date Range end (Y-m-d). Defaults to today.
+	* @return array total_shipment, active_shipment, delivered_shipment, tracking_issues, avg_transit, delivered_rate.
+	*/
+	public function get_analytics_summary( $start_date, $end_date = '' ) {
+
+		$start_date = $start_date ? $start_date : '';
+		$end_date = $end_date ? $end_date : gmdate( 'Y-m-d' );
+
 		global $wpdb;
 		$result = $wpdb->get_row( $wpdb->prepare("
 			SELECT
@@ -339,8 +355,7 @@ class WC_Trackship_Admin {
 				$start_date, $end_date, $start_date, $end_date, $start_date, $end_date
 		), ARRAY_A);
 
-		// print_r($wpdb->last_query);
-		wp_send_json($result);
+		return $result;
 	}
 
 	public function get_settings_html( $arrays ) {
@@ -682,12 +697,12 @@ class WC_Trackship_Admin {
 	*/
 	public function add_bulk_actions( $bulk_actions ) {
 		$lable = wc_get_order_status_name( 'delivered' );
-		$bulk_actions['mark_delivered'] = __( 'Change status to ' . $lable . '', 'trackship-for-woocommerce' );	
+		$bulk_actions['mark_delivered'] = __( 'Change status to ' . $lable . '', 'trackship-for-woocommerce' ); 
 		return $bulk_actions;
 	}
 	
 	/*
-	* add order again button for delivered order status	
+	* add order again button for delivered order status 
 	*/
 	public function add_reorder_button_delivered( $statuses ) {
 		$statuses[] = 'delivered';
@@ -751,7 +766,7 @@ class WC_Trackship_Admin {
 
 	/*
 	* change style of delivered order label
-	*/	
+	*/
 	public function footer_function() {
 		if ( !is_plugin_active( 'woocommerce-order-status-manager/woocommerce-order-status-manager.php' ) ) {
 			?>
