@@ -240,6 +240,92 @@ span.last_event {
 	height: 16px;
 	cursor: pointer;
 }
+.shipment_note_cell {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	min-width: 0;
+}
+table.dataTable tbody td span.shipment_note_text {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 160px;
+}
+table.dataTable tbody td span.edit_shipment_note {
+	flex: 0 0 auto;
+	font-size: 16px;
+	line-height: 20px;
+	color: #6b7280;
+	cursor: pointer;
+}
+table.dataTable tbody td span.edit_shipment_note:hover {
+	color: #3858e9;
+}
+table.dataTable tbody a.add_shipment_note {
+	cursor: pointer;
+}
+
+/* Shipment note popup */
+.popupwrapper.ts_shipment_note_popup {
+	font-size: 14px;
+	background: rgba(15, 23, 42, .45);
+}
+.popupwrapper.ts_shipment_note_popup .popuprow {
+	width: 480px;
+	max-width: calc(100% - 30px);
+	border-radius: 14px;
+	box-shadow: 0 20px 50px rgba(15, 23, 42, .18);
+	overflow: hidden;
+	text-align: left;
+}
+.popupwrapper.ts_shipment_note_popup .popup_header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 14px 20px;
+	border-bottom: 1px solid #e9ebf2;
+}
+.popupwrapper.ts_shipment_note_popup .popup_header h3.popup_title {
+	margin: 0;
+	font-size: 15px;
+	font-weight: 600;
+	color: #1f2540;
+}
+.popupwrapper.ts_shipment_note_popup .popup_header .popup_close_icon {
+	position: static;
+	width: 28px;
+	height: 28px;
+	line-height: 28px;
+	font-size: 18px;
+	border-radius: 50%;
+	color: #6b7280;
+	text-align: center;
+	cursor: pointer;
+}
+.popupwrapper.ts_shipment_note_popup .popup_header .popup_close_icon:hover {
+	color: #1f2540;
+	background: rgba(107, 114, 128, .12);
+}
+.popupwrapper.ts_shipment_note_popup .popup_body {
+	padding: 16px 20px 20px;
+}
+.popupwrapper.ts_shipment_note_popup .ts_note_shipment_info {
+	margin: 0 0 10px;
+	font-size: 13px;
+	color: #6b7280;
+}
+.popupwrapper.ts_shipment_note_popup textarea {
+	width: 100%;
+	box-sizing: border-box;
+	resize: vertical;
+}
+.popupwrapper.ts_shipment_note_popup .ts_note_actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 12px;
+}
 table.dataTable tbody td span {
 	display: inline-block;
 	line-height: 1.5em;

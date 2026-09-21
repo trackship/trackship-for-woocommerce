@@ -21,6 +21,15 @@ function shipment_js_error(response, jqXHR, exception) {
 	jQuery(document).trackship_snackbar_warning(msg);
 }
 
+function ts_esc_html( str ) {
+	return String( str === null || str === undefined ? '' : str )
+		.replace( /&/g, '&amp;' )
+		.replace( /</g, '&lt;' )
+		.replace( />/g, '&gt;' )
+		.replace( /"/g, '&quot;' )
+		.replace( /'/g, '&#039;' );
+}
+
 /* ajax_loader jquery */
 (function( $ ){
 	'use strict';
@@ -106,7 +115,10 @@ jQuery(document).ready(function() {
 		fixedColumns: { end: 1 },
 		scrollX: true,
 		buttons: [
-			'csvHtml5'
+			{
+				extend: 'csvHtml5',
+				exportOptions: { orthogonal: 'export' }
+			}
 		],
 		processing: true,
 		ordering: true,
@@ -202,6 +214,21 @@ jQuery(document).ready(function() {
 				'orderable': false,
 				"mRender":function(data,type,full) {
 					return '<span class="shipment_status_label '+full.shipment_status_id+'">' + full.shipment_status + '</span>';
+				},
+			},
+			{
+				"width": "200px",
+				'orderable': false,
+				'data': 'shipment_note',
+				"mRender": function(data, type, full) {
+					var note = full.shipment_note || '';
+					if ( 'export' === type ) {
+						return note;
+					}
+					if ( ! note ) {
+						return '<a class="edit_shipment_note add_shipment_note">' + ts_esc_html( shipments_script.add_note ) + '</a>';
+					}
+					return '<div class="shipment_note_cell"><span class="shipment_note_text" title="' + ts_esc_html( note ) + '">' + ts_esc_html( note ) + '</span><span class="dashicons dashicons-edit edit_shipment_note" title="' + ts_esc_html( shipments_script.edit_note ) + '"></span></div>';
 				},
 			},
 			{
@@ -422,25 +449,94 @@ jQuery(document).ready(function() {
 		}	
 	});
 
-	var localStorageData = localStorage.getItem('shipment_columns');
+	// Shipment notes: open editor
+	jQuery(document).on("click", ".edit_shipment_note", function(){
+		var rowData = $table.row( jQuery(this).closest('tr') ).data();
+		if ( ! rowData ) {
+			return;
+		}
+		jQuery('#ts_shipment_note_id').val( rowData.shipment_id );
+		jQuery('#ts_shipment_note_text').val( rowData.shipment_note || '' );
+		jQuery('.ts_note_shipment_info').text( shipments_script.order_label + ' #' + rowData.order_number + ' · ' + rowData.tracking_number );
+		jQuery('.ts_shipment_note_popup').show();
+		jQuery('#ts_shipment_note_text').trigger('focus');
+	});
+
+	jQuery(document).on("click", ".ts_note_cancel, .ts_shipment_note_popup .popup_close_icon", function(){
+		jQuery('.ts_shipment_note_popup').hide();
+	});
+
+	// Shipment notes: save
+	jQuery(document).on("click", ".ts_note_save", function(){
+		var $btn = jQuery(this);
+		$btn.prop('disabled', true);
+		jQuery.ajax({
+			url: ajaxurl,
+			type: 'POST',
+			dataType: 'json',
+			data: {
+				action: 'save_shipment_note',
+				shipment_id: jQuery('#ts_shipment_note_id').val(),
+				note: jQuery('#ts_shipment_note_text').val(),
+				security: jQuery('#nonce_trackship_shipments').val()
+			},
+			success: function(response) {
+				$btn.prop('disabled', false);
+				if ( response && response.success ) {
+					jQuery('.ts_shipment_note_popup').hide();
+					jQuery(document).trackship_snackbar( shipments_script.note_saved );
+					$table.ajax.reload( null, false );
+				} else {
+					jQuery(document).trackship_snackbar_warning( response && response.data && response.data.message ? response.data.message : shipments_script.note_error );
+				}
+			},
+			error: function(response, jqXHR, exception) {
+				$btn.prop('disabled', false);
+				shipment_js_error(response, jqXHR, exception);
+			}
+		});
+	});
+
+	// Column visibility is saved by column index. Shipment notes was inserted at index 8,
+	// so carry preferences saved with the old layout over to the new key.
+	var columnsStorageKey = 'shipment_columns_v2';
+	try {
+		var legacyColumns = localStorage.getItem('shipment_columns');
+		if ( legacyColumns && ! localStorage.getItem(columnsStorageKey) ) {
+			var legacyData = JSON.parse(legacyColumns);
+			var migratedColumns = {};
+			Object.keys(legacyData).forEach(function(keyName) {
+				var index = parseInt(keyName, 10);
+				if ( index >= 1 && index <= 7 ) {
+					migratedColumns[index] = legacyData[keyName];
+				} else if ( index >= 8 && index <= 17 ) {
+					migratedColumns[index + 1] = legacyData[keyName];
+				}
+			});
+			localStorage.setItem(columnsStorageKey, JSON.stringify(migratedColumns));
+		}
+		localStorage.removeItem('shipment_columns');
+	} catch (e) {}
+
+	var localStorageData = localStorage.getItem(columnsStorageKey);
 	if(localStorageData){
 		var data = JSON.parse(localStorageData);
 		Object.keys(data).map((keyName) => {
 			jQuery(`#column_${keyName}`).prop("checked",data[keyName]);
-			$table.columns(keyName).visible(keyName == 18 ? true : data[keyName]);
+			$table.columns(keyName).visible(keyName == 19 ? true : data[keyName]);
 		})
 	}
 
 	jQuery(document).on("change", ".column_toogle input", function () {
-		var localStorageData = localStorage.getItem('shipment_columns')
+		var localStorageData = localStorage.getItem(columnsStorageKey)
 		var number = jQuery(this).data('number');
 		if(localStorageData){
-			localStorage.setItem('shipment_columns',JSON.stringify({
+			localStorage.setItem(columnsStorageKey,JSON.stringify({
 				...JSON.parse(localStorageData),
 				[number]:jQuery(this).prop("checked") == true
 			}));
 		}else{
-			localStorage.setItem('shipment_columns',JSON.stringify({
+			localStorage.setItem(columnsStorageKey,JSON.stringify({
 				[number]:jQuery(this).prop("checked") == true
 			}));
 		}

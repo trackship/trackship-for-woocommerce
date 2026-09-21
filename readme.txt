@@ -1,6 +1,6 @@
 === TrackShip for WooCommerce ===
 Contributors: TrackShip
-Tags: WooCommerce, parcel tracking, woocommerce shipment tracking, order tracking, tracking
+Tags: parcel-tracking, woocommerce-shipment-tracking, order-tracking, tracking, delivery-tracking
 Requires at least: 6.2
 Tested up to: 7.0.2
 Requires PHP: 7.4
