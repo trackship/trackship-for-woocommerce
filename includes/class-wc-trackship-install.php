@@ -516,6 +516,14 @@ class WC_Trackship_Install {
 			update_trackship_settings( 'trackship_db', '1.46' );
 			update_option( 'trackship_db', '1.46' );
 		}
+
+		// Shipment notes column on the shipment meta table
+		if ( version_compare( get_option( 'trackship_db' ), '1.48', '<' ) ) {
+			$this->check_column_exists();
+
+			update_trackship_settings( 'trackship_db', '1.47' );
+			update_option( 'trackship_db', '1.47' );
+		}
 	}
 
 	public function update_trackship_providers() {
@@ -675,6 +683,7 @@ class WC_Trackship_Install {
 				`destination_events` LONGTEXT ,
 				`destination_state` VARCHAR(40) ,
 				`destination_city` VARCHAR(40) ,
+				`shipment_note` TEXT ,
 				PRIMARY KEY (`meta_id`),
 				INDEX `meta_id` (`meta_id`)
 			) $charset_collate;";
@@ -729,6 +738,7 @@ class WC_Trackship_Install {
 			'destination_events'	=> ' LONGTEXT',
 			'destination_state'		=> ' VARCHAR(40)',
 			'destination_city'		=> ' VARCHAR(40)',
+			'shipment_note'			=> ' TEXT',
 		);
 		foreach ( $shipment_table_meta as $column_name => $type ) {
 			$columns = $wpdb->get_var( $wpdb->prepare( "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$wpdb->prefix}trackship_shipment_meta' AND COLUMN_NAME = %s", $column_name ));
@@ -819,6 +829,7 @@ class WC_Trackship_Install {
 				'destination_events',
 				'destination_state',
 				'destination_city',
+				'shipment_note',
 			);
 			foreach ($meta_columns as $column) {
 				if ( $wpdb->get_var( "SHOW COLUMNS FROM {$wpdb->prefix}trackship_shipment_meta LIKE '{$column}'" ) != $column ) {

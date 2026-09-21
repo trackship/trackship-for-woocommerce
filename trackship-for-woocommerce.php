@@ -158,6 +158,23 @@ class Trackship_For_Woocommerce {
 		require_once $this->get_plugin_path() . '/includes/mcp/class-trackship-abilities.php';
 		$this->mcp_abilities = Trackship_Abilities::get_instance();
 
+		// AI Assistant (TrackShip MCP): TrackShip's own MCP server at /wp-json/trackship/v1/mcp,
+		// with OAuth sign-in, the audit log and the AI Assistant screen. Its tools come from
+		// Trackship_Abilities::tool_map(), the same list the WooCommerce MCP route uses.
+		$mcp_dir = $this->get_plugin_path() . '/includes/mcp/';
+		foreach ( array( 'settings', 'registry', 'audit', 'keys', 'oauth', 'htaccess', 'woo-key', 'server', 'selftest' ) as $mcp_class ) {
+			require_once $mcp_dir . 'class-trackship-mcp-' . $mcp_class . '.php';
+		}
+		require_once $mcp_dir . 'ui-helpers.php';
+		require_once $mcp_dir . 'screen.php';
+		Trackship_MCP_Audit::init();
+		Trackship_MCP_Keys::init();
+		Trackship_MCP_OAuth::init();
+		Trackship_MCP_Htaccess::init();
+		Trackship_MCP_Woo_Key::init();
+		Trackship_MCP_Selftest::init();
+		Trackship_MCP_Server::instance()->init();
+
 		add_action( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'tsw_plugin_action_links' ) );
 
 		add_filter( 'yith_wcbm_add_badge_tags_in_wp_kses_allowed_html', '__return_true' );

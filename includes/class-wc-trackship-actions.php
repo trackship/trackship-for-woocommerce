@@ -180,6 +180,14 @@ class WC_Trackship_Actions {
 		wp_enqueue_style( 'woocommerce_admin_styles' );
 		wp_enqueue_style( 'trackshipcss' );
 
+		// Shared AI connection screen assets — must be enqueued here (admin_enqueue_scripts),
+		// never during the screen render, or the CSS is silently dropped. This fork styles the
+		// screen with TrackShip's own design tokens (assets/css/trackship.css), so no separate
+		// framework is loaded.
+		if ( 'trackship-for-woocommerce' === $page && function_exists( 'trackship_mcp_enqueue_assets' ) ) {
+			trackship_mcp_enqueue_assets();
+		}
+
 		wp_enqueue_script( 'wp-color-picker' );
 		wp_enqueue_script( 'jquery-blockui' );
 		wp_enqueue_script( 'select2');
