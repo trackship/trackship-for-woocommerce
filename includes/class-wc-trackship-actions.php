@@ -1597,6 +1597,10 @@ class WC_Trackship_Actions {
 			return false;
 		}
 
+		if ( !get_permalink( $page_id ) ) {
+			return false;
+		}
+
 		if ( $tracking_number ) {
 			return add_query_arg( array(
 				'tracking'	=> $tracking_number,
