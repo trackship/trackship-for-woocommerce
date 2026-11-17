@@ -509,7 +509,6 @@ class Trackship_For_Woocommerce {
 				return array();
 			}
 			$tracking_items = $order->get_meta( '_wc_shipment_tracking_items', true );
-			$tracking_items = is_array( $tracking_items ) ? $tracking_items : [];
 			foreach ( $tracking_items as $key => $tracking_item ) {
 				$provider = ! empty( $tracking_item['custom_tracking_provider'] )? $tracking_item['custom_tracking_provider'] : $tracking_item['tracking_provider'];
 

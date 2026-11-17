@@ -551,21 +551,30 @@ class WC_Trackship_Install {
 		global $wpdb;
 		// added in version 1.7.6
 		$url = 'https://api.trackship.com/v1/shipping_carriers/supported';
-		$resp = wp_remote_get( $url );
-		
-		if ( is_array( $resp ) && ! is_wp_error( $resp ) ) {
-		
-			$providers = json_decode($resp['body'], true );
-			
-			$wpdb->query( "TRUNCATE TABLE {$wpdb->prefix}trackship_shipping_provider" );
-			foreach ( $providers['data'] as $provider ) {
-				$data_array = array(
-					'provider_name' => $provider['label'],
-					'ts_slug' => $provider['slug'],
-				);
-				$wpdb->insert( $wpdb->prefix . 'trackship_shipping_provider', $data_array );
-			}
+		$resp = wp_remote_get( $url, array( 'timeout' => 30 ) );
+
+		if ( is_wp_error( $resp ) || 200 != wp_remote_retrieve_response_code( $resp ) ) {
+			return false;
 		}
+
+		$providers = json_decode( wp_remote_retrieve_body( $resp ), true );
+
+		// Never truncate on an empty or malformed response -- an emptied table breaks carrier
+		// mapping, analytics and the shipments list.
+		if ( empty( $providers['data'] ) || ! is_array( $providers['data'] ) ) {
+			return false;
+		}
+
+		$wpdb->query( "TRUNCATE TABLE {$wpdb->prefix}trackship_shipping_provider" );
+		foreach ( $providers['data'] as $provider ) {
+			$data_array = array(
+				'provider_name' => $provider['label'],
+				'ts_slug' => $provider['slug'],
+			);
+			$wpdb->insert( $wpdb->prefix . 'trackship_shipping_provider', $data_array );
+		}
+
+		return true;
 	}
 	
 	/**
