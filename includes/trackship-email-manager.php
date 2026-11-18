@@ -16,6 +16,7 @@ class WC_TrackShip_Email_Manager {
 	public function __construct() {
 		add_action( 'ts_status_change_trigger', array( $this, 'ts_status_change_trigger' ), 10, 4 );
 		add_action( 'trigger_pickup_reminder_email', array( $this, 'trigger_pickup_reminder_email' ), 10, 4 );
+		add_filter( 'trackship_mail_content', array( $this, 'add_schema_markup' ), 20, 5 );
 	}
 
 	public function ts_status_change_trigger ( $order_id, $old_status, $new_status, $tracking_number ) {
@@ -283,6 +284,247 @@ class WC_TrackShip_Email_Manager {
 			break;
 		}
 
+	}
+
+	/*
+	* Gmail and Yahoo read this markup and show a package card above the email.
+	* The card only appears once the sending domain is registered with Google.
+	*/
+	public function add_schema_markup( $message, $email_heading, $order_id, $email_id, $new_status ) {
+		if ( ! in_array( $email_id, array( 'shipment_email', 'pickup_reminder' ) ) ) {
+			return $message;
+		}
+
+		$markup = $this->get_parcel_delivery_markup( $order_id, $new_status );
+		if ( ! $markup ) {
+			return $message;
+		}
+
+		$script = '<script type="application/ld+json">' . $markup . '</script>';
+
+		if ( preg_match( '/<\/head>/i', $message ) ) {
+			return preg_replace( '/<\/head>/i', $script . '</head>', $message, 1 );
+		}
+
+		if ( preg_match( '/<body[^>]*>/i', $message, $body_tag ) ) {
+			return str_replace( $body_tag[0], $body_tag[0] . $script, $message );
+		}
+
+		return $script . $message;
+	}
+
+	/*
+	* Build the schema.org ParcelDelivery for the shipment this email is about
+	*/
+	public function get_parcel_delivery_markup( $order_id, $new_status ) {
+		$order = $this->order;
+		$row = $this->shipment_row;
+		$tracking_item = $this->tracking_item;
+
+		if ( ! $order || ! $row || empty( $tracking_item['tracking_number'] ) ) {
+			return '';
+		}
+
+		$tracking_number = $tracking_item['tracking_number'];
+		$provider = ! empty( $tracking_item['formatted_tracking_provider'] ) ? $tracking_item['formatted_tracking_provider'] : ( ! empty( $tracking_item['tracking_provider'] ) ? $tracking_item['tracking_provider'] : ( $tracking_item['custom_tracking_provider'] ?? '' ) );
+
+		$tracking_url = trackship_for_woocommerce()->actions->get_tracking_page_link( $order_id, $tracking_number );
+		if ( ! $tracking_url ) {
+			$tracking_url = ! empty( $tracking_item['formatted_tracking_link'] ) ? $tracking_item['formatted_tracking_link'] : '';
+		}
+
+		$data = array(
+			'@context'			=> 'http://schema.org',
+			'@type'				=> 'ParcelDelivery',
+			'trackingNumber'	=> $tracking_number,
+		);
+
+		if ( $tracking_url ) {
+			$data['trackingUrl'] = $tracking_url;
+		}
+
+		if ( $provider ) {
+			$data['carrier'] = array(
+				'@type'	=> 'Organization',
+				'name'	=> trackship_for_woocommerce()->actions->get_provider_name( $provider ),
+			);
+		}
+
+		$show_est_delivery_date = apply_filters( 'show_est_delivery_date', true, $row->shipping_provider );
+		if ( ! empty( $row->est_delivery_date ) && $show_est_delivery_date ) {
+			$raw_date = trim( (string) $row->est_delivery_date );
+			// Gmail rejects a bare date, so a date with no time becomes the end of that day
+			$has_time = (bool) preg_match( '/\d{2}:\d{2}/', $raw_date );
+			$when = $has_time ? $raw_date : substr( $raw_date, 0, 10 ) . ' 23:59:59';
+
+			try {
+				$arrival = new DateTime( $when, wp_timezone() );
+				$data['expectedArrivalUntil'] = $arrival->format( 'c' );
+			} catch ( Exception $e ) {
+				// an unparseable date simply leaves the field out
+			}
+		}
+
+		$address = $this->get_schema_delivery_address( $order );
+		if ( $address ) {
+			$data['deliveryAddress'] = $address;
+		}
+
+		$items = $this->get_schema_items_shipped( $order_id, $row, $tracking_item );
+		if ( $items ) {
+			$data['itemShipped'] = $items;
+		}
+
+		$data['partOfOrder'] = array(
+			'@type'			=> 'Order',
+			'orderNumber'	=> (string) $order->get_order_number(),
+			'merchant'		=> array(
+				'@type'	=> 'Organization',
+				'name'	=> $this->get_blogname(),
+			),
+		);
+
+		$order_status = $this->get_schema_order_status( $new_status );
+		if ( $order_status ) {
+			$data['partOfOrder']['orderStatus'] = $order_status;
+		}
+
+		if ( $order->get_customer_id() ) {
+			$data['partOfOrder']['url'] = $order->get_view_order_url();
+		}
+
+		$data = apply_filters( 'trackship_email_schema_markup', $data, $order_id, $new_status, $tracking_item, $row );
+		if ( empty( $data ) ) {
+			return '';
+		}
+
+		// the HEX flags keep a stray tag in a product name from closing the script element
+		return wp_json_encode( $data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT );
+	}
+
+	/*
+	* Shipment status as one of the schema.org OrderStatus values
+	*/
+	public function get_schema_order_status( $new_status ) {
+		$map = array(
+			'in_transit'			=> 'OrderInTransit',
+			'out_for_delivery'		=> 'OrderInTransit',
+			'available_for_pickup'	=> 'OrderPickupAvailable',
+			'pickup_reminder'		=> 'OrderPickupAvailable',
+			'delivered'				=> 'OrderDelivered',
+			'return_to_sender'		=> 'OrderReturned',
+			'failure'				=> 'OrderProblem',
+			'on_hold'				=> 'OrderProblem',
+			'exception'				=> 'OrderProblem',
+		);
+
+		return isset( $map[ $new_status ] ) ? 'http://schema.org/' . $map[ $new_status ] : '';
+	}
+
+	/*
+	* Delivery address of the order. The shipping address is used whole, or the billing
+	* address is used whole, never a mix of fields from both.
+	*/
+	public function get_schema_delivery_address( $order ) {
+		$has_shipping = $order->get_shipping_address_1() || $order->get_shipping_city() || $order->get_shipping_postcode();
+
+		$street = $has_shipping ? $order->get_shipping_address_1() : $order->get_billing_address_1();
+		$city = $has_shipping ? $order->get_shipping_city() : $order->get_billing_city();
+		$state = $has_shipping ? $order->get_shipping_state() : $order->get_billing_state();
+		$postcode = $has_shipping ? $order->get_shipping_postcode() : $order->get_billing_postcode();
+		$country = $has_shipping ? $order->get_shipping_country() : $order->get_billing_country();
+		$recipient = $has_shipping ? $order->get_formatted_shipping_full_name() : $order->get_formatted_billing_full_name();
+
+		if ( ! $city && ! $country ) {
+			return array();
+		}
+
+		$address = array( '@type' => 'PostalAddress' );
+
+		// Gmail requires a name on the address
+		if ( $recipient ) {
+			$address['name'] = $recipient;
+		}
+
+		if ( $street ) {
+			$address['streetAddress'] = $street;
+		}
+		if ( $city ) {
+			$address['addressLocality'] = $city;
+		}
+		if ( $state ) {
+			$address['addressRegion'] = $state;
+		}
+		if ( $postcode ) {
+			$address['postalCode'] = $postcode;
+		}
+		if ( $country ) {
+			$address['addressCountry'] = $country;
+		}
+
+		return $address;
+	}
+
+	/*
+	* Products in this shipment, as schema.org Product entries
+	*/
+	public function get_schema_items_shipped( $order_id, $row, $tracking_item ) {
+		$order = wc_get_order( $order_id );
+		if ( ! $order ) {
+			return array();
+		}
+
+		$products = array();
+		foreach ( $order->get_items() as $item_id => $item ) {
+			$variation_id = $item->get_variation_id();
+			$product_id = $variation_id ? $variation_id : $item->get_product_id();
+
+			$products[] = array(
+				'product_id' => $product_id,
+				'product_name' => $item->get_name(),
+				'product_qty' => $item->get_quantity(),
+				'items_total_price' => $item->get_total(),
+				'item_unit_price' => $item->get_quantity() ? $item->get_subtotal() / $item->get_quantity() : $item->get_subtotal(),
+				'product_image' => get_the_post_thumbnail_url( $product_id, 'thumbnail' ),
+			);
+		}
+
+		// the filter the tracking page uses as well, so a shipment that carries only part of
+		// the order lists only those items here too
+		$products = apply_filters( 'tracking_widget_product_array', $products, $order_id, $row, $row->shipping_provider, $tracking_item['tracking_number'] );
+		if ( empty( $products ) ) {
+			return array();
+		}
+
+		$items = array();
+		foreach ( $products as $product ) {
+			$item = array(
+				'@type'	=> 'Product',
+				'name'	=> $product['product_name'],
+			);
+
+			if ( ! empty( $product['product_image'] ) ) {
+				$item['image'] = $product['product_image'];
+			}
+
+			$_product = wc_get_product( $product['product_id'] );
+			if ( $_product && $_product->get_sku() ) {
+				$item['sku'] = $_product->get_sku();
+			}
+
+			$permalink = get_permalink( $product['product_id'] );
+			if ( $permalink ) {
+				$item['url'] = $permalink;
+			}
+
+			$items[] = $item;
+
+			if ( count( $items ) >= 10 ) {
+				break;
+			}
+		}
+
+		return $items;
 	}
 
 	public function get_tracking_info_template( $tracking_item, $shipment_row, $order_id, $new_status ) {

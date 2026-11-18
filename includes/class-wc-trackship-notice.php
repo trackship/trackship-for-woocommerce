@@ -66,7 +66,7 @@ class WC_TrackShip_Admin_Notice {
 
 		$notice_types = [
 			'ts-review-ignore' => 'ts_review_ignore_141',
-			'ts-upgrade-ignore' => 'ts_popup_ignore207',
+			'ts-upgrade-ignore' => 'ts_bfcm_ignore_2026',
 			'ts-fulfillments-ignore' => 'ts_fulfillments_ignore',
 		];
 
@@ -128,48 +128,179 @@ class WC_TrackShip_Admin_Notice {
 	* Display admin notice on Upgrade TrackShip plan
 	*/
 	public function trackship_upgrade_notice () {
-		if ( get_trackship_settings( 'ts_popup_ignore207', '') ) {
+		if ( get_trackship_settings( 'ts_bfcm_ignore_2026', '' ) ) {
 			return;
 		}
-		if ( current_time( 'timestamp' ) > strtotime( '2026-08-31 23:59:59' ) ) {
-			return;
-		}
-		$user_plan = get_option( 'user_plan' );
 
-		$nonce = wp_create_nonce('ts_dismiss_notice');
+		// the sale ends on December 1, and so does the notice
+		if ( current_time( 'timestamp' ) > strtotime( '2026-12-01 23:59:59' ) ) {
+			return;
+		}
+
+		// the offer is for stores that are not on a paid yearly plan yet
+		$user_plan = get_option( 'user_plan' );
+		if ( ! in_array( $user_plan, array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended', 'Free Trial' ) ) ) {
+			return;
+		}
+
+		$nonce = wp_create_nonce( 'ts_dismiss_notice' );
 		$dismissable_url = esc_url( add_query_arg( [ 'ts-upgrade-ignore' => 'true', 'nonce' => $nonce ] ) );
 		$url = 'https://my.trackship.com/settings/#billing';
+		$coupon = 'BFCM30';
 		?>
 		<style>
-			.wp-core-ui .notice.trackship-dismissable-notice {
-			padding: 20px;
-			text-decoration: none;
+		.wp-core-ui .notice.ts_bfcm_notice {
+			display: flex;
+			align-items: center;
+			gap: 20px;
+			flex-wrap: wrap;
+			padding: 16px 20px;
+			border: 1px solid #cfe7da;
+			border-left: 4px solid #22c55e;
+			border-radius: 10px;
+			background: linear-gradient( 90deg, #eefaf1 0%, #eef5fd 100% );
 		}
-		.trackship-dismissable-notice h3, .trackship-dismissable-notice p {
-			margin: 0;
-			padding-bottom: 10px;
-		}
-		.wp-core-ui .notice.trackship-dismissable-notice a.notice-dismiss{
+		.wp-core-ui .notice.ts_bfcm_notice a.notice-dismiss {
 			padding: 9px;
 			text-decoration: none;
 		}
+		.ts_bfcm_notice .ts_bfcm_body {
+			flex: 1 1 420px;
+			min-width: 0;
+		}
+		.ts_bfcm_notice .ts_bfcm_badge {
+			display: inline-block;
+			margin-bottom: 10px;
+			padding: 4px 12px;
+			border-radius: 999px;
+			background: #f97316;
+			color: #fff;
+			font-size: 12px;
+			font-weight: 600;
+		}
+		.ts_bfcm_notice p {
+			margin: 0 0 8px;
+			padding: 0;
+			font-size: 14px;
+			line-height: 1.5;
+		}
+		.ts_bfcm_notice p.ts_bfcm_terms {
+			color: #5b6472;
+			font-size: 13px;
+		}
+		.ts_bfcm_notice .ts_bfcm_coupon_row {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			flex-wrap: wrap;
+			margin: 0;
+		}
+		.ts_bfcm_notice .ts_bfcm_code {
+			padding: 4px 12px;
+			border: 1px dashed #3858e9;
+			border-radius: 6px;
+			background: #fff;
+			color: #1f2540;
+			font-size: 13px;
+			font-weight: 600;
+			letter-spacing: .5px;
+		}
+		.wp-core-ui .ts_bfcm_notice .ts_bfcm_copy {
+			height: auto;
+			min-height: 0;
+			padding: 2px 10px;
+			border-color: #3858e9;
+			background: #3858e9;
+			color: #fff;
+			font-size: 11px;
+			font-weight: 600;
+			line-height: 1.7;
+			text-transform: uppercase;
+			letter-spacing: .3px;
+		}
+		.ts_bfcm_notice .ts_bfcm_valid {
+			padding: 3px 12px;
+			border: 1px solid #fdba74;
+			border-radius: 999px;
+			background: #fff7ed;
+			color: #c2410c;
+			font-size: 12px;
+			font-weight: 600;
+		}
+		.wp-core-ui .ts_bfcm_notice .ts_bfcm_cta {
+			flex: 0 0 auto;
+			margin-right: 30px;
+			padding: 4px 16px;
+			height: auto;
+			min-height: 0;
+			font-size: 12px;
+			font-weight: 600;
+			line-height: 1.9;
+			text-transform: uppercase;
+			letter-spacing: .3px;
+		}
 		</style>
-
-		<?php // Upgrade to Pro Notice for Free Plan ?>
-		<?php if ( in_array( $user_plan, array( 'Complimentary 100', 'Complimentary 150', 'Free 20', 'No active plan', 'Trial Ended', 'Free Trial' ) ) ) { ?>
-
-			<div class="notice notice-success is-dismissible trackship-dismissable-notice" role="region">
-				<a href="<?php esc_html_e( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></a>
-				<h3>Limited-time offer: 3,600 Shipments/year for just $240!</h3>
-				<p>Upgrade to TrackShip Pro and give buyers the branded, worry-free tracking experience they love.</p>
-				<p>🎁 Use coupon code <strong>GROW240</strong> to get 3,600 shipments/year for just <strong>$240</strong> for your first year <em>(regular price $290, save $50)</em>! <em>(Valid till August 31, 2026)</em></p>
-				<p style="padding:0;">
-					<a class="button button-primary" target="_blank" href="<?php echo esc_url( $url ); ?>">Upgrade to Pro</a>
-					<a class="button" href="<?php echo esc_url( $dismissable_url ); ?>">Dismiss</a>
+		<div class="notice is-dismissible ts_bfcm_notice" role="region">
+			<a href="<?php echo esc_url( $dismissable_url ); ?>" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss this notice.', 'trackship-for-woocommerce' ); ?></span></a>
+			<div class="ts_bfcm_body">
+				<span class="ts_bfcm_badge">&#9889; <?php esc_html_e( 'Black Friday Offer', 'trackship-for-woocommerce' ); ?></span>
+				<p>
+					&#128640;
+					<?php
+					printf(
+						/* translators: 1: Black Friday Sale label, 2: the discount */
+						esc_html__( '%1$s %2$s on any yearly plan!', 'trackship-for-woocommerce' ),
+						'<strong>' . esc_html__( 'Black Friday Sale', 'trackship-for-woocommerce' ) . '</strong>',
+						'<strong>' . esc_html__( '30% off your first year', 'trackship-for-woocommerce' ) . '</strong>'
+					);
+					?>
+				</p>
+				<p class="ts_bfcm_terms"><?php esc_html_e( 'The discount applies to your first yearly subscription. After the first year, the plan renews at the regular price.', 'trackship-for-woocommerce' ); ?></p>
+				<p class="ts_bfcm_coupon_row">
+					<span>&#127991; <?php esc_html_e( 'Use coupon', 'trackship-for-woocommerce' ); ?></span>
+					<span class="ts_bfcm_code"><?php echo esc_html( $coupon ); ?></span>
+					<button type="button" class="button ts_bfcm_copy" data-coupon="<?php echo esc_attr( $coupon ); ?>" data-copied="<?php esc_attr_e( 'Copied!', 'trackship-for-woocommerce' ); ?>"><?php esc_html_e( 'Copy', 'trackship-for-woocommerce' ); ?></button>
+					<span><?php esc_html_e( 'at checkout and save 30%', 'trackship-for-woocommerce' ); ?></span>
+					<span class="ts_bfcm_valid">&#9200; <?php esc_html_e( 'Valid until December 1, 2026', 'trackship-for-woocommerce' ); ?></span>
 				</p>
 			</div>
-			<?php
-		}
+			<a class="button button-primary ts_bfcm_cta" target="_blank" href="<?php echo esc_url( $url ); ?>"><?php esc_html_e( 'Subscribe Now', 'trackship-for-woocommerce' ); ?></a>
+		</div>
+		<script>
+		jQuery( document ).on( 'click', '.ts_bfcm_copy', function () {
+			var button = jQuery( this );
+			var coupon = button.data( 'coupon' );
+			var label = button.text();
+
+			var done = function () {
+				button.text( button.data( 'copied' ) );
+				setTimeout( function () {
+					button.text( label );
+				}, 2000 );
+			};
+
+			// clipboard access is refused on http and in some browsers, so fall back to a
+			// hidden field the old execCommand can copy from
+			var fallback = function () {
+				var field = jQuery( '<textarea>' ).val( coupon ).css( { position: 'fixed', opacity: 0 } ).appendTo( 'body' );
+				field.trigger( 'select' );
+				try {
+					document.execCommand( 'copy' );
+					done();
+				} catch ( e ) {
+					window.prompt( 'Copy the coupon code:', coupon );
+				}
+				field.remove();
+			};
+
+			if ( navigator.clipboard && navigator.clipboard.writeText ) {
+				navigator.clipboard.writeText( coupon ).then( done ).catch( fallback );
+			} else {
+				fallback();
+			}
+		} );
+		</script>
+		<?php
 	}
 
 	/*

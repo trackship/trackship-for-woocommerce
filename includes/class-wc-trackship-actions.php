@@ -1593,24 +1593,22 @@ class WC_Trackship_Actions {
 
 	public function get_tracking_page_link( $order_id, $tracking_number = '' ) {
 		$page_id = get_trackship_settings( 'tracking_page_id' );
-		if ( !get_trackship_settings( 'ts_tracking_page' ) || !$page_id ) {
+		if ( ! get_trackship_settings( 'ts_tracking_page' ) || ! $page_id ) {
 			return false;
 		}
 
-		if ( $tracking_number ) {
-			return add_query_arg( array(
-				'tracking'	=> $tracking_number,
-			), get_permalink( $page_id ) );
-		} else {
-			$tracking_number = $this->get_tracking_number( $order_id );
-			if ( $tracking_number ) {
-				return add_query_arg( array(
-					'tracking'	=> $tracking_number,
-				), get_permalink( $page_id ) );
-			} else {
-				return false;
-			}
+		// the page can have been trashed or deleted since it was chosen
+		$page_link = get_permalink( $page_id );
+		if ( ! $page_link ) {
+			return false;
 		}
+
+		$tracking_number = $tracking_number ? $tracking_number : $this->get_tracking_number( $order_id );
+		if ( ! $tracking_number ) {
+			return false;
+		}
+
+		return add_query_arg( array( 'tracking' => $tracking_number ), $page_link );
 	}
 
 	public function ast_tracking_link( $formatted_tracking_link, $tracking_number, $order_id, $trackship_supported ) {
