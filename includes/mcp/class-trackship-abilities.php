@@ -171,7 +171,7 @@ class Trackship_Abilities {
 			// ---- WRITES ----
 			'update-settings' => array(
 				'label' => __( 'Update TrackShip settings', 'trackship-for-woocommerce' ),
-				'description' => __( 'Update one or more writable TrackShip settings. Only whitelisted keys are accepted. This changes store configuration — confirm with the user first. Allowed keys: ', 'trackship-for-woocommerce' ) . implode( ', ', array_keys( $this->settings_service->get_whitelist() ) ) . '.',
+				'description' => __( 'Update one or more writable TrackShip settings. Only whitelisted keys are accepted, covering admin notifications, tracking page behaviour, design and colours, the track form and integrations. The changes property lists every allowed key, and get-settings returns their current values. This changes store configuration — confirm with the user first.', 'trackship-for-woocommerce' ),
 				'writes' => true,
 				'input_schema' => array(
 					'type' => 'object',

@@ -2,9 +2,9 @@
 Contributors: TrackShip, brijesh353
 Tags: parcel-tracking, woocommerce-shipment-tracking, order-tracking, tracking, delivery-tracking
 Requires at least: 6.2
-Tested up to: 7.1.1
+Tested up to: 7.1.4
 Requires PHP: 7.4
-Stable tag: 2.0.8
+Stable tag: 2.0.9
 License: GPLv2 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -170,6 +170,12 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 13. You can view TrackShip Analytics and filter results by time range, shipment status, or provider.
 
 == Changelog ==
+= 2.0.9 - 2026-11-18 =
+* New - Added Gmail schema markup to shipment status emails, so the order items and tracking details appear in the Gmail inbox view.
+* Fix - The shipping provider sync no longer empties the providers table when TrackShip returns an empty or malformed response.
+* Compatibility - Verified compatibility with WooCommerce version 11.3.0.
+* Compatibility - Verified compatibility with WordPress version 7.1.4.
+
 = 2.0.8 - 2026-09-21 =
 * New - Added an AI Assistant tab with a built-in MCP server, allowing AI clients to securely connect to your store using OAuth 2.1 with PKCE, including connection management, a connectivity self-test, and an audit log of AI actions.
 * New - Added WordPress Abilities API integration that exposes shipments, analytics, notifications, and settings as MCP tools, shared by the TrackShip MCP server and WooCommerce's native MCP routes.
@@ -229,5 +235,8 @@ No. You can fully test out TrackShip and all the features with the free trial Tr
 For a complete changelog history, please visit our [documentation](https://docs.trackship.com/docs/trackship-for-woocommerce/changelog/).
 
 == Upgrade Notice ==
+= 2.0.9 =
+Shipment status emails now carry Gmail schema markup, so order and tracking details show in the Gmail inbox view. The shipping provider sync no longer clears the providers table on a failed response.
+
 = 2.0.8 =
 New AI Assistant with a built-in MCP server for secure AI client access, shipment notes on the shipments table, and WordPress Abilities API integration. The option to display TrackShip branding in emails has been removed.
